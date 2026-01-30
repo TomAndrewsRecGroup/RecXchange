@@ -1,7 +1,6 @@
 import "@/app/globals.css";
 import { Inter } from "next/font/google";
 import React from "react";
-// Import your components
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -18,27 +17,32 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="dark scroll-smooth">
       <body 
-        className={`${inter.className} bg-black min-h-screen relative mesh-background antialiased`}
+        className={`${inter.className} bg-black min-h-screen antialiased overflow-x-hidden`}
       >
-        {/* Global UI Overlays */}
+        {/* Background Layer: Fixed and Full Width */}
         <div className="fixed inset-0 pointer-events-none z-0">
           <div className="absolute inset-0 opacity-[0.02] mix-blend-overlay bg-[url('https://res.cloudinary.com/dzv9rqg49/image/upload/v1695123456/noise_z7p5vj.png')]" />
-          <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-[#312fd7]/10 blur-[120px] rounded-full" />
-          <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-[#c71df1]/10 blur-[120px] rounded-full" />
+          <div className="absolute top-[-10%] left-[-10%] w-[70%] h-[70%] bg-[#312fd7]/15 blur-[120px] rounded-full" />
+          <div className="absolute bottom-[-10%] right-[-10%] w-[70%] h-[70%] bg-[#c71df1]/15 blur-[120px] rounded-full" />
         </div>
 
-        {/* 1. Header is placed here so it stays on top of everything */}
+        {/* Navigation: Fixed z-index ensures it stays on top */}
         <Header />
 
-        <div className="relative z-10 flex flex-col min-h-screen">
-          {/* 2. Main content area - pt-20 ensures it doesn't hide under the header */}
-          <main className="flex-grow pt-20">
+        {/* Content Wrapper: 
+            - flex-col + min-h-screen keeps footer at the bottom.
+            - w-full ensures it spans the entire browser width.
+        */}
+        <div className="relative z-10 flex flex-col min-h-screen w-full">
+          {/* Increased pt-24 to ensure clearance for the large CTA header.
+              w-full ensures the inner content can span the whole screen.
+          */}
+          <main className="flex-grow w-full pt-24">
             {children}
           </main>
           
-          {/* 3. Footer is placed at the bottom of the stack */}
           <Footer />
         </div>
       </body>
