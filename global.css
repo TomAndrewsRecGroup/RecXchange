@@ -1,0 +1,45 @@
+/* globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --purple: #c71df1;
+  --blue: #312fd7;
+  --black: #000000;
+  --bg-dark: #0a0a0a;
+}
+
+@layer base {
+  body {
+    @apply bg-[#000000] text-white antialiased;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply backdrop-blur-xl bg-white/5 border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.8)];
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-[#312fd7] to-[#c71df1] bg-clip-text text-transparent;
+  }
+
+  .mesh-background {
+    background-color: #000000;
+    background-image: 
+      radial-gradient(at 0% 0%, rgba(49, 47, 215, 0.15) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, rgba(199, 31, 241, 0.15) 0px, transparent 50%);
+  }
+
+  /* The "Pulse" underline from your brief */
+  .pulse-underline {
+    @apply h-[2px] w-24 mx-auto rounded-full bg-gradient-to-r from-blue-600 to-purple-600;
+    animation: pulse-width 3s infinite ease-in-out;
+  }
+}
+
+@keyframes pulse-width {
+  0%, 100% { width: 60px; opacity: 0.5; }
+  50% { width: 120px; opacity: 1; }
+}
