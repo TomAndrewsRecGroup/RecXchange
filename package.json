@@ -1,6 +1,6 @@
 {
   "name": "recxchange-marketing",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -10,7 +10,7 @@
     "vercel-build": "next build"
   },
   "dependencies": {
-    "next": "15.0.3",
+    "next": "15.1.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "framer-motion": "^11.11.17",
