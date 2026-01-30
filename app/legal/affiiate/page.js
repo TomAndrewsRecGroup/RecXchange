@@ -5,7 +5,7 @@ export default function AffiliatePage() {
       <p className="text-[10px] text-purple-400 uppercase tracking-widest font-bold mb-8">Token-Based Reward System</p>
 
       <div className="space-y-8 text-sm">
-        <p>Operated by Eavee AI Ltd (trading as "RecXchange"), our program rewards success through RecX Tokens—digital credits rather than cash payouts.</p>
+        <p>Operated by RecXchange Portal LLC (trading as "RecXchange"), our program rewards success through RecX Tokens—digital credits rather than cash payouts.</p>
 
         <div className="p-6 rounded-2xl bg-purple-500/5 border border-purple-500/20">
           <h3 className="text-purple-400 font-bold mb-4">Redemption Rules</h3>
