@@ -33,7 +33,7 @@ export default function Header() {
               <Link href="/recruiter" className="block px-4 py-2 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded">Recruiter Home</Link>
               <Link href="/clients-with-roles" className="block px-4 py-2 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded">Clients with Roles</Link>
               <Link href="/recruiters-with-candidates" className="block px-4 py-2 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded">With Candidates</Link>
-              <Link href="/pricing" className="block px-4 py-2 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded border-t border-white/5 mt-1 font-medium text-[#c71df1]">Split Fee</Link>
+              <Link href="/pricing" className="block px-4 py-2 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded border-t border-white/5 mt-1 font-medium text-[#c71df1]">Pricing</Link>
             </div>
           </div>
 
@@ -51,7 +51,7 @@ export default function Header() {
           </div>
 
           {/* Updated Static Links */}
-          <Link href="/pricing" className="text-sm text-gray-400 hover:text-white transition-colors">Price & Tiers</Link>
+          <Link href="/pricing" className="text-sm text-gray-400 hover:text-white transition-colors">Pricing</Link>
           <Link href="/deal-protection" className="text-sm text-gray-400 hover:text-white transition-colors">Deal Protection</Link>
         </nav>
 
