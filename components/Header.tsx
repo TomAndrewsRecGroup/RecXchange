@@ -53,6 +53,7 @@ export default function Header() {
           {/* Updated Static Links */}
           <Link href="/pricing" className="text-sm text-gray-400 hover:text-white transition-colors">Pricing</Link>
           <Link href="/deal-protection" className="text-sm text-gray-400 hover:text-white transition-colors">Deal Protection</Link>
+           <Link href="/roles" className="text-sm text-gray-400 hover:text-white transition-colors">Live Roles</Link>
         </nav>
 
         {/* Right: CTAs */}
