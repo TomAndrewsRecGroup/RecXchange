@@ -1,6 +1,9 @@
 import "@/app/globals.css";
 import { Inter } from "next/font/google";
 import React from "react";
+// Import your components
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,17 +24,22 @@ export default function RootLayout({ children }: RootLayoutProps) {
       >
         {/* Global UI Overlays */}
         <div className="fixed inset-0 pointer-events-none z-0">
-          {/* Subtle Grain/Texture Overlay for a premium feel */}
           <div className="absolute inset-0 opacity-[0.02] mix-blend-overlay bg-[url('https://res.cloudinary.com/dzv9rqg49/image/upload/v1695123456/noise_z7p5vj.png')]" />
-          
-          {/* Global Light Orbs (These will sit behind the content of every page) */}
           <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-[#312fd7]/10 blur-[120px] rounded-full" />
           <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-[#c71df1]/10 blur-[120px] rounded-full" />
         </div>
 
-        {/* The children (pages) will sit in a relative container with a higher Z-index */}
-        <div className="relative z-10">
-          {children}
+        {/* 1. Header is placed here so it stays on top of everything */}
+        <Header />
+
+        <div className="relative z-10 flex flex-col min-h-screen">
+          {/* 2. Main content area - pt-20 ensures it doesn't hide under the header */}
+          <main className="flex-grow pt-20">
+            {children}
+          </main>
+          
+          {/* 3. Footer is placed at the bottom of the stack */}
+          <Footer />
         </div>
       </body>
     </html>
