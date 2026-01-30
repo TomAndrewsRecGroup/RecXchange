@@ -19,18 +19,18 @@ export default function Footer() {
           <h4 className="text-white font-bold text-sm mb-4">Recruiters</h4>
           <ul className="space-y-2 text-sm text-gray-500">
             <li><Link href="/recruiter" className="hover:text-white">Recruiter Home</Link></li>
-            <li><Link href="/clients-with-roles" className="hover:text-white">Clients with Roles</Link></li>
-            <li><Link href="/recruiters-with-candidates" className="hover:text-white">With Candidates</Link></li>
-            <li><Link href="/collaboration" className="hover:text-[#c71df1] transition-colors font-medium">Split Fees</Link></li>
+            <li><Link href="/recruiter-roles" className="hover:text-white">Post Roles</Link></li>
+            <li><Link href="/recruiter-candidates" className="hover:text-white">Submit Candidates</Link></li>
+            <li><Link href="/pricing" className="hover:text-[#c71df1] transition-colors font-medium">Pricing</Link></li>
           </ul>
         </div>
 
         <div>
           <h4 className="text-white font-bold text-sm mb-4">Hiring Managers</h4>
           <ul className="space-y-2 text-sm text-gray-500">
-            <li><Link href="/hiring-manager" className="hover:text-white">Manager Home</Link></li>
-            <li><Link href="/hire-now" className="hover:text-white">Hire Now</Link></li>
-            <li><Link href="/hire-soon" className="hover:text-white">Hire Soon</Link></li>
+            <li><Link href="/hiring-manager" className="hover:text-white">Home Manager Home</Link></li>
+            <li><Link href="/hire-now" className="hover:text-white">Hiring Now?</Link></li>
+            <li><Link href="/hire-soon" className="hover:text-white">Hiring Soon?</Link></li>
             <li><Link href="/account-management" className="hover:text-white">Management & Support</Link></li>
           </ul>
         </div>
