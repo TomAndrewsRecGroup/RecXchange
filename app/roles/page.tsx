@@ -22,21 +22,19 @@ export default function RolesMarketplace() {
   const [filterType, setFilterType] = useState('All'); 
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Advanced Filtering Logic
   const filteredRoles = useMemo(() => {
     return allRoles.filter(role => {
       const matchesType = filterType === 'All' || role.type === filterType;
       const query = searchQuery.toLowerCase();
-      const matchesSearch = 
+      return matchesType && (
         role.title.toLowerCase().includes(query) || 
         role.skill.toLowerCase().includes(query) ||
         role.industry.toLowerCase().includes(query) ||
-        role.loc.toLowerCase().includes(query);
-      return matchesType && matchesSearch;
+        role.loc.toLowerCase().includes(query)
+      );
     });
   }, [filterType, searchQuery]);
 
-  // Pagination Logic
   const itemsPerPage = 4;
   const totalPages = Math.ceil(filteredRoles.length / itemsPerPage);
   const paginatedRoles = filteredRoles.slice((page - 1) * itemsPerPage, page * itemsPerPage);
@@ -51,7 +49,6 @@ export default function RolesMarketplace() {
     <main className="min-h-screen pt-32 pb-20 px-6 mesh-background relative text-white">
       <div className="max-w-6xl mx-auto relative z-10">
         
-        {/* 1. Enhanced Header Section */}
         <header className="mb-12">
           <motion.div 
             initial={{ opacity: 0, y: -10 }} 
@@ -69,9 +66,7 @@ export default function RolesMarketplace() {
           </p>
         </header>
 
-        {/* 2. Global Search & Stats Hub */}
         <div className="flex flex-col gap-6 mb-12">
-          {/* Search Bar */}
           <section className="glass-card p-2 rounded-2xl border-white/5 flex items-center shadow-2xl">
             <div className="pl-6 text-gray-500">
               <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -86,7 +81,6 @@ export default function RolesMarketplace() {
             />
           </section>
 
-          {/* Type Toggles */}
           <div className="flex flex-wrap gap-3">
             {[
               { label: 'All Roles', count: stats.total, val: 'All' },
@@ -111,7 +105,6 @@ export default function RolesMarketplace() {
           </div>
         </div>
 
-        {/* 3. Roles Grid with Stable Height */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 min-h-[580px] content-start">
           <AnimatePresence mode="wait">
             {paginatedRoles.length > 0 ? (
@@ -122,20 +115,40 @@ export default function RolesMarketplace() {
                   initial={{ opacity: 0, scale: 0.98 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.98 }}
-                  transition={{ duration: 0.2 }}
-                  className="glass-card group p-8 rounded-[2.5rem] border-white/5 hover:border-blue-500/20 hover:bg-white/[0.03] transition-all flex flex-col justify-between relative overflow-hidden"
+                  className="glass-card group p-8 rounded-[2.5rem] border-white/5 hover:border-blue-500/20 hover:bg-white/[0.03] transition-all flex flex-col justify-between relative overflow-visible"
                 >
-                  <div className="absolute top-0 right-0 w-24 h-24 bg-blue-500/5 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
-                  
                   <div>
                     <div className="flex justify-between items-center mb-6">
-                      <span className={`text-[9px] font-black uppercase px-3 py-1 rounded-lg border tracking-widest ${
-                        role.type === 'RecX Direct' ? 'border-blue-500/30 text-blue-400 bg-blue-500/5' : 'border-purple-500/30 text-purple-400 bg-purple-500/5'
-                      }`}>
-                        {role.type}
-                      </span>
+                      {/* --- TOOLTIP START --- */}
+                      <div className="relative group/tooltip">
+                        <span className={`cursor-help text-[9px] font-black uppercase px-3 py-1 rounded-lg border tracking-widest transition-all ${
+                          role.type === 'RecX Direct' 
+                          ? 'border-blue-500/30 text-blue-400 bg-blue-500/5 group-hover/tooltip:bg-blue-500/10' 
+                          : 'border-purple-500/30 text-purple-400 bg-purple-500/5 group-hover/tooltip:bg-purple-500/10'
+                        }`}>
+                          {role.type}
+                        </span>
+                        
+                        {/* Popup Panel */}
+                        <div className="absolute bottom-full left-0 mb-3 w-64 p-4 rounded-2xl bg-[#0a0a0a] border border-white/10 shadow-2xl opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible transition-all z-50 pointer-events-none translate-y-2 group-hover/tooltip:translate-y-0">
+                          <p className="text-[10px] font-black uppercase tracking-widest mb-1.5 text-white flex items-center gap-2">
+                            <span className={`w-1 h-1 rounded-full ${role.type === 'RecX Direct' ? 'bg-blue-500' : 'bg-purple-500'}`} />
+                            {role.type}
+                          </p>
+                          <p className="text-[11px] text-gray-400 leading-relaxed font-medium normal-case tracking-normal">
+                            {role.type === 'RecX Direct' 
+                              ? "RecXchange owned live clients. Business Development is done for you—just bring the talent." 
+                              : "Recruiter Xchange. Collaborate with other professional recruiters on their exclusive mandates."
+                            }
+                          </p>
+                          <div className="absolute -bottom-1.5 left-4 w-3 h-3 bg-[#0a0a0a] border-r border-b border-white/10 rotate-45" />
+                        </div>
+                      </div>
+                      {/* --- TOOLTIP END --- */}
+                      
                       <span className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">{role.loc}</span>
                     </div>
+                    
                     <h3 className="text-2xl font-bold mb-2 group-hover:text-blue-400 transition-colors">{role.title}</h3>
                     <div className="flex gap-2 items-center text-[10px] text-gray-500 font-bold uppercase tracking-tighter">
                       <span>{role.industry}</span>
@@ -163,7 +176,6 @@ export default function RolesMarketplace() {
           </AnimatePresence>
         </div>
 
-        {/* 4. Functional Pagination */}
         <div className="mt-16 flex items-center justify-center gap-8 border-t border-white/5 pt-10">
           <button 
             disabled={page === 1}
@@ -172,7 +184,6 @@ export default function RolesMarketplace() {
           >
             ← Previous
           </button>
-          
           <div className="flex gap-2">
             {[...Array(totalPages)].map((_, i) => (
               <button
@@ -186,7 +197,6 @@ export default function RolesMarketplace() {
               </button>
             ))}
           </div>
-
           <button 
             disabled={page >= totalPages}
             onClick={() => { setPage(p => p + 1); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
@@ -195,7 +205,6 @@ export default function RolesMarketplace() {
             Next →
           </button>
         </div>
-
       </div>
     </main>
   );
