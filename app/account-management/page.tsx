@@ -1,78 +1,92 @@
 "use client";
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import Link from 'next/link';
+import React from "react";
+import { UserCheck, MessageSquare, Users, ShieldCheck, Trophy, Handshake } from "lucide-react";
 
-interface Role {
-  id: number;
-  title: string;
-  company: string;
-  location: string;
-  fee: string;
-  type: 'Exclusive' | 'Standard';
-  tags: string[];
-}
-
-const mockRoles: Role[] = [
-  { id: 1, title: "Senior DevOps Engineer", company: "FinTech Scaleup", location: "London / Remote", fee: "20%", type: "Exclusive", tags: ["AWS", "Kubernetes"] },
-  { id: 2, title: "Head of Growth", company: "Web3 Studio", location: "Dubai", fee: "25%", type: "Standard", tags: ["Marketing", "Crypto"] },
-  { id: 3, title: "Full Stack Developer", company: "E-commerce Giant", location: "Berlin", fee: "18%", type: "Standard", tags: ["React", "Node.js"] },
+const supportSteps = [
+  {
+    icon: <MessageSquare className="text-[#312fd7]" size={32} />,
+    title: "Expert Role Briefing",
+    description: "Your dedicated Account Manager meets with you to understand the technical requirements, cultural fit, and strategic goals of your roles."
+  },
+  {
+    icon: <Users className="text-[#c71df1]" size={32} />,
+    title: "Global Recruiter Management",
+    description: "We manage the 15,000+ specialist recruiters on the platform, directing their sourcing efforts so you don't have to deal with multiple agencies."
+  },
+  {
+    icon: <Trophy className="text-white" size={32} />,
+    title: "Elite Candidate Filtering",
+    description: "The Xchange Engine performs semantic matching, and your Account Manager manually vets the results to ensure only the top 1% of candidates reach your desk."
+  },
+  {
+    icon: <Handshake className="text-[#312fd7]" size={32} />,
+    title: "End-to-End Support",
+    description: "From scheduling interviews to managing offers and onboarding, your Account Manager acts as an extension of your internal HR team."
+  }
 ];
 
-export default function RecruiterRoles() {
-  const [roles] = useState<Role[]>(mockRoles);
-
+export default function AccountManagement() {
   return (
-    <main className="min-h-screen pt-32 pb-20 px-6 relative z-10">
-      <div className="max-w-6xl mx-auto">
-        <header className="mb-12">
-          <span className="text-label mb-4 block">Marketplace Feed</span>
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
-            Live <span className="gradient-text">Mandates</span>
-          </h1>
-          <p className="text-gray-400 mt-4 max-w-xl">
-            Verified roles from across the Xchange. Submit your best candidates and track split-fee progress in real-time.
-          </p>
-        </header>
+    <div className="w-full pb-20 pt-10 px-6">
+      {/* Hero Section */}
+      <div className="max-w-4xl mx-auto text-center mb-20">
+        <h3 className="text-[10px] uppercase tracking-[0.3em] font-bold text-[#c71df1] mb-4">
+          Partnership at Scale
+        </h3>
+        <h1 className="text-5xl font-bold mb-6">
+          Your Dedicated <span className="gradient-text">Account Manager</span>
+        </h1>
+        <p className="text-gray-400 text-lg leading-relaxed">
+          Hiring at speed shouldn't mean sacrificing quality. Every client is assigned a specialist Account Manager to navigate the Xchange Engine and manage the global recruiter community for you.
+        </p>
+      </div>
 
-        <div className="grid gap-4">
-          <AnimatePresence>
-            {roles.map((role, i) => (
-              <motion.div
-                key={role.id}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.1 }}
-                className="glass-card p-6 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-6 group hover:border-blue-500/30"
-              >
-                <div>
-                  <div className="flex gap-3 mb-2">
-                    <span className={`text-[9px] font-bold px-2 py-0.5 rounded ${role.type === 'Exclusive' ? 'bg-blue-500/20 text-blue-400' : 'bg-gray-500/20 text-gray-400'}`}>
-                      {role.type}
-                    </span>
-                    <span className="text-[9px] font-bold px-2 py-0.5 rounded bg-green-500/10 text-green-400">
-                      Split: {role.fee}
-                    </span>
-                  </div>
-                  <h3 className="text-xl font-bold group-hover:text-blue-400 transition-colors">{role.title}</h3>
-                  <p className="text-gray-500 text-sm">{role.company} • {role.location}</p>
-                </div>
+      {/* Process Grid */}
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 mb-24">
+        {supportSteps.map((step, index) => (
+          <div key={index} className="glass-card p-10 rounded-3xl hover:border-[#c71df1]/50 transition-colors group">
+            <div className="mb-6 group-hover:scale-110 transition-transform duration-300">
+              {step.icon}
+            </div>
+            <h4 className="text-xl font-bold mb-3">{step.title}</h4>
+            <p className="text-gray-500 text-sm leading-relaxed">
+              {step.description}
+            </p>
+          </div>
+        ))}
+      </div>
 
-                <div className="flex items-center gap-4 w-full md:w-auto">
-                  <div className="flex gap-2 mr-4">
-                    {role.tags.map(tag => (
-                      <span key={tag} className="text-[10px] text-gray-600 border border-white/5 px-2 py-1 rounded-md">{tag}</span>
-                    ))}
-                  </div>
-                  <button className="flex-1 md:flex-none px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-xs font-bold hover:bg-blue-600 transition-all">
-                    View Brief
-                  </button>
-                </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
+      {/* High-Impact Stat Section */}
+      <div className="max-w-6xl mx-auto glass-card rounded-[3rem] p-12 relative overflow-hidden text-center">
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#312fd7] via-[#c71df1] to-[#312fd7]" />
+        <h2 className="text-3xl font-bold mb-8">One Point of Contact. 15,000+ Recruiters.</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+          <div>
+            <div className="text-4xl font-bold text-white mb-2">100%</div>
+            <div className="text-xs uppercase tracking-widest text-gray-500 font-bold">Role Ownership</div>
+          </div>
+          <div>
+            <div className="text-4xl font-bold text-[#c71df1] mb-2">Top 1%</div>
+            <div className="text-xs uppercase tracking-widest text-gray-500 font-bold">Candidate Quality</div>
+          </div>
+          <div>
+            <div className="text-4xl font-bold text-[#312fd7] mb-2">24/7</div>
+            <div className="text-xs uppercase tracking-widest text-gray-500 font-bold">Engine Monitoring</div>
+          </div>
         </div>
       </div>
-    </main>
+
+      {/* CTA Section */}
+      <div className="max-w-3xl mx-auto mt-24 text-center">
+        <ShieldCheck className="mx-auto text-green-500 mb-6" size={48} />
+        <h3 className="text-2xl font-bold mb-4">Ready to brief your Account Manager?</h3>
+        <p className="text-gray-500 mb-8">
+          Experience the efficiency of the Xchange Engine backed by the expertise of a dedicated recruitment partner.
+        </p>
+        <button className="px-10 py-4 rounded-full bg-white text-black font-bold hover:bg-gray-200 transition-all shadow-[0_0_30px_rgba(255,255,255,0.1)]">
+          Schedule Your Briefing
+        </button>
+      </div>
+    </div>
   );
 }
