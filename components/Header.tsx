@@ -31,8 +31,8 @@ export default function Header() {
             </button>
             <div className="absolute top-full left-0 hidden group-hover:block w-56 bg-[#0a0a0a] border border-white/10 rounded-lg p-2 shadow-2xl">
               <Link href="/recruiter" className="block px-4 py-2 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded">Recruiter Home</Link>
-              <Link href="/clients-with-roles" className="block px-4 py-2 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded">Clients with Roles</Link>
-              <Link href="/recruiters-with-candidates" className="block px-4 py-2 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded">With Candidates</Link>
+              <Link href="/recruiter-roles" className="block px-4 py-2 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded">Recruiters with Roles</Link>
+              <Link href="/recruiters-with-candidates" className="block px-4 py-2 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded">Recruiters with Candidates</Link>
               <Link href="/collaboration" className="block px-4 py-2 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded border-t border-white/5 mt-1 font-medium text-[#c71df1]">Split Fees</Link>
             </div>
           </div>
@@ -44,8 +44,8 @@ export default function Header() {
             </button>
             <div className="absolute top-full left-0 hidden group-hover:block w-64 bg-[#0a0a0a] border border-white/10 rounded-lg p-2 shadow-2xl">
               <Link href="/hiring-manager" className="block px-4 py-2 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded">Hiring Manager Home</Link>
-              <Link href="/hire-now" className="block px-4 py-2 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded">Hire Now</Link>
-              <Link href="/hire-soon" className="block px-4 py-2 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded">Hire Soon</Link>
+              <Link href="/hiring-manager-live" className="block px-4 py-2 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded">Hiring Now?</Link>
+              <Link href="/hiring-manager-strategic" className="block px-4 py-2 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded">Hirng Soon?</Link>
               <Link href="/account-management" className="block px-4 py-2 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded border-t border-white/5 mt-1">Management & Support</Link>
             </div>
           </div>
