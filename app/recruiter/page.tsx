@@ -65,7 +65,7 @@ export default function RecruiterDiagnostic() {
                   You have signed roles and need candidates. Post to the Xchange Engine and let partner recruiters bring the candidates to you.
                 </p>
                 <div className="space-y-3">
-                  {["Instant AI Shortlisting", "270M+ Global Profiles", "Verified Match Scores"].map((item, i) => (
+                  {["Instant AI Shortlisting", "Verified Recruiter Network", "Clients Protected"].map((item, i) => (
                     <div key={i} className="flex items-center gap-3 text-[10px] font-bold text-gray-500 uppercase tracking-widest">
                       <div className="w-1 h-1 rounded-full bg-blue-500" /> {item}
                     </div>
@@ -74,7 +74,7 @@ export default function RecruiterDiagnostic() {
               </div>
               
               <div className="mt-12 flex items-center justify-between pt-8 border-t border-white/5">
-                <span className="text-[10px] font-black text-blue-400 uppercase tracking-widest">Collaborate</span>
+                <span className="text-[10px] font-black text-blue-400 uppercase tracking-widest">80%+ Matched Candidates, straight to you.</span>
                 <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-white group-hover:translate-x-2 transition-transform">→</div>
               </div>
             </motion.div>
@@ -111,29 +111,13 @@ export default function RecruiterDiagnostic() {
               </div>
 
               <div className="mt-12 flex items-center justify-between pt-8 border-t border-white/5">
-                <span className="text-[10px] font-black text-purple-400 uppercase tracking-widest">Collaborate & Split</span>
+                <span className="text-[10px] font-black text-purple-400 uppercase tracking-widest">Data protected until your ready</span>
                 <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-white group-hover:translate-x-2 transition-transform">→</div>
               </div>
             </motion.div>
           </Link>
         </section>
 
-        {/* 4. Cross-Path Footer */}
-        <footer className="mt-16 w-full max-w-4xl">
-          <div className="glass-card rounded-[2rem] p-8 flex flex-col md:flex-row items-center justify-between gap-6 border-white/5 bg-black/40">
-            <div className="text-center md:text-left">
-              <p className="text-white font-bold text-sm mb-1">New to Split-Fee Collaboration?</p>
-              <p className="text-[11px] text-gray-500 uppercase tracking-widest font-medium">Protecting your deals is our core priority.</p>
-            </div>
-            <div className="flex gap-4">
-              <Link href="/deal-protection" className="px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-[10px] font-black uppercase tracking-widest text-gray-300 hover:text-white hover:bg-white/10 transition-all">
-                Deal Protection Rules
-              </Link>
-              <Link href="/pricing-and-splits" className="px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-[10px] font-black uppercase tracking-widest text-gray-300 hover:text-white hover:bg-white/10 transition-all">
-                Split Calculator
-              </Link>
-            </div>
-          </div>
           
           <div className="mt-8 text-center">
              <p className="text-[9px] text-gray-600 font-bold uppercase tracking-[0.4em]">
