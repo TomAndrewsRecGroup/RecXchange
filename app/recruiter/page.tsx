@@ -39,7 +39,7 @@ export default function RecruiterDiagnostic() {
             RecXchange is a modular ecosystem. Tell us your current bottleneck and we’ll route you to the specific tools, roles, or candidate pools you need.
           </p>
         </header>
-
+</div>
         {/* 3. Main Diagnostic Cards */}
         <section className="w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
           
@@ -124,8 +124,6 @@ export default function RecruiterDiagnostic() {
                RecXchange Root System — Version 2026.1
              </p>
           </div>
-        </footer>
-      </div>
+    </footer>
     </main>
-  );
-}
+  )};
