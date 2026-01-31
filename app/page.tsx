@@ -19,29 +19,7 @@ export default function EntryWall() {
 
   return (
     <main className="relative min-h-screen flex flex-col items-center justify-center px-6 py-20 overflow-x-hidden">
-      
-      {/* 1. Permanent Glass Nav (Simplified for Entry) */}
-      <nav className="fixed top-0 left-0 w-full z-50 p-6">
-        <div className="max-w-7xl mx-auto glass-card rounded-2xl px-8 py-4 flex items-center justify-between">
-          <Link href="/" className="text-2xl font-bold gradient-text">RecXchange</Link>
-          
-          <div className="flex items-center gap-4">
-            <Link 
-              href="https://app.recxchange.io/login" 
-              className="px-5 py-2 rounded-full border border-white/10 text-sm hover:bg-white/5 transition-all font-medium"
-            >
-              Login
-            </Link>
-            <Link 
-              href="https://app.recxchange.io/register" 
-              className="px-5 py-2 rounded-full bg-gradient-to-r from-[#312fd7] to-[#c71df1] text-sm font-bold hover:opacity-90 transition-all shadow-lg shadow-purple-500/20"
-            >
-              Get Started
-            </Link>
-          </div>
-        </div>
-      </nav>
-
+    
       {/* 2. Central Content */}
       <div className="relative z-10 text-center max-w-6xl w-full">
         <motion.header
@@ -70,7 +48,7 @@ export default function EntryWall() {
             initial="initial"
             animate="animate"
             whileHover="hover"
-            onClick={() => router.push('/recruiter-roles')}
+            onClick={() => router.push('/recruiter')}
             className="glass-card p-12 rounded-[3rem] flex flex-col justify-between items-start text-left min-h-[480px] cursor-pointer group relative overflow-hidden"
           >
             {/* Hover Glow Effect */}
@@ -102,7 +80,7 @@ export default function EntryWall() {
             initial="initial"
             animate="animate"
             whileHover="hover"
-            onClick={() => router.push('/hiring-manager-live')}
+            onClick={() => router.push('/hiring-manager')}
             className="glass-card p-12 rounded-[3rem] flex flex-col justify-between items-start text-left min-h-[480px] cursor-pointer group relative overflow-hidden"
           >
             {/* Hover Glow Effect */}
