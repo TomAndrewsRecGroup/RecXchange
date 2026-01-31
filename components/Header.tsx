@@ -46,7 +46,7 @@ export default function Header() {
               <Link href="/hiring-manager" className="block px-4 py-2 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded">Hiring Manager Home</Link>
               <Link href="/hiring-manager-live" className="block px-4 py-2 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded">Hiring Now?</Link>
               <Link href="/hiring-manager-strategic" className="block px-4 py-2 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded">Hirng Soon?</Link>
-              <Link href="/account-management" className="block px-4 py-2 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded border-t border-white/5 mt-1">Management & Support</Link>
+              <Link href="/account-management" className="block px-4 py-2 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded border-t border-white/5 mt-1">Account Management</Link>
             </div>
           </div>
 
