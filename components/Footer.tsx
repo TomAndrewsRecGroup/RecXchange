@@ -29,7 +29,7 @@ export default function Footer() {
         <div>
           <h4 className="text-white font-bold text-sm mb-4">Hiring Managers</h4>
           <ul className="space-y-2 text-sm text-gray-500">
-            <li><Link href="/hiring-manager" className="hover:text-white">Home Manager Home</Link></li>
+            <li><Link href="/hiring-manager" className="hover:text-white">Hiring Manager Home</Link></li>
             <li><Link href="/hire-now" className="hover:text-white">Hiring Now?</Link></li>
             <li><Link href="/hire-soon" className="hover:text-white">Hiring Soon?</Link></li>
             <li><Link href="/account-management" className="hover:text-white">Management & Support</Link></li>
