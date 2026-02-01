@@ -39,9 +39,9 @@ export default function RecruiterDiagnostic() {
             RecXchange is a modular ecosystem. Tell us your current bottleneck and we’ll route you to the specific tools, roles, or candidate pools you need.
           </p>
         </header>
-</div>
-        {/* 3. Main Diagnostic Cards */}
-        <section className="w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+      </div>
+      {/* 3. Main Diagnostic Cards */}
+      <section className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
           
           {/* Option A: Fill Roles (Blue) */}
           <Link href="/recruiter-roles" className="group h-full">
@@ -81,7 +81,7 @@ export default function RecruiterDiagnostic() {
           </Link>
 
           {/* Option B: Post Roles (Purple) */}
-          <Link href="/recruiter-with-candidates" className="group h-full">
+          <Link href="/recruiters-with-candidates" className="group h-full">
             <motion.div 
               variants={panelVariants}
               initial="initial"
@@ -118,12 +118,11 @@ export default function RecruiterDiagnostic() {
           </Link>
         </section>
 
-          
-          <div className="mt-8 text-center">
-             <p className="text-[9px] text-gray-600 font-bold uppercase tracking-[0.4em]">
-               RecXchange Root System — Version 2026.1
-             </p>
-          </div>
-    </footer>
+      <footer className="mt-8 text-center">
+        <p className="text-[9px] text-gray-600 font-bold uppercase tracking-[0.4em]">
+          RecXchange Root System — Version 2026.1
+        </p>
+      </footer>
     </main>
-  )};
+  );
+}

@@ -23,7 +23,7 @@ export default function CollaborationPage() {
 
         <div className="glass-card p-10 rounded-3xl border-t-4 border-[#c71df1]">
           <h2 className="text-3xl font-bold mb-4">Up to 70% Retained</h2>
-          <p className="text-gray-500 mb-6">Work on high-priority **RecXDirect** roles verified by our team. These mandates offer aggressive splits for recruiters who deliver speed and quality.</p>
+          <p className="text-gray-500 mb-6">Work on high-priority **RecXDirect** roles verified by our team. These roles offer aggressive splits for recruiters who deliver speed and quality.</p>
           <div className="inline-block px-4 py-2 rounded-full bg-[#c71df1]/20 text-[#c71df1] font-bold">RecXDirect Access</div>
         </div>
       </div>

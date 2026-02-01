@@ -20,7 +20,7 @@ export default function Footer() {
           <ul className="space-y-2 text-sm text-gray-500">
             <li><Link href="/recruiter" className="hover:text-white">Recruiter Home</Link></li>
             <li><Link href="/recruiter-roles" className="hover:text-white">Post Roles</Link></li>
-            <li><Link href="/recruiter-candidates" className="hover:text-white">Submit Candidates</Link></li>
+            <li><Link href="/recruiters-with-candidates" className="hover:text-white">Submit Candidates</Link></li>
             <li><Link href="/collaboration" className="hover:text-white">Split Fees</Link></li>
             <li><Link href="/pricing" className="hover:text-[#c71df1] transition-colors font-medium">Pricing</Link></li>
           </ul>

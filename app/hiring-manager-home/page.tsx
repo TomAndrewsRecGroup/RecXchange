@@ -19,8 +19,8 @@ export default function HiringManagerHome() {
   return (
     <main className="relative min-h-screen flex flex-col items-center pt-32 pb-20 px-6 overflow-x-hidden">
       
-      {/* 1. Persistent Glass Nav - Persona Specific */}
-      <nav className="fixed top-0 left-0 w-full z-50 p-6">
+      {/* 1. Persistent Glass Header - Persona Specific */}
+      <header className="fixed top-0 left-0 w-full z-50 p-6">
         <div className="max-w-7xl mx-auto glass-card rounded-2xl px-8 py-4 flex items-center justify-between">
           <Link href="/" className="text-2xl font-bold gradient-text">RecXchange</Link>
           
@@ -40,7 +40,7 @@ export default function HiringManagerHome() {
             </Link>
           </div>
         </div>
-      </nav>
+      </header>
 
       {/* 2. Visual Content */}
       <div className="relative z-10 w-full max-w-4xl flex flex-col items-center">

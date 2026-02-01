@@ -33,7 +33,7 @@ export default function LegalLayout({ children }: { children: React.ReactNode })
         </header>
 
         {/* Dynamic Navigation Bar */}
-        <nav className="flex gap-3 mb-12 overflow-x-auto pb-4 no-scrollbar border-b border-white/5">
+        <header className="flex gap-3 mb-12 overflow-x-auto pb-4 no-scrollbar border-b border-white/5">
           {links.map((link) => {
             const isActive = pathname === link.href;
             return (
@@ -57,7 +57,7 @@ export default function LegalLayout({ children }: { children: React.ReactNode })
               </Link>
             );
           })}
-        </nav>
+        </header>
 
         {/* Content Area */}
         <motion.div
