@@ -41,7 +41,7 @@ export default function RecruiterDiagnostic() {
         </header>
       </div>
       {/* 3. Main Diagnostic Cards */}
-      <section className="w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+      <section className="w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           
           {/* Option A: Fill Roles (Blue) */}
           <Link href="/recruiter-roles" className="group h-full">
