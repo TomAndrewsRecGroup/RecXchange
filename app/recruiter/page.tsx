@@ -81,7 +81,7 @@ export default function RecruiterDiagnostic() {
           </Link>
 
           {/* Option B: Post Roles (Purple) */}
-          <Link href="/recruiter-with-candidates" className="group h-full">
+          <Link href="/recruiters-with-candidates" className="group h-full">
             <motion.div 
               variants={panelVariants}
               initial="initial"
