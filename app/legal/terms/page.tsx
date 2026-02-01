@@ -45,7 +45,7 @@ export default function TermsPage() {
               <p className="text-gray-400">
                 RecXchange is operated by <span className="text-white">RecXchange Portal LLC</span>, headquartered in Dubai, UAE (Trade Licence No: 1508955). 
                 We provide the neutral digital infrastructure for recruiter-to-recruiter (R2R) collaboration. 
-                RecXchange acts as a facilitator and platform provider; we are not a party to individual recruitment transactions unless explicitly stated in a specific mandate.
+                RecXchange acts as a facilitator and platform provider; we are not a party to individual recruitment transactions unless explicitly stated in a specific role.
               </p>
             </section>
 

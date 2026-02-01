@@ -62,7 +62,7 @@ export default function RolesMarketplace() {
             The <span className="gradient-text">Role Marketplace</span>
           </h1>
           <p className="text-gray-400 max-w-2xl text-lg leading-relaxed">
-            Access exclusive mandates directly from the RecXchange platform or collaborate with verified partners globally.
+            Access exclusive roles directly from the RecXchange platform or collaborate with verified partners globally.
           </p>
         </header>
 
@@ -138,7 +138,7 @@ export default function RolesMarketplace() {
                           <p className="text-[11px] text-gray-400 leading-relaxed font-medium normal-case tracking-normal">
                             {role.type === 'RecX Direct' 
                               ? "RecXchange owned live clients. Business Development is done for you—just bring the talent." 
-                              : "Recruiter Xchange. Collaborate with other professional recruiters on their exclusive mandates."
+                              : "Recruiter Xchange. Collaborate with other professional recruiters on their exclusive roles."
                             }
                           </p>
                           <div className="absolute -bottom-1.5 left-4 w-3 h-3 bg-[#0a0a0a] border-r border-b border-white/10 rotate-45" />

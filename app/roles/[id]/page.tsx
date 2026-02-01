@@ -78,7 +78,7 @@ export default function IndividualRoleView() {
                 </div>
 
                 <div>
-                  <h3 className="text-[10px] font-black uppercase text-gray-500 tracking-[0.3em] mb-6">Technical Mandates</h3>
+                  <h3 className="text-[10px] font-black uppercase text-gray-500 tracking-[0.3em] mb-6">Technical Roles</h3>
                   <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
                     {role.requirements.map((req, i) => (
                       <li key={i} className="flex gap-4 text-sm text-gray-400 group">
@@ -95,7 +95,7 @@ export default function IndividualRoleView() {
             <div className="px-10 py-8 glass-card rounded-[2.5rem] border-white/5 flex flex-col md:flex-row gap-8 items-center justify-between">
                <div className="max-w-md">
                   <p className="text-xs text-gray-400 leading-relaxed">
-                    This mandate is managed via the **RecX Direct** distribution channel. Candidate ownership is strictly enforced by timestamped submission.
+                    This role is managed via the **RecX Direct** distribution channel. Candidate ownership is strictly enforced by timestamped submission.
                   </p>
                </div>
                <Link href="/deal-protection" className="text-[10px] font-black text-blue-400 uppercase tracking-widest hover:text-white transition-colors">
@@ -123,7 +123,7 @@ export default function IndividualRoleView() {
                   <span className="text-xs text-white font-mono">{role.salary}</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Mandate ID</span>
+                  <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Role ID</span>
                   <span className="text-xs text-white font-mono">{role.id}</span>
                 </div>
                 <div className="flex justify-between items-center">
@@ -138,7 +138,7 @@ export default function IndividualRoleView() {
                 rel="noopener noreferrer"
                 className="button-primary w-full block text-center py-5 shadow-2xl shadow-blue-900/40"
               >
-                Engage Mandate
+                Engage Role
               </a>
               
               <p className="text-[9px] text-gray-600 text-center mt-6 leading-relaxed font-medium">
