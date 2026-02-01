@@ -80,7 +80,7 @@ export default function EntryWall() {
             initial="initial"
             animate="animate"
             whileHover="hover"
-            onClick={() => router.push('/hiring-manager')}
+            onClick={() => router.push('/hiring-manager-home')}
             className="glass-card p-12 rounded-[3rem] flex flex-col justify-between items-start text-left min-h-[480px] cursor-pointer group relative overflow-hidden"
           >
             {/* Hover Glow Effect */}
@@ -95,7 +95,7 @@ export default function EntryWall() {
                 You are looking to fill urgent roles or build strategic pipelines using a global network of specialists.
               </p>
               <ul className="space-y-5 text-sm text-gray-500 font-medium">
-                <li className="flex items-center gap-4"><span className="w-1.5 h-1.5 rounded-full bg-purple-500 shadow-[0_0_8px_rgba(199,31,241,0.8)]" /> Broadcast roles to 1000+ recruiters</li>
+                <li className="flex items-center gap-4"><span className="w-1.5 h-1.5 rounded-full bg-purple-500 shadow-[0_0_8px_rgba(199,31,241,0.8)]" /> Broadcast roles to 15,000+ recruiters</li>
                 <li className="flex items-center gap-4"><span className="w-1.5 h-1.5 rounded-full bg-purple-500" /> One AM, zero administrative friction</li>
                 <li className="flex items-center gap-4"><span className="w-1.5 h-1.5 rounded-full bg-purple-500" /> Strategic market pre-warming</li>
               </ul>
@@ -117,7 +117,7 @@ export default function EntryWall() {
           <span className="opacity-60">Global Talent Infrastructure</span>
           <div className="h-4 w-[1px] bg-white/10 hidden md:block" />
           <Link href="/roles" className="hover:text-white transition-colors">Preview Live Roles</Link>
-          <Link href="/legal/terms" className="hover:text-white transition-colors">How Protection Works</Link>
+          <Link href="/deal-protection" className="hover:text-white transition-colors">How Protection Works</Link>
         </motion.div>
       </div>
     </main>
