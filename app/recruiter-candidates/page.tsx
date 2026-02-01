@@ -60,7 +60,7 @@ export default function FillRolesPage() {
             transition={{ delay: 0.2 }}
             className="text-gray-400 max-w-2xl mx-auto text-lg mt-8 leading-relaxed"
           >
-            Bridge the gap between a signed mandate and a closed placement. Drop in your requirements and let our engine source, rank, and deliver the top 1% of the global talent pool.
+            Bridge the gap between a signed role and a closed placement. Drop in your requirements and let our engine source, rank, and deliver the top 1% of the global talent pool.
           </motion.p>
         </header>
 

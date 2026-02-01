@@ -12,7 +12,7 @@ interface ProcessStep {
 export default function HiringManagerLive() {
   const steps: ProcessStep[] = [
     { t: "The Brief", d: "Submit your role details, timelines, and pre-agreed fee terms once." },
-    { t: "The Broadcast", d: "We deploy the mandate to the exact segment of our verified recruiter network." },
+    { t: "The Broadcast", d: "We deploy the role to the exact segment of our verified recruiter network." },
     { t: "The Delivery", d: "Vetted shortlists and offers flow back through your single RecXchange point of contact." }
   ];
 
@@ -98,7 +98,7 @@ export default function HiringManagerLive() {
             </div>
 
             <div className="relative w-80 h-80 flex items-center justify-center">
-              {/* Pulsing Central Node (Your Mandate) */}
+            {/* Pulsing Central Node (Your Role) */}
               <motion.div 
                 animate={{ 
                   scale: [1, 1.05, 1],
@@ -107,7 +107,7 @@ export default function HiringManagerLive() {
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                 className="z-20 w-24 h-24 rounded-full bg-blue-600 flex items-center justify-center border-4 border-blue-400/30 text-center shadow-2xl"
               >
-                <span className="text-[9px] font-black uppercase leading-tight tracking-tighter">Your<br/>Active<br/>Mandate</span>
+                <span className="text-[9px] font-black uppercase leading-tight tracking-tighter">Your<br/>Active<br/>Role</span>
               </motion.div>
 
               {/* Orbiting Specialist Nodes */}

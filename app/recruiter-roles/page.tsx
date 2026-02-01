@@ -46,7 +46,7 @@ export default function PostRolesPage() {
             transition={{ delay: 0.2 }}
             className="text-gray-400 max-w-2xl mx-auto text-lg mt-8 leading-relaxed"
           >
-            Stop letting hard-to-fill mandates gather dust. Post your roles once, leverage a global recruiter network for high-quality candidates, and manage every split fee with institutional security.
+            Stop letting hard-to-fill roles gather dust. Post your roles once, leverage a global recruiter network for high-quality candidates, and manage every split fee with institutional security.
           </motion.p>
         </header>
 
@@ -59,7 +59,7 @@ export default function PostRolesPage() {
               <h2 className="text-2xl font-bold mb-8">Role Liquidity. Partnered Success.</h2>
               <div className="space-y-12">
                 {[
-                  { t: "Verified Mandates", d: "Broadcast roles with pre-agreed fee structures. RecXchange ensures every partner is pre-vetted for quality." },
+                  { t: "Verified Roles", d: "Broadcast roles with pre-agreed fee structures. RecXchange ensures every partner is pre-vetted for quality." },
                   { t: "Tiered Visibility", d: "Total control. Broadcast to the open marketplace or limit visibility to your private 'Circle of Trust'." },
                   { t: "Unified Pipeline", d: "Track candidate flows from multiple partners in one dashboard. No more messy email chains or lost CVs." }
                 ].map((item, i) => (
