@@ -43,6 +43,7 @@ export default function Footer() {
             <li><Link href="/deal-protection" className="hover:text-white">Deal Protection</Link></li>
             <li><Link href="/privacy" className="hover:text-white">Privacy Policy</Link></li>
             <li><Link href="/terms" className="hover:text-white">Terms of Service</Link></li>
+             <li><Link href="/contact" className="hover:text-white">Contact Us</Link></li>
           </ul>
         </div>
       </div>
