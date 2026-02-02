@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import React from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import FloatingChat from "@/components/FloatingChat"; // Ensure this file exists in /components
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,23 +29,19 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <div className="absolute bottom-[-10%] right-[-10%] w-[70%] h-[70%] bg-[#c71df1]/15 blur-[120px] rounded-full" />
         </div>
 
-        {/* Navigation: Fixed z-index ensures it stays on top */}
+        {/* Navigation */}
         <Header />
 
-        {/* Content Wrapper: 
-            - flex-col + min-h-screen keeps footer at the bottom.
-            - w-full ensures it spans the entire browser width.
-        */}
         <div className="relative z-10 flex flex-col min-h-screen w-full">
-          {/* Increased pt-24 to ensure clearance for the large CTA header.
-              w-full ensures the inner content can span the whole screen.
-          */}
           <main className="flex-grow w-full pt-24">
             {children}
           </main>
           
           <Footer />
         </div>
+
+        {/* Floating Chatbot: Added here so it floats above the layout content */}
+        <FloatingChat />
       </body>
     </html>
   );
