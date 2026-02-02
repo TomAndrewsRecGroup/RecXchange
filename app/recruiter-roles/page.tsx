@@ -1,6 +1,6 @@
 "use client";
-import React, { useState, useEffect } from 'react';
-import { motion, useSpring, useTransform } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
 import RecruiterFinalCTA from '@/components/RecruiterFinalCTA';
 
@@ -29,7 +29,7 @@ export default function PostRolesPage() {
             animate={{ opacity: 1, y: 0 }}
             className="text-label text-purple-400"
           >
-            Recruiter Path — Post Roles
+            Recruiter Path — Role Distribution
           </motion.span>
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
@@ -50,7 +50,27 @@ export default function PostRolesPage() {
           </motion.p>
         </header>
 
-        {/* 2. Main Workspace Layout */}
+        {/* 2. Visual Proof Section (NEW) */}
+        <div className="mb-24 relative group">
+          <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-blue-600 rounded-[2.5rem] blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
+          <div className="relative glass-card rounded-[2.5rem] overflow-hidden border border-white/10 bg-black/40 shadow-2xl">
+            <div className="flex items-center justify-between px-8 py-4 border-b border-white/5 bg-white/5">
+               <div className="flex gap-2">
+                 <div className="w-2.5 h-2.5 rounded-full bg-red-500/20" />
+                 <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/20" />
+                 <div className="w-2.5 h-2.5 rounded-full bg-green-500/20" />
+               </div>
+               <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest italic">Live Dashboard — Role Management</span>
+            </div>
+            <img 
+              src="/role.png" 
+              alt="Xchange Engine Role Management" 
+              className="w-full h-auto opacity-90"
+            />
+          </div>
+        </div>
+
+        {/* 3. Main Workspace Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start mb-24">
           
           {/* Left: Narrative & Process */}
@@ -85,8 +105,6 @@ export default function PostRolesPage() {
               </div>
             </div>
 
-            
-
             <div className="p-8 rounded-[2.5rem] border border-purple-500/20 bg-purple-500/5 relative overflow-hidden group">
                <div className="relative z-10">
                   <h3 className="text-sm font-bold text-purple-400 mb-3 flex items-center gap-2">
@@ -108,8 +126,8 @@ export default function PostRolesPage() {
               className="glass-card p-10 md:p-14 rounded-[3.5rem] border-white/5 bg-black/60 relative"
             >
               <div className="mb-10">
-                <h2 className="text-2xl font-bold text-white mb-2">Split Fee Calculator</h2>
-                <p className="text-[11px] text-gray-500 uppercase tracking-widest font-black">Revenue Projection Engine</p>
+                <h2 className="text-2xl font-bold text-white mb-2 text-center">Split Fee Calculator</h2>
+                <p className="text-[11px] text-gray-500 text-center uppercase tracking-widest font-black">Revenue Projection Engine</p>
               </div>
               
               <div className="space-y-10">
@@ -157,7 +175,7 @@ export default function PostRolesPage() {
 
                 <a 
                   href="https://app.recxchange.io/register" 
-                  className="button-primary w-full py-6 text-base shadow-2xl shadow-purple-900/40"
+                  className="button-primary w-full py-6 text-base shadow-2xl shadow-purple-900/40 text-center block"
                 >
                   Post Role to Xchange
                 </a>
