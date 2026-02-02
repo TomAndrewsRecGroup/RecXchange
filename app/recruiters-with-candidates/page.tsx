@@ -44,31 +44,52 @@ export default function RecruiterCandidatesPage() {
           </ul>
         </div>
 
-        <div className="space-y-8">
-          <div className="glass-card p-8 rounded-3xl border-white/5">
-            <div className="flex gap-4 items-start">
-              <div className="p-3 bg-white/5 rounded-2xl text-[#c71df1]">
-                <Cpu size={24} />
-              </div>
-              <div>
-                <h4 className="font-bold mb-2">Multi-Dimensional Analysis</h4>
-                <p className="text-gray-500 text-xs leading-relaxed">
-                  Our AI evaluates candidates based on location fit, experience alignment, and work model preferences (remote/hybrid) to ensure every match is viable.
-                </p>
+        {/* Visual Proof: The Match Screenshot */}
+        <div className="relative group">
+          <div className="absolute -inset-1 bg-gradient-to-r from-[#312fd7] to-[#c71df1] rounded-[2.5rem] blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+          <div className="relative glass-card rounded-[2.5rem] overflow-hidden border border-white/10 bg-black shadow-2xl">
+            <div className="flex items-center justify-between px-6 py-3 border-b border-white/5 bg-white/5">
+              <span className="text-[9px] font-bold text-gray-500 uppercase tracking-widest italic">Xchange Engine — AI Match Analysis</span>
+              <div className="flex gap-1.5">
+                <div className="w-2 h-2 rounded-full bg-red-500/20" />
+                <div className="w-2 h-2 rounded-full bg-yellow-500/20" />
+                <div className="w-2 h-2 rounded-full bg-green-500/20" />
               </div>
             </div>
+            <img 
+              src="/match.png" 
+              alt="System Match Interface" 
+              className="w-full h-auto opacity-90 group-hover:opacity-100 transition-opacity"
+            />
           </div>
-          <div className="glass-card p-8 rounded-3xl border-white/5">
-            <div className="flex gap-4 items-start">
-              <div className="p-3 bg-white/5 rounded-2xl text-white">
-                <Bell size={24} />
-              </div>
-              <div>
-                <h4 className="font-bold mb-2">Automated Discovery</h4>
-                <p className="text-gray-500 text-xs leading-relaxed">
-                  The engine re-calculates matches dynamically as new roles are added, ensuring your candidates never miss an opportunity.
-                </p>
-              </div>
+        </div>
+      </div>
+
+      {/* Trust Cards: Analysis & Discovery */}
+      <div className="grid md:grid-cols-2 gap-8 mb-32">
+        <div className="glass-card p-8 rounded-3xl border-white/5">
+          <div className="flex gap-4 items-start">
+            <div className="p-3 bg-white/5 rounded-2xl text-[#c71df1]">
+              <Cpu size={24} />
+            </div>
+            <div>
+              <h4 className="font-bold mb-2 text-white">Multi-Dimensional Analysis</h4>
+              <p className="text-gray-500 text-xs leading-relaxed">
+                Our AI evaluates candidates based on location fit, experience alignment, and work model preferences (remote/hybrid) to ensure every match is viable.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="glass-card p-8 rounded-3xl border-white/5">
+          <div className="flex gap-4 items-start">
+            <div className="p-3 bg-white/5 rounded-2xl text-white">
+              <Bell size={24} />
+            </div>
+            <div>
+              <h4 className="font-bold mb-2 text-white">Automated Discovery</h4>
+              <p className="text-gray-500 text-xs leading-relaxed">
+                The engine re-calculates matches dynamically as new roles are added, ensuring your candidates never miss an opportunity.
+              </p>
             </div>
           </div>
         </div>
