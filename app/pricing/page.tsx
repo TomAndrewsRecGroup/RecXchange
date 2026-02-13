@@ -8,7 +8,7 @@ export const metadata = {
 export default function PricingPage() {
   return (
     <section className="py-16 container mx-auto px-4 max-w-3xl">
-      <h1 className="text-3xl font-bold mb-4">Pricing</h1>
+      <h1 className="text-3xl md:text-4xl font-bold mb-4">Simple & Transparent Pricing</h1>
       <p className="mb-8">
         Choose the plan that’s right for your business. We offer flexible options for recruiters and
         competitive fees for hiring managers using RecX Direct.

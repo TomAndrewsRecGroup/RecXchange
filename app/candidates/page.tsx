@@ -7,11 +7,14 @@ export const metadata = {
 
 export default function CandidatesPage() {
   return (
-    <section className="py-16 container mx-auto px-4">
-      <h1 className="text-3xl font-bold mb-4">Candidate Pool</h1>
-      <p className="mb-6">
-        The candidate pool is a shared database of top talent. Recruiters can opt in candidates and
-        collaborate on placements. Content coming soon.
+    <section className="py-16 container mx-auto px-4 max-w-4xl">
+      <h1 className="text-3xl md:text-4xl font-bold mb-4">
+        Candidate Pool – Share and Source Top Talent
+      </h1>
+      <p className="mb-6 text-gray-700">
+        Our candidate pool is a shared database of high‑quality talent. Recruiters can opt in vetted
+        candidates, collaborate on placements and ensure everyone is rewarded fairly through our
+        split‑fee protection. This feature is launching soon – stay tuned for updates.
       </p>
       <div className="text-sm text-gray-500">Candidate pool features will be available soon.</div>
     </section>
