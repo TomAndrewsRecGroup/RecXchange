@@ -22,7 +22,6 @@ async function upsertContact(
 
   console.log('[GHL Chat] Upserting contact:', { email, firstName, lastName, persona });
 
-  // Search for existing contact by email
   const searchUrl = `${GHL_BASE}/contacts/search/duplicate?locationId=${LOCATION_ID}&email=${encodeURIComponent(email)}`;
   console.log('[GHL Chat] Searching for duplicate contact:', searchUrl);
   
@@ -36,7 +35,6 @@ async function upsertContact(
     return searchData.contact.id;
   }
 
-  // Build contact payload based on persona
   const tags =
     persona === 'hiring-manager'
       ? ['live-chat', 'hiring-manager', 'recxchange-website']
@@ -159,8 +157,9 @@ async function postInboundMessage(
 ): Promise<void> {
   console.log('[GHL Chat] Posting inbound message to conversation:', conversationId);
   
+  // Try multiple message type formats to find which one Eavee accepts
   const payload = {
-    type: 'TYPE_LIVE_CHAT',
+    type: 'Live_Chat',
     conversationId,
     contactId,
     locationId: LOCATION_ID,
