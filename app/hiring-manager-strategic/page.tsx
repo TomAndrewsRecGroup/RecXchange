@@ -147,12 +147,14 @@ export default function HiringManagerStrategic() {
                 "We essentially eliminated our 'time-to-hire' metric because the talent was already identified before the role was even live."
               </p>
               <div className="flex items-center gap-3 mt-6">
-                <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-purple-500/30">
-                  <img 
-                    src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah&backgroundColor=b6e3f4&clothing=blazerShirt&clothingColor=3c4f5c&eyebrows=default&eyes=default&mouth=smile&skinColor=ae5d29&hair=long&hairColor=4a312c&facialHair=blank&accessories=blank" 
-                    alt="VP Talent Avatar"
-                    className="w-full h-full object-cover"
-                  />
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500/20 to-blue-500/20 border-2 border-purple-500/30 flex items-center justify-center overflow-hidden">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    {/* Female avatar silhouette */}
+                    <circle cx="12" cy="8" r="3.5" fill="#a855f7" opacity="0.8"/>
+                    <path d="M5 20c0-4 3-7 7-7s7 3 7 7" stroke="#a855f7" strokeWidth="2" strokeLinecap="round" opacity="0.8"/>
+                    {/* Hair representation - simple curved lines */}
+                    <path d="M8 7c0-2.5 1.5-4 4-4s4 1.5 4 4" stroke="#a855f7" strokeWidth="1.5" strokeLinecap="round" opacity="0.6"/>
+                  </svg>
                 </div>
                 <p className="text-[9px] font-bold text-white uppercase tracking-[0.2em]">VP Talent • Fintech Global</p>
               </div>
