@@ -1,54 +1,66 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Shared in-memory reply store.
-// Keyed by conversationId so multiple simultaneous chat sessions are isolated.
-// Each entry tracks the contactId that belongs to the VISITOR so we can filter
-// out echo messages (GHL "Customer Replied" fires for ALL messages including
-// the visitor's own inbound messages which we already display client-side).
-// ─────────────────────────────────────────────────────────────────────────────
+const GHL_BASE = 'https://services.leadconnectorhq.com';
+const API_KEY = process.env.GHL_API_KEY!;
+const LOCATION_ID = process.env.GHL_LOCATION_ID!;
+
+const ghlHeaders = {
+  'Authorization': `Bearer ${API_KEY}`,
+  'Content-Type': 'application/json',
+  'Version': '2021-07-28',
+};
+
+// ───────────────────────────────────────────────────────────────────────────
+// Shared in-memory reply store keyed by conversationId.
+// Multiple simultaneous sessions are fully isolated.
+// ───────────────────────────────────────────────────────────────────────────
 export interface PendingReply {
   body: string;
   timestamp: number;
 }
 
-// visitorContactIds: tracks which contactIds are website visitors (not team)
-export const visitorContactIds = new Set<string>();
-
-// pendingReplies: keyed by conversationId
 export const pendingReplies: Map<string, PendingReply[]> = new Map();
+
+// ─── Resolve conversationId from contactId when GHL doesn't send it directly ───
+async function getConversationIdFromContact(contactId: string): Promise<string | null> {
+  try {
+    const res = await fetch(
+      `${GHL_BASE}/conversations/search?locationId=${LOCATION_ID}&contactId=${contactId}`,
+      { headers: ghlHeaders }
+    );
+    const data = await res.json();
+    return data?.conversations?.[0]?.id ?? null;
+  } catch {
+    return null;
+  }
+}
 
 export async function POST(req: NextRequest) {
   try {
     const payload = await req.json();
+    const { contactId, body, direction } = payload;
+    let { conversationId } = payload;
 
-    const {
-      conversationId,
-      body,
-      contactId,
-      direction,
-      messageType,
-      type,
-    } = payload;
+    if (!body) return NextResponse.json({ received: true });
 
-    if (!conversationId || !body) {
+    // Only queue outbound (team) replies — drop inbound (visitor) echoes.
+    // If direction is explicitly inbound, skip. If direction is missing we
+    // fall through and trust the conversationId lookup to find the right thread.
+    if (direction && direction !== 'outbound') {
       return NextResponse.json({ received: true });
     }
 
-    // Filter out visitor echo:
-    // If the message came FROM the visitor (direction=inbound, or contactId is
-    // a known visitor, or type is inbound) — skip it.
-    const isInbound =
-      direction === 'inbound' ||
-      type === 'inbound' ||
-      messageType === 'TYPE_LIVE_CHAT' ||
-      visitorContactIds.has(contactId);
+    // Resolve conversationId via GHL API if not provided in payload
+    if (!conversationId && contactId) {
+      conversationId = await getConversationIdFromContact(contactId);
+    }
 
-    if (isInbound) {
+    if (!conversationId) {
+      console.warn('[GHL Webhook] Could not resolve conversationId for contactId:', contactId);
       return NextResponse.json({ received: true });
     }
 
-    // Queue the team reply for the SSE stream
+    // Queue for SSE stream
     const existing = pendingReplies.get(conversationId) || [];
     existing.push({ body, timestamp: Date.now() });
     pendingReplies.set(conversationId, existing);
@@ -60,7 +72,7 @@ export async function POST(req: NextRequest) {
   }
 }
 
-// Allow GHL to register this endpoint (some GHL versions send a GET to verify)
+// GHL sends a GET to verify the endpoint on first save
 export async function GET() {
   return NextResponse.json({ status: 'RecXchange webhook active' });
 }
