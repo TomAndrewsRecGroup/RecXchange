@@ -1,31 +1,54 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-// ───────────────────────────────────────────────────────────────────────────
-// In-memory message store keyed by conversationId.
-// On Vercel Serverless this resets per cold start, which is fine for live chat
-// (SSE client is always connected while the widget is open).
-// For persistence across restarts swap this for a KV store (Vercel KV / Redis).
-// ───────────────────────────────────────────────────────────────────────────
-export const pendingReplies: Map<string, { body: string; timestamp: number }[]> = new Map();
+// ─────────────────────────────────────────────────────────────────────────────
+// Shared in-memory reply store.
+// Keyed by conversationId so multiple simultaneous chat sessions are isolated.
+// Each entry tracks the contactId that belongs to the VISITOR so we can filter
+// out echo messages (GHL "Customer Replied" fires for ALL messages including
+// the visitor's own inbound messages which we already display client-side).
+// ─────────────────────────────────────────────────────────────────────────────
+export interface PendingReply {
+  body: string;
+  timestamp: number;
+}
+
+// visitorContactIds: tracks which contactIds are website visitors (not team)
+export const visitorContactIds = new Set<string>();
+
+// pendingReplies: keyed by conversationId
+export const pendingReplies: Map<string, PendingReply[]> = new Map();
 
 export async function POST(req: NextRequest) {
   try {
     const payload = await req.json();
 
-    // GHL OutboundMessage webhook shape:
-    // { type: 'OutboundMessage', conversationId, body, contactId, ... }
-    const { type, conversationId, body, messageType } = payload;
-
-    // Only handle outbound messages (team replies) — ignore other webhook types
-    if (type !== 'OutboundMessage' && messageType !== 'TYPE_LIVE_CHAT') {
-      return NextResponse.json({ received: true });
-    }
+    const {
+      conversationId,
+      body,
+      contactId,
+      direction,
+      messageType,
+      type,
+    } = payload;
 
     if (!conversationId || !body) {
       return NextResponse.json({ received: true });
     }
 
-    // Store the reply so the SSE stream can pick it up
+    // Filter out visitor echo:
+    // If the message came FROM the visitor (direction=inbound, or contactId is
+    // a known visitor, or type is inbound) — skip it.
+    const isInbound =
+      direction === 'inbound' ||
+      type === 'inbound' ||
+      messageType === 'TYPE_LIVE_CHAT' ||
+      visitorContactIds.has(contactId);
+
+    if (isInbound) {
+      return NextResponse.json({ received: true });
+    }
+
+    // Queue the team reply for the SSE stream
     const existing = pendingReplies.get(conversationId) || [];
     existing.push({ body, timestamp: Date.now() });
     pendingReplies.set(conversationId, existing);
@@ -35,4 +58,9 @@ export async function POST(req: NextRequest) {
     console.error('[GHL Webhook] Error:', err);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
+}
+
+// Allow GHL to register this endpoint (some GHL versions send a GET to verify)
+export async function GET() {
+  return NextResponse.json({ status: 'RecXchange webhook active' });
 }

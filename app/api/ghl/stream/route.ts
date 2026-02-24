@@ -1,7 +1,6 @@
 import { NextRequest } from 'next/server';
 import { pendingReplies } from '../webhook/route';
 
-// Required for streaming responses on Vercel
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
@@ -13,43 +12,44 @@ export async function GET(req: NextRequest) {
     return new Response('conversationId is required', { status: 400 });
   }
 
-  // Track the last timestamp we sent so we don't re-send old messages
-  let lastSentAt = Date.now();
+  // Capture timestamp at connection time — only deliver replies after this point
+  const connectedAt = Date.now();
 
   const stream = new ReadableStream({
     start(controller) {
-      // Send an initial heartbeat so the connection is confirmed open
-      controller.enqueue(`data: ${JSON.stringify({ type: 'connected' })}\n\n`);
+      const enc = (data: object) =>
+        new TextEncoder().encode(`data: ${JSON.stringify(data)}\n\n`);
+
+      // Confirm connection to client
+      controller.enqueue(enc({ type: 'connected' }));
 
       const interval = setInterval(() => {
-        const replies = pendingReplies.get(conversationId) || [];
-        const newReplies = replies.filter(r => r.timestamp > lastSentAt);
+        // Heartbeat — keeps connection alive through Vercel's 30s limit
+        controller.enqueue(enc({ type: 'heartbeat' }));
 
-        if (newReplies.length > 0) {
-          newReplies.forEach(reply => {
-            controller.enqueue(
-              `data: ${JSON.stringify({ type: 'message', body: reply.body })}\n\n`
-            );
-          });
-          lastSentAt = Date.now();
+        const replies = pendingReplies.get(conversationId);
+        if (!replies || replies.length === 0) return;
 
-          // Clean up sent messages from store
-          const remaining = replies.filter(r => r.timestamp <= lastSentAt);
-          if (remaining.length === 0) {
-            pendingReplies.delete(conversationId);
-          } else {
-            pendingReplies.set(conversationId, remaining);
-          }
+        // Only send replies that arrived AFTER this SSE connection was opened
+        const newReplies = replies.filter(r => r.timestamp > connectedAt);
+        if (newReplies.length === 0) return;
+
+        newReplies.forEach(reply => {
+          controller.enqueue(enc({ type: 'message', body: reply.body }));
+        });
+
+        // Prune delivered replies from store
+        const remaining = replies.filter(r => r.timestamp <= connectedAt);
+        if (remaining.length === 0) {
+          pendingReplies.delete(conversationId);
+        } else {
+          pendingReplies.set(conversationId, remaining);
         }
+      }, 2000);
 
-        // Heartbeat every 25s to keep connection alive through Vercel's 30s timeout
-        controller.enqueue(`data: ${JSON.stringify({ type: 'heartbeat' })}\n\n`);
-      }, 3000); // Poll every 3 seconds
-
-      // Clean up interval when client disconnects
       req.signal.addEventListener('abort', () => {
         clearInterval(interval);
-        controller.close();
+        try { controller.close(); } catch { /* already closed */ }
       });
     },
   });

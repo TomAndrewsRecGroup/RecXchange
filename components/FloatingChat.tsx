@@ -1,7 +1,10 @@
 "use client";
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageCircle, X, Send, Sparkles, Loader2 } from 'lucide-react';
+import { MessageCircle, X, Send, Loader2, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+
+type Persona = 'recruiter' | 'hiring-manager';
+type Stage = 'persona' | 'capture' | 'chat';
 
 type Message = {
   id: string;
@@ -10,47 +13,45 @@ type Message = {
   timestamp: Date;
 };
 
-type ChatStage = 'capture' | 'chat';
-
 export default function FloatingChat() {
   const [isOpen, setIsOpen] = useState(false);
-  const [stage, setStage] = useState<ChatStage>('capture');
+  const [stage, setStage] = useState<Stage>('persona');
+  const [persona, setPersona] = useState<Persona | null>(null);
 
-  // Contact details
+  // Capture fields
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [companyName, setCompanyName] = useState('');
+  const [captureError, setCaptureError] = useState('');
 
-  // Session state (persisted after first message)
+  // Session
   const [contactId, setContactId] = useState<string | null>(null);
   const [conversationId, setConversationId] = useState<string | null>(null);
 
-  // Messages
+  // Chat
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [isSending, setIsSending] = useState(false);
-  const [captureError, setCaptureError] = useState('');
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const sseRef = useRef<EventSource | null>(null);
 
-  // Auto-scroll to latest message
+  // Auto-scroll
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // Focus input when chat opens
+  // Focus input on chat stage
   useEffect(() => {
     if (isOpen && stage === 'chat') {
       setTimeout(() => inputRef.current?.focus(), 100);
     }
   }, [isOpen, stage]);
 
-  // ─── SSE: Connect to reply stream once we have a conversationId ─────────────────────
+  // ─── SSE: open stream once conversationId is set ───────────────────────────
   useEffect(() => {
     if (!conversationId) return;
-
-    // Close any existing stream
     if (sseRef.current) sseRef.current.close();
 
     const sse = new EventSource(`/api/ghl/stream?conversationId=${conversationId}`);
@@ -62,59 +63,47 @@ export default function FloatingChat() {
         if (data.type === 'message' && data.body) {
           setMessages(prev => [
             ...prev,
-            {
-              id: `team-${Date.now()}`,
-              from: 'team',
-              body: data.body,
-              timestamp: new Date(),
-            },
+            { id: `team-${Date.now()}-${Math.random()}`, from: 'team', body: data.body, timestamp: new Date() },
           ]);
         }
-      } catch {
-        // ignore parse errors
-      }
-    };
-
-    sse.onerror = () => {
-      // SSE will auto-reconnect; no action needed
+      } catch { /* ignore */ }
     };
 
     return () => sse.close();
   }, [conversationId]);
 
-  // ─── Handle capture form submit ─────────────────────────────────────────────────
+  // ─── Persona select ────────────────────────────────────────────────────────
+  const handlePersonaSelect = (p: Persona) => {
+    setPersona(p);
+    setStage('capture');
+  };
+
+  // ─── Capture submit ────────────────────────────────────────────────────────
   const handleCaptureSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim() || !email.trim()) {
-      setCaptureError('Please enter your name and email to start chatting.');
-      return;
-    }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setCaptureError('Please enter a valid email address.');
-      return;
-    }
+    if (!name.trim()) return setCaptureError('Please enter your name.');
+    if (!email.trim() || !emailRegex.test(email)) return setCaptureError('Please enter a valid email.');
+    if (persona === 'hiring-manager' && !companyName.trim()) return setCaptureError('Please enter your company name.');
     setCaptureError('');
-    setMessages([
-      {
-        id: 'welcome',
-        from: 'team',
-        body: `Hi ${name.split(' ')[0]}! 👋 Welcome to RecXchange. Our team will be with you shortly. What can we help you with today?`,
-        timestamp: new Date(),
-      },
-    ]);
+
+    const greeting =
+      persona === 'hiring-manager'
+        ? `Hi ${name.split(' ')[0]}! 👋 Welcome to RecXchange. I can see you\'re hiring — our team will be with you shortly. What can we help with today?`
+        : `Hi ${name.split(' ')[0]}! 👋 Welcome to RecXchange. Great to have a recruiter on board — our team will be with you shortly. What are you looking for today?`;
+
+    setMessages([{ id: 'welcome', from: 'team', body: greeting, timestamp: new Date() }]);
     setStage('chat');
   };
 
-  // ─── Handle sending a message ─────────────────────────────────────────────────────
+  // ─── Send message ──────────────────────────────────────────────────────────
   const handleSend = async () => {
     const trimmed = inputValue.trim();
     if (!trimmed || isSending) return;
 
-    const tempId = `visitor-${Date.now()}`;
     setMessages(prev => [
       ...prev,
-      { id: tempId, from: 'visitor', body: trimmed, timestamp: new Date() },
+      { id: `v-${Date.now()}`, from: 'visitor', body: trimmed, timestamp: new Date() },
     ]);
     setInputValue('');
     setIsSending(true);
@@ -127,24 +116,19 @@ export default function FloatingChat() {
           name,
           email,
           message: trimmed,
+          persona,
+          companyName: persona === 'hiring-manager' ? companyName : undefined,
           contactId,
           conversationId,
         }),
       });
-
       const data = await res.json();
-
       if (data.contactId) setContactId(data.contactId);
       if (data.conversationId) setConversationId(data.conversationId);
     } catch {
       setMessages(prev => [
         ...prev,
-        {
-          id: `error-${Date.now()}`,
-          from: 'team',
-          body: 'Sorry, there was an issue sending your message. Please try again.',
-          timestamp: new Date(),
-        },
+        { id: `err-${Date.now()}`, from: 'team', body: 'Sorry, there was an issue sending your message. Please try again.', timestamp: new Date() },
       ]);
     } finally {
       setIsSending(false);
@@ -153,16 +137,22 @@ export default function FloatingChat() {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handleSend();
-    }
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(); }
   };
 
-  const formatTime = (date: Date) =>
-    date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const formatTime = (d: Date) => d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-  // ─── Render ───────────────────────────────────────────────────────────────────────────
+  const resetChat = () => {
+    setStage('persona');
+    setPersona(null);
+    setName(''); setEmail(''); setCompanyName('');
+    setContactId(null); setConversationId(null);
+    setMessages([]);
+    setInputValue('');
+    if (sseRef.current) { sseRef.current.close(); sseRef.current = null; }
+  };
+
+  // ─── Render ────────────────────────────────────────────────────────────────
   return (
     <div className="fixed bottom-8 right-8 z-[100]">
       <AnimatePresence>
@@ -173,16 +163,13 @@ export default function FloatingChat() {
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ duration: 0.2 }}
             className="w-80 glass-card rounded-[2rem] border-cyan-400/20 mb-4 flex flex-col overflow-hidden shadow-2xl bg-[#050508]/95 backdrop-blur-2xl"
-            style={{ height: '520px' }}
+            style={{ height: stage === 'persona' ? 'auto' : '520px' }}
           >
-
-            {/* ─── Header ─────────────────────────────────────────────────── */}
+            {/* Header */}
             <div className="p-4 border-b border-cyan-400/10 bg-gradient-to-r from-cyan-400/5 to-fuchsia-400/5 flex justify-between items-center flex-shrink-0">
               <div className="flex items-center gap-2">
                 <div className="relative">
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-r from-cyan-500 to-fuchsia-500 flex items-center justify-center">
-                    <Sparkles size={14} className="text-white" />
-                  </div>
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-r from-cyan-500 to-fuchsia-500 flex items-center justify-center text-white text-xs font-bold">R</div>
                   <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-green-400 rounded-full border-2 border-[#050508]" />
                 </div>
                 <div>
@@ -190,80 +177,109 @@ export default function FloatingChat() {
                   <p className="text-[9px] text-green-400 font-bold uppercase tracking-widest">Online Now</p>
                 </div>
               </div>
-              <button
-                onClick={() => setIsOpen(false)}
-                className="text-gray-500 hover:text-white transition-colors p-1"
-              >
-                <X size={16} />
-              </button>
+              <div className="flex items-center gap-2">
+                {stage === 'chat' && (
+                  <button onClick={resetChat} className="text-[9px] text-gray-600 hover:text-gray-400 uppercase tracking-widest font-bold transition-colors">
+                    New Chat
+                  </button>
+                )}
+                <button onClick={() => setIsOpen(false)} className="text-gray-500 hover:text-white transition-colors p-1">
+                  <X size={16} />
+                </button>
+              </div>
             </div>
 
-            {/* ─── Stage: Capture ──────────────────────────────────────────── */}
-            {stage === 'capture' && (
-              <form
-                onSubmit={handleCaptureSubmit}
-                className="flex-grow flex flex-col justify-center p-6 gap-4"
-              >
+            {/* ── Stage: Persona ── */}
+            {stage === 'persona' && (
+              <div className="p-6 flex flex-col gap-4">
                 <div>
-                  <p className="text-white text-sm font-bold mb-1">Start a conversation</p>
+                  <p className="text-white text-sm font-bold mb-1">How can we help?</p>
+                  <p className="text-gray-500 text-xs">Tell us who you are so we can route you correctly.</p>
+                </div>
+                <button
+                  onClick={() => handlePersonaSelect('recruiter')}
+                  className="group w-full p-4 rounded-2xl border border-cyan-400/15 bg-cyan-400/5 hover:bg-cyan-400/10 hover:border-cyan-400/30 transition-all text-left flex items-center justify-between"
+                >
+                  <div>
+                    <p className="text-xs font-bold text-white mb-0.5">I\'m a Recruiter</p>
+                    <p className="text-[10px] text-gray-500">I have candidates or need roles to fill</p>
+                  </div>
+                  <ChevronRight size={14} className="text-cyan-400 group-hover:translate-x-1 transition-transform" />
+                </button>
+                <button
+                  onClick={() => handlePersonaSelect('hiring-manager')}
+                  className="group w-full p-4 rounded-2xl border border-fuchsia-400/15 bg-fuchsia-400/5 hover:bg-fuchsia-400/10 hover:border-fuchsia-400/30 transition-all text-left flex items-center justify-between"
+                >
+                  <div>
+                    <p className="text-xs font-bold text-white mb-0.5">I\'m a Hiring Manager</p>
+                    <p className="text-[10px] text-gray-500">I\'m looking to hire for my company</p>
+                  </div>
+                  <ChevronRight size={14} className="text-fuchsia-400 group-hover:translate-x-1 transition-transform" />
+                </button>
+                <p className="text-[9px] text-gray-600 text-center">Typically replies within a few minutes.</p>
+              </div>
+            )}
+
+            {/* ── Stage: Capture ── */}
+            {stage === 'capture' && (
+              <form onSubmit={handleCaptureSubmit} className="flex-grow flex flex-col justify-center p-6 gap-4">
+                <div>
+                  <p className="text-white text-sm font-bold mb-1">
+                    {persona === 'hiring-manager' ? 'Hiring Manager Details' : 'Your Details'}
+                  </p>
                   <p className="text-gray-500 text-xs leading-relaxed">
-                    Our team typically replies within a few minutes.
+                    {persona === 'hiring-manager'
+                      ? 'We\'ll add you to our Clients directory so our team can follow up.'
+                      : 'We\'ll add you to our Recruiter network for follow-up.'}
                   </p>
                 </div>
-
                 <div className="space-y-3">
                   <input
-                    type="text"
-                    placeholder="Your name"
-                    value={name}
+                    type="text" placeholder="Full name" value={name}
                     onChange={e => setName(e.target.value)}
                     className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-600 outline-none focus:border-cyan-400/40 transition-colors"
                   />
                   <input
-                    type="email"
-                    placeholder="Your email"
-                    value={email}
+                    type="email" placeholder="Business email" value={email}
                     onChange={e => setEmail(e.target.value)}
                     className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-600 outline-none focus:border-cyan-400/40 transition-colors"
                   />
+                  {persona === 'hiring-manager' && (
+                    <input
+                      type="text" placeholder="Company name" value={companyName}
+                      onChange={e => setCompanyName(e.target.value)}
+                      className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-600 outline-none focus:border-fuchsia-400/40 transition-colors"
+                    />
+                  )}
                 </div>
-
-                {captureError && (
-                  <p className="text-[10px] text-red-400 font-bold">{captureError}</p>
-                )}
-
+                {captureError && <p className="text-[10px] text-red-400 font-bold">{captureError}</p>}
                 <button
                   type="submit"
-                  className="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white text-xs font-bold uppercase tracking-widest hover:shadow-[0_0_20px_rgba(0,255,255,0.3)] transition-all"
+                  className={`w-full py-3 rounded-xl text-white text-xs font-bold uppercase tracking-widest transition-all ${
+                    persona === 'hiring-manager'
+                      ? 'bg-gradient-to-r from-fuchsia-500 to-cyan-500 hover:shadow-[0_0_20px_rgba(255,0,255,0.3)]'
+                      : 'bg-gradient-to-r from-cyan-500 to-fuchsia-500 hover:shadow-[0_0_20px_rgba(0,255,255,0.3)]'
+                  }`}
                 >
                   Start Chatting
                 </button>
-
-                <p className="text-[9px] text-gray-600 text-center">
-                  By chatting you agree to our privacy policy.
-                </p>
+                <button type="button" onClick={() => setStage('persona')} className="text-[9px] text-gray-600 hover:text-gray-400 transition-colors text-center">
+                  ← Back
+                </button>
               </form>
             )}
 
-            {/* ─── Stage: Chat ─────────────────────────────────────────────── */}
+            {/* ── Stage: Chat ── */}
             {stage === 'chat' && (
               <>
-                {/* Messages */}
                 <div className="flex-grow p-4 space-y-3 overflow-y-auto">
                   {messages.map(msg => (
-                    <div
-                      key={msg.id}
-                      className={`flex flex-col gap-1 ${
-                        msg.from === 'visitor' ? 'items-end' : 'items-start'
-                      }`}
-                    >
-                      <div
-                        className={`max-w-[85%] px-3 py-2 rounded-2xl text-xs leading-relaxed ${
-                          msg.from === 'visitor'
-                            ? 'bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 border border-cyan-400/20 text-white rounded-br-sm'
-                            : 'bg-white/5 border border-white/10 text-gray-300 rounded-bl-sm'
-                        }`}
-                      >
+                    <div key={msg.id} className={`flex flex-col gap-1 ${msg.from === 'visitor' ? 'items-end' : 'items-start'}`}>
+                      <div className={`max-w-[85%] px-3 py-2 rounded-2xl text-xs leading-relaxed ${
+                        msg.from === 'visitor'
+                          ? 'bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 border border-cyan-400/20 text-white rounded-br-sm'
+                          : 'bg-white/5 border border-white/10 text-gray-300 rounded-bl-sm'
+                      }`}>
                         {msg.body}
                       </div>
                       <span className="text-[8px] text-gray-600">
@@ -271,9 +287,8 @@ export default function FloatingChat() {
                       </span>
                     </div>
                   ))}
-
                   {isSending && (
-                    <div className="flex items-start gap-2">
+                    <div className="flex items-start">
                       <div className="bg-white/5 border border-white/10 px-3 py-2 rounded-2xl rounded-bl-sm flex items-center gap-1.5">
                         <span className="w-1 h-1 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
                         <span className="w-1 h-1 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
@@ -281,11 +296,8 @@ export default function FloatingChat() {
                       </div>
                     </div>
                   )}
-
                   <div ref={messagesEndRef} />
                 </div>
-
-                {/* Input */}
                 <div className="p-3 bg-white/[0.02] border-t border-cyan-400/10 flex gap-2 items-center flex-shrink-0">
                   <input
                     ref={inputRef}
@@ -302,11 +314,7 @@ export default function FloatingChat() {
                     disabled={isSending || !inputValue.trim()}
                     className="w-8 h-8 rounded-full bg-gradient-to-r from-cyan-500 to-fuchsia-500 flex items-center justify-center text-white hover:shadow-[0_0_12px_rgba(0,255,255,0.4)] transition-all disabled:opacity-30 disabled:cursor-not-allowed flex-shrink-0"
                   >
-                    {isSending ? (
-                      <Loader2 size={12} className="animate-spin" />
-                    ) : (
-                      <Send size={12} />
-                    )}
+                    {isSending ? <Loader2 size={12} className="animate-spin" /> : <Send size={12} />}
                   </button>
                 </div>
               </>
@@ -323,17 +331,11 @@ export default function FloatingChat() {
         className="w-14 h-14 rounded-full bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white flex items-center justify-center shadow-[0_0_20px_rgba(0,255,255,0.4)] relative"
       >
         <AnimatePresence mode="wait">
-          {isOpen ? (
-            <motion.div key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.15 }}>
-              <X size={22} />
-            </motion.div>
-          ) : (
-            <motion.div key="open" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.15 }}>
-              <MessageCircle size={22} />
-            </motion.div>
-          )}
+          {isOpen
+            ? <motion.div key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.15 }}><X size={22} /></motion.div>
+            : <motion.div key="open" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.15 }}><MessageCircle size={22} /></motion.div>
+          }
         </AnimatePresence>
-        {/* Unread indicator — shown when closed */}
         {!isOpen && (
           <span className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full border-2 border-[#050508] animate-pulse" />
         )}

@@ -10,63 +10,116 @@ const ghlHeaders = {
   'Version': '2021-07-28',
 };
 
-// ─── Step 1: Upsert contact ───────────────────────────────────────────────────
-async function upsertContact(name: string, email: string): Promise<string> {
-  // Try to find existing contact by email first
+// ─── Upsert Contact ───────────────────────────────────────────────────────────
+async function upsertContact(
+  name: string,
+  email: string,
+  persona: 'recruiter' | 'hiring-manager',
+  companyName?: string
+): Promise<string> {
+  const firstName = name.split(' ')[0] || name;
+  const lastName = name.split(' ').slice(1).join(' ') || '';
+
+  // Search for existing contact by email
   const search = await fetch(
-    `${GHL_BASE}/contacts/?locationId=${LOCATION_ID}&email=${encodeURIComponent(email)}`,
+    `${GHL_BASE}/contacts/search/duplicate?locationId=${LOCATION_ID}&email=${encodeURIComponent(email)}`,
     { headers: ghlHeaders }
   );
   const searchData = await search.json();
+  if (searchData?.contact?.id) return searchData.contact.id;
 
-  if (searchData?.contacts?.length > 0) {
-    return searchData.contacts[0].id;
+  // Build contact payload based on persona
+  const tags =
+    persona === 'hiring-manager'
+      ? ['live-chat', 'hiring-manager', 'recxchange-website']
+      : ['live-chat', 'recruiter', 'recxchange-website'];
+
+  const contactPayload: Record<string, unknown> = {
+    locationId: LOCATION_ID,
+    firstName,
+    lastName,
+    email,
+    source: 'RecXchange Live Chat',
+    tags,
+  };
+
+  // Hiring managers get company name attached
+  if (persona === 'hiring-manager' && companyName) {
+    contactPayload.companyName = companyName;
   }
 
-  // Create new contact
   const create = await fetch(`${GHL_BASE}/contacts/`, {
     method: 'POST',
     headers: ghlHeaders,
-    body: JSON.stringify({
-      locationId: LOCATION_ID,
-      firstName: name.split(' ')[0] || name,
-      lastName: name.split(' ').slice(1).join(' ') || '',
-      email,
-      source: 'RecXchange Live Chat',
-      tags: ['live-chat', 'recxchange-website'],
-    }),
+    body: JSON.stringify(contactPayload),
   });
   const createData = await create.json();
   return createData?.contact?.id;
 }
 
-// ─── Step 2: Get or create conversation ──────────────────────────────────────
+// ─── Upsert Company (Hiring Managers only) ────────────────────────────────────
+async function upsertCompany(companyName: string, contactId: string): Promise<void> {
+  try {
+    // Search for existing company
+    const search = await fetch(
+      `${GHL_BASE}/companies/search?locationId=${LOCATION_ID}&name=${encodeURIComponent(companyName)}`,
+      { headers: ghlHeaders }
+    );
+    const searchData = await search.json();
+
+    let companyId: string | null = null;
+
+    if (searchData?.companies?.length > 0) {
+      companyId = searchData.companies[0].id;
+    } else {
+      // Create company
+      const create = await fetch(`${GHL_BASE}/companies/`, {
+        method: 'POST',
+        headers: ghlHeaders,
+        body: JSON.stringify({
+          locationId: LOCATION_ID,
+          name: companyName,
+        }),
+      });
+      const createData = await create.json();
+      companyId = createData?.company?.id ?? null;
+    }
+
+    // Associate contact with company
+    if (companyId) {
+      await fetch(`${GHL_BASE}/contacts/${contactId}`, {
+        method: 'PUT',
+        headers: ghlHeaders,
+        body: JSON.stringify({ companyId }),
+      });
+    }
+  } catch (err) {
+    // Non-fatal — log but don't block message delivery
+    console.error('[GHL Chat] Company upsert failed:', err);
+  }
+}
+
+// ─── Get or Create Conversation ───────────────────────────────────────────────
 async function getOrCreateConversation(contactId: string): Promise<string> {
-  // Search for existing conversation
   const search = await fetch(
     `${GHL_BASE}/conversations/search?locationId=${LOCATION_ID}&contactId=${contactId}`,
     { headers: ghlHeaders }
   );
   const searchData = await search.json();
-
   if (searchData?.conversations?.length > 0) {
     return searchData.conversations[0].id;
   }
 
-  // Create new conversation
   const create = await fetch(`${GHL_BASE}/conversations/`, {
     method: 'POST',
     headers: ghlHeaders,
-    body: JSON.stringify({
-      locationId: LOCATION_ID,
-      contactId,
-    }),
+    body: JSON.stringify({ locationId: LOCATION_ID, contactId }),
   });
   const createData = await create.json();
   return createData?.conversation?.id;
 }
 
-// ─── Step 3: Post inbound message ────────────────────────────────────────────
+// ─── Post Inbound Message ─────────────────────────────────────────────────────
 async function postInboundMessage(
   conversationId: string,
   contactId: string,
@@ -85,24 +138,40 @@ async function postInboundMessage(
   });
 }
 
-// ─── Main handler ─────────────────────────────────────────────────────────────
+// ─── Main Handler ─────────────────────────────────────────────────────────────
 export async function POST(req: NextRequest) {
   try {
-    const { name, email, message, conversationId: existingConvId, contactId: existingContactId } = await req.json();
+    const {
+      name,
+      email,
+      message,
+      persona,
+      companyName,
+      conversationId: existingConvId,
+      contactId: existingContactId,
+    } = await req.json();
 
     if (!message?.trim()) {
       return NextResponse.json({ error: 'Message is required' }, { status: 400 });
     }
 
-    // If we already have IDs from a previous message in the same session, reuse them
     let contactId = existingContactId;
     let conversationId = existingConvId;
 
+    // First message — create contact + optionally company
     if (!contactId) {
-      if (!name || !email) {
-        return NextResponse.json({ error: 'Name and email required for first message' }, { status: 400 });
+      if (!name || !email || !persona) {
+        return NextResponse.json(
+          { error: 'Name, email and persona required for first message' },
+          { status: 400 }
+        );
       }
-      contactId = await upsertContact(name, email);
+      contactId = await upsertContact(name, email, persona, companyName);
+
+      // Hiring managers: also create/link company record
+      if (persona === 'hiring-manager' && companyName && contactId) {
+        await upsertCompany(companyName, contactId);
+      }
     }
 
     if (!conversationId) {
