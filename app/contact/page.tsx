@@ -225,14 +225,14 @@ export default function ContactPage() {
               <div className="p-8 pb-6 border-b border-white/5 bg-gradient-to-r from-cyan-400/5 to-fuchsia-400/5">
                 <div className="flex items-center gap-4">
                   <div className="relative">
-                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyan-500 to-fuchsia-500 flex items-center justify-center p-2">
+                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-500 to-fuchsia-500 flex items-center justify-center p-3">
                       <img
                         src="https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png"
                         alt="RecXchange"
                         className="w-full h-full object-contain"
                       />
                     </div>
-                    <span className="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-green-400 rounded-full border-2 border-black animate-pulse" />
+                    <span className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-black animate-pulse" />
                   </div>
                   <div>
                     <h3 className="text-lg font-bold text-white">RecXchange Team</h3>
