@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { Database, Search, Zap, Cpu, Bell, Globe } from "lucide-react";
+import Link from "next/link";
 
 export default function RecruiterCandidatesPage() {
   return (
@@ -57,7 +58,7 @@ export default function RecruiterCandidatesPage() {
               </div>
             </div>
             <img 
-              src="/match.png" 
+              src="https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/Match.png" 
               alt="System Match Interface" 
               className="w-full h-auto opacity-90 group-hover:opacity-100 transition-opacity"
             />
@@ -103,15 +104,23 @@ export default function RecruiterCandidatesPage() {
           No Candidates? <span className="gradient-text">No Problem.</span>
         </h2>
         <p className="text-gray-400 max-w-3xl mx-auto mb-12 text-lg">
-          If your internal database doesn't have the right fit, tap into our global AI search engine. Access over **270 million candidate profiles** instantly to find exactly who you need.
+          If your internal database doesn&apos;t have the right fit, tap into our global AI search engine. Access over 270 million candidate profiles instantly to find exactly who you need.
         </p>
         <div className="flex flex-wrap justify-center gap-4">
-          <button className="px-10 py-4 rounded-full bg-white text-black font-bold hover:bg-gray-200 transition-all flex items-center gap-2">
+          <Link 
+            href="{{trigger_link.Hc9mpfL0JxjX06kwNpd1}}" 
+            className="px-10 py-4 rounded-full bg-white text-black font-bold hover:bg-gray-200 transition-all flex items-center gap-2"
+          >
             <Search size={18} /> Start AI Search
-          </button>
-          <button className="px-10 py-4 rounded-full border border-white/20 text-white font-bold hover:bg-white/5 transition-all">
-            Upload Database
-          </button>
+          </Link>
+          <a 
+            href="https://apollo.io" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="px-10 py-4 rounded-full border border-white/20 text-white font-bold hover:bg-white/5 transition-all"
+          >
+            Our Data Provider
+          </a>
         </div>
       </div>
     </div>
