@@ -4,6 +4,7 @@ import React from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FloatingChat from "@/components/FloatingChat";
+import { Analytics } from "@vercel/analytics/next";
 
 const sora = Sora({ subsets: ["latin"], weight: ["300", "400", "600", "700", "800"] });
 
@@ -41,6 +42,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
 
         {/* Floating Chatbot */}
         <FloatingChat />
+
+        {/* Vercel Web Analytics */}
+        <Analytics />
       </body>
     </html>
   );
