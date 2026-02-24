@@ -35,7 +35,7 @@ export default function EntryWall() {
           </h1>
           <div className="pulse-underline mb-10" />
           <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-16 leading-relaxed">
-            Choose your professional path. We’ve built tailored ecosystems for both independent recruiters and corporate hiring teams.
+            Choose your professional path. We've built tailored ecosystems for both independent recruiters and corporate hiring teams.
           </p>
         </motion.header>
 
@@ -68,8 +68,10 @@ export default function EntryWall() {
               </ul>
             </div>
 
-            <button className="w-full mt-12 py-5 rounded-2xl border border-cyan-400/10 bg-cyan-400/5 font-bold text-sm group-hover:bg-gradient-to-r group-hover:from-cyan-500 group-hover:to-fuchsia-500 group-hover:text-white group-hover:border-transparent transition-all uppercase tracking-widest">
-              Enter Recruiter Path
+            <button className="relative w-full mt-12 py-5 rounded-2xl border border-white/15 bg-black/40 overflow-hidden group/btn font-bold text-sm uppercase tracking-widest transition-all">
+              <span className="absolute inset-[1px] rounded-2xl bg-black/80 group-hover/btn:bg-transparent transition-colors" />
+              <span className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-fuchsia-500 opacity-0 group-hover/btn:opacity-100 transition-opacity" />
+              <span className="relative z-10 text-white flex items-center justify-center">Enter Recruiter Path</span>
             </button>
           </motion.div>
 
@@ -99,8 +101,10 @@ export default function EntryWall() {
               </ul>
             </div>
 
-            <button className="w-full mt-12 py-5 rounded-2xl border border-fuchsia-400/10 bg-fuchsia-400/5 font-bold text-sm group-hover:bg-gradient-to-r group-hover:from-fuchsia-500 group-hover:to-cyan-500 group-hover:text-white group-hover:border-transparent transition-all uppercase tracking-widest">
-              Enter Hiring Manager Path
+            <button className="relative w-full mt-12 py-5 rounded-2xl border border-white/15 bg-black/40 overflow-hidden group/btn font-bold text-sm uppercase tracking-widest transition-all">
+              <span className="absolute inset-[1px] rounded-2xl bg-black/80 group-hover/btn:bg-transparent transition-colors" />
+              <span className="absolute inset-0 bg-gradient-to-r from-fuchsia-500 to-cyan-500 opacity-0 group-hover/btn:opacity-100 transition-opacity" />
+              <span className="relative z-10 text-white flex items-center justify-center">Enter Hiring Manager Path</span>
             </button>
           </motion.div>
         </div>

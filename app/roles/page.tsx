@@ -145,7 +145,7 @@ export default function RolesMarketplace() {
                     >
                       <span className="absolute inset-[1px] rounded-2xl bg-black/80 group-hover/btn:bg-transparent transition-colors" />
                       <span className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-fuchsia-500 opacity-0 group-hover/btn:opacity-100 transition-opacity" />
-                      <span className="relative z-10 text-white">View Details</span>
+                      <span className="relative z-10 text-white flex items-center">View Details</span>
                     </Link>
                   </div>
                 </motion.div>

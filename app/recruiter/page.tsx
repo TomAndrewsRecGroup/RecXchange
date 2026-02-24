@@ -38,7 +38,7 @@ export default function RecruiterDiagnostic() {
           </h1>
           <div className="pulse-underline mt-4 mx-auto" />
           <p className="text-gray-400 text-base md:text-lg max-w-2xl mx-auto mt-8 leading-relaxed">
-            RecXchange is a modular ecosystem. Tell us your current bottleneck and we’ll route you to the specific tools, roles, or candidate pools you need.
+            RecXchange is a modular ecosystem. Tell us your current bottleneck and we'll route you to the specific tools, roles, or candidate pools you need.
           </p>
         </header>
 
@@ -83,8 +83,10 @@ export default function RecruiterDiagnostic() {
                     ))}
                   </ul>
                 </div>
-                <div className="w-full py-4 rounded-xl border border-cyan-400/30 bg-cyan-400/5 text-[10px] font-bold text-cyan-400 uppercase tracking-widest text-center group-hover:bg-gradient-to-r group-hover:from-cyan-500 group-hover:to-fuchsia-500 group-hover:text-white group-hover:border-transparent transition-all">
-                  80%+ Matched Candidates, straight to you.
+                <div className="relative w-full py-4 rounded-xl border border-white/15 bg-black/40 overflow-hidden group/btn text-[10px] font-bold uppercase tracking-widest text-center transition-all">
+                  <span className="absolute inset-[1px] rounded-xl bg-black/80 group-hover/btn:bg-transparent transition-colors" />
+                  <span className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-fuchsia-500 opacity-0 group-hover/btn:opacity-100 transition-opacity" />
+                  <span className="relative z-10 text-white flex items-center justify-center">80%+ Matched Candidates, straight to you.</span>
                 </div>
               </motion.div>
             </Link>
@@ -116,8 +118,10 @@ export default function RecruiterDiagnostic() {
                     ))}
                   </ul>
                 </div>
-                <div className="w-full py-4 rounded-xl border border-fuchsia-400/30 bg-fuchsia-400/5 text-[10px] font-bold text-fuchsia-400 uppercase tracking-widest text-center group-hover:bg-gradient-to-r group-hover:from-fuchsia-500 group-hover:to-cyan-500 group-hover:text-white group-hover:border-transparent transition-all">
-                  Data protected until you’re ready
+                <div className="relative w-full py-4 rounded-xl border border-white/15 bg-black/40 overflow-hidden group/btn text-[10px] font-bold uppercase tracking-widest text-center transition-all">
+                  <span className="absolute inset-[1px] rounded-xl bg-black/80 group-hover/btn:bg-transparent transition-colors" />
+                  <span className="absolute inset-0 bg-gradient-to-r from-fuchsia-500 to-cyan-500 opacity-0 group-hover/btn:opacity-100 transition-opacity" />
+                  <span className="relative z-10 text-white flex items-center justify-center">Data protected until you're ready</span>
                 </div>
               </motion.div>
             </Link>
