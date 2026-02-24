@@ -139,8 +139,13 @@ export default function RolesMarketplace() {
                       <span className="text-[9px] text-gray-600 uppercase font-black tracking-widest block mb-1">Fee Share Projection</span>
                       <span className="text-2xl font-bold gradient-text tabular-nums">{role.split}</span>
                     </div>
-                    <Link href={`/roles/${role.id}`} className="px-6 py-3 rounded-2xl bg-white/5 border border-white/10 text-[10px] font-black uppercase tracking-widest hover:bg-gradient-to-r hover:from-cyan-500 hover:to-fuchsia-500 hover:text-white hover:border-transparent transition-all">
-                      View Details
+                    <Link 
+                      href={`/roles/${role.id}`} 
+                      className="relative inline-flex items-center justify-center px-6 py-3 rounded-2xl border border-white/15 bg-black/40 overflow-hidden group/btn text-[10px] font-black uppercase tracking-widest transition-all"
+                    >
+                      <span className="absolute inset-[1px] rounded-2xl bg-black/80 group-hover/btn:bg-transparent transition-colors" />
+                      <span className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-fuchsia-500 opacity-0 group-hover/btn:opacity-100 transition-opacity" />
+                      <span className="relative z-10 text-white">View Details</span>
                     </Link>
                   </div>
                 </motion.div>
@@ -166,7 +171,7 @@ export default function RolesMarketplace() {
             {[...Array(totalPages)].map((_, i) => (
               <button
                 key={i}
-                onClick={() => { setPage(i + 1); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                onClick={() => { setPage(i + 1); window.scrollTo({ top: 0, behavior: 0, behavior: 'smooth' }); }}
                 className={`w-8 h-8 rounded-lg border text-[10px] font-bold transition-all ${
                   page === i + 1
                     ? 'bg-gradient-to-r from-cyan-500 to-fuchsia-500 border-transparent text-white'
