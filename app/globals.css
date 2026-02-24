@@ -3,10 +3,13 @@
 @tailwind utilities;
 
 :root {
-  --purple: #c71df1;
-  --blue: #312fd7;
-  --black: #000000;
-  --bg-dark: #0a0a0a;
+  --recx-cyan: #00FFFF;
+  --recx-magenta: #FF00FF;
+  --recx-purple: #a855f7;
+  --recx-bg: #050508;
+  --recx-neon: #00FFFF;
+  --neon-pulse: 0 0 8px rgba(0, 255, 255, 0.8), 0 0 20px rgba(0, 255, 255, 0.4);
+  --gradient-brand: linear-gradient(135deg, #00FFFF, #a855f7, #FF00FF);
 }
 
 @layer base {
@@ -14,76 +17,74 @@
     scroll-behavior: smooth;
   }
   body {
-    @apply bg-[#000000] text-white antialiased;
-    /* Prevents horizontal scroll issues with motion animations */
-    overflow-x: hidden; 
+    @apply bg-[#050508] text-white antialiased;
+    overflow-x: hidden;
   }
 
-  /* Custom Scrollbar for a premium look */
+  /* Custom Scrollbar */
   ::-webkit-scrollbar {
     width: 8px;
   }
   ::-webkit-scrollbar-track {
-    background: #000000;
+    background: #050508;
   }
   ::-webkit-scrollbar-thumb {
-    background: #222;
+    background: rgba(0, 255, 255, 0.2);
     border-radius: 10px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #333;
+    background: rgba(0, 255, 255, 0.4);
   }
 }
 
 @layer components {
-  /* Premium Glassmorphism with slight lift */
+  /* Premium Glassmorphism */
   .glass-card {
     @apply backdrop-blur-2xl bg-white/[0.03] border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)];
     transition: border-color 0.3s ease, background-color 0.3s ease;
   }
 
   .glass-card:hover {
-    @apply border-white/20 bg-white/[0.05];
+    @apply border-cyan-400/30 bg-white/[0.05];
   }
 
-  /* Unified Gradient Text */
+  /* Platform Gradient Text — cyan → purple → magenta */
   .gradient-text {
-    @apply bg-gradient-to-r from-[#312fd7] via-[#9d27e4] to-[#c71df1] bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-cyan-400 via-purple-400 to-fuchsia-500 bg-clip-text text-transparent;
     display: inline-block;
   }
 
-  /* Fixed Mesh Background that covers the whole viewport */
+  /* Mesh Background */
   .mesh-background {
-    background-color: #000000;
-    background-image: 
-      radial-gradient(at 0% 0%, rgba(49, 47, 215, 0.12) 0px, transparent 40%),
-      radial-gradient(at 100% 100%, rgba(199, 31, 241, 0.1) 0px, transparent 40%);
+    background-color: #050508;
+    background-image:
+      radial-gradient(at 0% 0%, rgba(0, 255, 255, 0.08) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, rgba(255, 0, 255, 0.07) 0px, transparent 50%);
     background-attachment: fixed;
     min-height: 100vh;
   }
 
   /* Animated Header Underline */
   .pulse-underline {
-    @apply h-[2px] rounded-full bg-gradient-to-r from-[#312fd7] to-[#c71df1];
-    box-shadow: 0 0 15px rgba(199, 31, 241, 0.3);
+    @apply h-[2px] rounded-full bg-gradient-to-r from-cyan-400 to-fuchsia-500;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
     animation: pulse-width 4s infinite ease-in-out;
   }
 }
 
 @keyframes pulse-width {
-  0%, 100% { 
-    width: 64px; 
-    opacity: 0.4; 
+  0%, 100% {
+    width: 64px;
+    opacity: 0.4;
     filter: blur(1px);
   }
-  50% { 
-    width: 140px; 
-    opacity: 1; 
+  50% {
+    width: 140px;
+    opacity: 1;
     filter: blur(0px);
   }
 }
 
-/* Utility for text hierarchy in your cards */
 .text-label {
   @apply text-[10px] uppercase tracking-[0.2em] font-bold text-gray-500;
 }
