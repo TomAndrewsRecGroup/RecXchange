@@ -44,7 +44,7 @@ export default function PostRolesPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start mb-24">
           
           <div className="space-y-10">
-            <div className="glass-card p-10 rounded-[3rem] border-white/5 bg-gradient-to-br from-white/[0.02] to-transparent">
+            <div className="glass-card p-10 rounded-[3rem] border border-white/10 bg-gradient-to-br from-white/[0.02] to-transparent hover:border-white/20 transition-all">
               <h2 className="text-2xl font-bold mb-8">Role Liquidity. Partnered Success.</h2>
               <div className="space-y-12">
                 {[
@@ -74,7 +74,7 @@ export default function PostRolesPage() {
               </div>
             </div>
 
-            <div className="p-8 rounded-[2.5rem] border border-purple-500/20 bg-purple-500/5 relative overflow-hidden group">
+            <div className="p-8 rounded-[2.5rem] border border-purple-500/20 bg-purple-500/5 relative overflow-hidden group hover:border-purple-500/30 transition-all">
                <div className="relative z-10">
                   <h3 className="text-sm font-bold text-purple-400 mb-3 flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-purple-500 animate-pulse" />
@@ -91,7 +91,7 @@ export default function PostRolesPage() {
             <motion.div 
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="glass-card p-10 md:p-14 rounded-[3.5rem] border-white/5 bg-black/60 relative"
+              className="glass-card p-10 md:p-14 rounded-[3.5rem] border border-white/10 bg-black/60 relative hover:border-white/20 transition-all"
             >
               <div className="mb-10">
                 <h2 className="text-2xl font-bold text-white mb-2 text-center">Split Fee Calculator</h2>
@@ -141,32 +141,20 @@ export default function PostRolesPage() {
                   </div>
                 </div>
 
-                <a 
-                  href="{{trigger_link.jYQNc9YXcMkYPvo3HZfC}}" 
-                  className="button-primary w-full py-6 text-base shadow-2xl shadow-purple-900/40 text-center block"
+                <motion.a
+                  href="{{trigger_link.jYQNc9YXcMkYPvo3HZfC}}"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full py-6 text-base text-center block rounded-full bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white font-extrabold shadow-[0_0_25px_rgba(0,255,255,0.3)] hover:shadow-[0_0_35px_rgba(0,255,255,0.4)] transition-all"
                 >
                   Post Role to Xchange
-                </a>
+                </motion.a>
               </div>
             </motion.div>
           </aside>
         </div>
 
         <RecruiterFinalCTA />
-
-        <footer className="mt-20 border-t border-white/5 pt-10">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-            <div className="flex flex-col gap-1">
-               <span className="text-[9px] text-gray-500 font-black uppercase tracking-[0.3em]">Corporate Entity: RecXchange Portal LLC</span>
-               <span className="text-[9px] text-gray-700 font-bold uppercase">Registered in Dubai Silicon Oasis</span>
-            </div>
-            <div className="flex gap-10">
-              <Link href="/roles" className="text-[10px] font-bold text-gray-500 hover:text-white uppercase tracking-widest transition-colors">Marketplace</Link>
-              <Link href="/legal/terms" className="text-[10px] font-bold text-gray-500 hover:text-white uppercase tracking-widest transition-colors">SFA Rules</Link>
-              <Link href="/pricing-and-splits" className="text-[10px] font-bold text-gray-500 hover:text-white uppercase tracking-widest transition-colors">Tiers</Link>
-            </div>
-          </div>
-        </footer>
       </div>
     </main>
   );
