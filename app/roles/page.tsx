@@ -172,13 +172,21 @@ export default function RolesMarketplace() {
               <button
                 key={i}
                 onClick={() => { setPage(i + 1); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                className={`w-8 h-8 rounded-lg border text-[10px] font-bold transition-all ${
+                className={`relative w-8 h-8 rounded-lg border overflow-hidden text-[10px] font-bold transition-all ${
                   page === i + 1
-                    ? 'bg-gradient-to-r from-cyan-500 to-fuchsia-500 border-transparent text-white'
+                    ? 'border-white/15 bg-black/40'
                     : 'border-white/5 bg-white/5 text-gray-500 hover:border-cyan-400/30'
                 }`}
               >
-                {i + 1}
+                {page === i + 1 ? (
+                  <>
+                    <span className="absolute inset-[1px] rounded-lg bg-black/80" />
+                    <span className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-fuchsia-500" />
+                    <span className="relative z-10 text-white flex items-center justify-center h-full">{i + 1}</span>
+                  </>
+                ) : (
+                  <span className="flex items-center justify-center h-full">{i + 1}</span>
+                )}
               </button>
             ))}
           </div>
