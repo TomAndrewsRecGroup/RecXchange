@@ -206,7 +206,7 @@ export default function FloatingChat() {
                   className="group w-full p-4 rounded-2xl border border-cyan-400/15 bg-cyan-400/5 hover:bg-cyan-400/10 hover:border-cyan-400/30 transition-all text-left flex items-center justify-between"
                 >
                   <div>
-                    <p className="text-xs font-bold text-white mb-0.5">I'm a Recruiter</p>
+                    <p className="text-xs font-bold text-white mb-0.5">I&apos;m a Recruiter</p>
                     <p className="text-[10px] text-gray-500">I have candidates or need roles to fill</p>
                   </div>
                   <ChevronRight size={14} className="text-cyan-400 group-hover:translate-x-1 transition-transform" />
@@ -216,8 +216,8 @@ export default function FloatingChat() {
                   className="group w-full p-4 rounded-2xl border border-fuchsia-400/15 bg-fuchsia-400/5 hover:bg-fuchsia-400/10 hover:border-fuchsia-400/30 transition-all text-left flex items-center justify-between"
                 >
                   <div>
-                    <p className="text-xs font-bold text-white mb-0.5">I'm a Hiring Manager</p>
-                    <p className="text-[10px] text-gray-500">I'm looking to hire for my company</p>
+                    <p className="text-xs font-bold text-white mb-0.5">I&apos;m a Hiring Manager</p>
+                    <p className="text-[10px] text-gray-500">I&apos;m looking to hire for my company</p>
                   </div>
                   <ChevronRight size={14} className="text-fuchsia-400 group-hover:translate-x-1 transition-transform" />
                 </button>
@@ -234,8 +234,8 @@ export default function FloatingChat() {
                   </p>
                   <p className="text-gray-500 text-xs leading-relaxed">
                     {persona === 'hiring-manager'
-                      ? 'We'll add you to our Clients directory so our team can follow up.'
-                      : 'We'll add you to our Recruiter network for follow-up.'}
+                      ? "We'll add you to our Clients directory so our team can follow up."
+                      : "We'll add you to our Recruiter network for follow-up."}
                   </p>
                 </div>
                 <div className="space-y-3">
@@ -352,7 +352,7 @@ export default function FloatingChat() {
         </AnimatePresence>
         {!isOpen && (
           <span className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full border-2 border-[#050508] animate-pulse" />
-        )}
+        )
       </motion.button>
     </div>
   );
