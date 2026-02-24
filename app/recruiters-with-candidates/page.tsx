@@ -21,7 +21,7 @@ export default function RecruiterCandidatesPage() {
 
       {/* Main Feature: The Database Sync */}
       <div className="grid lg:grid-cols-2 gap-12 items-start mb-32">
-        <div className="glass-card p-12 rounded-[3rem] border-l-4 border-[#312fd7] relative overflow-hidden h-full">
+        <div className="glass-card p-12 rounded-[3rem] border-l-4 border-[#312fd7] relative overflow-hidden">
           <div className="absolute top-0 right-0 p-8 opacity-5">
             <Database size={200} />
           </div>
@@ -46,10 +46,10 @@ export default function RecruiterCandidatesPage() {
         </div>
 
         {/* Visual Proof: The Match Screenshot */}
-        <div className="flex flex-col h-full">
-          <div className="relative group flex-1">
+        <div>
+          <div className="relative group">
             <div className="absolute -inset-1 bg-gradient-to-r from-[#312fd7] to-[#c71df1] rounded-[2.5rem] blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
-            <div className="relative glass-card rounded-[2.5rem] overflow-hidden border border-white/10 bg-black shadow-2xl h-full">
+            <div className="relative glass-card rounded-[2.5rem] overflow-hidden border border-white/10 bg-black shadow-2xl">
               <div className="flex items-center justify-between px-6 py-3 border-b border-white/5 bg-white/5">
                 <span className="text-[9px] font-bold text-gray-500 uppercase tracking-widest italic">Xchange Engine — AI Match Analysis</span>
                 <div className="flex gap-1.5">
