@@ -45,11 +45,15 @@ export default function RolesMarketplace() {
   };
 
   return (
-    <main className="min-h-screen pt-32 pb-20 px-6 mesh-background relative text-white">
+    <main className="min-h-screen pt-32 pb-20 px-6 relative text-white" style={{
+      backgroundColor: '#050508',
+      backgroundImage: 'radial-gradient(at 0% 0%, rgba(0, 255, 255, 0.08) 0px, transparent 50%), radial-gradient(at 100% 100%, rgba(255, 0, 255, 0.07) 0px, transparent 50%)',
+      backgroundAttachment: 'fixed'
+    }}>
       <div className="max-w-6xl mx-auto relative z-10">
 
         <div className="flex flex-col gap-6 mb-12">
-          <section className="glass-card p-2 rounded-2xl border-cyan-400/10 flex items-center shadow-2xl">
+          <section className="glass-card p-2 rounded-2xl border-purple-400/10 flex items-center shadow-2xl">
             <div className="pl-6 text-gray-500">
               <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -74,12 +78,12 @@ export default function RolesMarketplace() {
                 onClick={() => { setFilterType(btn.val); setPage(1); }}
                 className={`px-6 py-2.5 rounded-xl border text-[10px] font-black uppercase tracking-widest transition-all flex items-center gap-3 ${
                   filterType === btn.val
-                    ? 'border-cyan-400/40 bg-cyan-400/10 text-cyan-400'
+                    ? 'border-purple-400/40 bg-purple-400/10 text-purple-400'
                     : 'border-white/5 bg-white/[0.02] text-gray-500 hover:text-gray-300'
                 }`}
               >
                 {btn.label}
-                <span className={`px-1.5 py-0.5 rounded-md text-[8px] ${filterType === btn.val ? 'bg-cyan-400/20' : 'bg-white/5'}`}>
+                <span className={`px-1.5 py-0.5 rounded-md text-[8px] ${filterType === btn.val ? 'bg-purple-400/20' : 'bg-white/5'}`}>
                   {btn.count}
                 </span>
               </button>
@@ -97,7 +101,7 @@ export default function RolesMarketplace() {
                   initial={{ opacity: 0, scale: 0.98 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.98 }}
-                  className="glass-card group p-8 rounded-[2.5rem] border-white/5 hover:border-cyan-400/20 hover:bg-cyan-400/[0.02] transition-all flex flex-col justify-between relative overflow-visible"
+                  className="glass-card group p-8 rounded-[2.5rem] border-white/5 hover:border-purple-400/20 hover:bg-purple-400/[0.02] transition-all flex flex-col justify-between relative overflow-visible"
                 >
                   <div>
                     <div className="flex justify-between items-center mb-6">
@@ -109,7 +113,7 @@ export default function RolesMarketplace() {
                         }`}>
                           {role.type}
                         </span>
-                        <div className="absolute bottom-full left-0 mb-3 w-64 p-4 rounded-2xl bg-[#0a0a0a] border border-cyan-400/10 shadow-2xl opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible transition-all z-50 pointer-events-none translate-y-2 group-hover/tooltip:translate-y-0">
+                        <div className="absolute bottom-full left-0 mb-3 w-64 p-4 rounded-2xl bg-[#0a0a0a] border border-purple-400/10 shadow-2xl opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible transition-all z-50 pointer-events-none translate-y-2 group-hover/tooltip:translate-y-0">
                           <p className="text-[10px] font-black uppercase tracking-widest mb-1.5 text-white flex items-center gap-2">
                             <span className={`w-1 h-1 rounded-full ${role.type === 'RecX Direct' ? 'bg-cyan-400' : 'bg-fuchsia-400'}`} />
                             {role.type}
@@ -120,13 +124,13 @@ export default function RolesMarketplace() {
                               : "Recruiter Xchange. Collaborate with other professional recruiters on their exclusive roles."
                             }
                           </p>
-                          <div className="absolute -bottom-1.5 left-4 w-3 h-3 bg-[#0a0a0a] border-r border-b border-cyan-400/10 rotate-45" />
+                          <div className="absolute -bottom-1.5 left-4 w-3 h-3 bg-[#0a0a0a] border-r border-b border-purple-400/10 rotate-45" />
                         </div>
                       </div>
                       <span className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">{role.loc}</span>
                     </div>
 
-                    <h3 className="text-2xl font-bold mb-2 group-hover:text-cyan-400 transition-colors">{role.title}</h3>
+                    <h3 className="text-2xl font-bold mb-2 text-white transition-colors">{role.title}</h3>
                     <div className="flex gap-2 items-center text-[10px] text-gray-500 font-bold uppercase tracking-tighter">
                       <span>{role.industry}</span>
                       <span className="w-1 h-1 rounded-full bg-white/10" />
@@ -134,7 +138,7 @@ export default function RolesMarketplace() {
                     </div>
                   </div>
 
-                  <div className="mt-10 pt-6 border-t border-cyan-400/10 flex justify-between items-end">
+                  <div className="mt-10 pt-6 border-t border-purple-400/10 flex justify-between items-end">
                     <div>
                       <span className="text-[9px] text-gray-600 uppercase font-black tracking-widest block mb-1">Fee Share Projection</span>
                       <span className="text-2xl font-bold gradient-text tabular-nums">{role.split}</span>
@@ -159,11 +163,11 @@ export default function RolesMarketplace() {
         </div>
 
         {/* Pagination */}
-        <div className="mt-16 flex items-center justify-center gap-8 border-t border-cyan-400/10 pt-10">
+        <div className="mt-16 flex items-center justify-center gap-8 border-t border-purple-400/10 pt-10">
           <button
             disabled={page === 1}
             onClick={() => { setPage(p => p - 1); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-            className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 disabled:opacity-20 hover:text-cyan-400 transition-all"
+            className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 disabled:opacity-20 hover:text-purple-400 transition-all"
           >
             ← Previous
           </button>
@@ -175,7 +179,7 @@ export default function RolesMarketplace() {
                 className={`relative w-8 h-8 rounded-lg border overflow-hidden text-[10px] font-bold transition-all ${
                   page === i + 1
                     ? 'border-white/15 bg-black/40'
-                    : 'border-white/5 bg-white/5 text-gray-500 hover:border-cyan-400/30'
+                    : 'border-white/5 bg-white/5 text-gray-500 hover:border-purple-400/30'
                 }`}
               >
                 {page === i + 1 ? (
@@ -193,7 +197,7 @@ export default function RolesMarketplace() {
           <button
             disabled={page >= totalPages}
             onClick={() => { setPage(p => p + 1); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-            className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 disabled:opacity-20 hover:text-cyan-400 transition-all"
+            className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 disabled:opacity-20 hover:text-purple-400 transition-all"
           >
             Next →
           </button>
