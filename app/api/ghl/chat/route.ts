@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { visitorContactIds } from '../webhook/route';
 
 const GHL_BASE = 'https://services.leadconnectorhq.com';
 const API_KEY = process.env.GHL_API_KEY!;
@@ -32,6 +33,8 @@ async function upsertContact(
   
   if (searchData?.contact?.id) {
     console.log('[GHL Chat] Found existing contact:', searchData.contact.id);
+    // Register as visitor even if they already exist
+    visitorContactIds.add(searchData.contact.id);
     return searchData.contact.id;
   }
 
@@ -68,7 +71,13 @@ async function upsertContact(
     throw new Error(`Failed to create contact: ${JSON.stringify(createData)}`);
   }
   
-  return createData.contact.id;
+  const contactId = createData.contact.id;
+  
+  // Register this contactId as a website visitor
+  console.log('[GHL Chat] Registering visitor contactId:', contactId);
+  visitorContactIds.add(contactId);
+  
+  return contactId;
 }
 
 // ─── Upsert Company (Hiring Managers only) ────────────────────────────────────
@@ -157,7 +166,6 @@ async function postInboundMessage(
 ): Promise<void> {
   console.log('[GHL Chat] Posting inbound message to conversation:', conversationId);
   
-  // Try multiple message type formats to find which one Eavee accepts
   const payload = {
     type: 'Live_Chat',
     conversationId,
@@ -226,6 +234,9 @@ export async function POST(req: NextRequest) {
       if (persona === 'hiring-manager' && companyName && contactId) {
         await upsertCompany(companyName, contactId);
       }
+    } else {
+      // Subsequent messages from same visitor — ensure they're registered
+      visitorContactIds.add(contactId);
     }
 
     if (!conversationId) {

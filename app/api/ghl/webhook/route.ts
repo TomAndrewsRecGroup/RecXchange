@@ -10,18 +10,22 @@ const ghlHeaders = {
   'Version': '2021-07-28',
 };
 
-// ───────────────────────────────────────────────────────────────────────────
-// Shared in-memory reply store keyed by conversationId.
-// Multiple simultaneous sessions are fully isolated.
-// ───────────────────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────
+// Shared in-memory stores
+// ─────────────────────────────────────────────────────────────────────────
 export interface PendingReply {
   body: string;
   timestamp: number;
 }
 
+// Team replies waiting to be delivered to website visitors
 export const pendingReplies: Map<string, PendingReply[]> = new Map();
 
-// ─── Resolve conversationId from contactId when GHL doesn't send it directly ───
+// Contact IDs that belong to website visitors (not team members)
+// Used to filter out echo messages from "Customer Replied" trigger
+export const visitorContactIds = new Set<string>();
+
+// ─── Resolve conversationId from contactId ───────────────────────────────────────
 async function getConversationIdFromContact(contactId: string): Promise<string | null> {
   try {
     const res = await fetch(
@@ -38,15 +42,24 @@ async function getConversationIdFromContact(contactId: string): Promise<string |
 export async function POST(req: NextRequest) {
   try {
     const payload = await req.json();
+    console.log('[GHL Webhook] Received payload:', JSON.stringify(payload));
+    
     const { contactId, body, direction } = payload;
     let { conversationId } = payload;
 
     if (!body) return NextResponse.json({ received: true });
 
-    // Only queue outbound (team) replies — drop inbound (visitor) echoes.
-    // If direction is explicitly inbound, skip. If direction is missing we
-    // fall through and trust the conversationId lookup to find the right thread.
+    // ─── Filter out visitor echoes ──────────────────────────────────────────────────
+    // If this contactId is a known website visitor, ignore the message
+    // (it's their own message being echoed back by GHL's "Customer Replied" trigger)
+    if (contactId && visitorContactIds.has(contactId)) {
+      console.log('[GHL Webhook] Ignoring visitor echo for contactId:', contactId);
+      return NextResponse.json({ received: true });
+    }
+
+    // If direction is explicitly inbound, also skip
     if (direction && direction !== 'outbound') {
+      console.log('[GHL Webhook] Ignoring non-outbound message, direction:', direction);
       return NextResponse.json({ received: true });
     }
 
@@ -60,7 +73,9 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ received: true });
     }
 
-    // Queue for SSE stream
+    console.log('[GHL Webhook] Queueing team reply for conversation:', conversationId);
+
+    // Queue the team reply for the SSE stream
     const existing = pendingReplies.get(conversationId) || [];
     existing.push({ body, timestamp: Date.now() });
     pendingReplies.set(conversationId, existing);
