@@ -9,48 +9,18 @@ export default function PostRolesPage() {
   const [fee, setFee] = useState<number>(20);
   const [split, setSplit] = useState<number>(50);
 
-  // Derived calculations
   const totalFee = (salary * (fee / 100));
   const yourShare = totalFee * (split / 100);
 
   return (
     <main className="min-h-screen pt-32 pb-20 px-6 mesh-background relative overflow-x-hidden text-white">
       
-      {/* Dynamic Background Ambience */}
       <div className="fixed bottom-0 right-0 w-[45%] h-[45%] bg-purple-600/10 blur-[130px] rounded-full pointer-events-none -z-10" />
       <div className="fixed top-0 left-0 w-[35%] h-[35%] bg-blue-600/10 blur-[130px] rounded-full pointer-events-none -z-10" />
 
       <div className="max-w-6xl mx-auto relative z-10">
-        
-        {/* 1. Header Section */}
-        <header className="text-center mb-16">
-          <motion.span 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-label text-purple-400"
-          >
-            Recruiter Path — Role Distribution
-          </motion.span>
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-4xl md:text-6xl font-bold mt-6 tracking-tight"
-          >
-            The Xchange Engine: <br/>
-            <span className="gradient-text">Distribute, Partner, Earn.</span>
-          </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-gray-400 max-w-2xl mx-auto text-lg mt-8 leading-relaxed"
-          >
-            Stop letting hard-to-fill roles gather dust. Post your roles once, leverage a global recruiter network for high-quality candidates, and manage every split fee with institutional security.
-          </motion.p>
-        </header>
 
-        {/* 2. Visual Proof Section (NEW) */}
+        {/* 1. Visual Proof Section */}
         <div className="mb-24 relative group">
           <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-blue-600 rounded-[2.5rem] blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
           <div className="relative glass-card rounded-[2.5rem] overflow-hidden border border-white/10 bg-black/40 shadow-2xl">
@@ -70,10 +40,9 @@ export default function PostRolesPage() {
           </div>
         </div>
 
-        {/* 3. Main Workspace Layout */}
+        {/* 2. Main Workspace Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start mb-24">
           
-          {/* Left: Narrative & Process */}
           <div className="space-y-10">
             <div className="glass-card p-10 rounded-[3rem] border-white/5 bg-gradient-to-br from-white/[0.02] to-transparent">
               <h2 className="text-2xl font-bold mb-8">Role Liquidity. Partnered Success.</h2>
@@ -118,7 +87,6 @@ export default function PostRolesPage() {
             </div>
           </div>
 
-          {/* Right: Interactive Calculator */}
           <aside className="sticky top-32">
             <motion.div 
               initial={{ opacity: 0, scale: 0.95 }}
@@ -186,7 +154,6 @@ export default function PostRolesPage() {
 
         <RecruiterFinalCTA />
 
-        {/* Global Hub Footer Navigation */}
         <footer className="mt-20 border-t border-white/5 pt-10">
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
             <div className="flex flex-col gap-1">

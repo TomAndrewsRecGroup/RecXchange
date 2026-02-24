@@ -48,23 +48,6 @@ export default function RolesMarketplace() {
     <main className="min-h-screen pt-32 pb-20 px-6 mesh-background relative text-white">
       <div className="max-w-6xl mx-auto relative z-10">
 
-        <header className="mb-12">
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex items-center gap-3 mb-4"
-          >
-            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_rgba(0,255,255,0.8)]" />
-            <span className="text-[10px] font-black text-cyan-400 uppercase tracking-[0.3em]">Live Exchange Terminal</span>
-          </motion.div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">
-            The <span className="gradient-text">Role Marketplace</span>
-          </h1>
-          <p className="text-gray-400 max-w-2xl text-lg leading-relaxed">
-            Access exclusive roles directly from the RecXchange platform or collaborate with verified partners globally.
-          </p>
-        </header>
-
         <div className="flex flex-col gap-6 mb-12">
           <section className="glass-card p-2 rounded-2xl border-cyan-400/10 flex items-center shadow-2xl">
             <div className="pl-6 text-gray-500">
@@ -118,7 +101,6 @@ export default function RolesMarketplace() {
                 >
                   <div>
                     <div className="flex justify-between items-center mb-6">
-                      {/* Tooltip */}
                       <div className="relative group/tooltip">
                         <span className={`cursor-help text-[9px] font-black uppercase px-3 py-1 rounded-lg border tracking-widest transition-all ${
                           role.type === 'RecX Direct'
@@ -127,8 +109,6 @@ export default function RolesMarketplace() {
                         }`}>
                           {role.type}
                         </span>
-
-                        {/* Popup */}
                         <div className="absolute bottom-full left-0 mb-3 w-64 p-4 rounded-2xl bg-[#0a0a0a] border border-cyan-400/10 shadow-2xl opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible transition-all z-50 pointer-events-none translate-y-2 group-hover/tooltip:translate-y-0">
                           <p className="text-[10px] font-black uppercase tracking-widest mb-1.5 text-white flex items-center gap-2">
                             <span className={`w-1 h-1 rounded-full ${role.type === 'RecX Direct' ? 'bg-cyan-400' : 'bg-fuchsia-400'}`} />
@@ -143,7 +123,6 @@ export default function RolesMarketplace() {
                           <div className="absolute -bottom-1.5 left-4 w-3 h-3 bg-[#0a0a0a] border-r border-b border-cyan-400/10 rotate-45" />
                         </div>
                       </div>
-
                       <span className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">{role.loc}</span>
                     </div>
 

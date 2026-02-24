@@ -18,48 +18,7 @@ export default function HiringManagerHome() {
   return (
     <main className="relative min-h-screen flex flex-col items-center pt-32 pb-20 px-6 overflow-x-hidden">
 
-      {/* Persona Nav */}
-      <nav className="fixed top-0 left-0 w-full z-50 p-6">
-        <div className="max-w-7xl mx-auto glass-card rounded-2xl px-8 py-4 flex items-center justify-between border-cyan-400/10">
-          <Link href="/" className="text-2xl font-bold gradient-text">RecXchange</Link>
-
-          <div className="hidden md:flex items-center gap-8 text-[11px] font-bold uppercase tracking-widest">
-            <Link href="/recruiter-roles" className="text-gray-500 hover:text-cyan-400 transition-colors">Recruiter Path</Link>
-            <div className="h-4 w-[1px] bg-cyan-400/20" />
-            <button className="text-fuchsia-400 border-b border-fuchsia-400/50 pb-0.5">Hiring Manager</button>
-            <Link href="/deal-protection" className="text-gray-500 hover:text-cyan-400 transition-colors">Trust Layer</Link>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <div className="hidden lg:block px-3 py-1 rounded-full border border-fuchsia-500/20 bg-fuchsia-500/5 text-[9px] font-bold text-fuchsia-400 uppercase tracking-widest">
-              Manager Mode
-            </div>
-            <Link href="https://app.recxchange.io/login" className="px-5 py-2 rounded-full border border-white/10 text-xs font-bold hover:bg-cyan-400/5 hover:border-cyan-400/20 transition-all">
-              Login
-            </Link>
-          </div>
-        </div>
-      </nav>
-
-      {/* Hero */}
       <div className="relative z-10 w-full max-w-4xl flex flex-col items-center">
-        <header className="text-center mb-12">
-          <motion.span
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-label mb-4 block"
-          >
-            Tailored Talent Solutions
-          </motion.span>
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-[1.1]">
-            How can we support <br />
-            <span className="gradient-text">your growth?</span>
-          </h1>
-          <div className="pulse-underline mt-4 mx-auto" />
-          <p className="text-gray-400 text-base md:text-lg max-w-2xl mx-auto mt-8 leading-relaxed">
-            Whether you are firefighting urgent hires or building a strategic roadmap for next quarter, we have the specialised engine to handle it.
-          </p>
-        </header>
 
         {/* Diagnostic Card */}
         <section className="glass-card w-full rounded-[3rem] p-10 md:p-14 border-fuchsia-400/10 relative overflow-hidden">
@@ -149,7 +108,6 @@ export default function HiringManagerHome() {
           </div>
         </section>
 
-        {/* Footer Strip */}
         <footer className="mt-16 w-full max-w-4xl px-4">
           <div className="glass-card py-4 px-10 rounded-full border-cyan-400/10 flex flex-col md:flex-row justify-between items-center gap-4 text-[9px] text-gray-500 font-bold uppercase tracking-[0.2em]">
             <span className="opacity-60">Global Talent Infrastructure</span>
