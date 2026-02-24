@@ -133,7 +133,7 @@ export default function IndividualRoleView() {
               </div>
 
               <a 
-                href="https://app.recxchange.io" 
+                href="{{trigger_link.Hc9mpfL0JxjX06kwNpd1}}" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="button-primary w-full block text-center py-5 shadow-2xl shadow-blue-900/40"

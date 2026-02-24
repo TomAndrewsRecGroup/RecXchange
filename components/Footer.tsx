@@ -53,7 +53,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 mt-16 pt-8 border-t border-cyan-400/10 flex flex-col md:flex-row justify-between items-center gap-4 text-gray-600 text-xs">
         <p>© {new Date().getFullYear()} RecXchange Engine. All rights reserved.</p>
         <div className="flex gap-8">
-          <Link href="https://app.recxchange.io" className="hover:text-cyan-400 transition-colors">Platform Login</Link>
+          <Link href="{{trigger_link.Hc9mpfL0JxjX06kwNpd1}}" className="hover:text-cyan-400 transition-colors">Platform Login</Link>
           <Link href="{{trigger_link.jYQNc9YXcMkYPvo3HZfC}}" className="hover:text-fuchsia-400 transition-colors">Create Account</Link>
         </div>
       </div>
