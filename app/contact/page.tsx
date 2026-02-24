@@ -1,8 +1,10 @@
 "use client";
-import React from 'react';
-import { Mail, Globe, ShieldCheck, ArrowRight } from 'lucide-react';
+import React, { useState } from 'react';
+import { Mail, MessageCircle } from 'lucide-react';
 
 export default function ContactPage() {
+  const [userType, setUserType] = useState<'candidate' | 'hiring' | null>(null);
+
   return (
     <main className="pt-40 pb-20 px-6 max-w-7xl mx-auto min-h-screen">
       <div className="grid lg:grid-cols-2 gap-20 items-start">
@@ -25,61 +27,115 @@ export default function ContactPage() {
               </div>
               <div>
                 <p className="text-[10px] text-gray-500 font-black uppercase tracking-widest mb-1">Direct Liaison</p>
-                <p className="text-xl font-medium text-white">support@recxchange.com</p>
-              </div>
-            </div>
-
-            <div className="flex gap-6 p-8 glass-card rounded-[2.5rem] border-fuchsia-400/10">
-              <div className="w-14 h-14 rounded-2xl bg-fuchsia-500/10 flex items-center justify-center text-fuchsia-400 border border-fuchsia-400/20">
-                <Globe />
-              </div>
-              <div>
-                <p className="text-[10px] text-gray-500 font-black uppercase tracking-widest mb-1">Operational HQ</p>
-                <p className="text-sm font-medium text-gray-300">Dubai Silicon Oasis, <br />Dubai, United Arab Emirates</p>
+                <p className="text-xl font-medium text-white">support@recxchange.io</p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Right: Lead Form */}
+        {/* Right: Chat-Style Interface */}
         <div className="relative">
           <div className="absolute -inset-4 bg-cyan-500/5 blur-[100px] rounded-full" />
-          <form className="relative glass-card p-10 md:p-12 rounded-[3.5rem] border-cyan-400/10 space-y-8 bg-black/40 backdrop-blur-3xl">
-
-            <div className="space-y-2">
-              <label className="text-[10px] uppercase font-black text-gray-500 tracking-widest">Inquiry Type</label>
-              <select className="w-full bg-white/[0.03] border border-white/10 rounded-2xl px-6 py-4 text-sm text-gray-300 focus:border-cyan-400 outline-none transition-all cursor-pointer appearance-none">
-                <option className="bg-black">I am looking to Hire (Employer)</option>
-                <option className="bg-black">I am a Recruiter (Agency Partner)</option>
-                <option className="bg-black">Technical Support / Integration</option>
-              </select>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label className="text-[10px] uppercase font-black text-gray-500 tracking-widest">Full Name</label>
-                <input type="text" placeholder="Jane Doe" className="w-full bg-white/[0.03] border border-white/10 rounded-2xl px-6 py-4 text-sm text-white focus:border-cyan-400 outline-none transition-all" />
+          <div className="relative glass-card p-10 md:p-12 rounded-[3.5rem] border-cyan-400/10 space-y-8 bg-black/40 backdrop-blur-3xl">
+            
+            {/* Header */}
+            <div className="flex items-center gap-4 pb-6 border-b border-white/5">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyan-500 to-fuchsia-500 flex items-center justify-center">
+                <MessageCircle className="text-white" size={24} />
               </div>
-              <div className="space-y-2">
-                <label className="text-[10px] uppercase font-black text-gray-500 tracking-widest">Business Email</label>
-                <input type="email" placeholder="jane@company.com" className="w-full bg-white/[0.03] border border-white/10 rounded-2xl px-6 py-4 text-sm text-white focus:border-cyan-400 outline-none transition-all" />
+              <div>
+                <h3 className="text-lg font-bold text-white">Live Chat</h3>
+                <p className="text-xs text-gray-500 font-medium">Start a conversation with our team</p>
               </div>
             </div>
 
-            <div className="space-y-2">
-              <label className="text-[10px] uppercase font-black text-gray-500 tracking-widest">Message</label>
-              <textarea rows={4} placeholder="Tell us about your requirements..." className="w-full bg-white/[0.03] border border-white/10 rounded-2xl px-6 py-4 text-sm text-white focus:border-cyan-400 outline-none transition-all resize-none"></textarea>
-            </div>
+            {/* User Type Selection */}
+            {!userType ? (
+              <div className="space-y-4">
+                <p className="text-sm text-gray-400 font-medium mb-6">I am a...</p>
+                
+                <button
+                  onClick={() => setUserType('candidate')}
+                  className="w-full p-6 rounded-2xl border border-cyan-400/20 bg-cyan-400/5 hover:bg-cyan-400/10 hover:border-cyan-400/40 transition-all text-left group"
+                >
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-base font-bold text-white mb-1">Candidate</p>
+                      <p className="text-xs text-gray-500">Looking for opportunities</p>
+                    </div>
+                    <div className="w-8 h-8 rounded-lg bg-cyan-400/10 border border-cyan-400/30 flex items-center justify-center text-cyan-400 group-hover:bg-cyan-400/20 transition-all">
+                      →
+                    </div>
+                  </div>
+                </button>
 
-            <button className="w-full py-5 rounded-2xl bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white font-black hover:shadow-[0_0_30px_rgba(0,255,255,0.3)] transition-all uppercase text-xs tracking-[0.2em] flex items-center justify-center gap-3 shadow-xl">
-              Initialize Dispatch <ArrowRight size={16} />
-            </button>
+                <button
+                  onClick={() => setUserType('hiring')}
+                  className="w-full p-6 rounded-2xl border border-fuchsia-400/20 bg-fuchsia-400/5 hover:bg-fuchsia-400/10 hover:border-fuchsia-400/40 transition-all text-left group"
+                >
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-base font-bold text-white mb-1">Hiring Manager</p>
+                      <p className="text-xs text-gray-500">Need to fill roles</p>
+                    </div>
+                    <div className="w-8 h-8 rounded-lg bg-fuchsia-400/10 border border-fuchsia-400/30 flex items-center justify-center text-fuchsia-400 group-hover:bg-fuchsia-400/20 transition-all">
+                      →
+                    </div>
+                  </div>
+                </button>
+              </div>
+            ) : (
+              <div className="space-y-6">
+                {/* Selected Type Badge */}
+                <div className="flex items-center justify-between pb-4 border-b border-white/5">
+                  <div className={`px-4 py-2 rounded-xl border text-xs font-bold uppercase tracking-widest ${
+                    userType === 'candidate' 
+                      ? 'border-cyan-400/30 bg-cyan-400/10 text-cyan-400'
+                      : 'border-fuchsia-400/30 bg-fuchsia-400/10 text-fuchsia-400'
+                  }`}>
+                    {userType === 'candidate' ? 'Candidate' : 'Hiring Manager'}
+                  </div>
+                  <button 
+                    onClick={() => setUserType(null)}
+                    className="text-xs text-gray-500 hover:text-gray-300 transition-colors font-medium"
+                  >
+                    Change
+                  </button>
+                </div>
 
-            <div className="pt-6 border-t border-cyan-400/10 flex items-center gap-3 justify-center">
-              <ShieldCheck size={16} className="text-cyan-400/40" />
-              <p className="text-[9px] text-gray-600 uppercase font-bold tracking-widest">Secure AES-256 Encrypted Communication</p>
-            </div>
-          </form>
+                {/* Chat Message Placeholder */}
+                <div className="space-y-4">
+                  <div className="bg-white/5 rounded-2xl p-4 border border-white/10">
+                    <p className="text-xs text-gray-500 mb-2 font-medium">RecXchange Team</p>
+                    <p className="text-sm text-white leading-relaxed">
+                      {userType === 'candidate' 
+                        ? "Great! We'd love to help you find your next opportunity. Our team will connect with you shortly to discuss your experience and career goals."
+                        : "Perfect! We're here to help you fill your roles. Our team will reach out to understand your hiring needs and get you connected with top talent."}
+                    </p>
+                  </div>
+
+                  <div className="bg-gradient-to-r from-cyan-500/10 to-fuchsia-500/10 rounded-2xl p-4 border border-cyan-400/20">
+                    <p className="text-xs text-gray-400 mb-2 font-medium">You</p>
+                    <input 
+                      type="text" 
+                      placeholder="Type your message here..."
+                      className="w-full bg-transparent border-none text-sm text-white outline-none placeholder:text-gray-600"
+                    />
+                  </div>
+                </div>
+
+                {/* Action Button */}
+                <button className="w-full py-5 rounded-2xl bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white font-black hover:shadow-[0_0_30px_rgba(0,255,255,0.3)] transition-all uppercase text-xs tracking-[0.2em] flex items-center justify-center gap-3 shadow-xl">
+                  <MessageCircle size={16} />
+                  Start Live Chat
+                </button>
+
+                <p className="text-center text-[9px] text-gray-600 uppercase font-bold tracking-widest">
+                  Connected via secure channel
+                </p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </main>
