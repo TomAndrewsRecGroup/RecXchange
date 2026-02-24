@@ -2,7 +2,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MessageCircle, X, Send, Loader2, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Image from 'next/image';
 
 type Persona = 'recruiter' | 'hiring-manager';
 type Stage = 'persona' | 'capture' | 'chat';
@@ -157,12 +156,10 @@ export default function FloatingChat() {
               <div className="flex items-center gap-2">
                 <div className="relative">
                   <div className="w-8 h-8 rounded-full bg-gradient-to-r from-cyan-500 to-fuchsia-500 flex items-center justify-center p-1">
-                    <Image
+                    <img
                       src="https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png"
                       alt="RecXchange"
-                      width={24}
-                      height={24}
-                      className="object-contain"
+                      className="w-full h-full object-contain"
                     />
                   </div>
                   <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-green-400 rounded-full border-2 border-[#050508]" />
