@@ -47,7 +47,7 @@ export default function RolesMarketplace() {
   return (
     <main className="min-h-screen pt-32 pb-20 px-6 relative text-white" style={{
       backgroundColor: '#050508',
-      backgroundImage: 'radial-gradient(at 0% 0%, rgba(0, 255, 255, 0.08) 0px, transparent 50%), radial-gradient(at 100% 100%, rgba(255, 0, 255, 0.07) 0px, transparent 50%)',
+      backgroundImage: 'radial-gradient(at 0% 0%, rgba(0, 255, 255, 0.15) 0px, transparent 50%), radial-gradient(at 100% 100%, rgba(255, 0, 255, 0.15) 0px, transparent 50%)',
       backgroundAttachment: 'fixed'
     }}>
       <div className="max-w-6xl mx-auto relative z-10">
