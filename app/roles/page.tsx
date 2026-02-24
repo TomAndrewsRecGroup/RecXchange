@@ -171,7 +171,7 @@ export default function RolesMarketplace() {
             {[...Array(totalPages)].map((_, i) => (
               <button
                 key={i}
-                onClick={() => { setPage(i + 1); window.scrollTo({ top: 0, behavior: 0, behavior: 'smooth' }); }}
+                onClick={() => { setPage(i + 1); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
                 className={`w-8 h-8 rounded-lg border text-[10px] font-bold transition-all ${
                   page === i + 1
                     ? 'bg-gradient-to-r from-cyan-500 to-fuchsia-500 border-transparent text-white'
