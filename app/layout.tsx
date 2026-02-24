@@ -11,6 +11,11 @@ const sora = Sora({ subsets: ["latin"], weight: ["300", "400", "600", "700", "80
 export const metadata = {
   title: "RecXchange | The Recruiter Xchange",
   description: "Connect, Collaborate, and Scale with the Xchange Engine.",
+  icons: {
+    icon: "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png",
+    shortcut: "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png",
+    apple: "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png",
+  },
 };
 
 interface RootLayoutProps {
