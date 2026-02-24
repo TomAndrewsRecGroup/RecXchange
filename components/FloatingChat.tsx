@@ -155,14 +155,14 @@ export default function FloatingChat() {
             <div className="p-4 border-b border-cyan-400/10 bg-gradient-to-r from-cyan-400/5 to-fuchsia-400/5 flex justify-between items-center flex-shrink-0">
               <div className="flex items-center gap-2">
                 <div className="relative">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-r from-cyan-500 to-fuchsia-500 flex items-center justify-center p-1.5">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-r from-cyan-500 to-fuchsia-500 flex items-center justify-center p-0.5">
                     <img
                       src="https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png"
                       alt="RecXchange"
                       className="w-full h-full object-contain"
                     />
                   </div>
-                  <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-400 rounded-full border-2 border-[#050508]" />
+                  <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-green-400 rounded-full border-2 border-[#050508]" />
                 </div>
                 <div>
                   <p className="text-[11px] font-bold text-white">RecXchange Team</p>
