@@ -19,7 +19,8 @@ export default function FloatingChat() {
   const [persona, setPersona] = useState<Persona | null>(null);
 
   // Capture fields
-  const [name, setName] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [companyName, setCompanyName] = useState('');
   const [captureError, setCaptureError] = useState('');
@@ -82,15 +83,17 @@ export default function FloatingChat() {
   const handleCaptureSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!name.trim()) return setCaptureError('Please enter your name.');
+    if (!firstName.trim()) return setCaptureError('Please enter your first name.');
+    if (!lastName.trim()) return setCaptureError('Please enter your last name.');
     if (!email.trim() || !emailRegex.test(email)) return setCaptureError('Please enter a valid email.');
     if (persona === 'hiring-manager' && !companyName.trim()) return setCaptureError('Please enter your company name.');
     setCaptureError('');
 
+    const fullName = `${firstName.trim()} ${lastName.trim()}`;
     const greeting =
       persona === 'hiring-manager'
-        ? `Hi ${name.split(' ')[0]}! 👋 Welcome to RecXchange. I can see you\'re hiring — our team will be with you shortly. What can we help with today?`
-        : `Hi ${name.split(' ')[0]}! 👋 Welcome to RecXchange. Great to have a recruiter on board — our team will be with you shortly. What are you looking for today?`;
+        ? `Hi ${firstName}! 👋 Welcome to RecXchange. I can see you're hiring — our team will be with you shortly. What can we help with today?`
+        : `Hi ${firstName}! 👋 Welcome to RecXchange. Great to have a recruiter on board — our team will be with you shortly. What are you looking for today?`;
 
     setMessages([{ id: 'welcome', from: 'team', body: greeting, timestamp: new Date() }]);
     setStage('chat');
@@ -100,6 +103,8 @@ export default function FloatingChat() {
   const handleSend = async () => {
     const trimmed = inputValue.trim();
     if (!trimmed || isSending) return;
+
+    const fullName = `${firstName.trim()} ${lastName.trim()}`;
 
     setMessages(prev => [
       ...prev,
@@ -113,7 +118,7 @@ export default function FloatingChat() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name,
+          name: fullName,
           email,
           message: trimmed,
           persona,
@@ -145,7 +150,7 @@ export default function FloatingChat() {
   const resetChat = () => {
     setStage('persona');
     setPersona(null);
-    setName(''); setEmail(''); setCompanyName('');
+    setFirstName(''); setLastName(''); setEmail(''); setCompanyName('');
     setContactId(null); setConversationId(null);
     setMessages([]);
     setInputValue('');
@@ -201,7 +206,7 @@ export default function FloatingChat() {
                   className="group w-full p-4 rounded-2xl border border-cyan-400/15 bg-cyan-400/5 hover:bg-cyan-400/10 hover:border-cyan-400/30 transition-all text-left flex items-center justify-between"
                 >
                   <div>
-                    <p className="text-xs font-bold text-white mb-0.5">I\'m a Recruiter</p>
+                    <p className="text-xs font-bold text-white mb-0.5">I'm a Recruiter</p>
                     <p className="text-[10px] text-gray-500">I have candidates or need roles to fill</p>
                   </div>
                   <ChevronRight size={14} className="text-cyan-400 group-hover:translate-x-1 transition-transform" />
@@ -211,8 +216,8 @@ export default function FloatingChat() {
                   className="group w-full p-4 rounded-2xl border border-fuchsia-400/15 bg-fuchsia-400/5 hover:bg-fuchsia-400/10 hover:border-fuchsia-400/30 transition-all text-left flex items-center justify-between"
                 >
                   <div>
-                    <p className="text-xs font-bold text-white mb-0.5">I\'m a Hiring Manager</p>
-                    <p className="text-[10px] text-gray-500">I\'m looking to hire for my company</p>
+                    <p className="text-xs font-bold text-white mb-0.5">I'm a Hiring Manager</p>
+                    <p className="text-[10px] text-gray-500">I'm looking to hire for my company</p>
                   </div>
                   <ChevronRight size={14} className="text-fuchsia-400 group-hover:translate-x-1 transition-transform" />
                 </button>
@@ -229,18 +234,27 @@ export default function FloatingChat() {
                   </p>
                   <p className="text-gray-500 text-xs leading-relaxed">
                     {persona === 'hiring-manager'
-                      ? 'We\'ll add you to our Clients directory so our team can follow up.'
-                      : 'We\'ll add you to our Recruiter network for follow-up.'}
+                      ? 'We'll add you to our Clients directory so our team can follow up.'
+                      : 'We'll add you to our Recruiter network for follow-up.'}
                   </p>
                 </div>
                 <div className="space-y-3">
+                  <div className="grid grid-cols-2 gap-3">
+                    <input
+                      type="text" placeholder="First name" value={firstName}
+                      onChange={e => setFirstName(e.target.value)}
+                      className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-600 outline-none focus:border-cyan-400/40 transition-colors"
+                    />
+                    <input
+                      type="text" placeholder="Last name" value={lastName}
+                      onChange={e => setLastName(e.target.value)}
+                      className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-600 outline-none focus:border-cyan-400/40 transition-colors"
+                    />
+                  </div>
                   <input
-                    type="text" placeholder="Full name" value={name}
-                    onChange={e => setName(e.target.value)}
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-600 outline-none focus:border-cyan-400/40 transition-colors"
-                  />
-                  <input
-                    type="email" placeholder="Business email" value={email}
+                    type="email" 
+                    placeholder={persona === 'hiring-manager' ? 'Business email' : 'Email'} 
+                    value={email}
                     onChange={e => setEmail(e.target.value)}
                     className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-600 outline-none focus:border-cyan-400/40 transition-colors"
                   />
