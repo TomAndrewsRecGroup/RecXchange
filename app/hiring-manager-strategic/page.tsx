@@ -1,6 +1,6 @@
 "use client";
-import React from 'react';
-import { motion, useScroll, useSpring } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
 import Link from 'next/link';
 import ManagerFinalCTA from '@/components/ManagerFinalCTA';
 
@@ -17,9 +17,15 @@ export default function HiringManagerStrategic() {
     { time: "Phase 03: 60-90 Days", title: "Launch-Ready Pipelines", desc: "Vetted shortlists are primed and ready the moment your requisition is officially signed off by finance." }
   ];
 
-  // Scroll animation for the timeline line
-  const { scrollYProgress } = useScroll();
-  const scaleY = useSpring(scrollYProgress, {
+  // Scroll animation for the timeline - track the timeline container specifically
+  const timelineRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: timelineRef,
+    offset: ["start center", "end center"]
+  });
+  
+  // Transform to make the bar reach 100% earlier in the scroll
+  const scaleY = useSpring(useTransform(scrollYProgress, [0, 0.85], [0, 1]), {
     stiffness: 100,
     damping: 30,
     restDelta: 0.001
@@ -58,7 +64,7 @@ export default function HiringManagerStrategic() {
             transition={{ delay: 0.2 }}
             className="text-gray-400 text-lg mt-8 max-w-2xl leading-relaxed"
           >
-            Stop the cycle of reactive "firefighting." We build your talent infrastructure ahead of time, ensuring high-velocity growth that doesn't sacrifice quality.
+            Stop the cycle of reactive "firefighting." We build your talent infrastructure ahead of time, ensuring high-velocity growth that doesn&apos;t sacrifice quality.
           </motion.p>
         </header>
 
@@ -66,7 +72,7 @@ export default function HiringManagerStrategic() {
         <div className="grid grid-cols-1 lg:grid-cols-[1.4fr,1fr] gap-12 items-start mb-24">
           
           {/* Timeline Section */}
-          <div className="glass-card p-10 md:p-14 rounded-[3rem] border-white/5 bg-white/[0.01] relative overflow-hidden">
+          <div ref={timelineRef} className="glass-card p-10 md:p-14 rounded-[3rem] border-white/5 bg-white/[0.01] relative overflow-hidden">
             <h2 className="text-xl font-bold mb-14 flex items-center gap-3">
               <span className="w-2 h-2 rounded-full bg-purple-500 shadow-[0_0_15px_#a855f7]" />
               The 90-Day Strategic Roadmap
@@ -141,7 +147,13 @@ export default function HiringManagerStrategic() {
                 "We essentially eliminated our 'time-to-hire' metric because the talent was already identified before the role was even live."
               </p>
               <div className="flex items-center gap-3 mt-6">
-                <div className="w-6 h-6 rounded-full bg-gradient-to-r from-purple-500 to-blue-500" />
+                <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-purple-500/30">
+                  <img 
+                    src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah&backgroundColor=b6e3f4&clothing=blazerShirt&clothingColor=3c4f5c&eyebrows=default&eyes=default&mouth=smile&skinColor=ae5d29&hair=long&hairColor=4a312c&facialHair=blank&accessories=blank" 
+                    alt="VP Talent Avatar"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
                 <p className="text-[9px] font-bold text-white uppercase tracking-[0.2em]">VP Talent • Fintech Global</p>
               </div>
             </motion.div>
