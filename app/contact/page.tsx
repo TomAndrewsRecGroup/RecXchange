@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Mail, MessageCircle } from 'lucide-react';
 
 export default function ContactPage() {
-  const [userType, setUserType] = useState<'candidate' | 'hiring' | null>(null);
+  const [userType, setUserType] = useState<'recruiter' | 'hiring' | null>(null);
 
   return (
     <main className="pt-40 pb-20 px-6 max-w-7xl mx-auto min-h-screen">
@@ -55,13 +55,13 @@ export default function ContactPage() {
                 <p className="text-sm text-gray-400 font-medium mb-6">I am a...</p>
                 
                 <button
-                  onClick={() => setUserType('candidate')}
+                  onClick={() => setUserType('recruiter')}
                   className="w-full p-6 rounded-2xl border border-cyan-400/20 bg-cyan-400/5 hover:bg-cyan-400/10 hover:border-cyan-400/40 transition-all text-left group"
                 >
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-base font-bold text-white mb-1">Candidate</p>
-                      <p className="text-xs text-gray-500">Looking for opportunities</p>
+                      <p className="text-base font-bold text-white mb-1">Recruiter</p>
+                      <p className="text-xs text-gray-500">Agency or independent recruiter</p>
                     </div>
                     <div className="w-8 h-8 rounded-lg bg-cyan-400/10 border border-cyan-400/30 flex items-center justify-center text-cyan-400 group-hover:bg-cyan-400/20 transition-all">
                       →
@@ -89,11 +89,11 @@ export default function ContactPage() {
                 {/* Selected Type Badge */}
                 <div className="flex items-center justify-between pb-4 border-b border-white/5">
                   <div className={`px-4 py-2 rounded-xl border text-xs font-bold uppercase tracking-widest ${
-                    userType === 'candidate' 
+                    userType === 'recruiter' 
                       ? 'border-cyan-400/30 bg-cyan-400/10 text-cyan-400'
                       : 'border-fuchsia-400/30 bg-fuchsia-400/10 text-fuchsia-400'
                   }`}>
-                    {userType === 'candidate' ? 'Candidate' : 'Hiring Manager'}
+                    {userType === 'recruiter' ? 'Recruiter' : 'Hiring Manager'}
                   </div>
                   <button 
                     onClick={() => setUserType(null)}
@@ -108,8 +108,8 @@ export default function ContactPage() {
                   <div className="bg-white/5 rounded-2xl p-4 border border-white/10">
                     <p className="text-xs text-gray-500 mb-2 font-medium">RecXchange Team</p>
                     <p className="text-sm text-white leading-relaxed">
-                      {userType === 'candidate' 
-                        ? "Great! We'd love to help you find your next opportunity. Our team will connect with you shortly to discuss your experience and career goals."
+                      {userType === 'recruiter' 
+                        ? "Great! We'd love to help you access our platform and collaborate with other recruiters. Our team will connect with you shortly to discuss partnership opportunities."
                         : "Perfect! We're here to help you fill your roles. Our team will reach out to understand your hiring needs and get you connected with top talent."}
                     </p>
                   </div>
