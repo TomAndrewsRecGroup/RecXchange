@@ -1,23 +1,138 @@
 "use client";
-import React, { useState } from 'react';
-import { Mail, MessageCircle, Send, User, Building2, Phone, MessageSquare } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { Mail, Send, User, Building2, Phone, Loader2, MessageCircle } from 'lucide-react';
+
+// Matching FloatingChat types
+type Persona = 'recruiter' | 'hiring-manager';
+type Stage = 'persona' | 'capture' | 'chat';
+type Message = {
+  id: string;
+  from: 'visitor' | 'team';
+  body: string;
+  timestamp: Date;
+};
 
 export default function ContactPage() {
-  const [userType, setUserType] = useState<'recruiter' | 'hiring' | null>(null);
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    company: '',
-    phone: '',
-    message: ''
-  });
+  // State management matching FloatingChat
+  const [stage, setStage] = useState<Stage>('persona');
+  const [persona, setPersona] = useState<Persona | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // This would connect to your existing webhook/API
-    console.log('Form submitted:', { userType, ...formData });
-    // Add your webhook/API call here
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [companyName, setCompanyName] = useState('');
+  const [captureError, setCaptureError] = useState('');
+
+  const [contactId, setContactId] = useState<string | null>(null);
+  const [conversationId, setConversationId] = useState<string | null>(null);
+
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [inputValue, setInputValue] = useState('');
+  const [isSending, setIsSending] = useState(false);
+
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const sseRef = useRef<EventSource | null>(null);
+
+  // Auto-scroll to latest message
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
+  // Focus input when entering chat stage
+  useEffect(() => {
+    if (stage === 'chat') {
+      setTimeout(() => inputRef.current?.focus(), 100);
+    }
+  }, [stage]);
+
+  // SSE for real-time messages (same as FloatingChat)
+  useEffect(() => {
+    if (!conversationId) return;
+    if (sseRef.current) sseRef.current.close();
+    const sse = new EventSource(`/api/ghl/stream?conversationId=${conversationId}`);
+    sseRef.current = sse;
+    sse.onmessage = (event) => {
+      try {
+        const data = JSON.parse(event.data);
+        if (data.type === 'message' && data.body) {
+          setMessages(prev => [
+            ...prev,
+            { id: `team-${Date.now()}-${Math.random()}`, from: 'team', body: data.body, timestamp: new Date() },
+          ]);
+        }
+      } catch { /* ignore */ }
+    };
+    return () => sse.close();
+  }, [conversationId]);
+
+  // Handle persona selection
+  const handlePersonaSelect = (p: Persona) => {
+    setPersona(p);
+    setStage('capture');
   };
+
+  // Handle capture form submission (same validation as FloatingChat)
+  const handleCaptureSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!firstName.trim()) return setCaptureError('Please enter your first name.');
+    if (!lastName.trim()) return setCaptureError('Please enter your last name.');
+    if (!email.trim() || !emailRegex.test(email)) return setCaptureError('Please enter a valid email.');
+    if (persona === 'hiring-manager' && !companyName.trim()) return setCaptureError('Please enter your company name.');
+    setCaptureError('');
+    const greeting =
+      persona === 'hiring-manager'
+        ? `Hi ${firstName}! Welcome to RecXchange. Our team will be with you shortly. What can we help with today?`
+        : `Hi ${firstName}! Welcome to RecXchange. Great to have a recruiter on board. What are you looking for today?`;
+    setMessages([{ id: 'welcome', from: 'team', body: greeting, timestamp: new Date() }]);
+    setStage('chat');
+  };
+
+  // Handle sending messages (same API call as FloatingChat)
+  const handleSend = async () => {
+    const trimmed = inputValue.trim();
+    if (!trimmed || isSending) return;
+    const fullName = `${firstName.trim()} ${lastName.trim()}`;
+    setMessages(prev => [
+      ...prev,
+      { id: `v-${Date.now()}`, from: 'visitor', body: trimmed, timestamp: new Date() },
+    ]);
+    setInputValue('');
+    setIsSending(true);
+    try {
+      const res = await fetch('/api/ghl/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: fullName,
+          email,
+          message: trimmed,
+          persona,
+          companyName: persona === 'hiring-manager' ? companyName : undefined,
+          contactId,
+          conversationId,
+        }),
+      });
+      const data = await res.json();
+      if (data.contactId) setContactId(data.contactId);
+      if (data.conversationId) setConversationId(data.conversationId);
+    } catch {
+      setMessages(prev => [
+        ...prev,
+        { id: `err-${Date.now()}`, from: 'team', body: 'Sorry, there was an issue. Please try again.', timestamp: new Date() },
+      ]);
+    } finally {
+      setIsSending(false);
+      inputRef.current?.focus();
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(); }
+  };
+
+  const formatTime = (d: Date) => d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
   return (
     <main className="min-h-screen pt-32 pb-20 px-6 relative text-white" style={{
@@ -41,7 +156,7 @@ export default function ContactPage() {
 
         <div className="grid lg:grid-cols-2 gap-12 items-start">
 
-          {/* Left: Contact Info Cards */}
+          {/* Left: Contact Info & Trust */}
           <div className="space-y-6">
             
             {/* Email Card */}
@@ -60,7 +175,7 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* Why Choose Us Section */}
+            {/* Why Choose Us */}
             <div className="glass-card p-8 rounded-[2.5rem] border-cyan-400/10">
               <h3 className="text-xl font-bold mb-6 flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-cyan-500/10 flex items-center justify-center text-cyan-400 border border-cyan-400/20">
@@ -101,185 +216,214 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* Right: Live Chat Form */}
+          {/* Right: Chat Form (Static Always-Open Version) */}
           <div className="relative">
             <div className="absolute -inset-4 bg-purple-500/5 blur-[100px] rounded-full" />
-            <div className="relative glass-card p-10 md:p-12 rounded-[3.5rem] border-purple-400/10 bg-black/40 backdrop-blur-3xl">
+            <div className="relative glass-card rounded-[3.5rem] border-purple-400/10 bg-black/40 backdrop-blur-3xl overflow-hidden" style={{ minHeight: stage === 'chat' ? '600px' : 'auto' }}>
               
               {/* Chat Header */}
-              <div className="flex items-center gap-4 pb-6 border-b border-white/5 mb-8">
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyan-500 to-fuchsia-500 flex items-center justify-center relative">
-                  <MessageCircle className="text-white" size={24} />
-                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full border-2 border-black animate-pulse" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-bold text-white">Start a Conversation</h3>
-                  <p className="text-xs text-gray-400 font-medium flex items-center gap-1">
-                    <span className="w-2 h-2 bg-green-400 rounded-full" />
-                    Our team is online now
-                  </p>
+              <div className="p-8 pb-6 border-b border-white/5 bg-gradient-to-r from-cyan-400/5 to-fuchsia-400/5">
+                <div className="flex items-center gap-4">
+                  <div className="relative">
+                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyan-500 to-fuchsia-500 flex items-center justify-center text-white text-lg font-bold">
+                      R
+                    </div>
+                    <span className="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-green-400 rounded-full border-2 border-black animate-pulse" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-white">RecXchange Team</h3>
+                    <p className="text-xs text-green-400 font-bold uppercase tracking-widest flex items-center gap-1.5">
+                      <span className="w-2 h-2 bg-green-400 rounded-full" />
+                      Online Now
+                    </p>
+                  </div>
                 </div>
               </div>
 
-              {/* User Type Selection */}
-              {!userType ? (
-                <div className="space-y-4">
-                  <p className="text-sm text-gray-400 font-medium mb-6">I am a...</p>
+              {/* Stage: Persona Selection */}
+              {stage === 'persona' && (
+                <div className="p-10 space-y-6">
+                  <div>
+                    <p className="text-white text-base font-bold mb-2">How can we help?</p>
+                    <p className="text-gray-400 text-sm">Tell us who you are so we can route you correctly.</p>
+                  </div>
                   
                   <button
-                    onClick={() => setUserType('recruiter')}
+                    onClick={() => handlePersonaSelect('recruiter')}
                     className="w-full p-6 rounded-2xl border border-cyan-400/20 bg-cyan-400/5 hover:bg-cyan-400/10 hover:border-cyan-400/40 transition-all text-left group"
                   >
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-base font-bold text-white mb-1">Recruiter</p>
-                        <p className="text-xs text-gray-500">Agency or independent recruiter</p>
+                        <p className="text-base font-bold text-white mb-1">I'm a Recruiter</p>
+                        <p className="text-xs text-gray-500">I have candidates or need roles to fill</p>
                       </div>
-                      <div className="w-10 h-10 rounded-xl bg-cyan-400/10 border border-cyan-400/30 flex items-center justify-center text-cyan-400 group-hover:bg-cyan-400/20 transition-all text-lg">
+                      <div className="w-10 h-10 rounded-xl bg-cyan-400/10 border border-cyan-400/30 flex items-center justify-center text-cyan-400 group-hover:translate-x-1 transition-transform text-lg">
                         →
                       </div>
                     </div>
                   </button>
 
                   <button
-                    onClick={() => setUserType('hiring')}
+                    onClick={() => handlePersonaSelect('hiring-manager')}
                     className="w-full p-6 rounded-2xl border border-fuchsia-400/20 bg-fuchsia-400/5 hover:bg-fuchsia-400/10 hover:border-fuchsia-400/40 transition-all text-left group"
                   >
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-base font-bold text-white mb-1">Hiring Manager</p>
-                        <p className="text-xs text-gray-500">Need to fill roles</p>
+                        <p className="text-base font-bold text-white mb-1">I'm a Hiring Manager</p>
+                        <p className="text-xs text-gray-500">I'm looking to hire for my company</p>
                       </div>
-                      <div className="w-10 h-10 rounded-xl bg-fuchsia-400/10 border border-fuchsia-400/30 flex items-center justify-center text-fuchsia-400 group-hover:bg-fuchsia-400/20 transition-all text-lg">
+                      <div className="w-10 h-10 rounded-xl bg-fuchsia-400/10 border border-fuchsia-400/30 flex items-center justify-center text-fuchsia-400 group-hover:translate-x-1 transition-transform text-lg">
                         →
                       </div>
                     </div>
                   </button>
+
+                  <p className="text-xs text-gray-600 text-center pt-4">Typically replies within a few minutes.</p>
                 </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  {/* Selected Type Badge */}
-                  <div className="flex items-center justify-between pb-6 border-b border-white/5">
-                    <div className={`px-4 py-2 rounded-xl border text-xs font-bold uppercase tracking-widest ${
-                      userType === 'recruiter' 
-                        ? 'border-cyan-400/30 bg-cyan-400/10 text-cyan-400'
-                        : 'border-fuchsia-400/30 bg-fuchsia-400/10 text-fuchsia-400'
-                    }`}>
-                      {userType === 'recruiter' ? 'Recruiter' : 'Hiring Manager'}
-                    </div>
-                    <button 
-                      type="button"
-                      onClick={() => setUserType(null)}
-                      className="text-xs text-gray-500 hover:text-gray-300 transition-colors font-medium"
-                    >
-                      Change
-                    </button>
+              )}
+
+              {/* Stage: Capture Details */}
+              {stage === 'capture' && (
+                <form onSubmit={handleCaptureSubmit} className="p-10 space-y-6">
+                  <div>
+                    <p className="text-white text-base font-bold mb-2">
+                      {persona === 'hiring-manager' ? 'Hiring Manager Details' : 'Your Details'}
+                    </p>
+                    <p className="text-gray-400 text-sm leading-relaxed">
+                      {persona === 'hiring-manager'
+                        ? "We'll add you to our Clients directory so our team can follow up."
+                        : "We'll add you to our Recruiter network for follow-up."}
+                    </p>
                   </div>
 
-                  {/* Form Fields */}
                   <div className="space-y-4">
-                    {/* Name */}
-                    <div>
-                      <label className="text-[10px] uppercase font-black text-gray-500 tracking-widest block mb-2">
-                        Full Name
-                      </label>
-                      <div className="relative">
-                        <User className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={16} />
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="text-[10px] uppercase font-black text-gray-500 tracking-widest block mb-2">First Name</label>
                         <input
                           type="text"
-                          required
-                          value={formData.name}
-                          onChange={(e) => setFormData({...formData, name: e.target.value})}
-                          placeholder="John Smith"
-                          className="w-full bg-white/[0.03] border border-white/10 rounded-2xl pl-12 pr-6 py-4 text-sm text-white focus:border-purple-400 outline-none transition-all"
+                          value={firstName}
+                          onChange={e => setFirstName(e.target.value)}
+                          placeholder="John"
+                          className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 outline-none focus:border-cyan-400/40 transition-colors"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-[10px] uppercase font-black text-gray-500 tracking-widest block mb-2">Last Name</label>
+                        <input
+                          type="text"
+                          value={lastName}
+                          onChange={e => setLastName(e.target.value)}
+                          placeholder="Smith"
+                          className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 outline-none focus:border-cyan-400/40 transition-colors"
                         />
                       </div>
                     </div>
 
-                    {/* Email */}
                     <div>
                       <label className="text-[10px] uppercase font-black text-gray-500 tracking-widest block mb-2">
-                        Business Email
+                        {persona === 'hiring-manager' ? 'Business Email' : 'Email'}
                       </label>
-                      <div className="relative">
-                        <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={16} />
-                        <input
-                          type="email"
-                          required
-                          value={formData.email}
-                          onChange={(e) => setFormData({...formData, email: e.target.value})}
-                          placeholder="john@company.com"
-                          className="w-full bg-white/[0.03] border border-white/10 rounded-2xl pl-12 pr-6 py-4 text-sm text-white focus:border-purple-400 outline-none transition-all"
-                        />
-                      </div>
+                      <input
+                        type="email"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                        placeholder="john@company.com"
+                        className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 outline-none focus:border-cyan-400/40 transition-colors"
+                      />
                     </div>
 
-                    {/* Company */}
-                    <div>
-                      <label className="text-[10px] uppercase font-black text-gray-500 tracking-widest block mb-2">
-                        Company Name
-                      </label>
-                      <div className="relative">
-                        <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={16} />
+                    {persona === 'hiring-manager' && (
+                      <div>
+                        <label className="text-[10px] uppercase font-black text-gray-500 tracking-widest block mb-2">Company Name</label>
                         <input
                           type="text"
-                          value={formData.company}
-                          onChange={(e) => setFormData({...formData, company: e.target.value})}
+                          value={companyName}
+                          onChange={e => setCompanyName(e.target.value)}
                           placeholder="Your Company Ltd"
-                          className="w-full bg-white/[0.03] border border-white/10 rounded-2xl pl-12 pr-6 py-4 text-sm text-white focus:border-purple-400 outline-none transition-all"
+                          className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 outline-none focus:border-fuchsia-400/40 transition-colors"
                         />
                       </div>
-                    </div>
-
-                    {/* Phone */}
-                    <div>
-                      <label className="text-[10px] uppercase font-black text-gray-500 tracking-widest block mb-2">
-                        Phone Number (Optional)
-                      </label>
-                      <div className="relative">
-                        <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={16} />
-                        <input
-                          type="tel"
-                          value={formData.phone}
-                          onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                          placeholder="+44 7XXX XXXXXX"
-                          className="w-full bg-white/[0.03] border border-white/10 rounded-2xl pl-12 pr-6 py-4 text-sm text-white focus:border-purple-400 outline-none transition-all"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Message */}
-                    <div>
-                      <label className="text-[10px] uppercase font-black text-gray-500 tracking-widest block mb-2">
-                        Message
-                      </label>
-                      <div className="relative">
-                        <MessageSquare className="absolute left-4 top-4 text-gray-500" size={16} />
-                        <textarea
-                          required
-                          rows={4}
-                          value={formData.message}
-                          onChange={(e) => setFormData({...formData, message: e.target.value})}
-                          placeholder="Tell us about your requirements..."
-                          className="w-full bg-white/[0.03] border border-white/10 rounded-2xl pl-12 pr-6 py-4 text-sm text-white focus:border-purple-400 outline-none transition-all resize-none"
-                        />
-                      </div>
-                    </div>
+                    )}
                   </div>
 
-                  {/* Submit Button */}
-                  <button 
+                  {captureError && (
+                    <p className="text-xs text-red-400 font-bold">{captureError}</p>
+                  )}
+
+                  <button
                     type="submit"
-                    className="w-full py-5 rounded-2xl bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white font-black hover:shadow-[0_0_30px_rgba(0,255,255,0.3)] transition-all uppercase text-xs tracking-[0.2em] flex items-center justify-center gap-3 shadow-xl"
+                    className={`w-full py-4 rounded-xl text-white text-sm font-bold uppercase tracking-widest transition-all ${
+                      persona === 'hiring-manager'
+                        ? 'bg-gradient-to-r from-fuchsia-500 to-cyan-500 hover:shadow-[0_0_20px_rgba(255,0,255,0.3)]'
+                        : 'bg-gradient-to-r from-cyan-500 to-fuchsia-500 hover:shadow-[0_0_20px_rgba(0,255,255,0.3)]'
+                    }`}
                   >
-                    <Send size={16} />
-                    Start Conversation
+                    Start Chatting
                   </button>
 
-                  <p className="text-center text-[9px] text-gray-600 uppercase font-bold tracking-widest">
-                    Secure AES-256 Encrypted Communication
-                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setStage('persona')}
+                    className="text-xs text-gray-600 hover:text-gray-400 transition-colors w-full text-center"
+                  >
+                    ← Back
+                  </button>
                 </form>
+              )}
+
+              {/* Stage: Live Chat */}
+              {stage === 'chat' && (
+                <div className="flex flex-col" style={{ height: '540px' }}>
+                  <div className="flex-grow p-6 space-y-4 overflow-y-auto">
+                    {messages.map(msg => (
+                      <div
+                        key={msg.id}
+                        className={`flex flex-col gap-1 ${msg.from === 'visitor' ? 'items-end' : 'items-start'}`}
+                      >
+                        <div className={`max-w-[85%] px-4 py-3 rounded-2xl text-sm leading-relaxed ${
+                          msg.from === 'visitor'
+                            ? 'bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 border border-cyan-400/20 text-white rounded-br-sm'
+                            : 'bg-white/5 border border-white/10 text-gray-300 rounded-bl-sm'
+                        }`}>
+                          {msg.body}
+                        </div>
+                        <span className="text-[9px] text-gray-600">
+                          {msg.from === 'visitor' ? 'You' : 'RecXchange'} &middot; {formatTime(msg.timestamp)}
+                        </span>
+                      </div>
+                    ))}
+                    {isSending && (
+                      <div className="flex items-start">
+                        <div className="bg-white/5 border border-white/10 px-4 py-3 rounded-2xl rounded-bl-sm flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                          <span className="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                          <span className="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                        </div>
+                      </div>
+                    )}
+                    <div ref={messagesEndRef} />
+                  </div>
+                  <div className="p-4 bg-white/[0.02] border-t border-cyan-400/10 flex gap-3 items-center">
+                    <input
+                      ref={inputRef}
+                      type="text"
+                      value={inputValue}
+                      onChange={e => setInputValue(e.target.value)}
+                      onKeyDown={handleKeyDown}
+                      placeholder="Type a message..."
+                      disabled={isSending}
+                      className="flex-grow bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 outline-none focus:border-purple-400 transition-colors disabled:opacity-50"
+                    />
+                    <button
+                      onClick={handleSend}
+                      disabled={isSending || !inputValue.trim()}
+                      className="w-11 h-11 rounded-xl bg-gradient-to-r from-cyan-500 to-fuchsia-500 flex items-center justify-center text-white hover:shadow-[0_0_16px_rgba(0,255,255,0.4)] transition-all disabled:opacity-30 disabled:cursor-not-allowed flex-shrink-0"
+                    >
+                      {isSending ? <Loader2 size={18} className="animate-spin" /> : <Send size={18} />}
+                    </button>
+                  </div>
+                </div>
               )}
             </div>
           </div>
