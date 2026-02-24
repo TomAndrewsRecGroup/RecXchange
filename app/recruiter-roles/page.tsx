@@ -142,7 +142,7 @@ export default function PostRolesPage() {
                 </div>
 
                 <a 
-                  href="https://app.recxchange.io/register" 
+                  href="{{trigger_link.jYQNc9YXcMkYPvo3HZfC}}" 
                   className="button-primary w-full py-6 text-base shadow-2xl shadow-purple-900/40 text-center block"
                 >
                   Post Role to Xchange

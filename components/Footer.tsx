@@ -54,7 +54,7 @@ export default function Footer() {
         <p>© {new Date().getFullYear()} RecXchange Engine. All rights reserved.</p>
         <div className="flex gap-8">
           <Link href="https://app.recxchange.io" className="hover:text-cyan-400 transition-colors">Platform Login</Link>
-          <Link href="https://app.recxchange.io/register" className="hover:text-fuchsia-400 transition-colors">Create Account</Link>
+          <Link href="{{trigger_link.jYQNc9YXcMkYPvo3HZfC}}" className="hover:text-fuchsia-400 transition-colors">Create Account</Link>
         </div>
       </div>
     </footer>

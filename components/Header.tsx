@@ -63,7 +63,7 @@ export default function Header() {
             Login
           </Link>
           <Link
-            href="https://app.recxchange.io/register"
+            href="{{trigger_link.jYQNc9YXcMkYPvo3HZfC}}"
             className="px-5 py-2.5 rounded-full bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white text-sm font-bold hover:scale-105 transition-all shadow-[0_0_20px_rgba(0,255,255,0.3)]"
           >
             Get Started Today
