@@ -1,5 +1,5 @@
 import "@/app/globals.css";
-import { Sora } from "next/font/google";
+import { Space_Grotesk, Inter } from "next/font/google";
 import React from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -8,7 +8,19 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 
-const sora = Sora({ subsets: ["latin"], weight: ["300", "400", "600", "700", "800"] });
+const spaceGrotesk = Space_Grotesk({ 
+  subsets: ["latin"], 
+  weight: ["400", "500", "600", "700"],
+  variable: '--font-heading',
+  display: 'swap',
+});
+
+const inter = Inter({ 
+  subsets: ["latin"], 
+  weight: ["300", "400", "500", "600", "700"],
+  variable: '--font-body',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: "RecXchange | Share Roles. Split Fees. Fill Roles. Get Paid.",
@@ -397,7 +409,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         />
       </head>
       <body
-        className={`${sora.className} bg-[#050508] min-h-screen antialiased overflow-x-hidden`}
+        className={`${inter.variable} ${spaceGrotesk.variable} font-body bg-[#050508] min-h-screen antialiased overflow-x-hidden`}
       >
         <ErrorBoundary>
           {/* Background Layer */}
