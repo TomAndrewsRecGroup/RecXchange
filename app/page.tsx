@@ -1,8 +1,32 @@
-"use client";
 import React from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "RecXchange | Recruiter Collaboration Platform - Share Roles, Split Fees, Get Paid",
+  description: "Join 15,000+ recruiters partnering on placements. Post roles to find candidates or share candidates to find roles. Split fees 50/50, 60/40, or 70/30. AI-powered matching with 270M candidates. One placement pays for the year.",
+  keywords: [
+    "recruiter collaboration platform",
+    "split fee recruitment",
+    "recruitment marketplace",
+    "recruiter network",
+    "fee share recruitment",
+    "collaborative recruitment",
+    "RecXchange",
+    "recruitment partnerships"
+  ],
+  openGraph: {
+    title: "RecXchange | Share Roles. Split Fees. Get Paid.",
+    description: "15,000+ recruiters partnering on placements. AI-powered matching. Split fees automatically.",
+    url: "https://recxchange.io",
+    type: "website"
+  },
+  alternates: {
+    canonical: "https://recxchange.io"
+  }
+};
 
 export default function EntryWall() {
   const router = useRouter();
