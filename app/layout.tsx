@@ -29,8 +29,8 @@ export const metadata: Metadata = {
     "recruitment fee split",
     "recruiter collaboration"
   ],
-  authors: [{ name: "Andrews Recruitment Group" }],
-  creator: "Andrews Recruitment Group",
+  authors: [{ name: "RecXchange" }],
+  creator: "RecXchange",
   publisher: "RecXchange",
   metadataBase: new URL("https://recxchange.io"),
   alternates: {
@@ -101,11 +101,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           "https://www.linkedin.com/company/recxchange",
           "https://twitter.com/RecXchange"
         ],
-        "description": "RecXchange is a recruiter collaboration platform where thousands of recruiters partner on placements and split fees automatically.",
-        "founder": {
-          "@type": "Organization",
-          "name": "Andrews Recruitment Group"
-        }
+        "description": "RecXchange is a recruiter collaboration platform where thousands of recruiters partner on placements and split fees automatically."
       },
       {
         "@type": "SoftwareApplication",
