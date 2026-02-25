@@ -31,19 +31,19 @@ export async function GET(request: NextRequest) {
       conversionRate: 12.5,
       insights: {
         biggestDropOff: {
-          stage: 'CONVERSION PATH: Completing signup form',
-          percentage: 42.3
+          stage: 'Completing signup form',
+          percentage: 41.6
         },
         topConversionTriggers: [
-          'fake_engine_signup_clicked',
-          'calculator_cta_clicked',
-          'hero_cta_clicked'
+          'Fake Engine Demo',
+          'Calculator Result',
+          'Hero CTA'
         ]
       },
       stages: [
         {
           stage: 'arrival',
-          description: 'WHERE: Initial arrival on site',
+          description: 'Arrived on Site',
           keyQuestions: [
             'What brought them here?',
             'Which page did they land on?',
@@ -61,7 +61,7 @@ export async function GET(request: NextRequest) {
         },
         {
           stage: 'discovery',
-          description: 'WHAT ROUTE: Exploring the platform',
+          description: 'Explored Platform',
           keyQuestions: [
             'What pages did they visit?',
             'How deep did they scroll?',
@@ -79,7 +79,7 @@ export async function GET(request: NextRequest) {
         },
         {
           stage: 'problem_identification',
-          description: 'WHAT PROBLEMS: Understanding pain points',
+          description: 'Researched Questions',
           keyQuestions: [
             'What questions did they have?',
             'What concerns were they researching?',
@@ -97,7 +97,7 @@ export async function GET(request: NextRequest) {
         },
         {
           stage: 'solution_exploration',
-          description: 'WHAT ANSWERS: Seeing how RecXchange solves their problems',
+          description: 'Saw Value Proposition',
           keyQuestions: [
             'What convinced them this works?',
             'Which proof points resonated?',
@@ -115,7 +115,7 @@ export async function GET(request: NextRequest) {
         },
         {
           stage: 'intent',
-          description: 'WHAT CONVERTED: Decision to sign up',
+          description: 'Clicked to Sign Up',
           keyQuestions: [
             'What triggered the signup intent?',
             'Which CTA did they click?',
@@ -133,7 +133,7 @@ export async function GET(request: NextRequest) {
         },
         {
           stage: 'conversion_attempt',
-          description: 'CONVERSION PATH: Completing signup form',
+          description: 'Started Signup Form',
           keyQuestions: [
             'Did they complete the form?',
             'Where did they get stuck?',
@@ -151,7 +151,7 @@ export async function GET(request: NextRequest) {
         },
         {
           stage: 'conversion_complete',
-          description: 'SUCCESS: Account created',
+          description: 'Account Created ✓',
           keyQuestions: [
             'How long did signup take?',
             'Did they complete it in one session?'
@@ -167,7 +167,7 @@ export async function GET(request: NextRequest) {
         },
         {
           stage: 'activation',
-          description: 'ACTIVATION: Active platform usage',
+          description: 'Became Active User',
           keyQuestions: [
             'Did they complete onboarding?',
             'Did they upload a candidate?',
@@ -198,19 +198,19 @@ export async function GET(request: NextRequest) {
       conversionRate: 18.4,
       insights: {
         biggestDropOff: {
-          stage: 'CONVERSION PATH: Booking the call via Calendly',
+          stage: 'Booking via Calendly',
           percentage: 38.5
         },
         topConversionTriggers: [
-          'book_call_cta_clicked',
-          'hero_cta_clicked',
-          'pricing_details_viewed'
+          'Book Call CTA',
+          'Pricing Page',
+          'Demo Video'
         ]
       },
       stages: [
         {
           stage: 'arrival',
-          description: 'WHERE: Initial arrival on site',
+          description: 'Arrived on Site',
           keyQuestions: [
             'What brought them here?',
             'Which hiring manager page did they land on?',
@@ -228,7 +228,7 @@ export async function GET(request: NextRequest) {
         },
         {
           stage: 'discovery',
-          description: 'WHAT ROUTE: Understanding the service',
+          description: 'Explored Service',
           keyQuestions: [
             'What pages did they visit?',
             'How engaged were they?',
@@ -246,7 +246,7 @@ export async function GET(request: NextRequest) {
         },
         {
           stage: 'problem_identification',
-          description: 'WHAT PROBLEMS: Researching recruitment solutions',
+          description: 'Researched Solutions',
           keyQuestions: [
             'What concerns did they research?',
             'What questions did they have about pricing?',
@@ -264,7 +264,7 @@ export async function GET(request: NextRequest) {
         },
         {
           stage: 'solution_exploration',
-          description: 'WHAT ANSWERS: Understanding how RecXchange helps',
+          description: 'Understood Benefits',
           keyQuestions: [
             'Did they watch the demo?',
             'Which benefits resonated?',
@@ -282,7 +282,7 @@ export async function GET(request: NextRequest) {
         },
         {
           stage: 'intent',
-          description: 'WHAT CONVERTED: Decision to book a call',
+          description: 'Clicked to Book Call',
           keyQuestions: [
             'What triggered the booking intent?',
             'Which CTA convinced them?',
@@ -300,7 +300,7 @@ export async function GET(request: NextRequest) {
         },
         {
           stage: 'conversion_attempt',
-          description: 'CONVERSION PATH: Booking the call via Calendly',
+          description: 'Opened Calendly',
           keyQuestions: [
             'Did they select a time?',
             'Where did they drop off?',
@@ -318,7 +318,7 @@ export async function GET(request: NextRequest) {
         },
         {
           stage: 'conversion_complete',
-          description: 'SUCCESS: Call booked',
+          description: 'Call Booked ✓',
           keyQuestions: [
             'How long did booking take?',
             'What time/date did they choose?',
@@ -335,7 +335,7 @@ export async function GET(request: NextRequest) {
         },
         {
           stage: 'activation',
-          description: 'ACTIVATION: Call attended and account created',
+          description: 'Attended Call & Joined',
           keyQuestions: [
             'Did they attend the call?',
             'Did they create an account after?',
@@ -404,6 +404,8 @@ export async function GET(request: NextRequest) {
 }
 
 function generateHTMLEmail(recruiterMetrics: FunnelMetrics, hiringManagerMetrics: FunnelMetrics): string {
+  const LOGO_URL = 'https://images.squarespace-cdn.com/content/v1/68120154725429476150f64b/00d296cd-6741-4c0a-a711-08a3f35db445/REX-Logo-GW-25.png?format=1500w';
+  
   return `
 <!DOCTYPE html>
 <html>
@@ -419,207 +421,210 @@ function generateHTMLEmail(recruiterMetrics: FunnelMetrics, hiringManagerMetrics
     .container {
       max-width: 900px;
       margin: 0 auto;
-      background: #111;
-      border-radius: 16px;
+      background: #0a0a0a;
+      border-radius: 20px;
       overflow: hidden;
-      border: 1px solid #222;
     }
     .header {
-      background: linear-gradient(135deg, #00ffff 0%, #c71df1 100%);
+      background: #000;
       padding: 40px;
       text-align: center;
+      border-bottom: 1px solid #222;
+    }
+    .logo {
+      max-width: 200px;
+      height: auto;
+      margin-bottom: 20px;
     }
     .header h1 {
       margin: 0;
-      color: #000;
+      color: #fff;
       font-size: 32px;
       font-weight: 800;
     }
     .header p {
-      margin: 8px 0 0 0;
-      color: #000;
-      opacity: 0.7;
-      font-size: 14px;
+      margin: 12px 0 0 0;
+      color: #888;
+      font-size: 16px;
     }
     .test-badge {
-      background: #ff4444;
+      background: linear-gradient(135deg, #ff4444, #ff0066);
       color: white;
-      padding: 4px 12px;
+      padding: 6px 16px;
       border-radius: 20px;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
-      margin-top: 10px;
+      margin-top: 15px;
       display: inline-block;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
     .content {
       padding: 40px;
     }
     .funnel {
       margin-bottom: 60px;
+      background: #111;
+      border-radius: 16px;
+      padding: 30px;
+      border: 1px solid #222;
     }
     .funnel-header {
       margin-bottom: 30px;
+      text-align: center;
     }
     .funnel h2 {
-      color: #00ffff;
-      font-size: 24px;
+      color: #fff;
+      font-size: 28px;
       margin: 0 0 8px 0;
     }
     .funnel-description {
       color: #888;
-      font-size: 14px;
+      font-size: 15px;
       margin: 0;
     }
-    .stats {
+    .summary-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 20px;
-      margin-bottom: 30px;
-      padding: 25px;
-      background: #0a0a0a;
-      border-radius: 12px;
-      border: 1px solid #222;
+      margin-bottom: 40px;
     }
-    .stat {
+    .summary-card {
+      background: linear-gradient(135deg, #0a0a0a, #111);
+      border: 2px solid #222;
+      border-radius: 12px;
+      padding: 20px;
       text-align: center;
     }
-    .stat-label {
-      font-size: 11px;
+    .summary-label {
+      font-size: 12px;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 1.5px;
       color: #666;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
+      font-weight: 600;
     }
-    .stat-value {
-      font-size: 36px;
-      font-weight: 800;
+    .summary-value {
+      font-size: 48px;
+      font-weight: 900;
       background: linear-gradient(135deg, #00ffff, #c71df1);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      line-height: 1;
     }
-    .insights {
-      padding: 20px;
-      background: #1a1a1a;
+    .summary-subtext {
+      font-size: 13px;
+      color: #666;
+      margin-top: 8px;
+    }
+    .alert-box {
+      background: linear-gradient(135deg, #ff4444, #ff0066);
       border-radius: 12px;
-      border-left: 4px solid #c71df1;
+      padding: 20px;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    .alert-box h3 {
+      margin: 0 0 10px 0;
+      font-size: 16px;
+      color: #fff;
+      font-weight: 700;
+    }
+    .alert-box p {
+      margin: 0;
+      font-size: 14px;
+      color: #fff;
+      opacity: 0.9;
+    }
+    .stage-visual {
       margin-bottom: 30px;
     }
-    .insights h3 {
-      color: #c71df1;
-      font-size: 16px;
-      margin: 0 0 15px 0;
-    }
-    .insight-item {
-      font-size: 13px;
-      color: #aaa;
-      margin-bottom: 8px;
-      line-height: 1.5;
-    }
-    .insight-item strong {
-      color: #fff;
-    }
-    .stage {
-      position: relative;
-      margin-bottom: 25px;
-      padding: 25px;
-      background: #0a0a0a;
-      border-radius: 12px;
-      border-left: 4px solid #00ffff;
+    .stage-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      gap: 15px;
     }
     .stage-number {
-      position: absolute;
-      top: 25px;
-      left: -15px;
-      width: 30px;
-      height: 30px;
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
       background: linear-gradient(135deg, #00ffff, #c71df1);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       color: #000;
-      font-weight: 800;
-      font-size: 14px;
+      font-weight: 900;
+      font-size: 18px;
     }
-    .stage-header {
+    .stage-content {
+      flex: 1;
+      background: #0a0a0a;
+      border: 1px solid #222;
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .stage-title-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
-      padding-left: 20px;
+      margin-bottom: 15px;
     }
     .stage-title {
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 700;
       color: #fff;
     }
     .stage-count {
-      font-size: 28px;
-      font-weight: 800;
-      color: #00ffff;
+      font-size: 32px;
+      font-weight: 900;
+      background: linear-gradient(135deg, #00ffff, #c71df1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
-    .stage-bar {
-      height: 10px;
-      background: #222;
-      border-radius: 5px;
+    .progress-bar-container {
+      background: #1a1a1a;
+      height: 12px;
+      border-radius: 6px;
       overflow: hidden;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
-    .stage-bar-fill {
+    .progress-bar {
       height: 100%;
       background: linear-gradient(90deg, #00ffff, #c71df1);
-      border-radius: 5px;
+      border-radius: 6px;
       transition: width 0.3s ease;
     }
-    .stage-meta {
+    .stage-stats {
       display: flex;
       justify-content: space-between;
-      font-size: 12px;
-      color: #666;
+      font-size: 13px;
+      color: #888;
       margin-bottom: 12px;
     }
-    .drop-off {
-      color: #ff4444;
-      font-weight: 600;
-    }
-    .stage-questions {
-      background: #1a1a1a;
-      padding: 15px;
+    .drop-off-warning {
+      background: rgba(255, 68, 68, 0.1);
+      border: 1px solid rgba(255, 68, 68, 0.3);
       border-radius: 8px;
-      margin-top: 12px;
+      padding: 10px 15px;
+      margin-top: 10px;
     }
-    .stage-questions-title {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #888;
-      margin-bottom: 8px;
+    .drop-off-text {
+      color: #ff4444;
+      font-weight: 700;
+      font-size: 14px;
     }
-    .stage-questions ul {
-      margin: 0;
-      padding-left: 20px;
-      list-style: none;
-    }
-    .stage-questions li {
+    .success-badge {
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: #22c55e;
+      padding: 4px 12px;
+      border-radius: 20px;
       font-size: 12px;
-      color: #bbb;
-      margin-bottom: 4px;
-      position: relative;
-    }
-    .stage-questions li:before {
-      content: '•';
-      color: #00ffff;
-      position: absolute;
-      left: -15px;
-    }
-    .top-events {
-      font-size: 11px;
-      color: #777;
-      margin-top: 8px;
-    }
-    .top-events span {
-      color: #00ffff;
+      font-weight: 600;
     }
     .footer {
       text-align: center;
@@ -633,9 +638,10 @@ function generateHTMLEmail(recruiterMetrics: FunnelMetrics, hiringManagerMetrics
 <body>
   <div class="container">
     <div class="header">
-      <h1>📈 Weekly Funnel Report</h1>
-      <p>${recruiterMetrics.period.start.toLocaleDateString()} - ${recruiterMetrics.period.end.toLocaleDateString()}</p>
-      <span class="test-badge">TEST EMAIL - SAMPLE DATA</span>
+      <img src="${LOGO_URL}" alt="RecXchange Logo" class="logo" />
+      <h1>Weekly Funnel Report</h1>
+      <p>${recruiterMetrics.period.start.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })} - ${recruiterMetrics.period.end.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
+      <span class="test-badge">Test Email - Sample Data</span>
     </div>
     
     <div class="content">
@@ -645,7 +651,7 @@ function generateHTMLEmail(recruiterMetrics: FunnelMetrics, hiringManagerMetrics
     
     <div class="footer">
       <p><strong>RecXchange Analytics</strong> • Automated Weekly Report</p>
-      <p>Generated on ${new Date().toLocaleString()}</p>
+      <p>Generated on ${new Date().toLocaleString('en-GB')}</p>
     </div>
   </div>
 </body>
@@ -654,33 +660,34 @@ function generateHTMLEmail(recruiterMetrics: FunnelMetrics, hiringManagerMetrics
 }
 
 function generateFunnelHTML(metrics: FunnelMetrics): string {
-  const stagesHTML = metrics.stages.map((stage, index) => `
-    <div class="stage">
+  const stagesHTML = metrics.stages.map((stage, index) => {
+    const isDropOffHigh = stage.dropOffPercentage > 30;
+    const hasNoDrop = stage.dropOffPercentage === 0;
+    
+    return `
+    <div class="stage-row">
       <div class="stage-number">${index + 1}</div>
-      <div class="stage-header">
-        <div class="stage-title">${stage.description}</div>
-        <div class="stage-count">${stage.count}</div>
-      </div>
-      <div class="stage-bar">
-        <div class="stage-bar-fill" style="width: ${stage.percentage}%"></div>
-      </div>
-      <div class="stage-meta">
-        <span>${stage.percentage}% of total users</span>
-        ${stage.dropOffPercentage > 0 ? `<span class="drop-off">↓ ${stage.dropOffPercentage}% drop-off (${stage.dropOff} users)</span>` : '<span style="color: #22c55e;">✓ All users progressed</span>'}
-      </div>
-      ${stage.topEvents.length > 0 ? `
-        <div class="top-events">
-          Top events: <span>${stage.topEvents.map(e => `${e.event} (${e.count})`).join(', ')}</span>
+      <div class="stage-content">
+        <div class="stage-title-row">
+          <div class="stage-title">${stage.description}</div>
+          <div class="stage-count">${stage.count}</div>
         </div>
-      ` : ''}
-      <div class="stage-questions">
-        <div class="stage-questions-title">Key Questions:</div>
-        <ul>
-          ${stage.keyQuestions.map(q => `<li>${q}</li>`).join('')}
-        </ul>
+        <div class="progress-bar-container">
+          <div class="progress-bar" style="width: ${stage.percentage}%"></div>
+        </div>
+        <div class="stage-stats">
+          <span><strong>${stage.percentage}%</strong> of all visitors</span>
+          ${!hasNoDrop ? `<span><strong>${stage.dropOff}</strong> people left here</span>` : `<span class="success-badge">✓ Everyone continued</span>`}
+        </div>
+        ${isDropOffHigh ? `
+          <div class="drop-off-warning">
+            <div class="drop-off-text">⚠️ High Drop-off: ${stage.dropOffPercentage}% left at this stage</div>
+          </div>
+        ` : ''}
       </div>
     </div>
-  `).join('');
+    `;
+  }).join('');
 
   return `
     <div class="funnel">
@@ -689,32 +696,32 @@ function generateFunnelHTML(metrics: FunnelMetrics): string {
         <p class="funnel-description">${metrics.description}</p>
       </div>
       
-      <div class="stats">
-        <div class="stat">
-          <div class="stat-label">Total Users</div>
-          <div class="stat-value">${metrics.totalUsers}</div>
+      <div class="summary-grid">
+        <div class="summary-card">
+          <div class="summary-label">Total Visitors</div>
+          <div class="summary-value">${metrics.totalUsers}</div>
+          <div class="summary-subtext">this week</div>
         </div>
-        <div class="stat">
-          <div class="stat-label">Conversion Rate</div>
-          <div class="stat-value">${metrics.conversionRate}%</div>
+        <div class="summary-card">
+          <div class="summary-label">Conversion Rate</div>
+          <div class="summary-value">${metrics.conversionRate}%</div>
+          <div class="summary-subtext">signed up / booked</div>
         </div>
-        <div class="stat">
-          <div class="stat-label">Converted</div>
-          <div class="stat-value">${metrics.stages[metrics.stages.length - 1]?.count || 0}</div>
-        </div>
-      </div>
-      
-      <div class="insights">
-        <h3>🔍 Key Insights</h3>
-        <div class="insight-item">
-          <strong>Biggest Drop-off:</strong> ${metrics.insights.biggestDropOff.stage} (${metrics.insights.biggestDropOff.percentage}% loss)
-        </div>
-        <div class="insight-item">
-          <strong>Top Conversion Triggers:</strong> ${metrics.insights.topConversionTriggers.join(', ')}
+        <div class="summary-card">
+          <div class="summary-label">Converted</div>
+          <div class="summary-value">${metrics.stages[metrics.stages.length - 1]?.count || 0}</div>
+          <div class="summary-subtext">new users</div>
         </div>
       </div>
       
-      ${stagesHTML}
+      <div class="alert-box">
+        <h3>🚨 Biggest Problem Area</h3>
+        <p><strong>${metrics.insights.biggestDropOff.stage}</strong> - ${metrics.insights.biggestDropOff.percentage}% of people are leaving here</p>
+      </div>
+      
+      <div class="stage-visual">
+        ${stagesHTML}
+      </div>
     </div>
   `;
 }
