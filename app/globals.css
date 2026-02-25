@@ -21,6 +21,28 @@
     overflow-x: hidden;
   }
 
+  /* Toned-down link colors for better readability */
+  a {
+    @apply transition-colors;
+  }
+  
+  /* Make cyan links more subtle */
+  .text-cyan-400 {
+    color: rgb(103 232 249 / 0.7) !important;
+  }
+  .hover\:text-cyan-400:hover,
+  .hover\:text-cyan-300:hover {
+    color: rgb(103 232 249 / 0.9) !important;
+  }
+  
+  /* Make fuchsia links more subtle */
+  .text-fuchsia-400 {
+    color: rgb(232 121 249 / 0.7) !important;
+  }
+  .hover\:text-fuchsia-400:hover {
+    color: rgb(232 121 249 / 0.9) !important;
+  }
+
   /* Custom Scrollbar */
   ::-webkit-scrollbar {
     width: 8px;
