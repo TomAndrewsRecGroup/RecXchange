@@ -160,9 +160,11 @@ export async function GET(request: Request) {
     });
     
   } catch (error) {
-    console.error('Blog API error:', error);
+    // Log error details server-side only
+    console.error('[Blog API] Error:', error);
+    // Never expose error details to client (security)
     return NextResponse.json(
-      { error: 'Failed to fetch social posts', details: error },
+      { error: 'Failed to fetch social posts' },
       { status: 500 }
     );
   }
