@@ -18,7 +18,7 @@ export default function HiringManagerHome() {
   return (
     <main className="relative min-h-screen flex flex-col items-center pt-32 pb-20 px-6 overflow-x-hidden">
 
-      <div className="relative z-10 w-full max-w-4xl flex flex-col items-center">
+      <div className="relative z-10 w-full max-w-6xl flex flex-col items-center">
 
         {/* Intro Context */}
         <header className="text-center mb-12">
@@ -28,7 +28,7 @@ export default function HiringManagerHome() {
             transition={{ duration: 0.5 }}
           >
             <span className="block text-[10px] uppercase tracking-[0.4em] text-fuchsia-400/60 mb-6 font-bold">
-              RecX Direct — Powered by Andrews Recruitment Group
+              RecX Direct — Scale with a Digital RPO style process, but with agency style terms. Simple.
             </span>
             <h1 className="text-4xl md:text-6xl font-bold gradient-text mb-6 tracking-tight">
               Post your role for free.
@@ -139,8 +139,8 @@ export default function HiringManagerHome() {
           <div className="glass-card py-4 px-10 rounded-full border-cyan-400/10 flex flex-col md:flex-row justify-between items-center gap-4 text-[9px] text-gray-500 font-bold uppercase tracking-[0.2em]">
             <span className="opacity-60">Global Talent Infrastructure</span>
             <div className="flex gap-8">
-              <Link href="/hiring-manager-live" className="hover:text-cyan-400 transition-colors">Urgent</Link>
-              <Link href="/hiring-manager-strategic" className="hover:text-fuchsia-400 transition-colors">Strategic</Link>
+              <Link href="/hiring-manager-live" className="hover:text-cyan-400 transition-colors">Fill Role Now</Link>
+              <Link href="/hiring-manager-strategic" className="hover:text-fuchsia-400 transition-colors">Build Pipeline</Link>
               <Link href="/account-management" className="hover:text-white transition-colors">Enterprise</Link>
             </div>
           </div>
