@@ -28,17 +28,17 @@ export default function RecruiterDiagnostic() {
           >
             <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_rgba(0,255,255,0.8)]" />
             <span className="text-[9px] font-black text-cyan-400 uppercase tracking-[0.3em]">
-              Global Recruiter Protocol Active
+              Share Roles. Split Fees. Fill Roles. Get Paid.
             </span>
           </motion.div>
 
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight leading-tight">
-            How would you like to <br />
-            <span className="gradient-text">scale your desk today?</span>
+            What do you need <br />
+            <span className="gradient-text">right now?</span>
           </h1>
           <div className="pulse-underline mt-4 mx-auto" />
           <p className="text-gray-400 text-base md:text-lg max-w-2xl mx-auto mt-8 leading-relaxed">
-            RecXchange is a modular ecosystem. Tell us your current bottleneck and we'll route you to the specific tools, roles, or candidate pools you need.
+            Pick one. We'll show you how to make money from it.
           </p>
         </header>
 
@@ -47,11 +47,11 @@ export default function RecruiterDiagnostic() {
           <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/5 blur-[100px] pointer-events-none" />
 
           <div className="inline-block px-4 py-1.5 rounded-full border border-cyan-400/20 bg-cyan-400/5 text-[10px] font-bold uppercase tracking-[0.2em] text-cyan-400 mb-8">
-            Diagnostic — Select your path
+            Select your path
           </div>
 
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-12 tracking-tight">
-            Select the option that matches your current need:
+            Choose the option that matches your current need:
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -73,10 +73,14 @@ export default function RecruiterDiagnostic() {
                   </div>
                   <h3 className="text-xl font-bold text-white mb-4 group-hover:text-cyan-400 transition-colors">I need candidates</h3>
                   <p className="text-gray-500 text-sm leading-relaxed mb-8">
-                    You have signed roles and need candidates. Post to the Xchange Engine and let partner recruiters bring the candidates to you.
+                    You have a role but no candidates. Post it. Recruiters with matching candidates partner with you. Split the fee 50/50.
                   </p>
                   <ul className="space-y-4 mb-10">
-                    {["Instant AI Shortlisting", "Verified Recruiter Network", "Clients Protected"].map((item, i) => (
+                    {[
+                      "AI matches candidates to your role in seconds",
+                      "All recruiters rated and reviewed by others",
+                      "Your client details stay hidden until you agree"
+                    ].map((item, i) => (
                       <li key={i} className="text-[10px] text-gray-400 flex items-center gap-3 font-bold uppercase tracking-widest">
                         <span className="w-1 h-1 bg-cyan-400 rounded-full" /> {item}
                       </li>
@@ -86,7 +90,7 @@ export default function RecruiterDiagnostic() {
                 <div className="relative w-full py-4 rounded-xl border border-white/15 bg-black/40 overflow-hidden group/btn text-[10px] font-bold uppercase tracking-widest text-center transition-all">
                   <span className="absolute inset-[1px] rounded-xl bg-black/80 group-hover/btn:bg-transparent transition-colors" />
                   <span className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-fuchsia-500 opacity-0 group-hover/btn:opacity-100 transition-opacity" />
-                  <span className="relative z-10 text-white flex items-center justify-center">80%+ Matched Candidates, straight to you.</span>
+                  <span className="relative z-10 text-white flex items-center justify-center">Browse Roles to Fill</span>
                 </div>
               </motion.div>
             </Link>
@@ -108,10 +112,14 @@ export default function RecruiterDiagnostic() {
                   </div>
                   <h3 className="text-xl font-bold text-white mb-4 group-hover:text-fuchsia-400 transition-colors">I need roles</h3>
                   <p className="text-gray-500 text-sm leading-relaxed mb-8">
-                    You have elite talent but need roles to fill. Post to the Xchange Engine and let partner recruiters bring the roles to you.
+                    You have a great candidate but no role. Post them. Recruiters with matching roles partner with you. Split the fee 50/50.
                   </p>
                   <ul className="space-y-4 mb-10">
-                    {["Collaborative Split Fees", "Automated SFAs", "Circle of Trust Privacy"].map((item, i) => (
+                    {[
+                      "Pre-set split terms (50/50, 60/40, 70/30)",
+                      "Split fee agreements auto-generated and legally binding",
+                      "Candidate details hidden until you approve the match"
+                    ].map((item, i) => (
                       <li key={i} className="text-[10px] text-gray-400 flex items-center gap-3 font-bold uppercase tracking-widest">
                         <span className="w-1 h-1 bg-fuchsia-400 rounded-full" /> {item}
                       </li>
@@ -121,7 +129,7 @@ export default function RecruiterDiagnostic() {
                 <div className="relative w-full py-4 rounded-xl border border-white/15 bg-black/40 overflow-hidden group/btn text-[10px] font-bold uppercase tracking-widest text-center transition-all">
                   <span className="absolute inset-[1px] rounded-xl bg-black/80 group-hover/btn:bg-transparent transition-colors" />
                   <span className="absolute inset-0 bg-gradient-to-r from-fuchsia-500 to-cyan-500 opacity-0 group-hover/btn:opacity-100 transition-opacity" />
-                  <span className="relative z-10 text-white flex items-center justify-center">Data protected until you're ready</span>
+                  <span className="relative z-10 text-white flex items-center justify-center">Browse Recruiters with Roles</span>
                 </div>
               </motion.div>
             </Link>
