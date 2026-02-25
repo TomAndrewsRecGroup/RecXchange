@@ -30,7 +30,7 @@ export default function EntryWall() {
           <span className="block text-[10px] uppercase tracking-[0.4em] text-cyan-400/60 mb-6 font-bold">
             The Recruiter Xchange Engine
           </span>
-          <h1 className="text-5xl md:text-7xl font-bold gradient-text mb-6 tracking-tight">
+          <h1 className="text-5xl md:text-7xl font-bold gradient-text mb-[27px] tracking-tight">
             What describes you best?
           </h1>
           <div className="pulse-underline mb-10" />
