@@ -38,7 +38,7 @@ export default function HiringManagerHome() {
               15,000+ recruiters compete to fill it. You pay one fee when hired.
             </p>
             <div className="mt-6 flex flex-wrap justify-center gap-4 text-xs text-gray-500">
-              <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10">$7,000 avg fee</span>
+              <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10">15,000+ Recruiters</span>
               <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10">270M candidates</span>
               <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10">Engineering · Healthcare · Tech · HR · Sales · Finance</span>
             </div>
