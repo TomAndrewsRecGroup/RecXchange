@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { AnalyticsEvent } from '@/lib/analytics';
 import { 
-  recruiterFunnel, 
-  hiringManagerFunnel,
+  recruiterSignupFunnel, 
+  hiringManagerBookingFunnel,
   calculateFunnelMetrics,
   getWeeklyFunnelMetrics 
 } from '@/lib/funnel';
@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
     const { events } = await eventsResponse.json();
 
     // Select funnel configuration
-    const funnel = type === 'hiring-manager' ? hiringManagerFunnel : recruiterFunnel;
+    const funnel = type === 'hiring-manager' ? hiringManagerBookingFunnel : recruiterSignupFunnel;
 
     // Calculate metrics
     let metrics;
