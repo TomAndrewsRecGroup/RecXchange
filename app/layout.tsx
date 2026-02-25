@@ -102,9 +102,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
         },
         "sameAs": [
           "https://www.linkedin.com/company/recxchange",
-          "https://twitter.com/RecXchange"
+          "https://twitter.com/RecXchange",
+          "https://youtube.com/@recxchange"
         ],
-        "description": "RecXchange is a recruiter collaboration platform where 15,000+ recruiters partner on placements and split fees automatically. Average placement fee: $7,000. Access to 270M candidate profiles.",
+        "description": "RecXchange is a recruiter collaboration platform where 15,000+ recruiters partner on placements and split fees automatically. Average placement fee: $7,000. Access to 270M candidate profiles. $750,000 in fees available across 100+ live roles. Weekly live streams and video tutorials on YouTube.",
         "numberOfEmployees": {
           "@type": "QuantitativeValue",
           "value": 15000,
@@ -131,7 +132,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         "applicationCategory": "BusinessApplication",
         "operatingSystem": "Web",
         "url": "https://recxchange.io",
-        "description": "The recruiter network where 15,000+ recruiters partner on placements. Average placement fee: $7,000. Split fees up to 70% on RecX Direct roles. Access 270M candidate profiles. Post roles to find candidates, or share candidates to find roles.",
+        "description": "The recruiter network where 15,000+ recruiters partner on placements. Average placement fee: $7,000. Split fees up to 70% on RecX Direct roles. Access 270M candidate profiles. Post roles to find candidates, or share candidates to find roles. $750,000 in fees available across 100+ live roles in UK, USA, Europe, Africa, Middle East, Australia covering Engineering, Healthcare, Tech, HR, Sales, Finance.",
         "offers": [
           {
             "@type": "Offer",
@@ -200,7 +201,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
           "RecX Direct client role access with up to 70% split",
           "Average placement fee: $7,000",
           "15,000+ vetted recruiters",
-          "Timestamped submission protection"
+          "Timestamped submission protection",
+          "$750,000 in fees available across 100+ live roles",
+          "Weekly live streams and video tutorials"
         ]
       },
       {
