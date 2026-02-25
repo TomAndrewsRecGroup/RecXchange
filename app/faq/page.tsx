@@ -188,8 +188,8 @@ export default function FAQPage() {
                 <div className="space-y-6">
                   {/* Row 1: Total Fee */}
                   <div className="flex items-center justify-center">
-                    <div className="px-6 py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white font-bold">
-                      Total Placement Fee: $7,000
+                    <div className="px-6 py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white font-bold text-lg">
+                      Total Placement Fee: $10,000
                     </div>
                   </div>
                   
@@ -202,19 +202,19 @@ export default function FAQPage() {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="p-6 rounded-xl border border-cyan-400/20 bg-cyan-400/5">
                       <div className="text-cyan-400 font-bold text-lg mb-2">50/50 Split</div>
-                      <div className="text-2xl font-bold text-white mb-1">$3,500</div>
+                      <div className="text-2xl font-bold text-white mb-1">$5,000</div>
                       <div className="text-xs text-gray-500">Each recruiter</div>
                     </div>
                     
                     <div className="p-6 rounded-xl border border-fuchsia-400/20 bg-fuchsia-400/5">
                       <div className="text-fuchsia-400 font-bold text-lg mb-2">60/40 Split</div>
-                      <div className="text-2xl font-bold text-white mb-1">$4,200</div>
+                      <div className="text-2xl font-bold text-white mb-1">$6,000</div>
                       <div className="text-xs text-gray-500">Lead recruiter</div>
                     </div>
                     
                     <div className="p-6 rounded-xl border border-purple-400/20 bg-purple-400/5">
                       <div className="text-purple-400 font-bold text-lg mb-2">70% Direct</div>
-                      <div className="text-2xl font-bold text-white mb-1">$4,900</div>
+                      <div className="text-2xl font-bold text-white mb-1">$7,000</div>
                       <div className="text-xs text-gray-500">RecX Direct</div>
                     </div>
                   </div>
