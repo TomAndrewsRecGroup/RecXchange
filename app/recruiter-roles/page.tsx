@@ -20,25 +20,24 @@ export default function PostRolesPage() {
 
       <div className="max-w-6xl mx-auto relative z-10">
 
-        {/* 1. Visual Proof Section */}
-        <div className="mb-24 relative group">
-          <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-blue-600 rounded-[2.5rem] blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
-          <div className="relative glass-card rounded-[2.5rem] overflow-hidden border border-white/10 bg-black/40 shadow-2xl">
-            <div className="flex items-center justify-between px-8 py-4 border-b border-white/5 bg-white/5">
-               <div className="flex gap-2">
-                 <div className="w-2.5 h-2.5 rounded-full bg-red-500/20" />
-                 <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/20" />
-                 <div className="w-2.5 h-2.5 rounded-full bg-green-500/20" />
-               </div>
-               <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest italic">Live Dashboard — Role Management</span>
-            </div>
-            <img 
-              src="/role.png" 
-              alt="Xchange Engine Role Management" 
-              className="w-full h-auto opacity-90"
-            />
-          </div>
-        </div>
+        {/* Hero Header */}
+        <header className="text-center mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <span className="block text-[10px] uppercase tracking-[0.4em] text-cyan-400/60 mb-6 font-bold">
+              Need Candidates?
+            </span>
+            <h1 className="text-4xl md:text-6xl font-bold gradient-text mb-6 tracking-tight leading-tight">
+              See how much you'll take home
+            </h1>
+            <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
+              After collaborating with a pre-vetted recruiter. Split the work. Split the fee. Keep more than you think.
+            </p>
+          </motion.div>
+        </header>
 
         {/* 2. Main Workspace Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start mb-24">
