@@ -42,7 +42,7 @@ export default function AccountManagement() {
       </div>
 
       {/* Process Grid */}
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 mb-24">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 mb-24">
         {supportSteps.map((step, index) => (
           <div key={index} className="glass-card p-10 rounded-3xl hover:border-[#c71df1]/50 transition-colors group">
             <div className="mb-6 group-hover:scale-110 transition-transform duration-300">
@@ -83,7 +83,7 @@ export default function AccountManagement() {
         <p className="text-gray-500 mb-8">
           Experience the efficiency of the Xchange Engine backed by the expertise of a dedicated recruitment partner.
         </p>
-        <button className="px-10 py-4 rounded-full bg-white text-black font-bold hover:bg-gray-200 transition-all shadow-[0_0_30px_rgba(255,255,255,0.1)]">
+        <button className="px-10 py-4 rounded-full bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white font-bold hover:shadow-[0_0_25px_rgba(0,255,255,0.3)] transition-all">
           Schedule Your Briefing
         </button>
       </div>
