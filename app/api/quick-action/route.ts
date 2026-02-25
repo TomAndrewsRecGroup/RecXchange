@@ -57,6 +57,14 @@ const ACTION_CONFIG = {
 };
 
 /**
+ * Validate email address using RFC 5322 compliant regex
+ */
+function isValidEmail(email: string): boolean {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+/**
  * POST /api/quick-action
  * 
  * Handles quick action form submissions:
@@ -79,7 +87,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!email.includes('@')) {
+    // Validate email format
+    if (!isValidEmail(email)) {
       return NextResponse.json(
         { error: 'Invalid email address' },
         { status: 400 }
