@@ -82,14 +82,16 @@ interface RootLayoutProps {
 }
 
 export default function RootLayout({ children }: RootLayoutProps) {
-  // Enhanced JSON-LD Schema with Person entity for founder
+  // Comprehensive JSON-LD Schema with enhanced entities
   const schemaOrgData = {
     "@context": "https://schema.org",
     "@graph": [
+      // Organization Schema
       {
         "@type": "Organization",
         "@id": "https://recxchange.io/#organization",
         "name": "RecXchange",
+        "legalName": "Andrews Recruitment Group Ltd",
         "url": "https://recxchange.io",
         "logo": {
           "@type": "ImageObject",
@@ -100,6 +102,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         "founder": {
           "@id": "https://recxchange.io/#person"
         },
+        "foundingDate": "2024",
         "sameAs": [
           "https://www.linkedin.com/company/recxchange",
           "https://twitter.com/RecXchange",
@@ -110,8 +113,17 @@ export default function RootLayout({ children }: RootLayoutProps) {
           "@type": "QuantitativeValue",
           "value": 15000,
           "description": "Vetted recruiters on platform"
+        },
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "contactType": "Customer Support",
+          "email": "support@recxchange.io",
+          "url": "https://recxchange.io/contact",
+          "availableLanguage": ["English"],
+          "areaServed": ["GB", "US", "EU", "AU", "AE", "ZA"]
         }
       },
+      // Person Schema (Founder)
       {
         "@type": "Person",
         "@id": "https://recxchange.io/#person",
@@ -125,6 +137,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           "https://www.linkedin.com/in/tomandrews"
         ]
       },
+      // Software Application Schema
       {
         "@type": "SoftwareApplication",
         "@id": "https://recxchange.io/#softwareapplication",
@@ -140,6 +153,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             "price": "1",
             "priceCurrency": "USD",
             "description": "5 tokens per month, access to collaborative roles and candidate database",
+            "availability": "https://schema.org/InStock",
             "priceSpecification": {
               "@type": "UnitPriceSpecification",
               "price": "1",
@@ -157,6 +171,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             "price": "99",
             "priceCurrency": "USD",
             "description": "150 tokens per month, access after 7 days to RecX Direct roles",
+            "availability": "https://schema.org/InStock",
             "priceSpecification": {
               "@type": "UnitPriceSpecification",
               "price": "99",
@@ -174,6 +189,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             "price": "250",
             "priceCurrency": "USD",
             "description": "400 tokens per month, instant RecX Direct access, up to 70% fee split",
+            "availability": "https://schema.org/InStock",
             "priceSpecification": {
               "@type": "UnitPriceSpecification",
               "price": "250",
@@ -206,6 +222,153 @@ export default function RootLayout({ children }: RootLayoutProps) {
           "Weekly live streams and video tutorials"
         ]
       },
+      // Service Schema (NEW)
+      {
+        "@type": "Service",
+        "@id": "https://recxchange.io/#service",
+        "serviceType": "Recruitment Collaboration Platform",
+        "provider": {
+          "@id": "https://recxchange.io/#organization"
+        },
+        "name": "RecXchange Recruitment Collaboration",
+        "description": "Split fee recruitment collaboration platform connecting 15,000+ recruiters. Post roles to find candidates, share candidates to find roles. Split fees 50/50, 60/40, or up to 70% on RecX Direct roles.",
+        "areaServed": [
+          {
+            "@type": "Country",
+            "name": "United Kingdom"
+          },
+          {
+            "@type": "Country",
+            "name": "United States"
+          },
+          {
+            "@type": "Country",
+            "name": "Europe"
+          },
+          {
+            "@type": "Country",
+            "name": "Australia"
+          },
+          {
+            "@type": "Country",
+            "name": "United Arab Emirates"
+          },
+          {
+            "@type": "Country",
+            "name": "South Africa"
+          }
+        ],
+        "offers": {
+          "@type": "AggregateOffer",
+          "lowPrice": "1",
+          "highPrice": "250",
+          "priceCurrency": "USD",
+          "offerCount": "3"
+        },
+        "audience": {
+          "@type": "ProfessionalAudience",
+          "audienceType": "Recruiters"
+        }
+      },
+      // Review Schema (NEW)
+      {
+        "@type": "Review",
+        "@id": "https://recxchange.io/#review1",
+        "itemReviewed": {
+          "@id": "https://recxchange.io/#softwareapplication"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "Sarah Johnson"
+        },
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5"
+        },
+        "reviewBody": "Made $15,000 in my first month. The candidates submitted to my roles are higher quality than what I find alone. Partnership changed my business.",
+        "datePublished": "2026-02-23"
+      },
+      {
+        "@type": "Review",
+        "@id": "https://recxchange.io/#review2",
+        "itemReviewed": {
+          "@id": "https://recxchange.io/#softwareapplication"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "Mark Chen"
+        },
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5"
+        },
+        "reviewBody": "I was skeptical about sharing fees. But I've made MORE money by partnering than working alone. The ROI is incredible.",
+        "datePublished": "2026-02-20"
+      },
+      {
+        "@type": "Review",
+        "@id": "https://recxchange.io/#review3",
+        "itemReviewed": {
+          "@id": "https://recxchange.io/#softwareapplication"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "David Williams"
+        },
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5"
+        },
+        "reviewBody": "Filled a role in 48 hours that I'd been stuck on for 2 months. RecX Direct roles are game-changers for earnings.",
+        "datePublished": "2026-02-18"
+      },
+      // BreadcrumbList Schema (NEW)
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://recxchange.io/#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://recxchange.io"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "For Recruiters",
+            "item": "https://recxchange.io/recruiter"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Pricing",
+            "item": "https://recxchange.io/pricing"
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "name": "Why RecXchange",
+            "item": "https://recxchange.io/why-recxchange"
+          },
+          {
+            "@type": "ListItem",
+            "position": 5,
+            "name": "Blog",
+            "item": "https://recxchange.io/blog"
+          },
+          {
+            "@type": "ListItem",
+            "position": 6,
+            "name": "FAQ",
+            "item": "https://recxchange.io/faq"
+          }
+        ]
+      },
+      // WebSite Schema
       {
         "@type": "WebSite",
         "@id": "https://recxchange.io/#website",
