@@ -83,12 +83,12 @@ export default function EntryWall() {
               </div>
               <h2 className="text-4xl font-bold mb-6 text-white group-hover:text-cyan-400 transition-colors">Recruiter</h2>
               <p className="text-gray-400 text-base mb-8 leading-relaxed">
-                You're a recruiter. Post roles to find candidates. Or share candidates to find roles. Either way, split fees with 15,000+ recruiters.
+                You're a recruiter. Post roles to find candidates. Or share candidates to find roles. Either way, <Link href="/collaboration" className="text-cyan-400 hover:underline">split fees</Link> with 15,000+ recruiters.
               </p>
               <ul className="space-y-5 text-sm text-gray-500 font-medium">
                 <li className="flex items-center gap-4"><span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(0,255,255,0.8)]" /> Search 270M candidates when your pipeline is dry</li>
-                <li className="flex items-center gap-4"><span className="w-1.5 h-1.5 rounded-full bg-cyan-400" /> Up to 70% split on RecX Direct roles</li>
-                <li className="flex items-center gap-4"><span className="w-1.5 h-1.5 rounded-full bg-cyan-400" /> Split fee contracts protect both parties</li>
+                <li className="flex items-center gap-4"><span className="w-1.5 h-1.5 rounded-full bg-cyan-400" /> Up to <Link href="/why-recxchange" className="text-cyan-400 hover:underline">70% split on RecX Direct</Link> roles</li>
+                <li className="flex items-center gap-4"><span className="w-1.5 h-1.5 rounded-full bg-cyan-400" /> <Link href="/deal-protection" className="text-cyan-400 hover:underline">Split fee contracts</Link> protect both parties</li>
               </ul>
             </div>
 
@@ -116,12 +116,12 @@ export default function EntryWall() {
               </div>
               <h2 className="text-4xl font-bold mb-6 text-white group-hover:text-fuchsia-400 transition-colors">Hiring Manager</h2>
               <p className="text-gray-400 text-base mb-8 leading-relaxed">
-                You're hiring talent. We post your role. Thousands of recruiters compete to fill it. You pay one fee.
+                You're hiring talent. We <Link href="/hiring-manager-live" className="text-fuchsia-400 hover:underline">post your role</Link>. Thousands of recruiters compete to fill it. You pay one fee.
               </p>
               <ul className="space-y-5 text-sm text-gray-500 font-medium">
                 <li className="flex items-center gap-4"><span className="w-1.5 h-1.5 rounded-full bg-fuchsia-500 shadow-[0_0_8px_rgba(255,0,255,0.8)]" /> 15,000+ recruiters see your role instantly</li>
-                <li className="flex items-center gap-4"><span className="w-1.5 h-1.5 rounded-full bg-fuchsia-500" /> One point of contact. No recruiter spam.</li>
-                <li className="flex items-center gap-4"><span className="w-1.5 h-1.5 rounded-full bg-fuchsia-500" /> Test the market before you officially hire</li>
+                <li className="flex items-center gap-4"><span className="w-1.5 h-1.5 rounded-full bg-fuchsia-500" /> <Link href="/account-management" className="text-fuchsia-400 hover:underline">One point of contact</Link>. No recruiter spam.</li>
+                <li className="flex items-center gap-4"><span className="w-1.5 h-1.5 rounded-full bg-fuchsia-500" /> <Link href="/hiring-manager-strategic" className="text-fuchsia-400 hover:underline">Test the market</Link> before you officially hire</li>
               </ul>
             </div>
 
@@ -133,7 +133,7 @@ export default function EntryWall() {
           </motion.div>
         </div>
 
-        {/* Bottom Root Hint */}
+        {/* Bottom Root Hint - ENHANCED with more contextual links */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -143,7 +143,22 @@ export default function EntryWall() {
           <span className="opacity-60">Global Talent Infrastructure</span>
           <div className="h-4 w-[1px] bg-cyan-400/20 hidden md:block" />
           <Link href="/roles" className="hover:text-cyan-400 transition-colors">Preview Live Roles</Link>
+          <Link href="/pricing" className="hover:text-fuchsia-400 transition-colors">View Pricing</Link>
           <Link href="/deal-protection" className="hover:text-cyan-400 transition-colors">How Protection Works</Link>
+          <Link href="/blog" className="hover:text-cyan-400 transition-colors">Latest Updates</Link>
+          <Link href="/faq" className="hover:text-cyan-400 transition-colors">Common Questions</Link>
+        </motion.div>
+
+        {/* NEW: Additional Contextual Links Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1 }}
+          className="mt-12 max-w-3xl mx-auto"
+        >
+          <p className="text-gray-500 text-sm leading-relaxed text-center">
+            Join our <Link href="/blog" className="text-cyan-400 hover:underline">recruiter community</Link> with access to <Link href="/why-recxchange" className="text-cyan-400 hover:underline">270M candidate profiles</Link>. Learn <Link href="/collaboration" className="text-cyan-400 hover:underline">how split fees work</Link>, explore our <Link href="/pricing" className="text-fuchsia-400 hover:underline">transparent pricing tiers</Link>, or read success stories on our <Link href="/blog" className="text-cyan-400 hover:underline">blog</Link>. Questions? Check our <Link href="/faq" className="text-cyan-400 hover:underline">FAQ</Link> or <Link href="/contact" className="text-cyan-400 hover:underline">contact us</Link>.
+          </p>
         </motion.div>
       </div>
     </main>
