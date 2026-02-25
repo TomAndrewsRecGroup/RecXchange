@@ -3,7 +3,7 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import type { Metadata } from 'next';
+import type { Metadata };
 
 // Note: Metadata export removed - now handled by metadata.ts in this directory
 
@@ -66,9 +66,10 @@ export default function RolesMarketplace() {
             <span className="block text-[10px] uppercase tracking-[0.4em] text-purple-400/60 mb-6 font-bold">
               Live Roles · Live Revenue
             </span>
-            <h1 className="text-4xl md:text-6xl font-bold gradient-text mb-6 tracking-tight leading-tight">
+            <h1 className="text-4xl md:text-6xl font-bold gradient-text mb-6 tracking-tight leading-tight pb-2">
               One placement pays for 12 months
             </h1>
+            <div className="pulse-underline mb-8 mx-auto" />
             <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
               Browse live roles. Submit candidates. Split fees 50/50, 60/40, or take 70% on RecX Direct placements.
             </p>
