@@ -177,7 +177,7 @@ function generateHTMLEmail(
     }
     .ghl-summary {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 20px;
       margin-bottom: 30px;
     }
@@ -201,6 +201,11 @@ function generateHTMLEmail(
       font-weight: 900;
       color: #00ffff;
       line-height: 1;
+    }
+    .ghl-stat-subtext {
+      font-size: 13px;
+      color: #666;
+      margin-top: 8px;
     }
     .tier-grid {
       display: grid;
@@ -435,20 +440,25 @@ function generateHTMLEmail(
 }
 
 function generateGHLSection(ghlData: GHLConversionData): string {
-  const totalTierSignups = ghlData.tieredSignups.reduce((sum, tier) => sum + tier.count, 0);
-  
   return `
     <div class="ghl-section">
       <h2>💎 Actual Signups (from CRM)</h2>
       
       <div class="ghl-summary">
         <div class="ghl-stat">
-          <div class="ghl-stat-label">Website Visitors Tagged</div>
-          <div class="ghl-stat-value">${ghlData.websiteSignups}</div>
+          <div class="ghl-stat-label">Website Visitors</div>
+          <div class="ghl-stat-value">${ghlData.websiteTaggedContacts}</div>
+          <div class="ghl-stat-subtext">tagged this week</div>
         </div>
         <div class="ghl-stat">
-          <div class="ghl-stat-label">Paid Tier Signups</div>
-          <div class="ghl-stat-value">${totalTierSignups}</div>
+          <div class="ghl-stat-label">Paid Signups</div>
+          <div class="ghl-stat-value">${ghlData.totalTieredSignups}</div>
+          <div class="ghl-stat-subtext">with tier tag</div>
+        </div>
+        <div class="ghl-stat">
+          <div class="ghl-stat-label">Conversion Rate</div>
+          <div class="ghl-stat-value">${ghlData.conversionRate}%</div>
+          <div class="ghl-stat-subtext">to paid tier</div>
         </div>
       </div>
       
