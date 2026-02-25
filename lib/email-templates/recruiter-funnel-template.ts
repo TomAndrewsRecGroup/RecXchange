@@ -107,8 +107,17 @@ export function generateRecruiterFunnelEmail(
 }
 
 function generateGHLSection(ghlData: GHLConversionData): string {
-  const totalSignups =
-    ghlData.entry + ghlData.lite + ghlData.pro + ghlData.teams;
+  // Extract tier counts from tieredSignups array
+  const getTierCount = (tierName: string): number => {
+    const tier = ghlData.tieredSignups.find(t => t.tier.includes(tierName));
+    return tier?.count || 0;
+  };
+
+  const entryCount = getTierCount('entry');
+  const liteCount = getTierCount('lite');
+  const proCount = getTierCount('pro');
+  const teamsCount = getTierCount('teams');
+  const totalSignups = ghlData.totalTieredSignups;
 
   return `
     <div class="ghl-section">
@@ -133,21 +142,21 @@ function generateGHLSection(ghlData: GHLConversionData): string {
       </div>
 
       <div class="tier-grid">
-        <div class="tier-card ${ghlData.entry > 0 ? 'has-signups' : ''}">
+        <div class="tier-card ${entryCount > 0 ? 'has-signups' : ''}">
           <div class="tier-name">RecX Entry ($1)</div>
-          <div class="tier-count">${ghlData.entry}</div>
+          <div class="tier-count">${entryCount}</div>
         </div>
-        <div class="tier-card ${ghlData.lite > 0 ? 'has-signups' : ''}">
+        <div class="tier-card ${liteCount > 0 ? 'has-signups' : ''}">
           <div class="tier-name">RecX Lite ($99)</div>
-          <div class="tier-count">${ghlData.lite}</div>
+          <div class="tier-count">${liteCount}</div>
         </div>
-        <div class="tier-card ${ghlData.pro > 0 ? 'has-signups' : ''}">
+        <div class="tier-card ${proCount > 0 ? 'has-signups' : ''}">
           <div class="tier-name">RecX Pro ($250)</div>
-          <div class="tier-count">${ghlData.pro}</div>
+          <div class="tier-count">${proCount}</div>
         </div>
-        <div class="tier-card ${ghlData.teams > 0 ? 'has-signups' : ''}">
+        <div class="tier-card ${teamsCount > 0 ? 'has-signups' : ''}">
           <div class="tier-name">RecX Teams (Custom)</div>
-          <div class="tier-count">${ghlData.teams}</div>
+          <div class="tier-count">${teamsCount}</div>
         </div>
       </div>
     </div>
