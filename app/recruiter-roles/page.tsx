@@ -4,10 +4,79 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import RecruiterFinalCTA from '@/components/RecruiterFinalCTA';
 
+interface Currency {
+  code: string;
+  symbol: string;
+  name: string;
+}
+
+const currencies: Currency[] = [
+  { code: 'GBP', symbol: '£', name: 'British Pound' },
+  { code: 'USD', symbol: '$', name: 'US Dollar' },
+  { code: 'EUR', symbol: '€', name: 'Euro' },
+  { code: 'AUD', symbol: '$', name: 'Australian Dollar' },
+  { code: 'CAD', symbol: '$', name: 'Canadian Dollar' },
+  { code: 'CHF', symbol: 'Fr', name: 'Swiss Franc' },
+  { code: 'JPY', symbol: '¥', name: 'Japanese Yen' },
+  { code: 'CNY', symbol: '¥', name: 'Chinese Yuan' },
+  { code: 'INR', symbol: '₹', name: 'Indian Rupee' },
+  { code: 'AED', symbol: 'د.إ', name: 'UAE Dirham' },
+  { code: 'SAR', symbol: '﷼', name: 'Saudi Riyal' },
+  { code: 'ZAR', symbol: 'R', name: 'South African Rand' },
+  { code: 'SGD', symbol: '$', name: 'Singapore Dollar' },
+  { code: 'HKD', symbol: '$', name: 'Hong Kong Dollar' },
+  { code: 'NZD', symbol: '$', name: 'New Zealand Dollar' },
+  { code: 'SEK', symbol: 'kr', name: 'Swedish Krona' },
+  { code: 'NOK', symbol: 'kr', name: 'Norwegian Krone' },
+  { code: 'DKK', symbol: 'kr', name: 'Danish Krone' },
+  { code: 'PLN', symbol: 'zł', name: 'Polish Złoty' },
+  { code: 'CZK', symbol: 'Kč', name: 'Czech Koruna' },
+  { code: 'HUF', symbol: 'Ft', name: 'Hungarian Forint' },
+  { code: 'RON', symbol: 'lei', name: 'Romanian Leu' },
+  { code: 'BGN', symbol: 'лв', name: 'Bulgarian Lev' },
+  { code: 'HRK', symbol: 'kn', name: 'Croatian Kuna' },
+  { code: 'TRY', symbol: '₺', name: 'Turkish Lira' },
+  { code: 'ILS', symbol: '₪', name: 'Israeli Shekel' },
+  { code: 'THB', symbol: '฿', name: 'Thai Baht' },
+  { code: 'MYR', symbol: 'RM', name: 'Malaysian Ringgit' },
+  { code: 'IDR', symbol: 'Rp', name: 'Indonesian Rupiah' },
+  { code: 'PHP', symbol: '₱', name: 'Philippine Peso' },
+  { code: 'VND', symbol: '₫', name: 'Vietnamese Dong' },
+  { code: 'KRW', symbol: '₩', name: 'South Korean Won' },
+  { code: 'BRL', symbol: 'R$', name: 'Brazilian Real' },
+  { code: 'MXN', symbol: '$', name: 'Mexican Peso' },
+  { code: 'CLP', symbol: '$', name: 'Chilean Peso' },
+  { code: 'COP', symbol: '$', name: 'Colombian Peso' },
+  { code: 'PEN', symbol: 'S/', name: 'Peruvian Sol' },
+  { code: 'ARS', symbol: '$', name: 'Argentine Peso' },
+  { code: 'EGP', symbol: 'E£', name: 'Egyptian Pound' },
+  { code: 'NGN', symbol: '₦', name: 'Nigerian Naira' },
+  { code: 'KES', symbol: 'KSh', name: 'Kenyan Shilling' },
+  { code: 'GHS', symbol: '₵', name: 'Ghanaian Cedi' },
+  { code: 'MAD', symbol: 'د.م.', name: 'Moroccan Dirham' },
+  { code: 'TND', symbol: 'د.ت', name: 'Tunisian Dinar' },
+  { code: 'JOD', symbol: 'د.ا', name: 'Jordanian Dinar' },
+  { code: 'KWD', symbol: 'د.ك', name: 'Kuwaiti Dinar' },
+  { code: 'QAR', symbol: '﷼', name: 'Qatari Riyal' },
+  { code: 'OMR', symbol: '﷼', name: 'Omani Rial' },
+  { code: 'BHD', symbol: '.د.ب', name: 'Bahraini Dinar' },
+  { code: 'PKR', symbol: '₨', name: 'Pakistani Rupee' },
+  { code: 'BDT', symbol: '৳', name: 'Bangladeshi Taka' },
+  { code: 'LKR', symbol: 'Rs', name: 'Sri Lankan Rupee' },
+  { code: 'NPR', symbol: '₨', name: 'Nepalese Rupee' },
+  { code: 'MMK', symbol: 'K', name: 'Myanmar Kyat' },
+  { code: 'UZS', symbol: "so'm", name: 'Uzbekistani Som' },
+  { code: 'KZT', symbol: '₸', name: 'Kazakhstani Tenge' },
+  { code: 'UAH', symbol: '₴', name: 'Ukrainian Hryvnia' },
+  { code: 'RUB', symbol: '₽', name: 'Russian Ruble' },
+  { code: 'GEL', symbol: '₾', name: 'Georgian Lari' },
+];
+
 export default function PostRolesPage() {
   const [salary, setSalary] = useState<number>(90000);
   const [fee, setFee] = useState<number>(20);
   const [split, setSplit] = useState<number>(50);
+  const [selectedCurrency, setSelectedCurrency] = useState<Currency>(currencies[0]); // Default to GBP
 
   const totalFee = (salary * (fee / 100));
   const yourShare = totalFee * (split / 100);
@@ -98,8 +167,32 @@ export default function PostRolesPage() {
               </div>
               
               <div className="space-y-10">
+                {/* Currency Selector */}
                 <div className="space-y-4">
-                  <label className="text-[10px] uppercase text-gray-400 font-black tracking-[0.2em]">Annual Base Salary (£)</label>
+                  <label className="text-[10px] uppercase text-gray-400 font-black tracking-[0.2em]">Currency</label>
+                  <select
+                    value={selectedCurrency.code}
+                    onChange={(e) => {
+                      const currency = currencies.find(c => c.code === e.target.value);
+                      if (currency) setSelectedCurrency(currency);
+                    }}
+                    className="w-full bg-white/[0.03] border border-white/10 rounded-2xl px-6 py-5 text-lg text-white outline-none focus:border-purple-500/50 transition-all cursor-pointer appearance-none"
+                    style={{
+                      backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' opacity='0.4' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`,
+                      backgroundRepeat: 'no-repeat',
+                      backgroundPosition: 'right 1.5rem center',
+                    }}
+                  >
+                    {currencies.map((currency) => (
+                      <option key={currency.code} value={currency.code} className="bg-black text-white">
+                        {currency.code} - {currency.symbol} ({currency.name})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="space-y-4">
+                  <label className="text-[10px] uppercase text-gray-400 font-black tracking-[0.2em]">Annual Base Salary ({selectedCurrency.symbol})</label>
                   <input 
                     type="number" 
                     value={salary} 
@@ -133,10 +226,10 @@ export default function PostRolesPage() {
                   <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 blur-[60px] rounded-full" />
                   <span className="text-[10px] text-gray-400 block mb-3 uppercase tracking-[0.3em] font-black">Your Estimated Take-Home</span>
                   <span className="text-5xl md:text-6xl font-bold gradient-text tabular-nums tracking-tighter">
-                    £{Math.floor(yourShare).toLocaleString()}
+                    {selectedCurrency.symbol}{Math.floor(yourShare).toLocaleString()}
                   </span>
                   <div className="mt-6 pt-6 border-t border-white/5 flex justify-center gap-6">
-                     <span className="text-[9px] text-gray-500 uppercase font-bold tracking-widest">Total Invoice: £{totalFee.toLocaleString()}</span>
+                     <span className="text-[9px] text-gray-500 uppercase font-bold tracking-widest">Total Invoice: {selectedCurrency.symbol}{totalFee.toLocaleString()}</span>
                   </div>
                 </div>
 
