@@ -150,11 +150,12 @@ function FakeXchangeEngine() {
               .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
               .join(' ');
             
-            // Append specialty if found
+            // Append specialty if found - Use Array.from instead of spread
             if (specialties.length > 0) {
-              const uniqueSpecialties = [...new Set(specialties.map(s => 
+              const capitalizedSpecialties = specialties.map(s => 
                 s.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ')
-              ))];
+              );
+              const uniqueSpecialties = Array.from(new Set(capitalizedSpecialties));
               finalTitle = `${finalTitle} - ${uniqueSpecialties[0]}`;
             }
             
@@ -184,10 +185,12 @@ function FakeXchangeEngine() {
           .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
           .join(' ');
         
+        // Use Array.from instead of spread
         if (specialties.length > 0) {
-          const uniqueSpecialties = [...new Set(specialties.map(s => 
+          const capitalizedSpecialties = specialties.map(s => 
             s.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ')
-          ))];
+          );
+          const uniqueSpecialties = Array.from(new Set(capitalizedSpecialties));
           finalTitle = `${finalTitle} - ${uniqueSpecialties[0]}`;
         }
         
