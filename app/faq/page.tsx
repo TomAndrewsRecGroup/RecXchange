@@ -58,7 +58,7 @@ const faqs: FAQItem[] = [
   {
     category: "RecX Direct",
     question: "What is RecX Direct?",
-    answer: "RecX Direct is a service powered by Andrews Recruitment Group where end clients post their roles for free. Thousands of recruiters can work on these roles, and clients only deal with one point of contact (Andrews Recruitment Group)."
+    answer: "RecX Direct is a service where end clients post their roles for free. Thousands of recruiters can work on these roles, and clients only deal with one point of contact (Andrews Recruitment Group or Senior RecXchange Account Managers)."
   },
   {
     category: "RecX Direct",
@@ -80,7 +80,7 @@ const faqs: FAQItem[] = [
   {
     category: "Tokens & Pricing",
     question: "What happens if I run out of tokens?",
-    answer: "You can upgrade to a higher tier mid-month to get more tokens, or wait until your tokens refresh at the start of the next billing cycle."
+    answer: "You can upgrade to a higher tier mid-month to get more tokens, purchase additional tokens in blocks of 10, 40, 100, or 500 from the RecXchange shop inside the platform, or wait until your tokens refresh at the start of the next billing cycle."
   },
   {
     category: "Tokens & Pricing",
@@ -136,8 +136,7 @@ export default function FAQPage() {
           <motion.header
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-center mb-16"
-          >
+            className="text-center mb-16">
             <span className="block text-[10px] uppercase tracking-[0.4em] text-cyan-400/60 mb-6 font-bold">
               Frequently Asked Questions
             </span>
