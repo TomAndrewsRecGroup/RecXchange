@@ -7,10 +7,71 @@ import { trackEvent } from '@/lib/analytics';
 
 type EnginePhase = 'idle' | 'uploading' | 'matching' | 'result';
 
-// Job roles mapped by keywords found in CVs
+// Common job title patterns with professional certifications
+const JOB_TITLE_PATTERNS = [
+  // Healthcare & Medical
+  /\b(nurse|nursing|rn|registered nurse|lpn|cna|nurse practitioner|midwife|healthcare assistant|clinical nurse|mental health nurse|pediatric nurse|critical care nurse|oncology nurse|emergency nurse|theatre nurse|district nurse|school nurse|occupational health nurse|nurse prescriber|specialist nurse|advanced nurse practitioner)\b/gi,
+  /\b(doctor|physician|surgeon|consultant|gp|general practitioner|medical officer|psychiatrist|radiologist|cardiologist|anesthetist|dermatologist|neurologist|pediatrician)\b/gi,
+  /\b(pharmacist|pharmacy|pharmaceutical|dispensing)\b/gi,
+  /\b(physiotherapist|occupational therapist|speech therapist|therapist|counselor|psychologist|clinical psychologist)\b/gi,
+  /\b(paramedic|emergency medical|emt|ambulance)\b/gi,
+  /\b(dental|dentist|orthodontist|hygienist)\b/gi,
+  /\b(radiographer|sonographer|medical imaging)\b/gi,
+  /\b(healthcare manager|clinical manager|ward manager|practice manager)\b/gi,
+  
+  // Engineering
+  /\b(mechanical engineer|civil engineer|electrical engineer|structural engineer|chemical engineer|aerospace engineer|biomedical engineer|industrial engineer|marine engineer|mining engineer|environmental engineer|automotive engineer|manufacturing engineer|design engineer|project engineer|site engineer|test engineer|validation engineer|systems engineer)\b/gi,
+  /\b(software engineer|developer|programmer|full stack|frontend|backend|web developer|mobile developer|devops|cloud engineer|data engineer|ml engineer|ai engineer|security engineer)\b/gi,
+  
+  // Technology
+  /\b(data scientist|data analyst|business analyst|system analyst|solutions architect|cloud architect|network architect|infrastructure engineer|network engineer|database administrator|dba|it manager|technical lead|tech lead|scrum master|product owner)\b/gi,
+  /\b(ux designer|ui designer|product designer|graphic designer|web designer|creative director|art director)\b/gi,
+  /\b(qa engineer|quality assurance|test engineer|qa analyst|automation engineer)\b/gi,
+  
+  // Business & Management
+  /\b(project manager|programme manager|product manager|operations manager|general manager|business development manager|account manager|relationship manager|client services manager)\b/gi,
+  /\b(sales director|sales manager|account executive|business development|sales representative|sales consultant)\b/gi,
+  /\b(marketing director|marketing manager|digital marketing|content manager|seo specialist|social media manager|brand manager|growth manager)\b/gi,
+  /\b(hr manager|human resources|talent acquisition|recruiter|recruitment consultant|people operations|hr business partner|hr advisor|talent partner)\b/gi,
+  /\b(financial analyst|accountant|finance manager|controller|cfo|financial controller|management accountant|chartered accountant|auditor|tax advisor)\b/gi,
+  /\b(operations director|operations manager|supply chain|logistics manager|procurement manager|warehouse manager)\b/gi,
+  
+  // Education
+  /\b(teacher|lecturer|professor|teaching assistant|head teacher|deputy head|tutor|instructor|trainer|education coordinator)\b/gi,
+  
+  // Legal
+  /\b(solicitor|barrister|lawyer|legal advisor|paralegal|legal executive|compliance officer|legal counsel)\b/gi,
+  
+  // Construction & Trades
+  /\b(construction manager|site manager|quantity surveyor|building surveyor|carpenter|electrician|plumber|joiner|bricklayer|plasterer|roofer|painter|decorator)\b/gi,
+  
+  // Retail & Hospitality
+  /\b(store manager|retail manager|assistant manager|team leader|supervisor|chef|sous chef|head chef|kitchen manager|restaurant manager|bar manager|hotel manager)\b/gi,
+  
+  // Other Professional
+  /\b(architect|town planner|surveyor|estate agent|property manager|facilities manager|office manager|executive assistant|pa|personal assistant|administrator|receptionist)\b/gi,
+  /\b(social worker|care manager|support worker|youth worker|community worker)\b/gi,
+  /\b(journalist|editor|copywriter|content writer|technical writer|communications manager|pr manager)\b/gi,
+];
+
+// Specialty/certification patterns (to append to job titles)
+const SPECIALTY_PATTERNS = [
+  /\b(adhd|adhd specialist|adhd prescriber)\b/gi,
+  /\b(diabetes|diabetes specialist)\b/gi,
+  /\b(mental health|psychiatry|psychiatric)\b/gi,
+  /\b(pediatric|paediatric|children|neonatal)\b/gi,
+  /\b(oncology|cancer)\b/gi,
+  /\b(cardiology|cardiac)\b/gi,
+  /\b(neurology|neurological)\b/gi,
+  /\b(emergency|a&e|accident and emergency|trauma)\b/gi,
+  /\b(intensive care|icu|critical care)\b/gi,
+  /\b(surgery|surgical|operating theatre|perioperative)\b/gi,
+];
+
+// Job role mappings for keyword-based fallback
 const jobMappings: Record<string, string[]> = {
   'Senior Software Engineer': ['software', 'developer', 'programming', 'javascript', 'python', 'java', 'react', 'node', 'frontend', 'backend', 'full stack', 'web dev'],
-  'Data Scientist': ['data science', 'machine learning', 'ml', 'analytics', 'statistics', 'data analysis', 'python', 'r language', 'pandas', 'tensorflow'],
+  'Data Scientist': ['data science', 'machine learning', 'ml', 'analytics', 'statistics', 'data analysis', 'pandas', 'tensorflow'],
   'DevOps Engineer': ['devops', 'kubernetes', 'docker', 'aws', 'azure', 'cloud', 'ci/cd', 'jenkins', 'terraform', 'infrastructure'],
   'Product Manager': ['product management', 'product manager', 'roadmap', 'agile', 'scrum', 'stakeholder', 'user stories', 'product owner'],
   'Sales Director': ['sales', 'business development', 'account management', 'revenue', 'b2b', 'enterprise sales', 'crm', 'salesforce', 'closing deals'],
@@ -21,7 +82,7 @@ const jobMappings: Record<string, string[]> = {
   'HR Manager': ['human resources', 'hr', 'recruitment', 'talent acquisition', 'employee relations', 'hr manager', 'people operations'],
   'Financial Analyst': ['finance', 'financial analysis', 'accounting', 'excel', 'financial modeling', 'budgeting', 'forecasting', 'cpa', 'cfa'],
   'Project Manager': ['project management', 'pmp', 'project manager', 'stakeholder management', 'waterfall', 'agile', 'project planning'],
-  'UX Designer': ['ux', 'ui', 'user experience', 'user interface', 'figma', 'sketch', 'adobe xd', 'wireframes', 'prototyping', 'design'],
+  'UX Designer': ['ux', 'ui', 'user experience', 'user interface', 'figma', 'sketch', 'adobe xd', 'wireframes', 'prototyping'],
   'Quality Assurance Engineer': ['qa', 'quality assurance', 'testing', 'test automation', 'selenium', 'manual testing', 'test cases'],
   'Operations Manager': ['operations', 'operations management', 'supply chain', 'logistics', 'process improvement', 'lean', 'six sigma']
 };
@@ -45,20 +106,107 @@ function FakeXchangeEngine() {
       const reader = new FileReader();
       reader.onload = (e) => {
         const text = e.target?.result as string;
-        resolve(text.toLowerCase());
+        resolve(text);
       };
       reader.readAsText(file);
     });
   };
 
-  const findBestMatch = (cvText: string): string => {
+  const extractJobTitle = (cvText: string): string | null => {
+    const textLower = cvText.toLowerCase();
+    
+    // Common CV section headers that precede job titles
+    const experienceSectionPatterns = [
+      /(?:professional experience|work experience|employment history|experience|career history|work history)[:\s]*([\s\S]{0,2000}?)(?=education|skills|qualifications|certifications|references|$)/gi,
+      /(?:current role|current position|present)[:\s]*([\s\S]{0,500}?)(?=\n\n|education|skills)/gi,
+      /(?:job title|position|role)[:\s]*([^\n]{5,100})/gi,
+    ];
+
+    // Try to extract from experience sections first
+    for (const pattern of experienceSectionPatterns) {
+      const matches = cvText.match(pattern);
+      if (matches && matches.length > 0) {
+        const experienceSection = matches[0];
+        
+        // Search for job title patterns in this section
+        for (const titlePattern of JOB_TITLE_PATTERNS) {
+          const titleMatches = experienceSection.match(titlePattern);
+          if (titleMatches && titleMatches.length > 0) {
+            // Get the first (most recent) job title
+            const extractedTitle = titleMatches[0].trim();
+            
+            // Check for specialties to append
+            const specialties: string[] = [];
+            for (const specialtyPattern of SPECIALTY_PATTERNS) {
+              const specialtyMatches = cvText.match(specialtyPattern);
+              if (specialtyMatches && specialtyMatches.length > 0) {
+                specialties.push(specialtyMatches[0].trim());
+              }
+            }
+            
+            // Capitalize properly
+            let finalTitle = extractedTitle
+              .split(' ')
+              .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+              .join(' ');
+            
+            // Append specialty if found
+            if (specialties.length > 0) {
+              const uniqueSpecialties = [...new Set(specialties.map(s => 
+                s.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ')
+              ))];
+              finalTitle = `${finalTitle} - ${uniqueSpecialties[0]}`;
+            }
+            
+            return finalTitle;
+          }
+        }
+      }
+    }
+
+    // Fallback: Search entire document for job title patterns
+    for (const titlePattern of JOB_TITLE_PATTERNS) {
+      const titleMatches = cvText.match(titlePattern);
+      if (titleMatches && titleMatches.length > 0) {
+        const extractedTitle = titleMatches[0].trim();
+        
+        // Check for specialties
+        const specialties: string[] = [];
+        for (const specialtyPattern of SPECIALTY_PATTERNS) {
+          const specialtyMatches = cvText.match(specialtyPattern);
+          if (specialtyMatches && specialtyMatches.length > 0) {
+            specialties.push(specialtyMatches[0].trim());
+          }
+        }
+        
+        let finalTitle = extractedTitle
+          .split(' ')
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+          .join(' ');
+        
+        if (specialties.length > 0) {
+          const uniqueSpecialties = [...new Set(specialties.map(s => 
+            s.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ')
+          ))];
+          finalTitle = `${finalTitle} - ${uniqueSpecialties[0]}`;
+        }
+        
+        return finalTitle;
+      }
+    }
+
+    return null;
+  };
+
+  const findBestMatchFromKeywords = (cvText: string): string => {
+    const textLower = cvText.toLowerCase();
     let bestMatch = 'Senior Software Engineer'; // default fallback
     let highestScore = 0;
 
     Object.entries(jobMappings).forEach(([role, keywords]) => {
       let score = 0;
       keywords.forEach(keyword => {
-        if (cvText.includes(keyword.toLowerCase())) {
+        if (textLower.includes(keyword.toLowerCase())) {
           score += 1;
         }
       });
@@ -88,8 +236,13 @@ function FakeXchangeEngine() {
       // Extract text from file
       const cvText = await extractTextFromFile(file);
       
-      // Find best matching job title based on CV content
-      const matchedJob = findBestMatch(cvText);
+      // Try to extract actual job title from CV first (PRIORITY)
+      let matchedJob = extractJobTitle(cvText);
+      
+      // If no job title found, fallback to keyword matching
+      if (!matchedJob) {
+        matchedJob = findBestMatchFromKeywords(cvText);
+      }
 
       // Generate random results with matched job
       const randomScore = Math.floor(Math.random() * (97 - 85 + 1)) + 85;
@@ -114,15 +267,15 @@ function FakeXchangeEngine() {
         });
       }, 2800);
     } catch (error) {
-      // If parsing fails, use random job as fallback
-      const allJobs = Object.keys(jobMappings);
-      const randomJob = allJobs[Math.floor(Math.random() * allJobs.length)];
+      console.error('CV parsing error:', error);
+      // If parsing fails, use keyword-based fallback
+      const fallbackJob = 'Senior Software Engineer';
       const randomScore = Math.floor(Math.random() * (97 - 85 + 1)) + 85;
       const randomFee = Math.floor(Math.random() * (9000 - 4500 + 1)) + 4500;
 
       setMatchScore(randomScore);
       setSplitFee(randomFee);
-      setJobTitle(randomJob);
+      setJobTitle(fallbackJob);
 
       setTimeout(() => setPhase('matching'), 800);
       setTimeout(() => {
@@ -131,7 +284,7 @@ function FakeXchangeEngine() {
         trackEvent('fake_engine_result_shown', {
           page: '/recruiters-with-candidates',
           persona: 'recruiter',
-          matched_job: randomJob,
+          matched_job: fallbackJob,
           match_score: randomScore,
           split_fee: randomFee
         });
@@ -293,7 +446,7 @@ function FakeXchangeEngine() {
               <div className="relative w-full py-6 px-8 rounded-2xl border-2 border-dashed border-cyan-400/30 bg-cyan-400/5 hover:bg-cyan-400/10 hover:border-cyan-400/50 transition-all text-center group">
                 <Upload size={32} className="mx-auto mb-3 text-cyan-400 group-hover:scale-110 transition-transform" />
                 <p className="text-sm font-bold text-white mb-1">Upload Candidate CV</p>
-                <p className="text-xs text-gray-500">PDF, DOC, or DOCX (browser only, not stored)</p>
+                <p className="text-xs text-gray-500">PDF, DOC, DOCX, or TXT (browser only, not stored)</p>
               </div>
               <input
                 type="file"
@@ -313,7 +466,7 @@ function FakeXchangeEngine() {
                 <div className="flex items-center gap-3">
                   <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse" />
                   <p className="text-xs text-gray-400 font-medium">
-                    {phase === 'uploading' ? 'Processing candidate profile...' : 'Scanning 100+ live roles for matches...'}
+                    {phase === 'uploading' ? 'Extracting job title and skills from CV...' : 'Scanning 100+ live roles for matches...'}
                   </p>
                 </div>
               </motion.div>
