@@ -16,9 +16,10 @@ export default function WhyRecXchangePage() {
           <span className="block text-[10px] uppercase tracking-[0.4em] text-cyan-400/60 mb-6 font-bold">
             Platform Comparison
           </span>
-          <h1 className="text-5xl md:text-6xl font-bold gradient-text mb-6 tracking-tight">
+          <h1 className="text-5xl md:text-6xl font-bold gradient-text mb-6 tracking-tight leading-tight pb-2">
             Why Choose RecXchange?
           </h1>
+          <div className="pulse-underline mb-8 mx-auto" />
           <p className="text-gray-400 text-lg max-w-3xl mx-auto leading-relaxed">
             See how RecXchange compares to traditional recruitment methods. Better for recruiters, better for hiring managers, better results for everyone.
           </p>
