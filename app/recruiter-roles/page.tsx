@@ -82,7 +82,7 @@ export default function PostRolesPage() {
   const yourShare = totalFee * (split / 100);
 
   return (
-    <main className="min-h-screen pt-32 pb-20 px-6 mesh-background relative overflow-x-hidden text-white">
+    <main className="min-h-screen pt-24 pb-20 px-6 mesh-background relative overflow-x-hidden text-white">
       
       <div className="fixed bottom-0 right-0 w-[45%] h-[45%] bg-purple-600/10 blur-[130px] rounded-full pointer-events-none -z-10" />
       <div className="fixed top-0 left-0 w-[35%] h-[35%] bg-blue-600/10 blur-[130px] rounded-full pointer-events-none -z-10" />
@@ -99,9 +99,10 @@ export default function PostRolesPage() {
             <span className="block text-[10px] uppercase tracking-[0.4em] text-cyan-400/60 mb-6 font-bold">
               Need Candidates?
             </span>
-            <h1 className="text-4xl md:text-6xl font-bold gradient-text mb-6 tracking-tight leading-tight">
+            <h1 className="text-4xl md:text-6xl font-bold gradient-text mb-6 tracking-tight leading-tight pb-2">
               See how much you'll take home
             </h1>
+            <div className="pulse-underline mb-8 mx-auto" />
             <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
               After collaborating with a pre-vetted recruiter. Split the work. Split the fee. Keep more than you think.
             </p>
