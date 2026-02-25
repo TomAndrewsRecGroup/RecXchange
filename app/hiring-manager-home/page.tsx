@@ -20,16 +20,35 @@ export default function HiringManagerHome() {
 
       <div className="relative z-10 w-full max-w-4xl flex flex-col items-center">
 
+        {/* Intro Context */}
+        <header className="text-center mb-12">
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <span className="block text-[10px] uppercase tracking-[0.4em] text-fuchsia-400/60 mb-6 font-bold">
+              RecX Direct — Powered by Andrews Recruitment Group
+            </span>
+            <h1 className="text-4xl md:text-6xl font-bold gradient-text mb-6 tracking-tight">
+              Post your role for free.
+            </h1>
+            <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
+              Thousands of recruiters compete to fill it. You pay one fee when hired.
+            </p>
+          </motion.div>
+        </header>
+
         {/* Diagnostic Card */}
         <section className="glass-card w-full rounded-[3rem] p-10 md:p-14 border-fuchsia-400/10 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-64 h-64 bg-fuchsia-500/5 blur-[100px] pointer-events-none" />
 
           <div className="inline-block px-4 py-1.5 rounded-full border border-fuchsia-400/20 bg-fuchsia-400/5 text-[10px] font-bold uppercase tracking-[0.2em] text-fuchsia-400 mb-8">
-            Diagnostic — Select your priority
+            Select your priority
           </div>
 
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-12 tracking-tight">
-            Select the path that matches your current timeline:
+            Choose the path that matches your current timeline:
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -47,12 +66,16 @@ export default function HiringManagerHome() {
                   <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-400/20 flex items-center justify-center mb-6 text-cyan-400">
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-4 group-hover:text-cyan-400 transition-colors">Urgent Support</h3>
+                  <h3 className="text-xl font-bold text-white mb-4 group-hover:text-cyan-400 transition-colors">Fill Role Now</h3>
                   <p className="text-gray-500 text-sm leading-relaxed mb-8">
-                    Open roles that need immediate shortlists. Broadcast your brief to specialised recruiters today.
+                    You need someone hired this month. Post your role. Get shortlisted candidates in 48 hours. Pay one fee when you hire.
                   </p>
                   <ul className="space-y-4 mb-10">
-                    {["Single Brief Distribution", "Instant Fee Alignment"].map((item, i) => (
+                    {[
+                      "Post once, thousands of recruiters see it",
+                      "Set your fee upfront (12-20% standard)",
+                      "First candidates submitted in 48 hours"
+                    ].map((item, i) => (
                       <li key={i} className="text-[10px] text-gray-400 flex items-center gap-3 font-bold uppercase tracking-widest">
                         <span className="w-1 h-1 bg-cyan-400 rounded-full" /> {item}
                       </li>
@@ -60,7 +83,7 @@ export default function HiringManagerHome() {
                   </ul>
                 </div>
                 <div className="w-full py-4 rounded-xl border border-cyan-400/30 bg-cyan-400/5 text-[10px] font-bold text-cyan-400 uppercase tracking-widest text-center group-hover:bg-gradient-to-r group-hover:from-cyan-500 group-hover:to-fuchsia-500 group-hover:text-white group-hover:border-transparent transition-all">
-                  Resolve Live Roles
+                  Post Urgent Role
                 </div>
               </motion.div>
             </Link>
@@ -78,12 +101,16 @@ export default function HiringManagerHome() {
                   <div className="w-10 h-10 rounded-xl bg-fuchsia-500/10 border border-fuchsia-400/20 flex items-center justify-center mb-6 text-fuchsia-400">
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-4 group-hover:text-fuchsia-400 transition-colors">Strategic Planning</h3>
+                  <h3 className="text-xl font-bold text-white mb-4 group-hover:text-fuchsia-400 transition-colors">Build Pipeline</h3>
                   <p className="text-gray-500 text-sm leading-relaxed mb-8">
-                    Map the market and pre-warm talent pools before you hire. Build a pipeline for upcoming sign-offs.
+                    You're hiring in 3-6 months. Test the market now. See who's available. Build a pipeline before you officially recruit.
                   </p>
                   <ul className="space-y-4 mb-10">
-                    {["Market Mapping Insights", "Pipeline Brand Warming"].map((item, i) => (
+                    {[
+                      "See candidate availability before you post publicly",
+                      "Engage candidates before your role goes live",
+                      "Build talent pipeline for future hiring"
+                    ].map((item, i) => (
                       <li key={i} className="text-[10px] text-gray-400 flex items-center gap-3 font-bold uppercase tracking-widest">
                         <span className="w-1 h-1 bg-fuchsia-400 rounded-full" /> {item}
                       </li>
@@ -91,7 +118,7 @@ export default function HiringManagerHome() {
                   </ul>
                 </div>
                 <div className="w-full py-4 rounded-xl border border-fuchsia-400/30 bg-fuchsia-400/5 text-[10px] font-bold text-fuchsia-400 uppercase tracking-widest text-center group-hover:bg-gradient-to-r group-hover:from-fuchsia-500 group-hover:to-cyan-500 group-hover:text-white group-hover:border-transparent transition-all">
-                  Build Hiring Roadmap
+                  Start Market Mapping
                 </div>
               </motion.div>
             </Link>
