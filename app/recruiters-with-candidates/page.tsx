@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function RecruiterCandidatesPage() {
   return (
-    <div className="w-full pb-20 pt-10 px-6 max-w-7xl mx-auto">
+    <div className="w-full pb-20 pt-10 px-6 max-w-6xl mx-auto">
       {/* Hero Section */}
       <div className="text-center mb-20">
         <h3 className="text-[10px] uppercase tracking-[0.3em] font-bold text-[#312fd7] mb-4">
@@ -20,36 +20,38 @@ export default function RecruiterCandidatesPage() {
       </div>
 
       {/* Main Feature: The Database Sync */}
-      <div className="grid lg:grid-cols-2 gap-12 items-start mb-32">
-        <div className="glass-card p-12 rounded-[3rem] border-l-4 border-[#312fd7] relative overflow-hidden">
-          <div className="absolute top-0 right-0 p-8 opacity-5">
-            <Database size={200} />
+      <div className="grid lg:grid-cols-2 gap-12 items-stretch mb-32">
+        <div className="glass-card p-12 rounded-[3rem] border-l-4 border-[#312fd7] relative overflow-hidden flex flex-col justify-between">
+          <div>
+            <div className="absolute top-0 right-0 p-8 opacity-5">
+              <Database size={200} />
+            </div>
+            <h2 className="text-3xl font-bold mb-6">
+              Utilize Your Existing <span className="text-[#312fd7]">Database</span>
+            </h2>
+            <p className="text-gray-400 mb-8 leading-relaxed">
+              The Xchange Engine automatically analyzes your CVs and profiles to extract meaningful insights like skill compatibility, career trajectory, and industry relevance. It then matches these candidates across multiple dimensions to the best-suited roles on the platform.
+            </p>
+            <ul className="space-y-4">
+              {[
+                "Semantic matching beyond simple keywords",
+                "Continuous 24/7 background scanning",
+                "Instant notifications for high-quality role matches"
+              ].map((item, i) => (
+                <li key={i} className="flex items-center gap-3 text-sm text-gray-300">
+                  <Zap size={16} className="text-[#312fd7]" />
+                  {item}
+                </li>
+              ))}
+            </ul>
           </div>
-          <h2 className="text-3xl font-bold mb-6">
-            Utilize Your Existing <span className="text-[#312fd7]">Database</span>
-          </h2>
-          <p className="text-gray-400 mb-8 leading-relaxed">
-            The Xchange Engine automatically analyzes your CVs and profiles to extract meaningful insights like skill compatibility, career trajectory, and industry relevance. It then matches these candidates across multiple dimensions to the best-suited roles on the platform.
-          </p>
-          <ul className="space-y-4">
-            {[
-              "Semantic matching beyond simple keywords",
-              "Continuous 24/7 background scanning",
-              "Instant notifications for high-quality role matches"
-            ].map((item, i) => (
-              <li key={i} className="flex items-center gap-3 text-sm text-gray-300">
-                <Zap size={16} className="text-[#312fd7]" />
-                {item}
-              </li>
-            ))}
-          </ul>
         </div>
 
-        {/* Visual Proof: The Match Screenshot */}
-        <div>
-          <div className="relative group">
+        {/* Visual Proof: The Match Screenshot - Now Matching Height */}
+        <div className="flex flex-col">
+          <div className="relative group flex-1">
             <div className="absolute -inset-1 bg-gradient-to-r from-[#312fd7] to-[#c71df1] rounded-[2.5rem] blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
-            <div className="relative glass-card rounded-[2.5rem] overflow-hidden border border-white/10 bg-black shadow-2xl">
+            <div className="relative glass-card rounded-[2.5rem] overflow-hidden border border-white/10 bg-black shadow-2xl h-full flex flex-col">
               <div className="flex items-center justify-between px-6 py-3 border-b border-white/5 bg-white/5">
                 <span className="text-[9px] font-bold text-gray-500 uppercase tracking-widest italic">Xchange Engine — AI Match Analysis</span>
                 <div className="flex gap-1.5">
@@ -58,11 +60,13 @@ export default function RecruiterCandidatesPage() {
                   <div className="w-2 h-2 rounded-full bg-green-500/20" />
                 </div>
               </div>
-              <img 
-                src="https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/Match.png" 
-                alt="System Match Interface" 
-                className="w-full h-auto opacity-90 group-hover:opacity-100 transition-opacity"
-              />
+              <div className="flex-1 flex items-center justify-center p-6">
+                <img 
+                  src="https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/Match.png" 
+                  alt="System Match Interface" 
+                  className="w-full h-auto opacity-90 group-hover:opacity-100 transition-opacity object-contain"
+                />
+              </div>
             </div>
           </div>
           <p className="text-xs text-gray-500 mt-4 text-center italic leading-relaxed">
