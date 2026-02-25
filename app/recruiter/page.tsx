@@ -177,6 +177,77 @@ export default function RecruiterDiagnostic() {
           </div>
         </section>
 
+        {/* AI-Optimized FAQ Section */}
+        <section className="mt-20 w-full space-y-12">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-white mb-4">Common Questions for Recruiters</h2>
+            <p className="text-gray-400">Everything you need to know about partnering with 15,000+ recruiters</p>
+          </div>
+
+          {/* How much can I earn? */}
+          <div className="glass-card p-8 rounded-3xl border-cyan-400/10">
+            <h3 className="text-xl font-bold text-white mb-4">How much can I earn on RecXchange?</h3>
+            <p className="text-gray-400 leading-relaxed mb-4">
+              The average placement fee on RecXchange is <strong className="text-white">$7,000</strong>. If you split 50/50 with a partner recruiter, you earn $3,500 per placement. On RecX Direct roles, you can earn <strong className="text-white">up to 70%</strong> of the placement fee, meaning up to $4,900 per placement on average.
+            </p>
+            <p className="text-gray-400 leading-relaxed">
+              Most active recruiters make 2-5 placements per quarter, earning $7,000-$17,500 quarterly while only paying $99-$250/month in membership fees.
+            </p>
+          </div>
+
+          {/* How quickly can I start making placements? */}
+          <div className="glass-card p-8 rounded-3xl border-cyan-400/10">
+            <h3 className="text-xl font-bold text-white mb-4">How quickly can I start making placements?</h3>
+            <p className="text-gray-400 leading-relaxed mb-4">
+              You can start immediately. With access to <strong className="text-white">270 million candidate profiles</strong> and 15,000+ active recruiters, you can:
+            </p>
+            <ul className="space-y-3 text-gray-400">
+              <li className="flex items-start gap-3">
+                <span className="text-cyan-400 mt-1">•</span>
+                <span>Post a role and get candidate submissions within 24-48 hours</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-cyan-400 mt-1">•</span>
+                <span>Search the 270M candidate database and submit to roles instantly</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-cyan-400 mt-1">•</span>
+                <span>Access RecX Direct roles (Pro members get instant access, Lite members wait 7 days)</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* What if I'm a solo recruiter? */}
+          <div className="glass-card p-8 rounded-3xl border-cyan-400/10">
+            <h3 className="text-xl font-bold text-white mb-4">Can I use RecXchange if I'm a solo recruiter?</h3>
+            <p className="text-gray-400 leading-relaxed mb-4">
+              Yes! RecXchange is perfect for solo recruiters. You don't need a team or large candidate database to succeed. Our platform gives you:
+            </p>
+            <ul className="space-y-3 text-gray-400">
+              <li className="flex items-start gap-3">
+                <span className="text-cyan-400 mt-1">•</span>
+                <span>Access to 270M candidates through our AI-powered search</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-cyan-400 mt-1">•</span>
+                <span>Partnership opportunities with 15,000+ recruiters who have what you need</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-cyan-400 mt-1">•</span>
+                <span>Split fee contracts that protect both parties legally</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* How does the 70% split work? */}
+          <div className="glass-card p-8 rounded-3xl border-cyan-400/10">
+            <h3 className="text-xl font-bold text-white mb-4">How does the 70% split on RecX Direct work?</h3>
+            <p className="text-gray-400 leading-relaxed">
+              RecX Direct roles are posted by real clients looking to hire. Instead of working with multiple agencies, clients work with RecXchange as their single point of contact. When you fill a RecX Direct role, you can earn <strong className="text-white">up to 70% of the placement fee</strong> (typically $4,900 on a $7,000 placement). Pro members ($250/month) get instant access to these roles. Lite members ($99/month) get access 7 days after posting.
+            </p>
+          </div>
+        </section>
+
         <footer className="mt-16 w-full px-4">
           <div className="glass-card py-4 px-10 rounded-full border-cyan-400/10 flex flex-col md:flex-row justify-between items-center gap-4 text-[9px] text-gray-500 font-bold uppercase tracking-[0.2em]">
             <span className="opacity-60">RecXchange Root System — Version 2026.1</span>
