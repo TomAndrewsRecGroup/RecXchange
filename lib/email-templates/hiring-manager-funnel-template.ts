@@ -89,7 +89,7 @@ function generateFunnelSection(metrics: FunnelMetrics): string {
       <div class="stage-number">${index + 1}</div>
       <div class="stage-content">
         <div class="stage-title-row">
-          <div class="stage-title">${stage.name}</div>
+          <div class="stage-title">${stage.description}</div>
           <div class="stage-count">${stage.count}</div>
         </div>
         <div class="progress-bar-container">
@@ -97,7 +97,7 @@ function generateFunnelSection(metrics: FunnelMetrics): string {
         </div>
         <div class="stage-stats">
           <span>${stage.percentage.toFixed(1)}% of total</span>
-          ${stage.dropOffRate ? `<span class="drop-off-text">${stage.dropOffRate.toFixed(1)}% drop-off</span>` : ''}
+          ${stage.dropOffPercentage > 0 ? `<span class="drop-off-text">${stage.dropOffPercentage.toFixed(1)}% drop-off</span>` : ''}
         </div>
       </div>
     </div>
