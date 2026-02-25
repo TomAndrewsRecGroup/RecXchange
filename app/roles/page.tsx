@@ -1,31 +1,11 @@
+'use client';
+
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 
-export const metadata: Metadata = {
-  title: "Live Recruitment Roles | RecXchange - Browse 1000s of Split Fee Opportunities",
-  description: "Browse live recruitment roles from 15,000+ recruiters. Submit candidates and split fees 50/50, 60/40, or take 70% on RecX Direct placements. $7,000 average placement fee. $750,000 in fees available. Roles across UK, USA, Europe, Africa, Middle East, Australia in Engineering, Healthcare, Tech, HR, Sales, Finance.",
-  keywords: [
-    "recruitment roles",
-    "live recruitment jobs",
-    "split fee roles",
-    "recruiter marketplace",
-    "collaborative recruitment roles",
-    "RecX Direct roles",
-    "recruitment job board",
-    "fee share opportunities"
-  ],
-  openGraph: {
-    title: "Live Recruitment Roles | RecXchange",
-    description: "Browse 1000s of live roles. Submit candidates. Split fees automatically. $7,000 average fee.",
-    url: "https://recxchange.io/roles",
-    type: "website"
-  },
-  alternates: {
-    canonical: "https://recxchange.io/roles"
-  }
-};
+// Note: Metadata export removed - now handled by metadata.ts in this directory
 
 const allRoles = [
   { id: 1, title: "Principal AI Engineer", loc: "London, UK", salary: "£140k", split: "£14,000", type: "RecX Direct", industry: "Tech", skill: "Python" },
@@ -244,7 +224,7 @@ export default function RolesMarketplace() {
           </div>
           <button
             disabled={page >= totalPages}
-            onClick={() => { setPage(p => 1); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+            onClick={() => { setPage(p => p + 1); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
             className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 disabled:opacity-20 hover:text-purple-400 transition-all"
           >
             Next →
