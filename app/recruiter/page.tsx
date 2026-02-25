@@ -3,7 +3,7 @@
 import React from 'react';
 import { motion, Variants } from 'framer-motion';
 import Link from 'next/link';
-import type { Metadata } from 'next';
+import type { Metadata };
 
 // Note: Metadata export removed - handled by layout.tsx
 
@@ -26,24 +26,21 @@ export default function RecruiterDiagnostic() {
       <div className="relative z-10 w-full max-w-6xl flex flex-col items-center">
         <header className="text-center mb-12">
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-cyan-500/5 border border-cyan-500/20 mb-6"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
           >
-            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_rgba(0,255,255,0.8)]" />
-            <span className="text-[9px] font-black text-cyan-400 uppercase tracking-[0.3em]">
+            <span className="block text-[10px] uppercase tracking-[0.4em] text-cyan-400/60 mb-6 font-bold">
               Share Roles. Split Fees. Fill Roles. Get Paid.
             </span>
+            <h1 className="text-4xl md:text-6xl font-bold gradient-text mb-6 tracking-tight leading-tight pb-2">
+              What do you need <br />right now?
+            </h1>
+            <div className="pulse-underline mb-8 mx-auto" />
+            <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
+              Pick one. We'll show you how to make money from it.
+            </p>
           </motion.div>
-
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-[27px] tracking-tight leading-tight">
-            What do you need <br />
-            <span className="gradient-text">right now?</span>
-          </h1>
-          <div className="pulse-underline mt-4 mx-auto" />
-          <p className="text-gray-400 text-base md:text-lg max-w-2xl mx-auto mt-8 leading-relaxed">
-            Pick one. We'll show you how to make money from it.
-          </p>
         </header>
 
         {/* Diagnostic Card — matching hiring-manager-home structure */}
