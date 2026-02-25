@@ -82,7 +82,7 @@ interface RootLayoutProps {
 }
 
 export default function RootLayout({ children }: RootLayoutProps) {
-  // JSON-LD Schema for Organization and SoftwareApplication
+  // Enhanced JSON-LD Schema with Person entity for founder
   const schemaOrgData = {
     "@context": "https://schema.org",
     "@graph": [
@@ -97,11 +97,32 @@ export default function RootLayout({ children }: RootLayoutProps) {
           "width": 512,
           "height": 512
         },
+        "founder": {
+          "@id": "https://recxchange.io/#person"
+        },
         "sameAs": [
           "https://www.linkedin.com/company/recxchange",
           "https://twitter.com/RecXchange"
         ],
-        "description": "RecXchange is a recruiter collaboration platform where thousands of recruiters partner on placements and split fees automatically."
+        "description": "RecXchange is a recruiter collaboration platform where 15,000+ recruiters partner on placements and split fees automatically. Average placement fee: $7,000. Access to 270M candidate profiles.",
+        "numberOfEmployees": {
+          "@type": "QuantitativeValue",
+          "value": 15000,
+          "description": "Vetted recruiters on platform"
+        }
+      },
+      {
+        "@type": "Person",
+        "@id": "https://recxchange.io/#person",
+        "name": "Tom Andrews",
+        "jobTitle": "CEO & Co-Founder",
+        "worksFor": {
+          "@id": "https://recxchange.io/#organization"
+        },
+        "url": "https://recxchange.io",
+        "sameAs": [
+          "https://www.linkedin.com/in/tomandrews"
+        ]
       },
       {
         "@type": "SoftwareApplication",
@@ -110,13 +131,14 @@ export default function RootLayout({ children }: RootLayoutProps) {
         "applicationCategory": "BusinessApplication",
         "operatingSystem": "Web",
         "url": "https://recxchange.io",
-        "description": "The recruiter network where thousands of recruiters partner on placements and split fees automatically. Post roles to find candidates, or share candidates to find roles.",
+        "description": "The recruiter network where 15,000+ recruiters partner on placements. Average placement fee: $7,000. Split fees up to 70% on RecX Direct roles. Access 270M candidate profiles. Post roles to find candidates, or share candidates to find roles.",
         "offers": [
           {
             "@type": "Offer",
             "name": "RecX Entry",
             "price": "1",
             "priceCurrency": "USD",
+            "description": "5 tokens per month, access to collaborative roles and candidate database",
             "priceSpecification": {
               "@type": "UnitPriceSpecification",
               "price": "1",
@@ -133,6 +155,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             "name": "RecX Lite",
             "price": "99",
             "priceCurrency": "USD",
+            "description": "150 tokens per month, access after 7 days to RecX Direct roles",
             "priceSpecification": {
               "@type": "UnitPriceSpecification",
               "price": "99",
@@ -149,6 +172,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             "name": "RecX Pro",
             "price": "250",
             "priceCurrency": "USD",
+            "description": "400 tokens per month, instant RecX Direct access, up to 70% fee split",
             "priceSpecification": {
               "@type": "UnitPriceSpecification",
               "price": "250",
@@ -173,8 +197,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
           "Automated split fee contracts",
           "Candidate and role sharing",
           "270M candidate database search",
-          "RecX Direct client role access",
-          "Vetted recruiter network",
+          "RecX Direct client role access with up to 70% split",
+          "Average placement fee: $7,000",
+          "15,000+ vetted recruiters",
           "Timestamped submission protection"
         ]
       },
