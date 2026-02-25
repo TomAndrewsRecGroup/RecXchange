@@ -1,8 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Database, Search, Zap, Cpu, Bell, Globe, Upload, Check } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from 'framer-motion';
+import { trackEvent } from '@/lib/analytics';
 
 type EnginePhase = 'idle' | 'uploading' | 'matching' | 'result';
 
@@ -30,6 +31,14 @@ function FakeXchangeEngine() {
   const [matchScore, setMatchScore] = useState(0);
   const [splitFee, setSplitFee] = useState(0);
   const [jobTitle, setJobTitle] = useState('');
+
+  // Track when component is viewed
+  useEffect(() => {
+    trackEvent('fake_engine_viewed', {
+      page: '/recruiters-with-candidates',
+      persona: 'recruiter'
+    });
+  }, []);
 
   const extractTextFromFile = async (file: File): Promise<string> => {
     return new Promise((resolve) => {
@@ -67,6 +76,12 @@ function FakeXchangeEngine() {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    // Track CV upload
+    trackEvent('fake_engine_cv_uploaded', {
+      page: '/recruiters-with-candidates',
+      persona: 'recruiter'
+    });
+
     setPhase('uploading');
 
     try {
@@ -86,7 +101,18 @@ function FakeXchangeEngine() {
 
       // Continue animation sequence
       setTimeout(() => setPhase('matching'), 800);
-      setTimeout(() => setPhase('result'), 2800);
+      setTimeout(() => {
+        setPhase('result');
+        
+        // Track result shown
+        trackEvent('fake_engine_result_shown', {
+          page: '/recruiters-with-candidates',
+          persona: 'recruiter',
+          matched_job: matchedJob,
+          match_score: randomScore,
+          split_fee: randomFee
+        });
+      }, 2800);
     } catch (error) {
       // If parsing fails, use random job as fallback
       const allJobs = Object.keys(jobMappings);
@@ -99,7 +125,17 @@ function FakeXchangeEngine() {
       setJobTitle(randomJob);
 
       setTimeout(() => setPhase('matching'), 800);
-      setTimeout(() => setPhase('result'), 2800);
+      setTimeout(() => {
+        setPhase('result');
+        
+        trackEvent('fake_engine_result_shown', {
+          page: '/recruiters-with-candidates',
+          persona: 'recruiter',
+          matched_job: randomJob,
+          match_score: randomScore,
+          split_fee: randomFee
+        });
+      }, 2800);
     }
 
     // Clear the input so same file can be uploaded again
@@ -107,7 +143,25 @@ function FakeXchangeEngine() {
   };
 
   const resetEngine = () => {
+    trackEvent('fake_engine_try_another_clicked', {
+      page: '/recruiters-with-candidates',
+      persona: 'recruiter',
+      matched_job: jobTitle,
+      match_score: matchScore,
+      split_fee: splitFee
+    });
     setPhase('idle');
+  };
+
+  const handleSignupClick = () => {
+    trackEvent('fake_engine_signup_clicked', {
+      page: '/recruiters-with-candidates',
+      persona: 'recruiter',
+      cta_text: 'See Live Roles',
+      matched_job: jobTitle,
+      match_score: matchScore,
+      split_fee: splitFee
+    });
   };
 
   return (
@@ -299,6 +353,7 @@ function FakeXchangeEngine() {
               </button>
               <Link
                 href="{{trigger_link.Hc9mpfL0JxjX06kwNpd1}}"
+                onClick={handleSignupClick}
                 className="flex-1 py-4 px-6 rounded-xl bg-gradient-to-r from-cyan-500 to-fuchsia-500 hover:shadow-[0_0_30px_rgba(0,255,255,0.4)] text-white text-sm font-bold uppercase tracking-widest text-center transition-all"
               >
                 See Live Roles
@@ -316,6 +371,14 @@ function FakeXchangeEngine() {
 }
 
 export default function RecruiterCandidatesPage() {
+  // Track page view
+  useEffect(() => {
+    trackEvent('page_viewed', {
+      page: '/recruiters-with-candidates',
+      persona: 'recruiter'
+    });
+  }, []);
+
   return (
     <div className="w-full pb-20 pt-24 px-6 max-w-6xl mx-auto">
       {/* Hero Section */}
@@ -440,6 +503,12 @@ export default function RecruiterCandidatesPage() {
         <div className="flex flex-wrap justify-center gap-4">
           <Link 
             href="{{trigger_link.Hc9mpfL0JxjX06kwNpd1}}" 
+            onClick={() => trackEvent('cta_clicked', { 
+              page: '/recruiters-with-candidates',
+              cta_text: 'Start AI Search',
+              cta_location: '270M candidate search section',
+              persona: 'recruiter'
+            })}
             className="px-10 py-4 rounded-full bg-white text-black font-bold hover:bg-gray-200 transition-all flex items-center gap-2"
           >
             <Search size={18} /> Start AI Search
@@ -448,6 +517,12 @@ export default function RecruiterCandidatesPage() {
             href="https://apollo.io" 
             target="_blank" 
             rel="noopener noreferrer"
+            onClick={() => trackEvent('cta_clicked', { 
+              page: '/recruiters-with-candidates',
+              cta_text: 'Our Data Provider',
+              cta_location: '270M candidate search section',
+              persona: 'recruiter'
+            })}
             className="px-10 py-4 rounded-full border border-white/20 text-white font-bold hover:bg-white/5 transition-all"
           >
             Our Data Provider
