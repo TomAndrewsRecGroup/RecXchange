@@ -23,7 +23,9 @@ export async function GET(request: NextRequest) {
     // Create dummy GHL conversion data
     const ghlData: GHLConversionData = {
       totalContacts: 89,
-      websiteSignups: 42,
+      websiteTaggedContacts: 42,
+      totalTieredSignups: 31,
+      conversionRate: 73.8,
       tieredSignups: [
         { tier: 'os subs entry', count: 8, contacts: [] },
         { tier: 'os subs lite', count: 12, contacts: [] },
@@ -36,10 +38,7 @@ export async function GET(request: NextRequest) {
       }
     };
 
-    // Create dummy recruiter funnel data (continued from previous file...)
-    // [keeping all existing code from lines 25-368 of the original file]
-
-const recruiterMetrics: FunnelMetrics = {
+    const recruiterMetrics: FunnelMetrics = {
       funnel: 'Recruiter Signup Funnel',
       description: 'Tracks recruiters from first visit to active platform usage',
       period: ghlData.period,
@@ -87,7 +86,6 @@ const recruiterMetrics: FunnelMetrics = {
       ]
     };
 
-    // Use the same HTML email generator from the production funnel
     const htmlContent = `
 <!DOCTYPE html>
 <html>
@@ -103,10 +101,11 @@ const recruiterMetrics: FunnelMetrics = {
     .content { padding: 40px; }
     .ghl-section { background: #111; border-radius: 16px; padding: 30px; margin-bottom: 40px; border: 2px solid #00ffff; }
     .ghl-section h2 { color: #00ffff; font-size: 24px; margin: 0 0 20px 0; text-align: center; }
-    .ghl-summary { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 30px; }
+    .ghl-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 30px; }
     .ghl-stat { background: #0a0a0a; border: 1px solid #222; border-radius: 12px; padding: 20px; text-align: center; }
     .ghl-stat-label { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; color: #666; margin-bottom: 10px; font-weight: 600; }
     .ghl-stat-value { font-size: 42px; font-weight: 900; color: #00ffff; line-height: 1; }
+    .ghl-stat-subtext { font-size: 13px; color: #666; margin-top: 8px; }
     .tier-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
     .tier-card { background: linear-gradient(135deg, #0a0a0a, #111); border: 2px solid #222; border-radius: 12px; padding: 20px; }
     .tier-card.has-signups { border-color: #22c55e; }
@@ -127,14 +126,15 @@ const recruiterMetrics: FunnelMetrics = {
       <div class="ghl-section">
         <h2>💎 Actual Signups (from CRM)</h2>
         <div class="ghl-summary">
-          <div class="ghl-stat"><div class="ghl-stat-label">Website Visitors Tagged</div><div class="ghl-stat-value">${ghlData.websiteSignups}</div></div>
-          <div class="ghl-stat"><div class="ghl-stat-label">Paid Tier Signups</div><div class="ghl-stat-value">${ghlData.tieredSignups.reduce((sum, t) => sum + t.count, 0)}</div></div>
+          <div class="ghl-stat"><div class="ghl-stat-label">Website Visitors</div><div class="ghl-stat-value">${ghlData.websiteTaggedContacts}</div><div class="ghl-stat-subtext">tagged this week</div></div>
+          <div class="ghl-stat"><div class="ghl-stat-label">Paid Signups</div><div class="ghl-stat-value">${ghlData.totalTieredSignups}</div><div class="ghl-stat-subtext">with tier tag</div></div>
+          <div class="ghl-stat"><div class="ghl-stat-label">Conversion Rate</div><div class="ghl-stat-value">${ghlData.conversionRate}%</div><div class="ghl-stat-subtext">to paid tier</div></div>
         </div>
         <div class="tier-grid">
           ${ghlData.tieredSignups.map(tier => `<div class="tier-card ${tier.count > 0 ? 'has-signups' : ''}"><div class="tier-name">${tier.tier}</div><div class="tier-count">${tier.count}</div></div>`).join('')}
         </div>
       </div>
-      <p style="color: #888; text-align: center; margin: 40px 0;">Note: Funnels would appear below in production email</p>
+      <p style="color: #888; text-align: center; margin: 40px 0;">Note: Full funnels would appear below in production email</p>
     </div>
     <div class="footer" style="text-align: center; padding: 40px; color: #666; font-size: 12px; border-top: 1px solid #222;">
       <p><strong>RecXchange Analytics</strong> • Automated Weekly Report</p>
@@ -145,7 +145,6 @@ const recruiterMetrics: FunnelMetrics = {
 </html>
     `;
 
-    // Send via SendGrid
     const emailResponse = await fetch('https://api.sendgrid.com/v3/mail/send', {
       method: 'POST',
       headers: {
@@ -155,7 +154,7 @@ const recruiterMetrics: FunnelMetrics = {
       body: JSON.stringify({
         personalizations: [{
           to: [{ email: EMAIL_TO }],
-          subject: `💎 [TEST] RecXchange CRM Signup Data - ${new Date().toLocaleDateString()}`
+          subject: `💎 [TEST] RecXchange Weekly Funnel - ${new Date().toLocaleDateString()}`
         }],
         from: { email: EMAIL_FROM, name: 'RecXchange Analytics' },
         content: [{ type: 'text/html', value: htmlContent }]
