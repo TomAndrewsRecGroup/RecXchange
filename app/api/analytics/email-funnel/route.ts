@@ -7,6 +7,7 @@ import {
   generateFunnelASCII,
   FunnelMetrics
 } from '@/lib/funnel';
+import { getWeeklyGHLConversionData, GHLConversionData } from '@/lib/ghl-client';
 
 /**
  * POST /api/analytics/email-funnel
@@ -19,6 +20,8 @@ export async function POST(request: NextRequest) {
     const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
     const EMAIL_TO = process.env.FUNNEL_EMAIL_TO || 'tom@andrewsrecruitmentgroup.com';
     const EMAIL_FROM = process.env.SENDGRID_FROM_EMAIL || 'analytics@recxchange.com';
+    const GHL_API_KEY = process.env.GHL_API_KEY;
+    const GHL_LOCATION_ID = process.env.GHL_LOCATION_ID;
 
     if (!SENDGRID_API_KEY) {
       console.error('[Email Funnel] SENDGRID_API_KEY not configured');
@@ -38,12 +41,24 @@ export async function POST(request: NextRequest) {
     const recruiterMetrics = getWeeklyFunnelMetrics(events, recruiterSignupFunnel);
     const hiringManagerMetrics = getWeeklyFunnelMetrics(events, hiringManagerBookingFunnel);
 
+    // Get GHL conversion data if API key is configured
+    let ghlData: GHLConversionData | null = null;
+    if (GHL_API_KEY && GHL_LOCATION_ID) {
+      try {
+        ghlData = await getWeeklyGHLConversionData(GHL_API_KEY, GHL_LOCATION_ID);
+        console.log('[Email Funnel] GHL conversion data fetched:', ghlData);
+      } catch (error) {
+        console.error('[Email Funnel] Failed to fetch GHL data:', error);
+        // Continue without GHL data
+      }
+    }
+
     // Generate visualizations
     const recruiterViz = generateFunnelASCII(recruiterMetrics);
     const hiringManagerViz = generateFunnelASCII(hiringManagerMetrics);
 
     // Generate HTML email content
-    const htmlContent = generateHTMLEmail(recruiterMetrics, hiringManagerMetrics);
+    const htmlContent = generateHTMLEmail(recruiterMetrics, hiringManagerMetrics, ghlData);
 
     // Send via SendGrid
     const emailResponse = await fetch('https://api.sendgrid.com/v3/mail/send', {
@@ -84,6 +99,7 @@ export async function POST(request: NextRequest) {
       success: true,
       recruiterMetrics,
       hiringManagerMetrics,
+      ghlData,
       sentTo: EMAIL_TO
     });
   } catch (error) {
@@ -95,7 +111,11 @@ export async function POST(request: NextRequest) {
   }
 }
 
-function generateHTMLEmail(recruiterMetrics: FunnelMetrics, hiringManagerMetrics: FunnelMetrics): string {
+function generateHTMLEmail(
+  recruiterMetrics: FunnelMetrics, 
+  hiringManagerMetrics: FunnelMetrics,
+  ghlData: GHLConversionData | null
+): string {
   const LOGO_URL = 'https://images.squarespace-cdn.com/content/v1/68120154725429476150f64b/00d296cd-6741-4c0a-a711-08a3f35db445/REX-Logo-GW-25.png?format=1500w';
   
   return `
@@ -141,6 +161,81 @@ function generateHTMLEmail(recruiterMetrics: FunnelMetrics, hiringManagerMetrics
     }
     .content {
       padding: 40px;
+    }
+    .ghl-section {
+      background: #111;
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 40px;
+      border: 2px solid #00ffff;
+    }
+    .ghl-section h2 {
+      color: #00ffff;
+      font-size: 24px;
+      margin: 0 0 20px 0;
+      text-align: center;
+    }
+    .ghl-summary {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    .ghl-stat {
+      background: #0a0a0a;
+      border: 1px solid #222;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+    .ghl-stat-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #666;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    .ghl-stat-value {
+      font-size: 42px;
+      font-weight: 900;
+      color: #00ffff;
+      line-height: 1;
+    }
+    .tier-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+    .tier-card {
+      background: linear-gradient(135deg, #0a0a0a, #111);
+      border: 2px solid #222;
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .tier-card.has-signups {
+      border-color: #22c55e;
+    }
+    .tier-name {
+      font-size: 14px;
+      color: #888;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .tier-count {
+      font-size: 36px;
+      font-weight: 900;
+      background: linear-gradient(135deg, #00ffff, #c71df1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .tier-card.has-signups .tier-count {
+      background: linear-gradient(135deg, #22c55e, #00ffff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
     .funnel {
       margin-bottom: 60px;
@@ -324,6 +419,7 @@ function generateHTMLEmail(recruiterMetrics: FunnelMetrics, hiringManagerMetrics
     </div>
     
     <div class="content">
+      ${ghlData ? generateGHLSection(ghlData) : ''}
       ${generateFunnelHTML(recruiterMetrics)}
       ${generateFunnelHTML(hiringManagerMetrics)}
     </div>
@@ -335,6 +431,36 @@ function generateHTMLEmail(recruiterMetrics: FunnelMetrics, hiringManagerMetrics
   </div>
 </body>
 </html>
+  `;
+}
+
+function generateGHLSection(ghlData: GHLConversionData): string {
+  const totalTierSignups = ghlData.tieredSignups.reduce((sum, tier) => sum + tier.count, 0);
+  
+  return `
+    <div class="ghl-section">
+      <h2>💎 Actual Signups (from CRM)</h2>
+      
+      <div class="ghl-summary">
+        <div class="ghl-stat">
+          <div class="ghl-stat-label">Website Visitors Tagged</div>
+          <div class="ghl-stat-value">${ghlData.websiteSignups}</div>
+        </div>
+        <div class="ghl-stat">
+          <div class="ghl-stat-label">Paid Tier Signups</div>
+          <div class="ghl-stat-value">${totalTierSignups}</div>
+        </div>
+      </div>
+      
+      <div class="tier-grid">
+        ${ghlData.tieredSignups.map(tier => `
+          <div class="tier-card ${tier.count > 0 ? 'has-signups' : ''}">
+            <div class="tier-name">${tier.tier}</div>
+            <div class="tier-count">${tier.count}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
   `;
 }
 
