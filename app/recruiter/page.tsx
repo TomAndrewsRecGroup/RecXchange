@@ -3,7 +3,6 @@
 import React from 'react';
 import { motion, Variants } from 'framer-motion';
 import Link from 'next/link';
-import type { Metadata };
 
 // Note: Metadata export removed - handled by layout.tsx
 
