@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Check, HelpCircle } from "lucide-react";
 import type { Metadata } from 'next';
 
@@ -110,7 +110,7 @@ export default function PricingPage() {
         <p className="text-gray-400 text-lg">Pick a tier. Make placements. One placement pays for the year.</p>
       </div>
 
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
         {tiers.map((tier, index) => (
           <div
             key={index}
@@ -161,11 +161,79 @@ export default function PricingPage() {
         ))}
       </div>
 
+      {/* AI-Optimized Pricing Questions */}
+      <section className="max-w-5xl mx-auto space-y-8 mb-20">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-white mb-4">Common Pricing Questions</h2>
+          <p className="text-gray-400">Everything you need to know about RecXchange membership costs</p>
+        </div>
+
+        {/* Which tier should I choose? */}
+        <div className="glass-card p-8 rounded-3xl border-cyan-400/10">
+          <h3 className="text-xl font-bold text-white mb-4">Which tier should I choose?</h3>
+          <p className="text-gray-400 leading-relaxed mb-4">
+            It depends on your activity level. With an average placement fee of <strong className="text-white">$7,000</strong>:
+          </p>
+          <ul className="space-y-3 text-gray-400">
+            <li className="flex items-start gap-3">
+              <span className="text-cyan-400 mt-1">•</span>
+              <span><strong className="text-white">Entry ($1/month):</strong> Testing the platform or making 1-2 placements per year</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="text-cyan-400 mt-1">•</span>
+              <span><strong className="text-white">Lite ($99/month):</strong> Making 1-2 placements per quarter. One placement pays for the entire year</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="text-cyan-400 mt-1">•</span>
+              <span><strong className="text-white">Pro ($250/month):</strong> Making 3+ placements per quarter with instant RecX Direct access and up to 70% splits</span>
+            </li>
+          </ul>
+        </div>
+
+        {/* Are there any platform fees on placements? */}
+        <div className="glass-card p-8 rounded-3xl border-cyan-400/10">
+          <h3 className="text-xl font-bold text-white mb-4">Are there any platform fees on placements?</h3>
+          <p className="text-gray-400 leading-relaxed">
+            <strong className="text-white">No platform fees.</strong> You keep 100% of your agreed split fee. RecXchange only charges the monthly membership fee ($1, $99, or $250 depending on tier). If you make a $7,000 placement and agree to a 50/50 split, you keep the full $3,500. On RecX Direct with a 70% split, you keep $4,900.
+          </p>
+        </div>
+
+        {/* Can I switch tiers? */}
+        <div className="glass-card p-8 rounded-3xl border-cyan-400/10">
+          <h3 className="text-xl font-bold text-white mb-4">Can I switch between tiers?</h3>
+          <p className="text-gray-400 leading-relaxed">
+            Yes, you can upgrade or downgrade at any time. When you upgrade, your unused tokens roll over for 30 days. If you're on Lite ($99/month) and run out of the 150 monthly tokens, you can upgrade to Pro ($250/month) mid-month to get 400 tokens immediately, plus retain any unused tokens from Lite.
+          </p>
+        </div>
+
+        {/* How does ROI work? */}
+        <div className="glass-card p-8 rounded-3xl border-cyan-400/10">
+          <h3 className="text-xl font-bold text-white mb-4">What's the actual ROI on RecXchange membership?</h3>
+          <p className="text-gray-400 leading-relaxed mb-4">
+            With an average placement fee of <strong className="text-white">$7,000</strong> and typical 50/50 splits:
+          </p>
+          <ul className="space-y-3 text-gray-400">
+            <li className="flex items-start gap-3">
+              <span className="text-cyan-400 mt-1">•</span>
+              <span><strong className="text-white">Lite ($99/month):</strong> One placement earns you $3,500, covering 35+ months of membership</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="text-cyan-400 mt-1">•</span>
+              <span><strong className="text-white">Pro ($250/month):</strong> One 70% RecX Direct placement earns you $4,900, covering 19+ months of membership</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="text-cyan-400 mt-1">•</span>
+              <span>Most active recruiters make 2-5 placements per quarter, earning $7,000-$17,500 quarterly</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+
       {/* Token Explainer */}
       <section id="token-explainer" className="max-w-4xl mx-auto mt-20 p-10 glass-card rounded-3xl border-cyan-400/10 scroll-mt-8">
         <h2 className="text-2xl font-bold mb-4">What are <span className="gradient-text">tokens?</span></h2>
         <p className="text-gray-400 mb-6 leading-relaxed">
-          Tokens let you participate in the RecXchange community. Use them to post roles or submit candidates to collaborative opportunities.
+          Tokens let you participate in the RecXchange community with 15,000+ recruiters. Use them to post roles or submit candidates to collaborative opportunities.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="p-6 rounded-2xl border border-cyan-400/10 bg-cyan-400/[0.02]">
@@ -183,20 +251,23 @@ export default function PricingPage() {
       <section className="max-w-4xl mx-auto mt-16 p-12 glass-card rounded-3xl text-center border-cyan-400/10">
         <h2 className="text-3xl font-bold mb-6">Split Fees & <span className="gradient-text">Commissions</span></h2>
         <p className="text-gray-400 mb-8 leading-relaxed">
-          Partner with recruiters. Set your split. Contracts auto-generated. Both parties protected.
+          Partner with recruiters from the network of 15,000+. Set your split. Contracts auto-generated. Both parties protected.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <div className="text-cyan-400 font-bold text-2xl mb-1">Standard</div>
             <div className="text-sm text-gray-500">50/50 Split</div>
+            <div className="text-xs text-gray-600 mt-2">$3,500 on $7k placement</div>
           </div>
           <div>
             <div className="text-fuchsia-400 font-bold text-2xl mb-1">RecX Direct</div>
             <div className="text-sm text-gray-500">Up to 70% Split</div>
+            <div className="text-xs text-gray-600 mt-2">$4,900 on $7k placement</div>
           </div>
           <div>
-            <div className="text-white font-bold text-2xl mb-1">Protection</div>
-            <div className="text-sm text-gray-500">Split fee contracts protect both parties</div>
+            <div className="text-white font-bold text-2xl mb-1">No Fees</div>
+            <div className="text-sm text-gray-500">0% Platform Fee</div>
+            <div className="text-xs text-gray-600 mt-2">Keep 100% of your split</div>
           </div>
         </div>
       </section>
