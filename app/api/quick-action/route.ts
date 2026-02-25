@@ -158,14 +158,9 @@ export async function POST(request: NextRequest) {
 
     // 3. Track analytics event
     try {
-      await trackEvent({
-        event: 'quick_action_submitted',
-        properties: {
-          action_type: actionType,
-          source_page: source,
-          email_provided: true,
-        },
-        timestamp: new Date(),
+      trackEvent('quick_action_form_submitted', {
+        action_type: actionType,
+        page: source,
       });
     } catch (error) {
       console.error('[Quick Action] Failed to track event:', error);
