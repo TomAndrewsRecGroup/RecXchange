@@ -10,15 +10,6 @@ interface QuickActionRequest {
 const ACTION_CONFIG = {
   match_candidate: {
     ghlTag: 'quick-action-match-candidate',
-    emailSubject: 'RecXchange - Match My Candidate Request',
-    emailTemplate: (email: string, source: string) => `
-      <h2>New Candidate Match Request</h2>
-      <p><strong>Email:</strong> ${email}</p>
-      <p><strong>Source Page:</strong> ${source}</p>
-      <p><strong>Action:</strong> User wants 3 matching roles for their candidate</p>
-      <hr>
-      <p>Follow up within 24 hours with matching role suggestions.</p>
-    `,
     autoResponseSubject: 'Your RecXchange Candidate Match Request',
     autoResponseTemplate: (email: string) => `
       <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 600px; margin: 0 auto; padding: 40px 20px;">
@@ -31,15 +22,6 @@ const ACTION_CONFIG = {
   },
   explain_recx_direct: {
     ghlTag: 'quick-action-recx-direct',
-    emailSubject: 'RecXchange - RecX Direct Explainer Request',
-    emailTemplate: (email: string, source: string) => `
-      <h2>New RecX Direct Info Request</h2>
-      <p><strong>Email:</strong> ${email}</p>
-      <p><strong>Source Page:</strong> ${source}</p>
-      <p><strong>Action:</strong> User wants RecX Direct explainer and fee pool info</p>
-      <hr>
-      <p>Send the RecX Direct explainer and current fee pool details.</p>
-    `,
     autoResponseSubject: 'RecX Direct - Explainer & Fee Pool',
     autoResponseTemplate: (email: string) => `
       <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 600px; margin: 0 auto; padding: 40px 20px;">
@@ -79,9 +61,10 @@ const ACTION_CONFIG = {
  * 
  * Handles quick action form submissions:
  * 1. Creates/updates contact in GHL with appropriate tag
- * 2. Sends notification email to team
- * 3. Sends auto-response to user
- * 4. Tracks analytics event
+ * 2. Sends auto-response to user
+ * 3. Tracks analytics event
+ * 
+ * Note: Team notifications are handled by GHL automation workflows
  */
 export async function POST(request: NextRequest) {
   try {
@@ -114,7 +97,6 @@ export async function POST(request: NextRequest) {
     const GHL_API_KEY = process.env.GHL_API_KEY;
     const GHL_LOCATION_ID = process.env.GHL_LOCATION_ID;
     const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
-    const TEAM_EMAIL = process.env.FUNNEL_EMAIL_TO || 'tom@andrewsrecruitmentgroup.com';
     const FROM_EMAIL = process.env.SENDGRID_FROM_EMAIL || 'analytics@recxchange.com';
 
     // 1. Create/update contact in GHL
@@ -148,32 +130,8 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // 2. Send notification email to team
+    // 2. Send auto-response to user
     if (SENDGRID_API_KEY) {
-      try {
-        await fetch('https://api.sendgrid.com/v3/mail/send', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${SENDGRID_API_KEY}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            personalizations: [{
-              to: [{ email: TEAM_EMAIL }],
-              subject: config.emailSubject
-            }],
-            from: { email: FROM_EMAIL, name: 'RecXchange Quick Actions' },
-            content: [{
-              type: 'text/html',
-              value: config.emailTemplate(email, source)
-            }]
-          })
-        });
-      } catch (error) {
-        console.error('[Quick Action] Failed to send team notification:', error);
-      }
-
-      // 3. Send auto-response to user
       try {
         await fetch('https://api.sendgrid.com/v3/mail/send', {
           method: 'POST',
@@ -198,7 +156,7 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // 4. Track analytics event
+    // 3. Track analytics event
     try {
       await trackEvent({
         event: 'quick_action_submitted',
