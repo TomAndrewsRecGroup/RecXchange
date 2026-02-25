@@ -56,6 +56,11 @@ export function OptimizedImage({
     setIsLoading(false);
   };
 
+  // Combine wrapper className with image transition classes
+  const imageClassName = `${
+    isLoading ? 'opacity-0' : 'opacity-100'
+  } transition-opacity duration-300`;
+
   return (
     <div className={`relative ${className}`}>
       {isLoading && showPlaceholder && (
@@ -66,15 +71,11 @@ export function OptimizedImage({
         {...props}
         src={imgSrc}
         alt={alt}
-        className={`${
-          isLoading ? 'opacity-0' : 'opacity-100'
-        } transition-opacity duration-300 ${props.className || ''}`}
+        className={imageClassName}
         onError={handleError}
         onLoad={handleLoad}
         loading="lazy"
         quality={90}
-        placeholder={showPlaceholder ? 'blur' : undefined}
-        blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzAwIiBoZWlnaHQ9IjQ3NSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4="
       />
       
       {hasError && !fallbackSrc && (
