@@ -1,7 +1,31 @@
-"use client";
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Live Recruitment Roles | RecXchange - Browse 1000s of Split Fee Opportunities",
+  description: "Browse live recruitment roles from 15,000+ recruiters. Submit candidates and split fees 50/50, 60/40, or take 70% on RecX Direct placements. £14,000 average fee share. One placement pays for 12 months membership.",
+  keywords: [
+    "recruitment roles",
+    "live recruitment jobs",
+    "split fee roles",
+    "recruiter marketplace",
+    "collaborative recruitment roles",
+    "RecX Direct roles",
+    "recruitment job board",
+    "fee share opportunities"
+  ],
+  openGraph: {
+    title: "Live Recruitment Roles | RecXchange",
+    description: "Browse 1000s of live roles. Submit candidates. Split fees automatically. £14,000 average fee share.",
+    url: "https://recxchange.io/roles",
+    type: "website"
+  },
+  alternates: {
+    canonical: "https://recxchange.io/roles"
+  }
+};
 
 const allRoles = [
   { id: 1, title: "Principal AI Engineer", loc: "London, UK", salary: "£140k", split: "£14,000", type: "RecX Direct", industry: "Tech", skill: "Python" },
