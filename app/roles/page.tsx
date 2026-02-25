@@ -52,6 +52,25 @@ export default function RolesMarketplace() {
     }}>
       <div className="max-w-6xl mx-auto relative z-10">
 
+        {/* Hero Header */}
+        <header className="text-center mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <span className="block text-[10px] uppercase tracking-[0.4em] text-purple-400/60 mb-6 font-bold">
+              Live Roles · Live Revenue
+            </span>
+            <h1 className="text-4xl md:text-6xl font-bold gradient-text mb-6 tracking-tight leading-tight">
+              One placement pays for 12 months
+            </h1>
+            <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
+              Browse live roles. Submit candidates. Split fees 50/50, 60/40, or take 70% on RecX Direct placements.
+            </p>
+          </motion.div>
+        </header>
+
         <div className="flex flex-col gap-6 mb-12">
           <section className="glass-card p-2 rounded-2xl border-purple-400/10 flex items-center shadow-2xl">
             <div className="pl-6 text-gray-500">
