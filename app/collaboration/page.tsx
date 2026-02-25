@@ -2,6 +2,7 @@
 import React from "react";
 import { Zap, Cpu, Target } from "lucide-react";
 import { motion } from 'framer-motion';
+import QuickActionForm from '@/components/quick-action-form';
 
 export default function CollaborationPage() {
   return (
@@ -43,7 +44,7 @@ export default function CollaborationPage() {
       </div>
 
       {/* Xchange Engine Section */}
-      <div className="relative overflow-hidden glass-card rounded-[3rem] p-12 lg:p-20 border-cyan-400/10">
+      <div className="relative overflow-hidden glass-card rounded-[3rem] p-12 lg:p-20 border-cyan-400/10 mb-20">
         <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-fuchsia-500/10 blur-[120px] rounded-full" />
         <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-96 h-96 bg-cyan-500/5 blur-[120px] rounded-full" />
 
@@ -91,6 +92,21 @@ export default function CollaborationPage() {
           </div>
         </div>
       </div>
+
+      {/* Quick Action: Match Candidate */}
+      <section className="max-w-4xl mx-auto glass-card rounded-[3rem] p-10 md:p-14 border-cyan-400/10 text-center">
+        <div className="inline-block px-4 py-1.5 rounded-full border border-cyan-400/20 bg-cyan-400/5 text-[10px] font-bold uppercase tracking-[0.2em] text-cyan-400 mb-6">
+          Try the Engine
+        </div>
+        <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">See the matching engine in action</h2>
+        <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
+          Send us a candidate and we'll show you 3 matching roles from our live database within 24 hours.
+        </p>
+        <QuickActionForm 
+          actionType="match_candidate"
+          className="max-w-lg mx-auto"
+        />
+      </section>
     </div>
   );
 }
