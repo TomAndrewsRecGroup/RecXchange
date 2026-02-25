@@ -45,7 +45,7 @@ export type EventProps = {
   // CTA context
   cta_text?: string;
   cta_location?: string;
-  variant?: 'A' | 'B';
+  variant?: 'A' | 'B' | 'primary' | 'secondary' | 'ghost';
   
   // User persona
   persona?: 'recruiter' | 'hiring-manager' | 'unknown';
