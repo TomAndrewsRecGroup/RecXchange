@@ -6,16 +6,24 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 type EnginePhase = 'idle' | 'uploading' | 'matching' | 'result';
 
-const jobTitles = [
-  'Senior Software Engineer',
-  'Sales Director',
-  'Talent Acquisition Lead',
-  'Product Manager',
-  'Data Scientist',
-  'DevOps Engineer',
-  'Marketing Director',
-  'Chief Technology Officer'
-];
+// Job roles mapped by keywords found in CVs
+const jobMappings: Record<string, string[]> = {
+  'Senior Software Engineer': ['software', 'developer', 'programming', 'javascript', 'python', 'java', 'react', 'node', 'frontend', 'backend', 'full stack', 'web dev'],
+  'Data Scientist': ['data science', 'machine learning', 'ml', 'analytics', 'statistics', 'data analysis', 'python', 'r language', 'pandas', 'tensorflow'],
+  'DevOps Engineer': ['devops', 'kubernetes', 'docker', 'aws', 'azure', 'cloud', 'ci/cd', 'jenkins', 'terraform', 'infrastructure'],
+  'Product Manager': ['product management', 'product manager', 'roadmap', 'agile', 'scrum', 'stakeholder', 'user stories', 'product owner'],
+  'Sales Director': ['sales', 'business development', 'account management', 'revenue', 'b2b', 'enterprise sales', 'crm', 'salesforce', 'closing deals'],
+  'Marketing Director': ['marketing', 'digital marketing', 'seo', 'sem', 'social media', 'content marketing', 'campaigns', 'brand', 'growth marketing'],
+  'Mechanical Engineer': ['mechanical engineering', 'cad', 'solidworks', 'autocad', 'manufacturing', 'design engineer', 'mechanical design', 'product design', 'engineering drawings'],
+  'Civil Engineer': ['civil engineering', 'structural', 'construction', 'infrastructure', 'surveying', 'site engineer', 'project engineer'],
+  'Electrical Engineer': ['electrical engineering', 'electronics', 'circuit', 'pcb', 'embedded', 'power systems', 'electrical design'],
+  'HR Manager': ['human resources', 'hr', 'recruitment', 'talent acquisition', 'employee relations', 'hr manager', 'people operations'],
+  'Financial Analyst': ['finance', 'financial analysis', 'accounting', 'excel', 'financial modeling', 'budgeting', 'forecasting', 'cpa', 'cfa'],
+  'Project Manager': ['project management', 'pmp', 'project manager', 'stakeholder management', 'waterfall', 'agile', 'project planning'],
+  'UX Designer': ['ux', 'ui', 'user experience', 'user interface', 'figma', 'sketch', 'adobe xd', 'wireframes', 'prototyping', 'design'],
+  'Quality Assurance Engineer': ['qa', 'quality assurance', 'testing', 'test automation', 'selenium', 'manual testing', 'test cases'],
+  'Operations Manager': ['operations', 'operations management', 'supply chain', 'logistics', 'process improvement', 'lean', 'six sigma']
+};
 
 function FakeXchangeEngine() {
   const [phase, setPhase] = useState<EnginePhase>('idle');
@@ -23,23 +31,76 @@ function FakeXchangeEngine() {
   const [splitFee, setSplitFee] = useState(0);
   const [jobTitle, setJobTitle] = useState('');
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const extractTextFromFile = async (file: File): Promise<string> => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const text = e.target?.result as string;
+        resolve(text.toLowerCase());
+      };
+      reader.readAsText(file);
+    });
+  };
+
+  const findBestMatch = (cvText: string): string => {
+    let bestMatch = 'Senior Software Engineer'; // default fallback
+    let highestScore = 0;
+
+    Object.entries(jobMappings).forEach(([role, keywords]) => {
+      let score = 0;
+      keywords.forEach(keyword => {
+        if (cvText.includes(keyword.toLowerCase())) {
+          score += 1;
+        }
+      });
+
+      if (score > highestScore) {
+        highestScore = score;
+        bestMatch = role;
+      }
+    });
+
+    return bestMatch;
+  };
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Generate random results
-    const randomScore = Math.floor(Math.random() * (97 - 85 + 1)) + 85;
-    const randomFee = Math.floor(Math.random() * (9000 - 4500 + 1)) + 4500;
-    const randomJob = jobTitles[Math.floor(Math.random() * jobTitles.length)];
-
-    setMatchScore(randomScore);
-    setSplitFee(randomFee);
-    setJobTitle(randomJob);
-
-    // Start animation sequence
     setPhase('uploading');
-    setTimeout(() => setPhase('matching'), 800);
-    setTimeout(() => setPhase('result'), 2800);
+
+    try {
+      // Extract text from file
+      const cvText = await extractTextFromFile(file);
+      
+      // Find best matching job title based on CV content
+      const matchedJob = findBestMatch(cvText);
+
+      // Generate random results with matched job
+      const randomScore = Math.floor(Math.random() * (97 - 85 + 1)) + 85;
+      const randomFee = Math.floor(Math.random() * (9000 - 4500 + 1)) + 4500;
+
+      setMatchScore(randomScore);
+      setSplitFee(randomFee);
+      setJobTitle(matchedJob);
+
+      // Continue animation sequence
+      setTimeout(() => setPhase('matching'), 800);
+      setTimeout(() => setPhase('result'), 2800);
+    } catch (error) {
+      // If parsing fails, use random job as fallback
+      const allJobs = Object.keys(jobMappings);
+      const randomJob = allJobs[Math.floor(Math.random() * allJobs.length)];
+      const randomScore = Math.floor(Math.random() * (97 - 85 + 1)) + 85;
+      const randomFee = Math.floor(Math.random() * (9000 - 4500 + 1)) + 4500;
+
+      setMatchScore(randomScore);
+      setSplitFee(randomFee);
+      setJobTitle(randomJob);
+
+      setTimeout(() => setPhase('matching'), 800);
+      setTimeout(() => setPhase('result'), 2800);
+    }
 
     // Clear the input so same file can be uploaded again
     e.target.value = '';
@@ -182,7 +243,7 @@ function FakeXchangeEngine() {
               </div>
               <input
                 type="file"
-                accept=".pdf,.doc,.docx"
+                accept=".pdf,.doc,.docx,.txt"
                 onChange={handleFileUpload}
                 className="hidden"
                 disabled={phase !== 'idle'}
