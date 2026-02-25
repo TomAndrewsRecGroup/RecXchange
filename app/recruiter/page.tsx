@@ -19,12 +19,12 @@ export default function RecruiterDiagnostic() {
     <main className="relative min-h-screen flex flex-col items-center pt-32 pb-20 px-6 overflow-x-hidden">
 
       {/* Hero Content */}
-      <div className="relative z-10 w-full max-w-4xl flex flex-col items-center">
+      <div className="relative z-10 w-full max-w-6xl flex flex-col items-center">
         <header className="text-center mb-12">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-cyan-500/5 border border-cyan-500/20 mb-8"
+            className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-cyan-500/5 border border-cyan-500/20 mb-6"
           >
             <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_rgba(0,255,255,0.8)]" />
             <span className="text-[9px] font-black text-cyan-400 uppercase tracking-[0.3em]">
@@ -32,7 +32,7 @@ export default function RecruiterDiagnostic() {
             </span>
           </motion.div>
 
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight leading-tight">
+          <h1 className="text-4xl md:text-6xl font-bold text-white mb-[27px] tracking-tight leading-tight">
             What do you need <br />
             <span className="gradient-text">right now?</span>
           </h1>
@@ -90,7 +90,7 @@ export default function RecruiterDiagnostic() {
                 <div className="relative w-full py-4 rounded-xl border border-white/15 bg-black/40 overflow-hidden group/btn text-[10px] font-bold uppercase tracking-widest text-center transition-all">
                   <span className="absolute inset-[1px] rounded-xl bg-black/80 group-hover/btn:bg-transparent transition-colors" />
                   <span className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-fuchsia-500 opacity-0 group-hover/btn:opacity-100 transition-opacity" />
-                  <span className="relative z-10 text-white flex items-center justify-center">Browse Roles to Fill</span>
+                  <span className="relative z-10 text-white flex items-center justify-center">See How Candidates Match</span>
                 </div>
               </motion.div>
             </Link>
@@ -129,7 +129,7 @@ export default function RecruiterDiagnostic() {
                 <div className="relative w-full py-4 rounded-xl border border-white/15 bg-black/40 overflow-hidden group/btn text-[10px] font-bold uppercase tracking-widest text-center transition-all">
                   <span className="absolute inset-[1px] rounded-xl bg-black/80 group-hover/btn:bg-transparent transition-colors" />
                   <span className="absolute inset-0 bg-gradient-to-r from-fuchsia-500 to-cyan-500 opacity-0 group-hover/btn:opacity-100 transition-opacity" />
-                  <span className="relative z-10 text-white flex items-center justify-center">Browse Recruiters with Roles</span>
+                  <span className="relative z-10 text-white flex items-center justify-center">Work on Live Roles</span>
                 </div>
               </motion.div>
             </Link>
