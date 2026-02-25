@@ -23,8 +23,10 @@ export interface GHLTierData {
 
 export interface GHLConversionData {
   totalContacts: number;
-  websiteSignups: number;
+  websiteTaggedContacts: number;
   tieredSignups: GHLTierData[];
+  totalTieredSignups: number;
+  conversionRate: number;
   period: {
     start: Date;
     end: Date;
@@ -32,6 +34,62 @@ export interface GHLConversionData {
 }
 
 const GHL_API_BASE = 'https://rest.gohighlevel.com/v1';
+
+// Common website-related tag patterns to detect
+// These should match tags applied via trigger links and contact forms
+const WEBSITE_TAG_PATTERNS = [
+  'website',
+  'recxchange',
+  'web form',
+  'contact form',
+  'cta',
+  'trigger link',
+  'sign in',
+  'signin',
+  'get started',
+  'join',
+  'signup form',
+  'landing page',
+  'recruiter',
+  'hiring manager'
+];
+
+/**
+ * Check if contact has any website-related tag
+ */
+function hasWebsiteTag(contact: GHLContact): boolean {
+  if (!contact.tags || contact.tags.length === 0) {
+    return false;
+  }
+
+  return contact.tags.some(tag => {
+    const tagLower = tag.toLowerCase();
+    return WEBSITE_TAG_PATTERNS.some(pattern => tagLower.includes(pattern));
+  });
+}
+
+/**
+ * Check if contact has any tier tag
+ */
+function hasTierTag(contact: GHLContact): boolean {
+  if (!contact.tags || contact.tags.length === 0) {
+    return false;
+  }
+
+  const tierPatterns = ['os subs entry', 'os subs lite', 'os subs pro', 'os subs teams'];
+  return contact.tags.some(tag => {
+    const tagLower = tag.toLowerCase();
+    return tierPatterns.some(tier => tagLower.includes(tier));
+  });
+}
+
+/**
+ * Check if contact has both website tag AND tier tag
+ * This identifies true conversions from website to paid tier
+ */
+function isWebsiteConversion(contact: GHLContact): boolean {
+  return hasWebsiteTag(contact) && hasTierTag(contact);
+}
 
 /**
  * Fetch contacts from GHL within a date range
@@ -91,7 +149,30 @@ export function filterContactsByTag(contacts: GHLContact[], tag: string): GHLCon
 }
 
 /**
+ * Get which specific tier a contact has
+ */
+function getContactTier(contact: GHLContact): 'os subs entry' | 'os subs lite' | 'os subs pro' | 'os subs teams' | null {
+  if (!contact.tags) return null;
+
+  const tiers: Array<'os subs entry' | 'os subs lite' | 'os subs pro' | 'os subs teams'> = [
+    'os subs teams',  // Check highest tier first
+    'os subs pro',
+    'os subs lite',
+    'os subs entry'
+  ];
+
+  for (const tier of tiers) {
+    if (contact.tags.some(tag => tag.toLowerCase().includes(tier.toLowerCase()))) {
+      return tier;
+    }
+  }
+
+  return null;
+}
+
+/**
  * Get conversion data grouped by tier
+ * Only counts contacts that have BOTH a website tag AND a tier tag
  */
 export async function getGHLConversionData(
   startDate: Date,
@@ -101,12 +182,8 @@ export async function getGHLConversionData(
 ): Promise<GHLConversionData> {
   const contacts = await getGHLContacts(startDate, endDate, apiKey, locationId);
 
-  // Filter contacts from website (you may need to adjust this based on your source field)
-  const websiteContacts = contacts.filter(contact => 
-    contact.source?.toLowerCase().includes('website') ||
-    contact.source?.toLowerCase().includes('recxchange') ||
-    contact.tags?.some(tag => tag.toLowerCase().includes('website'))
-  );
+  // Filter to only website-tagged contacts
+  const websiteContacts = contacts.filter(hasWebsiteTag);
 
   // Define tier tags
   const tiers: Array<'os subs entry' | 'os subs lite' | 'os subs pro' | 'os subs teams'> = [
@@ -116,9 +193,14 @@ export async function getGHLConversionData(
     'os subs teams'
   ];
 
-  // Group contacts by tier
+  // Group website conversions by tier
+  // CRITICAL: Only count contacts that have BOTH website tag AND tier tag
   const tieredSignups: GHLTierData[] = tiers.map(tier => {
-    const tierContacts = filterContactsByTag(contacts, tier);
+    const tierContacts = websiteContacts.filter(contact => {
+      // Must have both website tag and this specific tier tag
+      return hasTierTag(contact) && getContactTier(contact) === tier;
+    });
+    
     return {
       tier,
       count: tierContacts.length,
@@ -126,17 +208,20 @@ export async function getGHLConversionData(
     };
   });
 
-  // Count contacts with any tier tag
-  const contactsWithTier = contacts.filter(contact =>
-    tiers.some(tier => 
-      contact.tags?.some(tag => tag.toLowerCase().includes(tier.toLowerCase()))
-    )
-  );
+  // Total contacts with both website tag AND any tier tag
+  const totalTieredSignups = tieredSignups.reduce((sum, tier) => sum + tier.count, 0);
+
+  // Conversion rate: (paid signups / website visitors) * 100
+  const conversionRate = websiteContacts.length > 0 
+    ? Math.round((totalTieredSignups / websiteContacts.length) * 100 * 10) / 10
+    : 0;
 
   return {
     totalContacts: contacts.length,
-    websiteSignups: websiteContacts.length,
+    websiteTaggedContacts: websiteContacts.length,
     tieredSignups,
+    totalTieredSignups,
+    conversionRate,
     period: {
       start: startDate,
       end: endDate
@@ -156,3 +241,14 @@ export async function getWeeklyGHLConversionData(
   
   return getGHLConversionData(start, end, apiKey, locationId);
 }
+
+/**
+ * Export helper functions for testing
+ */
+export const helpers = {
+  hasWebsiteTag,
+  hasTierTag,
+  isWebsiteConversion,
+  getContactTier,
+  WEBSITE_TAG_PATTERNS
+};
