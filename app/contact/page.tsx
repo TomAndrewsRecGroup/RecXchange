@@ -145,10 +145,11 @@ export default function ContactPage() {
         {/* Header Section */}
         <div className="text-center mb-16">
           <h3 className="text-[10px] uppercase tracking-[0.4em] font-bold text-purple-400 mb-6">Get In Touch</h3>
-          <h1 className="text-5xl md:text-6xl font-bold mb-8 leading-tight">
+          <h1 className="text-5xl md:text-6xl font-bold gradient-text mb-6 tracking-tight leading-tight pb-2">
             Connect with the <br />
-            <span className="gradient-text">Engineers of Talent.</span>
+            Engineers of Talent.
           </h1>
+          <div className="pulse-underline mb-8 mx-auto" />
           <p className="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed">
             Whether you are scaling a team in California or sourcing from London, our team provides the human oversight for our AI-driven Xchange.
           </p>
