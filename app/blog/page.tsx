@@ -93,8 +93,6 @@ export default function BlogPage() {
   const [posts, setPosts] = useState<SocialPost[]>(mockPosts);
   const [loading, setLoading] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('All Posts');
-  const [isMockData, setIsMockData] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     fetchPosts();
@@ -102,7 +100,6 @@ export default function BlogPage() {
 
   const fetchPosts = async () => {
     setLoading(true);
-    setError(null);
     
     try {
       const categoryParam = selectedCategory === 'All Posts' ? '' : `?category=${encodeURIComponent(selectedCategory)}`;
@@ -119,19 +116,15 @@ export default function BlogPage() {
       
       const data: BlogResponse = await response.json();
       
-      if (data.posts && Array.isArray(data.posts)) {
-        setPosts(data.posts.length > 0 ? data.posts : mockPosts);
-        setIsMockData(data.mock || data.posts.length === 0);
+      if (data.posts && Array.isArray(data.posts) && data.posts.length > 0) {
+        setPosts(data.posts);
       } else {
         setPosts(mockPosts);
-        setIsMockData(true);
       }
     } catch (err) {
       console.error('Failed to fetch posts:', err);
-      setError(err instanceof Error ? err.message : 'Unknown error occurred');
       // Fallback to mock data on error
       setPosts(mockPosts);
-      setIsMockData(true);
     } finally {
       setLoading(false);
     }
@@ -179,9 +172,10 @@ export default function BlogPage() {
           <span className="block text-[10px] uppercase tracking-[0.4em] text-cyan-400/60 mb-6 font-bold">
             Social Updates
           </span>
-          <h1 className="text-5xl md:text-6xl font-bold gradient-text mb-6 tracking-tight">
+          <h1 className="text-5xl md:text-6xl font-bold gradient-text mb-6 tracking-tight leading-tight pb-2">
             RecXchange Social Feed
           </h1>
+          <div className="pulse-underline mb-8 mx-auto" />
           <p className="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed mb-8">
             Latest updates, insights, and stories from our social media channels.
           </p>
@@ -221,28 +215,6 @@ export default function BlogPage() {
             </button>
           ))}
         </div>
-
-        {/* Error Notice */}
-        {error && !loading && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mb-8 p-4 rounded-xl bg-orange-500/10 border border-orange-500/20 text-orange-400 text-sm text-center"
-          >
-            ⚠️ <strong>Notice:</strong> Unable to fetch live posts. Showing demo content.
-          </motion.div>
-        )}
-
-        {/* Mock Data Notice */}
-        {isMockData && !error && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mb-8 p-4 rounded-xl bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-sm text-center"
-          >
-            ℹ️ <strong>Demo Mode:</strong> Showing sample posts. Configure GHL_API_KEY and GHL_LOCATION_ID to connect GHL Social Planner.
-          </motion.div>
-        )}
 
         {/* Loading State */}
         {loading && (
