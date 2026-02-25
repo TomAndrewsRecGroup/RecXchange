@@ -2,21 +2,29 @@
 import React from "react";
 import { Database, Search, Zap, Cpu, Bell, Globe } from "lucide-react";
 import Link from "next/link";
+import { motion } from 'framer-motion';
 
 export default function RecruiterCandidatesPage() {
   return (
-    <div className="w-full pb-20 pt-10 px-6 max-w-6xl mx-auto">
+    <div className="w-full pb-20 pt-24 px-6 max-w-6xl mx-auto">
       {/* Hero Section */}
       <div className="text-center mb-20">
-        <h3 className="text-[10px] uppercase tracking-[0.3em] font-bold text-[#312fd7] mb-4">
-          Monetize Your Database
-        </h3>
-        <h1 className="text-5xl font-bold mb-6 italic">
-          AI-Powered <span className="gradient-text">Candidate Matching</span>
-        </h1>
-        <p className="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed">
-          Stop letting your goldmine of candidates gather dust. Share your database with the Xchange Engine and let our AI find the roles they were meant for.
-        </p>
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <span className="block text-[10px] uppercase tracking-[0.4em] text-cyan-400/60 mb-6 font-bold">
+            Monetize Your Database
+          </span>
+          <h1 className="text-4xl md:text-6xl font-bold gradient-text mb-6 tracking-tight leading-tight pb-2">
+            AI-Powered Candidate Matching
+          </h1>
+          <div className="pulse-underline mb-8 mx-auto" />
+          <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
+            Stop letting your goldmine of candidates gather dust. Share your database with the Xchange Engine and let our AI find the roles they were meant for.
+          </p>
+        </motion.div>
       </div>
 
       {/* Main Feature: The Database Sync */}

@@ -1,17 +1,30 @@
 "use client";
 import React from "react";
 import { Zap, Cpu, Target } from "lucide-react";
+import { motion } from 'framer-motion';
 
 export default function CollaborationPage() {
   return (
-    <div className="pb-20 pt-10 px-6 max-w-7xl mx-auto">
+    <div className="pb-20 pt-24 px-6 max-w-7xl mx-auto">
 
       {/* Hero */}
       <div className="text-center mb-20">
-        <h1 className="text-5xl font-bold mb-6 italic">Split Fees. <span className="gradient-text">Zero Friction.</span></h1>
-        <p className="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed">
-          RecXchange isn’t just a marketplace; it’s a high-performance engine designed to protect your deals and automate your matchmaking.
-        </p>
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <span className="block text-[10px] uppercase tracking-[0.4em] text-cyan-400/60 mb-6 font-bold">
+            The RecXchange Engine
+          </span>
+          <h1 className="text-4xl md:text-6xl font-bold gradient-text mb-6 tracking-tight leading-tight pb-2">
+            Split Fees. Zero Friction.
+          </h1>
+          <div className="pulse-underline mb-8 mx-auto" />
+          <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
+            RecXchange isn't just a marketplace; it's a high-performance engine designed to protect your deals and automate your matchmaking.
+          </p>
+        </motion.div>
       </div>
 
       {/* The Split Logic */}
