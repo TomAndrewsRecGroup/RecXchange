@@ -3,7 +3,6 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import type { Metadata };
 
 // Note: Metadata export removed - now handled by metadata.ts in this directory
 
