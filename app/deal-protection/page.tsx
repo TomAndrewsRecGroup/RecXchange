@@ -55,7 +55,7 @@ export default function DealProtection() {
           </motion.p>
         </header>
 
-        <div className="flex flex-col gap-8 pb-16">
+        <div className="flex flex-col gap-8 pb-10">
 
           {/* Section 1: Timeline */}
           <section className="glass-card p-10 md:p-14 rounded-[3.5rem] border-cyan-400/10 relative overflow-hidden bg-gradient-to-br from-cyan-400/[0.02] to-transparent shadow-2xl">
@@ -90,7 +90,7 @@ export default function DealProtection() {
             </div>
           </section>
 
-          {/* Section 2: Framework Blocks */}
+          {/* Section 2: Protection Blocks */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <motion.section
               whileHover={{ translateY: -5 }}
@@ -132,8 +132,8 @@ export default function DealProtection() {
           {/* Section 3: Summary Chips */}
           <section className="glass-card p-10 rounded-[2.5rem] border-cyan-400/10 flex flex-col md:flex-row items-center justify-between gap-8 bg-black/20">
             <div>
-              <h3 className="text-sm font-black uppercase tracking-[0.2em] mb-2">Framework Protocol</h3>
-              <p className="text-xs text-gray-600 font-bold uppercase tracking-widest">Resolution & Ethics Compliance // v2.6</p>
+              <h3 className="text-sm font-black uppercase tracking-[0.2em] mb-2">Resolution & Ethics</h3>
+              <p className="text-xs text-gray-600 font-bold uppercase tracking-widest">Disputes handled with one shared log.</p>
             </div>
             <div className="flex flex-wrap justify-center gap-3">
               {["Agreed Resolution", "Transparency", "Data Privacy"].map((text, i) => (
@@ -146,20 +146,6 @@ export default function DealProtection() {
         </div>
 
         <RecruiterFinalCTA />
-      </div>
-
-      {/* Footer Navigation Overlay */}
-      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 w-full max-w-2xl px-6 z-50">
-        <div className="glass-card py-4 px-10 rounded-full border-cyan-400/10 flex justify-between items-center text-[10px] text-gray-500 font-black uppercase tracking-[0.2em] shadow-2xl backdrop-blur-xl">
-          <div className="flex items-center gap-3">
-            <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_rgba(0,255,255,0.8)]" />
-            <span>Active Protocol v2.6</span>
-          </div>
-          <div className="flex gap-8">
-            <Link href="/roles" className="hover:text-cyan-400 transition-colors">Marketplace</Link>
-            <Link href="/about" className="hover:text-fuchsia-400 transition-colors">About</Link>
-          </div>
-        </div>
       </div>
     </main>
   );
