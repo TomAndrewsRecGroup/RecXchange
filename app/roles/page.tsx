@@ -5,7 +5,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: "Live Recruitment Roles | RecXchange - Browse 1000s of Split Fee Opportunities",
-  description: "Browse live recruitment roles from 15,000+ recruiters. Submit candidates and split fees 50/50, 60/40, or take 70% on RecX Direct placements. £14,000 average fee share. One placement pays for 12 months membership.",
+  description: "Browse live recruitment roles from 15,000+ recruiters. Submit candidates and split fees 50/50, 60/40, or take 70% on RecX Direct placements. $7,000 average placement fee. $750,000 in fees available. Roles across UK, USA, Europe, Africa, Middle East, Australia in Engineering, Healthcare, Tech, HR, Sales, Finance.",
   keywords: [
     "recruitment roles",
     "live recruitment jobs",
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "Live Recruitment Roles | RecXchange",
-    description: "Browse 1000s of live roles. Submit candidates. Split fees automatically. £14,000 average fee share.",
+    description: "Browse 1000s of live roles. Submit candidates. Split fees automatically. $7,000 average fee.",
     url: "https://recxchange.io/roles",
     type: "website"
   },
@@ -92,6 +92,11 @@ export default function RolesMarketplace() {
             <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
               Browse live roles. Submit candidates. Split fees 50/50, 60/40, or take 70% on RecX Direct placements.
             </p>
+            <div className="mt-6 flex flex-wrap justify-center gap-4 text-xs text-gray-500">
+              <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10">$7,000 avg fee</span>
+              <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10">$750k fees available</span>
+              <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10">UK · USA · Europe · Africa · Middle East · Australia</span>
+            </div>
           </motion.div>
         </header>
 
@@ -239,7 +244,7 @@ export default function RolesMarketplace() {
           </div>
           <button
             disabled={page >= totalPages}
-            onClick={() => { setPage(p => p + 1); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+            onClick={() => { setPage(p => 1); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
             className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 disabled:opacity-20 hover:text-purple-400 transition-all"
           >
             Next →

@@ -5,7 +5,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: "Hire Talent Faster | RecXchange - Digital RPO with Agency Terms",
-  description: "Post your role for free. 15,000+ recruiters compete to fill it. Pay one fee (12-20%) only when you hire. Get candidates in 48 hours. Digital RPO process with flexible agency-style terms.",
+  description: "Post your role for free. 15,000+ recruiters compete to fill it across UK, USA, Europe, Africa, Middle East, Australia. Pay one fee (12-20%) only when you hire. Get candidates in 48 hours. Average placement fee $7,000. Digital RPO process with flexible agency-style terms.",
   keywords: [
     "hire talent fast",
     "recruitment platform for hiring managers",
@@ -58,8 +58,13 @@ export default function HiringManagerHome() {
               Post your role for free.
             </h1>
             <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-              Thousands of recruiters compete to fill it. You pay one fee when hired.
+              15,000+ recruiters compete to fill it. You pay one fee when hired.
             </p>
+            <div className="mt-6 flex flex-wrap justify-center gap-4 text-xs text-gray-500">
+              <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10">$7,000 avg fee</span>
+              <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10">270M candidates</span>
+              <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10">Engineering · Healthcare · Tech · HR · Sales · Finance</span>
+            </div>
           </motion.div>
         </header>
 
@@ -96,7 +101,7 @@ export default function HiringManagerHome() {
                   </p>
                   <ul className="space-y-4 mb-10">
                     {[
-                      "Post once, thousands of recruiters see it",
+                      "Post once, 15,000+ recruiters see it",
                       "Set your fee upfront (12-20% standard)",
                       "First candidates submitted in 48 hours"
                     ].map((item, i) => (

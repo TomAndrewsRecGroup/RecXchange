@@ -6,7 +6,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: "RecXchange | Recruiter Collaboration Platform - Share Roles, Split Fees, Get Paid",
-  description: "Join 15,000+ recruiters partnering on placements. Post roles to find candidates or share candidates to find roles. Split fees 50/50, 60/40, or 70/30. AI-powered matching with 270M candidates. One placement pays for the year.",
+  description: "Join 15,000+ recruiters partnering on placements. Post roles to find candidates or share candidates to find roles. Split fees 50/50, 60/40, or 70/30. AI-powered matching with 270M candidates. Average placement fee $7,000. $750,000 in fees available across roles in UK, USA, Europe, Africa, Middle East, Australia.",
   keywords: [
     "recruiter collaboration platform",
     "split fee recruitment",
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "RecXchange | Share Roles. Split Fees. Get Paid.",
-    description: "15,000+ recruiters partnering on placements. AI-powered matching. Split fees automatically.",
+    description: "15,000+ recruiters partnering on placements. AI-powered matching. Split fees automatically. $7,000 average placement fee.",
     url: "https://recxchange.io",
     type: "website"
   },
@@ -83,11 +83,11 @@ export default function EntryWall() {
               </div>
               <h2 className="text-4xl font-bold mb-6 text-white group-hover:text-cyan-400 transition-colors">Recruiter</h2>
               <p className="text-gray-400 text-base mb-8 leading-relaxed">
-                You're a recruiter. Post roles to find candidates. Or share candidates to find roles. Either way, split fees 50/50.
+                You're a recruiter. Post roles to find candidates. Or share candidates to find roles. Either way, split fees with 15,000+ recruiters.
               </p>
               <ul className="space-y-5 text-sm text-gray-500 font-medium">
                 <li className="flex items-center gap-4"><span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(0,255,255,0.8)]" /> Search 270M candidates when your pipeline is dry</li>
-                <li className="flex items-center gap-4"><span className="w-1.5 h-1.5 rounded-full bg-cyan-400" /> Partner with vetted recruiters. Split fees automatically.</li>
+                <li className="flex items-center gap-4"><span className="w-1.5 h-1.5 rounded-full bg-cyan-400" /> Up to 70% split on RecX Direct roles</li>
                 <li className="flex items-center gap-4"><span className="w-1.5 h-1.5 rounded-full bg-cyan-400" /> Split fee contracts protect both parties</li>
               </ul>
             </div>
@@ -119,7 +119,7 @@ export default function EntryWall() {
                 You're hiring talent. We post your role. Thousands of recruiters compete to fill it. You pay one fee.
               </p>
               <ul className="space-y-5 text-sm text-gray-500 font-medium">
-                <li className="flex items-center gap-4"><span className="w-1.5 h-1.5 rounded-full bg-fuchsia-500 shadow-[0_0_8px_rgba(255,0,255,0.8)]" /> Thousands of recruiters see your role instantly</li>
+                <li className="flex items-center gap-4"><span className="w-1.5 h-1.5 rounded-full bg-fuchsia-500 shadow-[0_0_8px_rgba(255,0,255,0.8)]" /> 15,000+ recruiters see your role instantly</li>
                 <li className="flex items-center gap-4"><span className="w-1.5 h-1.5 rounded-full bg-fuchsia-500" /> One point of contact. No recruiter spam.</li>
                 <li className="flex items-center gap-4"><span className="w-1.5 h-1.5 rounded-full bg-fuchsia-500" /> Test the market before you officially hire</li>
               </ul>
