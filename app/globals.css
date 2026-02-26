@@ -10,6 +10,7 @@
   --recx-neon: #00FFFF;
   --neon-pulse: 0 0 8px rgba(0, 255, 255, 0.8), 0 0 20px rgba(0, 255, 255, 0.4);
   --gradient-brand: linear-gradient(135deg, #00FFFF, #a855f7, #FF00FF);
+  --header-spacing: 80px;
 }
 
 @layer base {
@@ -128,6 +129,34 @@
     @apply h-[2px] rounded-full bg-gradient-to-r from-cyan-400 to-fuchsia-500;
     box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
     animation: pulse-width 4s infinite ease-in-out;
+  }
+
+  /* Page spacing utilities - REDUCED HEADER PADDING */
+  .page-container {
+    @apply pt-20 pb-16 px-6;
+  }
+
+  .page-container-tight {
+    @apply pt-10 pb-16 px-6;
+  }
+
+  /* Override py-20 with reduced top padding */
+  main.py-20 {
+    padding-top: var(--header-spacing) !important;
+  }
+}
+
+@layer utilities {
+  /* Reduced header spacing utility */
+  .reduced-header-spacing {
+    padding-top: var(--header-spacing);
+  }
+
+  @media (max-width: 768px) {
+    main.py-20,
+    .reduced-header-spacing {
+      padding-top: 60px !important;
+    }
   }
 }
 
