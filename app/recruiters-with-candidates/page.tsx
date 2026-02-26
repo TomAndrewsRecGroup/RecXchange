@@ -7,66 +7,112 @@ import { trackEvent } from '@/lib/analytics';
 
 type EnginePhase = 'idle' | 'uploading' | 'matching' | 'result';
 
-// Common job title patterns with professional certifications
+// Enhanced job title patterns with more specific matching
 const JOB_TITLE_PATTERNS = [
-  // Healthcare & Medical
-  /\b(nurse|nursing|rn|registered nurse|lpn|cna|nurse practitioner|midwife|healthcare assistant|clinical nurse|mental health nurse|pediatric nurse|critical care nurse|oncology nurse|emergency nurse|theatre nurse|district nurse|school nurse|occupational health nurse|nurse prescriber|specialist nurse|advanced nurse practitioner)\b/gi,
-  /\b(doctor|physician|surgeon|consultant|gp|general practitioner|medical officer|psychiatrist|radiologist|cardiologist|anesthetist|dermatologist|neurologist|pediatrician)\b/gi,
-  /\b(pharmacist|pharmacy|pharmaceutical|dispensing)\b/gi,
-  /\b(physiotherapist|occupational therapist|speech therapist|therapist|counselor|psychologist|clinical psychologist)\b/gi,
-  /\b(paramedic|emergency medical|emt|ambulance)\b/gi,
-  /\b(dental|dentist|orthodontist|hygienist)\b/gi,
-  /\b(radiographer|sonographer|medical imaging)\b/gi,
-  /\b(healthcare manager|clinical manager|ward manager|practice manager)\b/gi,
+  // Healthcare & Medical - More specific patterns
+  /\b(registered nurse|nurse practitioner|clinical nurse specialist|nurse manager|charge nurse|staff nurse|community nurse|district nurse|practice nurse|school nurse|occupational health nurse|mental health nurse|learning disability nurse|children's nurse|neonatal nurse|midwife|student nurse)\b/gi,
+  /\b(senior (nurse|nursing)|lead nurse|advanced (nurse|nursing) practitioner|consultant nurse|nurse educator|nurse researcher)\b/gi,
+  /\b(consultant|registrar|foundation doctor|junior doctor|senior house officer|specialist registrar|staff grade|associate specialist|clinical fellow)\b/gi,
+  /\b(general practitioner|gp partner|salaried gp|locum gp|gp registrar|medical director|clinical director)\b/gi,
+  /\b(consultant (surgeon|physician|psychiatrist|radiologist|cardiologist|anesthetist|dermatologist|neurologist|pediatrician|oncologist))\b/gi,
+  /\b(pharmacist|clinical pharmacist|hospital pharmacist|community pharmacist|pharmacy manager|principal pharmacist)\b/gi,
+  /\b(physiotherapist|occupational therapist|speech (and )?language therapist|clinical psychologist|counseling psychologist|educational psychologist)\b/gi,
+  /\b(paramedic|emergency care practitioner|ambulance technician|emergency medical technician)\b/gi,
+  /\b(dentist|dental surgeon|orthodontist|dental hygienist|dental therapist|dental nurse)\b/gi,
+  /\b(radiographer|diagnostic radiographer|therapeutic radiographer|sonographer|medical imaging)\b/gi,
+  /\b(healthcare assistant|nursing assistant|support worker|care assistant|senior (healthcare|care) assistant)\b/gi,
+  /\b(ward manager|clinical manager|matron|modern matron|service manager|operations manager|healthcare manager)\b/gi,
   
-  // Engineering
-  /\b(mechanical engineer|civil engineer|electrical engineer|structural engineer|chemical engineer|aerospace engineer|biomedical engineer|industrial engineer|marine engineer|mining engineer|environmental engineer|automotive engineer|manufacturing engineer|design engineer|project engineer|site engineer|test engineer|validation engineer|systems engineer)\b/gi,
-  /\b(software engineer|developer|programmer|full stack|frontend|backend|web developer|mobile developer|devops|cloud engineer|data engineer|ml engineer|ai engineer|security engineer)\b/gi,
+  // Engineering - More specific
+  /\b(mechanical engineer|senior mechanical engineer|principal mechanical engineer|lead mechanical engineer|chief mechanical engineer)\b/gi,
+  /\b(civil engineer|senior civil engineer|structural engineer|site engineer|project engineer|geotechnical engineer)\b/gi,
+  /\b(electrical engineer|senior electrical engineer|power systems engineer|control systems engineer|instrumentation engineer)\b/gi,
+  /\b(software engineer|senior software engineer|lead software engineer|principal software engineer|staff software engineer)\b/gi,
+  /\b(full[\s-]?stack (developer|engineer)|frontend (developer|engineer)|backend (developer|engineer)|web developer)\b/gi,
+  /\b(devops engineer|site reliability engineer|cloud engineer|infrastructure engineer|platform engineer)\b/gi,
+  /\b(data engineer|ml engineer|machine learning engineer|ai engineer|mlops engineer)\b/gi,
+  /\b(chemical engineer|process engineer|production engineer|manufacturing engineer|quality engineer)\b/gi,
+  /\b(aerospace engineer|automotive engineer|marine engineer|biomedical engineer|environmental engineer)\b/gi,
   
   // Technology
-  /\b(data scientist|data analyst|business analyst|system analyst|solutions architect|cloud architect|network architect|infrastructure engineer|network engineer|database administrator|dba|it manager|technical lead|tech lead|scrum master|product owner)\b/gi,
-  /\b(ux designer|ui designer|product designer|graphic designer|web designer|creative director|art director)\b/gi,
-  /\b(qa engineer|quality assurance|test engineer|qa analyst|automation engineer)\b/gi,
+  /\b(data scientist|senior data scientist|lead data scientist|principal data scientist|data analyst|business intelligence analyst)\b/gi,
+  /\b(solutions architect|enterprise architect|cloud architect|security architect|network architect|technical architect)\b/gi,
+  /\b(network engineer|senior network engineer|network administrator|systems administrator|database administrator)\b/gi,
+  /\b(security engineer|cybersecurity analyst|information security analyst|penetration tester|security consultant)\b/gi,
+  /\b(ux designer|ui designer|product designer|senior (ux|ui|product) designer|lead designer|design director)\b/gi,
+  /\b(qa engineer|test engineer|quality assurance analyst|test automation engineer|sdet|quality engineer)\b/gi,
+  /\b(technical lead|tech lead|engineering manager|head of engineering|vp engineering|cto)\b/gi,
+  /\b(scrum master|agile coach|product owner|project manager|programme manager|delivery manager)\b/gi,
   
   // Business & Management
-  /\b(project manager|programme manager|product manager|operations manager|general manager|business development manager|account manager|relationship manager|client services manager)\b/gi,
-  /\b(sales director|sales manager|account executive|business development|sales representative|sales consultant)\b/gi,
-  /\b(marketing director|marketing manager|digital marketing|content manager|seo specialist|social media manager|brand manager|growth manager)\b/gi,
-  /\b(hr manager|human resources|talent acquisition|recruiter|recruitment consultant|people operations|hr business partner|hr advisor|talent partner)\b/gi,
-  /\b(financial analyst|accountant|finance manager|controller|cfo|financial controller|management accountant|chartered accountant|auditor|tax advisor)\b/gi,
-  /\b(operations director|operations manager|supply chain|logistics manager|procurement manager|warehouse manager)\b/gi,
+  /\b(project manager|senior project manager|programme manager|portfolio manager|pmo manager)\b/gi,
+  /\b(product manager|senior product manager|lead product manager|group product manager|head of product)\b/gi,
+  /\b(business analyst|senior business analyst|lead business analyst|business systems analyst|data analyst)\b/gi,
+  /\b(account manager|senior account manager|key account manager|strategic account manager|client services manager)\b/gi,
+  /\b(sales director|sales manager|regional sales manager|territory manager|business development manager)\b/gi,
+  /\b(account executive|senior account executive|sales executive|business development executive)\b/gi,
+  /\b(marketing director|marketing manager|digital marketing manager|content manager|brand manager|growth manager)\b/gi,
+  /\b(hr manager|human resources manager|people manager|hr business partner|talent acquisition manager)\b/gi,
+  /\b(recruiter|senior recruiter|recruitment consultant|talent acquisition specialist|talent partner)\b/gi,
+  /\b(financial analyst|senior financial analyst|finance manager|financial controller|management accountant)\b/gi,
+  /\b(accountant|senior accountant|chartered accountant|qualified accountant|accounts manager)\b/gi,
+  /\b(operations manager|operations director|general manager|regional manager|area manager)\b/gi,
+  /\b(supply chain manager|logistics manager|procurement manager|warehouse manager|distribution manager)\b/gi,
   
   // Education
-  /\b(teacher|lecturer|professor|teaching assistant|head teacher|deputy head|tutor|instructor|trainer|education coordinator)\b/gi,
+  /\b(teacher|secondary teacher|primary teacher|head teacher|deputy head|assistant head|subject leader)\b/gi,
+  /\b(lecturer|senior lecturer|professor|associate professor|research fellow|teaching fellow)\b/gi,
+  /\b(teaching assistant|higher level teaching assistant|learning support assistant|sen teaching assistant)\b/gi,
   
   // Legal
-  /\b(solicitor|barrister|lawyer|legal advisor|paralegal|legal executive|compliance officer|legal counsel)\b/gi,
+  /\b(solicitor|senior solicitor|associate solicitor|partner|legal director|general counsel)\b/gi,
+  /\b(barrister|junior barrister|senior barrister|qc|kc|pupil barrister)\b/gi,
+  /\b(paralegal|senior paralegal|legal executive|legal advisor|legal counsel|in-house counsel)\b/gi,
+  /\b(compliance officer|compliance manager|head of compliance|risk manager|governance manager)\b/gi,
   
   // Construction & Trades
-  /\b(construction manager|site manager|quantity surveyor|building surveyor|carpenter|electrician|plumber|joiner|bricklayer|plasterer|roofer|painter|decorator)\b/gi,
+  /\b(construction manager|site manager|project manager|contracts manager|senior site manager)\b/gi,
+  /\b(quantity surveyor|senior quantity surveyor|assistant quantity surveyor|commercial manager)\b/gi,
+  /\b(building surveyor|structural surveyor|chartered surveyor|senior surveyor)\b/gi,
+  /\b(site engineer|resident engineer|design engineer|structural engineer|civil engineer)\b/gi,
+  /\b(carpenter|joiner|electrician|plumber|bricklayer|plasterer|painter|decorator|roofer)\b/gi,
+  /\b(foreman|site supervisor|trade supervisor|works manager|maintenance manager)\b/gi,
   
   // Retail & Hospitality
-  /\b(store manager|retail manager|assistant manager|team leader|supervisor|chef|sous chef|head chef|kitchen manager|restaurant manager|bar manager|hotel manager)\b/gi,
+  /\b(store manager|retail manager|assistant (store|retail) manager|department manager|area manager)\b/gi,
+  /\b(head chef|sous chef|chef de partie|commis chef|pastry chef|executive chef)\b/gi,
+  /\b(restaurant manager|assistant restaurant manager|bar manager|front of house manager)\b/gi,
+  /\b(hotel manager|general manager|operations manager|duty manager|guest services manager)\b/gi,
   
   // Other Professional
-  /\b(architect|town planner|surveyor|estate agent|property manager|facilities manager|office manager|executive assistant|pa|personal assistant|administrator|receptionist)\b/gi,
-  /\b(social worker|care manager|support worker|youth worker|community worker)\b/gi,
-  /\b(journalist|editor|copywriter|content writer|technical writer|communications manager|pr manager)\b/gi,
+  /\b(architect|senior architect|principal architect|associate architect|architectural technician)\b/gi,
+  /\b(town planner|urban planner|planning consultant|senior planner|principal planner)\b/gi,
+  /\b(estate agent|property manager|lettings manager|property consultant|real estate agent)\b/gi,
+  /\b(facilities manager|building manager|estates manager|maintenance manager|property manager)\b/gi,
+  /\b(office manager|operations coordinator|business administrator|executive assistant|pa|personal assistant)\b/gi,
+  /\b(social worker|senior social worker|principal social worker|team manager|practice educator)\b/gi,
+  /\b(care manager|senior care manager|registered manager|service manager|care coordinator)\b/gi,
+  /\b(journalist|senior journalist|editor|sub-editor|content writer|copywriter|technical writer)\b/gi,
+  /\b(communications manager|pr manager|public relations manager|media relations manager)\b/gi,
 ];
 
-// Specialty/certification patterns (to append to job titles)
-const SPECIALTY_PATTERNS = [
-  /\b(adhd|adhd specialist|adhd prescriber)\b/gi,
-  /\b(diabetes|diabetes specialist)\b/gi,
-  /\b(mental health|psychiatry|psychiatric)\b/gi,
-  /\b(pediatric|paediatric|children|neonatal)\b/gi,
-  /\b(oncology|cancer)\b/gi,
-  /\b(cardiology|cardiac)\b/gi,
-  /\b(neurology|neurological)\b/gi,
-  /\b(emergency|a&e|accident and emergency|trauma)\b/gi,
-  /\b(intensive care|icu|critical care)\b/gi,
-  /\b(surgery|surgical|operating theatre|perioperative)\b/gi,
-];
+// Abbreviations to exclude or expand
+const ABBREVIATION_EXPANSIONS: Record<string, string> = {
+  'rn': 'Registered Nurse',
+  'gp': 'General Practitioner',
+  'sho': 'Senior House Officer',
+  'fy1': 'Foundation Year 1 Doctor',
+  'fy2': 'Foundation Year 2 Doctor',
+  'st1': 'Specialty Trainee Year 1',
+  'cna': 'Certified Nursing Assistant',
+  'lpn': 'Licensed Practical Nurse',
+  'emt': 'Emergency Medical Technician',
+  'qa': 'Quality Assurance Engineer',
+  'ba': 'Business Analyst',
+  'pa': 'Personal Assistant',
+  'hr': 'Human Resources Manager',
+  'it': 'IT Manager',
+};
 
 // Job role mappings for keyword-based fallback
 const jobMappings: Record<string, string[]> = {
@@ -79,6 +125,8 @@ const jobMappings: Record<string, string[]> = {
   'Mechanical Engineer': ['mechanical engineering', 'cad', 'solidworks', 'autocad', 'manufacturing', 'design engineer', 'mechanical design', 'product design', 'engineering drawings'],
   'Civil Engineer': ['civil engineering', 'structural', 'construction', 'infrastructure', 'surveying', 'site engineer', 'project engineer'],
   'Electrical Engineer': ['electrical engineering', 'electronics', 'circuit', 'pcb', 'embedded', 'power systems', 'electrical design'],
+  'Registered Nurse': ['nursing', 'registered nurse', 'clinical care', 'patient care', 'ward', 'healthcare', 'nmc', 'nursing diploma'],
+  'General Practitioner': ['general practice', 'primary care', 'family medicine', 'gmc', 'medical degree', 'mbbs', 'gp surgery'],
   'HR Manager': ['human resources', 'hr', 'recruitment', 'talent acquisition', 'employee relations', 'hr manager', 'people operations'],
   'Financial Analyst': ['finance', 'financial analysis', 'accounting', 'excel', 'financial modeling', 'budgeting', 'forecasting', 'cpa', 'cfa'],
   'Project Manager': ['project management', 'pmp', 'project manager', 'stakeholder management', 'waterfall', 'agile', 'project planning'],
@@ -113,8 +161,6 @@ function FakeXchangeEngine() {
   };
 
   const extractJobTitle = (cvText: string): string | null => {
-    const textLower = cvText.toLowerCase();
-    
     // Common CV section headers that precede job titles
     const experienceSectionPatterns = [
       /(?:professional experience|work experience|employment history|experience|career history|work history)[:\s]*([\s\S]{0,2000}?)(?=education|skills|qualifications|certifications|references|$)/gi,
@@ -133,33 +179,23 @@ function FakeXchangeEngine() {
           const titleMatches = experienceSection.match(titlePattern);
           if (titleMatches && titleMatches.length > 0) {
             // Get the first (most recent) job title
-            const extractedTitle = titleMatches[0].trim();
+            let extractedTitle = titleMatches[0].trim();
             
-            // Check for specialties to append
-            const specialties: string[] = [];
-            for (const specialtyPattern of SPECIALTY_PATTERNS) {
-              const specialtyMatches = cvText.match(specialtyPattern);
-              if (specialtyMatches && specialtyMatches.length > 0) {
-                specialties.push(specialtyMatches[0].trim());
-              }
+            // Check if it's a known abbreviation and expand it
+            const lowerTitle = extractedTitle.toLowerCase();
+            if (ABBREVIATION_EXPANSIONS[lowerTitle]) {
+              extractedTitle = ABBREVIATION_EXPANSIONS[lowerTitle];
             }
             
-            // Capitalize properly
-            let finalTitle = extractedTitle
-              .split(' ')
-              .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-              .join(' ');
-            
-            // Append specialty if found - Use Array.from instead of spread
-            if (specialties.length > 0) {
-              const capitalizedSpecialties = specialties.map(s => 
-                s.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ')
-              );
-              const uniqueSpecialties = Array.from(new Set(capitalizedSpecialties));
-              finalTitle = `${finalTitle} - ${uniqueSpecialties[0]}`;
+            // Capitalize properly only if not already an expansion
+            if (!ABBREVIATION_EXPANSIONS[lowerTitle]) {
+              extractedTitle = extractedTitle
+                .split(' ')
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                .join(' ');
             }
             
-            return finalTitle;
+            return extractedTitle;
           }
         }
       }
@@ -169,32 +205,23 @@ function FakeXchangeEngine() {
     for (const titlePattern of JOB_TITLE_PATTERNS) {
       const titleMatches = cvText.match(titlePattern);
       if (titleMatches && titleMatches.length > 0) {
-        const extractedTitle = titleMatches[0].trim();
+        let extractedTitle = titleMatches[0].trim();
         
-        // Check for specialties
-        const specialties: string[] = [];
-        for (const specialtyPattern of SPECIALTY_PATTERNS) {
-          const specialtyMatches = cvText.match(specialtyPattern);
-          if (specialtyMatches && specialtyMatches.length > 0) {
-            specialties.push(specialtyMatches[0].trim());
-          }
+        // Check if it's a known abbreviation and expand it
+        const lowerTitle = extractedTitle.toLowerCase();
+        if (ABBREVIATION_EXPANSIONS[lowerTitle]) {
+          extractedTitle = ABBREVIATION_EXPANSIONS[lowerTitle];
         }
         
-        let finalTitle = extractedTitle
-          .split(' ')
-          .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-          .join(' ');
-        
-        // Use Array.from instead of spread
-        if (specialties.length > 0) {
-          const capitalizedSpecialties = specialties.map(s => 
-            s.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ')
-          );
-          const uniqueSpecialties = Array.from(new Set(capitalizedSpecialties));
-          finalTitle = `${finalTitle} - ${uniqueSpecialties[0]}`;
+        // Capitalize properly only if not already an expansion
+        if (!ABBREVIATION_EXPANSIONS[lowerTitle]) {
+          extractedTitle = extractedTitle
+            .split(' ')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+            .join(' ');
         }
         
-        return finalTitle;
+        return extractedTitle;
       }
     }
 
@@ -321,10 +348,10 @@ function FakeXchangeEngine() {
   };
 
   return (
-    <div className="grid lg:grid-cols-2 gap-12 items-center mb-32">
-      {/* Left: Animated Core */}
-      <div className="relative flex items-center justify-center min-h-[400px]">
-        <div className="relative w-80 h-80">
+    <div className="grid lg:grid-cols-[520px_1fr] gap-8 items-start mb-32">
+      {/* Left: Animated Core - Reduced size and moved left */}
+      <div className="relative flex items-center justify-start min-h-[400px]">
+        <div className="relative w-72 h-72">
           {/* Outer Ring 1 - Cyan - Rotates Clockwise */}
           <motion.div
             className="absolute inset-0 rounded-full border-4 border-transparent"
@@ -438,7 +465,7 @@ function FakeXchangeEngine() {
 
       {/* Right: Upload & Results */}
       <div className="glass-card p-10 rounded-[2.5rem] border-purple-400/10">
-        <h3 className="text-2xl font-bold mb-6 gradient-text">Try the Xchange Engine</h3>
+        <h3 className="text-2xl font-bold mb-6 gradient-text">Utilize Your Existing Database</h3>
         <p className="text-gray-400 text-sm mb-8 leading-relaxed">
           Upload a candidate CV and watch the AI find matching roles in real-time. All data stays in your browser and is deleted immediately.
         </p>
@@ -536,7 +563,7 @@ export default function RecruiterCandidatesPage() {
   }, []);
 
   return (
-    <div className="w-full pb-20 pt-24 px-6 max-w-[1200px] mx-auto">
+    <div className="w-full pb-20 pt-24 px-6 max-w-[1400px] mx-auto">
       {/* Hero Section */}
       <div className="text-center mb-20">
         <motion.div
@@ -560,60 +587,31 @@ export default function RecruiterCandidatesPage() {
       {/* Fake Xchange Engine Demo */}
       <FakeXchangeEngine />
 
-      {/* Main Feature: The Database Sync */}
-      <div className="grid lg:grid-cols-2 gap-12 items-stretch mb-32">
-        <div className="glass-card p-12 rounded-[3rem] border-l-4 border-cyan-400/30 relative overflow-hidden flex flex-col justify-between">
-          <div>
-            <div className="absolute top-0 right-0 p-8 opacity-5">
-              <Database size={200} />
-            </div>
-            <h2 className="text-3xl font-bold mb-6">
-              Utilize Your Existing <span className="text-cyan-400">Database</span>
-            </h2>
-            <p className="text-gray-400 mb-8 leading-relaxed">
-              The Xchange Engine automatically analyzes your CVs and profiles to extract meaningful insights like skill compatibility, career trajectory, and industry relevance. It then matches these candidates across multiple dimensions to the best-suited roles on the platform.
-            </p>
-            <ul className="space-y-4">
-              {[
-                "Semantic matching beyond simple keywords",
-                "Continuous 24/7 background scanning",
-                "Instant notifications for high-quality role matches"
-              ].map((item, i) => (
-                <li key={i} className="flex items-center gap-3 text-sm text-gray-300">
-                  <Zap size={16} className="text-cyan-400" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        {/* Visual Proof: The Match Screenshot - Now Matching Height */}
-        <div className="flex flex-col">
-          <div className="relative group flex-1">
-            <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-fuchsia-500 rounded-[2.5rem] blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
-            <div className="relative glass-card rounded-[2.5rem] overflow-hidden border border-white/10 bg-black shadow-2xl h-full flex flex-col">
-              <div className="flex items-center justify-between px-6 py-3 border-b border-white/5 bg-white/5">
-                <span className="text-[9px] font-bold text-gray-500 uppercase tracking-widest italic">Xchange Engine — AI Match Analysis</span>
-                <div className="flex gap-1.5">
-                  <div className="w-2 h-2 rounded-full bg-red-500/20" />
-                  <div className="w-2 h-2 rounded-full bg-yellow-500/20" />
-                  <div className="w-2 h-2 rounded-full bg-green-500/20" />
-                </div>
-              </div>
-              <div className="flex-1 flex items-center justify-center p-6">
-                <img 
-                  src="https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/Match.png" 
-                  alt="System Match Interface" 
-                  className="w-full h-auto opacity-90 group-hover:opacity-100 transition-opacity object-contain"
-                />
+      {/* Visual Proof: The Match Screenshot - Full Width */}
+      <div className="mb-32">
+        <div className="relative group">
+          <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-fuchsia-500 rounded-[2.5rem] blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+          <div className="relative glass-card rounded-[2.5rem] overflow-hidden border border-white/10 bg-black shadow-2xl">
+            <div className="flex items-center justify-between px-6 py-3 border-b border-white/5 bg-white/5">
+              <span className="text-[9px] font-bold text-gray-500 uppercase tracking-widest italic">Xchange Engine — AI Match Analysis</span>
+              <div className="flex gap-1.5">
+                <div className="w-2 h-2 rounded-full bg-red-500/20" />
+                <div className="w-2 h-2 rounded-full bg-yellow-500/20" />
+                <div className="w-2 h-2 rounded-full bg-green-500/20" />
               </div>
             </div>
+            <div className="p-8">
+              <img 
+                src="https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/Match.png" 
+                alt="System Match Interface" 
+                className="w-full h-auto opacity-90 group-hover:opacity-100 transition-opacity"
+              />
+            </div>
           </div>
-          <p className="text-xs text-gray-500 mt-4 text-center italic leading-relaxed">
-            A real Xchange Match between recruiters, pulled from our RecXchange Platform
-          </p>
         </div>
+        <p className="text-xs text-gray-500 mt-4 text-center italic leading-relaxed">
+          A real Xchange Match between recruiters, pulled from our RecXchange Platform
+        </p>
       </div>
 
       {/* Trust Cards: Analysis & Discovery */}
@@ -661,13 +659,13 @@ export default function RecruiterCandidatesPage() {
             href="{{trigger_link.Hc9mpfL0JxjX06kwNpd1}}" 
             onClick={() => trackEvent('cta_clicked', { 
               page: '/recruiters-with-candidates',
-              cta_text: 'Start AI Search',
+              cta_text: 'Search 270M Candidates',
               cta_location: '270M candidate search section',
               persona: 'recruiter'
             })}
             className="px-10 py-4 rounded-full bg-white text-black font-bold hover:bg-gray-200 transition-all flex items-center gap-2"
           >
-            <Search size={18} /> Start AI Search
+            <Search size={18} /> Search 270M Candidates
           </Link>
           <a 
             href="https://apollo.io" 

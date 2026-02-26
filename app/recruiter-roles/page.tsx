@@ -193,7 +193,7 @@ export default function PostRolesPage() {
                 </div>
 
                 <div className="space-y-4">
-                  <label className="text-[10px] uppercase text-gray-400 font-black tracking-[0.2em]">Annual Base Salary ({selectedCurrency.symbol})</label>
+                  <label className="text-[10px] uppercase text-gray-400 font-black tracking-[0.2em]">Annual Base Salary</label>
                   <input 
                     type="number" 
                     value={salary} 
