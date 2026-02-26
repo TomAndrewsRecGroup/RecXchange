@@ -164,7 +164,7 @@ function FakeXchangeEngine() {
     // Common CV section headers that precede job titles
     const experienceSectionPatterns = [
       /(?:professional experience|work experience|employment history|experience|career history|work history)[:\s]*([\s\S]{0,2000}?)(?=education|skills|qualifications|certifications|references|$)/gi,
-      /(?:current role|current position|present)[:\s]*([\s\S]{0:500}?)(?=\n\n|education|skills)/gi,
+      /(?:current role|current position|present)[:\s]*([\s\S]{0,500}?)(?=\n\n|education|skills)/gi,
       /(?:job title|position|role)[:\s]*([^\n]{5,100})/gi,
     ];
 
@@ -348,9 +348,96 @@ function FakeXchangeEngine() {
   };
 
   return (
-    <div className="grid lg:grid-cols-[400px_1fr_1fr] gap-6 items-start mb-32">
-      {/* Left: Animated Core - Smaller and to the left */}
-      <div className="relative flex items-center justify-start min-h-[400px]">
+    <div className="grid lg:grid-cols-[1fr_400px_1fr] gap-6 items-start mb-32">
+      {/* Left: Upload & Results */}
+      <div className="glass-card p-8 rounded-[2.5rem] border-purple-400/10">
+        <h3 className="text-xl font-bold mb-4 gradient-text">Try the Xchange Engine</h3>
+        <p className="text-gray-400 text-sm mb-6 leading-relaxed">
+          Upload a candidate CV and watch the AI find matching roles in real-time. All data stays in your browser and is deleted immediately.
+        </p>
+
+        {phase !== 'result' ? (
+          <div>
+            <label className="block w-full cursor-pointer">
+              <div className="relative w-full py-6 px-8 rounded-2xl border-2 border-dashed border-cyan-400/30 bg-cyan-400/5 hover:bg-cyan-400/10 hover:border-cyan-400/50 transition-all text-center group">
+                <Upload size={32} className="mx-auto mb-3 text-cyan-400 group-hover:scale-110 transition-transform" />
+                <p className="text-sm font-bold text-white mb-1">Upload Candidate CV</p>
+                <p className="text-xs text-gray-500">PDF, DOC, DOCX, or TXT (browser only, not stored)</p>
+              </div>
+              <input
+                type="file"
+                accept=".pdf,.doc,.docx,.txt"
+                onChange={handleFileUpload}
+                className="hidden"
+                disabled={phase !== 'idle'}
+              />
+            </label>
+
+            {(phase === 'uploading' || phase === 'matching') && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mt-6 p-4 rounded-xl bg-purple-400/5 border border-purple-400/10"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse" />
+                  <p className="text-xs text-gray-400 font-medium">
+                    {phase === 'uploading' ? 'Extracting job title and skills from CV...' : 'Scanning 100+ live roles for matches...'}
+                  </p>
+                </div>
+              </motion.div>
+            )}
+          </div>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="space-y-6"
+          >
+            <div className="p-8 rounded-2xl bg-gradient-to-br from-green-500/10 to-cyan-500/10 border border-green-400/20">
+              <div className="flex items-start justify-between mb-6">
+                <div>
+                  <p className="text-[10px] text-green-400 font-black uppercase tracking-widest mb-2">Match Found</p>
+                  <h4 className="text-2xl font-bold text-white mb-1">{jobTitle}</h4>
+                  <p className="text-xs text-gray-500">RecX Direct Role</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-[10px] text-gray-500 font-black uppercase tracking-widest mb-1">Match Score</p>
+                  <p className="text-3xl font-bold gradient-text tabular-nums">{matchScore}%</p>
+                </div>
+              </div>
+
+              <div className="pt-6 border-t border-white/10">
+                <p className="text-[10px] text-gray-500 font-black uppercase tracking-widest mb-2">Estimated Split Fee</p>
+                <p className="text-4xl font-bold gradient-text tabular-nums">${splitFee.toLocaleString()}</p>
+              </div>
+            </div>
+
+            <div className="flex gap-4">
+              <button
+                onClick={resetEngine}
+                className="flex-1 py-4 px-6 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-white text-sm font-bold uppercase tracking-widest transition-all"
+              >
+                Try Another
+              </button>
+              <Link
+                href="{{trigger_link.Hc9mpfL0JxjX06kwNpd1}}"
+                onClick={handleSignupClick}
+                className="flex-1 py-4 px-6 rounded-xl bg-gradient-to-r from-cyan-500 to-fuchsia-500 hover:shadow-[0_0_30px_rgba(0,255,255,0.4)] text-white text-sm font-bold uppercase tracking-widest text-center transition-all"
+              >
+                See Live Roles
+              </Link>
+            </div>
+
+            <p className="text-xs text-gray-600 text-center italic">
+              Sign up to access real matching on 100+ live roles
+            </p>
+          </motion.div>
+        )}
+      </div>
+
+      {/* Middle: Animated Core - Smaller and centered */}
+      <div className="relative flex items-center justify-center min-h-[400px]">
         <div className="relative w-64 h-64">
           {/* Outer Ring 1 - Cyan - Rotates Clockwise */}
           <motion.div
@@ -461,93 +548,6 @@ function FakeXchangeEngine() {
             </div>
           </motion.div>
         </div>
-      </div>
-
-      {/* Middle: Upload & Results */}
-      <div className="glass-card p-8 rounded-[2.5rem] border-purple-400/10">
-        <h3 className="text-xl font-bold mb-4 gradient-text">Try the Xchange Engine</h3>
-        <p className="text-gray-400 text-sm mb-6 leading-relaxed">
-          Upload a candidate CV and watch the AI find matching roles in real-time. All data stays in your browser and is deleted immediately.
-        </p>
-
-        {phase !== 'result' ? (
-          <div>
-            <label className="block w-full cursor-pointer">
-              <div className="relative w-full py-6 px-8 rounded-2xl border-2 border-dashed border-cyan-400/30 bg-cyan-400/5 hover:bg-cyan-400/10 hover:border-cyan-400/50 transition-all text-center group">
-                <Upload size={32} className="mx-auto mb-3 text-cyan-400 group-hover:scale-110 transition-transform" />
-                <p className="text-sm font-bold text-white mb-1">Upload Candidate CV</p>
-                <p className="text-xs text-gray-500">PDF, DOC, DOCX, or TXT (browser only, not stored)</p>
-              </div>
-              <input
-                type="file"
-                accept=".pdf,.doc,.docx,.txt"
-                onChange={handleFileUpload}
-                className="hidden"
-                disabled={phase !== 'idle'}
-              />
-            </label>
-
-            {(phase === 'uploading' || phase === 'matching') && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="mt-6 p-4 rounded-xl bg-purple-400/5 border border-purple-400/10"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse" />
-                  <p className="text-xs text-gray-400 font-medium">
-                    {phase === 'uploading' ? 'Extracting job title and skills from CV...' : 'Scanning 100+ live roles for matches...'}
-                  </p>
-                </div>
-              </motion.div>
-            )}
-          </div>
-        ) : (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="space-y-6"
-          >
-            <div className="p-8 rounded-2xl bg-gradient-to-br from-green-500/10 to-cyan-500/10 border border-green-400/20">
-              <div className="flex items-start justify-between mb-6">
-                <div>
-                  <p className="text-[10px] text-green-400 font-black uppercase tracking-widest mb-2">Match Found</p>
-                  <h4 className="text-2xl font-bold text-white mb-1">{jobTitle}</h4>
-                  <p className="text-xs text-gray-500">RecX Direct Role</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-[10px] text-gray-500 font-black uppercase tracking-widest mb-1">Match Score</p>
-                  <p className="text-3xl font-bold gradient-text tabular-nums">{matchScore}%</p>
-                </div>
-              </div>
-
-              <div className="pt-6 border-t border-white/10">
-                <p className="text-[10px] text-gray-500 font-black uppercase tracking-widest mb-2">Estimated Split Fee</p>
-                <p className="text-4xl font-bold gradient-text tabular-nums">${splitFee.toLocaleString()}</p>
-              </div>
-            </div>
-
-            <div className="flex gap-4">
-              <button
-                onClick={resetEngine}
-                className="flex-1 py-4 px-6 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-white text-sm font-bold uppercase tracking-widest transition-all"
-              >
-                Try Another
-              </button>
-              <Link
-                href="{{trigger_link.Hc9mpfL0JxjX06kwNpd1}}"
-                onClick={handleSignupClick}
-                className="flex-1 py-4 px-6 rounded-xl bg-gradient-to-r from-cyan-500 to-fuchsia-500 hover:shadow-[0_0_30px_rgba(0,255,255,0.4)] text-white text-sm font-bold uppercase tracking-widest text-center transition-all"
-              >
-                See Live Roles
-              </Link>
-            </div>
-
-            <p className="text-xs text-gray-600 text-center italic">
-              Sign up to access real matching on 100+ live roles
-            </p>
-          </motion.div>
-        )}
       </div>
 
       {/* Right: Utilize Your Existing Database */}
