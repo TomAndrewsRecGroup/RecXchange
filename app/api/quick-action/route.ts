@@ -7,16 +7,17 @@ interface QuickActionRequest {
   email: string;
   actionType: 'match_candidate' | 'explain_recx_direct';
   source: string;
+  industries?: string[]; // Optional industries for match_candidate
 }
 
 const ACTION_CONFIG = {
   match_candidate: {
     ghlTag: 'Website - QA 3 roles',
     autoResponseSubject: 'Your RecXchange Candidate Match Request',
-    autoResponseTemplate: (firstName: string) => `
+    autoResponseTemplate: (firstName: string, industries?: string[]) => `
       <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 600px; margin: 0 auto; padding: 40px 20px;">
         <h2 style="color: #00ffff; margin: 0 0 20px 0;">Thanks for your interest${firstName ? `, ${firstName}` : ''}!</h2>
-        <p style="color: #333; line-height: 1.6; margin-bottom: 20px;">We've received your request for matching roles. Our team will review your candidate profile and send you 3 tailored role suggestions within 24 hours.</p>
+        <p style="color: #333; line-height: 1.6; margin-bottom: 20px;">We've received your request for matching roles${industries && industries.length > 0 ? ` in ${industries.join(', ')}` : ''}. Our team will review your request and send you 3 tailored role suggestions within 24 hours.</p>
         <p style="color: #666; line-height: 1.6; margin-bottom: 20px;">In the meantime, you can explore our platform at <a href="https://recxchange.io" style="color: #00ffff;">recxchange.io</a></p>
         <p style="color: #333; margin-top: 30px;">Best regards,<br><strong>The RecXchange Team</strong></p>
       </div>
@@ -79,7 +80,7 @@ function isValidEmail(email: string): boolean {
 export async function POST(request: NextRequest) {
   try {
     const body: QuickActionRequest = await request.json();
-    const { firstName, lastName, email, actionType, source } = body;
+    const { firstName, lastName, email, actionType, source, industries } = body;
 
     // Validate input
     if (!firstName || !lastName || !email || !actionType || !source) {
@@ -113,6 +114,12 @@ export async function POST(request: NextRequest) {
     // 1. Create/update contact in GHL
     if (GHL_API_KEY && GHL_LOCATION_ID) {
       try {
+        // Build tags array with industries if provided
+        const tags = [config.ghlTag, 'website', 'quick-action'];
+        if (industries && industries.length > 0) {
+          tags.push(...industries);
+        }
+
         const ghlResponse = await fetch('https://rest.gohighlevel.com/v1/contacts/', {
           method: 'POST',
           headers: {
@@ -124,12 +131,13 @@ export async function POST(request: NextRequest) {
             lastName,
             email,
             locationId: GHL_LOCATION_ID,
-            tags: [config.ghlTag, 'website', 'quick-action'],
+            tags,
             source: `RecXchange Quick Action - ${source}`,
             customFields: {
               action_type: actionType,
               source_page: source,
               action_date: new Date().toISOString(),
+              industries: industries && industries.length > 0 ? industries.join(', ') : '',
             }
           })
         });
@@ -160,7 +168,9 @@ export async function POST(request: NextRequest) {
             from: { email: FROM_EMAIL, name: 'RecXchange' },
             content: [{
               type: 'text/html',
-              value: config.autoResponseTemplate(firstName)
+              value: actionType === 'match_candidate' 
+                ? config.autoResponseTemplate(firstName, industries)
+                : config.autoResponseTemplate(firstName)
             }]
           })
         });
@@ -174,6 +184,7 @@ export async function POST(request: NextRequest) {
       trackEvent('quick_action_form_submitted', {
         action_type: actionType,
         page: source,
+        industries: industries && industries.length > 0 ? industries.join(', ') : 'none',
       });
     } catch (error) {
       console.error('[Quick Action] Failed to track event:', error);
