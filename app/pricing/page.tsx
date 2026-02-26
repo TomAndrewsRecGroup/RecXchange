@@ -87,12 +87,12 @@ export default function PricingPage() {
 
   return (
     <div className="py-20 px-6">
-      <div className="max-w-6xl mx-auto text-center mb-16">
+      <div className="max-w-[1200px] mx-auto text-center mb-16">
         <h1 className="text-5xl font-bold mb-4">Pricing & <span className="gradient-text">Tiers</span></h1>
         <p className="text-gray-400 text-lg">Pick a tier. Make placements. One placement pays for the year.</p>
       </div>
 
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+      <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
         {tiers.map((tier, index) => (
           <div
             key={index}
@@ -144,7 +144,7 @@ export default function PricingPage() {
       </div>
 
       {/* Quick Action: Explain RecX Direct */}
-      <section className="max-w-4xl mx-auto mb-20 glass-card rounded-[3rem] p-10 md:p-14 border-fuchsia-400/10 text-center">
+      <section className="max-w-[1200px] mx-auto mb-20 glass-card rounded-[3rem] p-10 md:p-14 border-fuchsia-400/10 text-center">
         <div className="inline-block px-4 py-1.5 rounded-full border border-fuchsia-400/20 bg-fuchsia-400/5 text-[10px] font-bold uppercase tracking-[0.2em] text-fuchsia-400 mb-6">
           RecX Direct
         </div>
@@ -159,7 +159,7 @@ export default function PricingPage() {
       </section>
 
       {/* AI-Optimized Pricing Questions */}
-      <section className="max-w-5xl mx-auto space-y-8 mb-20">
+      <section className="max-w-[1200px] mx-auto space-y-8 mb-20">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-white mb-4">Common Pricing Questions</h2>
           <p className="text-gray-400">Everything you need to know about RecXchange membership costs</p>
@@ -227,7 +227,7 @@ export default function PricingPage() {
       </section>
 
       {/* Token Explainer */}
-      <section id="token-explainer" className="max-w-4xl mx-auto mt-20 p-10 glass-card rounded-3xl border-cyan-400/10 scroll-mt-8">
+      <section id="token-explainer" className="max-w-[1200px] mx-auto mt-20 p-10 glass-card rounded-3xl border-cyan-400/10 scroll-mt-8">
         <h2 className="text-2xl font-bold mb-4">What are <span className="gradient-text">tokens?</span></h2>
         <p className="text-gray-400 mb-6 leading-relaxed">
           Tokens let you participate in the RecXchange community with 15,000+ recruiters. Use them to post roles or submit candidates to collaborative opportunities.
@@ -245,7 +245,7 @@ export default function PricingPage() {
       </section>
 
       {/* Split Fee Section */}
-      <section className="max-w-4xl mx-auto mt-16 p-12 glass-card rounded-3xl text-center border-cyan-400/10">
+      <section className="max-w-[1200px] mx-auto mt-16 p-12 glass-card rounded-3xl text-center border-cyan-400/10">
         <h2 className="text-3xl font-bold mb-6">Split Fees & <span className="gradient-text">Commissions</span></h2>
         <p className="text-gray-400 mb-8 leading-relaxed">
           Partner with recruiters from the network of 15,000+. Set your split. Contracts auto-generated. Both parties protected.
