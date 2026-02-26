@@ -3,7 +3,7 @@
 import React from 'react';
 import { motion, Variants } from 'framer-motion';
 import Link from 'next/link';
-import QuickActionForm from '@/components/quick-action-form';
+import SendRolesForm from '@/components/send-roles-form';
 
 // Note: Metadata export removed - handled by layout.tsx
 
@@ -147,19 +147,18 @@ export default function RecruiterDiagnostic() {
           </div>
         </section>
 
-        {/* Quick Action: Match Candidate */}
+        {/* Quick Action: Send Me 3 Roles */}
         <section className="mt-20 w-full glass-card rounded-[3rem] p-10 md:p-14 border-cyan-400/10 text-center">
           <div className="inline-block px-4 py-1.5 rounded-full border border-cyan-400/20 bg-cyan-400/5 text-[10px] font-bold uppercase tracking-[0.2em] text-cyan-400 mb-6">
             Quick Start
           </div>
-          <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Have a candidate ready to go?</h2>
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Want to see live roles?</h2>
           <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
-            Send us their email and we'll match them to 3 live roles within 24 hours. No signup required.
+            Tell us your industries and we'll send you 3 example roles that recruiters are working on right now.
           </p>
-          <QuickActionForm 
-            actionType="match_candidate"
-            className="max-w-lg mx-auto"
-          />
+          <div className="flex justify-center">
+            <SendRolesForm className="" />
+          </div>
         </section>
 
         {/* AI-Optimized FAQ Section */}
