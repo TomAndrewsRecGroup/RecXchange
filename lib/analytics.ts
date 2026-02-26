@@ -82,6 +82,7 @@ export type EventName =
   | 'call_booking_confirmed'
   | 'calendar_invite_sent'
   | 'call_reminder_clicked'
+  | 'hiring_manager_form_submitted'
   
   // General engagement
   | 'cta_clicked'
@@ -174,6 +175,11 @@ export type EventProps = {
   selected_date?: string;
   selected_time?: string;
   booking_lead_time_days?: number;
+  
+  // Hiring Manager form specific
+  company_name?: string;
+  role_title?: string;
+  source?: string;
   
   // Conversion context - WHAT CONVERTED
   conversion_trigger?: string; // e.g., "calculator_result", "testimonial", "pricing_clarity"
