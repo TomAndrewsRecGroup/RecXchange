@@ -234,7 +234,7 @@ export default function HiringManagerHome() {
 
             <h2 className="text-3xl font-bold gradient-text mb-4">How Does It Work?</h2>
             <p className="text-gray-400 text-sm mb-8">
-              Let's schedule a quick call to walk you through the process and answer your questions.
+              We'll send you a short video explainer showing exactly how RecX Direct works and how it helps you hire faster with one simple fee.
             </p>
 
             {howItWorksSuccess ? (
@@ -244,8 +244,8 @@ export default function HiringManagerHome() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2">We'll be in touch!</h3>
-                <p className="text-gray-400 text-sm">Expect a call within 24 hours.</p>
+                <h3 className="text-xl font-bold text-white mb-2">Video on its way!</h3>
+                <p className="text-gray-400 text-sm">Check your email for the explainer.</p>
               </div>
             ) : (
               <form onSubmit={handleHowItWorksSubmit} className="space-y-6">
@@ -303,7 +303,7 @@ export default function HiringManagerHome() {
                   <span className="absolute inset-[1px] rounded-2xl bg-black/80 group-hover/btn:bg-transparent transition-colors" />
                   <span className="absolute inset-0 bg-gradient-to-r from-fuchsia-500 to-cyan-500 opacity-0 group-hover/btn:opacity-100 transition-opacity" />
                   <span className="relative z-10 text-white flex items-center justify-center">
-                    {howItWorksSubmitting ? 'Submitting...' : 'Request Callback'}
+                    {howItWorksSubmitting ? 'Sending...' : 'Send Video Explainer'}
                   </span>
                 </button>
               </form>
