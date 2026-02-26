@@ -2,7 +2,7 @@
 import React from "react";
 import { Zap, Cpu, Target } from "lucide-react";
 import { motion } from 'framer-motion';
-import QuickActionForm from '@/components/quick-action-form';
+import SendRolesForm from '@/components/send-roles-form';
 
 export default function CollaborationPage() {
   return (
@@ -93,19 +93,18 @@ export default function CollaborationPage() {
         </div>
       </div>
 
-      {/* Quick Action: Match Candidate */}
+      {/* Quick Action: Send Me 3 Roles */}
       <section className="max-w-[1200px] mx-auto glass-card rounded-[3rem] p-10 md:p-14 border-cyan-400/10 text-center">
         <div className="inline-block px-4 py-1.5 rounded-full border border-cyan-400/20 bg-cyan-400/5 text-[10px] font-bold uppercase tracking-[0.2em] text-cyan-400 mb-6">
           Try the Engine
         </div>
         <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">See the matching engine in action</h2>
         <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
-          Send us a candidate and we'll show you 3 matching roles from our live database within 24 hours.
+          Tell us your industries and we'll show you 3 matching roles from our live database.
         </p>
-        <QuickActionForm 
-          actionType="match_candidate"
-          className="max-w-lg mx-auto"
-        />
+        <div className="flex justify-center">
+          <SendRolesForm className="" />
+        </div>
       </section>
     </div>
   );
