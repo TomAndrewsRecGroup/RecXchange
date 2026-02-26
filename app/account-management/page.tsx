@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { UserCheck, MessageSquare, Users, ShieldCheck, Trophy, Handshake } from "lucide-react";
+import { motion } from 'framer-motion';
 
 const supportSteps = [
   {
@@ -27,18 +28,25 @@ const supportSteps = [
 
 export default function AccountManagement() {
   return (
-    <div className="w-full pb-20 pt-10 px-6">
+    <div className="w-full pb-20 pt-24 px-6">
       {/* Hero Section */}
       <div className="max-w-4xl mx-auto text-center mb-20">
-        <h3 className="text-[10px] uppercase tracking-[0.3em] font-bold text-[#c71df1] mb-4">
-          Partnership at Scale
-        </h3>
-        <h1 className="text-5xl font-bold mb-6">
-          Your Dedicated <span className="gradient-text">Account Manager</span>
-        </h1>
-        <p className="text-gray-400 text-lg leading-relaxed">
-          Hiring at speed shouldn't mean sacrificing quality. Every client is assigned a specialist Account Manager to navigate the Xchange Engine and manage the global recruiter community for you.
-        </p>
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <span className="block text-[10px] uppercase tracking-[0.4em] text-cyan-400/60 mb-6 font-bold">
+            Partnership at Scale
+          </span>
+          <h1 className="text-4xl md:text-6xl font-bold gradient-text mb-6 tracking-tight leading-tight pb-2">
+            Your Dedicated Account Manager
+          </h1>
+          <div className="pulse-underline mb-8 mx-auto" />
+          <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
+            Hiring at speed shouldn't mean sacrificing quality. Every client is assigned a specialist Account Manager to navigate the Xchange Engine and manage the global recruiter community for you.
+          </p>
+        </motion.div>
       </div>
 
       {/* Process Grid */}

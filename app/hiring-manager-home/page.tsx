@@ -28,16 +28,17 @@ export default function HiringManagerHome() {
             transition={{ duration: 0.5 }}
           >
             <span className="block text-[10px] uppercase tracking-[0.4em] text-fuchsia-400/60 mb-6 font-bold">
-              RecX Direct — Scale with a Digital RPO style process, but with agency style terms. Simple.
+              RecX Direct
             </span>
-            <h1 className="text-4xl md:text-6xl font-bold gradient-text mb-6 tracking-tight">
+            <h1 className="text-4xl md:text-6xl font-bold gradient-text mb-6 tracking-tight leading-tight pb-2">
               Post your role for free.
             </h1>
+            <div className="pulse-underline mb-8 mx-auto" />
             <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
               15,000+ recruiters compete to fill it. You pay one fee when hired.
             </p>
             <div className="mt-6 flex flex-wrap justify-center gap-4 text-xs text-gray-500">
-              <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10">$7,000 avg fee</span>
+              <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10">15,000+ Recruiters</span>
               <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10">270M candidates</span>
               <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10">Engineering · Healthcare · Tech · HR · Sales · Finance</span>
             </div>

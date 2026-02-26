@@ -23,36 +23,23 @@ export default function DealProtection() {
       <div className="fixed top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_0%,_rgba(0,255,255,0.04)_0%,_transparent_50%)] pointer-events-none" />
 
       <div className="max-w-4xl mx-auto relative z-10">
-        <header className="mb-16">
+        <header className="text-center mb-16">
           <motion.div
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="flex items-center gap-3 mb-4"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
           >
-            <span className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(0,255,255,0.8)]" />
-            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-cyan-400">
+            <span className="block text-[10px] uppercase tracking-[0.4em] text-cyan-400/60 mb-6 font-bold">
               Protocol — Trust Infrastructure
             </span>
+            <h1 className="text-5xl md:text-6xl font-bold gradient-text mb-6 tracking-tight leading-tight pb-2">
+              Every submission has a timestamp, a trail, and an agreement.
+            </h1>
+            <div className="pulse-underline mb-8 mx-auto" />
+            <p className="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed">
+              We log who shared what, when they shared it, and under which terms—so your split-fee placements feel secure, not fragile.
+            </p>
           </motion.div>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-4xl md:text-6xl font-bold mt-4 leading-[1.1] tracking-tighter"
-          >
-            Every submission has a timestamp, <br />
-            <span className="gradient-text">a trail, and an agreement.</span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="text-gray-400 text-lg mt-8 max-w-2xl leading-relaxed font-medium"
-          >
-            We log who shared what, when they shared it, and under which terms—so your split-fee placements feel secure, not fragile.
-          </motion.p>
         </header>
 
         <div className="flex flex-col gap-8 pb-10">
@@ -101,7 +88,7 @@ export default function DealProtection() {
               </div>
               <h2 className="text-xl font-bold mb-4 tracking-tight">Agreement-First</h2>
               <p className="text-sm text-gray-400 leading-relaxed mb-8 font-medium">
-                Commercial terms are locked via a standardized framework before any data is exchanged. No “handshake” deals—only hard data protected by our master SFA.
+                Commercial terms are locked via a standardized framework before any data is exchanged. No "handshake" deals—only hard data protected by our master SFA.
               </p>
               <div className="space-y-4">
                 {["Clear fees & splits", "Standardized language", "One source of truth"].map((item, i) => (

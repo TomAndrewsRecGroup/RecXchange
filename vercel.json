@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/analytics/email-funnel",
+      "schedule": "0 9 * * 1"
+    }
+  ]
+}

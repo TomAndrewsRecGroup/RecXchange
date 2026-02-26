@@ -3,21 +3,20 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import type { Metadata } from 'next';
 
 // Note: Metadata export removed - now handled by metadata.ts in this directory
 
 const allRoles = [
-  { id: 1, title: "Principal AI Engineer", loc: "London, UK", salary: "£140k", split: "£14,000", type: "RecX Direct", industry: "Tech", skill: "Python" },
-  { id: 2, title: "Head of Talent", loc: "New York, US", salary: "$180k", split: "$18,000", type: "Shared", industry: "HR", skill: "Strategy" },
-  { id: 3, title: "Quantitative Researcher", loc: "Singapore", salary: "$200k", split: "$25,000", type: "RecX Direct", industry: "Finance", skill: "C++" },
-  { id: 4, title: "Senior DevOps Lead", loc: "Remote", salary: "£110k", split: "£11,000", type: "Shared", industry: "Tech", skill: "AWS" },
-  { id: 5, title: "Marketing Director", loc: "Berlin, DE", salary: "€120k", split: "€15,000", type: "RecX Direct", industry: "Marketing", skill: "Growth" },
-  { id: 6, title: "Cloud Architect", loc: "Austin, US", salary: "$160k", split: "$16,000", type: "Shared", industry: "Tech", skill: "Azure" },
-  { id: 7, title: "Product Manager", loc: "London, UK", salary: "£90k", split: "£9,000", type: "RecX Direct", industry: "Product", skill: "Agile" },
-  { id: 8, title: "Frontend Developer", loc: "Amsterdam, NL", salary: "€85k", split: "€8,500", type: "Shared", industry: "Tech", skill: "React" },
-  { id: 9, title: "Data Scientist", loc: "Toronto, CA", salary: "$130k", split: "$13,000", type: "RecX Direct", industry: "Tech", skill: "ML" },
-  { id: 10, title: "Legal Counsel", loc: "Dubai, UAE", salary: "$150k", split: "$20,000", type: "Shared", industry: "Legal", skill: "Corporate" },
+  { id: 1, title: "Principal AI Engineer", loc: "London, UK", salary: "£140k", split: "£14,000", splitValue: 14000, type: "RecX Direct", industry: "Tech", skill: "Python" },
+  { id: 2, title: "Head of Talent", loc: "New York, US", salary: "$180k", split: "$18,000", splitValue: 18000, type: "Shared", industry: "HR", skill: "Strategy" },
+  { id: 3, title: "Quantitative Researcher", loc: "Singapore", salary: "$200k", split: "$25,000", splitValue: 25000, type: "RecX Direct", industry: "Finance", skill: "C++" },
+  { id: 4, title: "Senior DevOps Lead", loc: "Remote", salary: "£110k", split: "£11,000", splitValue: 11000, type: "Shared", industry: "Tech", skill: "AWS" },
+  { id: 5, title: "Marketing Director", loc: "Berlin, DE", salary: "€120k", split: "€15,000", splitValue: 15000, type: "RecX Direct", industry: "Marketing", skill: "Growth" },
+  { id: 6, title: "Cloud Architect", loc: "Austin, US", salary: "$160k", split: "$16,000", splitValue: 16000, type: "Shared", industry: "Tech", skill: "Azure" },
+  { id: 7, title: "Product Manager", loc: "London, UK", salary: "£90k", split: "£9,000", splitValue: 9000, type: "RecX Direct", industry: "Product", skill: "Agile" },
+  { id: 8, title: "Frontend Developer", loc: "Amsterdam, NL", salary: "€85k", split: "€8,500", splitValue: 8500, type: "Shared", industry: "Tech", skill: "React" },
+  { id: 9, title: "Data Scientist", loc: "Toronto, CA", salary: "$130k", split: "$13,000", splitValue: 13000, type: "RecX Direct", industry: "Tech", skill: "ML" },
+  { id: 10, title: "Legal Counsel", loc: "Dubai, UAE", salary: "$150k", split: "$20,000", splitValue: 20000, type: "Shared", industry: "Legal", skill: "Corporate" },
 ];
 
 export default function RolesMarketplace() {
@@ -48,6 +47,11 @@ export default function RolesMarketplace() {
     shared: allRoles.filter(r => r.type === 'Shared').length
   };
 
+  // Calculate total fee pool from all split values
+  const totalFeePool = useMemo(() => {
+    return allRoles.reduce((sum, role) => sum + role.splitValue, 0);
+  }, []);
+
   return (
     <main className="min-h-screen pt-32 pb-20 px-6 relative text-white" style={{
       backgroundColor: '#050508',
@@ -66,9 +70,10 @@ export default function RolesMarketplace() {
             <span className="block text-[10px] uppercase tracking-[0.4em] text-purple-400/60 mb-6 font-bold">
               Live Roles · Live Revenue
             </span>
-            <h1 className="text-4xl md:text-6xl font-bold gradient-text mb-6 tracking-tight leading-tight">
+            <h1 className="text-4xl md:text-6xl font-bold gradient-text mb-6 tracking-tight leading-tight pb-2">
               One placement pays for 12 months
             </h1>
+            <div className="pulse-underline mb-8 mx-auto" />
             <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
               Browse live roles. Submit candidates. Split fees 50/50, 60/40, or take 70% on RecX Direct placements.
             </p>
@@ -79,6 +84,39 @@ export default function RolesMarketplace() {
             </div>
           </motion.div>
         </header>
+
+        {/* Total Roles and Total Fee Pool Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="glass-card p-8 rounded-[2.5rem] border-cyan-400/10 bg-gradient-to-r from-cyan-400/[0.03] to-transparent relative overflow-hidden"
+          >
+            <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 blur-[60px]" />
+            <div className="relative">
+              <p className="text-[10px] text-gray-500 font-black uppercase tracking-[0.2em] mb-3">Total Live Roles</p>
+              <p className="text-5xl font-bold gradient-text tabular-nums mb-2">{stats.total.toLocaleString()}</p>
+              <p className="text-xs text-gray-500 font-medium">
+                <span className="text-cyan-400 font-bold">{stats.direct}</span> RecX Direct · <span className="text-fuchsia-400 font-bold">{stats.shared}</span> Shared
+              </p>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="glass-card p-8 rounded-[2.5rem] border-fuchsia-400/10 bg-gradient-to-r from-fuchsia-400/[0.03] to-transparent relative overflow-hidden"
+          >
+            <div className="absolute top-0 right-0 w-32 h-32 bg-fuchsia-500/5 blur-[60px]" />
+            <div className="relative">
+              <p className="text-[10px] text-gray-500 font-black uppercase tracking-[0.2em] mb-3">Total Fee Pool</p>
+              <p className="text-5xl font-bold gradient-text tabular-nums mb-2">${totalFeePool.toLocaleString()}</p>
+              <p className="text-xs text-gray-500 font-medium">Available across all live roles</p>
+            </div>
+          </motion.div>
+        </div>
 
         <div className="flex flex-col gap-6 mb-12">
           <section className="glass-card p-2 rounded-2xl border-purple-400/10 flex items-center shadow-2xl">
