@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { trackEvent } from '@/lib/analytics';
 
 interface QuickActionRequest {
+  firstName: string;
+  lastName: string;
   email: string;
   actionType: 'match_candidate' | 'explain_recx_direct';
   source: string;
@@ -9,11 +11,11 @@ interface QuickActionRequest {
 
 const ACTION_CONFIG = {
   match_candidate: {
-    ghlTag: 'quick-action-match-candidate',
+    ghlTag: 'Website - QA 3 roles',
     autoResponseSubject: 'Your RecXchange Candidate Match Request',
-    autoResponseTemplate: (email: string) => `
+    autoResponseTemplate: (firstName: string) => `
       <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 600px; margin: 0 auto; padding: 40px 20px;">
-        <h2 style="color: #00ffff; margin: 0 0 20px 0;">Thanks for your interest!</h2>
+        <h2 style="color: #00ffff; margin: 0 0 20px 0;">Thanks for your interest${firstName ? `, ${firstName}` : ''}!</h2>
         <p style="color: #333; line-height: 1.6; margin-bottom: 20px;">We've received your request for matching roles. Our team will review your candidate profile and send you 3 tailored role suggestions within 24 hours.</p>
         <p style="color: #666; line-height: 1.6; margin-bottom: 20px;">In the meantime, you can explore our platform at <a href="https://recxchange.io" style="color: #00ffff;">recxchange.io</a></p>
         <p style="color: #333; margin-top: 30px;">Best regards,<br><strong>The RecXchange Team</strong></p>
@@ -21,11 +23,11 @@ const ACTION_CONFIG = {
     `,
   },
   explain_recx_direct: {
-    ghlTag: 'quick-action-recx-direct',
+    ghlTag: 'Website - QA RecX Direct',
     autoResponseSubject: 'RecX Direct - Explainer & Fee Pool',
-    autoResponseTemplate: (email: string) => `
+    autoResponseTemplate: (firstName: string) => `
       <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 600px; margin: 0 auto; padding: 40px 20px;">
-        <h2 style="color: #00ffff; margin: 0 0 20px 0;">RecX Direct Explainer</h2>
+        <h2 style="color: #00ffff; margin: 0 0 20px 0;">RecX Direct Explainer${firstName ? ` for ${firstName}` : ''}</h2>
         
         <h3 style="color: #333; margin: 30px 0 15px 0;">What is RecX Direct?</h3>
         <p style="color: #333; line-height: 1.6; margin-bottom: 20px;">RecX Direct is our revolutionary fee pooling model that makes premium recruitment accessible at any scale. Instead of paying traditional 15-20% fees, you pay a transparent monthly subscription and access a shared fee pool.</p>
@@ -77,10 +79,10 @@ function isValidEmail(email: string): boolean {
 export async function POST(request: NextRequest) {
   try {
     const body: QuickActionRequest = await request.json();
-    const { email, actionType, source } = body;
+    const { firstName, lastName, email, actionType, source } = body;
 
     // Validate input
-    if (!email || !actionType || !source) {
+    if (!firstName || !lastName || !email || !actionType || !source) {
       return NextResponse.json(
         { error: 'Missing required fields' },
         { status: 400 }
@@ -118,6 +120,8 @@ export async function POST(request: NextRequest) {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
+            firstName,
+            lastName,
             email,
             locationId: GHL_LOCATION_ID,
             tags: [config.ghlTag, 'website', 'quick-action'],
@@ -150,13 +154,13 @@ export async function POST(request: NextRequest) {
           },
           body: JSON.stringify({
             personalizations: [{
-              to: [{ email }],
+              to: [{ email, name: `${firstName} ${lastName}` }],
               subject: config.autoResponseSubject
             }],
             from: { email: FROM_EMAIL, name: 'RecXchange' },
             content: [{
               type: 'text/html',
-              value: config.autoResponseTemplate(email)
+              value: config.autoResponseTemplate(firstName)
             }]
           })
         });
