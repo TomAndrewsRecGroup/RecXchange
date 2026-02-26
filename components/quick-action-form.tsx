@@ -118,7 +118,7 @@ export default function QuickActionForm({
             onSubmit={handleSubmit}
             className="form-content"
           >
-            <div className="name-row">
+            <div className="input-row">
               <input
                 type="text"
                 value={firstName}
@@ -126,7 +126,7 @@ export default function QuickActionForm({
                 placeholder="First Name"
                 disabled={status === 'loading'}
                 required
-                className="name-input"
+                className="form-input name-input"
               />
               <input
                 type="text"
@@ -135,10 +135,8 @@ export default function QuickActionForm({
                 placeholder="Last Name"
                 disabled={status === 'loading'}
                 required
-                className="name-input"
+                className="form-input name-input"
               />
-            </div>
-            <div className="input-group">
               <input
                 type="email"
                 value={email}
@@ -146,7 +144,7 @@ export default function QuickActionForm({
                 placeholder={placeholder || config.emailPlaceholder}
                 disabled={status === 'loading'}
                 required
-                className="email-input"
+                className="form-input email-input"
               />
               <button
                 type="submit"
@@ -176,71 +174,52 @@ export default function QuickActionForm({
       <style jsx>{`
         .quick-action-form {
           width: 100%;
-          max-width: 500px;
+          max-width: 900px;
         }
 
         .form-content {
           width: 100%;
         }
 
-        .name-row {
+        .input-row {
           display: flex;
-          gap: 8px;
+          gap: 10px;
           width: 100%;
-          margin-bottom: 8px;
+          align-items: stretch;
         }
 
-        .name-input {
-          flex: 1;
-          padding: 14px 18px;
+        .form-input {
+          padding: 14px 16px;
           background: rgba(255, 255, 255, 0.05);
           border: 1px solid rgba(255, 255, 255, 0.1);
           border-radius: 8px;
           color: #fff;
           font-size: 15px;
           transition: all 0.2s;
-          text-align: center;
+          text-align: left;
         }
 
-        .name-input:focus {
+        .form-input:focus {
           outline: none;
           border-color: #00ffff;
           background: rgba(255, 255, 255, 0.08);
         }
 
-        .name-input::placeholder {
+        .form-input::placeholder {
           color: rgba(255, 255, 255, 0.4);
         }
 
-        .input-group {
-          display: flex;
-          gap: 8px;
-          width: 100%;
+        .name-input {
+          flex: 0 0 140px;
         }
 
         .email-input {
           flex: 1;
-          padding: 14px 18px;
-          background: rgba(255, 255, 255, 0.05);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          border-radius: 8px;
-          color: #fff;
-          font-size: 15px;
-          transition: all 0.2s;
-          text-align: center;
-        }
-
-        .email-input:focus {
-          outline: none;
-          border-color: #00ffff;
-          background: rgba(255, 255, 255, 0.08);
-        }
-
-        .email-input::placeholder {
-          color: rgba(255, 255, 255, 0.4);
+          min-width: 180px;
         }
 
         .submit-button {
+          flex: 0 0 auto;
           padding: 14px 24px;
           background: linear-gradient(135deg, #00ffff, #c71df1);
           border: none;
@@ -251,7 +230,6 @@ export default function QuickActionForm({
           cursor: pointer;
           transition: all 0.2s;
           white-space: nowrap;
-          text-align: center;
         }
 
         .submit-button:hover:not(:disabled) {
@@ -299,6 +277,7 @@ export default function QuickActionForm({
           border-radius: 50%;
           font-size: 18px;
           font-weight: bold;
+          flex-shrink: 0;
         }
 
         .success-message p {
@@ -308,14 +287,32 @@ export default function QuickActionForm({
         }
 
         .error-message {
-          margin: 8px 0 0 0;
-          padding: 8px 12px;
+          margin: 10px 0 0 0;
+          padding: 10px 14px;
           background: rgba(239, 68, 68, 0.1);
           border: 1px solid rgba(239, 68, 68, 0.3);
           border-radius: 6px;
           color: #ef4444;
           font-size: 13px;
-          text-align: center;
+        }
+
+        /* Mobile responsive: stack vertically */
+        @media (max-width: 768px) {
+          .input-row {
+            flex-direction: column;
+            gap: 8px;
+          }
+
+          .name-input,
+          .email-input,
+          .submit-button {
+            flex: 1 1 auto;
+            width: 100%;
+          }
+
+          .name-input {
+            flex: 0 0 auto;
+          }
         }
       `}</style>
     </div>
