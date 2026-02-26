@@ -164,7 +164,7 @@ function FakeXchangeEngine() {
     // Common CV section headers that precede job titles
     const experienceSectionPatterns = [
       /(?:professional experience|work experience|employment history|experience|career history|work history)[:\s]*([\s\S]{0,2000}?)(?=education|skills|qualifications|certifications|references|$)/gi,
-      /(?:current role|current position|present)[:\s]*([\s\S]{0,500}?)(?=\n\n|education|skills)/gi,
+      /(?:current role|current position|present)[:\s]*([\s\S]{0:500}?)(?=\n\n|education|skills)/gi,
       /(?:job title|position|role)[:\s]*([^\n]{5,100})/gi,
     ];
 
@@ -348,10 +348,10 @@ function FakeXchangeEngine() {
   };
 
   return (
-    <div className="grid lg:grid-cols-[520px_1fr] gap-8 items-start mb-32">
-      {/* Left: Animated Core - Reduced size and moved left */}
+    <div className="grid lg:grid-cols-[400px_1fr_1fr] gap-6 items-start mb-32">
+      {/* Left: Animated Core - Smaller and to the left */}
       <div className="relative flex items-center justify-start min-h-[400px]">
-        <div className="relative w-72 h-72">
+        <div className="relative w-64 h-64">
           {/* Outer Ring 1 - Cyan - Rotates Clockwise */}
           <motion.div
             className="absolute inset-0 rounded-full border-4 border-transparent"
@@ -388,7 +388,7 @@ function FakeXchangeEngine() {
 
           {/* Core - Gradient Sphere */}
           <motion.div
-            className="absolute inset-16 rounded-full bg-gradient-to-br from-cyan-500 via-purple-500 to-fuchsia-500 shadow-[0_0_60px_rgba(0,255,255,0.3)]"
+            className="absolute inset-12 rounded-full bg-gradient-to-br from-cyan-500 via-purple-500 to-fuchsia-500 shadow-[0_0_60px_rgba(0,255,255,0.3)]"
             animate={{
               scale: phase === 'matching' ? [1, 1.1, 1] : 1,
               boxShadow: phase === 'result' 
@@ -417,8 +417,8 @@ function FakeXchangeEngine() {
                     exit={{ opacity: 0, scale: 0.8 }}
                     className="text-white text-center"
                   >
-                    <Upload size={32} className="mx-auto mb-2" />
-                    <p className="text-xs font-bold uppercase tracking-widest">Ready</p>
+                    <Upload size={28} className="mx-auto mb-2" />
+                    <p className="text-[10px] font-bold uppercase tracking-widest">Ready</p>
                   </motion.div>
                 )}
                 {phase === 'uploading' && (
@@ -429,8 +429,8 @@ function FakeXchangeEngine() {
                     exit={{ opacity: 0, scale: 0.8 }}
                     className="text-white text-center"
                   >
-                    <div className="w-8 h-8 border-4 border-white/30 border-t-white rounded-full animate-spin mx-auto mb-2" />
-                    <p className="text-xs font-bold uppercase tracking-widest">Uploading</p>
+                    <div className="w-7 h-7 border-4 border-white/30 border-t-white rounded-full animate-spin mx-auto mb-2" />
+                    <p className="text-[10px] font-bold uppercase tracking-widest">Uploading</p>
                   </motion.div>
                 )}
                 {phase === 'matching' && (
@@ -441,8 +441,8 @@ function FakeXchangeEngine() {
                     exit={{ opacity: 0, scale: 0.8 }}
                     className="text-white text-center"
                   >
-                    <Cpu size={32} className="mx-auto mb-2 animate-pulse" />
-                    <p className="text-xs font-bold uppercase tracking-widest">Matching</p>
+                    <Cpu size={28} className="mx-auto mb-2 animate-pulse" />
+                    <p className="text-[10px] font-bold uppercase tracking-widest">Matching</p>
                   </motion.div>
                 )}
                 {phase === 'result' && (
@@ -453,8 +453,8 @@ function FakeXchangeEngine() {
                     exit={{ opacity: 0, scale: 0.8 }}
                     className="text-green-400 text-center"
                   >
-                    <Check size={40} className="mx-auto mb-2" strokeWidth={3} />
-                    <p className="text-xs font-bold uppercase tracking-widest">Match Found</p>
+                    <Check size={36} className="mx-auto mb-2" strokeWidth={3} />
+                    <p className="text-[10px] font-bold uppercase tracking-widest">Match Found</p>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -463,10 +463,10 @@ function FakeXchangeEngine() {
         </div>
       </div>
 
-      {/* Right: Upload & Results */}
-      <div className="glass-card p-10 rounded-[2.5rem] border-purple-400/10">
-        <h3 className="text-2xl font-bold mb-6 gradient-text">Utilize Your Existing Database</h3>
-        <p className="text-gray-400 text-sm mb-8 leading-relaxed">
+      {/* Middle: Upload & Results */}
+      <div className="glass-card p-8 rounded-[2.5rem] border-purple-400/10">
+        <h3 className="text-xl font-bold mb-4 gradient-text">Try the Xchange Engine</h3>
+        <p className="text-gray-400 text-sm mb-6 leading-relaxed">
           Upload a candidate CV and watch the AI find matching roles in real-time. All data stays in your browser and is deleted immediately.
         </p>
 
@@ -548,6 +548,33 @@ function FakeXchangeEngine() {
             </p>
           </motion.div>
         )}
+      </div>
+
+      {/* Right: Utilize Your Existing Database */}
+      <div className="glass-card p-10 rounded-[2.5rem] border-l-4 border-cyan-400/30 relative overflow-hidden flex flex-col justify-between h-full">
+        <div>
+          <div className="absolute top-0 right-0 p-8 opacity-5">
+            <Database size={180} />
+          </div>
+          <h2 className="text-2xl font-bold mb-4">
+            Utilize Your Existing <span className="text-cyan-400">Database</span>
+          </h2>
+          <p className="text-gray-400 mb-6 leading-relaxed text-sm">
+            The Xchange Engine automatically analyzes your CVs and profiles to extract meaningful insights like skill compatibility, career trajectory, and industry relevance. It then matches these candidates across multiple dimensions to the best-suited roles on the platform.
+          </p>
+          <ul className="space-y-4">
+            {[
+              "Semantic matching beyond simple keywords",
+              "Continuous 24/7 background scanning",
+              "Instant notifications for high-quality role matches"
+            ].map((item, i) => (
+              <li key={i} className="flex items-center gap-3 text-sm text-gray-300">
+                <Zap size={16} className="text-cyan-400 flex-shrink-0" />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );
