@@ -70,8 +70,7 @@ interface RecXDirectFormProps {
 
 export default function RecXDirectForm({ className = '' }: RecXDirectFormProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [selectedIndustries, setSelectedIndustries] = useState<string[]>([]);
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
@@ -88,13 +87,8 @@ export default function RecXDirectForm({ className = '' }: RecXDirectFormProps) 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!firstName.trim()) {
-      setErrorMessage('Please enter your first name');
-      return;
-    }
-
-    if (!lastName.trim()) {
-      setErrorMessage('Please enter your last name');
+    if (!name.trim()) {
+      setErrorMessage('Please enter your name');
       return;
     }
     
@@ -112,6 +106,11 @@ export default function RecXDirectForm({ className = '' }: RecXDirectFormProps) 
     setErrorMessage('');
 
     try {
+      // Split name into first and last
+      const nameParts = name.trim().split(' ');
+      const firstName = nameParts[0];
+      const lastName = nameParts.slice(1).join(' ') || nameParts[0];
+
       const response = await fetch('/api/quick-action', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -136,8 +135,7 @@ export default function RecXDirectForm({ className = '' }: RecXDirectFormProps) 
       // Reset after 3 seconds and close modal
       setTimeout(() => {
         setStatus('idle');
-        setFirstName('');
-        setLastName('');
+        setName('');
         setEmail('');
         setSelectedIndustries([]);
         setIsOpen(false);
@@ -153,18 +151,22 @@ export default function RecXDirectForm({ className = '' }: RecXDirectFormProps) 
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className={`recx-direct-trigger ${className}`}
+        className="px-6 py-3 rounded-xl border border-fuchsia-400/30 bg-fuchsia-400/5 text-fuchsia-400 text-xs font-bold uppercase tracking-widest hover:bg-fuchsia-400/10 transition-all"
       >
-        Learn About RecX Direct
+        LEARN ABOUT RECX DIRECT
       </button>
 
-      {/* Modal */}
+      {/* Modal - Solid Background */}
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/80 backdrop-blur-sm" onClick={() => setIsOpen(false)}>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/90" onClick={() => setIsOpen(false)}>
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="glass-card w-full max-w-2xl max-h-[90vh] overflow-y-auto p-10 rounded-[2.5rem] border-fuchsia-400/20 relative"
+            className="w-full max-w-2xl max-h-[90vh] overflow-y-auto p-10 rounded-[2.5rem] relative"
+            style={{
+              background: '#0a0a0a',
+              border: '1px solid rgba(199, 29, 241, 0.2)'
+            }}
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -174,7 +176,11 @@ export default function RecXDirectForm({ className = '' }: RecXDirectFormProps) 
               <X size={24} />
             </button>
 
-            <h2 className="text-3xl font-bold gradient-text mb-4">Learn About RecX Direct</h2>
+            <h2 className="text-3xl font-bold mb-4" style={{
+              background: 'linear-gradient(135deg, #c71df1, #00ffff)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent'
+            }}>Learn About RecX Direct</h2>
             <p className="text-gray-400 text-sm mb-8">
               Select your industries and we'll send you a detailed explainer of how RecX Direct works, current fee pool size, and how to earn up to 70% on placements.
             </p>
@@ -191,32 +197,17 @@ export default function RecXDirectForm({ className = '' }: RecXDirectFormProps) 
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">First Name *</label>
-                    <input
-                      type="text"
-                      value={firstName}
-                      onChange={(e) => setFirstName(e.target.value)}
-                      required
-                      disabled={status === 'loading'}
-                      className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-fuchsia-400/50 transition-all disabled:opacity-50"
-                      placeholder="John"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Last Name *</label>
-                    <input
-                      type="text"
-                      value={lastName}
-                      onChange={(e) => setLastName(e.target.value)}
-                      required
-                      disabled={status === 'loading'}
-                      className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-fuchsia-400/50 transition-all disabled:opacity-50"
-                      placeholder="Smith"
-                    />
-                  </div>
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Your Name *</label>
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                    disabled={status === 'loading'}
+                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-fuchsia-400/50 transition-all disabled:opacity-50"
+                    placeholder="John Smith"
+                  />
                 </div>
 
                 <div>
@@ -303,41 +294,6 @@ export default function RecXDirectForm({ className = '' }: RecXDirectFormProps) 
           </motion.div>
         </div>
       )}
-
-      <style jsx>{`
-        .recx-direct-trigger {
-          padding: 14px 24px;
-          background: linear-gradient(135deg, #c71df1, #00ffff);
-          border: none;
-          border-radius: 8px;
-          color: #fff;
-          font-weight: 600;
-          font-size: 14px;
-          cursor: pointer;
-          transition: all 0.2s;
-          white-space: nowrap;
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-        }
-
-        .recx-direct-trigger:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 8px 16px rgba(199, 29, 241, 0.3);
-        }
-
-        .glass-card {
-          background: rgba(0, 0, 0, 0.8);
-          backdrop-filter: blur(20px);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .gradient-text {
-          background: linear-gradient(135deg, #c71df1, #00ffff);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-        }
-      `}</style>
     </>
   );
 }
