@@ -8,7 +8,7 @@ import { motion } from 'framer-motion';
 export default function ResearchPage() {
   return (
     <main className="min-h-screen py-20 px-6">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-[1200px] mx-auto">
         {/* Header */}
         <motion.header
           initial={{ opacity: 0, y: -10 }}

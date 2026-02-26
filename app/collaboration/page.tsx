@@ -94,7 +94,7 @@ export default function CollaborationPage() {
       </div>
 
       {/* Quick Action: Match Candidate */}
-      <section className="max-w-4xl mx-auto glass-card rounded-[3rem] p-10 md:p-14 border-cyan-400/10 text-center">
+      <section className="max-w-[1200px] mx-auto glass-card rounded-[3rem] p-10 md:p-14 border-cyan-400/10 text-center">
         <div className="inline-block px-4 py-1.5 rounded-full border border-cyan-400/20 bg-cyan-400/5 text-[10px] font-bold uppercase tracking-[0.2em] text-cyan-400 mb-6">
           Try the Engine
         </div>

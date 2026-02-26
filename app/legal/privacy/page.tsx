@@ -6,7 +6,7 @@ import Link from 'next/link';
 export default function PrivacyPage() {
   return (
     <main className="min-h-screen pt-32 pb-20 px-6 mesh-background relative">
-      <div className="max-w-4xl mx-auto relative z-10">
+      <div className="max-w-[1200px] mx-auto relative z-10">
         
         {/* Navigation Breadcrumb */}
         <Link href="/legal-hub" className="text-[10px] uppercase tracking-widest text-gray-500 font-bold hover:text-white transition-colors flex items-center gap-2 mb-8">

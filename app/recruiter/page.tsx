@@ -23,7 +23,7 @@ export default function RecruiterDiagnostic() {
     <main className="relative min-h-screen flex flex-col items-center pt-32 pb-20 px-6 overflow-x-hidden">
 
       {/* Hero Content */}
-      <div className="relative z-10 w-full max-w-6xl flex flex-col items-center">
+      <div className="relative z-10 w-full max-w-[1200px] flex flex-col items-center">
         <header className="text-center mb-12">
           <motion.div
             initial={{ opacity: 0, y: -10 }}

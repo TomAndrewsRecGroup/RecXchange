@@ -16,9 +16,9 @@ export default function LegalLayout({ children }: { children: React.ReactNode })
   return (
     <div className="min-h-screen pt-32 pb-20 px-6 mesh-background relative">
       {/* Background Glows shared across all legal pages */}
-      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-6xl bg-blue-600/5 blur-[120px] pointer-events-none -z-10" />
+      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-[1200px] bg-blue-600/5 blur-[120px] pointer-events-none -z-10" />
 
-      <div className="max-w-4xl mx-auto relative z-10">
+      <div className="max-w-[1200px] mx-auto relative z-10">
         
         {/* Trust Header */}
         <header className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">

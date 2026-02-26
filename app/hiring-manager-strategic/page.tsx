@@ -38,7 +38,7 @@ export default function HiringManagerStrategic() {
       <div className="fixed top-0 right-0 w-[50%] h-[50%] bg-purple-600/10 blur-[120px] rounded-full pointer-events-none -z-10" />
       <div className="fixed bottom-0 left-0 w-[30%] h-[30%] bg-blue-600/10 blur-[120px] rounded-full pointer-events-none -z-10" />
 
-      <div className="max-w-5xl mx-auto relative z-10">
+      <div className="max-w-[1200px] mx-auto relative z-10">
         
         {/* 1. Header Section */}
         <header className="mb-16">

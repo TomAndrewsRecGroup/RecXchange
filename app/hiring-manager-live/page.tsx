@@ -34,7 +34,7 @@ export default function HiringManagerLive() {
       {/* Background Accents */}
       <div className="fixed top-0 left-0 w-[40%] h-[40%] bg-blue-600/10 blur-[120px] rounded-full pointer-events-none -z-10" />
       
-      <div className="max-w-6xl mx-auto relative z-10">
+      <div className="max-w-[1200px] mx-auto relative z-10">
         <header className="mb-16">
           <motion.span className="text-label">Live Broadcast Simulation</motion.span>
           <motion.h1 className="text-3xl md:text-5xl font-bold mt-4 leading-tight max-w-3xl">

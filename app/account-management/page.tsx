@@ -30,7 +30,7 @@ export default function AccountManagement() {
   return (
     <div className="w-full pb-20 pt-24 px-6">
       {/* Hero Section */}
-      <div className="max-w-4xl mx-auto text-center mb-20">
+      <div className="max-w-[1200px] mx-auto text-center mb-20">
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -50,7 +50,7 @@ export default function AccountManagement() {
       </div>
 
       {/* Process Grid */}
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 mb-24">
+      <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 mb-24">
         {supportSteps.map((step, index) => (
           <div key={index} className="glass-card p-10 rounded-3xl hover:border-[#c71df1]/50 transition-colors group">
             <div className="mb-6 group-hover:scale-110 transition-transform duration-300">
@@ -65,7 +65,7 @@ export default function AccountManagement() {
       </div>
 
       {/* High-Impact Stat Section */}
-      <div className="max-w-6xl mx-auto glass-card rounded-[3rem] p-12 relative overflow-hidden text-center">
+      <div className="max-w-[1200px] mx-auto glass-card rounded-[3rem] p-12 relative overflow-hidden text-center">
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#312fd7] via-[#c71df1] to-[#312fd7]" />
         <h2 className="text-3xl font-bold mb-8">One Point of Contact. 15,000+ Recruiters.</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">

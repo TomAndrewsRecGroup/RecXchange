@@ -1,7 +1,7 @@
 export default function BlogLoading() {
   return (
     <div className="py-20 px-6">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-[1200px] mx-auto">
         {/* Header skeleton */}
         <div className="text-center mb-16 animate-pulse">
           <div className="h-12 bg-gray-800/50 rounded-lg w-3/4 mx-auto mb-4"></div>

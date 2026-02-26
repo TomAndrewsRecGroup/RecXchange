@@ -536,7 +536,7 @@ export default function RecruiterCandidatesPage() {
   }, []);
 
   return (
-    <div className="w-full pb-20 pt-24 px-6 max-w-6xl mx-auto">
+    <div className="w-full pb-20 pt-24 px-6 max-w-[1200px] mx-auto">
       {/* Hero Section */}
       <div className="text-center mb-20">
         <motion.div

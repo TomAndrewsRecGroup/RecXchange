@@ -67,7 +67,7 @@ export default function BlogPostPage() {
   if (loading) {
     return (
       <main className="min-h-screen py-20 px-6">
-        <div className="max-w-4xl mx-auto text-center py-20">
+        <div className="max-w-[1200px] mx-auto text-center py-20">
           <div className="inline-block w-8 h-8 border-4 border-cyan-400/20 border-t-cyan-400 rounded-full animate-spin"></div>
           <p className="text-gray-400 mt-4">Loading post...</p>
         </div>
@@ -78,7 +78,7 @@ export default function BlogPostPage() {
   if (!post) {
     return (
       <main className="min-h-screen py-20 px-6">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-[1200px] mx-auto">
           <div className="glass-card p-12 rounded-3xl border-cyan-400/10 text-center">
             <h1 className="text-3xl font-bold text-white mb-4">Post Not Found</h1>
             <p className="text-gray-400 mb-8">The blog post you're looking for doesn't exist.</p>
@@ -96,7 +96,7 @@ export default function BlogPostPage() {
 
   return (
     <main className="min-h-screen py-20 px-6">
-      <article className="max-w-4xl mx-auto">
+      <article className="max-w-[1200px] mx-auto">
         {/* Back Button */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}

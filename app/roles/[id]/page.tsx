@@ -31,7 +31,7 @@ export default function IndividualRoleView() {
       {/* Background Ambience */}
       <div className="fixed top-0 right-0 w-[40%] h-[40%] bg-blue-600/5 blur-[120px] rounded-full pointer-events-none -z-10" />
 
-      <div className="max-w-6xl mx-auto relative z-10">
+      <div className="max-w-[1200px] mx-auto relative z-10">
         
         {/* Navigation & Breadcrumbs */}
         <motion.div 

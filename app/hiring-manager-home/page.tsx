@@ -18,7 +18,7 @@ export default function HiringManagerHome() {
   return (
     <main className="relative min-h-screen flex flex-col items-center pt-32 pb-20 px-6 overflow-x-hidden">
 
-      <div className="relative z-10 w-full max-w-6xl flex flex-col items-center">
+      <div className="relative z-10 w-full max-w-[1200px] flex flex-col items-center">
 
         {/* Intro Context */}
         <header className="text-center mb-12">
@@ -141,7 +141,7 @@ export default function HiringManagerHome() {
           </div>
         </section>
 
-        <footer className="mt-16 w-full max-w-4xl px-4">
+        <footer className="mt-16 w-full max-w-[1200px] px-4">
           <div className="glass-card py-4 px-10 rounded-full border-cyan-400/10 flex flex-col md:flex-row justify-between items-center gap-4 text-[9px] text-gray-500 font-bold uppercase tracking-[0.2em]">
             <span className="opacity-60">Global Talent Infrastructure</span>
             <div className="flex gap-8">

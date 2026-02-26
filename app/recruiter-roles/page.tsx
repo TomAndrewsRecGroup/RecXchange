@@ -87,7 +87,7 @@ export default function PostRolesPage() {
       <div className="fixed bottom-0 right-0 w-[45%] h-[45%] bg-purple-600/10 blur-[130px] rounded-full pointer-events-none -z-10" />
       <div className="fixed top-0 left-0 w-[35%] h-[35%] bg-blue-600/10 blur-[130px] rounded-full pointer-events-none -z-10" />
 
-      <div className="max-w-6xl mx-auto relative z-10">
+      <div className="max-w-[1200px] mx-auto relative z-10">
 
         {/* Hero Header */}
         <header className="text-center mb-16">

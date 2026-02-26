@@ -117,7 +117,7 @@ export default function Footer() {
 
         {/* Contextual Links Section Above Copyright */}
         <div className="mt-12 pt-8 border-t border-cyan-400/10">
-          <p className="text-gray-600 text-xs leading-relaxed max-w-5xl">
+          <p className="text-gray-600 text-xs leading-relaxed max-w-[1200px]">
             <strong className="text-gray-400">About RecXchange:</strong> RecXchange is a <Link href="/collaboration" className="text-cyan-400 hover:underline">split fee recruitment platform</Link> connecting 15,000+ recruiters globally. Our platform enables <Link href="/recruiter-roles" className="text-cyan-400 hover:underline">role sharing</Link>, <Link href="/recruiters-with-candidates" className="text-cyan-400 hover:underline">candidate submissions</Link>, and automated fee splits up to <Link href="/why-recxchange" className="text-cyan-400 hover:underline">70% on RecX Direct roles</Link>. With access to <Link href="/research" className="text-cyan-400 hover:underline">270M candidate profiles</Link> and <Link href="/deal-protection" className="text-cyan-400 hover:underline">timestamped submission protection</Link>, recruiters can earn an average of $7,000 per placement across <Link href="/roles" className="text-cyan-400 hover:underline">100+ live roles</Link> in Engineering, Healthcare, Tech, Sales, Finance, and HR. Learn more about our <Link href="/pricing" className="text-fuchsia-400 hover:underline">pricing plans</Link> or read <Link href="/blog" className="text-cyan-400 hover:underline">success stories from our community</Link>.
           </p>
         </div>

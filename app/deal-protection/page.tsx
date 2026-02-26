@@ -22,7 +22,7 @@ export default function DealProtection() {
       {/* Background Ambience */}
       <div className="fixed top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_0%,_rgba(0,255,255,0.04)_0%,_transparent_50%)] pointer-events-none" />
 
-      <div className="max-w-4xl mx-auto relative z-10">
+      <div className="max-w-[1200px] mx-auto relative z-10">
         <header className="text-center mb-16">
           <motion.div
             initial={{ opacity: 0, y: -10 }}
