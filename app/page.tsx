@@ -4,10 +4,9 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import type { Metadata };
 
 // Note: Metadata export doesn't work with 'use client'
-// Moving metadata to layout.tsx (already there)
+// Metadata is handled by layout.tsx
 
 export default function EntryWall() {
   const router = useRouter();
