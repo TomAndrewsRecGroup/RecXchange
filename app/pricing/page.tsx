@@ -3,7 +3,7 @@
 import React from "react";
 import { Check, HelpCircle } from "lucide-react";
 import type { Metadata } from 'next';
-import QuickActionForm from '@/components/quick-action-form';
+import RecXDirectForm from '@/components/recx-direct-form';
 
 // Note: Metadata export removed - will be handled by layout.tsx
 
@@ -148,14 +148,13 @@ export default function PricingPage() {
         <div className="inline-block px-4 py-1.5 rounded-full border border-fuchsia-400/20 bg-fuchsia-400/5 text-[10px] font-bold uppercase tracking-[0.2em] text-fuchsia-400 mb-6">
           RecX Direct
         </div>
-        <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Want to learn more about RecX Direct?</h2>
+        <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Want to earn today?</h2>
         <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
           Get a detailed explainer of how the fee pool works, current pool size, and how to earn up to 70% on placements.
         </p>
-        <QuickActionForm 
-          actionType="explain_recx_direct"
-          className="max-w-lg mx-auto"
-        />
+        <div className="flex justify-center">
+          <RecXDirectForm />
+        </div>
       </section>
 
       {/* AI-Optimized Pricing Questions */}
