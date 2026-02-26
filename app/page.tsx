@@ -4,7 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import type { Metadata } from 'next';
+import type { Metadata };
 
 // Note: Metadata export doesn't work with 'use client'
 // Moving metadata to layout.tsx (already there)
@@ -26,7 +26,7 @@ export default function EntryWall() {
     <main className="relative min-h-screen flex flex-col items-center justify-center px-6 py-20 overflow-x-hidden">
 
       {/* Central Content */}
-      <div className="relative z-10 text-center max-w-6xl w-full">
+      <div className="relative z-10 text-center max-w-[1200px] w-full">
         <motion.header
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
