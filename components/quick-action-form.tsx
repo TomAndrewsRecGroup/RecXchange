@@ -12,18 +12,16 @@ interface QuickActionFormProps {
 
 const ACTION_CONFIG = {
   match_candidate: {
-    placeholder: 'Your email address',
+    emailPlaceholder: 'your@email.com',
     buttonText: 'Send me 3 matching roles',
     successMessage: 'Great! We\'ll send you 3 matching roles within 24 hours.',
-    ghlTag: 'quick-action-match-candidate',
-    emailSubject: 'RecXchange - Match My Candidate',
+    ghlTag: 'Website - QA 3 roles',
   },
   explain_recx_direct: {
-    placeholder: 'Your email address',
+    emailPlaceholder: 'your@email.com',
     buttonText: 'Email me the explainer',
     successMessage: 'Perfect! Check your inbox for the RecX Direct explainer and fee pool.',
-    ghlTag: 'quick-action-recx-direct',
-    emailSubject: 'RecXchange - RecX Direct Info',
+    ghlTag: 'Website - QA RecX Direct',
   },
 };
 
@@ -33,6 +31,8 @@ export default function QuickActionForm({
   buttonText,
   className = '' 
 }: QuickActionFormProps) {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
@@ -41,6 +41,16 @@ export default function QuickActionForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!firstName.trim()) {
+      setErrorMessage('Please enter your first name');
+      return;
+    }
+
+    if (!lastName.trim()) {
+      setErrorMessage('Please enter your last name');
+      return;
+    }
     
     if (!email || !email.includes('@')) {
       setErrorMessage('Please enter a valid email address');
@@ -55,6 +65,8 @@ export default function QuickActionForm({
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          firstName,
+          lastName,
           email,
           actionType,
           source: window.location.pathname,
@@ -68,6 +80,8 @@ export default function QuickActionForm({
       }
 
       setStatus('success');
+      setFirstName('');
+      setLastName('');
       setEmail('');
       
       // Reset after 5 seconds
@@ -104,12 +118,32 @@ export default function QuickActionForm({
             onSubmit={handleSubmit}
             className="form-content"
           >
+            <div className="name-row">
+              <input
+                type="text"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                placeholder="First Name"
+                disabled={status === 'loading'}
+                required
+                className="name-input"
+              />
+              <input
+                type="text"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                placeholder="Last Name"
+                disabled={status === 'loading'}
+                required
+                className="name-input"
+              />
+            </div>
             <div className="input-group">
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder={placeholder || config.placeholder}
+                placeholder={placeholder || config.emailPlaceholder}
                 disabled={status === 'loading'}
                 required
                 className="email-input"
@@ -149,6 +183,35 @@ export default function QuickActionForm({
           width: 100%;
         }
 
+        .name-row {
+          display: flex;
+          gap: 8px;
+          width: 100%;
+          margin-bottom: 8px;
+        }
+
+        .name-input {
+          flex: 1;
+          padding: 14px 18px;
+          background: rgba(255, 255, 255, 0.05);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 8px;
+          color: #fff;
+          font-size: 15px;
+          transition: all 0.2s;
+          text-align: center;
+        }
+
+        .name-input:focus {
+          outline: none;
+          border-color: #00ffff;
+          background: rgba(255, 255, 255, 0.08);
+        }
+
+        .name-input::placeholder {
+          color: rgba(255, 255, 255, 0.4);
+        }
+
         .input-group {
           display: flex;
           gap: 8px;
@@ -164,6 +227,7 @@ export default function QuickActionForm({
           color: #fff;
           font-size: 15px;
           transition: all 0.2s;
+          text-align: center;
         }
 
         .email-input:focus {
@@ -181,12 +245,13 @@ export default function QuickActionForm({
           background: linear-gradient(135deg, #00ffff, #c71df1);
           border: none;
           border-radius: 8px;
-          color: #000;
+          color: #fff;
           font-weight: 600;
           font-size: 14px;
           cursor: pointer;
           transition: all 0.2s;
           white-space: nowrap;
+          text-align: center;
         }
 
         .submit-button:hover:not(:disabled) {
@@ -203,7 +268,7 @@ export default function QuickActionForm({
           display: inline-block;
           width: 16px;
           height: 16px;
-          border: 2px solid #000;
+          border: 2px solid #fff;
           border-top-color: transparent;
           border-radius: 50%;
           animation: spin 0.6s linear infinite;
@@ -250,6 +315,7 @@ export default function QuickActionForm({
           border-radius: 6px;
           color: #ef4444;
           font-size: 13px;
+          text-align: center;
         }
       `}</style>
     </div>
