@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { X } from 'lucide-react';
 
 // Industry list
@@ -70,8 +70,7 @@ interface SendRolesFormProps {
 
 export default function SendRolesForm({ className = '' }: SendRolesFormProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [selectedIndustries, setSelectedIndustries] = useState<string[]>([]);
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
@@ -88,13 +87,8 @@ export default function SendRolesForm({ className = '' }: SendRolesFormProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!firstName.trim()) {
-      setErrorMessage('Please enter your first name');
-      return;
-    }
-
-    if (!lastName.trim()) {
-      setErrorMessage('Please enter your last name');
+    if (!name.trim()) {
+      setErrorMessage('Please enter your name');
       return;
     }
     
@@ -112,6 +106,11 @@ export default function SendRolesForm({ className = '' }: SendRolesFormProps) {
     setErrorMessage('');
 
     try {
+      // Split name into first and last
+      const nameParts = name.trim().split(' ');
+      const firstName = nameParts[0];
+      const lastName = nameParts.slice(1).join(' ') || nameParts[0];
+
       const response = await fetch('/api/quick-action', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -136,8 +135,7 @@ export default function SendRolesForm({ className = '' }: SendRolesFormProps) {
       // Reset after 3 seconds and close modal
       setTimeout(() => {
         setStatus('idle');
-        setFirstName('');
-        setLastName('');
+        setName('');
         setEmail('');
         setSelectedIndustries([]);
         setIsOpen(false);
@@ -153,18 +151,22 @@ export default function SendRolesForm({ className = '' }: SendRolesFormProps) {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className={`send-roles-trigger ${className}`}
+        className="px-6 py-3 rounded-xl border border-cyan-400/30 bg-cyan-400/5 text-cyan-400 text-xs font-bold uppercase tracking-widest hover:bg-cyan-400/10 transition-all"
       >
-        Send Me 3 Roles
+        SEND ME 3 ROLES
       </button>
 
-      {/* Modal */}
+      {/* Modal - Solid Background */}
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/80 backdrop-blur-sm" onClick={() => setIsOpen(false)}>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/90" onClick={() => setIsOpen(false)}>
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="glass-card w-full max-w-2xl max-h-[90vh] overflow-y-auto p-10 rounded-[2.5rem] border-cyan-400/20 relative"
+            className="w-full max-w-2xl max-h-[90vh] overflow-y-auto p-10 rounded-[2.5rem] relative"
+            style={{
+              background: '#0a0a0a',
+              border: '1px solid rgba(0, 255, 255, 0.2)'
+            }}
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -174,7 +176,11 @@ export default function SendRolesForm({ className = '' }: SendRolesFormProps) {
               <X size={24} />
             </button>
 
-            <h2 className="text-3xl font-bold gradient-text mb-4">Send Me 3 Roles</h2>
+            <h2 className="text-3xl font-bold mb-4" style={{
+              background: 'linear-gradient(135deg, #00ffff, #c71df1)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent'
+            }}>Send Me 3 Roles</h2>
             <p className="text-gray-400 text-sm mb-8">
               Select up to 5 industries and we'll send you 3 example roles that recruiters are currently working on.
             </p>
@@ -191,32 +197,17 @@ export default function SendRolesForm({ className = '' }: SendRolesFormProps) {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">First Name *</label>
-                    <input
-                      type="text"
-                      value={firstName}
-                      onChange={(e) => setFirstName(e.target.value)}
-                      required
-                      disabled={status === 'loading'}
-                      className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-cyan-400/50 transition-all disabled:opacity-50"
-                      placeholder="John"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Last Name *</label>
-                    <input
-                      type="text"
-                      value={lastName}
-                      onChange={(e) => setLastName(e.target.value)}
-                      required
-                      disabled={status === 'loading'}
-                      className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-cyan-400/50 transition-all disabled:opacity-50"
-                      placeholder="Smith"
-                    />
-                  </div>
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Your Name *</label>
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                    disabled={status === 'loading'}
+                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-cyan-400/50 transition-all disabled:opacity-50"
+                    placeholder="John Smith"
+                  />
                 </div>
 
                 <div>
@@ -303,41 +294,6 @@ export default function SendRolesForm({ className = '' }: SendRolesFormProps) {
           </motion.div>
         </div>
       )}
-
-      <style jsx>{`
-        .send-roles-trigger {
-          padding: 14px 24px;
-          background: linear-gradient(135deg, #00ffff, #c71df1);
-          border: none;
-          border-radius: 8px;
-          color: #fff;
-          font-weight: 600;
-          font-size: 14px;
-          cursor: pointer;
-          transition: all 0.2s;
-          white-space: nowrap;
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-        }
-
-        .send-roles-trigger:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 8px 16px rgba(0, 255, 255, 0.3);
-        }
-
-        .glass-card {
-          background: rgba(0, 0, 0, 0.8);
-          backdrop-filter: blur(20px);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .gradient-text {
-          background: linear-gradient(135deg, #00ffff, #c71df1);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-        }
-      `}</style>
     </>
   );
 }
