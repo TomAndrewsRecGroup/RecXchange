@@ -3,6 +3,7 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
+import { X } from 'lucide-react';
 
 // Note: Metadata export removed - now handled by metadata.ts in this directory
 
@@ -23,6 +24,7 @@ export default function RolesMarketplace() {
   const [page, setPage] = useState(1);
   const [filterType, setFilterType] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
+  const [showModal, setShowModal] = useState(false);
 
   const filteredRoles = useMemo(() => {
     return allRoles.filter(role => {
@@ -58,7 +60,7 @@ export default function RolesMarketplace() {
       backgroundImage: 'radial-gradient(at 0% 0%, rgba(0, 255, 255, 0.15) 0px, transparent 50%), radial-gradient(at 100% 100%, rgba(255, 0, 255, 0.15) 0px, transparent 50%)',
       backgroundAttachment: 'fixed'
     }}>
-      <div className="max-w-6xl mx-auto relative z-10">
+      <div className="max-w-[1200px] mx-auto relative z-10">
 
         {/* Hero Header */}
         <header className="text-center mb-16">
@@ -85,12 +87,33 @@ export default function RolesMarketplace() {
           </motion.div>
         </header>
 
+        {/* CTA Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15 }}
+          className="glass-card p-8 rounded-[2.5rem] border-purple-400/20 bg-gradient-to-br from-purple-500/10 via-fuchsia-500/5 to-cyan-500/10 mb-12 text-center relative overflow-hidden"
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 via-purple-500/5 to-fuchsia-500/5 blur-3xl" />
+          <div className="relative z-10">
+            <p className="text-sm md:text-base text-gray-300 mb-4 font-medium">
+              Ready to access these roles? <span className="text-purple-400 font-bold">Join RecXchange</span> and start submitting candidates today.
+            </p>
+            <button
+              onClick={() => setShowModal(true)}
+              className="inline-flex items-center justify-center px-8 py-4 rounded-2xl border border-white/20 bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white font-black text-sm uppercase tracking-widest transition-all hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/20"
+            >
+              Get Started Now
+            </button>
+          </div>
+        </motion.div>
+
         {/* Total Roles and Total Fee Pool Stats */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
+            transition={{ delay: 0.2 }}
             className="glass-card p-8 rounded-[2.5rem] border-cyan-400/10 bg-gradient-to-r from-cyan-400/[0.03] to-transparent relative overflow-hidden"
           >
             <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 blur-[60px]" />
@@ -106,7 +129,7 @@ export default function RolesMarketplace() {
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
+            transition={{ delay: 0.25 }}
             className="glass-card p-8 rounded-[2.5rem] border-fuchsia-400/10 bg-gradient-to-r from-fuchsia-400/[0.03] to-transparent relative overflow-hidden"
           >
             <div className="absolute top-0 right-0 w-32 h-32 bg-fuchsia-500/5 blur-[60px]" />
@@ -269,6 +292,83 @@ export default function RolesMarketplace() {
           </button>
         </div>
       </div>
+
+      {/* CTA Modal */}
+      <AnimatePresence>
+        {showModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md px-4"
+            onClick={() => setShowModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ type: 'spring', duration: 0.5 }}
+              className="relative glass-card p-10 rounded-[3rem] border-purple-400/20 max-w-lg w-full"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={() => setShowModal(false)}
+                className="absolute top-6 right-6 w-10 h-10 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 transition-all"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              <div className="text-center">
+                <div className="inline-block px-4 py-2 rounded-full bg-gradient-to-r from-cyan-500/10 to-fuchsia-500/10 border border-purple-400/20 mb-6">
+                  <span className="text-xs font-black uppercase tracking-widest text-purple-400">Join RecXchange</span>
+                </div>
+
+                <h2 className="text-3xl font-bold gradient-text mb-4">Get Access to Live Roles</h2>
+                <p className="text-gray-400 mb-8 leading-relaxed">
+                  Sign up to RecXchange and start submitting candidates to live roles. Split fees 50/50, 60/40, or take 70% on RecX Direct placements.
+                </p>
+
+                <div className="space-y-3 mb-8">
+                  <div className="flex items-center gap-3 text-sm text-gray-300">
+                    <div className="w-6 h-6 rounded-full bg-gradient-to-r from-cyan-500 to-fuchsia-500 flex items-center justify-center flex-shrink-0">
+                      <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <span>Access to {stats.total} live roles worth ${totalFeePool.toLocaleString()}</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-sm text-gray-300">
+                    <div className="w-6 h-6 rounded-full bg-gradient-to-r from-cyan-500 to-fuchsia-500 flex items-center justify-center flex-shrink-0">
+                      <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <span>Submit candidates and track your pipeline</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-sm text-gray-300">
+                    <div className="w-6 h-6 rounded-full bg-gradient-to-r from-cyan-500 to-fuchsia-500 flex items-center justify-center flex-shrink-0">
+                      <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <span>Fair splits with transparent agreements</span>
+                  </div>
+                </div>
+
+                <Link
+                  href="/contact"
+                  onClick={() => setShowModal(false)}
+                  className="inline-flex items-center justify-center px-8 py-4 rounded-2xl border border-white/20 bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white font-black text-sm uppercase tracking-widest transition-all hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/20 w-full"
+                >
+                  Sign Up Now
+                </Link>
+
+                <p className="text-xs text-gray-600 mt-4">Free to join • No credit card required</p>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </main>
   );
 }
