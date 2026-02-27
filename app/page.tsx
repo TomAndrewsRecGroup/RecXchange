@@ -60,12 +60,23 @@ export default function EntryWall() {
               </div>
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-5 md:mb-6 text-white group-hover:text-cyan-400 transition-colors">Recruiter</h2>
               <p className="text-gray-400 text-[13px] sm:text-sm md:text-base mb-6 sm:mb-7 md:mb-8 leading-relaxed">
-                You're a recruiter. Post roles to find candidates. Or share candidates to find roles. Either way, <Link href="/collaboration" className="text-cyan-400 hover:underline">split fees</Link> with 15,000+ recruiters.
+                You're a recruiter. Post roles to find candidates. Or share candidates to find roles. Either way,{' '}
+                <Link href="/collaboration" className="text-cyan-400 hover:underline inline-block">split fees</Link>{' '}
+                with 15,000+ recruiters.
               </p>
               <ul className="space-y-3 sm:space-y-4 md:space-y-5 text-[11px] sm:text-xs md:text-sm text-gray-500 font-medium">
-                <li className="flex items-center gap-3 sm:gap-4"><span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(0,255,255,0.8)]" /> Search 270M candidates when your pipeline is dry</li>
-                <li className="flex items-center gap-3 sm:gap-4"><span className="w-1.5 h-1.5 rounded-full bg-cyan-400" /> Up to <Link href="/why-recxchange" className="text-cyan-400 hover:underline">70% split on RecX Direct</Link> roles</li>
-                <li className="flex items-center gap-3 sm:gap-4"><span className="w-1.5 h-1.5 rounded-full bg-cyan-400" /> <Link href="/deal-protection" className="text-cyan-400 hover:underline">Split fee contracts</Link> protect both parties</li>
+                <li className="flex items-center gap-3 sm:gap-4">
+                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(0,255,255,0.8)] flex-shrink-0" /> 
+                  <span>Search 270M candidates when your pipeline is dry</span>
+                </li>
+                <li className="flex items-center gap-3 sm:gap-4">
+                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 flex-shrink-0" /> 
+                  <span>Up to{' '}<Link href="/why-recxchange" className="text-cyan-400 hover:underline inline-block">70% split on RecX Direct</Link>{' '}roles</span>
+                </li>
+                <li className="flex items-center gap-3 sm:gap-4">
+                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 flex-shrink-0" /> 
+                  <span><Link href="/deal-protection" className="text-cyan-400 hover:underline inline-block">Split fee contracts</Link>{' '}protect both parties</span>
+                </li>
               </ul>
             </div>
 
@@ -93,12 +104,23 @@ export default function EntryWall() {
               </div>
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-5 md:mb-6 text-white group-hover:text-fuchsia-400 transition-colors">Hiring Manager</h2>
               <p className="text-gray-400 text-[13px] sm:text-sm md:text-base mb-6 sm:mb-7 md:mb-8 leading-relaxed">
-                You're hiring talent. We <Link href="/hiring-manager-live" className="text-fuchsia-400 hover:underline">post your role</Link>. Thousands of recruiters compete to fill it. You pay one fee.
+                You're hiring talent. We{' '}
+                <Link href="/hiring-manager-live" className="text-fuchsia-400 hover:underline inline-block">post your role</Link>.
+                {' '}Thousands of recruiters compete to fill it. You pay one fee.
               </p>
               <ul className="space-y-3 sm:space-y-4 md:space-y-5 text-[11px] sm:text-xs md:text-sm text-gray-500 font-medium">
-                <li className="flex items-center gap-3 sm:gap-4"><span className="w-1.5 h-1.5 rounded-full bg-fuchsia-500 shadow-[0_0_8px_rgba(255,0,255,0.8)]" /> 15,000+ recruiters see your role instantly</li>
-                <li className="flex items-center gap-3 sm:gap-4"><span className="w-1.5 h-1.5 rounded-full bg-fuchsia-500" /> <Link href="/account-management" className="text-fuchsia-400 hover:underline">One point of contact</Link>. No recruiter spam.</li>
-                <li className="flex items-center gap-3 sm:gap-4"><span className="w-1.5 h-1.5 rounded-full bg-fuchsia-500" /> <Link href="/hiring-manager-strategic" className="text-fuchsia-400 hover:underline">Test the market</Link> before you officially hire</li>
+                <li className="flex items-center gap-3 sm:gap-4">
+                  <span className="w-1.5 h-1.5 rounded-full bg-fuchsia-500 shadow-[0_0_8px_rgba(255,0,255,0.8)] flex-shrink-0" /> 
+                  <span>15,000+ recruiters see your role instantly</span>
+                </li>
+                <li className="flex items-center gap-3 sm:gap-4">
+                  <span className="w-1.5 h-1.5 rounded-full bg-fuchsia-500 flex-shrink-0" /> 
+                  <span><Link href="/account-management" className="text-fuchsia-400 hover:underline inline-block">One point of contact</Link>.{' '}No recruiter spam.</span>
+                </li>
+                <li className="flex items-center gap-3 sm:gap-4">
+                  <span className="w-1.5 h-1.5 rounded-full bg-fuchsia-500 flex-shrink-0" /> 
+                  <span><Link href="/hiring-manager-strategic" className="text-fuchsia-400 hover:underline inline-block">Test the market</Link>{' '}before you officially hire</span>
+                </li>
               </ul>
             </div>
 
@@ -135,7 +157,7 @@ export default function EntryWall() {
           className="mt-8 sm:mt-10 md:mt-12 max-w-3xl mx-auto px-4"
         >
           <p className="text-gray-500 text-[11px] sm:text-xs md:text-sm leading-relaxed text-center">
-            Join our <Link href="/blog" className="text-cyan-400 hover:underline">recruiter community</Link> with access to <Link href="/why-recxchange" className="text-cyan-400 hover:underline">270M candidate profiles</Link>. Learn <Link href="/collaboration" className="text-cyan-400 hover:underline">how split fees work</Link>, explore our <Link href="/pricing" className="text-fuchsia-400 hover:underline">transparent pricing tiers</Link>, or read success stories on our <Link href="/blog" className="text-cyan-400 hover:underline">blog</Link>. Questions? Check our <Link href="/faq" className="text-cyan-400 hover:underline">FAQ</Link> or <Link href="/contact" className="text-cyan-400 hover:underline">contact us</Link>.
+            Join our{' '}<Link href="/blog" className="text-cyan-400 hover:underline">recruiter community</Link>{' '}with access to{' '}<Link href="/why-recxchange" className="text-cyan-400 hover:underline">270M candidate profiles</Link>. Learn{' '}<Link href="/collaboration" className="text-cyan-400 hover:underline">how split fees work</Link>, explore our{' '}<Link href="/pricing" className="text-fuchsia-400 hover:underline">transparent pricing tiers</Link>, or read success stories on our{' '}<Link href="/blog" className="text-cyan-400 hover:underline">blog</Link>. Questions? Check our{' '}<Link href="/faq" className="text-cyan-400 hover:underline">FAQ</Link>{' '}or{' '}<Link href="/contact" className="text-cyan-400 hover:underline">contact us</Link>.
           </p>
         </motion.div>
       </div>
