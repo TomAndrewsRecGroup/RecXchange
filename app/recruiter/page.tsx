@@ -241,7 +241,7 @@ export default function RecruiterDiagnostic() {
                 {[
                   { icon: Database, title: "Full ATS & CRM", desc: "Store candidates and clients. Track activity. Manage pipelines in one place." },
                   { icon: Zap, title: "AI Wall & Search", desc: "GPT-powered AI assistant. Semantic search across 270M profiles." },
-                  { icon: Globe, title: "Split Fee Protection", desc: "Auto-generated legal agreements. Clear terms, known amounts, known dates." }
+                  { icon: Globe, title: "Split Fee Protection", desc: "Auto-generated legal agreements. Clear terms, known amounts, and known dates." }
                 ].map((item, i) => (
                   <div key={i} className="text-center">
                     <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-lg sm:rounded-xl md:rounded-2xl bg-purple-500/10 border border-purple-400/20 flex items-center justify-center text-purple-400 mx-auto mb-2.5 sm:mb-3 md:mb-4">
@@ -258,7 +258,7 @@ export default function RecruiterDiagnostic() {
           {/* The Numbers (Hormozi-Style Proof) */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 md:gap-5 lg:gap-6 mb-8 sm:mb-10 md:mb-12 lg:mb-16">
             {[
-              { value: "$7,000", label: "Avg Placement Fee", sublabel: "Your share: $3,500-$4,900" },
+              { value: "$7,000", label: "Avg Recruiter Earnings", sublabel: "Per placement" },
               { value: "15,000+", label: "Active Recruiters", sublabel: "Pre-vetted and rated" },
               { value: "270M", label: "Candidate Profiles", sublabel: "Global AI-powered search" }
             ].map((stat, i) => (
@@ -278,7 +278,7 @@ export default function RecruiterDiagnostic() {
                 Ready to <span className="gradient-text">start making placements?</span>
               </h3>
               <p className="text-gray-400 text-[13px] sm:text-sm md:text-base lg:text-lg mb-6 sm:mb-8 md:mb-10 max-w-2xl mx-auto leading-relaxed px-2">
-                Join 15,000+ recruiters already using RecXchange. Average Recruiter makes 2-5 placements per quarter and will average $7,000 per placement.
+                Join 15,000+ recruiters already using RecXchange. Recruiters earn an average of $7,000 per placement. Most active recruiters make 2-5 placements per quarter.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-stretch sm:items-center max-w-xl mx-auto">
                 <Link
@@ -324,14 +324,14 @@ export default function RecruiterDiagnostic() {
           <div className="glass-card p-4 sm:p-5 md:p-6 lg:p-8 rounded-lg sm:rounded-xl md:rounded-2xl lg:rounded-3xl border-cyan-400/10">
             <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-white mb-2.5 sm:mb-3 md:mb-4">How much can I earn on RecXchange?</h3>
             <p className="text-gray-400 text-[13px] sm:text-sm leading-relaxed">
-              Average placement fee is <strong className="text-white">$7,000</strong>. Split 50/50 = $3,500 per placement. On RecX Direct roles, earn up to <strong className="text-white">70%</strong> = $4,900 per placement. Most active recruiters make 2-5 placements per quarter while paying $1-$250/month.
+              Recruiters earn an average of <strong className="text-white">$7,000 per placement</strong>. Most active recruiters make 2-5 placements per quarter while paying $1-$250/month.
             </p>
           </div>
 
           <div className="glass-card p-4 sm:p-5 md:p-6 lg:p-8 rounded-lg sm:rounded-xl md:rounded-2xl lg:rounded-3xl border-cyan-400/10">
             <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-white mb-2.5 sm:mb-3 md:mb-4">How does the 70% split on RecX Direct work?</h3>
             <p className="text-gray-400 text-[13px] sm:text-sm leading-relaxed">
-              RecX Direct roles are posted by real clients. You can earn up to <strong className="text-white">70% of the placement fee</strong> (typically $4,900 on a $7,000 placement). Pro members get instant access. Lite members get access 7 days after posting.
+              RecX Direct roles are posted by real clients. Recruiters earn an average of <strong className="text-white">$7,000 per placement</strong> on RecX Direct roles. Pro members get instant access. Lite members get access 7 days after posting.
             </p>
           </div>
         </section>
