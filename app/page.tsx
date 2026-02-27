@@ -115,7 +115,7 @@ export default function EntryWall() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8 }}
-          className="mt-12 sm:mt-16 md:mt-20 glass-card py-1.5 sm:py-2 md:py-4 px-4 sm:px-8 md:px-10 rounded-full inline-flex flex-wrap justify-center gap-3 sm:gap-6 md:gap-8 items-center text-[8px] sm:text-[9px] text-gray-500 font-bold uppercase tracking-[0.12em] sm:tracking-[0.2em]"
+          className="mt-12 sm:mt-16 md:mt-20 glass-card py-3 sm:py-4 px-4 sm:px-8 md:px-10 rounded-full inline-flex flex-wrap justify-center gap-3 sm:gap-6 md:gap-8 items-center text-[8px] sm:text-[9px] text-gray-500 font-bold uppercase tracking-[0.12em] sm:tracking-[0.2em]"
         >
           <span className="opacity-60">Global Talent Infrastructure</span>
           <div className="h-4 w-[1px] bg-cyan-400/20 hidden md:block" />
