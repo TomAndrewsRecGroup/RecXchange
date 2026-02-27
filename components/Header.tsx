@@ -59,7 +59,12 @@ export default function Header() {
 
         {/* Right: CTAs */}
         <div className="flex items-center gap-4">
-          <Link href="{{trigger_link.Hc9mpfL0JxjX06kwNpd1}}" className="text-sm font-medium text-gray-300 hover:text-cyan-400 transition-colors">
+          <Link 
+            href="{{trigger_link.Hc9mpfL0JxjX06kwNpd1}}" 
+            className="text-sm font-medium text-gray-300 hover:text-cyan-400 transition-colors"
+            rel="external"
+            data-intent="platform-access"
+          >
             Login
           </Link>
           <Link
