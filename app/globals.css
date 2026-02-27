@@ -10,53 +10,74 @@
   --recx-neon: #00FFFF;
   --neon-pulse: 0 0 8px rgba(0, 255, 255, 0.8), 0 0 20px rgba(0, 255, 255, 0.4);
   --gradient-brand: linear-gradient(135deg, #00FFFF, #a855f7, #FF00FF);
-  --header-spacing: 80px;
+  /* Responsive header spacing */
+  --header-spacing-mobile: 80px;
+  --header-spacing-tablet: 100px;
+  --header-spacing-desktop: 120px;
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
+    /* Prevent horizontal scroll on mobile */
+    overflow-x: hidden;
   }
+  
   body {
     @apply bg-[#050508] text-white antialiased;
     font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
     overflow-x: hidden;
+    /* Improve text rendering on mobile */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
-  /* Professional heading typography with Inter */
+  /* MOBILE-FIRST RESPONSIVE TYPOGRAPHY */
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
   }
 
+  /* h1: Mobile 32px → Tablet 40px → Desktop 56px-72px */
   h1 {
-    @apply text-5xl md:text-6xl lg:text-7xl font-extrabold;
+    @apply text-[32px] sm:text-[40px] md:text-5xl lg:text-6xl xl:text-7xl font-extrabold;
     letter-spacing: -0.025em;
     line-height: 1.1;
   }
   
+  /* h2: Mobile 24px → Tablet 30px → Desktop 40px-56px */
   h2 {
-    @apply text-3xl md:text-4xl lg:text-5xl font-bold;
+    @apply text-2xl sm:text-[30px] md:text-3xl lg:text-4xl xl:text-5xl font-bold;
     letter-spacing: -0.02em;
     line-height: 1.2;
   }
   
+  /* h3: Mobile 20px → Tablet 24px → Desktop 30px-36px */
   h3 {
-    @apply text-2xl md:text-3xl font-semibold;
+    @apply text-xl sm:text-2xl md:text-[30px] lg:text-3xl font-semibold;
     letter-spacing: -0.015em;
     line-height: 1.3;
   }
 
+  /* h4: Mobile 18px → Tablet 20px → Desktop 24px-28px */
   h4 {
-    @apply text-xl md:text-2xl font-semibold;
+    @apply text-lg sm:text-xl md:text-2xl font-semibold;
     letter-spacing: -0.01em;
   }
 
+  /* h5: Mobile 16px → Tablet 18px → Desktop 20px-24px */
   h5 {
-    @apply text-lg md:text-xl font-semibold;
+    @apply text-base sm:text-lg md:text-xl font-semibold;
   }
 
+  /* h6: Mobile 14px → Tablet 16px → Desktop 18px-20px */
   h6 {
-    @apply text-base md:text-lg font-semibold;
+    @apply text-sm sm:text-base md:text-lg font-semibold;
+  }
+
+  /* Body text - optimized for readability on all devices */
+  p {
+    @apply text-sm sm:text-base leading-relaxed;
   }
 
   /* Toned-down link colors for better readability */
@@ -81,34 +102,43 @@
     color: rgb(232 121 249 / 0.9) !important;
   }
 
-  /* Custom Scrollbar */
-  ::-webkit-scrollbar {
-    width: 8px;
-  }
-  ::-webkit-scrollbar-track {
-    background: #050508;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: rgba(0, 255, 255, 0.2);
-    border-radius: 10px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 255, 255, 0.4);
+  /* Custom Scrollbar - hidden on mobile for cleaner look */
+  @media (min-width: 768px) {
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #050508;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(0, 255, 255, 0.2);
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 255, 255, 0.4);
+    }
   }
 }
 
 @layer components {
-  /* Premium Glassmorphism */
+  /* RESPONSIVE GLASSMORPHISM */
   .glass-card {
-    @apply backdrop-blur-2xl bg-white/[0.03] border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)];
+    @apply backdrop-blur-xl sm:backdrop-blur-2xl bg-white/[0.03] border border-white/10;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
     transition: border-color 0.3s ease, background-color 0.3s ease;
+  }
+
+  @media (min-width: 768px) {
+    .glass-card {
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
   }
 
   .glass-card:hover {
     @apply border-cyan-400/30 bg-white/[0.05];
   }
 
-  /* Platform Gradient Text — cyan → purple → magenta */
+  /* Platform Gradient Text */
   .gradient-text {
     @apply bg-gradient-to-r from-cyan-400 via-purple-400 to-fuchsia-500 bg-clip-text text-transparent;
     display: inline-block;
@@ -131,48 +161,305 @@
     animation: pulse-width 4s infinite ease-in-out;
   }
 
-  /* Page spacing utilities - REDUCED HEADER PADDING */
+  /* RESPONSIVE PAGE CONTAINERS */
   .page-container {
-    @apply pt-20 pb-16 px-6;
+    @apply pt-20 sm:pt-24 md:pt-28 lg:pt-32 pb-12 sm:pb-16 md:pb-20 px-4 sm:px-6 md:px-8;
   }
 
   .page-container-tight {
-    @apply pt-10 pb-16 px-6;
+    @apply pt-16 sm:pt-20 md:pt-24 pb-12 sm:pb-16 px-4 sm:px-6 md:px-8;
   }
 
-  /* Override py-20 with reduced top padding */
-  main.py-20 {
-    padding-top: var(--header-spacing) !important;
+  /* RESPONSIVE BUTTON STYLES */
+  .btn-primary {
+    @apply px-6 sm:px-8 md:px-10 py-3 sm:py-3.5 md:py-4 rounded-xl sm:rounded-2xl;
+    @apply text-xs sm:text-sm font-bold uppercase;
+    letter-spacing: 0.12em;
+  }
+
+  @media (min-width: 640px) {
+    .btn-primary {
+      letter-spacing: 0.15em;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .btn-primary {
+      letter-spacing: 0.2em;
+    }
+  }
+
+  .btn-secondary {
+    @apply px-5 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-3.5 rounded-lg sm:rounded-xl;
+    @apply text-[10px] sm:text-xs font-bold uppercase;
+    letter-spacing: 0.12em;
+  }
+
+  @media (min-width: 640px) {
+    .btn-secondary {
+      letter-spacing: 0.15em;
+    }
+  }
+
+  /* RESPONSIVE TEXT UTILITIES */
+  .text-label {
+    @apply text-[9px] sm:text-[10px] uppercase font-bold text-gray-500;
+    letter-spacing: 0.15em;
+  }
+
+  @media (min-width: 640px) {
+    .text-label {
+      letter-spacing: 0.2em;
+    }
+  }
+
+  .text-label-lg {
+    @apply text-[10px] sm:text-xs uppercase font-bold;
+    letter-spacing: 0.12em;
+  }
+
+  @media (min-width: 640px) {
+    .text-label-lg {
+      letter-spacing: 0.15em;
+    }
+  }
+
+  /* RESPONSIVE CARD PADDING */
+  .card-padding {
+    @apply p-5 sm:p-7 md:p-8 lg:p-10;
+  }
+
+  .card-padding-lg {
+    @apply p-6 sm:p-8 md:p-10 lg:p-14;
+  }
+
+  /* RESPONSIVE BORDER RADIUS */
+  .card-rounded {
+    @apply rounded-xl sm:rounded-2xl md:rounded-[2rem];
+  }
+
+  .card-rounded-lg {
+    @apply rounded-2xl sm:rounded-[2.5rem] md:rounded-[3rem];
+  }
+
+  /* RESPONSIVE SPACING */
+  .section-spacing {
+    @apply mb-10 sm:mb-12 md:mb-16 lg:mb-20;
+  }
+
+  .section-spacing-sm {
+    @apply mb-6 sm:mb-8 md:mb-10;
+  }
+
+  /* RESPONSIVE LIST STYLES */
+  .bullet-list {
+    @apply space-y-2.5 sm:space-y-3 md:space-y-4;
+  }
+
+  .bullet-list li {
+    @apply flex items-start gap-2 sm:gap-3 text-gray-400;
+  }
+
+  .bullet-list li::before {
+    content: '';
+    @apply w-1 h-1 mt-1.5 bg-cyan-400 rounded-full flex-shrink-0;
+  }
+
+  .bullet-list li span {
+    @apply text-[11px] sm:text-xs leading-snug;
   }
 }
 
 @layer utilities {
-  /* Reduced header spacing utility */
-  .reduced-header-spacing {
-    padding-top: var(--header-spacing);
+  /* MOBILE-FIRST RESPONSIVE UTILITIES */
+  
+  /* Reduced tracking on mobile for better text flow */
+  .tracking-mobile-tight {
+    letter-spacing: 0.12em;
   }
 
-  @media (max-width: 768px) {
-    main.py-20,
-    .reduced-header-spacing {
-      padding-top: 60px !important;
+  @media (min-width: 640px) {
+    .tracking-mobile-tight {
+      letter-spacing: 0.15em;
     }
+  }
+
+  @media (min-width: 768px) {
+    .tracking-mobile-tight {
+      letter-spacing: 0.2em;
+    }
+  }
+
+  /* Line height utilities for better mobile readability */
+  .leading-mobile {
+    line-height: 1.4;
+  }
+
+  @media (min-width: 640px) {
+    .leading-mobile {
+      line-height: 1.5;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .leading-mobile {
+      line-height: 1.6;
+    }
+  }
+
+  /* Touch-friendly tap targets (minimum 44x44px) */
+  .tap-target {
+    @apply min-h-[44px] min-w-[44px];
+  }
+
+  /* Prevent text from being too wide on large screens */
+  .text-container {
+    max-width: 65ch;
+  }
+
+  /* Safe area padding for notched devices */
+  .safe-area-padding {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+
+  /* Responsive header spacing */
+  .header-spacing {
+    padding-top: var(--header-spacing-mobile);
+  }
+
+  @media (min-width: 640px) {
+    .header-spacing {
+      padding-top: var(--header-spacing-tablet);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .header-spacing {
+      padding-top: var(--header-spacing-desktop);
+    }
+  }
+
+  /* Hide on mobile, show on desktop */
+  .mobile-hidden {
+    @apply hidden sm:block;
+  }
+
+  /* Show on mobile, hide on desktop */
+  .mobile-only {
+    @apply block sm:hidden;
+  }
+
+  /* Responsive grid gaps */
+  .grid-gap-responsive {
+    @apply gap-4 sm:gap-6 md:gap-8;
+  }
+
+  /* Responsive icon sizes */
+  .icon-sm {
+    @apply w-4 h-4 sm:w-5 sm:h-5;
+  }
+
+  .icon-md {
+    @apply w-5 h-5 sm:w-6 sm:h-6;
+  }
+
+  .icon-lg {
+    @apply w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8;
+  }
+
+  /* Responsive text alignment */
+  .text-mobile-center {
+    @apply text-center md:text-left;
+  }
+
+  /* Fix webkit tap highlight on mobile */
+  .no-tap-highlight {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Smooth momentum scrolling on iOS */
+  .momentum-scroll {
+    -webkit-overflow-scrolling: touch;
   }
 }
 
+/* ANIMATIONS */
 @keyframes pulse-width {
   0%, 100% {
-    width: 64px;
+    width: 48px;
     opacity: 0.4;
     filter: blur(1px);
   }
   50% {
-    width: 140px;
+    width: 96px;
     opacity: 1;
     filter: blur(0px);
   }
 }
 
-.text-label {
-  @apply text-[10px] uppercase tracking-[0.2em] font-bold text-gray-500;
+@media (min-width: 640px) {
+  @keyframes pulse-width {
+    0%, 100% {
+      width: 64px;
+      opacity: 0.4;
+      filter: blur(1px);
+    }
+    50% {
+      width: 140px;
+      opacity: 1;
+      filter: blur(0px);
+    }
+  }
+}
+
+/* MOBILE DEVICE OPTIMIZATIONS */
+@media (max-width: 639px) {
+  /* Prevent zoom on input focus (iOS Safari) */
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="password"],
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+
+  /* Improve button tap targets */
+  button, a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Reduce motion for better performance on mobile */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* TABLET OPTIMIZATIONS */
+@media (min-width: 640px) and (max-width: 1023px) {
+  /* Tablet-specific adjustments */
+  .glass-card {
+    backdrop-filter: blur(20px);
+  }
+}
+
+/* HIGH DPI / RETINA DISPLAYS */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  body {
+    font-weight: 400;
+  }
+
+  .font-bold {
+    font-weight: 600;
+  }
+
+  .font-black {
+    font-weight: 800;
+  }
 }
