@@ -66,7 +66,7 @@ export default function Header() {
         {/* Desktop CTAs - Hidden on mobile/tablet */}
         <div className="hidden lg:flex items-center gap-4">
           <Link 
-            href="{{trigger_link.Hc9mpfL0JxjX06kwNpd1}}" 
+            href="https://app.recxchange.io?trigger_link=Hc9mpfL0JxjX06kwNpd1" 
             className="text-sm font-medium text-gray-300 hover:text-cyan-400 transition-colors"
             rel="external"
             data-intent="platform-access"
@@ -74,7 +74,7 @@ export default function Header() {
             Login
           </Link>
           <Link
-            href="{{trigger_link.jYQNc9YXcMkYPvo3HZfC}}"
+            href="https://app.recxchange.io/register?trigger_link=jYQNc9YXcMkYPvo3HZfC"
             className="px-5 py-2.5 rounded-full bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white text-sm font-bold hover:scale-105 transition-all shadow-[0_0_20px_rgba(0,255,255,0.3)]"
           >
             Get Started Today
@@ -105,14 +105,14 @@ export default function Header() {
               {/* Mobile CTAs */}
               <div className="flex flex-col gap-3 pb-6 border-b border-cyan-400/20">
                 <Link
-                  href="{{trigger_link.jYQNc9YXcMkYPvo3HZfC}}"
+                  href="https://app.recxchange.io/register?trigger_link=jYQNc9YXcMkYPvo3HZfC"
                   className="w-full py-3 rounded-full bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white text-sm font-bold text-center shadow-[0_0_20px_rgba(0,255,255,0.3)]"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Get Started Today
                 </Link>
                 <Link 
-                  href="{{trigger_link.Hc9mpfL0JxjX06kwNpd1}}" 
+                  href="https://app.recxchange.io?trigger_link=Hc9mpfL0JxjX06kwNpd1" 
                   className="w-full py-3 rounded-full border border-cyan-400/30 text-cyan-400 text-sm font-bold text-center"
                   rel="external"
                   data-intent="platform-access"
