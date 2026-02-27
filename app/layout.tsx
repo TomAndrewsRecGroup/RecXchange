@@ -42,8 +42,8 @@ export const metadata: Metadata = {
     "recruitment fee split",
     "recruiter collaboration"
   ],
-  authors: [{ name: "RecXchange" }],
-  creator: "RecXchange",
+  authors: [{ name: "RecXchange" }, { name: "AMIVY Designs", url: "https://www.amivydesigns.com" }],
+  creator: "AMIVY Designs",
   publisher: "RecXchange",
   metadataBase: new URL("https://recxchange.io"),
   alternates: {
@@ -171,6 +171,19 @@ export default function RootLayout({ children }: RootLayoutProps) {
           "https://www.linkedin.com/in/tomandrews"
         ]
       },
+      // Design Agency Schema - AMIVY Designs
+      {
+        "@type": "Organization",
+        "@id": "https://www.amivydesigns.com/#organization",
+        "name": "AMIVY Designs",
+        "url": "https://www.amivydesigns.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/AMIVY%20Designs.png"
+        },
+        "description": "Premium web design, development, and digital branding agency specializing in custom websites and digital solutions.",
+        "serviceType": ["Web Design", "Web Development", "Digital Branding", "UI/UX Design"]
+      },
       // Software Application Schema
       {
         "@type": "SoftwareApplication",
@@ -182,6 +195,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
         "installUrl": "https://app.recxchange.io/login",
         "provider": {
           "@id": "https://recxchange.io/#organization"
+        },
+        "creator": {
+          "@id": "https://www.amivydesigns.com/#organization"
         },
         "description": "The recruiter network where 15,000+ recruiters partner on placements. Average placement fee: $7,000. Split fees up to 70% on RecX Direct roles. Access 270M candidate profiles. Post roles to find candidates, or share candidates to find roles. $750,000 in fees available across 100+ live roles in UK, USA, Europe, Africa, Middle East, Australia covering Engineering, Healthcare, Tech, HR, Sales, Finance.",
         "offers": [
@@ -416,6 +432,13 @@ export default function RootLayout({ children }: RootLayoutProps) {
         "publisher": {
           "@id": "https://recxchange.io/#organization"
         },
+        "creator": {
+          "@id": "https://www.amivydesigns.com/#organization"
+        },
+        "copyrightHolder": {
+          "@id": "https://recxchange.io/#organization"
+        },
+        "copyrightYear": 2024,
         "potentialAction": {
           "@type": "SearchAction",
           "target": "https://recxchange.io/roles?q={search_term_string}",
