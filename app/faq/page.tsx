@@ -159,86 +159,86 @@ export default function FAQPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       
-      <main className="min-h-screen py-20 px-6">
-        <div className="max-w-[1200px] mx-auto">
+      <main className="relative min-h-screen flex flex-col items-center pt-16 sm:pt-20 md:pt-28 pb-12 sm:pb-16 md:pb-20 px-4 sm:px-6">
+        <div className="relative z-10 w-full max-w-[1200px] flex flex-col items-center">
           {/* Header */}
           <motion.header
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-center mb-16">
-            <span className="block text-[10px] uppercase tracking-[0.4em] text-cyan-400/60 mb-6 font-bold">
+            className="text-center mb-6 sm:mb-8 md:mb-12 lg:mb-16">
+            <span className="block text-[9px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] md:tracking-[0.4em] text-cyan-400/60 mb-3 sm:mb-4 md:mb-6 font-bold">
               Frequently Asked Questions
             </span>
-            <h1 className="text-5xl md:text-6xl font-bold gradient-text mb-6 tracking-tight leading-tight pb-2">
+            <h1 className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-bold gradient-text mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2">
               How RecXchange Works
             </h1>
-            <div className="pulse-underline mb-8 mx-auto" />
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed">
+            <div className="pulse-underline mb-4 sm:mb-6 md:mb-8 mx-auto" />
+            <p className="text-gray-400 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed px-2">
               Everything you need to know about partnering with recruiters and splitting fees.
             </p>
           </motion.header>
 
           {/* Visual Guide */}
-          <section className="mb-16">
-            <div className="glass-card p-10 rounded-3xl border-cyan-400/10 text-center">
-              <h2 className="text-2xl font-bold text-white mb-4">How Fee Splits Work</h2>
-              <p className="text-gray-400 mb-8">Simple visual guide to understanding RecXchange fee sharing</p>
+          <section className="w-full mb-6 sm:mb-8 md:mb-12 lg:mb-16">
+            <div className="glass-card p-4 sm:p-6 md:p-8 lg:p-10 rounded-lg sm:rounded-xl md:rounded-2xl lg:rounded-3xl border-cyan-400/10 text-center">
+              <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-white mb-2 sm:mb-3 md:mb-4">How Fee Splits Work</h2>
+              <p className="text-gray-400 text-[13px] sm:text-sm md:text-base mb-4 sm:mb-5 md:mb-6 lg:mb-8 px-2">Simple visual guide to understanding RecXchange fee sharing</p>
               
               {/* Fee Split Flowchart - Simple Visual */}
-              <div className="bg-white/[0.02] rounded-2xl p-8 border border-white/5">
-                <div className="space-y-6">
+              <div className="bg-white/[0.02] rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 lg:p-8 border border-white/5">
+                <div className="space-y-4 sm:space-y-5 md:space-y-6">
                   {/* Row 1: Total Fee */}
                   <div className="flex items-center justify-center">
-                    <div className="px-6 py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white font-bold text-lg">
+                    <div className="px-4 sm:px-5 md:px-6 py-2.5 sm:py-3 md:py-4 rounded-lg sm:rounded-xl bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white font-bold text-sm sm:text-base md:text-lg">
                       Total Placement Fee: $10,000
                     </div>
                   </div>
                   
                   {/* Arrow Down */}
                   <div className="flex justify-center">
-                    <div className="text-4xl text-gray-600">↓</div>
+                    <div className="text-2xl sm:text-3xl md:text-4xl text-gray-600">↓</div>
                   </div>
 
                   {/* Row 2: Split Options */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="p-6 rounded-xl border border-cyan-400/20 bg-cyan-400/5">
-                      <div className="text-cyan-400 font-bold text-lg mb-2">50/50 Split</div>
-                      <div className="text-2xl font-bold text-white mb-1">$5,000</div>
-                      <div className="text-xs text-gray-500">Each recruiter</div>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+                    <div className="p-4 sm:p-5 md:p-6 rounded-lg sm:rounded-xl border border-cyan-400/20 bg-cyan-400/5">
+                      <div className="text-cyan-400 font-bold text-sm sm:text-base md:text-lg mb-1 sm:mb-2">50/50 Split</div>
+                      <div className="text-xl sm:text-2xl font-bold text-white mb-0.5 sm:mb-1">$5,000</div>
+                      <div className="text-[10px] sm:text-xs text-gray-500">Each recruiter</div>
                     </div>
                     
-                    <div className="p-6 rounded-xl border border-fuchsia-400/20 bg-fuchsia-400/5">
-                      <div className="text-fuchsia-400 font-bold text-lg mb-2">60/40 Split</div>
-                      <div className="text-2xl font-bold text-white mb-1">$6,000</div>
-                      <div className="text-xs text-gray-500">Lead recruiter</div>
+                    <div className="p-4 sm:p-5 md:p-6 rounded-lg sm:rounded-xl border border-fuchsia-400/20 bg-fuchsia-400/5">
+                      <div className="text-fuchsia-400 font-bold text-sm sm:text-base md:text-lg mb-1 sm:mb-2">60/40 Split</div>
+                      <div className="text-xl sm:text-2xl font-bold text-white mb-0.5 sm:mb-1">$6,000</div>
+                      <div className="text-[10px] sm:text-xs text-gray-500">Lead recruiter</div>
                     </div>
                     
-                    <div className="p-6 rounded-xl border border-purple-400/20 bg-purple-400/5">
-                      <div className="text-purple-400 font-bold text-lg mb-2">70% Direct</div>
-                      <div className="text-2xl font-bold text-white mb-1">$7,000</div>
-                      <div className="text-xs text-gray-500">RecX Direct</div>
+                    <div className="p-4 sm:p-5 md:p-6 rounded-lg sm:rounded-xl border border-purple-400/20 bg-purple-400/5">
+                      <div className="text-purple-400 font-bold text-sm sm:text-base md:text-lg mb-1 sm:mb-2">70% Direct</div>
+                      <div className="text-xl sm:text-2xl font-bold text-white mb-0.5 sm:mb-1">$7,000</div>
+                      <div className="text-[10px] sm:text-xs text-gray-500">RecX Direct</div>
                     </div>
                   </div>
 
                   {/* Arrow Down */}
                   <div className="flex justify-center">
-                    <div className="text-4xl text-gray-600">↓</div>
+                    <div className="text-2xl sm:text-3xl md:text-4xl text-gray-600">↓</div>
                   </div>
 
                   {/* Row 3: Platform Fee */}
                   <div className="flex items-center justify-center">
-                    <div className="px-6 py-4 rounded-xl bg-green-500/10 border border-green-500/20 text-green-400 font-bold">
+                    <div className="px-4 sm:px-5 md:px-6 py-2.5 sm:py-3 md:py-4 rounded-lg sm:rounded-xl bg-green-500/10 border border-green-500/20 text-green-400 font-bold text-sm sm:text-base">
                       Platform Fee: $0 (You keep 100%)
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="mt-8 flex flex-col md:flex-row gap-4 justify-center">
-                <Link href="https://youtube.com/@recxchange" target="_blank" rel="noopener noreferrer" className="px-6 py-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 hover:bg-red-500/20 transition-all font-bold text-sm">
+              <div className="mt-4 sm:mt-5 md:mt-6 lg:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+                <Link href="https://youtube.com/@recxchange" target="_blank" rel="noopener noreferrer" className="px-4 sm:px-5 md:px-6 py-2.5 sm:py-3 rounded-lg sm:rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 hover:bg-red-500/20 transition-all font-bold text-xs sm:text-sm">
                   🎥 Watch Video Tutorials
                 </Link>
-                <Link href="/why-recxchange" className="px-6 py-3 rounded-xl bg-cyan-400/10 border border-cyan-400/20 text-cyan-400 hover:bg-cyan-400/20 transition-all font-bold text-sm">
+                <Link href="/why-recxchange" className="px-4 sm:px-5 md:px-6 py-2.5 sm:py-3 rounded-lg sm:rounded-xl bg-cyan-400/10 border border-cyan-400/20 text-cyan-400 hover:bg-cyan-400/20 transition-all font-bold text-xs sm:text-sm">
                   Why Choose RecXchange?
                 </Link>
               </div>
@@ -247,13 +247,13 @@ export default function FAQPage() {
 
           {/* FAQ Categories */}
           {categories.map((category, categoryIndex) => (
-            <section key={category} className="mb-16">
-              <h2 className="text-2xl font-bold text-white mb-8 flex items-center gap-3">
-                <span className="w-2 h-2 rounded-full bg-cyan-400" />
-                {category}
+            <section key={category} className="w-full mb-6 sm:mb-8 md:mb-12 lg:mb-16">
+              <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-4 sm:mb-5 md:mb-6 lg:mb-8 flex items-center gap-2 sm:gap-3">
+                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-cyan-400 flex-shrink-0" />
+                <span className="flex-1">{category}</span>
               </h2>
               
-              <div className="space-y-6">
+              <div className="space-y-4 sm:space-y-5 md:space-y-6">
                 {faqs
                   .filter(faq => faq.category === category)
                   .map((faq, index) => {
@@ -267,14 +267,14 @@ export default function FAQPage() {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ delay: index * 0.1 }}
                         viewport={{ once: true }}
-                        className="glass-card p-8 rounded-2xl border-cyan-400/10 hover:border-cyan-400/20 transition-colors"
+                        className="glass-card p-4 sm:p-5 md:p-6 lg:p-8 rounded-lg sm:rounded-xl md:rounded-2xl border-cyan-400/10 hover:border-cyan-400/20 transition-colors"
                       >
-                        <div className="flex justify-between items-start gap-4">
+                        <div className="flex justify-between items-start gap-3 sm:gap-4">
                           <div className="flex-1">
-                            <h3 className="text-lg font-bold text-white mb-3">
+                            <h3 className="text-sm sm:text-base md:text-lg font-bold text-white mb-2 sm:mb-2.5 md:mb-3">
                               {faq.question}
                             </h3>
-                            <p className="text-gray-400 text-sm leading-relaxed">
+                            <p className="text-gray-400 text-[13px] sm:text-sm leading-relaxed">
                               {faq.answer}
                             </p>
                             
@@ -283,9 +283,9 @@ export default function FAQPage() {
                                 initial={{ opacity: 0, height: 0 }}
                                 animate={{ opacity: 1, height: 'auto' }}
                                 exit={{ opacity: 0, height: 0 }}
-                                className="mt-4 pt-4 border-t border-white/5"
+                                className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-white/5"
                               >
-                                <p className="text-gray-400 text-sm leading-relaxed whitespace-pre-line">
+                                <p className="text-gray-400 text-[13px] sm:text-sm leading-relaxed whitespace-pre-line">
                                   {faq.detailedAnswer}
                                 </p>
                               </motion.div>
@@ -295,7 +295,7 @@ export default function FAQPage() {
                           {faq.detailedAnswer && (
                             <button
                               onClick={() => toggleExpand(globalIndex)}
-                              className="text-cyan-400 text-sm font-bold hover:text-cyan-300 transition-colors flex-shrink-0"
+                              className="text-cyan-400 text-[11px] sm:text-xs md:text-sm font-bold hover:text-cyan-300 transition-colors flex-shrink-0"
                             >
                               {isExpanded ? 'Show Less' : 'Show More'}
                             </button>
@@ -313,18 +313,18 @@ export default function FAQPage() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="glass-card p-12 rounded-3xl border-cyan-400/10 text-center mt-20"
+            className="w-full glass-card p-6 sm:p-8 md:p-10 lg:p-12 rounded-lg sm:rounded-xl md:rounded-2xl lg:rounded-3xl border-cyan-400/10 text-center mt-8 sm:mt-12 md:mt-16 lg:mt-20"
           >
-            <h2 className="text-3xl font-bold text-white mb-4">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2.5 sm:mb-3 md:mb-4">
               Still have questions?
             </h2>
-            <p className="text-gray-400 mb-8">
+            <p className="text-gray-400 text-[13px] sm:text-sm md:text-base mb-5 sm:mb-6 md:mb-8 px-2">
               Talk to our team, watch our tutorials, or start with a free trial.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
               <Link
                 href="/contact"
-                className="px-8 py-4 rounded-xl bg-white/10 text-white hover:bg-cyan-400/10 hover:border-cyan-400/30 border border-white/10 font-bold transition-all"
+                className="px-6 sm:px-7 md:px-8 py-3 sm:py-3.5 md:py-4 rounded-lg sm:rounded-xl bg-white/10 text-white hover:bg-cyan-400/10 hover:border-cyan-400/30 border border-white/10 font-bold text-[11px] sm:text-xs md:text-sm transition-all"
               >
                 Contact Us
               </Link>
@@ -332,13 +332,13 @@ export default function FAQPage() {
                 href="https://youtube.com/@recxchange"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-8 py-4 rounded-xl bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/20 font-bold transition-all"
+                className="px-6 sm:px-7 md:px-8 py-3 sm:py-3.5 md:py-4 rounded-lg sm:rounded-xl bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/20 font-bold text-[11px] sm:text-xs md:text-sm transition-all"
               >
                 🎥 Watch Tutorials
               </Link>
               <Link
                 href="/pricing"
-                className="px-8 py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white font-bold hover:shadow-[0_0_20px_rgba(0,255,255,0.3)] transition-all"
+                className="px-6 sm:px-7 md:px-8 py-3 sm:py-3.5 md:py-4 rounded-lg sm:rounded-xl bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white font-bold text-[11px] sm:text-xs md:text-sm hover:shadow-[0_0_20px_rgba(0,255,255,0.3)] transition-all"
               >
                 View Pricing
               </Link>
