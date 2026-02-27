@@ -337,7 +337,7 @@ export default function RecruiterDiagnostic() {
         </section>
 
         <footer className="mt-10 sm:mt-12 md:mt-16 w-full px-2">
-          <div className="glass-card py-3 sm:py-4 px-4 sm:px-10 rounded-full border-cyan-400/10 flex flex-col md:flex-row justify-between items-center gap-3 sm:gap-4 text-[8px] sm:text-[9px] text-gray-500 font-bold uppercase tracking-[0.12em] sm:tracking-[0.2em]">
+          <div className="glass-card py-1.5 sm:py-2 md:py-4 px-4 sm:px-10 rounded-full border-cyan-400/10 flex flex-col md:flex-row justify-between items-center gap-3 sm:gap-4 text-[8px] sm:text-[9px] text-gray-500 font-bold uppercase tracking-[0.12em] sm:tracking-[0.2em]">
             <span className="opacity-60 text-center md:text-left leading-tight">RecXchange Root System — Version 2026.1</span>
             <div className="flex flex-wrap justify-center gap-2.5 sm:gap-4 md:gap-6 lg:gap-8">
               <Link href="/recruiter-roles" className="hover:text-cyan-400 transition-colors whitespace-nowrap">I Need Candidates</Link>
