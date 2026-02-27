@@ -131,16 +131,14 @@ export default function Footer() {
 
         {/* Copyright Row with Design Credit */}
         <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-cyan-400/10">
-          {/* Label Above Logo */}
-          <p className="text-gray-600 text-[9px] sm:text-[10px] uppercase tracking-wider text-center mb-3">Website Designed & Developed by</p>
-          
-          {/* Main Row: Copyright | Logo | Links */}
+          {/* Main Row: Copyright | Label + Logo | Links */}
           <div className="flex flex-col lg:flex-row justify-between items-center gap-4 text-gray-600 text-[10px] sm:text-xs">
             {/* Left: Copyright */}
             <p className="order-2 lg:order-1">© {new Date().getFullYear()} RecXchange Engine. All rights reserved.</p>
             
-            {/* Center: AMIVY Designs Logo */}
-            <div className="order-1 lg:order-2">
+            {/* Center: Label + Logo */}
+            <div className="order-1 lg:order-2 flex items-center gap-3">
+              <p className="text-gray-600 text-[9px] sm:text-[10px] uppercase tracking-wider whitespace-nowrap">Website Designed & Developed by</p>
               <Link 
                 href="https://www.amivydesigns.com" 
                 target="_blank" 
