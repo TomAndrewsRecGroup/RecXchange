@@ -13,6 +13,7 @@
     "vercel-build": "next build"
   },
   "dependencies": {
+    "@sendgrid/mail": "^8.1.4",
     "@vercel/analytics": "^1.5.0",
     "clsx": "^2.1.1",
     "framer-motion": "^11.11.17",
