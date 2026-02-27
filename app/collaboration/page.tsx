@@ -1,7 +1,8 @@
 "use client";
-import React from "react";
-import { Zap, Cpu, Target } from "lucide-react";
-import { motion } from 'framer-motion';
+import React from 'react';
+import { motion, Variants } from 'framer-motion';
+import Link from 'next/link';
+import { Target, Zap, Cpu } from 'lucide-react';
 import SendRolesForm from '@/components/send-roles-form';
 
 export default function CollaborationPage() {
@@ -59,20 +60,23 @@ export default function CollaborationPage() {
 
               <div className="space-y-3 sm:space-y-4 md:space-y-5 lg:space-y-6">
                 {[
-                  { icon: <Target className="text-cyan-400" />, title: "Semantic Matching", desc: "We look beyond keywords to understand experience, career trajectory, and industry relevance." },
-                  { icon: <Zap className="text-fuchsia-400" />, title: "Instant Notifications", desc: "Get alerted the second a high-quality match enters the engine." },
-                  { icon: <Cpu className="text-white" />, title: "Continuous Scanning", desc: "The engine never sleeps, re-ranking your entire database as new roles go live." }
-                ].map((item, i) => (
-                  <div key={i} className="flex gap-2 sm:gap-3 md:gap-4 items-start">
-                    <div className="mt-0.5 sm:mt-1 flex-shrink-0">
-                      {React.cloneElement(item.icon as React.ReactElement, { size: 16, className: `sm:w-5 sm:h-5 md:w-6 md:h-6 ${(item.icon as React.ReactElement).props.className}` })}
+                  { Icon: Target, color: "text-cyan-400", title: "Semantic Matching", desc: "We look beyond keywords to understand experience, career trajectory, and industry relevance." },
+                  { Icon: Zap, color: "text-fuchsia-400", title: "Instant Notifications", desc: "Get alerted the second a high-quality match enters the engine." },
+                  { Icon: Cpu, color: "text-white", title: "Continuous Scanning", desc: "The engine never sleeps, re-ranking your entire database as new roles go live." }
+                ].map((item, i) => {
+                  const IconComponent = item.Icon;
+                  return (
+                    <div key={i} className="flex gap-2 sm:gap-3 md:gap-4 items-start">
+                      <div className="mt-0.5 sm:mt-1 flex-shrink-0">
+                        <IconComponent className={`w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 ${item.color}`} />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-bold text-white text-[13px] sm:text-sm">{item.title}</h4>
+                        <p className="text-gray-500 text-[11px] sm:text-xs">{item.desc}</p>
+                      </div>
                     </div>
-                    <div className="flex-1">
-                      <h4 className="font-bold text-white text-[13px] sm:text-sm">{item.title}</h4>
-                      <p className="text-gray-500 text-[11px] sm:text-xs">{item.desc}</p>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
 
