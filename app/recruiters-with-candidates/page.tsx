@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Database, Search, Zap, Cpu, Bell, Globe, Upload, Check } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from 'framer-motion';
-import { trackEvent } from '@u0040/lib/analytics';
+import { trackEvent } from '@/lib/analytics';
 
 type EnginePhase = 'idle' | 'uploading' | 'matching' | 'result';
 
