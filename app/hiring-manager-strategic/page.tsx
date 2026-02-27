@@ -166,7 +166,7 @@ export default function HiringManagerStrategic() {
         
         {/* Footer Context Strip */}
         <footer className="mt-20">
-          <div className="glass-card py-4 px-10 rounded-full border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-[9px] text-gray-500 font-bold uppercase tracking-widest">
+          <div className="glass-card py-3 sm:py-4 px-10 rounded-full border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-[9px] text-gray-500 font-bold uppercase tracking-widest" style={{ minHeight: 'auto' }}>
             <span className="opacity-60">Confidentiality Assured • 2026 Talent Mapping Protocol</span>
             <div className="flex gap-8">
               <Link href="/account-management" className="hover:text-purple-400 transition-colors">Managed Services</Link>
