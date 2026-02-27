@@ -55,7 +55,9 @@ export default function AccountManagement() {
           {supportSteps.map((step, index) => (
             <div key={index} className="glass-card p-4 sm:p-6 md:p-8 lg:p-10 rounded-lg sm:rounded-xl md:rounded-2xl lg:rounded-3xl hover:border-[#c71df1]/50 transition-colors group">
               <div className="mb-3 sm:mb-4 md:mb-5 lg:mb-6 group-hover:scale-110 transition-transform duration-300">
-                {React.cloneElement(step.icon as React.ReactElement, { size: 20, className: `sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 ${(step.icon as React.ReactElement).props.className}` })}
+                <div className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-8 lg:h-8">
+                  {React.cloneElement(step.icon as React.ReactElement, { className: `w-full h-full ${(step.icon as React.ReactElement).props.className}` })}
+                </div>
               </div>
               <h4 className="text-base sm:text-lg md:text-xl font-bold mb-2 sm:mb-2.5 md:mb-3">{step.title}</h4>
               <p className="text-gray-500 text-[13px] sm:text-sm leading-relaxed">
@@ -87,7 +89,9 @@ export default function AccountManagement() {
 
         {/* CTA Section */}
         <section className="w-full max-w-3xl mx-auto text-center">
-          <ShieldCheck className="mx-auto text-green-500 mb-4 sm:mb-5 md:mb-6" size={32} />
+          <div className="flex justify-center mb-4 sm:mb-5 md:mb-6">
+            <ShieldCheck className="text-green-500 w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10" />
+          </div>
           <h3 className="text-xl sm:text-2xl font-bold mb-2.5 sm:mb-3 md:mb-4">Ready to brief your Account Manager?</h3>
           <p className="text-gray-500 text-[13px] sm:text-sm md:text-base mb-5 sm:mb-6 md:mb-8 px-2">
             Experience the efficiency of the Xchange Engine backed by the expertise of a dedicated recruitment partner.
