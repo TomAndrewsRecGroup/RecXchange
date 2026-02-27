@@ -294,7 +294,7 @@ export default function RecruiterDiagnostic() {
                   Know Your Path?
                 </button>
               </div>
-              <p className="text-[10px] sm:text-xs text-gray-600 mt-5 sm:mt-6 md:mt-8">Start with Free tier. Upgrade to Lite ($99/month) or Pro ($250/month) for full access.</p>
+              <p className="text-[10px] sm:text-xs text-gray-600 mt-5 sm:mt-6 md:mt-8">Entry tier $1/month. Lite $99/month. Pro $250/month.</p>
             </div>
           </div>
         </section>
@@ -324,7 +324,7 @@ export default function RecruiterDiagnostic() {
           <div className="glass-card p-4 sm:p-5 md:p-6 lg:p-8 rounded-lg sm:rounded-xl md:rounded-2xl lg:rounded-3xl border-cyan-400/10">
             <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-white mb-2.5 sm:mb-3 md:mb-4">How much can I earn on RecXchange?</h3>
             <p className="text-gray-400 text-[13px] sm:text-sm leading-relaxed">
-              Average placement fee is <strong className="text-white">$7,000</strong>. Split 50/50 = $3,500 per placement. On RecX Direct roles, earn up to <strong className="text-white">70%</strong> = $4,900 per placement. Most active recruiters make 2-5 placements per quarter while paying $99-$250/month.
+              Average placement fee is <strong className="text-white">$7,000</strong>. Split 50/50 = $3,500 per placement. On RecX Direct roles, earn up to <strong className="text-white">70%</strong> = $4,900 per placement. Most active recruiters make 2-5 placements per quarter while paying $1-$250/month.
             </p>
           </div>
 
