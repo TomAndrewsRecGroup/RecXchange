@@ -177,7 +177,7 @@ export default function RolesMarketplace() {
               Ready to access these roles? <span className="text-purple-400 font-bold">Join RecXchange</span> and start submitting candidates today.
             </p>
             <Link
-              href="{{trigger_link.Hc9mpfL0JxjX06kwNpd1}}"
+              href="https://app.recxchange.io/register?trigger_link=jYQNc9YXcMkYPvo3HZfC"
               className="inline-flex items-center justify-center px-8 py-4 rounded-2xl border border-white/20 bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white font-black text-sm uppercase tracking-widest transition-all hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/20"
             >
               Get Started Now
@@ -457,7 +457,7 @@ export default function RolesMarketplace() {
 
               <div className="space-y-3">
                 <Link
-                  href="{{trigger_link.Hc9mpfL0JxjX06kwNpd1}}"
+                  href="https://app.recxchange.io/register?trigger_link=jYQNc9YXcMkYPvo3HZfC"
                   onClick={() => { setShowModal(false); setSelectedRole(null); }}
                   className="relative w-full py-4 rounded-2xl border border-white/15 bg-black/40 overflow-hidden group/btn font-bold text-sm uppercase tracking-widest transition-all flex items-center justify-center"
                 >
