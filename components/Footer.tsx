@@ -129,12 +129,39 @@ export default function Footer() {
           </p>
         </div>
 
-        {/* Copyright */}
-        <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-cyan-400/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-gray-600 text-[10px] sm:text-xs">
-          <p>© {new Date().getFullYear()} RecXchange Engine. All rights reserved.</p>
-          <div className="flex gap-6 sm:gap-8">
-            <Link href="https://app.recxchange.io?trigger_link=Hc9mpfL0JxjX06kwNpd1" rel="external" data-intent="platform-access" className="hover:text-cyan-400 transition-colors">Platform Login</Link>
-            <Link href="https://app.recxchange.io/register?trigger_link=jYQNc9YXcMkYPvo3HZfC" className="hover:text-fuchsia-400 transition-colors">Create Account</Link>
+        {/* Copyright and Design Credit */}
+        <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-cyan-400/10">
+          {/* Main Copyright Row */}
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-gray-600 text-[10px] sm:text-xs mb-6">
+            <p>© {new Date().getFullYear()} RecXchange Engine. All rights reserved.</p>
+            <div className="flex gap-6 sm:gap-8">
+              <Link href="https://app.recxchange.io?trigger_link=Hc9mpfL0JxjX06kwNpd1" rel="external" data-intent="platform-access" className="hover:text-cyan-400 transition-colors">Platform Login</Link>
+              <Link href="https://app.recxchange.io/register?trigger_link=jYQNc9YXcMkYPvo3HZfC" className="hover:text-fuchsia-400 transition-colors">Create Account</Link>
+            </div>
+          </div>
+
+          {/* Design Credit - AMIVY Designs */}
+          <div className="flex flex-col items-center justify-center gap-2 pt-4 border-t border-cyan-400/5">
+            <p className="text-gray-600 text-[9px] sm:text-[10px] uppercase tracking-wider">Website Designed & Developed by</p>
+            <Link 
+              href="https://www.amivydesigns.com" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="group flex items-center gap-2 hover:opacity-80 transition-opacity"
+              aria-label="Visit AMIVY Designs - Web Design & Development"
+            >
+              <Image
+                src="https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/AMIVY%20Designs.png"
+                alt="AMIVY Designs - Premium Web Design & Development Agency"
+                width={120}
+                height={30}
+                quality={90}
+                className="opacity-70 group-hover:opacity-100 transition-opacity"
+              />
+            </Link>
+            <p className="text-gray-700 text-[8px] sm:text-[9px] text-center max-w-md leading-relaxed">
+              Custom web design, development, and digital branding solutions
+            </p>
           </div>
         </div>
       </div>
