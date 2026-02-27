@@ -54,28 +54,30 @@ export default function EntryWall() {
           >
             <div className="absolute -top-24 -right-24 w-48 h-48 bg-cyan-500/10 blur-[80px] rounded-full group-hover:bg-cyan-500/20 transition-colors" />
 
-            <div>
+            <div className="w-full">
               <div className="px-3 sm:px-4 py-1 rounded-full border border-cyan-400/30 bg-cyan-400/10 text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.15em] sm:tracking-widest text-cyan-400 mb-6 sm:mb-8 md:mb-10 inline-block">
                 Recruiter Mode
               </div>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-5 md:mb-6 text-white group-hover:text-cyan-400 transition-colors">Recruiter</h2>
-              <p className="text-gray-400 text-[13px] sm:text-sm md:text-base mb-6 sm:mb-7 md:mb-8 leading-relaxed">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-5 md:mb-6 text-white group-hover:text-cyan-400 transition-colors">
+                Recruiter
+              </h2>
+              <p className="text-gray-400 text-[13px] sm:text-sm md:text-base mb-6 sm:mb-7 md:mb-8 leading-relaxed pl-0 md:pl-0">
                 You're a recruiter. Post roles to find candidates. Or share candidates to find roles. Either way,{' '}
                 <Link href="/collaboration" className="text-cyan-400 hover:underline inline-block">split fees</Link>{' '}
                 with 15,000+ recruiters.
               </p>
-              <ul className="space-y-3 sm:space-y-4 md:space-y-5 text-[11px] sm:text-xs md:text-sm text-gray-500 font-medium">
-                <li className="flex items-center gap-3 sm:gap-4">
-                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(0,255,255,0.8)] flex-shrink-0" /> 
-                  <span>Search 270M candidates when your pipeline is dry</span>
+              <ul className="space-y-3 sm:space-y-4 md:space-y-5 text-[11px] sm:text-xs md:text-sm text-gray-500 font-medium pl-0">
+                <li className="flex items-start gap-3 sm:gap-4">
+                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(0,255,255,0.8)] flex-shrink-0 mt-1.5" /> 
+                  <span className="flex-1">Search 270M candidates when your pipeline is dry</span>
                 </li>
-                <li className="flex items-center gap-3 sm:gap-4">
-                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 flex-shrink-0" /> 
-                  <span>Up to{' '}<Link href="/why-recxchange" className="text-cyan-400 hover:underline inline-block">70% split on RecX Direct</Link>{' '}roles</span>
+                <li className="flex items-start gap-3 sm:gap-4">
+                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 flex-shrink-0 mt-1.5" /> 
+                  <span className="flex-1">Up to{' '}<Link href="/why-recxchange" className="text-cyan-400 hover:underline inline-block">70% split on RecX Direct</Link>{' '}roles</span>
                 </li>
-                <li className="flex items-center gap-3 sm:gap-4">
-                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 flex-shrink-0" /> 
-                  <span><Link href="/deal-protection" className="text-cyan-400 hover:underline inline-block">Split fee contracts</Link>{' '}protect both parties</span>
+                <li className="flex items-start gap-3 sm:gap-4">
+                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 flex-shrink-0 mt-1.5" /> 
+                  <span className="flex-1"><Link href="/deal-protection" className="text-cyan-400 hover:underline inline-block">Split fee contracts</Link>{' '}protect both parties</span>
                 </li>
               </ul>
             </div>
@@ -98,28 +100,30 @@ export default function EntryWall() {
           >
             <div className="absolute -top-24 -right-24 w-48 h-48 bg-fuchsia-500/10 blur-[80px] rounded-full group-hover:bg-fuchsia-500/20 transition-colors" />
 
-            <div>
+            <div className="w-full">
               <div className="px-3 sm:px-4 py-1 rounded-full border border-fuchsia-400/30 bg-fuchsia-400/10 text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.15em] sm:tracking-widest text-fuchsia-400 mb-6 sm:mb-8 md:mb-10 inline-block">
                 Hiring Team Mode
               </div>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-5 md:mb-6 text-white group-hover:text-fuchsia-400 transition-colors">Hiring Manager</h2>
-              <p className="text-gray-400 text-[13px] sm:text-sm md:text-base mb-6 sm:mb-7 md:mb-8 leading-relaxed">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-5 md:mb-6 text-white group-hover:text-fuchsia-400 transition-colors">
+                Hiring Manager
+              </h2>
+              <p className="text-gray-400 text-[13px] sm:text-sm md:text-base mb-6 sm:mb-7 md:mb-8 leading-relaxed pl-0 md:pl-0">
                 You're hiring talent. We{' '}
                 <Link href="/hiring-manager-live" className="text-fuchsia-400 hover:underline inline-block">post your role</Link>.
                 {' '}Thousands of recruiters compete to fill it. You pay one fee.
               </p>
-              <ul className="space-y-3 sm:space-y-4 md:space-y-5 text-[11px] sm:text-xs md:text-sm text-gray-500 font-medium">
-                <li className="flex items-center gap-3 sm:gap-4">
-                  <span className="w-1.5 h-1.5 rounded-full bg-fuchsia-500 shadow-[0_0_8px_rgba(255,0,255,0.8)] flex-shrink-0" /> 
-                  <span>15,000+ recruiters see your role instantly</span>
+              <ul className="space-y-3 sm:space-y-4 md:space-y-5 text-[11px] sm:text-xs md:text-sm text-gray-500 font-medium pl-0">
+                <li className="flex items-start gap-3 sm:gap-4">
+                  <span className="w-1.5 h-1.5 rounded-full bg-fuchsia-500 shadow-[0_0_8px_rgba(255,0,255,0.8)] flex-shrink-0 mt-1.5" /> 
+                  <span className="flex-1">15,000+ recruiters see your role instantly</span>
                 </li>
-                <li className="flex items-center gap-3 sm:gap-4">
-                  <span className="w-1.5 h-1.5 rounded-full bg-fuchsia-500 flex-shrink-0" /> 
-                  <span><Link href="/account-management" className="text-fuchsia-400 hover:underline inline-block">One point of contact</Link>.{' '}No recruiter spam.</span>
+                <li className="flex items-start gap-3 sm:gap-4">
+                  <span className="w-1.5 h-1.5 rounded-full bg-fuchsia-500 flex-shrink-0 mt-1.5" /> 
+                  <span className="flex-1"><Link href="/account-management" className="text-fuchsia-400 hover:underline inline-block">One point of contact</Link>.{' '}No recruiter spam.</span>
                 </li>
-                <li className="flex items-center gap-3 sm:gap-4">
-                  <span className="w-1.5 h-1.5 rounded-full bg-fuchsia-500 flex-shrink-0" /> 
-                  <span><Link href="/hiring-manager-strategic" className="text-fuchsia-400 hover:underline inline-block">Test the market</Link>{' '}before you officially hire</span>
+                <li className="flex items-start gap-3 sm:gap-4">
+                  <span className="w-1.5 h-1.5 rounded-full bg-fuchsia-500 flex-shrink-0 mt-1.5" /> 
+                  <span className="flex-1"><Link href="/hiring-manager-strategic" className="text-fuchsia-400 hover:underline inline-block">Test the market</Link>{' '}before you officially hire</span>
                 </li>
               </ul>
             </div>
