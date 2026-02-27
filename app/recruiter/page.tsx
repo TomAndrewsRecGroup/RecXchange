@@ -278,7 +278,7 @@ export default function RecruiterDiagnostic() {
                 Ready to <span className="gradient-text">start making placements?</span>
               </h3>
               <p className="text-gray-400 text-[13px] sm:text-sm md:text-base lg:text-lg mb-6 sm:mb-8 md:mb-10 max-w-2xl mx-auto leading-relaxed px-2">
-                Join 15,000+ recruiters already using RecXchange. Average member makes 2-5 placements per quarter at $3,500-$4,900 per placement.
+                Join 15,000+ recruiters already using RecXchange. Average Recruiter makes 2-5 placements per quarter and will average $7,000 per placement.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-stretch sm:items-center max-w-xl mx-auto">
                 <Link
@@ -294,7 +294,7 @@ export default function RecruiterDiagnostic() {
                   Know Your Path?
                 </button>
               </div>
-              <p className="text-[10px] sm:text-xs text-gray-600 mt-5 sm:mt-6 md:mt-8">Free to start. 150 tokens/month on Lite ($99). 400 tokens/month on Pro ($250).</p>
+              <p className="text-[10px] sm:text-xs text-gray-600 mt-5 sm:mt-6 md:mt-8">Start with Free tier. Upgrade to Lite ($99/month) or Pro ($250/month) for full access.</p>
             </div>
           </div>
         </section>
