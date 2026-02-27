@@ -1,0 +1,9 @@
+# RecXchange
+
+This is the informational website for RecXchange. The recruitment platform itself is located at app.recxchange.io.
+
+## Purpose
+
+RecXchange allows users to earn $3k-$11k per hire.
+
+Note: The platform requires authentication; this site provides marketing and guides only.
