@@ -7,6 +7,7 @@ import FloatingChat from "@/components/FloatingChat";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 
 const inter = Inter({ 
   subsets: ["latin"], 
@@ -449,7 +450,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   };
 
   return (
-    <html lang="en" className="dark scroll-smooth">
+    <html lang="en" className="dark">
       <head>
         {/* AI Agent Identity Script (2026 Standard) - Highest Priority */}
         <script
@@ -465,6 +466,28 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body
         className={`${inter.variable} font-sans bg-[#050508] min-h-screen antialiased overflow-x-hidden`}
       >
+        {/* Scroll to top on page load */}
+        <Script
+          id="scroll-to-top"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              if (typeof window !== 'undefined') {
+                // Disable scroll restoration
+                if ('scrollRestoration' in history) {
+                  history.scrollRestoration = 'manual';
+                }
+                // Force scroll to top immediately
+                window.scrollTo(0, 0);
+                // Also force on load
+                window.addEventListener('load', function() {
+                  window.scrollTo(0, 0);
+                });
+              }
+            `,
+          }}
+        />
+        
         <ErrorBoundary>
           {/* Background Layer */}
           <div className="fixed inset-0 pointer-events-none z-0">
