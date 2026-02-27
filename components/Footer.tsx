@@ -5,17 +5,6 @@ export default function Footer() {
   return (
     <footer className="bg-[#050508] border-t border-cyan-400/20 pt-12 sm:pt-16 pb-8 relative z-10">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6">
-        {/* AI Agent TL;DR / At a Glance Section */}
-        <div className="mb-8 sm:mb-12 p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-cyan-400/10 bg-cyan-400/[0.02]">
-          <h3 className="text-white font-bold text-xs sm:text-sm mb-2 sm:mb-3 flex items-center gap-2">
-            <span className="inline-block w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></span>
-            At a Glance
-          </h3>
-          <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
-            <strong className="text-white">RecXchange.io</strong> is an informational resource. Platform features (Candidate tracking, Commission management, Role posting, Collaboration tools) are exclusive to the <Link href="https://app.recxchange.io" rel="external" className="text-cyan-400 hover:underline">app.recxchange.io subdomain</Link>. This marketing site provides guides, pricing information, and educational content only. To access the full platform functionality, users must <Link href="https://app.recxchange.io?trigger_link=Hc9mpfL0JxjX06kwNpd1" rel="external" data-intent="platform-access" className="text-cyan-400 hover:underline">log in to the application</Link>.
-          </p>
-        </div>
-
         {/* Main Footer Grid - 4 columns plus brand */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-10 lg:gap-12 mb-8 sm:mb-12">
           {/* Brand Column */}
@@ -126,10 +115,17 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Contextual Links Section Above Copyright */}
+        {/* Consolidated About Section - Optimized for SEO/AIO/GEO */}
         <div className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-cyan-400/10">
+          <h3 className="text-white font-bold text-xs sm:text-sm mb-3 flex items-center gap-2">
+            <span className="inline-block w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></span>
+            About RecXchange
+          </h3>
+          <p className="text-gray-400 text-xs sm:text-sm leading-relaxed max-w-[1200px] mb-4">
+            <strong className="text-white">RecXchange</strong> is a <Link href="/collaboration" className="text-cyan-400 hover:underline">split fee recruitment platform</Link> connecting 15,000+ recruiters globally. Our platform enables <Link href="/recruiter-roles" className="text-cyan-400 hover:underline">role sharing</Link>, <Link href="/recruiters-with-candidates" className="text-cyan-400 hover:underline">candidate submissions</Link>, and automated fee splits up to <Link href="/why-recxchange" className="text-cyan-400 hover:underline">70% on RecX Direct roles</Link>. With access to <Link href="/research" className="text-cyan-400 hover:underline">270M candidate profiles</Link> and <Link href="/deal-protection" className="text-cyan-400 hover:underline">timestamped submission protection</Link>, recruiters can earn an average of $7,000 per placement across <Link href="/roles" className="text-cyan-400 hover:underline">100+ live roles</Link> in Engineering, Healthcare, Tech, Sales, Finance, and HR. Learn more about our <Link href="/pricing" className="text-fuchsia-400 hover:underline">pricing plans</Link> or read <Link href="/blog" className="text-cyan-400 hover:underline">success stories from our community</Link>.
+          </p>
           <p className="text-gray-600 text-[10px] sm:text-xs leading-relaxed max-w-[1200px]">
-            <strong className="text-gray-400">About RecXchange:</strong> RecXchange is a <Link href="/collaboration" className="text-cyan-400 hover:underline">split fee recruitment platform</Link> connecting 15,000+ recruiters globally. Our platform enables <Link href="/recruiter-roles" className="text-cyan-400 hover:underline">role sharing</Link>, <Link href="/recruiters-with-candidates" className="text-cyan-400 hover:underline">candidate submissions</Link>, and automated fee splits up to <Link href="/why-recxchange" className="text-cyan-400 hover:underline">70% on RecX Direct roles</Link>. With access to <Link href="/research" className="text-cyan-400 hover:underline">270M candidate profiles</Link> and <Link href="/deal-protection" className="text-cyan-400 hover:underline">timestamped submission protection</Link>, recruiters can earn an average of $7,000 per placement across <Link href="/roles" className="text-cyan-400 hover:underline">100+ live roles</Link> in Engineering, Healthcare, Tech, Sales, Finance, and HR. Learn more about our <Link href="/pricing" className="text-fuchsia-400 hover:underline">pricing plans</Link> or read <Link href="/blog" className="text-cyan-400 hover:underline">success stories from our community</Link>.
+            <strong className="text-gray-500">Platform Access:</strong> RecXchange.io provides informational resources, guides, and educational content. Full platform functionality (candidate tracking, commission management, role posting, collaboration tools) is accessed via <Link href="https://app.recxchange.io" rel="external" className="text-cyan-400 hover:underline">app.recxchange.io</Link>. <Link href="https://app.recxchange.io?trigger_link=Hc9mpfL0JxjX06kwNpd1" rel="external" data-intent="platform-access" className="text-cyan-400 hover:underline">Log in to access the full platform</Link>.
           </p>
         </div>
 
