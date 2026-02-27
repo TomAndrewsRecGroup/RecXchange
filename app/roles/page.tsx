@@ -4,6 +4,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { X } from 'lucide-react';
+import SendRolesForm from '@/components/send-roles-form';
 
 interface Role {
   id: string;
@@ -457,7 +458,7 @@ export default function RolesMarketplace() {
 
               <div className="space-y-3">
                 <Link
-                  href="https://app.recxchange.io/register?trigger_link=jYQNc9YXcMkYPvo3HZfC"
+                  href="https://app.recxchange.io?trigger_link=Hc9mpfL0JxjX06kwNpd1"
                   onClick={() => { setShowModal(false); setSelectedRole(null); }}
                   className="relative w-full py-4 rounded-2xl border border-white/15 bg-black/40 overflow-hidden group/btn font-bold text-sm uppercase tracking-widest transition-all flex items-center justify-center"
                 >
@@ -465,6 +466,10 @@ export default function RolesMarketplace() {
                   <span className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-fuchsia-500 opacity-0 group-hover/btn:opacity-100 transition-opacity" />
                   <span className="relative z-10 text-white">Work This Role</span>
                 </Link>
+
+                <div className="flex justify-center">
+                  <SendRolesForm />
+                </div>
                 
                 <p className="text-xs text-gray-600 text-center">Sign up to submit candidates and access full role details</p>
               </div>
