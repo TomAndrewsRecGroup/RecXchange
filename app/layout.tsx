@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 import FloatingChat from "@/components/FloatingChat";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Analytics } from "@vercel/analytics/next";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 
 const inter = Inter({ 
   subsets: ["latin"], 
@@ -14,6 +14,13 @@ const inter = Inter({
   variable: '--font-inter',
   display: 'swap',
 });
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+}
 
 export const metadata: Metadata = {
   title: "RecXchange | Share Roles. Split Fees. Fill Roles. Get Paid.",
@@ -447,7 +454,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <Header />
 
           <div className="relative z-10 flex flex-col min-h-screen w-full">
-            <main className="flex-grow w-full pt-24">
+            <main className="flex-grow w-full pt-16 sm:pt-24">
               {children}
             </main>
             <Footer />
