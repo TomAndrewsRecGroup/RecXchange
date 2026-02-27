@@ -2,7 +2,8 @@
 import React, { useState } from 'react';
 import { motion, Variants } from 'framer-motion';
 import Link from 'next/link';
-import { X, Zap, Users, Clock, Shield, Target, TrendingUp } from 'lucide-react';
+import { Zap, Users, Clock, Shield, Target } from 'lucide-react';
+import ModalWrapper from '@/components/ModalWrapper';
 
 export default function HiringManagerHome() {
   const [howItWorksFormOpen, setHowItWorksFormOpen] = useState(false);
@@ -62,6 +63,12 @@ export default function HiringManagerHome() {
     }
   };
 
+  const handleCloseModal = () => {
+    if (!howItWorksSubmitting) {
+      setHowItWorksFormOpen(false);
+    }
+  };
+
   // Scroll to top function
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -101,7 +108,7 @@ export default function HiringManagerHome() {
         <div className="w-full mb-10 sm:mb-16 flex flex-wrap justify-center gap-3 sm:gap-4">
           <button
             onClick={() => setHowItWorksFormOpen(true)}
-            className="px-5 sm:px-6 py-2.5 sm:py-3 rounded-xl border border-fuchsia-400/30 bg-fuchsia-400/5 text-fuchsia-400 text-[10px] sm:text-xs font-bold uppercase tracking-[0.15em] hover:bg-fuchsia-400/10 transition-all"
+            className="px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl border border-fuchsia-400/30 bg-fuchsia-400/5 text-fuchsia-400 text-xs font-bold uppercase tracking-widest hover:bg-fuchsia-400/10 transition-all"
           >
             How Does It Work?
           </button>
@@ -365,100 +372,90 @@ export default function HiringManagerHome() {
       </div>
 
       {/* How Does It Work Modal */}
-      {howItWorksFormOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-sm" onClick={() => setHowItWorksFormOpen(false)}>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="glass-card w-full max-w-lg p-6 sm:p-10 rounded-2xl sm:rounded-[2.5rem] border-fuchsia-400/20 relative max-h-[90vh] overflow-y-auto"
-            onClick={(e) => e.stopPropagation()}
-          >
+      <ModalWrapper
+        isOpen={howItWorksFormOpen}
+        onClose={handleCloseModal}
+        title="How Does It Work?"
+        subtitle="We'll send you a short video explainer showing exactly how RecX Direct works and how it helps you hire faster with one simple fee."
+        maxWidth="lg"
+        preventClose={howItWorksSubmitting}
+      >
+        {howItWorksSuccess ? (
+          <div className="py-12 sm:py-16 md:py-20 text-center">
+            <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-green-500/10 border border-green-400/20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+              <svg className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <h3 className="text-lg sm:text-xl font-bold text-white mb-2">Video on its way!</h3>
+            <p className="text-gray-400 text-xs sm:text-sm">Check your email for the explainer.</p>
+          </div>
+        ) : (
+          <form onSubmit={handleHowItWorksSubmit} className="space-y-4 sm:space-y-6">
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Your Name *</label>
+              <input
+                type="text"
+                value={howItWorksName}
+                onChange={(e) => setHowItWorksName(e.target.value)}
+                required
+                disabled={howItWorksSubmitting}
+                className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 text-sm text-white outline-none focus:border-fuchsia-400/50 transition-all disabled:opacity-50"
+                placeholder="John Smith"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Email Address *</label>
+              <input
+                type="email"
+                value={howItWorksEmail}
+                onChange={(e) => setHowItWorksEmail(e.target.value)}
+                required
+                disabled={howItWorksSubmitting}
+                className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 text-sm text-white outline-none focus:border-fuchsia-400/50 transition-all disabled:opacity-50"
+                placeholder="john@company.com"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Phone Number</label>
+              <input
+                type="tel"
+                value={howItWorksPhone}
+                onChange={(e) => setHowItWorksPhone(e.target.value)}
+                disabled={howItWorksSubmitting}
+                className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 text-sm text-white outline-none focus:border-fuchsia-400/50 transition-all disabled:opacity-50"
+                placeholder="+44 20 1234 5678"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Company</label>
+              <input
+                type="text"
+                value={howItWorksCompany}
+                onChange={(e) => setHowItWorksCompany(e.target.value)}
+                disabled={howItWorksSubmitting}
+                className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 text-sm text-white outline-none focus:border-fuchsia-400/50 transition-all disabled:opacity-50"
+                placeholder="Acme Corp"
+              />
+            </div>
+
             <button
-              onClick={() => setHowItWorksFormOpen(false)}
-              className="absolute top-4 right-4 sm:top-6 sm:right-6 text-gray-500 hover:text-white transition-colors"
+              type="submit"
+              disabled={howItWorksSubmitting}
+              className="relative w-full py-3 sm:py-4 rounded-xl sm:rounded-2xl border border-white/15 bg-black/40 overflow-hidden group/btn font-bold text-xs sm:text-sm uppercase tracking-widest transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <X size={20} className="sm:w-6 sm:h-6" />
+              <span className="absolute inset-[1px] rounded-xl sm:rounded-2xl bg-black/80 group-hover/btn:bg-transparent transition-colors" />
+              <span className="absolute inset-0 bg-gradient-to-r from-fuchsia-500 to-cyan-500 opacity-0 group-hover/btn:opacity-100 transition-opacity" />
+              <span className="relative z-10 text-white flex items-center justify-center">
+                {howItWorksSubmitting ? 'Sending...' : 'Send Video Explainer'}
+              </span>
             </button>
-
-            <h2 className="text-2xl sm:text-3xl font-bold gradient-text mb-3 sm:mb-4">How Does It Work?</h2>
-            <p className="text-gray-400 text-sm mb-6 sm:mb-8">
-              We'll send you a short video explainer showing exactly how RecX Direct works and how it helps you hire faster with one simple fee.
-            </p>
-
-            {howItWorksSuccess ? (
-              <div className="py-16 sm:py-20 text-center">
-                <div className="w-14 h-14 sm:w-16 sm:h-16 bg-green-500/10 border border-green-400/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-7 h-7 sm:w-8 sm:h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <h3 className="text-lg sm:text-xl font-bold text-white mb-2">Video on its way!</h3>
-                <p className="text-gray-400 text-sm">Check your email for the explainer.</p>
-              </div>
-            ) : (
-              <form onSubmit={handleHowItWorksSubmit} className="space-y-5 sm:space-y-6">
-                <div>
-                  <label className="block text-[10px] sm:text-xs font-bold uppercase tracking-[0.12em] text-gray-400 mb-2">Your Name *</label>
-                  <input
-                    type="text"
-                    value={howItWorksName}
-                    onChange={(e) => setHowItWorksName(e.target.value)}
-                    required
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-2.5 sm:py-3 text-white text-sm outline-none focus:border-fuchsia-400/50 transition-all"
-                    placeholder="John Smith"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-[10px] sm:text-xs font-bold uppercase tracking-[0.12em] text-gray-400 mb-2">Email Address *</label>
-                  <input
-                    type="email"
-                    value={howItWorksEmail}
-                    onChange={(e) => setHowItWorksEmail(e.target.value)}
-                    required
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-2.5 sm:py-3 text-white text-sm outline-none focus:border-fuchsia-400/50 transition-all"
-                    placeholder="john@company.com"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-[10px] sm:text-xs font-bold uppercase tracking-[0.12em] text-gray-400 mb-2">Phone Number</label>
-                  <input
-                    type="tel"
-                    value={howItWorksPhone}
-                    onChange={(e) => setHowItWorksPhone(e.target.value)}
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-2.5 sm:py-3 text-white text-sm outline-none focus:border-fuchsia-400/50 transition-all"
-                    placeholder="+44 20 1234 5678"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-[10px] sm:text-xs font-bold uppercase tracking-[0.12em] text-gray-400 mb-2">Company</label>
-                  <input
-                    type="text"
-                    value={howItWorksCompany}
-                    onChange={(e) => setHowItWorksCompany(e.target.value)}
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-2.5 sm:py-3 text-white text-sm outline-none focus:border-fuchsia-400/50 transition-all"
-                    placeholder="Acme Corp"
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={howItWorksSubmitting}
-                  className="relative w-full py-3.5 sm:py-4 rounded-xl sm:rounded-2xl border border-white/15 bg-black/40 overflow-hidden group/btn font-bold text-xs sm:text-sm uppercase tracking-[0.12em] sm:tracking-widest transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  <span className="absolute inset-[1px] rounded-xl sm:rounded-2xl bg-black/80 group-hover/btn:bg-transparent transition-colors" />
-                  <span className="absolute inset-0 bg-gradient-to-r from-fuchsia-500 to-cyan-500 opacity-0 group-hover/btn:opacity-100 transition-opacity" />
-                  <span className="relative z-10 text-white flex items-center justify-center">
-                    {howItWorksSubmitting ? 'Sending...' : 'Send Video Explainer'}
-                  </span>
-                </button>
-              </form>
-            )}
-          </motion.div>
-        </div>
-      )}
+          </form>
+        )}
+      </ModalWrapper>
     </main>
   );
 }
