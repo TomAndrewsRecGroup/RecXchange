@@ -111,11 +111,12 @@ export default function EntryWall() {
         </div>
 
         {/* Bottom Root Hint */}
-        <motion.div
+        <motion.footer
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8 }}
           className="mt-12 sm:mt-16 md:mt-20 glass-card py-3 sm:py-4 px-4 sm:px-8 md:px-10 rounded-full inline-flex flex-wrap justify-center gap-3 sm:gap-6 md:gap-8 items-center text-[8px] sm:text-[9px] text-gray-500 font-bold uppercase tracking-[0.12em] sm:tracking-[0.2em]"
+          style={{ minHeight: 'auto' }}
         >
           <span className="opacity-60">Global Talent Infrastructure</span>
           <div className="h-4 w-[1px] bg-cyan-400/20 hidden md:block" />
@@ -124,7 +125,7 @@ export default function EntryWall() {
           <Link href="/deal-protection" className="hover:text-cyan-400 transition-colors whitespace-nowrap">How Protection Works</Link>
           <Link href="/blog" className="hover:text-cyan-400 transition-colors whitespace-nowrap hidden sm:inline">Latest Updates</Link>
           <Link href="/faq" className="hover:text-cyan-400 transition-colors whitespace-nowrap hidden sm:inline">Common Questions</Link>
-        </motion.div>
+        </motion.footer>
 
         {/* Additional Contextual Links Section */}
         <motion.div
