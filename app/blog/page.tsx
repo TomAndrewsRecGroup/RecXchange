@@ -123,7 +123,6 @@ export default function BlogPage() {
       }
     } catch (err) {
       console.error('Failed to fetch posts:', err);
-      // Fallback to mock data on error
       setPosts(mockPosts);
     } finally {
       setLoading(false);
@@ -161,22 +160,22 @@ export default function BlogPage() {
     : posts.filter(post => post.category?.toLowerCase() === selectedCategory.toLowerCase());
 
   return (
-    <main className="min-h-screen py-20 px-6">
+    <main className="min-h-screen py-12 sm:py-16 md:py-20 px-4 sm:px-6">
       <div className="max-w-[1200px] mx-auto">
         {/* Header */}
         <motion.header
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-16"
+          className="text-center mb-8 sm:mb-12 md:mb-16"
         >
-          <span className="block text-[10px] uppercase tracking-[0.4em] text-cyan-400/60 mb-6 font-bold">
+          <span className="block text-[9px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] md:tracking-[0.4em] text-cyan-400/60 mb-3 sm:mb-4 md:mb-6 font-bold">
             Social Updates
           </span>
-          <h1 className="text-5xl md:text-6xl font-bold gradient-text mb-6 tracking-tight leading-tight pb-2">
+          <h1 className="text-[28px] sm:text-4xl md:text-5xl lg:text-6xl font-bold gradient-text mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2">
             RecXchange Social Feed
           </h1>
-          <div className="pulse-underline mb-8 mx-auto" />
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed mb-8">
+          <div className="pulse-underline mb-4 sm:mb-6 md:mb-8 mx-auto" />
+          <p className="text-gray-400 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-6 sm:mb-8 px-2">
             Latest updates, insights, and stories from our social media channels.
           </p>
           
@@ -191,94 +190,71 @@ export default function BlogPage() {
               href="https://www.linkedin.com/build-relation/newsletter-follow?entityUrn=7330859663111901185"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#0077B5]/10 border border-[#0077B5]/30 text-[#0077B5] hover:bg-[#0077B5]/20 transition-all font-bold text-sm"
+              className="inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg sm:rounded-xl bg-[#0077B5]/10 border border-[#0077B5]/30 text-[#0077B5] hover:bg-[#0077B5]/20 transition-all font-bold text-xs sm:text-sm"
             >
-              <span className="text-xl">📧</span>
-              Subscribe to Our LinkedIn Newsletter
+              <span className="text-lg sm:text-xl">📧</span>
+              <span className="hidden sm:inline">Subscribe to Our LinkedIn Newsletter</span>
+              <span className="sm:hidden">LinkedIn Newsletter</span>
             </Link>
           </motion.div>
         </motion.header>
 
         {/* Category Filter */}
-        <div className="flex gap-3 mb-12 justify-center flex-wrap">
+        <div className="flex gap-2 sm:gap-3 mb-8 sm:mb-10 md:mb-12 justify-center flex-wrap px-2">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
-              className={`px-6 py-2 rounded-xl border text-xs font-bold uppercase tracking-widest transition-all ${
+              className={`px-3 sm:px-4 md:px-6 py-1.5 sm:py-2 rounded-lg sm:rounded-xl border text-[9px] sm:text-xs font-bold uppercase tracking-[0.12em] sm:tracking-[0.15em] md:tracking-widest transition-all ${
                 selectedCategory === cat
                   ? 'border-cyan-400/40 bg-cyan-400/10 text-cyan-400'
                   : 'border-white/5 bg-white/[0.02] text-gray-500 hover:text-gray-300'
               }`}
             >
-              {cat}
+              <span className="hidden md:inline">{cat}</span>
+              <span className="md:hidden">{cat.split(' ')[0]}</span>
             </button>
           ))}
         </div>
 
         {/* Loading State */}
         {loading && (
-          <div className="text-center py-20">
-            <div className="inline-block w-8 h-8 border-4 border-cyan-400/20 border-t-cyan-400 rounded-full animate-spin"></div>
-            <p className="text-gray-400 mt-4">Loading posts...</p>
+          <div className="text-center py-16 sm:py-20">
+            <div className="inline-block w-7 h-7 sm:w-8 sm:h-8 border-4 border-cyan-400/20 border-t-cyan-400 rounded-full animate-spin"></div>
+            <p className="text-gray-400 mt-4 text-sm sm:text-base">Loading posts...</p>
           </div>
         )}
 
         {/* Posts Grid */}
         {!loading && filteredPosts.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 mb-12 sm:mb-16">
             {filteredPosts.map((post, index) => (
               <motion.article
                 key={post.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="glass-card p-8 rounded-2xl border-cyan-400/10 hover:border-cyan-400/20 transition-all group"
+                className="glass-card p-5 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl border-cyan-400/10 hover:border-cyan-400/20 transition-all group"
               >
-                {/* Category Badge */}
+                <div className="flex justify-between items-start mb-3 sm:mb-4">
+                  <span className="text-xl sm:text-2xl">{getPlatformIcon(post.platform)}</span>
+                  <span className="text-[9px] sm:text-[10px] text-gray-500 font-bold uppercase tracking-widest">{formatDate(post.publishedAt)}</span>
+                </div>
+                
                 {post.category && (
-                  <div className="inline-block px-3 py-1 rounded-full bg-cyan-400/10 border border-cyan-400/20 text-cyan-400 text-[9px] font-bold uppercase tracking-widest mb-4">
+                  <span className="inline-block px-2 sm:px-3 py-1 rounded-lg bg-cyan-400/10 text-cyan-400 text-[8px] sm:text-[9px] font-bold uppercase tracking-widest mb-3 sm:mb-4">
                     {post.category}
-                  </div>
-                )}
-
-                {/* Featured Image */}
-                {post.mediaUrl && (
-                  <div className="mb-4 rounded-xl overflow-hidden">
-                    <img
-                      src={post.mediaUrl}
-                      alt="Post media"
-                      className="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300"
-                      onError={(e) => {
-                        // Hide image if it fails to load
-                        e.currentTarget.style.display = 'none';
-                      }}
-                    />
-                  </div>
+                  </span>
                 )}
                 
-                {/* Post Content */}
-                <p className="text-gray-300 text-sm mb-4 leading-relaxed whitespace-pre-line">
+                <p className="text-xs sm:text-sm text-gray-300 leading-relaxed whitespace-pre-line mb-4 sm:mb-6 group-hover:text-gray-200 transition-colors">
                   {post.content}
                 </p>
-
-                {/* Footer */}
-                <div className="flex items-center justify-between text-xs text-gray-500 pt-4 border-t border-white/5">
-                  <span className="flex items-center gap-1">
-                    <span>{getPlatformIcon(post.platform)}</span>
-                    <span>{post.platform || 'LinkedIn'}</span>
-                  </span>
-                  <span>{formatDate(post.publishedAt)}</span>
-                </div>
-
-                {/* Tags */}
+                
                 {post.tags && post.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-1 mt-3">
-                    {post.tags.slice(0, 3).map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-2 py-1 rounded-full bg-white/5 text-gray-500 text-[10px]"
-                      >
+                  <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                    {post.tags.map((tag, i) => (
+                      <span key={i} className="text-[8px] sm:text-[9px] text-gray-600 font-medium px-2 py-0.5 rounded bg-white/[0.02] border border-white/5">
                         #{tag}
                       </span>
                     ))}
@@ -289,80 +265,11 @@ export default function BlogPage() {
           </div>
         )}
 
-        {/* Empty State */}
         {!loading && filteredPosts.length === 0 && (
-          <div className="glass-card p-10 rounded-3xl border-cyan-400/10 text-center">
-            <h2 className="text-2xl font-bold text-white mb-4">No Posts Found</h2>
-            <p className="text-gray-400 mb-6 leading-relaxed max-w-2xl mx-auto">
-              {selectedCategory === 'All Posts'
-                ? 'No social posts available yet. Check back soon!'
-                : `No posts in the "${selectedCategory}" category yet.`}
-            </p>
-            <button
-              onClick={() => setSelectedCategory('All Posts')}
-              className="px-6 py-3 rounded-xl bg-cyan-400/10 border border-cyan-400/20 text-cyan-400 hover:bg-cyan-400/20 transition-all font-bold text-sm"
-            >
-              View All Posts
-            </button>
+          <div className="text-center py-16 sm:py-20">
+            <p className="text-gray-500 text-sm sm:text-base">No posts found in this category.</p>
           </div>
         )}
-
-        {/* Newsletter CTA Section */}
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="glass-card p-10 rounded-3xl border-cyan-400/10 text-center mt-16 mb-8"
-        >
-          <h2 className="text-2xl font-bold text-white mb-4">📧 Get Weekly Insights Delivered</h2>
-          <p className="text-gray-400 mb-6 leading-relaxed max-w-2xl mx-auto">
-            Subscribe to our LinkedIn Newsletter for exclusive recruitment insights, platform updates, and success stories every week.
-          </p>
-          <Link
-            href="https://www.linkedin.com/build-relation/newsletter-follow?entityUrn=7330859663111901185"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-[#0077B5]/10 border border-[#0077B5]/30 text-[#0077B5] hover:bg-[#0077B5]/20 transition-all font-bold"
-          >
-            <span className="text-2xl">💼</span>
-            Subscribe on LinkedIn
-          </Link>
-        </motion.section>
-
-        {/* Additional CTAs */}
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="glass-card p-10 rounded-3xl border-cyan-400/10 text-center"
-        >
-          <h2 className="text-2xl font-bold text-white mb-4">Ready to Start Earning?</h2>
-          <p className="text-gray-400 mb-6 leading-relaxed max-w-2xl mx-auto">
-            Join 15,000+ recruiters partnering on placements. Split fees up to 70% with zero platform fees.
-          </p>
-          <div className="flex gap-4 justify-center flex-wrap">
-            <Link
-              href="/pricing"
-              className="px-8 py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white font-bold hover:shadow-[0_0_20px_rgba(0,255,255,0.3)] transition-all text-sm"
-            >
-              View Pricing
-            </Link>
-            <Link
-              href="/faq"
-              className="px-8 py-4 rounded-xl bg-white/10 text-white hover:bg-cyan-400/10 hover:border-cyan-400/30 border border-white/10 font-bold transition-all text-sm"
-            >
-              Learn More
-            </Link>
-            <Link
-              href="https://youtube.com/@recxchange"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-8 py-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 hover:bg-red-500/20 transition-all font-bold text-sm"
-            >
-              🎥 Watch Tutorials
-            </Link>
-          </div>
-        </motion.section>
       </div>
     </main>
   );
