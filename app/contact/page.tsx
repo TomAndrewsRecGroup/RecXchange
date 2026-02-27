@@ -135,84 +135,84 @@ export default function ContactPage() {
   const formatTime = (d: Date) => d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
   return (
-    <main className="min-h-screen pt-32 pb-20 px-6 relative text-white" style={{
+    <main className="relative min-h-screen flex flex-col items-center pt-16 sm:pt-20 md:pt-28 pb-12 sm:pb-16 md:pb-20 px-4 sm:px-6 text-white" style={{
       backgroundColor: '#050508',
       backgroundImage: 'radial-gradient(at 0% 0%, rgba(0, 255, 255, 0.15) 0px, transparent 50%), radial-gradient(at 100% 100%, rgba(255, 0, 255, 0.15) 0px, transparent 50%)',
       backgroundAttachment: 'fixed'
     }}>
-      <div className="max-w-7xl mx-auto">
+      <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-center">
         
         {/* Header Section */}
-        <div className="text-center mb-16">
-          <h3 className="text-[10px] uppercase tracking-[0.4em] font-bold text-purple-400 mb-6">Get In Touch</h3>
-          <h1 className="text-5xl md:text-6xl font-bold gradient-text mb-6 tracking-tight leading-tight pb-2">
+        <div className="text-center mb-6 sm:mb-8 md:mb-12 lg:mb-16 w-full">
+          <h3 className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] md:tracking-[0.4em] font-bold text-purple-400 mb-3 sm:mb-4 md:mb-6">Get In Touch</h3>
+          <h1 className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-bold gradient-text mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2">
             Connect with the <br />
             Engineers of Talent.
           </h1>
-          <div className="pulse-underline mb-8 mx-auto" />
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed">
+          <div className="pulse-underline mb-4 sm:mb-6 md:mb-8 mx-auto" />
+          <p className="text-gray-400 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed px-2">
             Whether you are scaling a team in California or sourcing from London, our team provides the human oversight for our AI-driven Xchange.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
+        <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-12 items-start w-full">
 
           {/* Left: Contact Info & Trust */}
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-5 md:space-y-6">
             
             {/* Email Card */}
-            <div className="glass-card p-8 rounded-[2.5rem] border-purple-400/10 bg-gradient-to-r from-purple-400/[0.03] to-transparent">
-              <div className="flex gap-6 items-start">
-                <div className="w-14 h-14 rounded-2xl bg-purple-500/10 flex items-center justify-center text-purple-400 border border-purple-400/20 shadow-inner flex-shrink-0">
-                  <Mail />
+            <div className="glass-card p-4 sm:p-5 md:p-6 lg:p-8 rounded-xl sm:rounded-2xl md:rounded-[2rem] lg:rounded-[2.5rem] border-purple-400/10 bg-gradient-to-r from-purple-400/[0.03] to-transparent">
+              <div className="flex gap-4 sm:gap-5 md:gap-6 items-start">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-xl sm:rounded-2xl bg-purple-500/10 flex items-center justify-center text-purple-400 border border-purple-400/20 shadow-inner flex-shrink-0">
+                  <Mail className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
-                <div>
-                  <p className="text-[10px] text-gray-500 font-black uppercase tracking-widest mb-2">Direct Liaison</p>
-                  <a href="mailto:support@recxchange.io" className="text-xl font-medium text-white hover:text-purple-400 transition-colors">
+                <div className="flex-1">
+                  <p className="text-[9px] sm:text-[10px] text-gray-500 font-black uppercase tracking-widest mb-1 sm:mb-2">Direct Liaison</p>
+                  <a href="mailto:support@recxchange.io" className="text-base sm:text-lg md:text-xl font-medium text-white hover:text-purple-400 transition-colors break-all">
                     support@recxchange.io
                   </a>
-                  <p className="text-sm text-gray-400 mt-2">We typically respond within 2-4 hours during business hours.</p>
+                  <p className="text-xs sm:text-sm text-gray-400 mt-1 sm:mt-2">We typically respond within 2-4 hours during business hours.</p>
                 </div>
               </div>
             </div>
 
             {/* Why Choose Us */}
-            <div className="glass-card p-8 rounded-[2.5rem] border-cyan-400/10">
-              <h3 className="text-xl font-bold mb-6 flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-cyan-500/10 flex items-center justify-center text-cyan-400 border border-cyan-400/20">
-                  <MessageCircle size={20} />
+            <div className="glass-card p-4 sm:p-5 md:p-6 lg:p-8 rounded-xl sm:rounded-2xl md:rounded-[2rem] lg:rounded-[2.5rem] border-cyan-400/10">
+              <h3 className="text-base sm:text-lg md:text-xl font-bold mb-3 sm:mb-4 md:mb-5 lg:mb-6 flex items-center gap-2 sm:gap-3">
+                <div className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-lg sm:rounded-xl bg-cyan-500/10 flex items-center justify-center text-cyan-400 border border-cyan-400/20 flex-shrink-0">
+                  <MessageCircle size={16} className="sm:w-5 sm:h-5" />
                 </div>
-                Why Connect With Us?
+                <span className="flex-1">Why Connect With Us?</span>
               </h3>
-              <ul className="space-y-4">
-                <li className="flex items-start gap-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 mt-2 flex-shrink-0" />
-                  <span className="text-sm text-gray-300"><strong className="text-white">Recruiters:</strong> Access RecX Direct roles, collaborate on shared positions, and earn protected split fees</span>
+              <ul className="space-y-3 sm:space-y-4">
+                <li className="flex items-start gap-2 sm:gap-3">
+                  <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-cyan-400 mt-1.5 sm:mt-2 flex-shrink-0" />
+                  <span className="text-[13px] sm:text-sm text-gray-300 flex-1"><strong className="text-white">Recruiters:</strong> Access RecX Direct roles, collaborate on shared positions, and earn protected split fees</span>
                 </li>
-                <li className="flex items-start gap-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-fuchsia-400 mt-2 flex-shrink-0" />
-                  <span className="text-sm text-gray-300"><strong className="text-white">Hiring Managers:</strong> Broadcast roles to 15,000+ specialist recruiters with zero admin overhead</span>
+                <li className="flex items-start gap-2 sm:gap-3">
+                  <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-fuchsia-400 mt-1.5 sm:mt-2 flex-shrink-0" />
+                  <span className="text-[13px] sm:text-sm text-gray-300 flex-1"><strong className="text-white">Hiring Managers:</strong> Broadcast roles to 15,000+ specialist recruiters with zero admin overhead</span>
                 </li>
-                <li className="flex items-start gap-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-purple-400 mt-2 flex-shrink-0" />
-                  <span className="text-sm text-gray-300"><strong className="text-white">Platform Support:</strong> Technical integrations, API access, and dedicated account management</span>
+                <li className="flex items-start gap-2 sm:gap-3">
+                  <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-purple-400 mt-1.5 sm:mt-2 flex-shrink-0" />
+                  <span className="text-[13px] sm:text-sm text-gray-300 flex-1"><strong className="text-white">Platform Support:</strong> Technical integrations, API access, and dedicated account management</span>
                 </li>
               </ul>
             </div>
 
             {/* Trust Indicators */}
-            <div className="grid grid-cols-3 gap-4">
-              <div className="glass-card p-4 rounded-2xl border-white/5 text-center">
-                <p className="text-2xl font-bold gradient-text">15k+</p>
-                <p className="text-xs text-gray-500 font-medium mt-1">Active Recruiters</p>
+            <div className="grid grid-cols-3 gap-3 sm:gap-4">
+              <div className="glass-card p-3 sm:p-4 rounded-xl sm:rounded-2xl border-white/5 text-center">
+                <p className="text-lg sm:text-xl md:text-2xl font-bold gradient-text">15k+</p>
+                <p className="text-[10px] sm:text-xs text-gray-500 font-medium mt-0.5 sm:mt-1">Active Recruiters</p>
               </div>
-              <div className="glass-card p-4 rounded-2xl border-white/5 text-center">
-                <p className="text-2xl font-bold gradient-text">270M+</p>
-                <p className="text-xs text-gray-500 font-medium mt-1">Candidate Profiles</p>
+              <div className="glass-card p-3 sm:p-4 rounded-xl sm:rounded-2xl border-white/5 text-center">
+                <p className="text-lg sm:text-xl md:text-2xl font-bold gradient-text">270M+</p>
+                <p className="text-[10px] sm:text-xs text-gray-500 font-medium mt-0.5 sm:mt-1">Candidate Profiles</p>
               </div>
-              <div className="glass-card p-4 rounded-2xl border-white/5 text-center">
-                <p className="text-2xl font-bold gradient-text">24/7</p>
-                <p className="text-xs text-gray-500 font-medium mt-1">Platform Uptime</p>
+              <div className="glass-card p-3 sm:p-4 rounded-xl sm:rounded-2xl border-white/5 text-center">
+                <p className="text-lg sm:text-xl md:text-2xl font-bold gradient-text">24/7</p>
+                <p className="text-[10px] sm:text-xs text-gray-500 font-medium mt-0.5 sm:mt-1">Platform Uptime</p>
               </div>
             </div>
           </div>
@@ -220,25 +220,25 @@ export default function ContactPage() {
           {/* Right: Chat Form (Static Always-Open Version) */}
           <div className="relative">
             <div className="absolute -inset-4 bg-purple-500/5 blur-[100px] rounded-full" />
-            <div className="relative glass-card rounded-[3.5rem] border-purple-400/10 bg-black/40 backdrop-blur-3xl overflow-hidden" style={{ minHeight: stage === 'chat' ? '600px' : 'auto' }}>
+            <div className="relative glass-card rounded-xl sm:rounded-2xl md:rounded-[2.5rem] lg:rounded-[3.5rem] border-purple-400/10 bg-black/40 backdrop-blur-3xl overflow-hidden" style={{ minHeight: stage === 'chat' ? '500px' : 'auto' }}>
               
               {/* Chat Header */}
-              <div className="p-8 pb-6 border-b border-white/5 bg-gradient-to-r from-cyan-400/5 to-fuchsia-400/5">
-                <div className="flex items-center gap-4">
+              <div className="p-4 sm:p-5 md:p-6 lg:p-8 pb-3 sm:pb-4 md:pb-5 lg:pb-6 border-b border-white/5 bg-gradient-to-r from-cyan-400/5 to-fuchsia-400/5">
+                <div className="flex items-center gap-3 sm:gap-4">
                   <div className="relative">
-                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyan-500 to-fuchsia-500 flex items-center justify-center p-1.5">
+                    <div className="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-xl sm:rounded-2xl bg-gradient-to-br from-cyan-500 to-fuchsia-500 flex items-center justify-center p-1.5">
                       <img
                         src="https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png"
                         alt="RecXchange"
                         className="w-full h-full object-contain"
                       />
                     </div>
-                    <span className="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-green-400 rounded-full border-2 border-black animate-pulse" />
+                    <span className="absolute -bottom-0.5 sm:-bottom-1 -right-0.5 sm:-right-1 w-3 h-3 sm:w-3.5 sm:h-3.5 bg-green-400 rounded-full border-2 border-black animate-pulse" />
                   </div>
-                  <div>
-                    <h3 className="text-lg font-bold text-white">RecXchange Team</h3>
-                    <p className="text-xs text-green-400 font-bold uppercase tracking-widest flex items-center gap-1.5">
-                      <span className="w-2 h-2 bg-green-400 rounded-full" />
+                  <div className="flex-1">
+                    <h3 className="text-sm sm:text-base md:text-lg font-bold text-white">RecXchange Team</h3>
+                    <p className="text-[9px] sm:text-[10px] md:text-xs text-green-400 font-bold uppercase tracking-widest flex items-center gap-1 sm:gap-1.5">
+                      <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-400 rounded-full" />
                       Online Now
                     </p>
                   </div>
@@ -247,22 +247,22 @@ export default function ContactPage() {
 
               {/* Stage: Persona Selection */}
               {stage === 'persona' && (
-                <div className="p-10 space-y-6">
+                <div className="p-4 sm:p-5 md:p-8 lg:p-10 space-y-4 sm:space-y-5 md:space-y-6">
                   <div>
-                    <p className="text-white text-base font-bold mb-2">How can we help?</p>
-                    <p className="text-gray-400 text-sm">Tell us who you are so we can route you correctly.</p>
+                    <p className="text-white text-sm sm:text-base font-bold mb-1 sm:mb-2">How can we help?</p>
+                    <p className="text-gray-400 text-xs sm:text-sm">Tell us who you are so we can route you correctly.</p>
                   </div>
                   
                   <button
                     onClick={() => handlePersonaSelect('recruiter')}
-                    className="w-full p-6 rounded-2xl border border-cyan-400/20 bg-cyan-400/5 hover:bg-cyan-400/10 hover:border-cyan-400/40 transition-all text-left group"
+                    className="w-full p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl border border-cyan-400/20 bg-cyan-400/5 hover:bg-cyan-400/10 hover:border-cyan-400/40 transition-all text-left group"
                   >
                     <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-base font-bold text-white mb-1">I'm a Recruiter</p>
-                        <p className="text-xs text-gray-500">I have candidates or need roles to fill</p>
+                      <div className="flex-1">
+                        <p className="text-sm sm:text-base font-bold text-white mb-0.5 sm:mb-1">I'm a Recruiter</p>
+                        <p className="text-[11px] sm:text-xs text-gray-500">I have candidates or need roles to fill</p>
                       </div>
-                      <div className="w-10 h-10 rounded-xl bg-cyan-400/10 border border-cyan-400/30 flex items-center justify-center text-cyan-400 group-hover:translate-x-1 transition-transform text-lg">
+                      <div className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-lg sm:rounded-xl bg-cyan-400/10 border border-cyan-400/30 flex items-center justify-center text-cyan-400 group-hover:translate-x-1 transition-transform text-base sm:text-lg flex-shrink-0">
                         →
                       </div>
                     </div>
@@ -270,63 +270,63 @@ export default function ContactPage() {
 
                   <button
                     onClick={() => handlePersonaSelect('hiring-manager')}
-                    className="w-full p-6 rounded-2xl border border-fuchsia-400/20 bg-fuchsia-400/5 hover:bg-fuchsia-400/10 hover:border-fuchsia-400/40 transition-all text-left group"
+                    className="w-full p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl border border-fuchsia-400/20 bg-fuchsia-400/5 hover:bg-fuchsia-400/10 hover:border-fuchsia-400/40 transition-all text-left group"
                   >
                     <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-base font-bold text-white mb-1">I'm a Hiring Manager</p>
-                        <p className="text-xs text-gray-500">I'm looking to hire for my company</p>
+                      <div className="flex-1">
+                        <p className="text-sm sm:text-base font-bold text-white mb-0.5 sm:mb-1">I'm a Hiring Manager</p>
+                        <p className="text-[11px] sm:text-xs text-gray-500">I'm looking to hire for my company</p>
                       </div>
-                      <div className="w-10 h-10 rounded-xl bg-fuchsia-400/10 border border-fuchsia-400/30 flex items-center justify-center text-fuchsia-400 group-hover:translate-x-1 transition-transform text-lg">
+                      <div className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-lg sm:rounded-xl bg-fuchsia-400/10 border border-fuchsia-400/30 flex items-center justify-center text-fuchsia-400 group-hover:translate-x-1 transition-transform text-base sm:text-lg flex-shrink-0">
                         →
                       </div>
                     </div>
                   </button>
 
-                  <p className="text-xs text-gray-600 text-center pt-4">Typically replies within a few minutes.</p>
+                  <p className="text-[10px] sm:text-xs text-gray-600 text-center pt-2 sm:pt-4">Typically replies within a few minutes.</p>
                 </div>
               )}
 
               {/* Stage: Capture Details */}
               {stage === 'capture' && (
-                <form onSubmit={handleCaptureSubmit} className="p-10 space-y-6">
+                <form onSubmit={handleCaptureSubmit} className="p-4 sm:p-5 md:p-8 lg:p-10 space-y-4 sm:space-y-5 md:space-y-6">
                   <div>
-                    <p className="text-white text-base font-bold mb-2">
+                    <p className="text-white text-sm sm:text-base font-bold mb-1 sm:mb-2">
                       {persona === 'hiring-manager' ? 'Hiring Manager Details' : 'Your Details'}
                     </p>
-                    <p className="text-gray-400 text-sm leading-relaxed">
+                    <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
                       {persona === 'hiring-manager'
                         ? "We'll add you to our Clients directory so our team can follow up."
                         : "We'll add you to our Recruiter network for follow-up."}
                     </p>
                   </div>
 
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-3 sm:space-y-4">
+                    <div className="grid grid-cols-2 gap-3 sm:gap-4">
                       <div>
-                        <label className="text-[10px] uppercase font-black text-gray-500 tracking-widest block mb-2">First Name</label>
+                        <label className="text-[9px] sm:text-[10px] uppercase font-black text-gray-500 tracking-widest block mb-1.5 sm:mb-2">First Name</label>
                         <input
                           type="text"
                           value={firstName}
                           onChange={e => setFirstName(e.target.value)}
                           placeholder="John"
-                          className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 outline-none focus:border-cyan-400/40 transition-colors"
+                          className="w-full bg-white/[0.03] border border-white/10 rounded-lg sm:rounded-xl px-3 sm:px-4 py-2 sm:py-2.5 md:py-3 text-xs sm:text-sm text-white placeholder-gray-600 outline-none focus:border-cyan-400/40 transition-colors"
                         />
                       </div>
                       <div>
-                        <label className="text-[10px] uppercase font-black text-gray-500 tracking-widest block mb-2">Last Name</label>
+                        <label className="text-[9px] sm:text-[10px] uppercase font-black text-gray-500 tracking-widest block mb-1.5 sm:mb-2">Last Name</label>
                         <input
                           type="text"
                           value={lastName}
                           onChange={e => setLastName(e.target.value)}
                           placeholder="Smith"
-                          className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 outline-none focus:border-cyan-400/40 transition-colors"
+                          className="w-full bg-white/[0.03] border border-white/10 rounded-lg sm:rounded-xl px-3 sm:px-4 py-2 sm:py-2.5 md:py-3 text-xs sm:text-sm text-white placeholder-gray-600 outline-none focus:border-cyan-400/40 transition-colors"
                         />
                       </div>
                     </div>
 
                     <div>
-                      <label className="text-[10px] uppercase font-black text-gray-500 tracking-widest block mb-2">
+                      <label className="text-[9px] sm:text-[10px] uppercase font-black text-gray-500 tracking-widest block mb-1.5 sm:mb-2">
                         {persona === 'hiring-manager' ? 'Business Email' : 'Email'}
                       </label>
                       <input
@@ -334,31 +334,31 @@ export default function ContactPage() {
                         value={email}
                         onChange={e => setEmail(e.target.value)}
                         placeholder="john@company.com"
-                        className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 outline-none focus:border-cyan-400/40 transition-colors"
+                        className="w-full bg-white/[0.03] border border-white/10 rounded-lg sm:rounded-xl px-3 sm:px-4 py-2 sm:py-2.5 md:py-3 text-xs sm:text-sm text-white placeholder-gray-600 outline-none focus:border-cyan-400/40 transition-colors"
                       />
                     </div>
 
                     {persona === 'hiring-manager' && (
                       <div>
-                        <label className="text-[10px] uppercase font-black text-gray-500 tracking-widest block mb-2">Company Name</label>
+                        <label className="text-[9px] sm:text-[10px] uppercase font-black text-gray-500 tracking-widest block mb-1.5 sm:mb-2">Company Name</label>
                         <input
                           type="text"
                           value={companyName}
                           onChange={e => setCompanyName(e.target.value)}
                           placeholder="Your Company Ltd"
-                          className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 outline-none focus:border-fuchsia-400/40 transition-colors"
+                          className="w-full bg-white/[0.03] border border-white/10 rounded-lg sm:rounded-xl px-3 sm:px-4 py-2 sm:py-2.5 md:py-3 text-xs sm:text-sm text-white placeholder-gray-600 outline-none focus:border-fuchsia-400/40 transition-colors"
                         />
                       </div>
                     )}
                   </div>
 
                   {captureError && (
-                    <p className="text-xs text-red-400 font-bold">{captureError}</p>
+                    <p className="text-[10px] sm:text-xs text-red-400 font-bold">{captureError}</p>
                   )}
 
                   <button
                     type="submit"
-                    className={`w-full py-4 rounded-xl text-white text-sm font-bold uppercase tracking-widest transition-all ${
+                    className={`w-full py-3 sm:py-3.5 md:py-4 rounded-lg sm:rounded-xl text-white text-[11px] sm:text-xs md:text-sm font-bold uppercase tracking-widest transition-all ${
                       persona === 'hiring-manager'
                         ? 'bg-gradient-to-r from-fuchsia-500 to-cyan-500 hover:shadow-[0_0_20px_rgba(255,0,255,0.3)]'
                         : 'bg-gradient-to-r from-cyan-500 to-fuchsia-500 hover:shadow-[0_0_20px_rgba(0,255,255,0.3)]'
@@ -370,7 +370,7 @@ export default function ContactPage() {
                   <button
                     type="button"
                     onClick={() => setStage('persona')}
-                    className="text-xs text-gray-600 hover:text-gray-400 transition-colors w-full text-center"
+                    className="text-[10px] sm:text-xs text-gray-600 hover:text-gray-400 transition-colors w-full text-center"
                   >
                     ← Back
                   </button>
@@ -379,37 +379,37 @@ export default function ContactPage() {
 
               {/* Stage: Live Chat */}
               {stage === 'chat' && (
-                <div className="flex flex-col" style={{ height: '540px' }}>
-                  <div className="flex-grow p-6 space-y-4 overflow-y-auto">
+                <div className="flex flex-col" style={{ height: '450px' }}>
+                  <div className="flex-grow p-3 sm:p-4 md:p-5 lg:p-6 space-y-3 sm:space-y-4 overflow-y-auto">
                     {messages.map(msg => (
                       <div
                         key={msg.id}
-                        className={`flex flex-col gap-1 ${msg.from === 'visitor' ? 'items-end' : 'items-start'}`}
+                        className={`flex flex-col gap-0.5 sm:gap-1 ${msg.from === 'visitor' ? 'items-end' : 'items-start'}`}
                       >
-                        <div className={`max-w-[85%] px-4 py-3 rounded-2xl text-sm leading-relaxed ${
+                        <div className={`max-w-[85%] px-3 sm:px-4 py-2 sm:py-2.5 md:py-3 rounded-xl sm:rounded-2xl text-xs sm:text-sm leading-relaxed ${
                           msg.from === 'visitor'
                             ? 'bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 border border-cyan-400/20 text-white rounded-br-sm'
                             : 'bg-white/5 border border-white/10 text-gray-300 rounded-bl-sm'
                         }`}>
                           {msg.body}
                         </div>
-                        <span className="text-[9px] text-gray-600">
+                        <span className="text-[8px] sm:text-[9px] text-gray-600">
                           {msg.from === 'visitor' ? 'You' : 'RecXchange'} &middot; {formatTime(msg.timestamp)}
                         </span>
                       </div>
                     ))}
                     {isSending && (
                       <div className="flex items-start">
-                        <div className="bg-white/5 border border-white/10 px-4 py-3 rounded-2xl rounded-bl-sm flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                          <span className="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                          <span className="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                        <div className="bg-white/5 border border-white/10 px-3 sm:px-4 py-2 sm:py-2.5 md:py-3 rounded-xl sm:rounded-2xl rounded-bl-sm flex items-center gap-1.5 sm:gap-2">
+                          <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                          <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                          <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
                         </div>
                       </div>
                     )}
                     <div ref={messagesEndRef} />
                   </div>
-                  <div className="p-4 bg-white/[0.02] border-t border-cyan-400/10 flex gap-3 items-center">
+                  <div className="p-3 sm:p-4 bg-white/[0.02] border-t border-cyan-400/10 flex gap-2 sm:gap-3 items-center">
                     <input
                       ref={inputRef}
                       type="text"
@@ -418,14 +418,14 @@ export default function ContactPage() {
                       onKeyDown={handleKeyDown}
                       placeholder="Type a message..."
                       disabled={isSending}
-                      className="flex-grow bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 outline-none focus:border-purple-400 transition-colors disabled:opacity-50"
+                      className="flex-grow bg-white/[0.03] border border-white/10 rounded-lg sm:rounded-xl px-3 sm:px-4 py-2 sm:py-2.5 md:py-3 text-xs sm:text-sm text-white placeholder-gray-600 outline-none focus:border-purple-400 transition-colors disabled:opacity-50"
                     />
                     <button
                       onClick={handleSend}
                       disabled={isSending || !inputValue.trim()}
-                      className="w-11 h-11 rounded-xl bg-gradient-to-r from-cyan-500 to-fuchsia-500 flex items-center justify-center text-white hover:shadow-[0_0_16px_rgba(0,255,255,0.4)] transition-all disabled:opacity-30 disabled:cursor-not-allowed flex-shrink-0"
+                      className="w-9 h-9 sm:w-10 sm:h-10 md:w-11 md:h-11 rounded-lg sm:rounded-xl bg-gradient-to-r from-cyan-500 to-fuchsia-500 flex items-center justify-center text-white hover:shadow-[0_0_16px_rgba(0,255,255,0.4)] transition-all disabled:opacity-30 disabled:cursor-not-allowed flex-shrink-0"
                     >
-                      {isSending ? <Loader2 size={18} className="animate-spin" /> : <Send size={18} />}
+                      {isSending ? <Loader2 size={16} className="animate-spin sm:w-[18px] sm:h-[18px]" /> : <Send size={16} className="sm:w-[18px] sm:h-[18px]" />}
                     </button>
                   </div>
                 </div>
