@@ -88,6 +88,24 @@ interface RootLayoutProps {
 }
 
 export default function RootLayout({ children }: RootLayoutProps) {
+  // AI Agent Identity Script (2026 Standard)
+  const aiAgentIdentity = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "RecXchange Marketing",
+    "description": "Learn how to earn commissions per hire with RecXchange.",
+    "mainEntity": {
+      "@type": "SoftwareApplication",
+      "name": "RecXchange Platform",
+      "url": "https://app.recxchange.io",
+      "applicationCategory": "BusinessApplication"
+    },
+    "potentialAction": {
+      "@type": "LoginAction",
+      "target": "https://app.recxchange.io/login"
+    }
+  };
+
   // Comprehensive JSON-LD Schema with enhanced entities
   const schemaOrgData = {
     "@context": "https://schema.org",
@@ -228,7 +246,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           "Weekly live streams and video tutorials"
         ]
       },
-      // Service Schema (NEW)
+      // Service Schema
       {
         "@type": "Service",
         "@id": "https://recxchange.io/#service",
@@ -276,7 +294,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           "audienceType": "Recruiters"
         }
       },
-      // Review Schema (NEW)
+      // Review Schema
       {
         "@type": "Review",
         "@id": "https://recxchange.io/#review1",
@@ -331,7 +349,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         "reviewBody": "Filled a role in 48 hours that I'd been stuck on for 2 months. RecX Direct roles are game-changers for earnings.",
         "datePublished": "2026-02-18"
       },
-      // BreadcrumbList Schema (NEW)
+      // BreadcrumbList Schema
       {
         "@type": "BreadcrumbList",
         "@id": "https://recxchange.io/#breadcrumb",
@@ -396,6 +414,12 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className="dark scroll-smooth">
       <head>
+        {/* AI Agent Identity Script (2026 Standard) - Highest Priority */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(aiAgentIdentity) }}
+        />
+        {/* Comprehensive Schema.org Data */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrgData) }}
