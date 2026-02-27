@@ -147,7 +147,7 @@ export default function Footer() {
                 aria-label="Visit AMIVY Designs - Web Design & Development"
               >
                 <Image
-                  src="https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/AMIVY%20Designs.png"
+                  src="https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/ChatGPT%20Image%20Feb%2027%2C%202026%2C%2011_55_36%20AM.png"
                   alt="AMIVY Designs - Premium Web Design & Development Agency"
                   width={180}
                   height={45}
