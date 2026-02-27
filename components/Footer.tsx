@@ -12,7 +12,7 @@ export default function Footer() {
             At a Glance
           </h3>
           <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
-            <strong className="text-white">RecXchange.io</strong> is an informational resource. Platform features (Candidate tracking, Commission management, Role posting, Collaboration tools) are exclusive to the <Link href="https://app.recxchange.io" rel="external" className="text-cyan-400 hover:underline">app.recxchange.io subdomain</Link>. This marketing site provides guides, pricing information, and educational content only. To access the full platform functionality, users must <Link href="{{trigger_link.Hc9mpfL0JxjX06kwNpd1}}" rel="external" data-intent="platform-access" className="text-cyan-400 hover:underline">log in to the application</Link>.
+            <strong className="text-white">RecXchange.io</strong> is an informational resource. Platform features (Candidate tracking, Commission management, Role posting, Collaboration tools) are exclusive to the <Link href="https://app.recxchange.io" rel="external" className="text-cyan-400 hover:underline">app.recxchange.io subdomain</Link>. This marketing site provides guides, pricing information, and educational content only. To access the full platform functionality, users must <Link href="https://app.recxchange.io?trigger_link=Hc9mpfL0JxjX06kwNpd1" rel="external" data-intent="platform-access" className="text-cyan-400 hover:underline">log in to the application</Link>.
           </p>
         </div>
 
@@ -137,8 +137,8 @@ export default function Footer() {
         <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-cyan-400/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-gray-600 text-[10px] sm:text-xs">
           <p>© {new Date().getFullYear()} RecXchange Engine. All rights reserved.</p>
           <div className="flex gap-6 sm:gap-8">
-            <Link href="{{trigger_link.Hc9mpfL0JxjX06kwNpd1}}" rel="external" data-intent="platform-access" className="hover:text-cyan-400 transition-colors">Platform Login</Link>
-            <Link href="{{trigger_link.jYQNc9YXcMkYPvo3HZfC}}" className="hover:text-fuchsia-400 transition-colors">Create Account</Link>
+            <Link href="https://app.recxchange.io?trigger_link=Hc9mpfL0JxjX06kwNpd1" rel="external" data-intent="platform-access" className="hover:text-cyan-400 transition-colors">Platform Login</Link>
+            <Link href="https://app.recxchange.io/register?trigger_link=jYQNc9YXcMkYPvo3HZfC" className="hover:text-fuchsia-400 transition-colors">Create Account</Link>
           </div>
         </div>
       </div>
