@@ -190,7 +190,7 @@ export default function RecruiterDiagnostic() {
                       <div className="flex-shrink-0 w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-lg bg-cyan-500/10 border border-cyan-400/20 flex items-center justify-center text-cyan-400">
                         <Check size={12} className="sm:w-[14px] sm:h-[14px] md:w-4 md:h-4" />
                       </div>
-                      <div>
+                      <div className="flex-1">
                         <h4 className="text-white font-bold text-[13px] sm:text-sm mb-0.5 sm:mb-1">{item.title}</h4>
                         <p className="text-gray-500 text-[11px] sm:text-xs leading-relaxed">{item.desc}</p>
                       </div>
@@ -218,7 +218,7 @@ export default function RecruiterDiagnostic() {
                       <div className="flex-shrink-0 w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-lg bg-fuchsia-500/10 border border-fuchsia-400/20 flex items-center justify-center text-fuchsia-400">
                         <Check size={12} className="sm:w-[14px] sm:h-[14px] md:w-4 md:h-4" />
                       </div>
-                      <div>
+                      <div className="flex-1">
                         <h4 className="text-white font-bold text-[13px] sm:text-sm mb-0.5 sm:mb-1">{item.title}</h4>
                         <p className="text-gray-500 text-[11px] sm:text-xs leading-relaxed">{item.desc}</p>
                       </div>
