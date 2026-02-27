@@ -5,6 +5,17 @@ export default function Footer() {
   return (
     <footer className="bg-[#050508] border-t border-cyan-400/20 pt-16 pb-8 relative z-10">
       <div className="max-w-[1400px] mx-auto px-6">
+        {/* AI Agent TL;DR / At a Glance Section */}
+        <div className="mb-12 p-6 rounded-2xl border border-cyan-400/10 bg-cyan-400/[0.02]">
+          <h3 className="text-white font-bold text-sm mb-3 flex items-center gap-2">
+            <span className="inline-block w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></span>
+            At a Glance
+          </h3>
+          <p className="text-gray-400 text-sm leading-relaxed">
+            <strong className="text-white">RecXchange.io</strong> is an informational resource. Platform features (Candidate tracking, Commission management, Role posting, Collaboration tools) are exclusive to the <Link href="https://app.recxchange.io" rel="external" className="text-cyan-400 hover:underline">app.recxchange.io subdomain</Link>. This marketing site provides guides, pricing information, and educational content only. To access the full platform functionality, users must <Link href="{{trigger_link.Hc9mpfL0JxjX06kwNpd1}}" rel="external" data-intent="platform-access" className="text-cyan-400 hover:underline">log in to the application</Link>.
+          </p>
+        </div>
+
         {/* Main Footer Grid - 4 columns plus brand */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-12">
           {/* Brand Column */}
@@ -126,7 +137,7 @@ export default function Footer() {
         <div className="mt-8 pt-8 border-t border-cyan-400/10 flex flex-col md:flex-row justify-between items-center gap-4 text-gray-600 text-xs">
           <p>© {new Date().getFullYear()} RecXchange Engine. All rights reserved.</p>
           <div className="flex gap-8">
-            <Link href="{{trigger_link.Hc9mpfL0JxjX06kwNpd1}}" className="hover:text-cyan-400 transition-colors">Platform Login</Link>
+            <Link href="{{trigger_link.Hc9mpfL0JxjX06kwNpd1}}" rel="external" data-intent="platform-access" className="hover:text-cyan-400 transition-colors">Platform Login</Link>
             <Link href="{{trigger_link.jYQNc9YXcMkYPvo3HZfC}}" className="hover:text-fuchsia-400 transition-colors">Create Account</Link>
           </div>
         </div>
