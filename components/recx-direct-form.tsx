@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { X } from 'lucide-react';
+import ModalWrapper from './ModalWrapper';
 
 // Same industry list as SendRolesForm
 const INDUSTRIES = [
@@ -147,153 +148,136 @@ export default function RecXDirectForm({ className = '' }: RecXDirectFormProps) 
     }
   };
 
+  const handleClose = () => {
+    if (status !== 'loading') {
+      setIsOpen(false);
+    }
+  };
+
   return (
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="px-6 py-3 rounded-xl border border-fuchsia-400/30 bg-fuchsia-400/5 text-fuchsia-400 text-xs font-bold uppercase tracking-widest hover:bg-fuchsia-400/10 transition-all"
+        className="px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl border border-fuchsia-400/30 bg-fuchsia-400/5 text-fuchsia-400 text-xs font-bold uppercase tracking-widest hover:bg-fuchsia-400/10 transition-all"
       >
         LEARN ABOUT RECX DIRECT
       </button>
 
-      {/* Modal - Solid Background */}
-      {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/90" onClick={() => setIsOpen(false)}>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="w-full max-w-2xl max-h-[90vh] overflow-y-auto p-10 rounded-[2.5rem] relative"
-            style={{
-              background: '#0a0a0a',
-              border: '1px solid rgba(199, 29, 241, 0.2)'
-            }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              onClick={() => setIsOpen(false)}
-              className="absolute top-6 right-6 text-gray-500 hover:text-white transition-colors z-10"
-            >
-              <X size={24} />
-            </button>
+      <ModalWrapper
+        isOpen={isOpen}
+        onClose={handleClose}
+        title="Learn About RecX Direct"
+        subtitle="Select your industries and we'll send you a detailed explainer of how RecX Direct works, current fee pool size, and how to earn up to 70% on placements."
+        maxWidth="2xl"
+        preventClose={status === 'loading'}
+      >
+        {status === 'success' ? (
+          <div className="py-12 sm:py-16 md:py-20 text-center">
+            <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-green-500/10 border border-green-400/20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+              <svg className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <h3 className="text-lg sm:text-xl font-bold text-white mb-2">Explainer sent!</h3>
+            <p className="text-gray-400 text-xs sm:text-sm">Check your email for the full RecX Direct breakdown.</p>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Your Name *</label>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+                disabled={status === 'loading'}
+                className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 text-sm text-white outline-none focus:border-fuchsia-400/50 transition-all disabled:opacity-50"
+                placeholder="John Smith"
+              />
+            </div>
 
-            <h2 className="text-3xl font-bold mb-4" style={{
-              background: 'linear-gradient(135deg, #c71df1, #00ffff)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent'
-            }}>Learn About RecX Direct</h2>
-            <p className="text-gray-400 text-sm mb-8">
-              Select your industries and we'll send you a detailed explainer of how RecX Direct works, current fee pool size, and how to earn up to 70% on placements.
-            </p>
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Email Address *</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                disabled={status === 'loading'}
+                className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 text-sm text-white outline-none focus:border-fuchsia-400/50 transition-all disabled:opacity-50"
+                placeholder="john@company.com"
+              />
+            </div>
 
-            {status === 'success' ? (
-              <div className="py-20 text-center">
-                <div className="w-16 h-16 bg-green-500/10 border border-green-400/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-                  </svg>
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">
+                Your Industries ({selectedIndustries.length}/5) *
+              </label>
+              
+              {/* Selected Tags */}
+              {selectedIndustries.length > 0 && (
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {selectedIndustries.map((industry) => (
+                    <button
+                      key={industry}
+                      type="button"
+                      onClick={() => handleIndustryToggle(industry)}
+                      disabled={status === 'loading'}
+                      className="px-2.5 py-1.5 sm:px-3 rounded-full bg-fuchsia-400/10 border border-fuchsia-400/30 text-fuchsia-400 text-[10px] sm:text-xs font-bold flex items-center gap-1.5 sm:gap-2 hover:bg-fuchsia-400/20 transition-all disabled:opacity-50"
+                    >
+                      <span className="line-clamp-1">{industry}</span>
+                      <X size={12} className="flex-shrink-0" />
+                    </button>
+                  ))}
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2">Explainer sent!</h3>
-                <p className="text-gray-400 text-sm">Check your email for the full RecX Direct breakdown.</p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Your Name *</label>
-                  <input
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required
-                    disabled={status === 'loading'}
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-fuchsia-400/50 transition-all disabled:opacity-50"
-                    placeholder="John Smith"
-                  />
-                </div>
+              )}
 
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Email Address *</label>
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    disabled={status === 'loading'}
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-fuchsia-400/50 transition-all disabled:opacity-50"
-                    placeholder="john@company.com"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">
-                    Your Industries ({selectedIndustries.length}/5) *
-                  </label>
-                  
-                  {/* Selected Tags */}
-                  {selectedIndustries.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {selectedIndustries.map((industry) => (
-                        <button
-                          key={industry}
-                          type="button"
-                          onClick={() => handleIndustryToggle(industry)}
-                          disabled={status === 'loading'}
-                          className="px-3 py-1.5 rounded-full bg-fuchsia-400/10 border border-fuchsia-400/30 text-fuchsia-400 text-xs font-bold flex items-center gap-2 hover:bg-fuchsia-400/20 transition-all disabled:opacity-50"
-                        >
-                          {industry}
-                          <X size={14} />
-                        </button>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* Industry Dropdown */}
-                  <div className="max-h-60 overflow-y-auto border border-white/10 rounded-xl bg-white/[0.03] p-2">
-                    {INDUSTRIES.map((industry) => (
-                      <button
-                        key={industry}
-                        type="button"
-                        onClick={() => handleIndustryToggle(industry)}
-                        disabled={(status === 'loading') || (!selectedIndustries.includes(industry) && selectedIndustries.length >= 5)}
-                        className={`w-full text-left px-4 py-2.5 rounded-lg text-sm transition-all ${
-                          selectedIndustries.includes(industry)
-                            ? 'bg-fuchsia-400/20 text-fuchsia-400 font-bold'
-                            : selectedIndustries.length >= 5
-                            ? 'text-gray-600 cursor-not-allowed'
-                            : 'text-gray-400 hover:bg-white/5'
-                        }`}
-                      >
-                        {industry}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {errorMessage && (
-                  <motion.p
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    className="text-sm text-red-400 bg-red-400/10 border border-red-400/20 rounded-lg px-4 py-2"
+              {/* Industry Dropdown */}
+              <div className="max-h-48 sm:max-h-60 overflow-y-auto border border-white/10 rounded-xl bg-white/[0.03] p-2">
+                {INDUSTRIES.map((industry) => (
+                  <button
+                    key={industry}
+                    type="button"
+                    onClick={() => handleIndustryToggle(industry)}
+                    disabled={(status === 'loading') || (!selectedIndustries.includes(industry) && selectedIndustries.length >= 5)}
+                    className={`w-full text-left px-3 py-2 sm:px-4 sm:py-2.5 rounded-lg text-xs sm:text-sm transition-all ${
+                      selectedIndustries.includes(industry)
+                        ? 'bg-fuchsia-400/20 text-fuchsia-400 font-bold'
+                        : selectedIndustries.length >= 5
+                        ? 'text-gray-600 cursor-not-allowed'
+                        : 'text-gray-400 hover:bg-white/5'
+                    }`}
                   >
-                    {errorMessage}
-                  </motion.p>
-                )}
+                    {industry}
+                  </button>
+                ))}
+              </div>
+            </div>
 
-                <button
-                  type="submit"
-                  disabled={status === 'loading' || selectedIndustries.length === 0}
-                  className="relative w-full py-4 rounded-2xl border border-white/15 bg-black/40 overflow-hidden group/btn font-bold text-sm uppercase tracking-widest transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  <span className="absolute inset-[1px] rounded-2xl bg-black/80 group-hover/btn:bg-transparent transition-colors" />
-                  <span className="absolute inset-0 bg-gradient-to-r from-fuchsia-500 to-cyan-500 opacity-0 group-hover/btn:opacity-100 transition-opacity" />
-                  <span className="relative z-10 text-white flex items-center justify-center">
-                    {status === 'loading' ? 'Sending...' : 'Send RecX Direct Explainer'}
-                  </span>
-                </button>
-              </form>
+            {errorMessage && (
+              <motion.p
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                className="text-xs sm:text-sm text-red-400 bg-red-400/10 border border-red-400/20 rounded-lg px-3 py-2 sm:px-4"
+              >
+                {errorMessage}
+              </motion.p>
             )}
-          </motion.div>
-        </div>
-      )}
+
+            <button
+              type="submit"
+              disabled={status === 'loading' || selectedIndustries.length === 0}
+              className="relative w-full py-3 sm:py-4 rounded-xl sm:rounded-2xl border border-white/15 bg-black/40 overflow-hidden group/btn font-bold text-xs sm:text-sm uppercase tracking-widest transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <span className="absolute inset-[1px] rounded-xl sm:rounded-2xl bg-black/80 group-hover/btn:bg-transparent transition-colors" />
+              <span className="absolute inset-0 bg-gradient-to-r from-fuchsia-500 to-cyan-500 opacity-0 group-hover/btn:opacity-100 transition-opacity" />
+              <span className="relative z-10 text-white flex items-center justify-center">
+                {status === 'loading' ? 'Sending...' : 'Send RecX Direct Explainer'}
+              </span>
+            </button>
+          </form>
+        )}
+      </ModalWrapper>
     </>
   );
 }
