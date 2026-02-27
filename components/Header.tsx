@@ -20,9 +20,9 @@ export default function Header() {
             <Image
               src="https://images.squarespace-cdn.com/content/v1/68120154725429476150f64b/00d296cd-6741-4c0a-a711-08a3f35db445/REX-Logo-GW-25.png?format=1500w"
               alt="RecXchange Logo"
-              width={120}
-              height={32}
-              className="sm:w-[150px] sm:h-[40px]"
+              width={150}
+              height={40}
+              className="w-[120px] h-auto sm:w-[150px]"
               priority
               style={{ filter: 'drop-shadow(0px 0px 8px rgba(0, 255, 255, 0.5))' }}
             />
