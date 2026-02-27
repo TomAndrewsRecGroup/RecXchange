@@ -5,22 +5,26 @@ import { motion } from 'framer-motion';
 
 const supportSteps = [
   {
-    icon: <MessageSquare className="text-[#312fd7]" />,
+    Icon: MessageSquare,
+    color: "text-[#312fd7]",
     title: "Expert Role Briefing",
     description: "Your dedicated Account Manager meets with you to understand the technical requirements, cultural fit, and strategic goals of your roles."
   },
   {
-    icon: <Users className="text-[#c71df1]" />,
+    Icon: Users,
+    color: "text-[#c71df1]",
     title: "Global Recruiter Management",
     description: "We manage the 15,000+ specialist recruiters on the platform, directing their sourcing efforts so you don't have to deal with multiple agencies."
   },
   {
-    icon: <Trophy className="text-white" />,
+    Icon: Trophy,
+    color: "text-white",
     title: "Elite Candidate Filtering",
     description: "The Xchange Engine performs semantic matching, and your Account Manager manually vets the results to ensure only the top 1% of candidates reach your desk."
   },
   {
-    icon: <Handshake className="text-[#312fd7]" />,
+    Icon: Handshake,
+    color: "text-[#312fd7]",
     title: "End-to-End Support",
     description: "From scheduling interviews to managing offers and onboarding, your Account Manager acts as an extension of your internal HR team."
   }
@@ -52,19 +56,20 @@ export default function AccountManagement() {
 
         {/* Process Grid */}
         <section className="w-full grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 md:gap-6 lg:gap-8 mb-8 sm:mb-10 md:mb-12 lg:mb-16">
-          {supportSteps.map((step, index) => (
-            <div key={index} className="glass-card p-4 sm:p-6 md:p-8 lg:p-10 rounded-lg sm:rounded-xl md:rounded-2xl lg:rounded-3xl hover:border-[#c71df1]/50 transition-colors group">
-              <div className="mb-3 sm:mb-4 md:mb-5 lg:mb-6 group-hover:scale-110 transition-transform duration-300">
-                <div className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-8 lg:h-8">
-                  {React.cloneElement(step.icon as React.ReactElement, { className: `w-full h-full ${(step.icon as React.ReactElement).props.className}` })}
+          {supportSteps.map((step, index) => {
+            const IconComponent = step.Icon;
+            return (
+              <div key={index} className="glass-card p-4 sm:p-6 md:p-8 lg:p-10 rounded-lg sm:rounded-xl md:rounded-2xl lg:rounded-3xl hover:border-[#c71df1]/50 transition-colors group">
+                <div className="mb-3 sm:mb-4 md:mb-5 lg:mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <IconComponent className={`w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 ${step.color}`} />
                 </div>
+                <h4 className="text-base sm:text-lg md:text-xl font-bold mb-2 sm:mb-2.5 md:mb-3">{step.title}</h4>
+                <p className="text-gray-500 text-[13px] sm:text-sm leading-relaxed">
+                  {step.description}
+                </p>
               </div>
-              <h4 className="text-base sm:text-lg md:text-xl font-bold mb-2 sm:mb-2.5 md:mb-3">{step.title}</h4>
-              <p className="text-gray-500 text-[13px] sm:text-sm leading-relaxed">
-                {step.description}
-              </p>
-            </div>
-          ))}
+            );
+          })}
         </section>
 
         {/* High-Impact Stat Section */}
