@@ -145,6 +145,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
           "url": "https://recxchange.io/contact",
           "availableLanguage": ["English"],
           "areaServed": ["GB", "US", "EU", "AU", "AE", "ZA"]
+        },
+        "owns": {
+          "@id": "https://recxchange.io/#softwareapplication"
         }
       },
       // Person Schema (Founder)
@@ -168,7 +171,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
         "name": "RecXchange",
         "applicationCategory": "BusinessApplication",
         "operatingSystem": "Web",
-        "url": "https://recxchange.io",
+        "url": "https://app.recxchange.io",
+        "installUrl": "https://app.recxchange.io/login",
+        "provider": {
+          "@id": "https://recxchange.io/#organization"
+        },
         "description": "The recruiter network where 15,000+ recruiters partner on placements. Average placement fee: $7,000. Split fees up to 70% on RecX Direct roles. Access 270M candidate profiles. Post roles to find candidates, or share candidates to find roles. $750,000 in fees available across 100+ live roles in UK, USA, Europe, Africa, Middle East, Australia covering Engineering, Healthcare, Tech, HR, Sales, Finance.",
         "offers": [
           {
