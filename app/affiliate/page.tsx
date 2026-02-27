@@ -211,7 +211,7 @@ export default function AffiliateTermsPage() {
                 <div className="glass-card p-6 rounded-lg border-cyan-400/10">
                   <ul className="list-disc list-inside space-y-3 text-sm">
                     <li>The new user signs up for a RecXchange account via your unique affiliate referral link</li>
-                    <li>The new user chooses a subscription tier (RecXFree, RecXLite, or RecXPro) and completes all required registration steps, including successful payment of any initial subscription fee for paid plans</li>
+                    <li>The new user chooses a subscription tier (RecX Entry, RecXLite, or RecXPro) and completes all required registration steps, including successful payment of any initial subscription fee for paid plans</li>
                     <li><strong className="text-white">The referred user remains an active user of RecXchange for at least two full calendar months after their sign-up</strong></li>
                   </ul>
                 </div>
@@ -243,7 +243,7 @@ export default function AffiliateTermsPage() {
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div className="glass-card p-6 rounded-lg border-gray-400/10">
-                    <h3 className="text-white font-bold mb-2">RecXFree Referral</h3>
+                    <h3 className="text-white font-bold mb-2">RecX Entry Referral</h3>
                     <p className="text-3xl font-bold text-cyan-400 mb-2">1 Token</p>
                     <p className="text-gray-400 text-xs">For each new free membership user who meets the two-month active requirement</p>
                   </div>
@@ -254,7 +254,7 @@ export default function AffiliateTermsPage() {
                   </div>
                   <div className="glass-card p-6 rounded-lg border-fuchsia-400/20 bg-fuchsia-400/5">
                     <h3 className="text-white font-bold mb-2">RecXPro Referral</h3>
-                    <p className="text-3xl font-bold text-fuchsia-400 mb-2">10 Tokens</p>
+                    <p className="text-3xl font-bold text-fuchsia-400 mb-2">25 Tokens</p>
                     <p className="text-gray-400 text-xs">For each new RecXPro (paid subscription) user who meets the two-month active requirement</p>
                   </div>
                 </div>
