@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { motion, Variants } from 'framer-motion';
 import Link from 'next/link';
-import { X } from 'lucide-react';
+import { X, Zap, Users, Clock, Shield, Target, TrendingUp } from 'lucide-react';
 
 export default function HiringManagerHome() {
   const [howItWorksFormOpen, setHowItWorksFormOpen] = useState(false);
@@ -60,6 +60,11 @@ export default function HiringManagerHome() {
     } finally {
       setHowItWorksSubmitting(false);
     }
+  };
+
+  // Scroll to top function
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -201,6 +206,149 @@ export default function HiringManagerHome() {
             <Link href="/account-management" className="text-fuchsia-400 hover:text-white transition-colors font-bold uppercase tracking-widest flex items-center gap-2">
               Learn about Managed Services <span className="text-lg">→</span>
             </Link>
+          </div>
+        </section>
+
+        {/* HORMOZI-STYLE COMBINED CONTENT SECTION */}
+        <section className="mt-20 w-full">
+          <div className="text-center mb-16">
+            <div className="inline-block px-4 py-1.5 rounded-full border border-purple-400/20 bg-purple-400/5 text-[10px] font-bold uppercase tracking-[0.2em] text-purple-400 mb-6">
+              Here's What You Actually Get
+            </div>
+            <h2 className="text-3xl md:text-5xl font-bold text-white mb-4 tracking-tight">
+              Both paths unlock the same platform
+            </h2>
+            <p className="text-gray-400 text-lg max-w-3xl mx-auto leading-relaxed">
+              Whether you need to fill a role now or build a pipeline for later, you're getting the full RecXchange hiring infrastructure. Here's exactly what that means.
+            </p>
+          </div>
+
+          {/* Split Content: Urgent vs Strategic */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+            {/* Left: If You Need To Fill Role Now */}
+            <div className="glass-card p-10 rounded-[2.5rem] border-cyan-400/10 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 blur-[60px]" />
+              <div className="relative">
+                <h3 className="text-2xl font-bold mb-6 text-cyan-400">If You Need To Fill Role Now</h3>
+                <p className="text-gray-400 text-sm leading-relaxed mb-8">
+                  Post your role once. 15,000+ recruiters see it instantly. They compete to bring you the best candidates. You set the fee upfront (12-20% standard). Pay only when you hire.
+                </p>
+                <div className="space-y-6">
+                  {[
+                    { title: "Network Effect", desc: "300+ recruiters sourcing simultaneously from 270M profiles." },
+                    { title: "First Candidates in 48hrs", desc: "AI matching delivers vetted shortlists within 2 days of posting." },
+                    { title: "One Fee When Hired", desc: "No retainers, no multi-agency fees. One placement = one payment." }
+                  ].map((item, i) => (
+                    <div key={i} className="flex gap-4 items-start">
+                      <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-400/20 flex items-center justify-center text-cyan-400">
+                        <Zap size={16} />
+                      </div>
+                      <div>
+                        <h4 className="text-white font-bold text-sm mb-1">{item.title}</h4>
+                        <p className="text-gray-500 text-xs leading-relaxed">{item.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Right: If You Want To Build Pipeline */}
+            <div className="glass-card p-10 rounded-[2.5rem] border-fuchsia-400/10 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-fuchsia-500/5 blur-[60px]" />
+              <div className="relative">
+                <h3 className="text-2xl font-bold mb-6 text-fuchsia-400">If You Want To Build Pipeline</h3>
+                <p className="text-gray-400 text-sm leading-relaxed mb-8">
+                  Pre-warm the market 3-6 months before you hire. We map competitor talent, benchmark salaries, and build your ready-to-activate pipeline before budgets are approved.
+                </p>
+                <div className="space-y-6">
+                  {[
+                    { title: "90-Day Strategic Roadmap", desc: "Market intelligence, network warming, and vetted shortlists ready on day 1." },
+                    { title: "Competitor Mapping", desc: "Org-chart visualization of rival teams and passive candidate outreach." },
+                    { title: "Launch-Ready Pipelines", desc: "Nurtured talent primed to move the moment your role goes live." }
+                  ].map((item, i) => (
+                    <div key={i} className="flex gap-4 items-start">
+                      <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-fuchsia-500/10 border border-fuchsia-400/20 flex items-center justify-center text-fuchsia-400">
+                        <Target size={16} />
+                      </div>
+                      <div>
+                        <h4 className="text-white font-bold text-sm mb-1">{item.title}</h4>
+                        <p className="text-gray-500 text-xs leading-relaxed">{item.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* What You Get No Matter What */}
+          <div className="glass-card p-12 md:p-16 rounded-[3rem] border-purple-400/10 mb-16 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-purple-500/5 blur-[100px]" />
+            <div className="relative">
+              <h3 className="text-2xl md:text-3xl font-bold mb-4 text-center">What You Get <span className="gradient-text">No Matter What</span></h3>
+              <p className="text-gray-400 text-center max-w-2xl mx-auto mb-12 leading-relaxed">
+                Both paths include full access to RecX Direct infrastructure. One platform, one fee structure, total control.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {[
+                  { icon: Users, title: "15,000+ Recruiters", desc: "Pre-vetted specialists competing to fill your role faster and better." },
+                  { icon: Clock, title: "48-Hour Turnaround", desc: "First vetted candidates submitted within 2 days of posting your role." },
+                  { icon: Shield, title: "Zero Risk Model", desc: "Pay only when you hire. No retainers, no upfront fees, no multi-agency chaos." }
+                ].map((item, i) => (
+                  <div key={i} className="text-center">
+                    <div className="w-14 h-14 rounded-2xl bg-purple-500/10 border border-purple-400/20 flex items-center justify-center text-purple-400 mx-auto mb-4">
+                      <item.icon size={24} />
+                    </div>
+                    <h4 className="text-white font-bold mb-2">{item.title}</h4>
+                    <p className="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* The Numbers (Hormozi-Style Proof) */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+            {[
+              { value: "15,000+", label: "Active Recruiters", sublabel: "Competing for your role" },
+              { value: "270M", label: "Candidate Profiles", sublabel: "Global talent database" },
+              { value: "12-20%", label: "Standard Fee", sublabel: "One fee when you hire" }
+            ].map((stat, i) => (
+              <div key={i} className="glass-card p-8 rounded-2xl border-white/5 text-center">
+                <p className="text-4xl font-bold gradient-text mb-2">{stat.value}</p>
+                <p className="text-white font-bold text-sm mb-1">{stat.label}</p>
+                <p className="text-gray-500 text-xs">{stat.sublabel}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Final CTA Section */}
+          <div className="glass-card p-12 md:p-16 rounded-[3rem] border-purple-400/20 bg-gradient-to-br from-purple-500/10 via-fuchsia-500/5 to-cyan-500/10 text-center relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 via-purple-500/5 to-fuchsia-500/5 blur-3xl" />
+            <div className="relative z-10">
+              <h3 className="text-3xl md:text-4xl font-bold mb-6">
+                Ready to <span className="gradient-text">fill your role?</span>
+              </h3>
+              <p className="text-gray-400 text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
+                Post for free. 15,000+ recruiters compete. First candidates in 48 hours. Pay one fee only when you hire.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <Link
+                  href="{{trigger_link.vJPDrwl8k6nFBhkZeZJH}}"
+                  className="px-10 py-5 rounded-2xl bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white font-black text-sm uppercase tracking-widest transition-all hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/20"
+                >
+                  Post Role Now
+                </Link>
+                <button
+                  onClick={scrollToTop}
+                  className="px-10 py-5 rounded-2xl border border-white/20 text-white font-bold text-sm uppercase tracking-widest hover:bg-white/5 transition-all"
+                >
+                  Know Your Timeline?
+                </button>
+              </div>
+              <p className="text-xs text-gray-600 mt-8">No retainer. No upfront fees. Pay only when you hire.</p>
+            </div>
           </div>
         </section>
 
