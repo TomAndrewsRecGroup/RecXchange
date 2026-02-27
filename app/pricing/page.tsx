@@ -165,7 +165,7 @@ export default function PricingPage() {
         <div className="glass-card p-4 sm:p-6 md:p-8 rounded-lg sm:rounded-xl md:rounded-2xl lg:rounded-3xl border-cyan-400/10">
           <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-white mb-2.5 sm:mb-3 md:mb-4">Which tier should I choose?</h3>
           <p className="text-gray-400 text-[13px] sm:text-sm md:text-base leading-relaxed mb-3 sm:mb-4">
-            It depends on your activity level. With an average placement fee of <strong className="text-white">$7,000</strong>:
+            It depends on your activity level. Recruiters earn an average of <strong className="text-white">$7,000 per placement</strong>:
           </p>
           <ul className="space-y-2.5 sm:space-y-3 text-[13px] sm:text-sm md:text-base text-gray-400">
             <li className="flex items-start gap-2 sm:gap-3">
@@ -178,7 +178,7 @@ export default function PricingPage() {
             </li>
             <li className="flex items-start gap-2 sm:gap-3">
               <span className="text-cyan-400 mt-1">•</span>
-              <span><strong className="text-white">Pro ($250/month):</strong> Making 3+ placements per quarter with instant RecX Direct access and up to 70% splits</span>
+              <span><strong className="text-white">Pro ($250/month):</strong> Making 3+ placements per quarter with instant RecX Direct access</span>
             </li>
           </ul>
         </div>
@@ -186,7 +186,7 @@ export default function PricingPage() {
         <div className="glass-card p-4 sm:p-6 md:p-8 rounded-lg sm:rounded-xl md:rounded-2xl lg:rounded-3xl border-cyan-400/10">
           <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-white mb-2.5 sm:mb-3 md:mb-4">Are there any platform fees on placements?</h3>
           <p className="text-gray-400 text-[13px] sm:text-sm md:text-base leading-relaxed">
-            <strong className="text-white">No platform fees.</strong> You keep 100% of your agreed split fee. RecXchange only charges the monthly membership fee ($1, $99, or $250 depending on tier). If you make a $7,000 placement and agree to a 50/50 split, you keep the full $3,500. On RecX Direct with a 70% split, you keep $4,900.
+            <strong className="text-white">No platform fees.</strong> RecXchange only charges the monthly membership fee ($1, $99, or $250 depending on tier). Recruiters earn an average of $7,000 per placement and keep 100% of their agreed split.
           </p>
         </div>
 
@@ -200,20 +200,20 @@ export default function PricingPage() {
         <div className="glass-card p-4 sm:p-6 md:p-8 rounded-lg sm:rounded-xl md:rounded-2xl lg:rounded-3xl border-cyan-400/10">
           <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-white mb-2.5 sm:mb-3 md:mb-4">What's the actual ROI on RecXchange membership?</h3>
           <p className="text-gray-400 text-[13px] sm:text-sm md:text-base leading-relaxed mb-3 sm:mb-4">
-            With an average placement fee of <strong className="text-white">$7,000</strong> and typical 50/50 splits:
+            Recruiters earn an average of <strong className="text-white">$7,000 per placement</strong>:
           </p>
           <ul className="space-y-2.5 sm:space-y-3 text-[13px] sm:text-sm md:text-base text-gray-400">
             <li className="flex items-start gap-2 sm:gap-3">
               <span className="text-cyan-400 mt-1">•</span>
-              <span><strong className="text-white">Lite ($99/month):</strong> One placement earns you $3,500, covering 35+ months of membership</span>
+              <span><strong className="text-white">Lite ($99/month):</strong> One placement covers 70+ months of membership</span>
             </li>
             <li className="flex items-start gap-2 sm:gap-3">
               <span className="text-cyan-400 mt-1">•</span>
-              <span><strong className="text-white">Pro ($250/month):</strong> One 70% RecX Direct placement earns you $4,900, covering 19+ months of membership</span>
+              <span><strong className="text-white">Pro ($250/month):</strong> One placement covers 28+ months of membership</span>
             </li>
             <li className="flex items-start gap-2 sm:gap-3">
               <span className="text-cyan-400 mt-1">•</span>
-              <span>Most active recruiters make 2-5 placements per quarter, earning $7,000-$17,500 quarterly</span>
+              <span>Most active recruiters make 2-5 placements per quarter, earning $14,000-$35,000 quarterly</span>
             </li>
           </ul>
         </div>
@@ -239,20 +239,20 @@ export default function PricingPage() {
 
       {/* Split Fee Section */}
       <section className="max-w-[1200px] mx-auto mt-10 sm:mt-12 md:mt-16 p-6 sm:p-10 md:p-12 glass-card rounded-xl sm:rounded-2xl md:rounded-3xl text-center border-cyan-400/10">
-        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4 md:mb-6">Split Fees & <span className="gradient-text">Commissions</span></h2>
+        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4 md:mb-6">Average Recruiter <span className="gradient-text">Earnings</span></h2>
         <p className="text-gray-400 text-[13px] sm:text-sm md:text-base mb-6 sm:mb-7 md:mb-8 leading-relaxed px-2">
           Partner with recruiters from the network of 15,000+. Set your split. Contracts auto-generated. Both parties protected.
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-6 md:gap-8">
           <div>
-            <div className="text-cyan-400 font-bold text-lg sm:text-xl md:text-2xl mb-1">Standard</div>
-            <div className="text-xs sm:text-sm text-gray-500">50/50 Split</div>
-            <div className="text-[10px] sm:text-xs text-gray-600 mt-1 sm:mt-2">$3,500 on $7k placement</div>
+            <div className="text-cyan-400 font-bold text-lg sm:text-xl md:text-2xl mb-1">Xchange</div>
+            <div className="text-xs sm:text-sm text-gray-500">Collaborative splits</div>
+            <div className="text-[10px] sm:text-xs text-gray-600 mt-1 sm:mt-2">50/50, 60/40, or 70/30</div>
           </div>
           <div>
             <div className="text-fuchsia-400 font-bold text-lg sm:text-xl md:text-2xl mb-1">RecX Direct</div>
-            <div className="text-xs sm:text-sm text-gray-500">Up to 70% Split</div>
-            <div className="text-[10px] sm:text-xs text-gray-600 mt-1 sm:mt-2">$4,900 on $7k placement</div>
+            <div className="text-xs sm:text-sm text-gray-500">Up to 70% earnings</div>
+            <div className="text-[10px] sm:text-xs text-gray-600 mt-1 sm:mt-2">Average $7k per placement</div>
           </div>
           <div>
             <div className="text-white font-bold text-lg sm:text-xl md:text-2xl mb-1">No Fees</div>
