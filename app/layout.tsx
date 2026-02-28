@@ -1,7 +1,7 @@
 import "@/app/globals.css";
 import { Inter } from "next/font/google";
 import React from "react";
-import Header from "@/components/Header";
+import ConditionalHeader from "@/components/ConditionalHeader";
 import Footer from "@/components/Footer";
 import FloatingChat from "@/components/FloatingChat";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
@@ -534,11 +534,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <div className="absolute bottom-[-10%] right-[-10%] w-[70%] h-[70%] bg-fuchsia-500/10 blur-[120px] rounded-full" />
           </div>
 
-          {/* Navigation */}
-          <Header />
+          {/* Conditional Navigation - hides on root page */}
+          <ConditionalHeader />
 
           <div className="relative z-10 flex flex-col min-h-screen w-full">
-            <main className="flex-grow w-full pt-16 sm:pt-24">
+            <main className="flex-grow w-full">
               {children}
             </main>
             <Footer />
