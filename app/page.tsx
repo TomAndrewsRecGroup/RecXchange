@@ -3,11 +3,14 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { ArrowRight, Sparkles } from 'lucide-react';
 
 export default function RootPage() {
+  const router = useRouter();
   const [showContent, setShowContent] = useState(false);
   const [logoPhase, setLogoPhase] = useState<'x' | 'full'>('x');
+  const [isNavigating, setIsNavigating] = useState(false);
 
   useEffect(() => {
     // Phase 1: Show X for 600ms
@@ -26,12 +29,37 @@ export default function RootPage() {
     };
   }, []);
 
+  const handleWebsiteClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsNavigating(true);
+    
+    // Brief delay for animation, then navigate
+    setTimeout(() => {
+      router.push('/home');
+    }, 400);
+  };
+
+  const handlePlatformClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsNavigating(true);
+    
+    // Brief delay for animation, then navigate
+    setTimeout(() => {
+      window.open('https://app.recxchange.io', '_blank', 'noopener,noreferrer');
+      setIsNavigating(false);
+    }, 400);
+  };
+
   return (
     <main className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 py-12 sm:py-16 overflow-x-hidden">
       {/* Logo Animation Section */}
       <div className="relative z-10 mb-12 sm:mb-16 md:mb-20">
         <div className="text-center">
-          <div className="relative inline-block">
+          <motion.div
+            className="relative inline-block"
+            animate={isNavigating ? { scale: 0.98, opacity: 0.7 } : { scale: 1, opacity: 1 }}
+            transition={{ duration: 0.3 }}
+          >
             <AnimatePresence mode="wait">
               {logoPhase === 'x' ? (
                 <motion.img
@@ -56,7 +84,7 @@ export default function RootPage() {
                 />
               )}
             </AnimatePresence>
-          </div>
+          </motion.div>
           
           <motion.p
             initial={{ opacity: 0 }}
@@ -79,58 +107,80 @@ export default function RootPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
           
           {/* Website CTA */}
-          <Link href="/home">
-            <div className="glass-card p-8 sm:p-10 md:p-12 rounded-2xl sm:rounded-3xl border-2 border-cyan-400/30 hover:border-cyan-400/60 transition-all duration-500 cursor-pointer group relative overflow-hidden min-h-[280px] sm:min-h-[320px] flex flex-col justify-between">
-              <div className="absolute -top-20 -right-20 w-40 h-40 bg-cyan-500/10 blur-[60px] rounded-full group-hover:bg-cyan-500/20 transition-colors" />
-              
-              <div className="relative z-10">
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-cyan-400/30 bg-cyan-400/10 text-[10px] font-bold uppercase tracking-widest text-cyan-400 mb-6">
-                  <Sparkles className="w-3 h-3" />
-                  Marketing Site
-                </div>
-                
-                <h2 className="text-3xl sm:text-4xl font-bold text-white group-hover:text-cyan-400 transition-colors mb-4">
-                  Access RecXchange Website
-                </h2>
-                
-                <p className="text-gray-400 text-sm sm:text-base leading-relaxed">
-                  Explore features, pricing, and how the Xchange Engine works.
-                </p>
+          <motion.div
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={handleWebsiteClick}
+            className="glass-card p-8 sm:p-10 md:p-12 rounded-2xl sm:rounded-3xl border-2 border-cyan-400/30 hover:border-cyan-400/60 transition-all duration-500 cursor-pointer group relative overflow-hidden min-h-[280px] sm:min-h-[320px] flex flex-col justify-between"
+          >
+            {/* Ripple effect on click */}
+            <motion.div
+              className="absolute inset-0 bg-cyan-400/20 rounded-2xl sm:rounded-3xl"
+              initial={{ scale: 0, opacity: 0 }}
+              whileTap={{ scale: 2, opacity: [0, 0.3, 0] }}
+              transition={{ duration: 0.5 }}
+            />
+            
+            <div className="absolute -top-20 -right-20 w-40 h-40 bg-cyan-500/10 blur-[60px] rounded-full group-hover:bg-cyan-500/20 transition-colors" />
+            
+            <div className="relative z-10">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-cyan-400/30 bg-cyan-400/10 text-[10px] font-bold uppercase tracking-widest text-cyan-400 mb-6">
+                <Sparkles className="w-3 h-3" />
+                Marketing Site
               </div>
               
-              <div className="relative z-10 flex items-center gap-2 text-cyan-400 font-bold text-sm uppercase tracking-wider mt-6 group-hover:gap-3 transition-all">
-                Continue to Website
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </div>
+              <h2 className="text-3xl sm:text-4xl font-bold text-white group-hover:text-cyan-400 transition-colors mb-4">
+                Access RecXchange Website
+              </h2>
+              
+              <p className="text-gray-400 text-sm sm:text-base leading-relaxed">
+                Explore features, pricing, and how the Xchange Engine works.
+              </p>
             </div>
-          </Link>
+            
+            <div className="relative z-10 flex items-center gap-2 text-cyan-400 font-bold text-sm uppercase tracking-wider mt-6 group-hover:gap-3 transition-all">
+              Continue to Website
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </motion.div>
 
           {/* Platform CTA */}
-          <Link href="https://app.recxchange.io" target="_blank" rel="noopener noreferrer">
-            <div className="glass-card p-8 sm:p-10 md:p-12 rounded-2xl sm:rounded-3xl border-2 border-fuchsia-400/30 hover:border-fuchsia-400/60 transition-all duration-500 cursor-pointer group relative overflow-hidden min-h-[280px] sm:min-h-[320px] flex flex-col justify-between">
-              <div className="absolute -top-20 -right-20 w-40 h-40 bg-fuchsia-500/10 blur-[60px] rounded-full group-hover:bg-fuchsia-500/20 transition-colors" />
-              
-              <div className="relative z-10">
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-fuchsia-400/30 bg-fuchsia-400/10 text-[10px] font-bold uppercase tracking-widest text-fuchsia-400 mb-6">
-                  <Sparkles className="w-3 h-3" />
-                  Live Platform
-                </div>
-                
-                <h2 className="text-3xl sm:text-4xl font-bold text-white group-hover:text-fuchsia-400 transition-colors mb-4">
-                  Access RecXchange Platform
-                </h2>
-                
-                <p className="text-gray-400 text-sm sm:text-base leading-relaxed">
-                  Go straight to the live recruiter OS to work on roles and candidates.
-                </p>
+          <motion.div
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={handlePlatformClick}
+            className="glass-card p-8 sm:p-10 md:p-12 rounded-2xl sm:rounded-3xl border-2 border-fuchsia-400/30 hover:border-fuchsia-400/60 transition-all duration-500 cursor-pointer group relative overflow-hidden min-h-[280px] sm:min-h-[320px] flex flex-col justify-between"
+          >
+            {/* Ripple effect on click */}
+            <motion.div
+              className="absolute inset-0 bg-fuchsia-400/20 rounded-2xl sm:rounded-3xl"
+              initial={{ scale: 0, opacity: 0 }}
+              whileTap={{ scale: 2, opacity: [0, 0.3, 0] }}
+              transition={{ duration: 0.5 }}
+            />
+            
+            <div className="absolute -top-20 -right-20 w-40 h-40 bg-fuchsia-500/10 blur-[60px] rounded-full group-hover:bg-fuchsia-500/20 transition-colors" />
+            
+            <div className="relative z-10">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-fuchsia-400/30 bg-fuchsia-400/10 text-[10px] font-bold uppercase tracking-widest text-fuchsia-400 mb-6">
+                <Sparkles className="w-3 h-3" />
+                Live Platform
               </div>
               
-              <div className="relative z-10 flex items-center gap-2 text-fuchsia-400 font-bold text-sm uppercase tracking-wider mt-6 group-hover:gap-3 transition-all">
-                Open Platform
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </div>
+              <h2 className="text-3xl sm:text-4xl font-bold text-white group-hover:text-fuchsia-400 transition-colors mb-4">
+                Access RecXchange Platform
+              </h2>
+              
+              <p className="text-gray-400 text-sm sm:text-base leading-relaxed">
+                Go straight to the live recruiter OS to work on roles and candidates.
+              </p>
             </div>
-          </Link>
+            
+            <div className="relative z-10 flex items-center gap-2 text-fuchsia-400 font-bold text-sm uppercase tracking-wider mt-6 group-hover:gap-3 transition-all">
+              Open Platform
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </motion.div>
         </div>
       </motion.div>
 
