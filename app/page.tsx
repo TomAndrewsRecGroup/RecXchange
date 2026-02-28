@@ -4,6 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { ExternalLink } from 'lucide-react';
 
 export default function EntryWall() {
   const router = useRouter();
@@ -21,12 +22,57 @@ export default function EntryWall() {
   return (
     <main className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 py-16 sm:py-20 overflow-x-hidden">
 
+      {/* App Distinction Banner */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="relative z-20 w-full max-w-[1200px] mb-6 sm:mb-8 md:mb-10"
+      >
+        <div className="glass-card p-3 sm:p-4 md:p-5 rounded-xl sm:rounded-2xl border-2 border-cyan-400/30 bg-gradient-to-r from-cyan-500/10 via-fuchsia-500/10 to-cyan-500/10">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
+            <div className="flex items-start gap-2 sm:gap-3 flex-1 text-center sm:text-left">
+              <div className="hidden sm:block w-2 h-2 rounded-full bg-cyan-400 animate-pulse flex-shrink-0 mt-1" />
+              <div className="flex-1">
+                <p className="text-white font-bold text-xs sm:text-sm md:text-base mb-0.5 sm:mb-1">
+                  📍 You're on the marketing website
+                </p>
+                <p className="text-gray-400 text-[10px] sm:text-xs md:text-sm">
+                  This site provides information about RecXchange. The actual platform is at{' '}
+                  <span className="text-cyan-400 font-bold">app.recxchange.io</span>
+                </p>
+              </div>
+            </div>
+            <div className="flex gap-2 sm:gap-3 w-full sm:w-auto">
+              <Link
+                href="https://app.recxchange.io/login"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 sm:flex-initial px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 rounded-lg sm:rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold text-[10px] sm:text-xs flex items-center justify-center gap-1.5 sm:gap-2 transition-all group"
+              >
+                Login
+                <ExternalLink className="w-3 h-3 sm:w-3.5 sm:h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </Link>
+              <Link
+                href="https://app.recxchange.io/register"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 sm:flex-initial px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 rounded-lg sm:rounded-xl bg-gradient-to-r from-cyan-500 to-fuchsia-500 hover:shadow-[0_0_20px_rgba(0,255,255,0.4)] text-white font-bold text-[10px] sm:text-xs flex items-center justify-center gap-1.5 sm:gap-2 transition-all group"
+              >
+                Go to App
+                <ExternalLink className="w-3 h-3 sm:w-3.5 sm:h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+
       {/* Central Content */}
       <div className="relative z-10 text-center max-w-[1200px] w-full">
         <motion.header
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
         >
           <span className="block text-[9px] sm:text-[10px] md:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] md:tracking-[0.4em] text-cyan-400/60 mb-3 sm:mb-4 md:mb-6 font-bold">
             The Recruiter Xchange Engine
