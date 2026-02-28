@@ -14,15 +14,15 @@ export default function RootPage() {
   const [isNavigating, setIsNavigating] = useState(false);
 
   useEffect(() => {
-    // Start shrinking animation after 2 seconds
+    // Start shrinking animation after 1.5 seconds (reduced from 2s)
     const shrinkTimer = setTimeout(() => {
       setAnimationComplete(true);
-    }, 2000);
+    }, 1500);
 
     // Show content 1 second after shrink starts
     const contentTimer = setTimeout(() => {
       setShowContent(true);
-    }, 3000);
+    }, 2500);
 
     return () => {
       clearTimeout(shrinkTimer);
@@ -54,7 +54,7 @@ export default function RootPage() {
         {/* Logo Animation - smooth single motion from center to top */}
         <motion.div
           initial={{ 
-            scale: 2.5, 
+            scale: 2.0, // Reduced from 2.5
             opacity: 1,
             y: '30vh' // Start at center of viewport
           }}
@@ -63,7 +63,7 @@ export default function RootPage() {
             opacity: 1,
             y: 0 // Move to natural H1 position at top
           } : { 
-            scale: 2.5, 
+            scale: 2.0, 
             opacity: 1,
             y: '30vh'
           }}
