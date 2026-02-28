@@ -19,7 +19,7 @@ export default function HomePage() {
   };
 
   return (
-    <main className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 py-16 sm:py-20 overflow-x-hidden">
+    <main className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 pt-20 sm:pt-24 md:pt-28 lg:pt-32 pb-16 sm:pb-20 overflow-x-hidden">
       {/* Central Content */}
       <div className="relative z-10 text-center max-w-[1200px] w-full">
         <motion.header

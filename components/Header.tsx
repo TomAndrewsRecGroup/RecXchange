@@ -16,7 +16,7 @@ export default function Header() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between">
 
           {/* Left: Logo */}
-          <Link href="/" className="flex-shrink-0 z-[110] relative">
+          <Link href="/home" className="flex-shrink-0 z-[110] relative">
             <Image
               src="https://images.squarespace-cdn.com/content/v1/68120154725429476150f64b/00d296cd-6741-4c0a-a711-08a3f35db445/REX-Logo-GW-25.png?format=1500w"
               alt="RecXchange Logo"
@@ -30,7 +30,7 @@ export default function Header() {
 
           {/* Desktop Nav - Hidden on mobile/tablet */}
           <nav className="hidden lg:flex items-center gap-7">
-            <Link href="/" className="text-sm text-gray-400 hover:text-cyan-400 transition-colors">Home</Link>
+            <Link href="/home" className="text-sm text-gray-400 hover:text-cyan-400 transition-colors">Home</Link>
 
             {/* Recruiters Dropdown */}
             <div className="group relative py-4">
@@ -139,7 +139,7 @@ export default function Header() {
                 {/* Mobile Nav Links */}
                 <nav className="space-y-4">
                   <Link 
-                    href="/" 
+                    href="/home" 
                     className="block text-base font-medium text-gray-300 hover:text-cyan-400 transition-colors py-2"
                     onClick={() => setMobileMenuOpen(false)}
                   >
