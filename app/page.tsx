@@ -1,31 +1,32 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 export default function RootPage() {
   const router = useRouter();
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [videoEnded, setVideoEnded] = useState(false);
+  const [animationComplete, setAnimationComplete] = useState(false);
   const [showContent, setShowContent] = useState(false);
   const [isNavigating, setIsNavigating] = useState(false);
 
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
+    // Start shrinking animation after 2 seconds
+    const shrinkTimer = setTimeout(() => {
+      setAnimationComplete(true);
+    }, 2000);
 
-    const handleVideoEnd = () => {
-      setVideoEnded(true);
+    // Show content 1 second after shrink starts
+    const contentTimer = setTimeout(() => {
       setShowContent(true);
-    };
+    }, 3000);
 
-    video.addEventListener('ended', handleVideoEnd);
-    
     return () => {
-      video.removeEventListener('ended', handleVideoEnd);
+      clearTimeout(shrinkTimer);
+      clearTimeout(contentTimer);
     };
   }, []);
 
@@ -47,39 +48,34 @@ export default function RootPage() {
   };
 
   return (
-    <main className="relative min-h-screen bg-black flex flex-col items-center justify-start px-4 sm:px-6 py-12 sm:py-16 overflow-x-hidden">
-      {/* Video Animation Section - starts large and central */}
-      <div className="relative w-full flex items-center justify-center" style={{ minHeight: videoEnded ? 'auto' : '100vh' }}>
+    <main className="relative min-h-screen bg-black flex flex-col items-center justify-center px-4 sm:px-6 py-12 sm:py-16 overflow-x-hidden">
+      {/* Logo Animation Section - starts large and central, shrinks to H1 */}
+      <div className="relative w-full flex items-center justify-center" style={{ minHeight: animationComplete ? 'auto' : '100vh' }}>
         <motion.div
-          initial={{ scale: 2, opacity: 1 }}
-          animate={videoEnded ? { 
+          initial={{ scale: 2.5, opacity: 1, y: 0 }}
+          animate={animationComplete ? { 
             scale: 1, 
             opacity: 1,
             y: 0 
           } : { 
-            scale: 2, 
-            opacity: 1 
+            scale: 2.5, 
+            opacity: 1,
+            y: 0
           }}
           transition={{ 
-            duration: 2, 
-            ease: 'easeOut',
-            delay: 6 // Start shrinking after 6s video
+            duration: 1.5, 
+            ease: 'easeOut'
           }}
           className="relative z-10 mb-8 sm:mb-12"
         >
-          <video
-            ref={videoRef}
-            autoPlay
-            muted
-            playsInline
-            className="w-full max-w-2xl h-auto"
-            onEnded={() => {
-              setVideoEnded(true);
-              setTimeout(() => setShowContent(true), 100);
-            }}
-          >
-            <source src="https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/Untitled%20design.mp4" type="video/mp4" />
-          </video>
+          <Image
+            src="https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/recxchange%20-home.png"
+            alt="RecXchange"
+            width={800}
+            height={200}
+            className="w-full max-w-4xl h-auto"
+            priority
+          />
         </motion.div>
       </div>
 
@@ -88,17 +84,17 @@ export default function RootPage() {
         initial={{ opacity: 0 }}
         animate={{ opacity: showContent ? 1 : 0 }}
         transition={{ duration: 1.5, delay: 0.3 }}
-        className="text-white text-sm sm:text-base md:text-lg font-light tracking-wide text-center mb-12 sm:mb-16"
+        className="text-white text-sm sm:text-base md:text-xl font-light tracking-wide text-center mb-12 sm:mb-16 max-w-5xl px-4"
       >
-        One platform. Every tool. Total trust.
+        The Recruiters Xchange: Live Roles from Live Clients and Live Candidates. One Login
       </motion.p>
 
-      {/* Two Large CTAs */}
+      {/* Two Large CTAs - 1200px max width */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: showContent ? 1 : 0, y: showContent ? 0 : 30 }}
         transition={{ duration: 1.5, delay: 0.5 }}
-        className="relative z-10 w-full max-w-5xl mx-auto mb-16 sm:mb-20 md:mb-24"
+        className="relative z-10 w-full max-w-[1200px] mx-auto mb-16 sm:mb-20 md:mb-24"
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
           
@@ -135,7 +131,7 @@ export default function RootPage() {
                 }}
               >
                 <Sparkles className="w-3 h-3" />
-                Marketing Site
+                Website
               </div>
               
               <h2 className="text-3xl sm:text-4xl font-bold text-white group-hover:text-blue-400 transition-colors mb-4"
@@ -210,23 +206,23 @@ export default function RootPage() {
         </div>
       </motion.div>
 
-      {/* Content Sections Below */}
+      {/* Content Sections Below - 1200px max width */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: showContent ? 1 : 0, y: showContent ? 0 : 30 }}
         transition={{ duration: 1.5, delay: 0.7 }}
-        className="relative z-10 w-full max-w-5xl mx-auto space-y-12 sm:space-y-16"
+        className="relative z-10 w-full max-w-[1200px] mx-auto space-y-12 sm:space-y-16"
       >
         
         {/* What is RecXchange? */}
         <section className="text-center px-4">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">
             What is <span 
               className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent"
               style={{ textShadow: '0 0 40px rgba(168, 85, 247, 0.6)' }}
             >RecXchange</span>?
           </h2>
-          <div className="space-y-4 text-gray-300 text-base sm:text-lg leading-relaxed max-w-3xl mx-auto">
+          <div className="space-y-4 text-gray-300 text-base sm:text-lg leading-relaxed max-w-4xl mx-auto">
             <p>
               RecXchange is a <strong className="text-white">global recruiter operating system and collaboration network</strong> that connects 15,000+ recruiters worldwide.
             </p>
@@ -247,7 +243,7 @@ export default function RootPage() {
             backdropFilter: 'blur(20px)'
           }}
         >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-8 text-center">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-8 text-center">
             Why <span 
               className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent"
             >RecXchange</span>?
