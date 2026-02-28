@@ -65,8 +65,6 @@ export default function manifest(): MetadataRoute.Manifest {
     ],
     prefer_related_applications: false,
     lang: 'en-GB',
-    dir: 'ltr',
-    iarc_rating_id: '',
-    screenshots: []
+    dir: 'ltr'
   }
 }
