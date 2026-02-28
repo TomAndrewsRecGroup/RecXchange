@@ -1,27 +1,81 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowRight, Sparkles } from 'lucide-react';
 
 export default function RootPage() {
+  const [showContent, setShowContent] = useState(false);
+  const [logoPhase, setLogoPhase] = useState<'x' | 'full'>('x');
+
+  useEffect(() => {
+    // Phase 1: Show X for 600ms
+    const xTimer = setTimeout(() => {
+      setLogoPhase('full');
+    }, 600);
+
+    // Phase 2: After full logo shows (600ms + 500ms transition), reveal content
+    const contentTimer = setTimeout(() => {
+      setShowContent(true);
+    }, 1200);
+
+    return () => {
+      clearTimeout(xTimer);
+      clearTimeout(contentTimer);
+    };
+  }, []);
+
   return (
     <main className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 py-12 sm:py-16 overflow-x-hidden">
-      {/* Logo Section - Static for now, will animate in Phase 3 */}
+      {/* Logo Animation Section */}
       <div className="relative z-10 mb-12 sm:mb-16 md:mb-20">
         <div className="text-center">
-          {/* RecXchange Logo - placeholder for now */}
-          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold gradient-text mb-4 tracking-tight">
-            RecXchange
-          </h1>
-          <p className="text-gray-400 text-sm sm:text-base md:text-lg font-medium tracking-wide">
+          <div className="relative inline-block">
+            <AnimatePresence mode="wait">
+              {logoPhase === 'x' ? (
+                <motion.img
+                  key="x-logo"
+                  src="https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/reccxchange%20x.png"
+                  alt="RecXchange X"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.5, ease: "easeOut" }}
+                  className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 mx-auto"
+                />
+              ) : (
+                <motion.img
+                  key="full-logo"
+                  src="https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/recxchange%20-home.png"
+                  alt="RecXchange"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, ease: "easeOut" }}
+                  className="w-64 sm:w-80 md:w-96 lg:w-[500px] h-auto mx-auto"
+                />
+              )}
+            </AnimatePresence>
+          </div>
+          
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: showContent ? 1 : 0 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+            className="text-gray-400 text-sm sm:text-base md:text-lg font-medium tracking-wide mt-4"
+          >
             The Recruiter Xchange — global recruiter OS and collaboration network.
-          </p>
+          </motion.p>
         </div>
       </div>
 
       {/* Two Large CTAs */}
-      <div className="relative z-10 w-full max-w-4xl mx-auto mb-16 sm:mb-20 md:mb-24">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: showContent ? 1 : 0, y: showContent ? 0 : 20 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="relative z-10 w-full max-w-4xl mx-auto mb-16 sm:mb-20 md:mb-24"
+      >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
           
           {/* Website CTA */}
@@ -78,10 +132,15 @@ export default function RootPage() {
             </div>
           </Link>
         </div>
-      </div>
+      </motion.div>
 
       {/* Content Sections Below */}
-      <div className="relative z-10 w-full max-w-4xl mx-auto space-y-12 sm:space-y-16">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: showContent ? 1 : 0, y: showContent ? 0 : 20 }}
+        transition={{ duration: 0.5, delay: 0.3 }}
+        className="relative z-10 w-full max-w-4xl mx-auto space-y-12 sm:space-y-16"
+      >
         
         {/* What is RecXchange? */}
         <section className="text-center px-4">
@@ -167,7 +226,7 @@ export default function RootPage() {
             <Link href="/contact" className="text-cyan-400 hover:underline">Contact Us</Link>
           </p>
         </footer>
-      </div>
+      </motion.div>
     </main>
   );
 }
