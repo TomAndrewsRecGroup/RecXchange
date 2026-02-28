@@ -69,12 +69,14 @@ export default function RootPage() {
           className="relative z-10 mb-8 sm:mb-12"
         >
           <Image
-            src="https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/recxchange%20-home.png"
+            src="https://images.squarespace-cdn.com/content/v1/68120154725429476150f64b/00d296cd-6741-4c0a-a711-08a3f35db445/REX-Logo-GW-25.png?format=1500w"
             alt="RecXchange"
-            width={800}
-            height={200}
-            className="w-full max-w-4xl h-auto"
+            width={600}
+            height={150}
+            className="w-full max-w-3xl h-auto"
+            style={{ filter: 'drop-shadow(0px 0px 12px rgba(59, 130, 246, 0.6))' }}
             priority
+            unoptimized
           />
         </motion.div>
       </div>
@@ -206,7 +208,7 @@ export default function RootPage() {
         </div>
       </motion.div>
 
-      {/* Content Sections Below - 1200px max width */}
+      {/* Combined What & Why Section - 1200px max width */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: showContent ? 1 : 0, y: showContent ? 0 : 30 }}
@@ -214,28 +216,7 @@ export default function RootPage() {
         className="relative z-10 w-full max-w-[1200px] mx-auto space-y-12 sm:space-y-16"
       >
         
-        {/* What is RecXchange? */}
-        <section className="text-center px-4">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">
-            What is <span 
-              className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent"
-              style={{ textShadow: '0 0 40px rgba(168, 85, 247, 0.6)' }}
-            >RecXchange</span>?
-          </h2>
-          <div className="space-y-4 text-gray-300 text-base sm:text-lg leading-relaxed max-w-4xl mx-auto">
-            <p>
-              RecXchange is a <strong className="text-white">global recruiter operating system and collaboration network</strong> that connects 15,000+ recruiters worldwide.
-            </p>
-            <p>
-              Powered by the <strong className="text-blue-400">AI-driven Xchange Engine</strong>, RecXchange enables recruiters to share roles, candidates, and fees seamlessly. With access to <strong className="text-white">270M+ candidate profiles</strong>, recruiters can fill hard-to-reach positions while scaling their businesses through trusted deal-flow collaboration.
-            </p>
-            <p>
-              Whether you're posting a role or sharing a candidate, RecXchange ensures <strong className="text-white">transparent fee-sharing</strong> and contract protection across every transaction.
-            </p>
-          </div>
-        </section>
-
-        {/* Why RecXchange? */}
+        {/* Combined Box */}
         <section className="p-8 sm:p-10 md:p-12 rounded-2xl sm:rounded-3xl"
           style={{
             background: 'rgba(10, 10, 15, 0.6)',
@@ -243,63 +224,119 @@ export default function RootPage() {
             backdropFilter: 'blur(20px)'
           }}
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-8 text-center">
-            Why <span 
-              className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent"
-            >RecXchange</span>?
-          </h2>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
+          {/* What is RecXchange */}
+          <div className="mb-12">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-8 text-left">
+              What is <span 
+                className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent"
+              >RecXchange</span>?
+            </h2>
             
-            {/* Feature 1 */}
-            <div className="flex items-start gap-4">
-              <div className="w-2 h-2 rounded-full bg-blue-400 flex-shrink-0 mt-2"
-                style={{ boxShadow: '0 0 15px rgba(59, 130, 246, 0.8)' }}
-              />
-              <div>
-                <h3 className="text-white font-bold text-lg mb-2">Global Collaboration</h3>
-                <p className="text-gray-300 text-sm leading-relaxed">
-                  Work with vetted recruiters worldwide, share roles, candidates, and fees.
-                </p>
-              </div>
+            <div className="space-y-4 text-gray-300 text-base sm:text-lg leading-relaxed text-left">
+              <ul className="space-y-3">
+                <li className="flex items-start gap-3">
+                  <div className="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0 mt-2"
+                    style={{ boxShadow: '0 0 10px rgba(59, 130, 246, 0.8)' }}
+                  />
+                  <span><strong className="text-white">15,000+ vetted recruiters</strong> worldwide competing to fill your roles and place your candidates</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <div className="w-1.5 h-1.5 rounded-full bg-purple-500 flex-shrink-0 mt-2"
+                    style={{ boxShadow: '0 0 10px rgba(168, 85, 247, 0.8)' }}
+                  />
+                  <span><strong className="text-white">$750,000+ in placement fees</strong> available right now across 100+ active roles</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <div className="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0 mt-2"
+                    style={{ boxShadow: '0 0 10px rgba(59, 130, 246, 0.8)' }}
+                  />
+                  <span><strong className="text-white">270M+ candidate profiles</strong> you can search and submit instantly</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <div className="w-1.5 h-1.5 rounded-full bg-purple-500 flex-shrink-0 mt-2"
+                    style={{ boxShadow: '0 0 10px rgba(168, 85, 247, 0.8)' }}
+                  />
+                  <span><strong className="text-white">AI-powered Xchange Engine</strong> matches your roles and candidates to the right recruiters in seconds</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <div className="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0 mt-2"
+                    style={{ boxShadow: '0 0 10px rgba(59, 130, 246, 0.8)' }}
+                  />
+                  <span><strong className="text-white">Average placement fee: $7,000</strong> — recruiters are making placements within 48 hours</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <div className="w-1.5 h-1.5 rounded-full bg-purple-500 flex-shrink-0 mt-2"
+                    style={{ boxShadow: '0 0 10px rgba(168, 85, 247, 0.8)' }}
+                  />
+                  <span><strong className="text-white">Automated contracts & fee splits</strong> — transparent, timestamped, protected</span>
+                </li>
+              </ul>
             </div>
+          </div>
 
-            {/* Feature 2 */}
-            <div className="flex items-start gap-4">
-              <div className="w-2 h-2 rounded-full bg-purple-500 flex-shrink-0 mt-2"
-                style={{ boxShadow: '0 0 15px rgba(168, 85, 247, 0.8)' }}
-              />
-              <div>
-                <h3 className="text-white font-bold text-lg mb-2">All-in-One OS</h3>
-                <p className="text-gray-300 text-sm leading-relaxed">
-                  ATS, CRM, sourcing, and Xchange Engine in one place — no more duct-taped tools.
-                </p>
+          {/* Divider */}
+          <div className="w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent mb-12" />
+
+          {/* Why RecXchange */}
+          <div>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-8 text-left">
+              Why <span 
+                className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent"
+              >RecXchange</span>?
+            </h2>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
+              
+              {/* Feature 1 */}
+              <div className="flex items-start gap-4">
+                <div className="w-2 h-2 rounded-full bg-blue-400 flex-shrink-0 mt-2"
+                  style={{ boxShadow: '0 0 15px rgba(59, 130, 246, 0.8)' }}
+                />
+                <div className="text-left">
+                  <h3 className="text-white font-bold text-lg mb-2">Fill Roles Faster</h3>
+                  <p className="text-gray-300 text-sm leading-relaxed">
+                    Roles you've been stuck on for weeks get filled in 48 hours when 15,000 recruiters compete to help.
+                  </p>
+                </div>
               </div>
-            </div>
 
-            {/* Feature 3 */}
-            <div className="flex items-start gap-4">
-              <div className="w-2 h-2 rounded-full bg-blue-400 flex-shrink-0 mt-2"
-                style={{ boxShadow: '0 0 15px rgba(59, 130, 246, 0.8)' }}
-              />
-              <div>
-                <h3 className="text-white font-bold text-lg mb-2">AI-Powered Routing</h3>
-                <p className="text-gray-300 text-sm leading-relaxed">
-                  The Xchange Engine directs opportunities to the right recruiters in real time.
-                </p>
+              {/* Feature 2 */}
+              <div className="flex items-start gap-4">
+                <div className="w-2 h-2 rounded-full bg-purple-500 flex-shrink-0 mt-2"
+                  style={{ boxShadow: '0 0 15px rgba(168, 85, 247, 0.8)' }}
+                />
+                <div className="text-left">
+                  <h3 className="text-white font-bold text-lg mb-2">Earn While You Sleep</h3>
+                  <p className="text-gray-300 text-sm leading-relaxed">
+                    Your candidates get submitted to hundreds of roles automatically — make placements you never touched.
+                  </p>
+                </div>
               </div>
-            </div>
 
-            {/* Feature 4 */}
-            <div className="flex items-start gap-4">
-              <div className="w-2 h-2 rounded-full bg-purple-500 flex-shrink-0 mt-2"
-                style={{ boxShadow: '0 0 15px rgba(168, 85, 247, 0.8)' }}
-              />
-              <div>
-                <h3 className="text-white font-bold text-lg mb-2">Built for Serious Recruiters</h3>
-                <p className="text-gray-300 text-sm leading-relaxed">
-                  Solo, boutique, or teams wanting scale without losing control.
-                </p>
+              {/* Feature 3 */}
+              <div className="flex items-start gap-4">
+                <div className="w-2 h-2 rounded-full bg-blue-400 flex-shrink-0 mt-2"
+                  style={{ boxShadow: '0 0 15px rgba(59, 130, 246, 0.8)' }}
+                />
+                <div className="text-left">
+                  <h3 className="text-white font-bold text-lg mb-2">Stop Losing to Competition</h3>
+                  <p className="text-gray-300 text-sm leading-relaxed">
+                    While you work alone, other recruiters are partnering and splitting $750K+ in active fees.
+                  </p>
+                </div>
+              </div>
+
+              {/* Feature 4 */}
+              <div className="flex items-start gap-4">
+                <div className="w-2 h-2 rounded-full bg-purple-500 flex-shrink-0 mt-2"
+                  style={{ boxShadow: '0 0 15px rgba(168, 85, 247, 0.8)' }}
+                />
+                <div className="text-left">
+                  <h3 className="text-white font-bold text-lg mb-2">Zero Risk, All Reward</h3>
+                  <p className="text-gray-300 text-sm leading-relaxed">
+                    Start for $1. No upfront fees. Only pay when you earn. Recruiters are making $15K+ in their first month.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
