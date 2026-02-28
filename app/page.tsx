@@ -74,7 +74,7 @@ export default function RootPage() {
           className="relative z-10 mb-8 sm:mb-12 mx-auto w-fit"
         >
           <Image
-            src="https://images.squarespace-cdn.com/content/v1/68120154725429476150f64b/00d296cd-6741-4c0a-a711-08a3f35db445/REX-Logo-GW-25.png?format=1500w"
+            src="https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Logo-BB-25.jpg"
             alt="RecXchange"
             width={600}
             height={150}
