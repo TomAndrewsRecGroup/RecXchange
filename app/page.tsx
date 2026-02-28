@@ -74,7 +74,7 @@ export default function RootPage() {
           className="relative z-10 mb-8 sm:mb-12 mx-auto w-fit"
         >
           <Image
-            src="https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Logo-BB-25.jpg"
+            src="https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Main-Logo-25.png"
             alt="RecXchange"
             width={600}
             height={150}
