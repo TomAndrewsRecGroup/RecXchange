@@ -25,7 +25,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: "RecXchange | Share Roles. Split Fees. Fill Roles. Get Paid.",
-  description: "The recruiter network where thousands of recruiters partner on placements and split fees automatically. Post roles to find candidates, or share candidates to find roles. Split fees 50/50.",
+  description: "Marketing and information site for RecXchange - the recruiter collaboration platform where 15,000+ recruiters partner on placements and split fees automatically. The actual platform is at app.recxchange.io. Post roles to find candidates, or share candidates to find roles. Split fees 50/50, 60/40, or up to 70%.",
   keywords: [
     "recruiter network",
     "split fee recruitment",
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     "recruitment fee split",
     "recruiter collaboration"
   ],
-  authors: [{ name: "RecXchange" }, { name: "AMIVY Designs", url: "https://www.amivydesigns.com" }],
+  authors: [{ name: "RecXchange" }, { name: "AMIVY Designs", url: "https://andrews-recruitment.com/about" }],
   creator: "AMIVY Designs",
   publisher: "RecXchange",
   metadataBase: new URL("https://recxchange.io"),
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
     url: "https://recxchange.io",
     siteName: "RecXchange",
     title: "RecXchange | Share Roles. Split Fees. Fill Roles. Get Paid.",
-    description: "The recruiter network where thousands of recruiters partner on placements and split fees automatically. Post roles to find candidates, or share candidates to find roles.",
+    description: "Marketing site for RecXchange recruitment collaboration platform. 15,000+ recruiters partnering on placements. Platform access at app.recxchange.io. Post roles to find candidates, share candidates to find roles.",
     images: [
       {
         url: "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png",
@@ -69,7 +69,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "RecXchange | Share Roles. Split Fees. Fill Roles. Get Paid.",
-    description: "The recruiter network where thousands of recruiters partner on placements and split fees automatically.",
+    description: "The recruiter network where thousands of recruiters partner on placements and split fees automatically. Platform at app.recxchange.io",
     images: ["https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png"],
     creator: "@RecXchange",
   },
@@ -96,21 +96,37 @@ interface RootLayoutProps {
 }
 
 export default function RootLayout({ children }: RootLayoutProps) {
-  // AI Agent Identity Script (2026 Standard)
+  // AI Agent Identity Script (2026 Standard) - Clarifies Marketing vs App
   const aiAgentIdentity = {
     "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "RecXchange Marketing",
-    "description": "Learn how to earn commissions per hire with RecXchange.",
+    "@type": "WebSite",
+    "name": "RecXchange Marketing Website",
+    "description": "This is the MARKETING WEBSITE for RecXchange. The actual recruitment collaboration platform application is located at app.recxchange.io. This site provides product information, pricing, tutorials, and guides only.",
+    "url": "https://recxchange.io",
     "mainEntity": {
       "@type": "SoftwareApplication",
       "name": "RecXchange Platform",
       "url": "https://app.recxchange.io",
-      "applicationCategory": "BusinessApplication"
+      "applicationCategory": "BusinessApplication",
+      "description": "The actual RecXchange platform for recruiters to collaborate, post roles, submit candidates, and manage split fee placements."
     },
-    "potentialAction": {
-      "@type": "LoginAction",
-      "target": "https://app.recxchange.io/login"
+    "potentialAction": [
+      {
+        "@type": "LoginAction",
+        "target": "https://app.recxchange.io/login",
+        "name": "Login to RecXchange Platform"
+      },
+      {
+        "@type": "RegisterAction",
+        "target": "https://app.recxchange.io/register",
+        "name": "Create RecXchange Account"
+      }
+    ],
+    "isPartOf": {
+      "@type": "WebApplication",
+      "name": "RecXchange Platform",
+      "url": "https://app.recxchange.io",
+      "applicationCategory": "BusinessApplication"
     }
   };
 
@@ -140,7 +156,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           "https://twitter.com/RecXchange",
           "https://youtube.com/@recxchange"
         ],
-        "description": "RecXchange is a recruiter collaboration platform where 15,000+ recruiters partner on placements and split fees automatically. Average placement fee: $7,000. Access to 270M candidate profiles. $750,000 in fees available across 100+ live roles. Weekly live streams and video tutorials on YouTube.",
+        "description": "RecXchange is a recruiter collaboration platform where 15,000+ recruiters partner on placements and split fees automatically. This marketing website (recxchange.io) provides information and guides. The actual platform is at app.recxchange.io. Average placement fee: $7,000. Access to 270M candidate profiles. $750,000 in fees available across 100+ live roles. Weekly live streams and video tutorials on YouTube.",
         "numberOfEmployees": {
           "@type": "QuantitativeValue",
           "value": 15000,
@@ -172,35 +188,38 @@ export default function RootLayout({ children }: RootLayoutProps) {
           "https://www.linkedin.com/in/tomandrews"
         ]
       },
-      // Design Agency Schema - AMIVY Designs
+      // Design Agency Schema - AMIVY Designs (UPDATED URL)
       {
         "@type": "Organization",
-        "@id": "https://www.amivydesigns.com/#organization",
+        "@id": "https://andrews-recruitment.com/about#organization",
         "name": "AMIVY Designs",
-        "url": "https://www.amivydesigns.com",
+        "url": "https://andrews-recruitment.com/about",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/AMIVY%20Designs.png"
+          "url": "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/79a68aec-f3cc-44c3-8b5b-500176059f26_20260228_053107_0000.png",
+          "width": 180,
+          "height": 45
         },
         "description": "Premium web design, development, and digital branding agency specializing in custom websites and digital solutions.",
         "serviceType": ["Web Design", "Web Development", "Digital Branding", "UI/UX Design"]
       },
-      // Software Application Schema
+      // Software Application Schema - Platform distinction
       {
         "@type": "SoftwareApplication",
         "@id": "https://recxchange.io/#softwareapplication",
-        "name": "RecXchange",
+        "name": "RecXchange Platform",
         "applicationCategory": "BusinessApplication",
         "operatingSystem": "Web",
         "url": "https://app.recxchange.io",
-        "installUrl": "https://app.recxchange.io/login",
+        "installUrl": "https://app.recxchange.io/register",
+        "softwareHelp": "https://recxchange.io/faq",
         "provider": {
           "@id": "https://recxchange.io/#organization"
         },
         "creator": {
-          "@id": "https://www.amivydesigns.com/#organization"
+          "@id": "https://andrews-recruitment.com/about#organization"
         },
-        "description": "The recruiter network where 15,000+ recruiters partner on placements. Average placement fee: $7,000. Split fees up to 70% on RecX Direct roles. Access 270M candidate profiles. Post roles to find candidates, or share candidates to find roles. $750,000 in fees available across 100+ live roles in UK, USA, Europe, Africa, Middle East, Australia covering Engineering, Healthcare, Tech, HR, Sales, Finance.",
+        "description": "The recruiter collaboration platform (app.recxchange.io) where 15,000+ recruiters partner on placements. Average placement fee: $7,000. Split fees up to 70% on RecX Direct roles. Access 270M candidate profiles. Post roles to find candidates, or share candidates to find roles. $750,000 in fees available across 100+ live roles in UK, USA, Europe, Africa, Middle East, Australia covering Engineering, Healthcare, Tech, HR, Sales, Finance. This marketing site (recxchange.io) provides information only.",
         "offers": [
           {
             "@type": "Offer",
@@ -209,6 +228,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             "priceCurrency": "USD",
             "description": "5 tokens per month, access to collaborative roles and candidate database",
             "availability": "https://schema.org/InStock",
+            "url": "https://recxchange.io/pricing",
             "priceSpecification": {
               "@type": "UnitPriceSpecification",
               "price": "1",
@@ -227,6 +247,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             "priceCurrency": "USD",
             "description": "150 tokens per month, access after 7 days to RecX Direct roles",
             "availability": "https://schema.org/InStock",
+            "url": "https://recxchange.io/pricing",
             "priceSpecification": {
               "@type": "UnitPriceSpecification",
               "price": "99",
@@ -245,6 +266,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             "priceCurrency": "USD",
             "description": "400 tokens per month, instant RecX Direct access, up to 70% fee split",
             "availability": "https://schema.org/InStock",
+            "url": "https://recxchange.io/pricing",
             "priceSpecification": {
               "@type": "UnitPriceSpecification",
               "price": "250",
@@ -286,7 +308,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           "@id": "https://recxchange.io/#organization"
         },
         "name": "RecXchange Recruitment Collaboration",
-        "description": "Split fee recruitment collaboration platform connecting 15,000+ recruiters. Post roles to find candidates, share candidates to find roles. Split fees 50/50, 60/40, or up to 70% on RecX Direct roles.",
+        "description": "Split fee recruitment collaboration platform connecting 15,000+ recruiters. Post roles to find candidates, share candidates to find roles. Split fees 50/50, 60/40, or up to 70% on RecX Direct roles. Platform access at app.recxchange.io",
         "areaServed": [
           {
             "@type": "Country",
@@ -318,7 +340,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
           "lowPrice": "1",
           "highPrice": "250",
           "priceCurrency": "USD",
-          "offerCount": "3"
+          "offerCount": "3",
+          "url": "https://recxchange.io/pricing"
         },
         "audience": {
           "@type": "ProfessionalAudience",
@@ -423,27 +446,42 @@ export default function RootLayout({ children }: RootLayoutProps) {
           }
         ]
       },
-      // WebSite Schema
+      // WebSite Schema with clarification
       {
         "@type": "WebSite",
         "@id": "https://recxchange.io/#website",
         "url": "https://recxchange.io",
-        "name": "RecXchange",
-        "description": "Share Roles. Split Fees. Fill Roles. Get Paid.",
+        "name": "RecXchange Marketing Website",
+        "description": "Marketing and information website for RecXchange recruitment collaboration platform. The actual platform application is at app.recxchange.io. This site provides product information, pricing, guides, and educational content.",
         "publisher": {
           "@id": "https://recxchange.io/#organization"
         },
         "creator": {
-          "@id": "https://www.amivydesigns.com/#organization"
+          "@id": "https://andrews-recruitment.com/about#organization"
         },
         "copyrightHolder": {
           "@id": "https://recxchange.io/#organization"
         },
         "copyrightYear": 2024,
-        "potentialAction": {
-          "@type": "SearchAction",
-          "target": "https://recxchange.io/roles?q={search_term_string}",
-          "query-input": "required name=search_term_string"
+        "potentialAction": [
+          {
+            "@type": "SearchAction",
+            "target": "https://recxchange.io/roles?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+          },
+          {
+            "@type": "LoginAction",
+            "target": "https://app.recxchange.io/login",
+            "name": "Login to Platform"
+          },
+          {
+            "@type": "RegisterAction",
+            "target": "https://app.recxchange.io/register",
+            "name": "Create Account"
+          }
+        ],
+        "mainEntity": {
+          "@id": "https://recxchange.io/#softwareapplication"
         }
       }
     ]
@@ -452,7 +490,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className="dark">
       <head>
-        {/* AI Agent Identity Script (2026 Standard) - Highest Priority */}
+        {/* AI Agent Identity Script (2026 Standard) - Marketing Site Clarification */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(aiAgentIdentity) }}
