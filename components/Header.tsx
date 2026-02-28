@@ -72,7 +72,7 @@ export default function Header() {
               rel="external"
               data-intent="platform-access"
             >
-              Login
+              Platform Login
             </Link>
             <Link
               href="https://app.recxchange.io/register?trigger_link=jYQNc9YXcMkYPvo3HZfC"
@@ -132,7 +132,7 @@ export default function Header() {
                     data-intent="platform-access"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    Login
+                    Platform Login
                   </Link>
                 </div>
 
