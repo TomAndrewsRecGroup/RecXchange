@@ -141,13 +141,13 @@ export default function Footer() {
             <div className="order-1 lg:order-2 flex items-center gap-3">
               <p className="text-gray-600 text-[9px] sm:text-[10px] uppercase tracking-wider whitespace-nowrap">Website Designed & Developed by</p>
               <Link 
-                href="https://www.amivydesigns.com" 
+                href="https://andrews-recruitment.com/about" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 aria-label="Visit AMIVY Designs - Web Design & Development"
               >
                 <Image
-                  src="https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/ChatGPT%20Image%20Feb%2027%2C%202026%2C%2011_55_36%20AM.png"
+                  src="https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/79a68aec-f3cc-44c3-8b5b-500176059f26_20260228_053107_0000.png"
                   alt="AMIVY Designs - Premium Web Design & Development Agency"
                   width={180}
                   height={45}
