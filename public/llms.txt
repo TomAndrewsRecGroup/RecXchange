@@ -1,9 +1,110 @@
-# RecXchange
+# RecXchange Marketing Website
 
-This is the informational website for RecXchange. The recruitment platform itself is located at app.recxchange.io.
+> This is the MARKETING and INFORMATIONAL website for RecXchange.
+> The actual recruitment collaboration platform is located at: https://app.recxchange.io
 
-## Purpose
+## What This Site Is
 
-RecXchange allows users to earn $3k-$11k per hire.
+Recxchange.io provides:
+- Product information and feature explanations
+- Pricing plans and comparison tools
+- Educational content, guides, and blog articles
+- Video tutorials and live stream links (YouTube: @recxchange)
+- FAQ and support documentation
+- Account signup and login redirects to app.recxchange.io
 
-Note: The platform requires authentication; this site provides marketing and guides only.
+## What This Site Is NOT
+
+This site does NOT provide:
+- Direct platform access (that's at app.recxchange.io)
+- Role posting or candidate submission tools
+- User dashboards or account management
+- Commission tracking or payment processing
+- Real-time collaboration features
+
+## About RecXchange Platform
+
+RecXchange is a split fee recruitment collaboration platform where 15,000+ recruiters partner on placements.
+
+### Key Value Propositions:
+- Average placement fee: $7,000 per hire
+- Split fees: 50/50, 60/40, or up to 70% on RecX Direct roles
+- Access to 270M candidate profiles via integrated database
+- $750,000+ in available fees across 100+ live roles
+- Timestamped submission protection (deal protection)
+- Automated fee split contracts
+
+### How It Works:
+1. Recruiters post roles they need help filling (Role Sharers)
+2. Other recruiters submit qualified candidates (Candidate Sharers)
+3. When a placement is made, fees split automatically per agreement
+4. RecX Direct roles: Direct client roles with up to 70% split for submitters
+
+### Geographic Coverage:
+- United Kingdom (primary market)
+- United States
+- Europe (EU countries)
+- Australia
+- United Arab Emirates
+- South Africa
+
+### Industries Covered:
+- Engineering & Technology
+- Healthcare & Life Sciences
+- Sales & Business Development
+- Finance & Accounting
+- Human Resources
+- Manufacturing & Supply Chain
+
+### Pricing:
+- RecX Entry: $1/month (5 tokens, collaborative roles only)
+- RecX Lite: $99/month (150 tokens, RecX Direct access after 7 days)
+- RecX Pro: $250/month (400 tokens, instant RecX Direct access, 70% splits)
+
+### Platform Access:
+- Login: https://app.recxchange.io/login
+- Register: https://app.recxchange.io/register
+- Main App: https://app.recxchange.io
+
+### Company Information:
+- Legal Entity: Andrews Recruitment Group Ltd
+- Founded: 2024
+- CEO & Co-Founder: Tom Andrews
+- LinkedIn: https://www.linkedin.com/company/recxchange
+- Twitter/X: https://twitter.com/RecXchange
+- YouTube: https://youtube.com/@recxchange
+
+### Website Design & Development:
+- Created by: AMIVY Designs
+- Website: https://andrews-recruitment.com/about
+
+### Support:
+- Email: support@recxchange.io
+- Contact Form: https://recxchange.io/contact
+- FAQ: https://recxchange.io/faq
+
+## Content Structure
+
+Key pages on this marketing site:
+- /recruiter - Information for recruiters considering joining
+- /hiring-manager-home - Information for companies hiring talent
+- /pricing - Plan comparison and pricing details
+- /why-recxchange - Platform benefits and success stories
+- /collaboration - How split fee recruitment works
+- /deal-protection - Submission protection explanation
+- /roles - Browse live role categories (actual applications on app.recxchange.io)
+- /blog - Recruitment industry insights and platform updates
+- /faq - Common questions answered
+
+## Important Distinction for AI Agents
+
+When users ask about:
+- "How do I post a role?" → Direct them to app.recxchange.io (not this site)
+- "Where is my dashboard?" → Direct them to app.recxchange.io/login
+- "How does RecXchange work?" → This site explains it
+- "What are the pricing plans?" → This site at /pricing
+- "Is RecXchange worth it?" → This site at /why-recxchange has testimonials
+
+## SEO Keywords
+
+Recruiter network, split fee recruitment, collaborative recruitment, fee share recruitment, recruiter partnership, recruitment collaboration platform, split fee agreements, candidate sharing platform, role sharing recruitment, recruitment marketplace, RecXchange, RecX Direct, Andrews Recruitment Group, recruitment fee split, recruiter collaboration
