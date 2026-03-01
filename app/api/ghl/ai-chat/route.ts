@@ -137,7 +137,7 @@ async function getOrCreateConversation(contactId: string): Promise<string> {
   return newConvId;
 }
 
-// ─── Send Message and Wait for AI Response ───────────────────────────────────
+// ─── Send Message and Wait for AI Response ────────────────────────────────────
 async function sendMessageAndWaitForAI(
   conversationId: string,
   contactId: string,
@@ -154,6 +154,8 @@ async function sendMessageAndWaitForAI(
     { headers: ghlHeaders }
   );
   const beforeData = await beforeMessages.json();
+  console.log('[GHL AI Chat] Before messages response:', JSON.stringify(beforeData));
+  
   const messageCountBefore = beforeData.messages?.length || 0;
   console.log('[GHL AI Chat] Messages before:', messageCountBefore);
   
@@ -205,34 +207,55 @@ async function sendMessageAndWaitForAI(
       { headers: ghlHeaders }
     );
     
-    if (messagesResponse.ok) {
-      const messagesData = await messagesResponse.json();
-      const messages: GHLMessage[] = messagesData.messages || [];
+    if (!messagesResponse.ok) {
+      const errorText = await messagesResponse.text();
+      console.error('[GHL AI Chat] Failed to fetch messages:', errorText);
+      continue;
+    }
+    
+    const messagesData = await messagesResponse.json();
+    console.log('[GHL AI Chat] Messages API response:', JSON.stringify(messagesData));
+    
+    // Handle different possible response formats
+    const messages: GHLMessage[] = messagesData.messages || messagesData.data || [];
+    
+    if (!Array.isArray(messages)) {
+      console.error('[GHL AI Chat] Messages is not an array:', typeof messages);
+      console.error('[GHL AI Chat] Full response structure:', JSON.stringify(messagesData));
+      continue;
+    }
+    
+    console.log(`[GHL AI Chat] Found ${messages.length} total messages`);
+    
+    // Look for newest outbound message (AI response)
+    const outboundMessages = messages.filter((msg: GHLMessage) => 
+      msg.direction === 'outbound' && 
+      msg.type === 'Live_Chat' && 
+      msg.body
+    );
+    
+    console.log(`[GHL AI Chat] Found ${outboundMessages.length} outbound messages`);
+    
+    // Check if we have more messages than before
+    if (messages.length > messageCountBefore) {
+      console.log('[GHL AI Chat] New messages detected!');
       
-      console.log(`[GHL AI Chat] Found ${messages.length} total messages`);
-      
-      // Look for newest outbound message (AI response)
-      const outboundMessages = messages.filter((msg: GHLMessage) => 
-        msg.direction === 'outbound' && 
-        msg.type === 'Live_Chat' && 
-        msg.body
-      );
-      
-      // Check if we have more messages than before
-      if (messages.length > messageCountBefore) {
-        // Get the most recent outbound message
-        if (outboundMessages.length > 0) {
-          // Sort by dateAdded to get newest
-          const sorted = outboundMessages.sort((a: GHLMessage, b: GHLMessage) => {
-            const dateA = new Date(a.dateAdded || 0).getTime();
-            const dateB = new Date(b.dateAdded || 0).getTime();
-            return dateB - dateA;
-          });
-          
-          aiMessage = sorted[0].body || null;
-          console.log('[GHL AI Chat] ✓ Found AI response:', aiMessage);
-        }
+      // Get the most recent outbound message
+      if (outboundMessages.length > 0) {
+        // Sort by dateAdded to get newest
+        const sorted = outboundMessages.sort((a: GHLMessage, b: GHLMessage) => {
+          const dateA = new Date(a.dateAdded || 0).getTime();
+          const dateB = new Date(b.dateAdded || 0).getTime();
+          return dateB - dateA;
+        });
+        
+        aiMessage = sorted[0].body || null;
+        console.log('[GHL AI Chat] ✓ Found AI response:', aiMessage);
+      } else {
+        console.log('[GHL AI Chat] No outbound messages found yet');
       }
+    } else {
+      console.log('[GHL AI Chat] No new messages yet');
     }
   }
   
