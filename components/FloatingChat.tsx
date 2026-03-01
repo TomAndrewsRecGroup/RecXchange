@@ -156,7 +156,7 @@ export default function FloatingChat() {
               onClick={() => setIsOpen(false)}
             />
             
-            {/* Chat modal */}
+            {/* Chat modal - FIXED HEIGHT FOR MOBILE */}
             <motion.div
               initial={{ opacity: 0, y: 20, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -164,77 +164,78 @@ export default function FloatingChat() {
               transition={{ duration: 0.2 }}
               className="
                 fixed md:absolute
-                inset-4 md:inset-auto
-                md:bottom-20 md:right-0
-                md:w-[380px] md:h-[550px]
-                max-w-full
+                bottom-20 right-4 left-4
+                md:bottom-20 md:right-0 md:left-auto
+                md:w-[380px]
+                h-[calc(100vh-180px)] max-h-[600px]
+                md:h-[550px]
                 bg-[#0a0a0f]/95 backdrop-blur-xl 
                 border border-cyan-400/30 
-                rounded-2xl md:rounded-2xl
+                rounded-2xl
                 shadow-2xl 
                 flex flex-col 
                 overflow-hidden
               "
             >
               {/* Header */}
-              <div className="p-4 sm:p-5 border-b border-cyan-400/20 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 flex-shrink-0">
+              <div className="p-3.5 sm:p-4 border-b border-cyan-400/20 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 flex-shrink-0">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h3 className="text-white font-bold text-base sm:text-sm">RecXchange Support</h3>
-                    <p className="text-gray-400 text-sm sm:text-xs flex items-center gap-1.5 sm:gap-1">
+                    <h3 className="text-white font-bold text-sm">RecXchange Support</h3>
+                    <p className="text-gray-400 text-xs flex items-center gap-1">
                       <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
                       AI Assistant {hasHandedOver && '→ Live Agent'}
                     </p>
                   </div>
                   <button
                     onClick={() => setIsOpen(false)}
-                    className="text-gray-400 hover:text-white transition-colors p-2 sm:p-2 rounded-lg hover:bg-white/10 touch-manipulation"
+                    className="text-gray-400 hover:text-white transition-colors p-1.5 rounded-lg hover:bg-white/10 touch-manipulation"
                   >
-                    <X className="w-5 h-5 sm:w-[18px] sm:h-[18px]" />
+                    <X className="w-5 h-5" />
                   </button>
                 </div>
               </div>
 
               {/* Messages */}
-              <div className="flex-1 overflow-y-auto p-4 sm:p-4 space-y-4 overscroll-contain">
+              <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 overscroll-contain">
                 {showUserForm ? (
-                  <div className="space-y-4 sm:space-y-4">
-                    <div className="text-center py-4 sm:py-4">
-                      <div className="w-14 h-14 sm:w-12 sm:h-12 rounded-full bg-gradient-to-r from-cyan-500 to-purple-500 flex items-center justify-center mx-auto mb-3">
-                        <MessageCircle className="text-white w-7 h-7 sm:w-6 sm:h-6" />
+                  <div className="space-y-3">
+                    <div className="text-center py-3">
+                      <div className="w-12 h-12 rounded-full bg-gradient-to-r from-cyan-500 to-purple-500 flex items-center justify-center mx-auto mb-2">
+                        <MessageCircle className="text-white w-6 h-6" />
                       </div>
-                      <p className="text-white text-base sm:text-sm font-semibold mb-1">Welcome to RecXchange!</p>
-                      <p className="text-gray-400 text-sm sm:text-xs">Let's get started with a few quick details</p>
+                      <p className="text-white text-sm font-semibold mb-1">Welcome to RecXchange!</p>
+                      <p className="text-gray-400 text-xs">Let's get started with a few quick details</p>
                     </div>
 
                     <div>
-                      <label className="text-gray-300 text-sm sm:text-xs block mb-1.5 sm:mb-1">Your Name *</label>
+                      <label className="text-gray-300 text-xs block mb-1">Your Name *</label>
                       <input
                         type="text"
                         value={userName}
                         onChange={(e) => setUserName(e.target.value)}
                         placeholder="John Smith"
-                        className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 sm:px-3 sm:py-2 text-white text-base sm:text-sm placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 touch-manipulation"
+                        className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2.5 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 touch-manipulation"
                       />
                     </div>
 
                     <div>
-                      <label className="text-gray-300 text-sm sm:text-xs block mb-1.5 sm:mb-1">Email Address *</label>
+                      <label className="text-gray-300 text-xs block mb-1">Email Address *</label>
                       <input
                         type="email"
                         value={userEmail}
                         onChange={(e) => setUserEmail(e.target.value)}
                         placeholder="john@company.com"
-                        className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 sm:px-3 sm:py-2 text-white text-base sm:text-sm placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 touch-manipulation"
+                        className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2.5 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 touch-manipulation"
                       />
                     </div>
 
                     <div>
-                      <label className="text-gray-300 text-sm sm:text-xs block mb-1.5 sm:mb-1">I am a... *</label>
+                      <label className="text-gray-300 text-xs block mb-1">I am a... *</label>
                       <select
                         value={userPersona}
                         onChange={(e) => setUserPersona(e.target.value as 'recruiter' | 'hiring-manager')}
-                        className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 sm:px-3 sm:py-2 text-white text-base sm:text-sm focus:outline-none focus:border-cyan-400/50 touch-manipulation"
+                        className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-cyan-400/50 touch-manipulation"
                       >
                         <option value="" className="bg-[#0a0a0f]">Select one</option>
                         <option value="recruiter" className="bg-[#0a0a0f]">Recruiter</option>
@@ -244,25 +245,25 @@ export default function FloatingChat() {
 
                     {userPersona === 'hiring-manager' && (
                       <div>
-                        <label className="text-gray-300 text-sm sm:text-xs block mb-1.5 sm:mb-1">Company Name *</label>
+                        <label className="text-gray-300 text-xs block mb-1">Company Name *</label>
                         <input
                           type="text"
                           value={companyName}
                           onChange={(e) => setCompanyName(e.target.value)}
                           placeholder="Acme Corp"
-                          className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 sm:px-3 sm:py-2 text-white text-base sm:text-sm placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 touch-manipulation"
+                          className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2.5 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 touch-manipulation"
                         />
                       </div>
                     )}
 
                     <button
                       onClick={handleStartChat}
-                      className="w-full py-3.5 sm:py-3 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-lg text-white font-bold text-base sm:text-sm hover:shadow-lg transition-all touch-manipulation active:scale-98"
+                      className="w-full py-3 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-lg text-white font-bold text-sm hover:shadow-lg transition-all touch-manipulation active:scale-98"
                     >
                       Start Chat
                     </button>
 
-                    <p className="text-gray-500 text-xs sm:text-[10px] text-center">
+                    <p className="text-gray-500 text-[10px] text-center">
                       By continuing, you agree to our data collection for support purposes.
                     </p>
                   </div>
@@ -274,7 +275,7 @@ export default function FloatingChat() {
                         className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
                       >
                         <div
-                          className={`max-w-[85%] sm:max-w-[80%] rounded-lg p-3.5 sm:p-3 text-base sm:text-sm leading-relaxed ${
+                          className={`max-w-[85%] rounded-lg p-3 text-sm leading-relaxed ${
                             msg.role === 'user'
                               ? 'bg-gradient-to-r from-cyan-500 to-purple-500 text-white'
                               : msg.isHandover
@@ -294,8 +295,8 @@ export default function FloatingChat() {
                     ))}
                     {isLoading && (
                       <div className="flex justify-start">
-                        <div className="bg-white/10 rounded-lg p-3.5 sm:p-3">
-                          <Loader2 className="animate-spin text-cyan-400 w-[18px] h-[18px] sm:w-4 sm:h-4" />
+                        <div className="bg-white/10 rounded-lg p-3">
+                          <Loader2 className="animate-spin text-cyan-400 w-4 h-4" />
                         </div>
                       </div>
                     )}
@@ -304,34 +305,34 @@ export default function FloatingChat() {
                 )}
               </div>
 
-              {/* Input */}
+              {/* Input - FIXED AT BOTTOM */}
               {!showUserForm && (
-                <div className="p-4 sm:p-4 border-t border-cyan-400/20 flex-shrink-0 bg-[#0a0a0f]/80">
+                <div className="p-3 sm:p-4 border-t border-cyan-400/20 flex-shrink-0 bg-[#0a0a0f]/95">
                   {hasHandedOver ? (
-                    <div className="text-center py-3 sm:py-2 text-gray-400 text-sm sm:text-xs">
+                    <div className="text-center py-2 text-gray-400 text-xs">
                       A team member will respond in your GHL inbox
                     </div>
                   ) : (
-                    <div className="flex gap-2.5 sm:gap-2">
+                    <div className="flex gap-2">
                       <input
                         type="text"
                         value={inputValue}
                         onChange={(e) => setInputValue(e.target.value)}
                         onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                         placeholder="Type your message..."
-                        className="flex-1 bg-white/10 border border-white/20 rounded-lg px-4 py-3 sm:px-3 sm:py-2 text-white text-base sm:text-sm placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 touch-manipulation"
+                        className="flex-1 bg-white/10 border border-white/20 rounded-lg px-3 py-2.5 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 touch-manipulation"
                         disabled={isLoading}
                       />
                       <button
                         onClick={handleSendMessage}
                         disabled={!inputValue.trim() || isLoading}
-                        className="px-5 py-3 sm:px-4 sm:py-2 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-lg text-white font-medium hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all touch-manipulation active:scale-95"
+                        className="px-4 py-2.5 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-lg text-white font-medium hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all touch-manipulation active:scale-95 flex-shrink-0"
                       >
-                        <Send className="w-[18px] h-[18px] sm:w-4 sm:h-4" />
+                        <Send className="w-4 h-4" />
                       </button>
                     </div>
                   )}
-                  <p className="text-gray-500 text-[10px] sm:text-[9px] text-center mt-2.5 sm:mt-2">
+                  <p className="text-gray-500 text-[9px] text-center mt-2">
                     Say "speak to human" to connect with a live agent
                   </p>
                 </div>
@@ -341,12 +342,12 @@ export default function FloatingChat() {
         )}
       </AnimatePresence>
 
-      {/* Toggle Button */}
+      {/* Toggle Button - SMALLER ON MOBILE */}
       <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(!isOpen)}
-        className="w-16 h-16 sm:w-14 sm:h-14 rounded-full bg-gradient-to-r from-cyan-500 to-purple-500 shadow-lg flex items-center justify-center text-white hover:shadow-xl transition-shadow touch-manipulation"
+        className="w-14 h-14 sm:w-14 sm:h-14 rounded-full bg-gradient-to-r from-cyan-500 to-purple-500 shadow-lg flex items-center justify-center text-white hover:shadow-xl transition-shadow touch-manipulation"
       >
         <AnimatePresence mode="wait">
           {isOpen ? (
@@ -357,7 +358,7 @@ export default function FloatingChat() {
               exit={{ rotate: 90, opacity: 0 }}
               transition={{ duration: 0.2 }}
             >
-              <X className="w-[26px] h-[26px] sm:w-6 sm:h-6" />
+              <X className="w-5 h-5" />
             </motion.div>
           ) : (
             <motion.div
@@ -367,7 +368,7 @@ export default function FloatingChat() {
               exit={{ rotate: -90, opacity: 0 }}
               transition={{ duration: 0.2 }}
             >
-              <MessageCircle className="w-[26px] h-[26px] sm:w-6 sm:h-6" />
+              <MessageCircle className="w-5 h-5" />
             </motion.div>
           )}
         </AnimatePresence>
