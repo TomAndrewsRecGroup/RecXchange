@@ -4,6 +4,7 @@ import { visitorContactIds } from '../webhook/route';
 const GHL_BASE = 'https://services.leadconnectorhq.com';
 const API_KEY = process.env.GHL_API_KEY!;
 const LOCATION_ID = process.env.GHL_LOCATION_ID!;
+const AI_AGENT_ID = process.env.GHL_CONVERSATION_AI_AGENT_ID;
 
 const ghlHeaders = {
   'Authorization': `Bearer ${API_KEY}`,
@@ -24,6 +25,7 @@ interface GHLMessage {
   dateAdded?: string;
   id?: string;
   messageType?: string;
+  status?: string;
 }
 
 // ─── Handover Detection ──────────────────────────────────────────────────────
@@ -39,6 +41,8 @@ function detectHandoverTrigger(message: string): boolean {
     'connect me to agent',
     'real person',
     'actual person',
+    'speak with someone',
+    'talk with someone',
   ];
   
   const lowerMessage = message.toLowerCase().trim();
@@ -138,140 +142,211 @@ async function getOrCreateConversation(contactId: string): Promise<string> {
   return newConvId;
 }
 
-// ─── Send Message and Wait for AI Response ────────────────────────────────────
+// ─── Robust AI Response Polling ───────────────────────────────────────────────
+async function pollForAIResponse(
+  conversationId: string,
+  messageCountBefore: number,
+  maxAttempts: number = 20
+): Promise<string | null> {
+  console.log('[GHL AI Chat] Starting AI response polling...');
+  
+  let attempts = 0;
+  let lastMessageCount = messageCountBefore;
+  
+  while (attempts < maxAttempts) {
+    attempts++;
+    
+    // Exponential backoff: 300ms, 500ms, 500ms, 700ms, 1000ms, 1000ms...
+    const delay = attempts <= 2 ? 300 : attempts <= 4 ? 500 : attempts <= 10 ? 700 : 1000;
+    await new Promise(resolve => setTimeout(resolve, delay));
+    
+    console.log(`[GHL AI Chat] Poll attempt ${attempts}/${maxAttempts} (delay: ${delay}ms)`);
+    
+    try {
+      const messagesResponse = await fetch(
+        `${GHL_BASE}/conversations/${conversationId}/messages?limit=15`,
+        { headers: ghlHeaders }
+      );
+      
+      if (!messagesResponse.ok) {
+        console.warn(`[GHL AI Chat] Messages API returned ${messagesResponse.status}`);
+        continue;
+      }
+      
+      const messagesData = await messagesResponse.json();
+      const messages: GHLMessage[] = messagesData.messages?.messages || [];
+      
+      if (!Array.isArray(messages)) {
+        console.warn('[GHL AI Chat] Invalid messages format');
+        continue;
+      }
+      
+      console.log(`[GHL AI Chat] Found ${messages.length} messages (was ${lastMessageCount})`);
+      
+      // Check for new messages
+      if (messages.length > messageCountBefore) {
+        // Look for outbound messages (AI responses)
+        const outboundMessages = messages.filter((msg: GHLMessage) => 
+          msg.direction === 'outbound' && 
+          msg.body && 
+          msg.body.trim().length > 0 &&
+          msg.status !== 'failed'
+        );
+        
+        if (outboundMessages.length > 0) {
+          // Sort by date to get most recent
+          const sorted = outboundMessages.sort((a: GHLMessage, b: GHLMessage) => {
+            const dateA = new Date(a.dateAdded || 0).getTime();
+            const dateB = new Date(b.dateAdded || 0).getTime();
+            return dateB - dateA;
+          });
+          
+          const aiMessage = sorted[0].body?.trim();
+          if (aiMessage) {
+            console.log('[GHL AI Chat] ✓ AI response received:', aiMessage.substring(0, 100));
+            return aiMessage;
+          }
+        }
+        
+        // Messages increased but no outbound yet - keep waiting
+        lastMessageCount = messages.length;
+      }
+      
+    } catch (pollError) {
+      console.error('[GHL AI Chat] Polling error:', pollError);
+      // Continue polling despite errors
+    }
+  }
+  
+  console.warn('[GHL AI Chat] ⚠️ AI response not received after', maxAttempts, 'attempts');
+  return null;
+}
+
+// ─── Trigger AI Bot (Multiple Methods) ────────────────────────────────────────
+async function triggerAIBot(
+  conversationId: string,
+  contactId: string,
+  message: string
+): Promise<void> {
+  console.log('[GHL AI Chat] Triggering AI bot for conversation');
+  
+  // Method 1: Standard inbound message (primary method)
+  try {
+    const inboundPayload = {
+      type: 'Live_Chat',
+      conversationId,
+      contactId,
+      locationId: LOCATION_ID,
+      message,
+    };
+    
+    const inboundResponse = await fetch(`${GHL_BASE}/conversations/messages/inbound`, {
+      method: 'POST',
+      headers: ghlHeaders,
+      body: JSON.stringify(inboundPayload),
+    });
+
+    if (inboundResponse.ok) {
+      const inboundData = await inboundResponse.json();
+      console.log('[GHL AI Chat] ✓ Inbound message posted, ID:', inboundData.messageId || inboundData.id);
+      return; // Success
+    } else {
+      const errorText = await inboundResponse.text();
+      console.warn('[GHL AI Chat] Inbound message failed:', errorText);
+    }
+  } catch (error) {
+    console.error('[GHL AI Chat] Inbound message error:', error);
+  }
+  
+  // Method 2: Fallback - regular message endpoint
+  try {
+    console.log('[GHL AI Chat] Trying fallback message endpoint');
+    const fallbackPayload = {
+      type: 'Live_Chat',
+      conversationId,
+      contactId,
+      locationId: LOCATION_ID,
+      message,
+      html: message,
+    };
+    
+    const fallbackResponse = await fetch(`${GHL_BASE}/conversations/messages`, {
+      method: 'POST',
+      headers: ghlHeaders,
+      body: JSON.stringify(fallbackPayload),
+    });
+
+    if (fallbackResponse.ok) {
+      console.log('[GHL AI Chat] ✓ Fallback message posted');
+      return;
+    }
+  } catch (error) {
+    console.error('[GHL AI Chat] Fallback message error:', error);
+  }
+  
+  throw new Error('All message posting methods failed');
+}
+
+// ─── Main AI Chat Logic ───────────────────────────────────────────────────────
 async function sendMessageAndWaitForAI(
   conversationId: string,
   contactId: string,
   message: string
 ): Promise<string> {
-  console.log('[GHL AI Chat] === Sending message to trigger AI bot ===');
-  console.log('[GHL AI Chat] ConversationId:', conversationId);
-  console.log('[GHL AI Chat] ContactId:', contactId);
+  console.log('[GHL AI Chat] === Processing AI chat request ===');
+  console.log('[GHL AI Chat] Conversation:', conversationId);
+  console.log('[GHL AI Chat] Contact:', contactId);
   console.log('[GHL AI Chat] Message:', message);
+  console.log('[GHL AI Chat] AI Agent ID:', AI_AGENT_ID || 'NOT SET');
   
-  // Get message count before posting
-  const beforeMessages = await fetch(
-    `${GHL_BASE}/conversations/${conversationId}/messages?limit=5`,
-    { headers: ghlHeaders }
-  );
-  const beforeData = await beforeMessages.json();
-  
-  // GHL API has nested structure: response.messages.messages
-  const messagesBefore: GHLMessage[] = beforeData.messages?.messages || [];
-  const messageCountBefore = messagesBefore.length;
-  console.log('[GHL AI Chat] Messages before:', messageCountBefore);
-  
-  // Post user message as inbound message (this triggers the AI bot automatically)
-  const inboundPayload = {
-    type: 'Live_Chat',
-    conversationId,
-    contactId,
-    locationId: LOCATION_ID,
-    message,
-  };
-  
-  console.log('[GHL AI Chat] Posting inbound message');
-  
-  const inboundResponse = await fetch(`${GHL_BASE}/conversations/messages/inbound`, {
-    method: 'POST',
-    headers: ghlHeaders,
-    body: JSON.stringify(inboundPayload),
-  });
-
-  if (!inboundResponse.ok) {
-    const errorText = await inboundResponse.text();
-    console.error('[GHL AI Chat] Failed to post inbound message:', errorText);
-    throw new Error(`Failed to post inbound message: ${errorText}`);
-  }
-
-  const inboundData = await inboundResponse.json();
-  console.log('[GHL AI Chat] Inbound message posted successfully');
-  console.log('[GHL AI Chat] Message ID:', inboundData.messageId || inboundData.id);
-  
-  // Wait for AI bot to respond (GHL AI bots respond automatically to inbound messages)
-  console.log('[GHL AI Chat] Waiting for AI bot response...');
-  
-  let attempts = 0;
-  const maxAttempts = 12; // 12 attempts over 6 seconds
-  let aiMessage = null;
-  
-  while (attempts < maxAttempts && !aiMessage) {
-    attempts++;
-    
-    // Wait 500ms between checks
-    await new Promise(resolve => setTimeout(resolve, 500));
-    
-    console.log(`[GHL AI Chat] Polling attempt ${attempts}/${maxAttempts}`);
-    
-    const messagesResponse = await fetch(
-      `${GHL_BASE}/conversations/${conversationId}/messages?limit=10`,
+  // Get baseline message count
+  let messageCountBefore = 0;
+  try {
+    const beforeResponse = await fetch(
+      `${GHL_BASE}/conversations/${conversationId}/messages?limit=5`,
       { headers: ghlHeaders }
     );
     
-    if (!messagesResponse.ok) {
-      const errorText = await messagesResponse.text();
-      console.error('[GHL AI Chat] Failed to fetch messages:', errorText);
-      continue;
+    if (beforeResponse.ok) {
+      const beforeData = await beforeResponse.json();
+      const messagesBefore: GHLMessage[] = beforeData.messages?.messages || [];
+      messageCountBefore = messagesBefore.length;
+      console.log('[GHL AI Chat] Baseline message count:', messageCountBefore);
     }
-    
-    const messagesData = await messagesResponse.json();
-    
-    // GHL API returns: { messages: { messages: [...] } }
-    const messages: GHLMessage[] = messagesData.messages?.messages || [];
-    
-    if (!Array.isArray(messages)) {
-      console.error('[GHL AI Chat] Messages is not an array:', typeof messages);
-      continue;
-    }
-    
-    console.log(`[GHL AI Chat] Found ${messages.length} total messages`);
-    
-    // Look for outbound message (AI response)
-    // messageType can be TYPE_LIVE_CHAT or just check direction
-    const outboundMessages = messages.filter((msg: GHLMessage) => 
-      msg.direction === 'outbound' && 
-      msg.body && 
-      msg.body.trim().length > 0
-    );
-    
-    console.log(`[GHL AI Chat] Found ${outboundMessages.length} outbound messages`);
-    
-    // Check if we have new messages
-    if (messages.length > messageCountBefore) {
-      console.log('[GHL AI Chat] New messages detected!');
-      
-      if (outboundMessages.length > 0) {
-        // Sort by dateAdded to get newest
-        const sorted = outboundMessages.sort((a: GHLMessage, b: GHLMessage) => {
-          const dateA = new Date(a.dateAdded || 0).getTime();
-          const dateB = new Date(b.dateAdded || 0).getTime();
-          return dateB - dateA;
-        });
-        
-        aiMessage = sorted[0].body || null;
-        console.log('[GHL AI Chat] ✓ Found AI response:', aiMessage);
-      } else {
-        console.log('[GHL AI Chat] No outbound messages found yet (only inbound)');
-      }
-    } else {
-      console.log('[GHL AI Chat] No new messages yet');
-    }
+  } catch (error) {
+    console.warn('[GHL AI Chat] Could not get baseline count:', error);
   }
   
-  if (!aiMessage) {
-    console.warn('[GHL AI Chat] ⚠️ AI bot did not respond within timeout');
-    console.warn('[GHL AI Chat] Only inbound message was found - AI bot is not responding');
-    console.warn('[GHL AI Chat] Please check:');
-    console.warn('[GHL AI Chat] 1. AI bot is configured in GHL Settings → Conversation AI');
-    console.warn('[GHL AI Chat] 2. AI bot is set to "Autopilot" mode (not "Suggestive")');
-    console.warn('[GHL AI Chat] 3. AI bot has "Live_Chat" channel enabled');
-    console.warn('[GHL AI Chat] 4. AI bot is active/enabled for this location');
-    
-    // Return a helpful fallback message that also creates a conversation for manual follow-up
-    return "Thank you for your message! I'm currently experiencing connectivity issues. A team member has been notified and will respond to you shortly via email or in your GHL inbox.";
+  // Post message to trigger AI
+  await triggerAIBot(conversationId, contactId, message);
+  
+  // Poll for AI response with robust retry logic
+  const aiResponse = await pollForAIResponse(conversationId, messageCountBefore, 20);
+  
+  if (aiResponse) {
+    return aiResponse;
   }
   
-  return aiMessage;
+  // AI didn't respond - return fallback and trigger handover
+  console.warn('[GHL AI Chat] ⚠️ AI bot did not respond - triggering automatic handover');
+  
+  // Mark conversation for human attention
+  try {
+    await fetch(`${GHL_BASE}/conversations/${conversationId}`, {
+      method: 'PUT',
+      headers: ghlHeaders,
+      body: JSON.stringify({
+        unread: true,
+        starred: true,
+      }),
+    });
+    console.log('[GHL AI Chat] Conversation marked for human review');
+  } catch (error) {
+    console.error('[GHL AI Chat] Failed to mark conversation:', error);
+  }
+  
+  // Return helpful message
+  return "Thank you for reaching out! I'm currently experiencing connectivity issues. A team member has been notified and will respond to you shortly. You can also email us at support@recxchange.io for immediate assistance.";
 }
 
 // ─── Handover to Live Agent ───────────────────────────────────────────────────
@@ -279,39 +354,45 @@ async function handoverToLiveAgent(
   conversationId: string,
   contactId: string
 ): Promise<void> {
-  console.log('[GHL AI Chat] Initiating handover to live agent');
+  console.log('[GHL AI Chat] ⚡ Manual handover to live agent requested');
   
-  // Update conversation to mark for human agent
-  await fetch(`${GHL_BASE}/conversations/${conversationId}`, {
-    method: 'PUT',
-    headers: ghlHeaders,
-    body: JSON.stringify({
-      unread: true,
-      starred: true,
-    }),
-  });
+  try {
+    // Mark conversation as urgent
+    await fetch(`${GHL_BASE}/conversations/${conversationId}`, {
+      method: 'PUT',
+      headers: ghlHeaders,
+      body: JSON.stringify({
+        unread: true,
+        starred: true,
+      }),
+    });
 
-  // Post handover notification as outbound message
-  await fetch(`${GHL_BASE}/conversations/messages`, {
-    method: 'POST',
-    headers: ghlHeaders,
-    body: JSON.stringify({
-      type: 'Live_Chat',
-      conversationId,
-      contactId,
-      message: '🔔 [Handover Requested] Connecting you with a team member...',
-    }),
-  });
+    // Post system notification
+    await fetch(`${GHL_BASE}/conversations/messages`, {
+      method: 'POST',
+      headers: ghlHeaders,
+      body: JSON.stringify({
+        type: 'Live_Chat',
+        conversationId,
+        contactId,
+        message: '🔔 [HANDOVER REQUESTED] User requested to speak with a human agent. Please respond ASAP.',
+      }),
+    });
 
-  console.log('[GHL AI Chat] Handover complete - conversation flagged for agent');
+    console.log('[GHL AI Chat] ✓ Handover complete - conversation flagged');
+  } catch (error) {
+    console.error('[GHL AI Chat] Handover error:', error);
+  }
 }
 
 // ─── Main Handler ─────────────────────────────────────────────────────────────
 export async function POST(req: NextRequest) {
-  console.log('[GHL AI Chat] === New AI chat request ===');
-  console.log('[GHL AI Chat] Environment check:');
-  console.log('[GHL AI Chat] - API_KEY present:', !!API_KEY);
-  console.log('[GHL AI Chat] - LOCATION_ID:', LOCATION_ID);
+  const startTime = Date.now();
+  console.log('[GHL AI Chat] ═══ NEW REQUEST ═══');
+  console.log('[GHL AI Chat] Timestamp:', new Date().toISOString());
+  console.log('[GHL AI Chat] API Key:', API_KEY ? '✓ Present' : '✗ Missing');
+  console.log('[GHL AI Chat] Location ID:', LOCATION_ID || '✗ Missing');
+  console.log('[GHL AI Chat] AI Agent ID:', AI_AGENT_ID || '⚠️ Not configured');
   
   try {
     const body = await req.json();
@@ -331,14 +412,17 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Message is required' }, { status: 400 });
     }
 
-    // Detect handover trigger FIRST
+    // Check for handover trigger FIRST
     const shouldHandover = detectHandoverTrigger(message);
-    console.log('[GHL AI Chat] Handover trigger detected:', shouldHandover);
+    
+    if (shouldHandover) {
+      console.log('[GHL AI Chat] 🔔 Handover trigger detected in message');
+    }
 
     let contactId = existingContactId;
     let conversationId = existingConvId;
 
-    // First message — create contact
+    // Create/get contact
     if (!contactId) {
       if (!name || !email || !persona) {
         return NextResponse.json(
@@ -351,25 +435,33 @@ export async function POST(req: NextRequest) {
       visitorContactIds.add(contactId);
     }
 
+    // Create/get conversation
     if (!conversationId) {
       conversationId = await getOrCreateConversation(contactId);
     }
 
-    // If handover requested, transfer to live agent
+    // Handle manual handover request
     if (shouldHandover) {
       await handoverToLiveAgent(conversationId, contactId);
+      
+      const elapsed = Date.now() - startTime;
+      console.log(`[GHL AI Chat] ✓ Request completed in ${elapsed}ms (handover)`);
+      
       return NextResponse.json({
         success: true,
         contactId,
         conversationId,
-        message: "I'm connecting you with a team member now. They'll respond in your conversation shortly!",
+        message: "Perfect! I'm connecting you with a team member now. They'll respond to you shortly via this conversation or email.",
         handover: true,
       });
     }
 
-    // Otherwise, post message and wait for AI bot to respond automatically
-    console.log('[GHL AI Chat] Posting message to trigger AI bot');
+    // Route to AI bot
+    console.log('[GHL AI Chat] → Routing to AI bot');
     const aiMessage = await sendMessageAndWaitForAI(conversationId, contactId, message);
+
+    const elapsed = Date.now() - startTime;
+    console.log(`[GHL AI Chat] ✓ Request completed in ${elapsed}ms`);
 
     return NextResponse.json({
       success: true,
@@ -378,15 +470,18 @@ export async function POST(req: NextRequest) {
       message: aiMessage,
       handover: false,
     });
+    
   } catch (err) {
-    console.error('[GHL AI Chat] Fatal error:', err);
-    console.error('[GHL AI Chat] Error stack:', err instanceof Error ? err.stack : 'No stack trace');
+    const elapsed = Date.now() - startTime;
+    console.error('[GHL AI Chat] ✗ Fatal error after', elapsed, 'ms');
+    console.error('[GHL AI Chat] Error:', err);
+    console.error('[GHL AI Chat] Stack:', err instanceof Error ? err.stack : 'No stack');
     
     return NextResponse.json(
       { 
         error: 'Internal server error', 
         details: err instanceof Error ? err.message : String(err),
-        message: 'I apologize for the technical issue. A team member will assist you shortly. You can also contact support@recxchange.io',
+        message: 'I apologize for the technical difficulty. Please email us at support@recxchange.io or try again in a moment.',
       },
       { status: 500 }
     );
