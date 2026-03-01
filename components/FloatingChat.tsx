@@ -11,6 +11,51 @@ interface Message {
   isHandover?: boolean;
 }
 
+// Map pathnames to user-friendly page names
+const getPageContext = (pathname: string): string => {
+  const pageMap: Record<string, string> = {
+    '/': 'Homepage',
+    '/home': 'Homepage',
+    '/why-recxchange': 'Why RecXchange',
+    '/pricing': 'Pricing',
+    '/collaboration': 'Collaboration',
+    '/deal-protection': 'Deal Protection',
+    '/roles': 'Active Roles',
+    '/blog': 'Blog',
+    '/account-management': 'Account Management',
+    '/hiring-manager-live': 'Hiring Manager - Live Roles',
+    '/hiring-manager-strategic': 'Hiring Manager - Strategic Roles',
+  };
+  
+  return pageMap[pathname] || `${pathname.replace('/', '').replace(/-/g, ' ')} page`;
+};
+
+// Detect user intent from first message
+const detectUserIntent = (message: string): string => {
+  const lower = message.toLowerCase();
+  
+  if (lower.includes('price') || lower.includes('cost') || lower.includes('pricing') || lower.includes('how much')) {
+    return 'pricing-inquiry';
+  }
+  if (lower.includes('demo') || lower.includes('trial') || lower.includes('try')) {
+    return 'demo-request';
+  }
+  if (lower.includes('work') || lower.includes('how does') || lower.includes('features')) {
+    return 'product-inquiry';
+  }
+  if (lower.includes('contact') || lower.includes('call') || lower.includes('meeting')) {
+    return 'contact-request';
+  }
+  if (lower.includes('role') || lower.includes('job') || lower.includes('position') || lower.includes('hiring')) {
+    return 'recruitment-inquiry';
+  }
+  if (lower.includes('collaborate') || lower.includes('partner') || lower.includes('together')) {
+    return 'collaboration-inquiry';
+  }
+  
+  return 'general-inquiry';
+};
+
 export default function FloatingChat() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
@@ -82,9 +127,15 @@ export default function FloatingChat() {
     setIsLoading(true);
 
     try {
+      // Get page context and detect intent
+      const pageContext = getPageContext(pathname);
+      const userIntent = messages.length === 1 ? detectUserIntent(userMessage) : undefined;
+      
       const payload: Record<string, unknown> = {
         message: userMessage,
         history: messages,
+        pageContext, // NEW: Send current page
+        userIntent, // NEW: Send detected intent
       };
 
       // First message includes user info
@@ -156,7 +207,7 @@ export default function FloatingChat() {
               onClick={() => setIsOpen(false)}
             />
             
-            {/* Chat modal - FIXED HEIGHT FOR MOBILE */}
+            {/* Chat modal */}
             <motion.div
               initial={{ opacity: 0, y: 20, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -305,7 +356,7 @@ export default function FloatingChat() {
                 )}
               </div>
 
-              {/* Input - FIXED AT BOTTOM */}
+              {/* Input */}
               {!showUserForm && (
                 <div className="p-3 sm:p-4 border-t border-cyan-400/20 flex-shrink-0 bg-[#0a0a0f]/95">
                   {hasHandedOver ? (
@@ -342,7 +393,7 @@ export default function FloatingChat() {
         )}
       </AnimatePresence>
 
-      {/* Toggle Button - SMALLER ON MOBILE */}
+      {/* Toggle Button */}
       <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
