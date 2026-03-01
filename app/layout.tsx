@@ -24,8 +24,8 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  title: "RecXchange | Share Roles. Split Fees. Fill Roles. Get Paid.",
-  description: "Marketing and information site for RecXchange - the recruiter collaboration platform where 15,000+ recruiters partner on placements and split fees automatically. The actual platform is at app.recxchange.io. Post roles to find candidates, or share candidates to find roles. Split fees 50/50, 60/40, or up to 70%.",
+  title: "RecXchange: Recruiter Collaboration Platform | 15,000+ Split Fee Network",
+  description: "RecXchange is a recruiter collaboration platform where 15,000+ recruiters partner on placements and split fees automatically. Access 270M candidates, $750K+ in live fees, and earn up to 70% commission on RecX Direct roles.",
   keywords: [
     "recruiter network",
     "split fee recruitment",
@@ -55,8 +55,8 @@ export const metadata: Metadata = {
     locale: "en_GB",
     url: "https://recxchange.io",
     siteName: "RecXchange",
-    title: "RecXchange | Share Roles. Split Fees. Fill Roles. Get Paid.",
-    description: "Marketing site for RecXchange recruitment collaboration platform. 15,000+ recruiters partnering on placements. Platform access at app.recxchange.io. Post roles to find candidates, share candidates to find roles.",
+    title: "RecXchange: Recruiter Collaboration Platform | 15,000+ Split Fee Network",
+    description: "The recruiter network where 15,000+ recruiters partner on placements and split fees automatically. Access 270M candidates and $750K+ in live placement fees.",
     images: [
       {
         url: "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png",
@@ -68,7 +68,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "RecXchange | Share Roles. Split Fees. Fill Roles. Get Paid.",
+    title: "RecXchange: Recruiter Collaboration Platform | 15,000+ Split Fee Network",
     description: "The recruiter network where thousands of recruiters partner on placements and split fees automatically. Platform at app.recxchange.io",
     images: ["https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png"],
     creator: "@RecXchange",
@@ -128,6 +128,114 @@ export default function RootLayout({ children }: RootLayoutProps) {
       "url": "https://app.recxchange.io",
       "applicationCategory": "BusinessApplication"
     }
+  };
+
+  // FAQPage Schema for Homepage (GEO Critical)
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is RecXchange?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "RecXchange is a recruiter collaboration platform where over 15,000 vetted recruiters worldwide partner on placements and split fees automatically. The platform provides access to 270 million candidate profiles, over $750,000 in active placement fees across 100+ live roles, and features an AI-powered matching engine that connects the right recruiters to roles and candidates in seconds. Recruiters can earn up to 70% commission on RecX Direct premium roles, with an average placement fee of $7,000."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do split fees work on RecXchange?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "RecXchange automates split fee agreements between recruiters. When two or more recruiters collaborate on a placement, fees are split according to pre-agreed percentages: 50/50 for standard collaborative roles, 60/40 for specialized partnerships, or up to 70% for RecX Direct premium roles. All agreements are timestamped and protected with automated contracts, ensuring transparent and secure fee distribution."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is RecX Direct?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "RecX Direct is RecXchange's premium tier offering exclusive roles with higher commission rates of up to 70% (compared to 50% on standard roles). These are direct client relationships where RecXchange has negotiated exclusive partnerships with hiring companies. Recruiters get priority access to high-value roles, faster payment processing (15-30 days vs. 30-45 days), and dedicated account management."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How fast can I make a placement on RecXchange?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Recruiters on RecXchange are making placements within 48 hours of joining. When you post a role, 15,000+ recruiters compete to help fill it. When you upload candidates, they're automatically matched to hundreds of relevant roles. The average RecXchange member makes their first split fee placement within 19 days."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How much does RecXchange cost?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "RecXchange offers three pricing tiers: RecX Entry at $1/month (5 tokens, basic access), RecX Lite at $99/month (150 tokens, RecX Direct access after 7 days), and RecX Pro at $250/month (400 tokens, instant RecX Direct access with up to 70% fee splits). You only pay when you use the platform, with no upfront fees and no commitment required."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is RecXchange suitable for solo recruiters?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, RecXchange is ideal for solo recruiters and boutique agencies. Instead of competing alone, you partner with 15,000+ other recruiters to fill roles faster and place candidates you wouldn't reach otherwise. Solo recruiters on the platform report making $15,000+ in their first month by leveraging the collaborative network."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the Xchange Engine?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The Xchange Engine is RecXchange's AI-powered matching technology that automatically connects roles with the right recruiters and candidates with the right opportunities. It analyzes skills, industries, locations, and recruiter specializations to make intelligent matches in seconds, ensuring your roles and candidates get maximum visibility to relevant partners."
+        }
+      }
+    ]
+  };
+
+  // Video Schema for YouTube Tutorials (GEO Critical)
+  const videoSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "itemListElement": [
+      {
+        "@type": "VideoObject",
+        "name": "How RecXchange Works: Split Fee Recruitment Explained",
+        "description": "A complete walkthrough of how RecXchange's split fee recruitment platform works. Learn how to post roles, submit candidates, collaborate with 15,000+ recruiters, and earn up to 70% commission on placements.",
+        "thumbnailUrl": "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png",
+        "uploadDate": "2026-02-15T10:00:00Z",
+        "contentUrl": "https://youtube.com/@recxchange",
+        "embedUrl": "https://youtube.com/@recxchange",
+        "publisher": {
+          "@type": "Organization",
+          "name": "RecXchange",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png"
+          }
+        },
+        "duration": "PT8M30S"
+      },
+      {
+        "@type": "VideoObject",
+        "name": "RecX Direct Explained: Earn Up to 70% Commission",
+        "description": "Learn about RecX Direct, RecXchange's premium tier with exclusive client roles and up to 70% commission splits. Discover how to access high-value placements and accelerate your recruitment revenue.",
+        "thumbnailUrl": "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png",
+        "uploadDate": "2026-02-20T14:00:00Z",
+        "contentUrl": "https://youtube.com/@recxchange",
+        "embedUrl": "https://youtube.com/@recxchange",
+        "publisher": {
+          "@type": "Organization",
+          "name": "RecXchange",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png"
+          }
+        },
+        "duration": "PT6M15S"
+      }
+    ]
   };
 
   // Comprehensive JSON-LD Schema with enhanced entities
@@ -462,7 +570,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         "copyrightHolder": {
           "@id": "https://recxchange.io/#organization"
         },
-        "copyrightYear": 2024,
+        "copyrightYear": 2026,
         "potentialAction": [
           {
             "@type": "SearchAction",
@@ -494,6 +602,16 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(aiAgentIdentity) }}
+        />
+        {/* FAQPage Schema for AI Optimization (GEO Critical) */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+        {/* Video Schema for YouTube Tutorials (GEO Critical) */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(videoSchema) }}
         />
         {/* Comprehensive Schema.org Data */}
         <script

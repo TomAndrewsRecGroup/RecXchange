@@ -236,7 +236,7 @@ export default function RootPage() {
             </div>
           </motion.div>
 
-          {/* Combined What & Why Section */}
+          {/* Combined What & Why Section - OPTIMIZED FOR GEO */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: showContent ? 1 : 0, y: showContent ? 0 : 30 }}
@@ -252,51 +252,54 @@ export default function RootPage() {
                 backdropFilter: 'blur(20px)'
               }}
             >
-              {/* What is RecXchange */}
+              {/* What is RecXchange - AI-OPTIMIZED H1 */}
               <div className="mb-12">
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-8 text-left">
-                  What is <span 
-                    className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent"
-                  >RecXchange</span>?
-                </h2>
+                <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 text-left">
+                  <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">RecXchange</span> is a Split Fee Recruitment Platform for 15,000+ Global Recruiters
+                </h1>
                 
+                {/* Opening statement - complete sentence for AI */}
+                <p className="text-gray-200 text-lg sm:text-xl leading-relaxed mb-6 text-left">
+                  RecXchange is a recruiter collaboration platform where over 15,000 vetted recruiters worldwide partner on placements and split fees automatically. The platform provides access to 270 million candidate profiles, over $750,000 in active placement fees across 100+ live roles, and an AI-powered matching engine that connects the right recruiters to roles and candidates in seconds.
+                </p>
+
                 <div className="space-y-4 text-gray-300 text-base sm:text-lg leading-relaxed text-left">
                   <ul className="space-y-3">
                     <li className="flex items-start gap-3">
                       <div className="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0 mt-2"
                         style={{ boxShadow: '0 0 10px rgba(59, 130, 246, 0.8)' }}
                       />
-                      <span><strong className="text-white">15,000+ vetted recruiters</strong> worldwide competing to fill your roles and place your candidates</span>
+                      <span>Over <strong className="text-white">15,000 vetted recruiters</strong> worldwide are competing to fill your roles and place your candidates.</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <div className="w-1.5 h-1.5 rounded-full bg-purple-500 flex-shrink-0 mt-2"
                         style={{ boxShadow: '0 0 10px rgba(168, 85, 247, 0.8)' }}
                       />
-                      <span><strong className="text-white">$750,000+ in placement fees</strong> available right now across 100+ active roles</span>
+                      <span>There is over <strong className="text-white">$750,000 in placement fees</strong> available right now across 100+ active roles in industries including Technology, Finance, Healthcare, Engineering, and Sales.</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <div className="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0 mt-2"
                         style={{ boxShadow: '0 0 10px rgba(59, 130, 246, 0.8)' }}
                       />
-                      <span><strong className="text-white">270M+ candidate profiles</strong> you can search and submit instantly</span>
+                      <span>You can search and submit candidates from a database of <strong className="text-white">270 million profiles</strong> instantly.</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <div className="w-1.5 h-1.5 rounded-full bg-purple-500 flex-shrink-0 mt-2"
                         style={{ boxShadow: '0 0 10px rgba(168, 85, 247, 0.8)' }}
                       />
-                      <span><strong className="text-white">AI-powered Xchange Engine</strong> matches your roles and candidates to the right recruiters in seconds</span>
+                      <span>The <strong className="text-white">AI-powered Xchange Engine</strong> automatically matches your roles and candidates to the right recruiters in seconds, using intelligent analysis of skills, industries, locations, and recruiter specializations.</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <div className="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0 mt-2"
                         style={{ boxShadow: '0 0 10px rgba(59, 130, 246, 0.8)' }}
                       />
-                      <span><strong className="text-white">Average placement fee: $7,000</strong> — recruiters are making placements within 48 hours</span>
+                      <span>The <strong className="text-white">average placement fee is $7,000</strong>, and recruiters are making placements within 48 hours of joining the platform.</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <div className="w-1.5 h-1.5 rounded-full bg-purple-500 flex-shrink-0 mt-2"
                         style={{ boxShadow: '0 0 10px rgba(168, 85, 247, 0.8)' }}
                       />
-                      <span><strong className="text-white">Automated contracts & fee splits</strong> — transparent, timestamped, protected</span>
+                      <span>All fee splits are managed through <strong className="text-white">automated contracts with timestamps</strong>, ensuring transparent, protected, and secure payment distribution.</span>
                     </li>
                   </ul>
                 </div>
@@ -308,9 +311,9 @@ export default function RootPage() {
               {/* Why RecXchange */}
               <div>
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-8 text-left">
-                  Why <span 
+                  Why Choose <span 
                     className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent"
-                  >RecXchange</span>?
+                  >RecXchange</span> for Your Recruitment Business?
                 </h2>
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
@@ -323,7 +326,7 @@ export default function RootPage() {
                     <div className="text-left">
                       <h3 className="text-white font-bold text-lg mb-2">Fill Roles Faster</h3>
                       <p className="text-gray-300 text-sm leading-relaxed">
-                        Roles you've been stuck on for weeks get filled in 48 hours when 15,000 recruiters compete to help.
+                        Roles that you've been stuck on for weeks get filled within 48 hours when 15,000 recruiters compete to help you succeed.
                       </p>
                     </div>
                   </div>
@@ -336,7 +339,7 @@ export default function RootPage() {
                     <div className="text-left">
                       <h3 className="text-white font-bold text-lg mb-2">Earn While You Sleep</h3>
                       <p className="text-gray-300 text-sm leading-relaxed">
-                        Your candidates get submitted to hundreds of roles automatically — make placements you never touched.
+                        Your candidates get automatically submitted to hundreds of relevant roles, allowing you to make placements on opportunities you never personally touched.
                       </p>
                     </div>
                   </div>
@@ -349,7 +352,7 @@ export default function RootPage() {
                     <div className="text-left">
                       <h3 className="text-white font-bold text-lg mb-2">Stop Losing to Competition</h3>
                       <p className="text-gray-300 text-sm leading-relaxed">
-                        While you work alone, other recruiters are partnering and splitting $750K+ in active fees.
+                        While you work alone, other recruiters on RecXchange are partnering and splitting over $750,000 in active placement fees.
                       </p>
                     </div>
                   </div>
@@ -362,7 +365,7 @@ export default function RootPage() {
                     <div className="text-left">
                       <h3 className="text-white font-bold text-lg mb-2">Zero Risk, All Reward</h3>
                       <p className="text-gray-300 text-sm leading-relaxed">
-                        Start for $1. No upfront fees. Only pay when you earn. Recruiters are making $15K+ in their first month.
+                        Start for just $1 per month with no upfront fees and only pay when you earn. Recruiters are making $15,000+ in their first month.
                       </p>
                     </div>
                   </div>
