@@ -74,21 +74,21 @@ export default function RootPage() {
 
       <main className="relative min-h-screen bg-black flex flex-col items-center px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16 overflow-x-hidden">
         <div className="w-full max-w-[1200px] mx-auto">
-          {/* Logo Animation - FIXED: Full width on mobile/tablet, max-width on desktop */}
+          {/* Logo Animation - FIXED: Stays within screen bounds during animation */}
           <motion.div
             initial={{ 
-              scale: 2.0,
+              scale: 1.5,
               opacity: 1,
-              y: '30vh'
+              y: '25vh'
             }}
             animate={animationComplete ? { 
               scale: 1, 
               opacity: 1,
               y: 0
             } : { 
-              scale: 2.0, 
+              scale: 1.5, 
               opacity: 1,
-              y: '30vh'
+              y: '25vh'
             }}
             transition={{ 
               duration: 1.5, 
@@ -235,7 +235,7 @@ export default function RootPage() {
             </div>
           </motion.div>
 
-          {/* Combined What & Why Section - REWRITTEN TO REMOVE REPETITION */}
+          {/* Combined What & Why Section */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: showContent ? 1 : 0, y: showContent ? 0 : 30 }}
@@ -251,13 +251,12 @@ export default function RootPage() {
                 backdropFilter: 'blur(20px)'
               }}
             >
-              {/* What is RecXchange - SIMPLIFIED & CLEAR */}
+              {/* What is RecXchange */}
               <div className="mb-8 sm:mb-10 md:mb-12">
                 <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4 text-left leading-tight">
                   What is <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">RecXchange</span>?
                 </h1>
                 
-                {/* Opening statement - complete sentence for AI */}
                 <p className="text-gray-200 text-base sm:text-lg md:text-xl leading-relaxed mb-4 sm:mb-6 text-left">
                   RecXchange is a global recruiter collaboration platform where recruitment professionals partner to fill roles and place candidates faster than working alone. When you post a role or upload a candidate, our AI-powered Xchange Engine instantly connects you with the right partners who have what you need.
                 </p>
@@ -301,7 +300,7 @@ export default function RootPage() {
               {/* Divider */}
               <div className="w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent mb-8 sm:mb-10 md:mb-12" />
 
-              {/* Why RecXchange - BENEFITS-FOCUSED */}
+              {/* Why RecXchange */}
               <div>
                 <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 sm:mb-8 text-left leading-tight">
                   Why Recruiters & Hiring Managers Choose <span 
@@ -311,7 +310,7 @@ export default function RootPage() {
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
                   
-                  {/* Benefit 1 - For Recruiters */}
+                  {/* Benefit 1 */}
                   <div className="flex items-start gap-3 sm:gap-4">
                     <div className="w-2 h-2 rounded-full bg-blue-400 flex-shrink-0 mt-1.5 sm:mt-2"
                       style={{ boxShadow: '0 0 15px rgba(59, 130, 246, 0.8)' }}
@@ -324,7 +323,7 @@ export default function RootPage() {
                     </div>
                   </div>
 
-                  {/* Benefit 2 - For Recruiters */}
+                  {/* Benefit 2 */}
                   <div className="flex items-start gap-3 sm:gap-4">
                     <div className="w-2 h-2 rounded-full bg-purple-500 flex-shrink-0 mt-1.5 sm:mt-2"
                       style={{ boxShadow: '0 0 15px rgba(168, 85, 247, 0.8)' }}
@@ -337,7 +336,7 @@ export default function RootPage() {
                     </div>
                   </div>
 
-                  {/* Benefit 3 - For Hiring Managers */}
+                  {/* Benefit 3 */}
                   <div className="flex items-start gap-3 sm:gap-4">
                     <div className="w-2 h-2 rounded-full bg-blue-400 flex-shrink-0 mt-1.5 sm:mt-2"
                       style={{ boxShadow: '0 0 15px rgba(59, 130, 246, 0.8)' }}
@@ -350,7 +349,7 @@ export default function RootPage() {
                     </div>
                   </div>
 
-                  {/* Benefit 4 - For Everyone */}
+                  {/* Benefit 4 */}
                   <div className="flex items-start gap-3 sm:gap-4">
                     <div className="w-2 h-2 rounded-full bg-purple-500 flex-shrink-0 mt-1.5 sm:mt-2"
                       style={{ boxShadow: '0 0 15px rgba(168, 85, 247, 0.8)' }}
