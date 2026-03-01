@@ -23,6 +23,7 @@ interface GHLMessage {
   body?: string;
   dateAdded?: string;
   id?: string;
+  messageType?: string;
 }
 
 // ─── Handover Detection ──────────────────────────────────────────────────────
@@ -154,9 +155,10 @@ async function sendMessageAndWaitForAI(
     { headers: ghlHeaders }
   );
   const beforeData = await beforeMessages.json();
-  console.log('[GHL AI Chat] Before messages response:', JSON.stringify(beforeData));
   
-  const messageCountBefore = beforeData.messages?.length || 0;
+  // GHL API has nested structure: response.messages.messages
+  const messagesBefore: GHLMessage[] = beforeData.messages?.messages || [];
+  const messageCountBefore = messagesBefore.length;
   console.log('[GHL AI Chat] Messages before:', messageCountBefore);
   
   // Post user message as inbound message (this triggers the AI bot automatically)
@@ -168,7 +170,7 @@ async function sendMessageAndWaitForAI(
     message,
   };
   
-  console.log('[GHL AI Chat] Posting inbound message:', JSON.stringify(inboundPayload));
+  console.log('[GHL AI Chat] Posting inbound message');
   
   const inboundResponse = await fetch(`${GHL_BASE}/conversations/messages/inbound`, {
     method: 'POST',
@@ -187,11 +189,10 @@ async function sendMessageAndWaitForAI(
   console.log('[GHL AI Chat] Message ID:', inboundData.messageId || inboundData.id);
   
   // Wait for AI bot to respond (GHL AI bots respond automatically to inbound messages)
-  // We need to poll for new messages
   console.log('[GHL AI Chat] Waiting for AI bot response...');
   
   let attempts = 0;
-  const maxAttempts = 10; // 10 attempts over 5 seconds
+  const maxAttempts = 12; // 12 attempts over 6 seconds
   let aiMessage = null;
   
   while (attempts < maxAttempts && !aiMessage) {
@@ -214,33 +215,31 @@ async function sendMessageAndWaitForAI(
     }
     
     const messagesData = await messagesResponse.json();
-    console.log('[GHL AI Chat] Messages API response:', JSON.stringify(messagesData));
     
-    // Handle different possible response formats
-    const messages: GHLMessage[] = messagesData.messages || messagesData.data || [];
+    // GHL API returns: { messages: { messages: [...] } }
+    const messages: GHLMessage[] = messagesData.messages?.messages || [];
     
     if (!Array.isArray(messages)) {
       console.error('[GHL AI Chat] Messages is not an array:', typeof messages);
-      console.error('[GHL AI Chat] Full response structure:', JSON.stringify(messagesData));
       continue;
     }
     
     console.log(`[GHL AI Chat] Found ${messages.length} total messages`);
     
-    // Look for newest outbound message (AI response)
+    // Look for outbound message (AI response)
+    // messageType can be TYPE_LIVE_CHAT or just check direction
     const outboundMessages = messages.filter((msg: GHLMessage) => 
       msg.direction === 'outbound' && 
-      msg.type === 'Live_Chat' && 
-      msg.body
+      msg.body && 
+      msg.body.trim().length > 0
     );
     
     console.log(`[GHL AI Chat] Found ${outboundMessages.length} outbound messages`);
     
-    // Check if we have more messages than before
+    // Check if we have new messages
     if (messages.length > messageCountBefore) {
       console.log('[GHL AI Chat] New messages detected!');
       
-      // Get the most recent outbound message
       if (outboundMessages.length > 0) {
         // Sort by dateAdded to get newest
         const sorted = outboundMessages.sort((a: GHLMessage, b: GHLMessage) => {
@@ -252,7 +251,7 @@ async function sendMessageAndWaitForAI(
         aiMessage = sorted[0].body || null;
         console.log('[GHL AI Chat] ✓ Found AI response:', aiMessage);
       } else {
-        console.log('[GHL AI Chat] No outbound messages found yet');
+        console.log('[GHL AI Chat] No outbound messages found yet (only inbound)');
       }
     } else {
       console.log('[GHL AI Chat] No new messages yet');
@@ -260,14 +259,16 @@ async function sendMessageAndWaitForAI(
   }
   
   if (!aiMessage) {
-    console.warn('[GHL AI Chat] AI bot did not respond within timeout');
-    console.warn('[GHL AI Chat] This could mean:');
-    console.warn('[GHL AI Chat] 1. AI bot is not configured for Live_Chat channel');
-    console.warn('[GHL AI Chat] 2. AI bot is in "suggestive" mode (not autopilot)');
-    console.warn('[GHL AI Chat] 3. AI bot response is taking longer than expected');
+    console.warn('[GHL AI Chat] ⚠️ AI bot did not respond within timeout');
+    console.warn('[GHL AI Chat] Only inbound message was found - AI bot is not responding');
+    console.warn('[GHL AI Chat] Please check:');
+    console.warn('[GHL AI Chat] 1. AI bot is configured in GHL Settings → Conversation AI');
+    console.warn('[GHL AI Chat] 2. AI bot is set to "Autopilot" mode (not "Suggestive")');
+    console.warn('[GHL AI Chat] 3. AI bot has "Live_Chat" channel enabled');
+    console.warn('[GHL AI Chat] 4. AI bot is active/enabled for this location');
     
-    // Return a helpful fallback message
-    return "Thank you for your message! Our AI assistant is processing your request. If you don't receive a response shortly, a team member will assist you.";
+    // Return a helpful fallback message that also creates a conversation for manual follow-up
+    return "Thank you for your message! I'm currently experiencing connectivity issues. A team member has been notified and will respond to you shortly via email or in your GHL inbox.";
   }
   
   return aiMessage;
@@ -314,7 +315,6 @@ export async function POST(req: NextRequest) {
   
   try {
     const body = await req.json();
-    console.log('[GHL AI Chat] Request body:', JSON.stringify(body));
     
     const {
       name,
