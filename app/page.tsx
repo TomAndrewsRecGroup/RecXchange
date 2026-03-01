@@ -74,10 +74,10 @@ export default function RootPage() {
 
       <main className="relative min-h-screen bg-black flex flex-col items-center px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16 overflow-x-hidden">
         <div className="w-full max-w-[1200px] mx-auto">
-          {/* Logo Animation - FIXED: Stays within screen bounds during animation */}
+          {/* Logo Animation - REDUCED to 1.3x scale for small mobile screens */}
           <motion.div
             initial={{ 
-              scale: 1.5,
+              scale: 1.3,
               opacity: 1,
               y: '25vh'
             }}
@@ -86,7 +86,7 @@ export default function RootPage() {
               opacity: 1,
               y: 0
             } : { 
-              scale: 1.5, 
+              scale: 1.3, 
               opacity: 1,
               y: '25vh'
             }}
