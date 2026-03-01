@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 RecXchange GHL AI Chat API Test Suite
-Python version for cross-platform compatibility
+Python version - Pure GHL Integration
 
 Usage:
   python tests/api-test-ghl-chat.py
@@ -38,6 +38,10 @@ def print_header():
     print("=" * 80)
     print(f"\nTarget: {API_ENDPOINT}")
     print(f"Date: {datetime.utcnow().isoformat()}Z\n")
+    print(f"{Colors.BLUE}📝 NOTE: Pure GHL AI Bot Integration{Colors.NC}")
+    print("    - Messages sent directly to GHL AI bot (no modification)")
+    print("    - GHL bot handles ALL responses and handover logic")
+    print("    - No client-side interference with bot behavior\n")
 
 def test_header(num, title):
     print("\n" + "─" * 80)
@@ -83,12 +87,12 @@ def test_initial_message():
         "message": "What is RecXchange?",
         "persona": "recruiter",
         "pageContext": "Homepage",
-        "userIntent": "general-inquiry"
     }
     
     print("Payload:")
     print(json.dumps(payload, indent=2))
     print("\nSending request...")
+    print(f"{Colors.YELLOW}⏳ Waiting for GHL AI bot response (10-15 seconds typical)...{Colors.NC}")
     
     try:
         response = requests.post(
@@ -108,24 +112,33 @@ def test_initial_message():
                 "contactId present": "contactId" in data and data.get("contactId"),
                 "conversationId present": "conversationId" in data and data.get("conversationId"),
                 "message present": "message" in data and data.get("message"),
-                "handover field": "handover" in data,
             }
             
             for check_name, result in checks.items():
                 status = f"{Colors.GREEN}✓{Colors.NC}" if result else f"{Colors.RED}✗{Colors.NC}"
                 print(f"  {status} {check_name}: {result}")
             
+            # Show AI response
+            ai_msg = data.get("message", "")
+            print(f"\n🤖 GHL AI Bot Response:")
+            print(f"  {ai_msg[:250]}{'...' if len(ai_msg) > 250 else ''}")
+            
             # Return IDs for follow-up test
             return {
                 "contactId": data.get("contactId"),
                 "conversationId": data.get("conversationId"),
-                "message": data.get("message", "")
+                "message": ai_msg
             }
         
         return None
         
     except requests.exceptions.Timeout:
         print(f"\n{Colors.RED}✗ FAILED - Request timed out after 30 seconds{Colors.NC}")
+        print("\n🔍 This usually means:")
+        print("  • GHL AI bot is taking too long to respond")
+        print("  • AI bot might not be in Autopilot mode")
+        print("  • Live_Chat channel might not be enabled")
+        print("  • Check Vercel logs for details")
         return None
     except Exception as e:
         print(f"\n{Colors.RED}✗ FAILED - {str(e)}{Colors.NC}")
@@ -145,17 +158,14 @@ def test_followup_message(contact_id, conversation_id):
     payload = {
         "contactId": contact_id,
         "conversationId": conversation_id,
-        "message": "How much is RecX Lite?",
+        "message": "How much does RecX Lite cost?",
         "pageContext": "Pricing",
-        "history": [
-            {"role": "assistant", "content": "Previous message"},
-            {"role": "user", "content": "How much is RecX Lite?"}
-        ]
     }
     
     print("\nPayload:")
     print(json.dumps(payload, indent=2))
     print("\nSending request...")
+    print(f"{Colors.YELLOW}⏳ Waiting for GHL AI bot response...{Colors.NC}")
     
     try:
         response = requests.post(
@@ -165,52 +175,12 @@ def test_followup_message(contact_id, conversation_id):
             timeout=30
         )
         
-        return check_response(response, "followup_message")
-        
-    except Exception as e:
-        print(f"\n{Colors.RED}✗ FAILED - {str(e)}{Colors.NC}")
-        return None
-
-def test_handover_trigger():
-    """Test 3: Handover trigger detection"""
-    global test_count
-    test_count += 1
-    
-    test_header(3, "HANDOVER TRIGGER")
-    
-    print("Testing handover trigger with message: 'I want to speak to a human'")
-    
-    timestamp = int(time.time())
-    payload = {
-        "name": "Handover Test User",
-        "email": f"handover.test+{timestamp}@recxchange.test",
-        "message": "I want to speak to a human",
-        "persona": "hiring-manager",
-        "companyName": "Test Company Inc",
-        "pageContext": "Contact"
-    }
-    
-    print("\nPayload:")
-    print(json.dumps(payload, indent=2))
-    print("\nSending request...")
-    
-    try:
-        response = requests.post(
-            API_ENDPOINT,
-            json=payload,
-            headers={"Content-Type": "application/json"},
-            timeout=30
-        )
-        
-        data = check_response(response, "handover_trigger")
+        data = check_response(response, "followup_message")
         
         if data:
-            handover_flag = data.get("handover", False)
-            print(f"\n📊 Handover Validation:")
-            if handover_flag:
-                print(f"  {Colors.GREEN}✓ Handover flag: true{Colors.NC}")
-            else:
-                print(f"  {Colors.RED}✗ Handover flag: {handover_flag} (expected: true){Colors.NC}")
+            ai_msg = data.get("message", "")
+            print(f"\n🤖 GHL AI Bot Response:")
+            print(f"  {ai_msg[:250]}{'...' if len(ai_msg) > 250 else ''}")
         
         return data
         
@@ -219,16 +189,16 @@ def test_handover_trigger():
         return None
 
 def test_invalid_request():
-    """Test 4: Invalid request (missing fields)"""
+    """Test 3: Invalid request (missing fields)"""
     global test_count, pass_count, fail_count
     test_count += 1
     
-    test_header(4, "INVALID REQUEST (Missing Fields)")
+    test_header(3, "INVALID REQUEST (Error Handling)")
     
-    print("Testing error handling with missing required fields")
+    print("Testing API validation with missing required fields")
     
     payload = {
-        "message": "This should fail"
+        "message": "This should fail - no name/email/persona"
     }
     
     print("\nPayload:")
@@ -240,7 +210,7 @@ def test_invalid_request():
             API_ENDPOINT,
             json=payload,
             headers={"Content-Type": "application/json"},
-            timeout=30
+            timeout=10
         )
         
         if response.status_code == 400:
@@ -273,19 +243,28 @@ def print_summary():
     
     if fail_count == 0:
         print(f"{Colors.GREEN}✓ ALL TESTS PASSED!{Colors.NC}")
-        print("\n💡 NEXT STEPS:")
-        print("  1. Check Vercel logs: https://vercel.com/tom-1100s-projects/recxchange/logs")
-        print("  2. Verify contacts in GHL with proper tags and custom fields")
-        print("  3. Check GHL conversations for AI responses")
-        print("  4. Confirm handover marked conversations as urgent/starred")
+        print("\n💡 VERIFICATION STEPS:")
+        print("  1. Check Vercel logs for message flow:")
+        print("     https://vercel.com/tom-1100s-projects/recxchange/logs")
+        print("  2. Check GHL Contacts - verify 'ai-chat' tag applied")
+        print("  3. Check GHL Conversations - verify AI bot responded")
+        print(f"  4. Test handover manually in browser")
+        print(f"     {Colors.BLUE}(GHL bot handles handover via training){Colors.NC}")
+        print("\n✨ Your GHL AI bot integration is working correctly!")
         return 0
     else:
         print(f"{Colors.RED}✗ SOME TESTS FAILED{Colors.NC}")
         print("\n🔍 TROUBLESHOOTING:")
-        print("  • Check Vercel deployment is successful")
-        print("  • Verify GHL_API_KEY, GHL_LOCATION_ID, GHL_CONVERSATION_AI_AGENT_ID env vars")
-        print("  • Check GHL AI bot is in Autopilot mode with Live_Chat enabled")
-        print("  • Review Vercel logs for detailed error messages")
+        print("  • Check Vercel deployment status")
+        print("  • Verify environment variables are set:")
+        print("    - GHL_API_KEY")
+        print("    - GHL_LOCATION_ID")
+        print("    - GHL_CONVERSATION_AI_AGENT_ID")
+        print("  • Check GHL AI bot configuration:")
+        print("    - Mode: Autopilot (NOT Suggestive)")
+        print("    - Channel: Live_Chat enabled")
+        print("    - Status: Active")
+        print("  • Review Vercel logs for detailed errors")
         return 1
 
 def main():
@@ -301,11 +280,7 @@ def main():
         test_followup_message(result1["contactId"], result1["conversationId"])
         time.sleep(2)
     
-    # Test 3: Handover trigger
-    test_handover_trigger()
-    time.sleep(2)
-    
-    # Test 4: Invalid request
+    # Test 3: Invalid request
     test_invalid_request()
     
     # Print summary and exit
