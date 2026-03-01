@@ -190,7 +190,7 @@ export default function FloatingChat() {
                     onClick={() => setIsOpen(false)}
                     className="text-gray-400 hover:text-white transition-colors p-2 sm:p-2 rounded-lg hover:bg-white/10 touch-manipulation"
                   >
-                    <X size={20} className="sm:w-[18px] sm:h-[18px]" />
+                    <X className="w-5 h-5 sm:w-[18px] sm:h-[18px]" />
                   </button>
                 </div>
               </div>
@@ -201,7 +201,7 @@ export default function FloatingChat() {
                   <div className="space-y-4 sm:space-y-4">
                     <div className="text-center py-4 sm:py-4">
                       <div className="w-14 h-14 sm:w-12 sm:h-12 rounded-full bg-gradient-to-r from-cyan-500 to-purple-500 flex items-center justify-center mx-auto mb-3">
-                        <MessageCircle className="text-white" size={28} />
+                        <MessageCircle className="text-white w-7 h-7 sm:w-6 sm:h-6" />
                       </div>
                       <p className="text-white text-base sm:text-sm font-semibold mb-1">Welcome to RecXchange!</p>
                       <p className="text-gray-400 text-sm sm:text-xs">Let's get started with a few quick details</p>
@@ -295,7 +295,7 @@ export default function FloatingChat() {
                     {isLoading && (
                       <div className="flex justify-start">
                         <div className="bg-white/10 rounded-lg p-3.5 sm:p-3">
-                          <Loader2 className="animate-spin text-cyan-400" size={18} className="sm:w-4 sm:h-4" />
+                          <Loader2 className="animate-spin text-cyan-400 w-[18px] h-[18px] sm:w-4 sm:h-4" />
                         </div>
                       </div>
                     )}
@@ -327,7 +327,7 @@ export default function FloatingChat() {
                         disabled={!inputValue.trim() || isLoading}
                         className="px-5 py-3 sm:px-4 sm:py-2 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-lg text-white font-medium hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all touch-manipulation active:scale-95"
                       >
-                        <Send size={18} className="sm:w-4 sm:h-4" />
+                        <Send className="w-[18px] h-[18px] sm:w-4 sm:h-4" />
                       </button>
                     </div>
                   )}
@@ -357,7 +357,7 @@ export default function FloatingChat() {
               exit={{ rotate: 90, opacity: 0 }}
               transition={{ duration: 0.2 }}
             >
-              <X size={26} className="sm:w-6 sm:h-6" />
+              <X className="w-[26px] h-[26px] sm:w-6 sm:h-6" />
             </motion.div>
           ) : (
             <motion.div
@@ -367,7 +367,7 @@ export default function FloatingChat() {
               exit={{ rotate: -90, opacity: 0 }}
               transition={{ duration: 0.2 }}
             >
-              <MessageCircle size={26} className="sm:w-6 sm:h-6" />
+              <MessageCircle className="w-[26px] h-[26px] sm:w-6 sm:h-6" />
             </motion.div>
           )}
         </AnimatePresence>
