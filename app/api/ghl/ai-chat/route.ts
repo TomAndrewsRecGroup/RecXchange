@@ -17,6 +17,14 @@ interface ChatMessage {
   isHandover?: boolean;
 }
 
+interface GHLMessage {
+  direction?: string;
+  type?: string;
+  body?: string;
+  dateAdded?: string;
+  id?: string;
+}
+
 // ─── Handover Detection ──────────────────────────────────────────────────────
 function detectHandoverTrigger(message: string): boolean {
   const triggers = [
@@ -199,17 +207,12 @@ async function sendMessageAndWaitForAI(
     
     if (messagesResponse.ok) {
       const messagesData = await messagesResponse.json();
-      const messages = messagesData.messages || [];
+      const messages: GHLMessage[] = messagesData.messages || [];
       
       console.log(`[GHL AI Chat] Found ${messages.length} total messages`);
       
       // Look for newest outbound message (AI response)
-      const outboundMessages = messages.filter((msg: { 
-        direction?: string; 
-        type?: string; 
-        body?: string;
-        dateAdded?: string;
-      }) => 
+      const outboundMessages = messages.filter((msg: GHLMessage) => 
         msg.direction === 'outbound' && 
         msg.type === 'Live_Chat' && 
         msg.body
@@ -220,13 +223,13 @@ async function sendMessageAndWaitForAI(
         // Get the most recent outbound message
         if (outboundMessages.length > 0) {
           // Sort by dateAdded to get newest
-          const sorted = outboundMessages.sort((a, b) => {
-            const dateA = new Date(a.dateAdded).getTime();
-            const dateB = new Date(b.dateAdded).getTime();
+          const sorted = outboundMessages.sort((a: GHLMessage, b: GHLMessage) => {
+            const dateA = new Date(a.dateAdded || 0).getTime();
+            const dateB = new Date(b.dateAdded || 0).getTime();
             return dateB - dateA;
           });
           
-          aiMessage = sorted[0].body;
+          aiMessage = sorted[0].body || null;
           console.log('[GHL AI Chat] ✓ Found AI response:', aiMessage);
         }
       }
