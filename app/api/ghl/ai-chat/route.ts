@@ -287,6 +287,7 @@ async function callGroqAI(
   conversationHistory: ConversationMessage[] = []
 ): Promise<string> {
   console.log('[Groq AI Chat] Calling Groq API');
+  console.log('[Groq AI Chat] Model: llama-3.1-8b-instant');
   console.log('[Groq AI Chat] User persona:', persona);
   console.log('[Groq AI Chat] Page context:', pageContext);
   
@@ -303,7 +304,7 @@ async function callGroqAI(
   try {
     const completion = await groq.chat.completions.create({
       messages,
-      model: 'llama-3.3-70b-versatile',
+      model: 'llama-3.1-8b-instant',
       temperature: 0.7,
       max_tokens: 300, // Keep responses concise
       top_p: 1,
@@ -320,7 +321,7 @@ async function callGroqAI(
   }
 }
 
-// ─── Main Handler ───────────────────────────────────────────────────────────
+// ─── Main Handler ────────────────────────────────────────────────────────────
 export async function POST(req: NextRequest) {
   const startTime = Date.now();
   console.log('[Groq AI Chat] ═══ NEW REQUEST ═══');
