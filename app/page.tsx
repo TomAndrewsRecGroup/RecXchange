@@ -74,7 +74,7 @@ export default function RootPage() {
 
       <main className="relative min-h-screen bg-black flex flex-col items-center px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16 overflow-x-hidden">
         <div className="w-full max-w-[1200px] mx-auto">
-          {/* Logo Animation - REDUCED to 1.15x scale for 320px screens */}
+          {/* Logo Animation */}
           <motion.div
             initial={{ 
               scale: 1.15,
@@ -349,7 +349,7 @@ export default function RootPage() {
                     </div>
                   </div>
 
-                  {/* Benefit 4 */}
+                  {/* Benefit 4 - UPDATED TEXT */}
                   <div className="flex items-start gap-3 sm:gap-4">
                     <div className="w-2 h-2 rounded-full bg-purple-500 flex-shrink-0 mt-1.5 sm:mt-2"
                       style={{ boxShadow: '0 0 15px rgba(168, 85, 247, 0.8)' }}
@@ -357,7 +357,7 @@ export default function RootPage() {
                     <div className="text-left">
                       <h3 className="text-white font-bold text-base sm:text-lg mb-1.5 sm:mb-2">Zero Risk, Instant ROI</h3>
                       <p className="text-gray-300 text-xs sm:text-sm leading-relaxed">
-                        Start for $1/month with no upfront fees. Members make $15,000+ in their first month. The average placement fee is $7,000.
+                        Start for $1/month with no additional fees. Members can make up to $15,000 in their first quarter, average placement fee is $7,000.
                       </p>
                     </div>
                   </div>
