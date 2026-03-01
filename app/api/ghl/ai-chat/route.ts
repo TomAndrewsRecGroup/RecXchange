@@ -4,7 +4,7 @@ import { visitorContactIds } from '../webhook/route';
 const GHL_BASE = 'https://services.leadconnectorhq.com';
 const API_KEY = process.env.GHL_API_KEY!;
 const LOCATION_ID = process.env.GHL_LOCATION_ID!;
-const AI_AGENT_ID = process.env.GHL_CONVERSATION_AI_AGENT_ID;
+const AI_AGENT_ID = process.env.GHL_CONVERSATION_AI_AGENT_ID!;
 
 const ghlHeaders = {
   'Authorization': `Bearer ${API_KEY}`,
@@ -22,7 +22,7 @@ interface GHLMessage {
   status?: string;
 }
 
-// ─── Upsert Contact (Simplified - No Logic) ─────────────────────────────────
+// ─── Upsert Contact ─────────────────────────────────────────────────────────
 async function upsertContact(
   name: string,
   email: string,
@@ -35,7 +35,6 @@ async function upsertContact(
 
   console.log('[GHL AI Chat] Upserting contact:', { email, firstName, lastName });
 
-  // Check for existing contact
   const searchUrl = `${GHL_BASE}/contacts/search/duplicate?locationId=${LOCATION_ID}&email=${encodeURIComponent(email)}`;
   const search = await fetch(searchUrl, { headers: ghlHeaders });
   const searchData = await search.json();
@@ -47,7 +46,6 @@ async function upsertContact(
     return contactId;
   }
 
-  // Create new contact (basic data only)
   const tags = [
     'ai-chat',
     persona === 'hiring-manager' ? 'hiring-manager' : 'recruiter',
@@ -90,13 +88,13 @@ async function upsertContact(
   return contactId;
 }
 
-// ─── Get or Create Conversation ─────────────────────────────────────────────
+// ─── Get or Create Conversation WITH AI AGENT ───────────────────────────────
 async function getOrCreateConversation(
   contactId: string
 ): Promise<string> {
   console.log('[GHL AI Chat] Getting/creating conversation for contact:', contactId);
+  console.log('[GHL AI Chat] AI Agent ID:', AI_AGENT_ID);
   
-  // Check for existing conversation
   const search = await fetch(
     `${GHL_BASE}/conversations/search?locationId=${LOCATION_ID}&contactId=${contactId}`,
     { headers: ghlHeaders }
@@ -109,14 +107,22 @@ async function getOrCreateConversation(
     return existingConvId;
   }
 
-  // Create new conversation
+  // Create new conversation WITH AI agent assigned
+  const conversationPayload: Record<string, unknown> = {
+    locationId: LOCATION_ID,
+    contactId,
+  };
+  
+  // ⚠️ CRITICAL: Link to AI Agent so bot processes messages
+  if (AI_AGENT_ID) {
+    conversationPayload.assignedTo = AI_AGENT_ID;
+    console.log('[GHL AI Chat] Assigning conversation to AI Agent:', AI_AGENT_ID);
+  }
+  
   const create = await fetch(`${GHL_BASE}/conversations/`, {
     method: 'POST',
     headers: ghlHeaders,
-    body: JSON.stringify({ 
-      locationId: LOCATION_ID, 
-      contactId,
-    }),
+    body: JSON.stringify(conversationPayload),
   });
   const createData = await create.json();
   
@@ -125,7 +131,7 @@ async function getOrCreateConversation(
   }
   
   const newConvId = createData.conversation.id;
-  console.log('[GHL AI Chat] Created new conversation:', newConvId);
+  console.log('[GHL AI Chat] Created new conversation with AI agent:', newConvId);
   
   return newConvId;
 }
@@ -134,7 +140,7 @@ async function getOrCreateConversation(
 async function pollForAIResponse(
   conversationId: string,
   messageCountBefore: number,
-  maxAttempts: number = 20
+  maxAttempts: number = 25
 ): Promise<string | null> {
   console.log('[GHL AI Chat] Polling for AI response...');
   
@@ -143,15 +149,15 @@ async function pollForAIResponse(
   while (attempts < maxAttempts) {
     attempts++;
     
-    // Exponential backoff: 300ms → 500ms → 700ms → 1000ms
-    const delay = attempts <= 2 ? 300 : attempts <= 4 ? 500 : attempts <= 10 ? 700 : 1000;
+    // Longer delays for AI processing
+    const delay = attempts <= 2 ? 500 : attempts <= 5 ? 1000 : attempts <= 15 ? 1500 : 2000;
     await new Promise(resolve => setTimeout(resolve, delay));
     
     console.log(`[GHL AI Chat] Poll attempt ${attempts}/${maxAttempts}`);
     
     try {
       const messagesResponse = await fetch(
-        `${GHL_BASE}/conversations/${conversationId}/messages?limit=15`,
+        `${GHL_BASE}/conversations/${conversationId}/messages?limit=20`,
         { headers: ghlHeaders }
       );
       
@@ -168,9 +174,9 @@ async function pollForAIResponse(
         continue;
       }
       
-      // Check for new messages
+      console.log(`[GHL AI Chat] Found ${messages.length} messages (baseline: ${messageCountBefore})`);
+      
       if (messages.length > messageCountBefore) {
-        // Look for AI bot outbound messages
         const outboundMessages = messages.filter((msg: GHLMessage) => 
           msg.direction === 'outbound' && 
           msg.body && 
@@ -179,7 +185,6 @@ async function pollForAIResponse(
         );
         
         if (outboundMessages.length > 0) {
-          // Get most recent
           const sorted = outboundMessages.sort((a: GHLMessage, b: GHLMessage) => {
             const dateA = new Date(a.dateAdded || 0).getTime();
             const dateB = new Date(b.dateAdded || 0).getTime();
@@ -188,7 +193,7 @@ async function pollForAIResponse(
           
           const aiMessage = sorted[0].body?.trim();
           if (aiMessage) {
-            console.log('[GHL AI Chat] ✓ AI response received');
+            console.log('[GHL AI Chat] ✓ AI response received:', aiMessage.substring(0, 100));
             return aiMessage;
           }
         }
@@ -203,7 +208,7 @@ async function pollForAIResponse(
   return null;
 }
 
-// ─── Send Message to GHL (Pure Integration) ─────────────────────────────────
+// ─── Send Message to GHL ─────────────────────────────────────────────────────
 async function sendMessageToGHL(
   conversationId: string,
   contactId: string,
@@ -211,16 +216,14 @@ async function sendMessageToGHL(
 ): Promise<void> {
   console.log('[GHL AI Chat] Sending message to GHL conversation');
   
-  // Send EXACT user message to GHL - no enrichment, no modification
   const payload = {
     type: 'Live_Chat',
     conversationId,
     contactId,
-    locationId: LOCATION_ID,
-    message: message, // PURE message - no context added
+    message: message,
   };
   
-  // Try inbound endpoint (triggers AI bot)
+  // Try inbound endpoint (should trigger AI bot)
   try {
     const response = await fetch(`${GHL_BASE}/conversations/messages/inbound`, {
       method: 'POST',
@@ -230,11 +233,14 @@ async function sendMessageToGHL(
 
     if (response.ok) {
       const data = await response.json();
-      console.log('[GHL AI Chat] ✓ Message posted via inbound endpoint');
+      console.log('[GHL AI Chat] ✓ Message posted via inbound endpoint, ID:', data.messageId || data.id);
       return;
+    } else {
+      const errorText = await response.text();
+      console.warn('[GHL AI Chat] Inbound endpoint returned', response.status, ':', errorText);
     }
   } catch (error) {
-    console.warn('[GHL AI Chat] Inbound endpoint failed, trying fallback');
+    console.warn('[GHL AI Chat] Inbound endpoint error:', error);
   }
   
   // Fallback to regular message endpoint
@@ -248,15 +254,18 @@ async function sendMessageToGHL(
     if (response.ok) {
       console.log('[GHL AI Chat] ✓ Message posted via regular endpoint');
       return;
+    } else {
+      const errorText = await response.text();
+      console.error('[GHL AI Chat] Regular endpoint also failed:', response.status, errorText);
     }
   } catch (error) {
-    console.error('[GHL AI Chat] All message posting failed:', error);
+    console.error('[GHL AI Chat] Regular endpoint error:', error);
   }
   
   throw new Error('Failed to post message to GHL');
 }
 
-// ─── Main AI Chat Flow (Pure Integration) ───────────────────────────────────
+// ─── Main AI Chat Flow ───────────────────────────────────────────────────────
 async function processAIChat(
   conversationId: string,
   contactId: string,
@@ -265,13 +274,13 @@ async function processAIChat(
   console.log('[GHL AI Chat] === Processing chat request ===');
   console.log('[GHL AI Chat] Conversation:', conversationId);
   console.log('[GHL AI Chat] Contact:', contactId);
+  console.log('[GHL AI Chat] AI Agent:', AI_AGENT_ID);
   console.log('[GHL AI Chat] Message:', message);
   
-  // Get current message count
   let messageCountBefore = 0;
   try {
     const beforeResponse = await fetch(
-      `${GHL_BASE}/conversations/${conversationId}/messages?limit=5`,
+      `${GHL_BASE}/conversations/${conversationId}/messages?limit=10`,
       { headers: ghlHeaders }
     );
     
@@ -285,17 +294,17 @@ async function processAIChat(
     console.warn('[GHL AI Chat] Could not get baseline count:', error);
   }
   
-  // Send message to GHL (pure - no modification)
   await sendMessageToGHL(conversationId, contactId, message);
   
-  // Poll for AI bot response
-  const aiResponse = await pollForAIResponse(conversationId, messageCountBefore, 20);
+  // Wait a moment for AI to start processing
+  await new Promise(resolve => setTimeout(resolve, 1000));
+  
+  const aiResponse = await pollForAIResponse(conversationId, messageCountBefore, 25);
   
   if (aiResponse) {
     return aiResponse;
   }
   
-  // AI bot didn't respond - mark for human review
   console.warn('[GHL AI Chat] ⚠️ AI bot failed to respond - marking for review');
   
   try {
@@ -312,7 +321,6 @@ async function processAIChat(
     console.error('[GHL AI Chat] Failed to mark conversation:', error);
   }
   
-  // Return fallback message
   return "Thank you for your message! Our team has been notified and will respond shortly. For immediate assistance, email support@recxchange.io";
 }
 
@@ -321,6 +329,8 @@ export async function POST(req: NextRequest) {
   const startTime = Date.now();
   console.log('[GHL AI Chat] ═══ NEW REQUEST ═══');
   console.log('[GHL AI Chat] Timestamp:', new Date().toISOString());
+  console.log('[GHL AI Chat] Location ID:', LOCATION_ID);
+  console.log('[GHL AI Chat] AI Agent ID:', AI_AGENT_ID || '⚠️ NOT SET');
   
   try {
     const body = await req.json();
@@ -336,7 +346,6 @@ export async function POST(req: NextRequest) {
       pageContext,
     } = body;
 
-    // Validate message
     if (!message?.trim()) {
       return NextResponse.json({ error: 'Message is required' }, { status: 400 });
     }
@@ -347,7 +356,6 @@ export async function POST(req: NextRequest) {
     let contactId = existingContactId;
     let conversationId = existingConvId;
 
-    // Create/get contact
     if (!contactId) {
       if (!name || !email || !persona) {
         return NextResponse.json(
@@ -360,12 +368,10 @@ export async function POST(req: NextRequest) {
       visitorContactIds.add(contactId);
     }
 
-    // Create/get conversation
     if (!conversationId) {
       conversationId = await getOrCreateConversation(contactId);
     }
 
-    // Send to GHL AI bot and wait for response
     console.log('[GHL AI Chat] → Sending to GHL AI bot');
     const aiMessage = await processAIChat(conversationId, contactId, message);
 
