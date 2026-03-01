@@ -12,12 +12,6 @@ const ghlHeaders = {
   'Version': '2021-07-28',
 };
 
-interface ChatMessage {
-  role: 'user' | 'assistant';
-  content: string;
-  isHandover?: boolean;
-}
-
 interface GHLMessage {
   direction?: string;
   type?: string;
@@ -28,41 +22,20 @@ interface GHLMessage {
   status?: string;
 }
 
-// ─── Handover Detection ──────────────────────────────────────────────────────
-function detectHandoverTrigger(message: string): boolean {
-  const triggers = [
-    'speak to human',
-    'talk to human',
-    'human agent',
-    'live agent',
-    'speak to someone',
-    'talk to someone',
-    'transfer to agent',
-    'connect me to agent',
-    'real person',
-    'actual person',
-    'speak with someone',
-    'talk with someone',
-  ];
-  
-  const lowerMessage = message.toLowerCase().trim();
-  return triggers.some(trigger => lowerMessage.includes(trigger));
-}
-
-// ─── Upsert Contact with Rich Data ──────────────────────────────────────────
+// ─── Upsert Contact (Simplified - No Logic) ─────────────────────────────────
 async function upsertContact(
   name: string,
   email: string,
   persona: 'recruiter' | 'hiring-manager',
   companyName?: string,
-  pageContext?: string,
-  userIntent?: string
+  pageContext?: string
 ): Promise<string> {
   const firstName = name.split(' ')[0] || name;
   const lastName = name.split(' ').slice(1).join(' ') || '';
 
-  console.log('[GHL AI Chat] Upserting contact:', { email, firstName, lastName, persona, pageContext });
+  console.log('[GHL AI Chat] Upserting contact:', { email, firstName, lastName });
 
+  // Check for existing contact
   const searchUrl = `${GHL_BASE}/contacts/search/duplicate?locationId=${LOCATION_ID}&email=${encodeURIComponent(email)}`;
   const search = await fetch(searchUrl, { headers: ghlHeaders });
   const searchData = await search.json();
@@ -71,45 +44,15 @@ async function upsertContact(
     const contactId = searchData.contact.id;
     console.log('[GHL AI Chat] Found existing contact:', contactId);
     visitorContactIds.add(contactId);
-    
-    // Update existing contact with new context
-    try {
-      const updatePayload: Record<string, unknown> = {};
-      
-      if (pageContext) {
-        updatePayload.customField = {
-          lastVisitedPage: pageContext,
-          lastInteractionDate: new Date().toISOString(),
-        };
-      }
-      
-      if (userIntent) {
-        updatePayload.customField = {
-          ...updatePayload.customField,
-          userIntent,
-        };
-      }
-      
-      if (Object.keys(updatePayload).length > 0) {
-        await fetch(`${GHL_BASE}/contacts/${contactId}`, {
-          method: 'PUT',
-          headers: ghlHeaders,
-          body: JSON.stringify(updatePayload),
-        });
-        console.log('[GHL AI Chat] Contact updated with context');
-      }
-    } catch (updateError) {
-      console.warn('[GHL AI Chat] Could not update contact context:', updateError);
-    }
-    
     return contactId;
   }
 
-  // Create new contact with rich data
-  const tags =
-    persona === 'hiring-manager'
-      ? ['ai-chat', 'hiring-manager', 'recxchange-website']
-      : ['ai-chat', 'recruiter', 'recxchange-website'];
+  // Create new contact (basic data only)
+  const tags = [
+    'ai-chat',
+    persona === 'hiring-manager' ? 'hiring-manager' : 'recruiter',
+    'recxchange-website',
+  ];
 
   if (pageContext) {
     tags.push(`page-${pageContext.toLowerCase().replace(/\s+/g, '-')}`);
@@ -122,12 +65,6 @@ async function upsertContact(
     email,
     source: 'RecXchange AI Chat',
     tags,
-    customField: {
-      persona,
-      firstContactPage: pageContext || 'unknown',
-      firstContactDate: new Date().toISOString(),
-      userIntent: userIntent || 'general-inquiry',
-    },
   };
 
   if (persona === 'hiring-manager' && companyName) {
@@ -149,18 +86,17 @@ async function upsertContact(
   const contactId = createData.contact.id;
   visitorContactIds.add(contactId);
   
-  console.log('[GHL AI Chat] New contact created with rich context');
+  console.log('[GHL AI Chat] New contact created:', contactId);
   return contactId;
 }
 
-// ─── Get or Create Conversation with Context ────────────────────────────────
+// ─── Get or Create Conversation ─────────────────────────────────────────────
 async function getOrCreateConversation(
-  contactId: string,
-  initialMessage?: string,
-  pageContext?: string
+  contactId: string
 ): Promise<string> {
   console.log('[GHL AI Chat] Getting/creating conversation for contact:', contactId);
   
+  // Check for existing conversation
   const search = await fetch(
     `${GHL_BASE}/conversations/search?locationId=${LOCATION_ID}&contactId=${contactId}`,
     { headers: ghlHeaders }
@@ -170,26 +106,6 @@ async function getOrCreateConversation(
   if (searchData?.conversations?.length > 0) {
     const existingConvId = searchData.conversations[0].id;
     console.log('[GHL AI Chat] Found existing conversation:', existingConvId);
-    
-    // Optionally add context note to existing conversation
-    if (pageContext && initialMessage) {
-      try {
-        await fetch(`${GHL_BASE}/conversations/messages`, {
-          method: 'POST',
-          headers: ghlHeaders,
-          body: JSON.stringify({
-            type: 'Live_Chat',
-            conversationId: existingConvId,
-            contactId,
-            message: `📍 Context: User on "${pageContext}" page | Question: ${initialMessage}`,
-            internal: true,
-          }),
-        });
-      } catch (error) {
-        console.warn('[GHL AI Chat] Could not add context note:', error);
-      }
-    }
-    
     return existingConvId;
   }
 
@@ -211,51 +127,27 @@ async function getOrCreateConversation(
   const newConvId = createData.conversation.id;
   console.log('[GHL AI Chat] Created new conversation:', newConvId);
   
-  // Add initial context note
-  if (pageContext || initialMessage) {
-    try {
-      const contextMessage = [
-        pageContext ? `📍 Started from: ${pageContext}` : null,
-        initialMessage ? `❓ First question: ${initialMessage}` : null,
-      ].filter(Boolean).join(' | ');
-      
-      await fetch(`${GHL_BASE}/conversations/messages`, {
-        method: 'POST',
-        headers: ghlHeaders,
-        body: JSON.stringify({
-          type: 'Live_Chat',
-          conversationId: newConvId,
-          contactId: LOCATION_ID, // System message
-          message: `[System Context] ${contextMessage}`,
-        }),
-      });
-    } catch (error) {
-      console.warn('[GHL AI Chat] Could not add initial context:', error);
-    }
-  }
-  
   return newConvId;
 }
 
-// ─── Robust AI Response Polling ──────────────────────────────────────────────
+// ─── Poll for AI Response ───────────────────────────────────────────────────
 async function pollForAIResponse(
   conversationId: string,
   messageCountBefore: number,
   maxAttempts: number = 20
 ): Promise<string | null> {
-  console.log('[GHL AI Chat] Starting AI response polling...');
+  console.log('[GHL AI Chat] Polling for AI response...');
   
   let attempts = 0;
-  let lastMessageCount = messageCountBefore;
   
   while (attempts < maxAttempts) {
     attempts++;
     
-    // Exponential backoff: 300ms, 500ms, 500ms, 700ms, 1000ms, 1000ms...
+    // Exponential backoff: 300ms → 500ms → 700ms → 1000ms
     const delay = attempts <= 2 ? 300 : attempts <= 4 ? 500 : attempts <= 10 ? 700 : 1000;
     await new Promise(resolve => setTimeout(resolve, delay));
     
-    console.log(`[GHL AI Chat] Poll attempt ${attempts}/${maxAttempts} (delay: ${delay}ms)`);
+    console.log(`[GHL AI Chat] Poll attempt ${attempts}/${maxAttempts}`);
     
     try {
       const messagesResponse = await fetch(
@@ -276,21 +168,18 @@ async function pollForAIResponse(
         continue;
       }
       
-      console.log(`[GHL AI Chat] Found ${messages.length} messages (was ${lastMessageCount})`);
-      
       // Check for new messages
       if (messages.length > messageCountBefore) {
-        // Look for outbound messages (AI responses)
+        // Look for AI bot outbound messages
         const outboundMessages = messages.filter((msg: GHLMessage) => 
           msg.direction === 'outbound' && 
           msg.body && 
           msg.body.trim().length > 0 &&
-          msg.status !== 'failed' &&
-          !msg.body.includes('[System Context]') // Skip system messages
+          msg.status !== 'failed'
         );
         
         if (outboundMessages.length > 0) {
-          // Sort by date to get most recent
+          // Get most recent
           const sorted = outboundMessages.sort((a: GHLMessage, b: GHLMessage) => {
             const dateA = new Date(a.dateAdded || 0).getTime();
             const dateB = new Date(b.dateAdded || 0).getTime();
@@ -299,113 +188,86 @@ async function pollForAIResponse(
           
           const aiMessage = sorted[0].body?.trim();
           if (aiMessage) {
-            console.log('[GHL AI Chat] ✓ AI response received:', aiMessage.substring(0, 100));
+            console.log('[GHL AI Chat] ✓ AI response received');
             return aiMessage;
           }
         }
-        
-        // Messages increased but no outbound yet - keep waiting
-        lastMessageCount = messages.length;
       }
       
     } catch (pollError) {
       console.error('[GHL AI Chat] Polling error:', pollError);
-      // Continue polling despite errors
     }
   }
   
-  console.warn('[GHL AI Chat] ⚠️ AI response not received after', maxAttempts, 'attempts');
+  console.warn('[GHL AI Chat] ⚠️ AI bot did not respond after', maxAttempts, 'attempts');
   return null;
 }
 
-// ─── Trigger AI Bot with Context ─────────────────────────────────────────────
-async function triggerAIBot(
+// ─── Send Message to GHL (Pure Integration) ─────────────────────────────────
+async function sendMessageToGHL(
   conversationId: string,
   contactId: string,
-  message: string,
-  pageContext?: string
+  message: string
 ): Promise<void> {
-  console.log('[GHL AI Chat] Triggering AI bot for conversation');
+  console.log('[GHL AI Chat] Sending message to GHL conversation');
   
-  // Enrich message with context for better AI responses
-  let enrichedMessage = message;
-  if (pageContext && !message.toLowerCase().includes(pageContext.toLowerCase())) {
-    // Only add context if not already in message
-    enrichedMessage = `[User is viewing: ${pageContext}] ${message}`;
-  }
+  // Send EXACT user message to GHL - no enrichment, no modification
+  const payload = {
+    type: 'Live_Chat',
+    conversationId,
+    contactId,
+    locationId: LOCATION_ID,
+    message: message, // PURE message - no context added
+  };
   
-  // Method 1: Standard inbound message (primary method)
+  // Try inbound endpoint (triggers AI bot)
   try {
-    const inboundPayload = {
-      type: 'Live_Chat',
-      conversationId,
-      contactId,
-      locationId: LOCATION_ID,
-      message: enrichedMessage,
-    };
-    
-    const inboundResponse = await fetch(`${GHL_BASE}/conversations/messages/inbound`, {
+    const response = await fetch(`${GHL_BASE}/conversations/messages/inbound`, {
       method: 'POST',
       headers: ghlHeaders,
-      body: JSON.stringify(inboundPayload),
+      body: JSON.stringify(payload),
     });
 
-    if (inboundResponse.ok) {
-      const inboundData = await inboundResponse.json();
-      console.log('[GHL AI Chat] ✓ Inbound message posted, ID:', inboundData.messageId || inboundData.id);
-      return; // Success
-    } else {
-      const errorText = await inboundResponse.text();
-      console.warn('[GHL AI Chat] Inbound message failed:', errorText);
-    }
-  } catch (error) {
-    console.error('[GHL AI Chat] Inbound message error:', error);
-  }
-  
-  // Method 2: Fallback - regular message endpoint
-  try {
-    console.log('[GHL AI Chat] Trying fallback message endpoint');
-    const fallbackPayload = {
-      type: 'Live_Chat',
-      conversationId,
-      contactId,
-      locationId: LOCATION_ID,
-      message: enrichedMessage,
-      html: enrichedMessage,
-    };
-    
-    const fallbackResponse = await fetch(`${GHL_BASE}/conversations/messages`, {
-      method: 'POST',
-      headers: ghlHeaders,
-      body: JSON.stringify(fallbackPayload),
-    });
-
-    if (fallbackResponse.ok) {
-      console.log('[GHL AI Chat] ✓ Fallback message posted');
+    if (response.ok) {
+      const data = await response.json();
+      console.log('[GHL AI Chat] ✓ Message posted via inbound endpoint');
       return;
     }
   } catch (error) {
-    console.error('[GHL AI Chat] Fallback message error:', error);
+    console.warn('[GHL AI Chat] Inbound endpoint failed, trying fallback');
   }
   
-  throw new Error('All message posting methods failed');
+  // Fallback to regular message endpoint
+  try {
+    const response = await fetch(`${GHL_BASE}/conversations/messages`, {
+      method: 'POST',
+      headers: ghlHeaders,
+      body: JSON.stringify(payload),
+    });
+
+    if (response.ok) {
+      console.log('[GHL AI Chat] ✓ Message posted via regular endpoint');
+      return;
+    }
+  } catch (error) {
+    console.error('[GHL AI Chat] All message posting failed:', error);
+  }
+  
+  throw new Error('Failed to post message to GHL');
 }
 
-// ─── Main AI Chat Logic ──────────────────────────────────────────────────────
-async function sendMessageAndWaitForAI(
+// ─── Main AI Chat Flow (Pure Integration) ───────────────────────────────────
+async function processAIChat(
   conversationId: string,
   contactId: string,
-  message: string,
-  pageContext?: string
+  message: string
 ): Promise<string> {
-  console.log('[GHL AI Chat] === Processing AI chat request ===');
+  console.log('[GHL AI Chat] === Processing chat request ===');
   console.log('[GHL AI Chat] Conversation:', conversationId);
   console.log('[GHL AI Chat] Contact:', contactId);
-  console.log('[GHL AI Chat] Page Context:', pageContext || 'none');
   console.log('[GHL AI Chat] Message:', message);
-  console.log('[GHL AI Chat] AI Agent ID:', AI_AGENT_ID || 'NOT SET');
   
-  // Get baseline message count
+  // Get current message count
   let messageCountBefore = 0;
   try {
     const beforeResponse = await fetch(
@@ -417,26 +279,25 @@ async function sendMessageAndWaitForAI(
       const beforeData = await beforeResponse.json();
       const messagesBefore: GHLMessage[] = beforeData.messages?.messages || [];
       messageCountBefore = messagesBefore.length;
-      console.log('[GHL AI Chat] Baseline message count:', messageCountBefore);
+      console.log('[GHL AI Chat] Current message count:', messageCountBefore);
     }
   } catch (error) {
     console.warn('[GHL AI Chat] Could not get baseline count:', error);
   }
   
-  // Post message to trigger AI with context
-  await triggerAIBot(conversationId, contactId, message, pageContext);
+  // Send message to GHL (pure - no modification)
+  await sendMessageToGHL(conversationId, contactId, message);
   
-  // Poll for AI response with robust retry logic
+  // Poll for AI bot response
   const aiResponse = await pollForAIResponse(conversationId, messageCountBefore, 20);
   
   if (aiResponse) {
     return aiResponse;
   }
   
-  // AI didn't respond - return fallback and trigger handover
-  console.warn('[GHL AI Chat] ⚠️ AI bot did not respond - triggering automatic handover');
+  // AI bot didn't respond - mark for human review
+  console.warn('[GHL AI Chat] ⚠️ AI bot failed to respond - marking for review');
   
-  // Mark conversation for human attention
   try {
     await fetch(`${GHL_BASE}/conversations/${conversationId}`, {
       method: 'PUT',
@@ -451,44 +312,8 @@ async function sendMessageAndWaitForAI(
     console.error('[GHL AI Chat] Failed to mark conversation:', error);
   }
   
-  // Return helpful message
-  return "Thank you for reaching out! I'm currently experiencing connectivity issues. A team member has been notified and will respond to you shortly. You can also email us at support@recxchange.io for immediate assistance.";
-}
-
-// ─── Handover to Live Agent ──────────────────────────────────────────────────
-async function handoverToLiveAgent(
-  conversationId: string,
-  contactId: string
-): Promise<void> {
-  console.log('[GHL AI Chat] ⚡ Manual handover to live agent requested');
-  
-  try {
-    // Mark conversation as urgent
-    await fetch(`${GHL_BASE}/conversations/${conversationId}`, {
-      method: 'PUT',
-      headers: ghlHeaders,
-      body: JSON.stringify({
-        unread: true,
-        starred: true,
-      }),
-    });
-
-    // Post system notification
-    await fetch(`${GHL_BASE}/conversations/messages`, {
-      method: 'POST',
-      headers: ghlHeaders,
-      body: JSON.stringify({
-        type: 'Live_Chat',
-        conversationId,
-        contactId,
-        message: '🔔 [HANDOVER REQUESTED] User requested to speak with a human agent. Please respond ASAP.',
-      }),
-    });
-
-    console.log('[GHL AI Chat] ✓ Handover complete - conversation flagged');
-  } catch (error) {
-    console.error('[GHL AI Chat] Handover error:', error);
-  }
+  // Return fallback message
+  return "Thank you for your message! Our team has been notified and will respond shortly. For immediate assistance, email support@recxchange.io";
 }
 
 // ─── Main Handler ────────────────────────────────────────────────────────────
@@ -496,9 +321,6 @@ export async function POST(req: NextRequest) {
   const startTime = Date.now();
   console.log('[GHL AI Chat] ═══ NEW REQUEST ═══');
   console.log('[GHL AI Chat] Timestamp:', new Date().toISOString());
-  console.log('[GHL AI Chat] API Key:', API_KEY ? '✓ Present' : '✗ Missing');
-  console.log('[GHL AI Chat] Location ID:', LOCATION_ID || '✗ Missing');
-  console.log('[GHL AI Chat] AI Agent ID:', AI_AGENT_ID || '⚠️ Not configured');
   
   try {
     const body = await req.json();
@@ -511,29 +333,21 @@ export async function POST(req: NextRequest) {
       companyName,
       conversationId: existingConvId,
       contactId: existingContactId,
-      history = [],
-      pageContext, // NEW: current page user is on
-      userIntent, // NEW: detected user intent
+      pageContext,
     } = body;
 
+    // Validate message
     if (!message?.trim()) {
       return NextResponse.json({ error: 'Message is required' }, { status: 400 });
     }
 
-    console.log('[GHL AI Chat] Page Context:', pageContext || 'not provided');
-    console.log('[GHL AI Chat] User Intent:', userIntent || 'not provided');
-
-    // Check for handover trigger FIRST
-    const shouldHandover = detectHandoverTrigger(message);
-    
-    if (shouldHandover) {
-      console.log('[GHL AI Chat] 🔔 Handover trigger detected in message');
-    }
+    console.log('[GHL AI Chat] Page:', pageContext || 'unknown');
+    console.log('[GHL AI Chat] Message preview:', message.substring(0, 50));
 
     let contactId = existingContactId;
     let conversationId = existingConvId;
 
-    // Create/get contact with rich context
+    // Create/get contact
     if (!contactId) {
       if (!name || !email || !persona) {
         return NextResponse.json(
@@ -541,58 +355,38 @@ export async function POST(req: NextRequest) {
           { status: 400 }
         );
       }
-      contactId = await upsertContact(name, email, persona, companyName, pageContext, userIntent);
+      contactId = await upsertContact(name, email, persona, companyName, pageContext);
     } else {
       visitorContactIds.add(contactId);
     }
 
-    // Create/get conversation with context
+    // Create/get conversation
     if (!conversationId) {
-      conversationId = await getOrCreateConversation(contactId, message, pageContext);
+      conversationId = await getOrCreateConversation(contactId);
     }
 
-    // Handle manual handover request
-    if (shouldHandover) {
-      await handoverToLiveAgent(conversationId, contactId);
-      
-      const elapsed = Date.now() - startTime;
-      console.log(`[GHL AI Chat] ✓ Request completed in ${elapsed}ms (handover)`);
-      
-      return NextResponse.json({
-        success: true,
-        contactId,
-        conversationId,
-        message: "Perfect! I'm connecting you with a team member now. They'll respond to you shortly via this conversation or email.",
-        handover: true,
-      });
-    }
-
-    // Route to AI bot with context
-    console.log('[GHL AI Chat] → Routing to AI bot with context');
-    const aiMessage = await sendMessageAndWaitForAI(conversationId, contactId, message, pageContext);
+    // Send to GHL AI bot and wait for response
+    console.log('[GHL AI Chat] → Sending to GHL AI bot');
+    const aiMessage = await processAIChat(conversationId, contactId, message);
 
     const elapsed = Date.now() - startTime;
-    console.log(`[GHL AI Chat] ✓ Request completed in ${elapsed}ms`);
+    console.log(`[GHL AI Chat] ✓ Completed in ${elapsed}ms`);
 
     return NextResponse.json({
       success: true,
       contactId,
       conversationId,
       message: aiMessage,
-      handover: false,
     });
     
   } catch (err) {
     const elapsed = Date.now() - startTime;
-    console.error('[GHL AI Chat] ✗ Fatal error after', elapsed, 'ms');
-    console.error('[GHL AI Chat] Error:', err);
-    console.error('[GHL AI Chat] Stack:', err instanceof Error ? err.stack : 'No stack');
+    console.error('[GHL AI Chat] ✗ Error after', elapsed, 'ms:', err);
     
     return NextResponse.json(
       { 
-        error: 'Internal server error', 
-        details: err instanceof Error ? err.message : String(err),
-        message: 'I apologize for the technical difficulty. Please email us at support@recxchange.io or try again in a moment.',
+        error: 'Internal server error',
+        message: 'Technical issue. Please email support@recxchange.io or try again.',
       },
       { status: 500 }
     );
