@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { visitorContactIds } from '../webhook/route';
+import Groq from 'groq-sdk';
 
 const GHL_BASE = 'https://services.leadconnectorhq.com';
 const API_KEY = process.env.GHL_API_KEY!;
 const LOCATION_ID = process.env.GHL_LOCATION_ID!;
-const AI_AGENT_ID = process.env.GHL_CONVERSATION_AI_AGENT_ID!;
+const GROQ_API_KEY = process.env.GROQ_API_KEY!;
 
 const ghlHeaders = {
   'Authorization': `Bearer ${API_KEY}`,
@@ -12,15 +13,90 @@ const ghlHeaders = {
   'Version': '2021-07-28',
 };
 
-interface GHLMessage {
-  direction?: string;
-  type?: string;
-  body?: string;
-  dateAdded?: string;
-  id?: string;
-  messageType?: string;
-  status?: string;
+const groq = new Groq({ apiKey: GROQ_API_KEY });
+
+interface ConversationMessage {
+  role: 'system' | 'user' | 'assistant';
+  content: string;
 }
+
+// System prompt based on your GHL configuration
+const SYSTEM_PROMPT = `You are the RecXchange Revenue Assistant.
+
+Your role is to guide recruiters and hiring managers toward the most relevant next action based on their specific question.
+
+You do not act as a general support bot.
+You do not provide long explanations.
+You move conversations forward efficiently.
+
+If the user expresses a clear intent, respond only to that intent. Do not introduce additional options unless the conversation requires it.
+
+Recruiter logic:
+• If asking for live roles → guide to 3 live roles form only.
+• If asking about RecX Direct → explain briefly and offer the explainer video.
+• If asking about Lite or Pro pricing → provide clear pricing and short positioning. Only escalate if they express intent to subscribe or upgrade.
+• If asking how to join → guide to sign-up.
+If a recruiter asks about Lite pricing, provide the price and guide them directly toward sign-up as the primary next step. Mention live roles only as part of the sign-up benefit, not as a separate option.
+
+Hiring manager logic:
+• If asking how it works → briefly explain and guide to strategy call.
+• If hesitant → offer explainer video.
+• If expressing urgency → escalate to human.
+Do not describe the process as the hiring manager posting a job. Instead, explain that RecX Direct distributes live roles to the recruiter network on their behalf.
+Do not mention fees or pricing unless specifically asked.
+Do not describe RecX Direct as a separate entity from RecXchange. It is part of RecXchange.
+Do not use em-dashes or long punctuation separators in responses.
+Use simple sentence structure.
+
+CAPABILITIES YOU CAN TRIGGER:
+
+For Recruiters:
+1. Send 3 Matched Roles - When they ask for roles
+2. Explain RecX Direct - When they ask about premium tiers or higher splits
+
+For Hiring Managers:
+1. Schedule Discovery Call - When they want to book a meeting or consultation
+
+CONVERSATION PATTERNS:
+
+When recruiter asks about roles:
+- Ask their industries first
+- Then mention you can send 3 matched roles to their email
+- Confirm email was sent
+
+When recruiter asks about RecX Direct:
+- Explain the 70% split benefit
+- Highlight premium advantages
+- Keep it brief
+
+When hiring manager wants to talk:
+- Send booking link: https://recxchange.io/book-meeting
+- Set expectations for the call
+
+Do not cross-sell in the same reply.
+Do not stack multiple calls-to-action.
+Keep responses under 100 words.
+Avoid jargon.
+Use clear recruiter language.
+
+Escalate only when:
+• The user explicitly requests a human.
+• The user confirms buying or upgrading intent.
+
+Conversation Guidelines:
+• Keep responses concise and controlled.
+• Move toward a clear action within 3 replies.
+• Avoid long educational explanations.
+• Do not answer unrelated questions.
+• Escalate high-intent users immediately.
+• Do not discuss detailed pricing.
+
+Core Positioning:
+RecXchange is a recruiter collaboration platform.
+Recruiters collaborate with other recruiters through structured split-fee partnerships.
+RecX Direct is the in-house business development arm that signs live clients and distributes their roles to the RecXchange network.
+
+Do not describe RecXchange as a job board.`;
 
 // ─── Upsert Contact ─────────────────────────────────────────────────────────
 async function upsertContact(
@@ -33,7 +109,7 @@ async function upsertContact(
   const firstName = name.split(' ')[0] || name;
   const lastName = name.split(' ').slice(1).join(' ') || '';
 
-  console.log('[GHL AI Chat] Upserting contact:', { email, firstName, lastName });
+  console.log('[Groq AI Chat] Upserting contact:', { email, firstName, lastName });
 
   const searchUrl = `${GHL_BASE}/contacts/search/duplicate?locationId=${LOCATION_ID}&email=${encodeURIComponent(email)}`;
   const search = await fetch(searchUrl, { headers: ghlHeaders });
@@ -41,7 +117,7 @@ async function upsertContact(
   
   if (searchData?.contact?.id) {
     const contactId = searchData.contact.id;
-    console.log('[GHL AI Chat] Found existing contact:', contactId);
+    console.log('[Groq AI Chat] Found existing contact:', contactId);
     visitorContactIds.add(contactId);
     return contactId;
   }
@@ -84,16 +160,15 @@ async function upsertContact(
   const contactId = createData.contact.id;
   visitorContactIds.add(contactId);
   
-  console.log('[GHL AI Chat] New contact created:', contactId);
+  console.log('[Groq AI Chat] New contact created:', contactId);
   return contactId;
 }
 
-// ─── Get or Create Conversation WITH AI AGENT ───────────────────────────────
+// ─── Get or Create Conversation ─────────────────────────────────────────────
 async function getOrCreateConversation(
   contactId: string
 ): Promise<string> {
-  console.log('[GHL AI Chat] Getting/creating conversation for contact:', contactId);
-  console.log('[GHL AI Chat] AI Agent ID:', AI_AGENT_ID);
+  console.log('[Groq AI Chat] Getting/creating conversation for contact:', contactId);
   
   const search = await fetch(
     `${GHL_BASE}/conversations/search?locationId=${LOCATION_ID}&contactId=${contactId}`,
@@ -103,26 +178,17 @@ async function getOrCreateConversation(
   
   if (searchData?.conversations?.length > 0) {
     const existingConvId = searchData.conversations[0].id;
-    console.log('[GHL AI Chat] Found existing conversation:', existingConvId);
+    console.log('[Groq AI Chat] Found existing conversation:', existingConvId);
     return existingConvId;
   }
 
-  // Create new conversation WITH AI agent assigned
-  const conversationPayload: Record<string, unknown> = {
-    locationId: LOCATION_ID,
-    contactId,
-  };
-  
-  // ⚠️ CRITICAL: Link to AI Agent so bot processes messages
-  if (AI_AGENT_ID) {
-    conversationPayload.assignedTo = AI_AGENT_ID;
-    console.log('[GHL AI Chat] Assigning conversation to AI Agent:', AI_AGENT_ID);
-  }
-  
   const create = await fetch(`${GHL_BASE}/conversations/`, {
     method: 'POST',
     headers: ghlHeaders,
-    body: JSON.stringify(conversationPayload),
+    body: JSON.stringify({ 
+      locationId: LOCATION_ID, 
+      contactId,
+    }),
   });
   const createData = await create.json();
   
@@ -131,206 +197,134 @@ async function getOrCreateConversation(
   }
   
   const newConvId = createData.conversation.id;
-  console.log('[GHL AI Chat] Created new conversation with AI agent:', newConvId);
+  console.log('[Groq AI Chat] Created new conversation:', newConvId);
   
   return newConvId;
 }
 
-// ─── Poll for AI Response ───────────────────────────────────────────────────
-async function pollForAIResponse(
+// ─── Log Message to GHL ─────────────────────────────────────────────────────
+async function logMessageToGHL(
   conversationId: string,
-  messageCountBefore: number,
-  maxAttempts: number = 25
-): Promise<string | null> {
-  console.log('[GHL AI Chat] Polling for AI response...');
-  
-  let attempts = 0;
-  
-  while (attempts < maxAttempts) {
-    attempts++;
-    
-    // Longer delays for AI processing
-    const delay = attempts <= 2 ? 500 : attempts <= 5 ? 1000 : attempts <= 15 ? 1500 : 2000;
-    await new Promise(resolve => setTimeout(resolve, delay));
-    
-    console.log(`[GHL AI Chat] Poll attempt ${attempts}/${maxAttempts}`);
-    
-    try {
-      const messagesResponse = await fetch(
-        `${GHL_BASE}/conversations/${conversationId}/messages?limit=20`,
-        { headers: ghlHeaders }
-      );
-      
-      if (!messagesResponse.ok) {
-        console.warn(`[GHL AI Chat] Messages API returned ${messagesResponse.status}`);
-        continue;
-      }
-      
-      const messagesData = await messagesResponse.json();
-      const messages: GHLMessage[] = messagesData.messages?.messages || [];
-      
-      if (!Array.isArray(messages)) {
-        console.warn('[GHL AI Chat] Invalid messages format');
-        continue;
-      }
-      
-      console.log(`[GHL AI Chat] Found ${messages.length} messages (baseline: ${messageCountBefore})`);
-      
-      if (messages.length > messageCountBefore) {
-        const outboundMessages = messages.filter((msg: GHLMessage) => 
-          msg.direction === 'outbound' && 
-          msg.body && 
-          msg.body.trim().length > 0 &&
-          msg.status !== 'failed'
-        );
-        
-        if (outboundMessages.length > 0) {
-          const sorted = outboundMessages.sort((a: GHLMessage, b: GHLMessage) => {
-            const dateA = new Date(a.dateAdded || 0).getTime();
-            const dateB = new Date(b.dateAdded || 0).getTime();
-            return dateB - dateA;
-          });
-          
-          const aiMessage = sorted[0].body?.trim();
-          if (aiMessage) {
-            console.log('[GHL AI Chat] ✓ AI response received:', aiMessage.substring(0, 100));
-            return aiMessage;
-          }
-        }
-      }
-      
-    } catch (pollError) {
-      console.error('[GHL AI Chat] Polling error:', pollError);
-    }
-  }
-  
-  console.warn('[GHL AI Chat] ⚠️ AI bot did not respond after', maxAttempts, 'attempts');
-  return null;
-}
-
-// ─── Send Message to GHL ─────────────────────────────────────────────────────
-async function sendMessageToGHL(
-  conversationId: string,
-  contactId: string,
-  message: string
+  message: string,
+  direction: 'inbound' | 'outbound'
 ): Promise<void> {
-  console.log('[GHL AI Chat] Sending message to GHL conversation');
+  console.log(`[Groq AI Chat] Logging ${direction} message to GHL`);
   
   const payload = {
     type: 'Live_Chat',
     conversationId,
-    contactId,
-    message: message,
+    message,
   };
   
-  // Try inbound endpoint (should trigger AI bot)
   try {
-    const response = await fetch(`${GHL_BASE}/conversations/messages/inbound`, {
+    const endpoint = direction === 'inbound' 
+      ? `${GHL_BASE}/conversations/messages/inbound`
+      : `${GHL_BASE}/conversations/messages`;
+      
+    const response = await fetch(endpoint, {
       method: 'POST',
       headers: ghlHeaders,
       body: JSON.stringify(payload),
     });
 
     if (response.ok) {
-      const data = await response.json();
-      console.log('[GHL AI Chat] ✓ Message posted via inbound endpoint, ID:', data.messageId || data.id);
-      return;
+      console.log(`[Groq AI Chat] ✓ ${direction} message logged`);
     } else {
-      const errorText = await response.text();
-      console.warn('[GHL AI Chat] Inbound endpoint returned', response.status, ':', errorText);
+      console.warn(`[Groq AI Chat] Failed to log ${direction} message:`, response.status);
     }
   } catch (error) {
-    console.warn('[GHL AI Chat] Inbound endpoint error:', error);
+    console.error(`[Groq AI Chat] Error logging ${direction} message:`, error);
   }
-  
-  // Fallback to regular message endpoint
-  try {
-    const response = await fetch(`${GHL_BASE}/conversations/messages`, {
-      method: 'POST',
-      headers: ghlHeaders,
-      body: JSON.stringify(payload),
-    });
-
-    if (response.ok) {
-      console.log('[GHL AI Chat] ✓ Message posted via regular endpoint');
-      return;
-    } else {
-      const errorText = await response.text();
-      console.error('[GHL AI Chat] Regular endpoint also failed:', response.status, errorText);
-    }
-  } catch (error) {
-    console.error('[GHL AI Chat] Regular endpoint error:', error);
-  }
-  
-  throw new Error('Failed to post message to GHL');
 }
 
-// ─── Main AI Chat Flow ───────────────────────────────────────────────────────
-async function processAIChat(
-  conversationId: string,
-  contactId: string,
-  message: string
-): Promise<string> {
-  console.log('[GHL AI Chat] === Processing chat request ===');
-  console.log('[GHL AI Chat] Conversation:', conversationId);
-  console.log('[GHL AI Chat] Contact:', contactId);
-  console.log('[GHL AI Chat] AI Agent:', AI_AGENT_ID);
-  console.log('[GHL AI Chat] Message:', message);
+// ─── Get Conversation History from GHL ──────────────────────────────────────
+async function getConversationHistory(
+  conversationId: string
+): Promise<ConversationMessage[]> {
+  console.log('[Groq AI Chat] Fetching conversation history');
   
-  let messageCountBefore = 0;
   try {
-    const beforeResponse = await fetch(
-      `${GHL_BASE}/conversations/${conversationId}/messages?limit=10`,
+    const response = await fetch(
+      `${GHL_BASE}/conversations/${conversationId}/messages?limit=20`,
       { headers: ghlHeaders }
     );
     
-    if (beforeResponse.ok) {
-      const beforeData = await beforeResponse.json();
-      const messagesBefore: GHLMessage[] = beforeData.messages?.messages || [];
-      messageCountBefore = messagesBefore.length;
-      console.log('[GHL AI Chat] Current message count:', messageCountBefore);
+    if (!response.ok) {
+      console.warn('[Groq AI Chat] Could not fetch history:', response.status);
+      return [];
     }
+    
+    const data = await response.json();
+    const messages = data.messages?.messages || [];
+    
+    // Convert GHL messages to Groq format
+    const history: ConversationMessage[] = messages
+      .filter((msg: any) => msg.body && msg.body.trim())
+      .sort((a: any, b: any) => {
+        const dateA = new Date(a.dateAdded || 0).getTime();
+        const dateB = new Date(b.dateAdded || 0).getTime();
+        return dateA - dateB; // Oldest first
+      })
+      .map((msg: any) => ({
+        role: msg.direction === 'inbound' ? 'user' : 'assistant',
+        content: msg.body.trim(),
+      }));
+    
+    console.log(`[Groq AI Chat] Found ${history.length} previous messages`);
+    return history;
+    
   } catch (error) {
-    console.warn('[GHL AI Chat] Could not get baseline count:', error);
+    console.error('[Groq AI Chat] Error fetching history:', error);
+    return [];
   }
-  
-  await sendMessageToGHL(conversationId, contactId, message);
-  
-  // Wait a moment for AI to start processing
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  
-  const aiResponse = await pollForAIResponse(conversationId, messageCountBefore, 25);
-  
-  if (aiResponse) {
-    return aiResponse;
-  }
-  
-  console.warn('[GHL AI Chat] ⚠️ AI bot failed to respond - marking for review');
-  
-  try {
-    await fetch(`${GHL_BASE}/conversations/${conversationId}`, {
-      method: 'PUT',
-      headers: ghlHeaders,
-      body: JSON.stringify({
-        unread: true,
-        starred: true,
-      }),
-    });
-    console.log('[GHL AI Chat] Conversation marked for human review');
-  } catch (error) {
-    console.error('[GHL AI Chat] Failed to mark conversation:', error);
-  }
-  
-  return "Thank you for your message! Our team has been notified and will respond shortly. For immediate assistance, email support@recxchange.io";
 }
 
-// ─── Main Handler ────────────────────────────────────────────────────────────
+// ─── Call Groq AI ───────────────────────────────────────────────────────────
+async function callGroqAI(
+  message: string,
+  persona: 'recruiter' | 'hiring-manager',
+  pageContext: string,
+  conversationHistory: ConversationMessage[] = []
+): Promise<string> {
+  console.log('[Groq AI Chat] Calling Groq API');
+  console.log('[Groq AI Chat] User persona:', persona);
+  console.log('[Groq AI Chat] Page context:', pageContext);
+  
+  // Build context-aware system message
+  const contextPrompt = `${SYSTEM_PROMPT}\n\nCurrent context:\n- User type: ${persona}\n- Page: ${pageContext}\n- Conversation has ${conversationHistory.length} previous messages`;
+  
+  // Build messages array
+  const messages: ConversationMessage[] = [
+    { role: 'system', content: contextPrompt },
+    ...conversationHistory.slice(-6), // Last 6 messages for context
+    { role: 'user', content: message },
+  ];
+  
+  try {
+    const completion = await groq.chat.completions.create({
+      messages,
+      model: 'llama-3.3-70b-versatile',
+      temperature: 0.7,
+      max_tokens: 300, // Keep responses concise
+      top_p: 1,
+    });
+    
+    const response = completion.choices[0]?.message?.content || '';
+    console.log('[Groq AI Chat] ✓ Groq responded:', response.substring(0, 100));
+    
+    return response.trim();
+    
+  } catch (error) {
+    console.error('[Groq AI Chat] Groq API error:', error);
+    throw new Error('AI service temporarily unavailable');
+  }
+}
+
+// ─── Main Handler ───────────────────────────────────────────────────────────
 export async function POST(req: NextRequest) {
   const startTime = Date.now();
-  console.log('[GHL AI Chat] ═══ NEW REQUEST ═══');
-  console.log('[GHL AI Chat] Timestamp:', new Date().toISOString());
-  console.log('[GHL AI Chat] Location ID:', LOCATION_ID);
-  console.log('[GHL AI Chat] AI Agent ID:', AI_AGENT_ID || '⚠️ NOT SET');
+  console.log('[Groq AI Chat] ═══ NEW REQUEST ═══');
+  console.log('[Groq AI Chat] Timestamp:', new Date().toISOString());
   
   try {
     const body = await req.json();
@@ -350,12 +344,14 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Message is required' }, { status: 400 });
     }
 
-    console.log('[GHL AI Chat] Page:', pageContext || 'unknown');
-    console.log('[GHL AI Chat] Message preview:', message.substring(0, 50));
+    console.log('[Groq AI Chat] Page:', pageContext || 'unknown');
+    console.log('[Groq AI Chat] Persona:', persona);
+    console.log('[Groq AI Chat] Message preview:', message.substring(0, 50));
 
     let contactId = existingContactId;
     let conversationId = existingConvId;
 
+    // Create/get contact
     if (!contactId) {
       if (!name || !email || !persona) {
         return NextResponse.json(
@@ -368,26 +364,37 @@ export async function POST(req: NextRequest) {
       visitorContactIds.add(contactId);
     }
 
+    // Create/get conversation
     if (!conversationId) {
       conversationId = await getOrCreateConversation(contactId);
     }
 
-    console.log('[GHL AI Chat] → Sending to GHL AI bot');
-    const aiMessage = await processAIChat(conversationId, contactId, message);
+    // Get conversation history for context
+    const history = await getConversationHistory(conversationId);
+
+    // Call Groq AI
+    console.log('[Groq AI Chat] → Calling Groq AI');
+    const aiResponse = await callGroqAI(message, persona, pageContext || 'Homepage', history);
+
+    // Log both messages to GHL for CRM tracking
+    await Promise.all([
+      logMessageToGHL(conversationId, message, 'inbound'),
+      logMessageToGHL(conversationId, aiResponse, 'outbound'),
+    ]);
 
     const elapsed = Date.now() - startTime;
-    console.log(`[GHL AI Chat] ✓ Completed in ${elapsed}ms`);
+    console.log(`[Groq AI Chat] ✓ Completed in ${elapsed}ms`);
 
     return NextResponse.json({
       success: true,
       contactId,
       conversationId,
-      message: aiMessage,
+      message: aiResponse,
     });
     
   } catch (err) {
     const elapsed = Date.now() - startTime;
-    console.error('[GHL AI Chat] ✗ Error after', elapsed, 'ms:', err);
+    console.error('[Groq AI Chat] ✗ Error after', elapsed, 'ms:', err);
     
     return NextResponse.json(
       { 
