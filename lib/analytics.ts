@@ -3,6 +3,8 @@
  * 
  * Centralized event tracking for RecXchange conversion funnel.
  * Supports multiple analytics platforms (GA4, custom API, etc.)
+ * 
+ * GDPR/PECR Compliance: All tracking respects user cookie consent preferences.
  */
 
 export type EventName =
@@ -208,6 +210,25 @@ export type AnalyticsEvent = {
 };
 
 /**
+ * Check if user has consented to analytics cookies
+ * GDPR/PECR Compliance: Must check consent before tracking
+ */
+function hasAnalyticsConsent(): boolean {
+  if (typeof window === 'undefined') return false;
+  
+  try {
+    const consent = localStorage.getItem('cookie-consent');
+    if (!consent) return false;
+    
+    const preferences = JSON.parse(consent);
+    return preferences.analytics === true;
+  } catch (error) {
+    // If we can't parse consent, assume no consent
+    return false;
+  }
+}
+
+/**
  * Generate or retrieve session ID
  */
 function getSessionId(): string {
@@ -228,11 +249,38 @@ function getSessionId(): string {
 /**
  * Track an analytics event
  * 
+ * GDPR/PECR Compliance: Only tracks if user has given explicit consent for analytics cookies.
+ * Necessary cookies and transactional events (form submissions) are always tracked.
+ * 
  * @param event - Event name from EventName type
  * @param props - Optional event properties
+ * @param options - Options to override consent check (e.g., for transactional events)
  */
-export function trackEvent(event: EventName, props?: EventProps): void {
+export function trackEvent(
+  event: EventName, 
+  props?: EventProps,
+  options?: { bypassConsent?: boolean }
+): void {
   if (typeof window === 'undefined') return;
+
+  // GDPR/PECR Compliance Check
+  // Only bypass consent for transactional events (form submissions, etc.)
+  const isTransactionalEvent = [
+    'signup_form_submitted',
+    'lead_form_submitted',
+    'quick_action_form_submitted',
+    'hiring_manager_form_submitted',
+  ].includes(event);
+
+  const shouldTrack = options?.bypassConsent || isTransactionalEvent || hasAnalyticsConsent();
+
+  if (!shouldTrack) {
+    // User has not consented to analytics - skip tracking
+    if (process.env.NODE_ENV === 'development') {
+      console.log('[Analytics] Tracking blocked - no consent:', event);
+    }
+    return;
+  }
 
   const timestamp = Date.now();
   const session_id = getSessionId();
@@ -244,7 +292,8 @@ export function trackEvent(event: EventName, props?: EventProps): void {
       event,
       props,
       timestamp: new Date(timestamp).toISOString(),
-      session_id
+      session_id,
+      consent: hasAnalyticsConsent() ? 'granted' : 'bypassed'
     });
   }
 
@@ -282,6 +331,7 @@ export function trackEvent(event: EventName, props?: EventProps): void {
   }
 
   // 4. Store in sessionStorage for debugging (last 100 events)
+  // This is considered "necessary" for functionality
   try {
     const storageKey = 'rx_analytics_events';
     const existingEvents = JSON.parse(sessionStorage.getItem(storageKey) || '[]');
@@ -374,4 +424,11 @@ export function clearSessionEvents(): void {
   } catch {
     // Silently fail
   }
+}
+
+/**
+ * Check if analytics is currently enabled (for debugging)
+ */
+export function isAnalyticsEnabled(): boolean {
+  return hasAnalyticsConsent();
 }
