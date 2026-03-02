@@ -110,6 +110,7 @@ export default function Footer() {
             <ul className="space-y-2 text-xs sm:text-sm text-gray-500">
               <li><Link href="/privacy" className="hover:text-cyan-400 transition-colors">Privacy Policy</Link></li>
               <li><Link href="/terms" className="hover:text-cyan-400 transition-colors">Terms of Service</Link></li>
+              <li><Link href="/cookie-policy" className="hover:text-cyan-400 transition-colors">Cookie Policy</Link></li>
               <li><Link href="/gdpr" className="hover:text-cyan-400 transition-colors">GDPR Compliance</Link></li>
               <li><Link href="/affiliate" className="hover:text-cyan-400 transition-colors">Affiliate Terms</Link></li>
             </ul>
