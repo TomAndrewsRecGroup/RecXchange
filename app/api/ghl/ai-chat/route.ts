@@ -78,9 +78,10 @@ When recruiter asks about RecX Direct:
 - Explain the 70% split benefit
 - Highlight premium advantages
 - Keep it brief
+- Offer the explainer email with video
 
 When hiring manager wants to talk:
-- Send booking link: https://recxchange.io/book-meeting
+- Send booking link
 - Set expectations for the call
 
 Do not cross-sell in the same reply.
@@ -117,12 +118,12 @@ The button format must be:
 
 Available actions:
 - send-3-roles: Opens form to get 3 matched roles
-- book-meeting: Opens meeting scheduler
-- recx-direct-info: Opens RecX Direct explainer
+- book-meeting: Opens meeting scheduler  
+- recx-direct-info: Opens form to get RecX Direct explainer video
 
 Example responses:
 "I can send you 3 live roles right now! [button:send-3-roles]Get 3 Roles[/button]"
-"Ready to see how it works? [button:recx-direct-info]Learn About RecX Direct[/button]"
+"Ready to see how it works? [button:recx-direct-info]Get RecX Direct Explainer[/button]"
 "Let's schedule a call! [button:book-meeting]Book a Meeting[/button]"`;
 
 // ─── Upsert Contact ─────────────────────────────────────────────────────────
@@ -333,12 +334,13 @@ function parseSmartLinks(
         prefillData = { name: userName, email: userEmail };
         break;
       
-      case 'book-meeting':
-        url = '/book-meeting';
+      case 'recx-direct-info':
+        url = `/?action=recx-direct-info&name=${encodeURIComponent(userName)}&email=${encodeURIComponent(userEmail)}`;
+        prefillData = { name: userName, email: userEmail };
         break;
       
-      case 'recx-direct-info':
-        url = '/recx-direct';
+      case 'book-meeting':
+        url = '/book-meeting';
         break;
     }
     
