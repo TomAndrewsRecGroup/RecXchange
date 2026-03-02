@@ -4,6 +4,7 @@ import React from "react";
 import ConditionalHeader from "@/components/ConditionalHeader";
 import Footer from "@/components/Footer";
 import FloatingChat from "@/components/FloatingChat";
+import CookieBanner from "@/components/CookieBanner";
 import ClientProviders from "@/components/ClientProviders";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Analytics } from "@vercel/analytics/next";
@@ -666,6 +667,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
 
             {/* Floating Chatbot */}
             <FloatingChat />
+
+            {/* Cookie Consent Banner */}
+            <CookieBanner />
 
             {/* Vercel Web Analytics */}
             <Analytics />
