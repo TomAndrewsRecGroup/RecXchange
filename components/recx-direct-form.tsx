@@ -1,81 +1,67 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { X } from 'lucide-react';
 import ModalWrapper from './ModalWrapper';
 
-// Same industry list as SendRolesForm
 const INDUSTRIES = [
-  'Accounting & Finance',
-  'Administrative & Office Support',
-  'Advertising, Arts & Media',
-  'Agriculture, Forestry & Fishing',
-  'Automotive',
-  'Banking & Financial Services',
-  'Biotechnology',
-  'Building & Construction',
-  'Business Consulting & Management',
-  'Call Centre & Customer Service',
-  'Chemicals',
-  'Community Services & Development',
-  'Construction & Architecture',
-  'Consulting & Strategy',
-  'Consumer Products & FMCG',
-  'Defence & Aerospace',
-  'Design & Architecture',
-  'Education & Training',
-  'Electronics & Electrical',
-  'Energy & Utilities',
-  'Engineering',
-  'Entertainment & Events',
-  'Environmental Services',
-  'Facilities Management',
-  'Farming, Animals & Conservation',
-  'Fashion & Beauty',
-  'Food & Beverage',
-  'Government & Public Sector',
-  'Healthcare & Medical',
-  'Hospitality & Tourism',
-  'Human Resources & Recruitment',
-  'Industrial & Manufacturing',
-  'Information & Communication Technology',
-  'Insurance & Superannuation',
-  'Legal',
-  'Logistics, Transport & Distribution',
-  'Manufacturing, Transport & Logistics',
-  'Marketing & Communications',
-  'Media & Digital',
-  'Mining, Resources & Energy',
-  'Non-Profit & Charities',
-  'Oil & Gas',
-  'Pharmaceuticals',
-  'Professional Services',
-  'Property & Real Estate',
-  'Public Relations',
-  'Retail & Consumer Products',
-  'Sales',
-  'Science & Technology',
-  'Security & Law Enforcement',
-  'Sport & Recreation',
-  'Telecommunications',
-  'Tourism & Hospitality',
-  'Trade & Services',
-  'Transport & Logistics',
-  'Warehousing & Supply Chain'
+  'Accounting & Finance', 'Administrative & Office Support', 'Advertising, Arts & Media',
+  'Agriculture, Forestry & Fishing', 'Automotive', 'Banking & Financial Services',
+  'Biotechnology', 'Building & Construction', 'Business Consulting & Management',
+  'Call Centre & Customer Service', 'Chemicals', 'Community Services & Development',
+  'Construction & Architecture', 'Consulting & Strategy', 'Consumer Products & FMCG',
+  'Defence & Aerospace', 'Design & Architecture', 'Education & Training',
+  'Electronics & Electrical', 'Energy & Utilities', 'Engineering',
+  'Entertainment & Events', 'Environmental Services', 'Facilities Management',
+  'Farming, Animals & Conservation', 'Fashion & Beauty', 'Food & Beverage',
+  'Government & Public Sector', 'Healthcare & Medical', 'Hospitality & Tourism',
+  'Human Resources & Recruitment', 'Industrial & Manufacturing',
+  'Information & Communication Technology', 'Insurance & Superannuation', 'Legal',
+  'Logistics, Transport & Distribution', 'Manufacturing, Transport & Logistics',
+  'Marketing & Communications', 'Media & Digital', 'Mining, Resources & Energy',
+  'Non-Profit & Charities', 'Oil & Gas', 'Pharmaceuticals', 'Professional Services',
+  'Property & Real Estate', 'Public Relations', 'Retail & Consumer Products', 'Sales',
+  'Science & Technology', 'Security & Law Enforcement', 'Sport & Recreation',
+  'Telecommunications', 'Tourism & Hospitality', 'Trade & Services',
+  'Transport & Logistics', 'Warehousing & Supply Chain'
 ].sort();
 
 interface RecXDirectFormProps {
   className?: string;
+  isOpen?: boolean;
+  onClose?: () => void;
+  prefillName?: string;
+  prefillEmail?: string;
+  prefillIndustries?: string[];
+  autoFocus?: boolean;
 }
 
-export default function RecXDirectForm({ className = '' }: RecXDirectFormProps) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [selectedIndustries, setSelectedIndustries] = useState<string[]>([]);
+export default function RecXDirectForm({
+  className = '',
+  isOpen: externalIsOpen,
+  onClose: externalOnClose,
+  prefillName = '',
+  prefillEmail = '',
+  prefillIndustries = [],
+  autoFocus = false
+}: RecXDirectFormProps) {
+  const [internalIsOpen, setInternalIsOpen] = useState(false);
+  const [name, setName] = useState(prefillName);
+  const [email, setEmail] = useState(prefillEmail);
+  const [selectedIndustries, setSelectedIndustries] = useState<string[]>(prefillIndustries);
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
+
+  const isControlled = externalIsOpen !== undefined;
+  const isOpen = isControlled ? externalIsOpen : internalIsOpen;
+  const setIsOpen = isControlled ? (externalOnClose || (() => {})) : setInternalIsOpen;
+
+  useEffect(() => {
+    if (prefillName) setName(prefillName);
+    if (prefillEmail) setEmail(prefillEmail);
+    if (prefillIndustries.length > 0) setSelectedIndustries(prefillIndustries);
+  }, [prefillName, prefillEmail, prefillIndustries]);
 
   const handleIndustryToggle = (industry: string) => {
     if (selectedIndustries.includes(industry)) {
@@ -107,7 +93,6 @@ export default function RecXDirectForm({ className = '' }: RecXDirectFormProps) 
     setErrorMessage('');
 
     try {
-      // Split name into first and last
       const nameParts = name.trim().split(' ');
       const firstName = nameParts[0];
       const lastName = nameParts.slice(1).join(' ') || nameParts[0];
@@ -133,13 +118,16 @@ export default function RecXDirectForm({ className = '' }: RecXDirectFormProps) 
 
       setStatus('success');
       
-      // Reset after 3 seconds and close modal
       setTimeout(() => {
         setStatus('idle');
         setName('');
         setEmail('');
         setSelectedIndustries([]);
-        setIsOpen(false);
+        if (isControlled && externalOnClose) {
+          externalOnClose();
+        } else {
+          setInternalIsOpen(false);
+        }
       }, 3000);
     } catch (error) {
       console.error('RecX Direct form error:', error);
@@ -150,18 +138,24 @@ export default function RecXDirectForm({ className = '' }: RecXDirectFormProps) 
 
   const handleClose = () => {
     if (status !== 'loading') {
-      setIsOpen(false);
+      if (isControlled && externalOnClose) {
+        externalOnClose();
+      } else {
+        setInternalIsOpen(false);
+      }
     }
   };
 
   return (
     <>
-      <button
-        onClick={() => setIsOpen(true)}
-        className="px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl border border-fuchsia-400/30 bg-fuchsia-400/5 text-fuchsia-400 text-xs font-bold uppercase tracking-widest hover:bg-fuchsia-400/10 transition-all"
-      >
-        LEARN ABOUT RECX DIRECT
-      </button>
+      {!isControlled && (
+        <button
+          onClick={() => setInternalIsOpen(true)}
+          className="px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl border border-fuchsia-400/30 bg-fuchsia-400/5 text-fuchsia-400 text-xs font-bold uppercase tracking-widest hover:bg-fuchsia-400/10 transition-all"
+        >
+          LEARN ABOUT RECX DIRECT
+        </button>
+      )}
 
       <ModalWrapper
         isOpen={isOpen}
@@ -190,6 +184,7 @@ export default function RecXDirectForm({ className = '' }: RecXDirectFormProps) 
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
+                autoFocus={autoFocus}
                 disabled={status === 'loading'}
                 className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 text-sm text-white outline-none focus:border-fuchsia-400/50 transition-all disabled:opacity-50"
                 placeholder="John Smith"
@@ -214,7 +209,6 @@ export default function RecXDirectForm({ className = '' }: RecXDirectFormProps) 
                 Your Industries ({selectedIndustries.length}/5) *
               </label>
               
-              {/* Selected Tags */}
               {selectedIndustries.length > 0 && (
                 <div className="flex flex-wrap gap-2 mb-4">
                   {selectedIndustries.map((industry) => (
@@ -232,7 +226,6 @@ export default function RecXDirectForm({ className = '' }: RecXDirectFormProps) 
                 </div>
               )}
 
-              {/* Industry Dropdown */}
               <div className="max-h-48 sm:max-h-60 overflow-y-auto border border-white/10 rounded-xl bg-white/[0.03] p-2">
                 {INDUSTRIES.map((industry) => (
                   <button
