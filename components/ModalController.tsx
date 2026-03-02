@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import SendRolesForm from './send-roles-form';
 
 /**
@@ -13,6 +13,7 @@ import SendRolesForm from './send-roles-form';
 export default function ModalController() {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const pathname = usePathname();
   const [modalState, setModalState] = useState<{
     action: string | null;
     data: Record<string, any>;
@@ -41,17 +42,11 @@ export default function ModalController() {
   }, [searchParams]);
 
   const handleClose = () => {
-    // Clear URL params when modal closes
+    // Clear modal state
     setModalState({ action: null, data: {} });
     
-    // Remove query params from URL without page reload
-    const url = new URL(window.location.href);
-    url.searchParams.delete('action');
-    url.searchParams.delete('name');
-    url.searchParams.delete('email');
-    url.searchParams.delete('industries');
-    
-    router.replace(url.pathname + url.search, { scroll: false });
+    // Clear URL params by navigating to clean pathname
+    router.replace(pathname, { scroll: false });
   };
 
   // Render appropriate modal based on action
