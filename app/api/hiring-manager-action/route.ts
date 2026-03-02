@@ -1,5 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { trackEvent } from '@/lib/analytics';
+import { 
+  checkRateLimit, 
+  getClientIP, 
+  validateFormData,
+  sanitizeInput,
+  getSecurityHeaders 
+} from '@/lib/security';
 
 interface HiringManagerActionRequest {
   // Support both old format (firstName/lastName) and new format (name)
@@ -15,28 +22,43 @@ interface HiringManagerActionRequest {
 }
 
 /**
- * Validate email address using RFC 5322 compliant regex
- */
-function isValidEmail(email: string): boolean {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
-}
-
-/**
  * POST /api/hiring-manager-action
  * 
  * Handles hiring manager form submissions:
- * 1. Creates client company in GHL
- * 2. Creates contact within that client company
- * 3. Tags contact based on meeting status (meeting-booked or no-meeting)
- * 4. Tags contact based on marketing consent (GDPR compliance)
- * 5. Sends auto-response with video explainer
- * 6. Tracks analytics event
+ * 1. Rate limiting and security checks
+ * 2. Input validation and sanitization
+ * 3. Creates contact in GHL with company information
+ * 4. Tags contact based on meeting status (meeting-booked or no-meeting)
+ * 5. Tags contact based on marketing consent (GDPR compliance)
+ * 6. Sends auto-response with video explainer
+ * 7. Tracks analytics event
  * 
  * Note: Team notifications are handled by GHL automation workflows
  */
 export async function POST(request: NextRequest) {
+  const securityHeaders = getSecurityHeaders();
+
   try {
+    // 1. Rate limiting - prevent spam and abuse
+    const clientIP = getClientIP(request);
+    const ipRateLimit = checkRateLimit(clientIP, 'form');
+    
+    if (!ipRateLimit.success) {
+      return NextResponse.json(
+        { 
+          error: 'Too many requests. Please try again later.',
+          resetIn: Math.ceil(ipRateLimit.resetIn / 1000)
+        },
+        { 
+          status: 429,
+          headers: {
+            ...securityHeaders,
+            'Retry-After': String(Math.ceil(ipRateLimit.resetIn / 1000)),
+          }
+        }
+      );
+    }
+
     const body: HiringManagerActionRequest = await request.json();
     const { name, firstName, lastName, email, companyName, industries, bookedMeeting, marketingConsent, source } = body;
 
@@ -45,33 +67,67 @@ export async function POST(request: NextRequest) {
     let finalLastName = lastName || '';
     
     if (name && !firstName && !lastName) {
-      const nameParts = name.split(' ');
+      const nameParts = sanitizeInput(name, 100).split(' ');
       finalFirstName = nameParts[0] || '';
       finalLastName = nameParts.slice(1).join(' ') || '';
     }
 
-    // Validate input
-    if (!finalFirstName || !email || !companyName || !source) {
+    // 2. Validate and sanitize input
+    let sanitizedData;
+    try {
+      sanitizedData = validateFormData({
+        firstName: finalFirstName,
+        lastName: finalLastName,
+        email,
+        companyName,
+      });
+    } catch (error) {
       return NextResponse.json(
-        { error: 'Missing required fields' },
-        { status: 400 }
+        { error: error instanceof Error ? error.message : 'Invalid input data' },
+        { status: 400, headers: securityHeaders }
       );
     }
 
-    // Validate email format
-    if (!isValidEmail(email)) {
+    finalFirstName = sanitizedData.firstName;
+    finalLastName = sanitizedData.lastName;
+    const sanitizedEmail = sanitizedData.email;
+    const sanitizedCompanyName = sanitizedData.companyName || '';
+
+    // Validate source
+    if (!source) {
       return NextResponse.json(
-        { error: 'Invalid email address' },
-        { status: 400 }
+        { error: 'Missing required fields' },
+        { status: 400, headers: securityHeaders }
+      );
+    }
+
+    // Email-based rate limiting - prevent email spam
+    const emailRateLimit = checkRateLimit(`email:${sanitizedEmail}`, 'email');
+    if (!emailRateLimit.success) {
+      return NextResponse.json(
+        { 
+          error: 'Too many submissions from this email. Please try again later.',
+          resetIn: Math.ceil(emailRateLimit.resetIn / 1000)
+        },
+        { 
+          status: 429,
+          headers: {
+            ...securityHeaders,
+            'Retry-After': String(Math.ceil(emailRateLimit.resetIn / 1000)),
+          }
+        }
       );
     }
 
     const GHL_API_KEY = process.env.GHL_API_KEY;
     const GHL_LOCATION_ID = process.env.GHL_LOCATION_ID;
     const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
-    const FROM_EMAIL = process.env.SENDGRID_FROM_EMAIL || 'analytics@recxchange.com';
+    const FROM_EMAIL = process.env.SENDGRID_FROM_EMAIL || 'tom@recxchange.io';
 
-    // 1. Create/update contact in GHL with company information
+    // Sanitize industries string
+    const sanitizedIndustries = industries ? sanitizeInput(industries, 500) : '';
+
+    // 3. Create/update contact in GHL with company information
     if (GHL_API_KEY && GHL_LOCATION_ID) {
       try {
         // Build tags based on meeting status and marketing consent
@@ -106,17 +162,17 @@ export async function POST(request: NextRequest) {
           body: JSON.stringify({
             firstName: finalFirstName,
             lastName: finalLastName,
-            email,
-            companyName,
+            email: sanitizedEmail,
+            companyName: sanitizedCompanyName,
             locationId: GHL_LOCATION_ID,
             tags,
             source: `RecXchange Hiring Manager - ${source}`,
             customFields: {
-              company_name: companyName,
+              company_name: sanitizedCompanyName,
               contact_type: 'Hiring Manager',
               source_page: source,
               inquiry_date: new Date().toISOString(),
-              industries: industries || '',
+              industries: sanitizedIndustries,
               meeting_status: bookedMeeting === true ? 'booked' : bookedMeeting === false ? 'declined' : 'unknown',
               marketing_consent: marketingConsent === true ? 'yes' : marketingConsent === false ? 'no' : 'not_asked',
               marketing_consent_date: marketingConsent !== undefined ? new Date().toISOString() : '',
@@ -133,7 +189,7 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // 2. Send auto-response with video explainer (always send transactional email)
+    // 4. Send auto-response with video explainer (always send transactional email)
     if (SENDGRID_API_KEY) {
       try {
         await fetch('https://api.sendgrid.com/v3/mail/send', {
@@ -144,7 +200,7 @@ export async function POST(request: NextRequest) {
           },
           body: JSON.stringify({
             personalizations: [{
-              to: [{ email, name: `${finalFirstName} ${finalLastName}`.trim() }],
+              to: [{ email: sanitizedEmail, name: `${finalFirstName} ${finalLastName}`.trim() }],
               subject: 'How RecXchange Works for Clients'
             }],
             from: { email: FROM_EMAIL, name: 'RecXchange' },
@@ -154,7 +210,7 @@ export async function POST(request: NextRequest) {
                 <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 600px; margin: 0 auto; padding: 40px 20px;">
                   <h2 style="color: #00ffff; margin: 0 0 20px 0;">Welcome to RecXchange, ${finalFirstName}!</h2>
                   
-                  <p style="color: #333; line-height: 1.6; margin-bottom: 20px;">Thank you for your interest in RecXchange. We're excited to show you how our platform can revolutionize your hiring process at ${companyName}.</p>
+                  <p style="color: #333; line-height: 1.6; margin-bottom: 20px;">Thank you for your interest in RecXchange. We're excited to show you how our platform can revolutionize your hiring process at ${sanitizedCompanyName}.</p>
                   
                   ${bookedMeeting === true ? `
                     <div style="background: #dcfce7; padding: 20px; border-radius: 12px; margin: 30px 0; border-left: 4px solid #22c55e;">
@@ -177,10 +233,10 @@ export async function POST(request: NextRequest) {
                     <li><strong>48-Hour Turnaround:</strong> First candidates submitted within 2 days</li>
                   </ul>
                   
-                  ${industries ? `
+                  ${sanitizedIndustries ? `
                     <div style="background: #fef9c3; padding: 20px; border-radius: 12px; margin: 30px 0; border-left: 4px solid #eab308;">
                       <p style="color: #854d0e; margin: 0; font-weight: 600;">Industries You Hire In:</p>
-                      <p style="color: #854d0e; margin: 10px 0 0 0; font-size: 14px;">${industries}</p>
+                      <p style="color: #854d0e; margin: 10px 0 0 0; font-size: 14px;">${sanitizedIndustries}</p>
                     </div>
                   ` : ''}
                   
@@ -201,7 +257,7 @@ export async function POST(request: NextRequest) {
                   ` : ''}
                   
                   <p style="color: #666; line-height: 1.6; margin-top: 30px; font-size: 14px; border-top: 1px solid #e5e5e5; padding-top: 20px;">
-                    Questions? Simply reply to this email or book a call directly with our team. We're here to help ${companyName} find the perfect candidates.
+                    Questions? Simply reply to this email or book a call directly with our team. We're here to help ${sanitizedCompanyName} find the perfect candidates.
                   </p>
                   
                   <p style="color: #333; margin-top: 30px;">Best regards,<br><strong>The RecXchange Team</strong></p>
@@ -215,28 +271,31 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // 3. Track analytics event
+    // 5. Track analytics event (bypasses consent check for transactional events)
     try {
       trackEvent('hiring_manager_form_submitted', {
-        company_name: companyName,
+        company_name: sanitizedCompanyName,
         page: source,
-        industries: industries || 'not specified',
+        industries: sanitizedIndustries || 'not specified',
         meeting_status: bookedMeeting === true ? 'booked' : bookedMeeting === false ? 'declined' : 'unknown',
         marketing_consent: marketingConsent === true ? 'given' : marketingConsent === false ? 'declined' : 'not_asked',
-      });
+      }, { bypassConsent: true }); // Transactional event
     } catch (error) {
       console.error('[Hiring Manager Action] Failed to track event:', error);
     }
 
-    return NextResponse.json({
-      success: true,
-      message: 'Hiring manager action processed successfully',
-    });
+    return NextResponse.json(
+      {
+        success: true,
+        message: 'Hiring manager action processed successfully',
+      },
+      { headers: securityHeaders }
+    );
   } catch (error) {
     console.error('[Hiring Manager Action] Error:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
-      { status: 500 }
+      { status: 500, headers: securityHeaders }
     );
   }
 }
