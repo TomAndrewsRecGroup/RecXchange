@@ -6,7 +6,7 @@ import { MessageCircle, X, Send, Loader2, User, ExternalLink } from 'lucide-reac
 import { usePathname, useRouter } from 'next/navigation';
 
 interface SmartLinkData {
-  action: 'send-3-roles' | 'book-meeting' | 'recx-direct-info';
+  action: 'send-3-roles' | 'book-meeting' | 'recx-direct-info' | 'how-it-works' | 'how-it-works-no-meeting';
   url: string;
 }
 
