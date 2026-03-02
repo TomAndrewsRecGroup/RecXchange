@@ -45,6 +45,7 @@ export default function HowItWorksForm({
   const [email, setEmail] = useState('');
   const [companyName, setCompanyName] = useState('');
   const [industries, setIndustries] = useState<string[]>([]);
+  const [marketingConsent, setMarketingConsent] = useState(false);
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -83,6 +84,7 @@ export default function HowItWorksForm({
     setEmail('');
     setCompanyName('');
     setIndustries([]);
+    setMarketingConsent(false);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -121,6 +123,7 @@ export default function HowItWorksForm({
           companyName,
           industries: industries.join(', '),
           bookedMeeting,
+          marketingConsent,
           source: 'how-it-works-modal',
         }),
       });
@@ -293,6 +296,22 @@ export default function HowItWorksForm({
                           <p className="text-gray-500 text-xs mt-2">
                             {industries.length} {industries.length === 1 ? 'industry' : 'industries'} selected
                           </p>
+                        </div>
+
+                        {/* GDPR Marketing Consent Checkbox */}
+                        <div className="border-t border-white/10 pt-4">
+                          <label className="flex items-start gap-3 cursor-pointer group">
+                            <input
+                              type="checkbox"
+                              checked={marketingConsent}
+                              onChange={(e) => setMarketingConsent(e.target.checked)}
+                              disabled={status === 'loading'}
+                              className="mt-0.5 w-4 h-4 rounded border-white/20 bg-white/5 text-cyan-400 focus:ring-cyan-400/50 focus:ring-offset-0 cursor-pointer disabled:opacity-50"
+                            />
+                            <span className="text-xs text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors">
+                              Yes, I'd like to receive updates, hiring insights, and opportunities from RecXchange by email. You can unsubscribe at any time.
+                            </span>
+                          </label>
                         </div>
 
                         {errorMessage && (
