@@ -155,8 +155,9 @@ export function checkRateLimit(
 /**
  * Get client IP address from request
  * Works with Vercel, Cloudflare, and standard deployments
+ * Accepts any Request-like object with headers
  */
-export function getClientIP(request: Request): string {
+export function getClientIP(request: { headers: Headers } | Request): string {
   // Try various headers used by different platforms
   const headers = request.headers;
   
