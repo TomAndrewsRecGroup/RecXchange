@@ -50,6 +50,7 @@ export default function RecXDirectForm({
   const [name, setName] = useState(prefillName);
   const [email, setEmail] = useState(prefillEmail);
   const [selectedIndustries, setSelectedIndustries] = useState<string[]>(prefillIndustries);
+  const [marketingConsent, setMarketingConsent] = useState(false);
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -106,6 +107,7 @@ export default function RecXDirectForm({
           email,
           actionType: 'explain_recx_direct',
           industries: selectedIndustries,
+          marketingConsent,
           source: window.location.pathname,
         }),
       });
@@ -123,6 +125,7 @@ export default function RecXDirectForm({
         setName('');
         setEmail('');
         setSelectedIndustries([]);
+        setMarketingConsent(false);
         if (isControlled && externalOnClose) {
           externalOnClose();
         } else {
@@ -245,6 +248,22 @@ export default function RecXDirectForm({
                   </button>
                 ))}
               </div>
+            </div>
+
+            {/* GDPR Marketing Consent Checkbox */}
+            <div className="border-t border-white/10 pt-4">
+              <label className="flex items-start gap-3 cursor-pointer group">
+                <input
+                  type="checkbox"
+                  checked={marketingConsent}
+                  onChange={(e) => setMarketingConsent(e.target.checked)}
+                  disabled={status === 'loading'}
+                  className="mt-0.5 w-4 h-4 rounded border-white/20 bg-white/5 text-fuchsia-400 focus:ring-fuchsia-400/50 focus:ring-offset-0 cursor-pointer disabled:opacity-50"
+                />
+                <span className="text-xs text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors">
+                  Yes, I'd like to receive updates, role opportunities, and insights from RecXchange by email. You can unsubscribe at any time.
+                </span>
+              </label>
             </div>
 
             {errorMessage && (
