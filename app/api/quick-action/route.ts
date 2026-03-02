@@ -8,6 +8,7 @@ interface QuickActionRequest {
   actionType: 'match_candidate' | 'explain_recx_direct';
   source: string;
   industries?: string[]; // Optional industries for match_candidate
+  marketingConsent?: boolean; // GDPR marketing consent
 }
 
 const ACTION_CONFIG = {
@@ -72,15 +73,16 @@ function isValidEmail(email: string): boolean {
  * 
  * Handles quick action form submissions:
  * 1. Creates/updates contact in GHL with appropriate tag
- * 2. Sends auto-response to user
- * 3. Tracks analytics event
+ * 2. Tags contacts based on marketing consent (GDPR compliance)
+ * 3. Sends auto-response to user
+ * 4. Tracks analytics event
  * 
  * Note: Team notifications are handled by GHL automation workflows
  */
 export async function POST(request: NextRequest) {
   try {
     const body: QuickActionRequest = await request.json();
-    const { firstName, lastName, email, actionType, source, industries } = body;
+    const { firstName, lastName, email, actionType, source, industries, marketingConsent } = body;
 
     // Validate input
     if (!firstName || !lastName || !email || !actionType || !source) {
@@ -114,10 +116,18 @@ export async function POST(request: NextRequest) {
     // 1. Create/update contact in GHL
     if (GHL_API_KEY && GHL_LOCATION_ID) {
       try {
-        // Build tags array with industries if provided
+        // Build tags array with industries and consent status
         const tags = [config.ghlTag, 'website', 'quick-action'];
+        
         if (industries && industries.length > 0) {
           tags.push(...industries);
+        }
+
+        // Add marketing consent tags
+        if (marketingConsent === true) {
+          tags.push('marketing-consent-given');
+        } else if (marketingConsent === false) {
+          tags.push('marketing-consent-declined');
         }
 
         const ghlResponse = await fetch('https://rest.gohighlevel.com/v1/contacts/', {
@@ -138,6 +148,8 @@ export async function POST(request: NextRequest) {
               source_page: source,
               action_date: new Date().toISOString(),
               industries: industries && industries.length > 0 ? industries.join(', ') : '',
+              marketing_consent: marketingConsent === true ? 'yes' : marketingConsent === false ? 'no' : 'not_asked',
+              marketing_consent_date: marketingConsent !== undefined ? new Date().toISOString() : '',
             }
           })
         });
@@ -151,7 +163,7 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // 2. Send auto-response to user
+    // 2. Send auto-response to user (always send transactional email)
     if (SENDGRID_API_KEY) {
       try {
         await fetch('https://api.sendgrid.com/v3/mail/send', {
@@ -185,6 +197,7 @@ export async function POST(request: NextRequest) {
         action_type: actionType,
         page: source,
         industries: industries && industries.length > 0 ? industries.join(', ') : 'none',
+        marketing_consent: marketingConsent === true ? 'given' : marketingConsent === false ? 'declined' : 'not_asked',
       });
     } catch (error) {
       console.error('[Quick Action] Failed to track event:', error);
