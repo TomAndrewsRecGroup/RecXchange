@@ -20,6 +20,16 @@ interface ConversationMessage {
   content: string;
 }
 
+interface SmartLinkData {
+  action: 'send-3-roles' | 'book-meeting' | 'recx-direct-info';
+  prefillData?: {
+    name?: string;
+    email?: string;
+    industries?: string[];
+  };
+  url: string;
+}
+
 // System prompt based on your GHL configuration
 const SYSTEM_PROMPT = `You are the RecXchange Revenue Assistant.
 
@@ -96,7 +106,24 @@ RecXchange is a recruiter collaboration platform.
 Recruiters collaborate with other recruiters through structured split-fee partnerships.
 RecX Direct is the in-house business development arm that signs live clients and distributes their roles to the RecXchange network.
 
-Do not describe RecXchange as a job board.`;
+Do not describe RecXchange as a job board.
+
+IMPORTANT - SMART LINKS:
+When offering to send 3 roles, ALWAYS format your response EXACTLY like this:
+"Great! [button:send-3-roles]Click here to select your industries and get 3 roles[/button]"
+
+The button format must be:
+[button:ACTION_NAME]Button Text[/button]
+
+Available actions:
+- send-3-roles: Opens form to get 3 matched roles
+- book-meeting: Opens meeting scheduler
+- recx-direct-info: Opens RecX Direct explainer
+
+Example responses:
+"I can send you 3 live roles right now! [button:send-3-roles]Get 3 Roles[/button]"
+"Ready to see how it works? [button:recx-direct-info]Learn About RecX Direct[/button]"
+"Let's schedule a call! [button:book-meeting]Book a Meeting[/button]"`;
 
 // ─── Upsert Contact ─────────────────────────────────────────────────────────
 async function upsertContact(
@@ -279,6 +306,54 @@ async function getConversationHistory(
   }
 }
 
+// ─── Parse Smart Links from AI Response ────────────────────────────────────
+function parseSmartLinks(
+  response: string, 
+  userName: string, 
+  userEmail: string
+): { cleanResponse: string; smartLinks: SmartLinkData[] } {
+  const smartLinks: SmartLinkData[] = [];
+  
+  // Match [button:action]text[/button] format
+  const buttonRegex = /\[button:(send-3-roles|book-meeting|recx-direct-info)\](.+?)\[\/button\]/g;
+  
+  let cleanResponse = response;
+  let match;
+  
+  while ((match = buttonRegex.exec(response)) !== null) {
+    const action = match[1] as 'send-3-roles' | 'book-meeting' | 'recx-direct-info';
+    const buttonText = match[2];
+    
+    let url = '';
+    let prefillData: SmartLinkData['prefillData'] = undefined;
+    
+    switch (action) {
+      case 'send-3-roles':
+        url = `/?action=send-3-roles&name=${encodeURIComponent(userName)}&email=${encodeURIComponent(userEmail)}`;
+        prefillData = { name: userName, email: userEmail };
+        break;
+      
+      case 'book-meeting':
+        url = '/book-meeting';
+        break;
+      
+      case 'recx-direct-info':
+        url = '/recx-direct';
+        break;
+    }
+    
+    smartLinks.push({ action, prefillData, url });
+    
+    // Replace button markup with clickable link for frontend
+    cleanResponse = cleanResponse.replace(
+      match[0], 
+      `[smartlink:${smartLinks.length - 1}]${buttonText}[/smartlink]`
+    );
+  }
+  
+  return { cleanResponse, smartLinks };
+}
+
 // ─── Call Groq AI ───────────────────────────────────────────────────────────
 async function callGroqAI(
   message: string,
@@ -377,6 +452,11 @@ export async function POST(req: NextRequest) {
     console.log('[Groq AI Chat] → Calling Groq AI');
     const aiResponse = await callGroqAI(message, persona, pageContext || 'Homepage', history);
 
+    // Parse smart links from response
+    const { cleanResponse, smartLinks } = parseSmartLinks(aiResponse, name || '', email || '');
+    
+    console.log('[Groq AI Chat] Found', smartLinks.length, 'smart links');
+
     // Log both messages to GHL for CRM tracking
     await Promise.all([
       logMessageToGHL(conversationId, message, 'inbound'),
@@ -390,7 +470,8 @@ export async function POST(req: NextRequest) {
       success: true,
       contactId,
       conversationId,
-      message: aiResponse,
+      message: cleanResponse,
+      smartLinks: smartLinks.length > 0 ? smartLinks : undefined,
     });
     
   } catch (err) {
