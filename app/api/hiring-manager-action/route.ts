@@ -2,10 +2,14 @@ import { NextRequest, NextResponse } from 'next/server';
 import { trackEvent } from '@/lib/analytics';
 
 interface HiringManagerActionRequest {
-  firstName: string;
-  lastName: string;
+  // Support both old format (firstName/lastName) and new format (name)
+  firstName?: string;
+  lastName?: string;
+  name?: string;
   email: string;
   companyName: string;
+  industries?: string; // Comma-separated list
+  bookedMeeting?: boolean;
   source: string;
 }
 
@@ -25,16 +29,27 @@ function isValidEmail(email: string): boolean {
  * 2. Creates contact within that client company
  * 3. Sends auto-response with video explainer
  * 4. Tracks analytics event
+ * 5. Tags contact based on meeting status (meeting-booked or no-meeting)
  * 
  * Note: Team notifications are handled by GHL automation workflows
  */
 export async function POST(request: NextRequest) {
   try {
     const body: HiringManagerActionRequest = await request.json();
-    const { firstName, lastName, email, companyName, source } = body;
+    const { name, firstName, lastName, email, companyName, industries, bookedMeeting, source } = body;
+
+    // Support both old format (firstName/lastName) and new format (name)
+    let finalFirstName = firstName || '';
+    let finalLastName = lastName || '';
+    
+    if (name && !firstName && !lastName) {
+      const nameParts = name.split(' ');
+      finalFirstName = nameParts[0] || '';
+      finalLastName = nameParts.slice(1).join(' ') || '';
+    }
 
     // Validate input
-    if (!firstName || !lastName || !email || !companyName || !source) {
+    if (!finalFirstName || !email || !companyName || !source) {
       return NextResponse.json(
         { error: 'Missing required fields' },
         { status: 400 }
@@ -57,6 +72,21 @@ export async function POST(request: NextRequest) {
     // 1. Create/update contact in GHL with company information
     if (GHL_API_KEY && GHL_LOCATION_ID) {
       try {
+        // Build tags based on meeting status
+        const tags = [
+          'Website - QA Hiring Manager',
+          'client',
+          'hiring-manager',
+          'website',
+          'how-it-works-requested'
+        ];
+        
+        if (bookedMeeting === true) {
+          tags.push('meeting-booked');
+        } else if (bookedMeeting === false) {
+          tags.push('no-meeting');
+        }
+
         const ghlResponse = await fetch('https://rest.gohighlevel.com/v1/contacts/', {
           method: 'POST',
           headers: {
@@ -64,18 +94,20 @@ export async function POST(request: NextRequest) {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            firstName,
-            lastName,
+            firstName: finalFirstName,
+            lastName: finalLastName,
             email,
             companyName,
             locationId: GHL_LOCATION_ID,
-            tags: ['Website - QA Hiring Manager', 'client', 'hiring-manager', 'website'],
+            tags,
             source: `RecXchange Hiring Manager - ${source}`,
             customFields: {
               company_name: companyName,
               contact_type: 'Hiring Manager',
               source_page: source,
               inquiry_date: new Date().toISOString(),
+              industries: industries || '',
+              meeting_status: bookedMeeting === true ? 'booked' : bookedMeeting === false ? 'declined' : 'unknown',
             }
           })
         });
@@ -100,7 +132,7 @@ export async function POST(request: NextRequest) {
           },
           body: JSON.stringify({
             personalizations: [{
-              to: [{ email, name: `${firstName} ${lastName}` }],
+              to: [{ email, name: `${finalFirstName} ${finalLastName}`.trim() }],
               subject: 'How RecXchange Works for Clients'
             }],
             from: { email: FROM_EMAIL, name: 'RecXchange' },
@@ -108,9 +140,16 @@ export async function POST(request: NextRequest) {
               type: 'text/html',
               value: `
                 <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 600px; margin: 0 auto; padding: 40px 20px;">
-                  <h2 style="color: #00ffff; margin: 0 0 20px 0;">Welcome to RecXchange, ${firstName}!</h2>
+                  <h2 style="color: #00ffff; margin: 0 0 20px 0;">Welcome to RecXchange, ${finalFirstName}!</h2>
                   
                   <p style="color: #333; line-height: 1.6; margin-bottom: 20px;">Thank you for your interest in RecXchange. We're excited to show you how our platform can revolutionize your hiring process at ${companyName}.</p>
+                  
+                  ${bookedMeeting === true ? `
+                    <div style="background: #dcfce7; padding: 20px; border-radius: 12px; margin: 30px 0; border-left: 4px solid #22c55e;">
+                      <p style="color: #166534; margin: 0; font-weight: 600;">✓ We're looking forward to your scheduled meeting!</p>
+                      <p style="color: #166534; margin: 10px 0 0 0; font-size: 14px;">Watch the video below to prepare, and feel free to bring any questions.</p>
+                    </div>
+                  ` : ''}
                   
                   <div style="background: #f9f9f9; padding: 30px; border-radius: 12px; margin: 30px 0; text-align: center;">
                     <h3 style="color: #333; margin: 0 0 20px 0;">Watch: How RecXchange Works for Clients</h3>
@@ -126,17 +165,28 @@ export async function POST(request: NextRequest) {
                     <li><strong>48-Hour Turnaround:</strong> First candidates submitted within 2 days</li>
                   </ul>
                   
+                  ${industries ? `
+                    <div style="background: #fef9c3; padding: 20px; border-radius: 12px; margin: 30px 0; border-left: 4px solid #eab308;">
+                      <p style="color: #854d0e; margin: 0; font-weight: 600;">Industries You Hire In:</p>
+                      <p style="color: #854d0e; margin: 10px 0 0 0; font-size: 14px;">${industries}</p>
+                    </div>
+                  ` : ''}
+                  
                   <h3 style="color: #333; margin: 30px 0 15px 0;">Next Steps</h3>
                   <ol style="color: #333; line-height: 1.8;">
                     <li>Watch the video explainer above</li>
-                    <li>Reply to this email with any questions</li>
-                    <li>Schedule a demo call with our team</li>
+                    ${bookedMeeting === true ? '<li>Prepare questions for your upcoming meeting</li>' : '<li>Reply to this email with any questions</li>'}
+                    ${bookedMeeting !== true ? '<li>Schedule a demo call with our team</li>' : ''}
                     <li>Post your first role and see the magic happen</li>
                   </ol>
                   
-                  <div style="text-align: center; margin: 40px 0;">
-                    <a href="https://recxchange.io/hiring-manager-live" style="display: inline-block; padding: 16px 32px; background: linear-gradient(135deg, #00ffff, #c71df1); color: #fff; text-decoration: none; border-radius: 8px; font-weight: bold;">Post Your First Role</a>
-                  </div>
+                  ${bookedMeeting !== true ? `
+                    <div style="text-align: center; margin: 40px 0;">
+                      <a href="https://recxchange.io/book-meeting" style="display: inline-block; padding: 16px 32px; background: linear-gradient(135deg, #00ffff, #c71df1); color: #fff; text-decoration: none; border-radius: 8px; font-weight: bold; margin-bottom: 15px;">Book a Call</a>
+                      <br>
+                      <a href="https://recxchange.io/hiring-manager-live" style="display: inline-block; padding: 16px 32px; background: linear-gradient(135deg, #00ffff, #c71df1); color: #fff; text-decoration: none; border-radius: 8px; font-weight: bold;">Post Your First Role</a>
+                    </div>
+                  ` : ''}
                   
                   <p style="color: #666; line-height: 1.6; margin-top: 30px; font-size: 14px; border-top: 1px solid #e5e5e5; padding-top: 20px;">
                     Questions? Simply reply to this email or book a call directly with our team. We're here to help ${companyName} find the perfect candidates.
@@ -158,6 +208,8 @@ export async function POST(request: NextRequest) {
       trackEvent('hiring_manager_form_submitted', {
         company_name: companyName,
         page: source,
+        industries: industries || 'not specified',
+        meeting_status: bookedMeeting === true ? 'booked' : bookedMeeting === false ? 'declined' : 'unknown',
       });
     } catch (error) {
       console.error('[Hiring Manager Action] Failed to track event:', error);
