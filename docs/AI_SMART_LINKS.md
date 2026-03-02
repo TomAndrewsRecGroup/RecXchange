@@ -2,7 +2,7 @@
 
 ## Overview
 
-This feature allows the AI chat assistant to generate "smart links" that automatically open modals (like "Send Me 3 Roles") with prefilled user data. When a recruiter asks for roles, the AI can generate a clickable link that opens the modal with their name and email already filled in.
+This feature allows the AI chat assistant to generate "smart links" that automatically open modals with prefilled user data. When a recruiter asks for roles or RecX Direct information, the AI can generate a clickable link that opens the relevant modal with their name and email already filled in.
 
 ## Architecture
 
@@ -21,26 +21,27 @@ components/
   ClientProviders.tsx            # Wraps app with modal controller
   ModalController.tsx            # Watches URL params, opens modals
   send-roles-form.tsx            # Updated to accept prefill props
+  recx-direct-form.tsx           # Updated to accept prefill props
 ```
 
 ### 2. Flow Diagram
 
 ```
-User asks for roles 
+User asks for roles or RecX Direct info
   ↓
 AI chat API (/api/ghl/ai-chat)
   ↓
-Groq AI generates response with [button:send-3-roles]Get Roles[/button]
+Groq AI generates response with [button:ACTION]Button Text[/button]
   ↓
 API parses button markup → generates URL with prefilled data
   ↓
 Frontend FloatingChat renders clickable link
   ↓
-User clicks link → navigates to /?action=send-3-roles&name=Tom&email=tom@example.com
+User clicks link → navigates to /?action=ACTION&name=Tom&email=tom@example.com
   ↓
 ModalController detects URL params
   ↓
-SendRolesForm opens with prefilled name and email
+Appropriate modal opens with prefilled name and email
   ↓
 User selects industries and submits
 ```
@@ -57,12 +58,13 @@ The AI uses a special markup format to indicate actionable links:
 
 **Available Actions:**
 - `send-3-roles` - Opens Send 3 Roles modal with prefilled data
+- `recx-direct-info` - Opens RecX Direct explainer modal with prefilled data
 - `book-meeting` - Redirects to booking page
-- `recx-direct-info` - Redirects to RecX Direct info page
 
-**Example AI Response:**
+**Example AI Responses:**
 ```
 "I can send you 3 live roles right now! [button:send-3-roles]Get 3 Roles[/button]"
+"Want to learn about RecX Direct? [button:recx-direct-info]Get RecX Direct Explainer[/button]"
 ```
 
 ### URL Parameter Format
@@ -72,8 +74,13 @@ The AI uses a special markup format to indicate actionable links:
 /?action=send-3-roles&name=Tom+Andrews&email=tom%40example.com&industries=tech,finance
 ```
 
+**RecX Direct Info Action:**
+```
+/?action=recx-direct-info&name=Tom+Andrews&email=tom%40example.com&industries=tech,finance
+```
+
 **Parameters:**
-- `action` - The action type (e.g., "send-3-roles")
+- `action` - The action type (e.g., "send-3-roles", "recx-direct-info")
 - `name` - User's full name (URL encoded)
 - `email` - User's email (URL encoded)
 - `industries` - Comma-separated list of industries (optional)
@@ -112,10 +119,14 @@ The frontend should:
 
 **Purpose:** Watches URL search params and opens appropriate modals.
 
+**Supported Actions:**
+- `send-3-roles` - Opens SendRolesForm
+- `recx-direct-info` - Opens RecXDirectForm
+
 **Key Features:**
-- Detects `?action=send-3-roles` in URL
+- Detects action parameter in URL
 - Parses name, email, and industries from URL params
-- Opens SendRolesForm with prefilled data
+- Opens appropriate modal with prefilled data
 - Clears URL params when modal closes
 - Extensible for future modal actions
 
@@ -127,11 +138,11 @@ The frontend should:
 </Suspense>
 ```
 
-### 2. SendRolesForm.tsx (Updated)
+### 2. SendRolesForm.tsx & RecXDirectForm.tsx (Updated)
 
 **New Props:**
 ```tsx
-interface SendRolesFormProps {
+interface FormProps {
   className?: string;
   isOpen?: boolean;              // External control
   onClose?: () => void;          // External close handler
@@ -211,8 +222,8 @@ The button format must be:
 
 Available actions:
 - send-3-roles: Opens form to get 3 matched roles
+- recx-direct-info: Opens form to get RecX Direct explainer video
 - book-meeting: Opens meeting scheduler
-- recx-direct-info: Opens RecX Direct explainer
 ```
 
 ## Adding New Actions
@@ -237,7 +248,8 @@ if (action === 'your-new-action') {
 
 ```tsx
 case 'your-new-action':
-  url = `/your-page?action=your-new-action&data=${encodeURIComponent(data)}`;
+  url = `/?action=your-new-action&name=${encodeURIComponent(userName)}&email=${encodeURIComponent(userEmail)}`;
+  prefillData = { name: userName, email: userEmail };
   break;
 ```
 
@@ -258,20 +270,31 @@ interface SmartLinkData {
 
 ### Manual Testing
 
-1. **Direct URL Test:**
+1. **Direct URL Test - Send 3 Roles:**
    ```
    http://localhost:3000/?action=send-3-roles&name=Test+User&email=test@example.com
    ```
-   - Modal should open automatically
+   - SendRolesForm modal should open automatically
    - Name and email should be prefilled
 
-2. **AI Chat Test:**
+2. **Direct URL Test - RecX Direct:**
+   ```
+   http://localhost:3000/?action=recx-direct-info&name=Test+User&email=test@example.com
+   ```
+   - RecXDirectForm modal should open automatically
+   - Name and email should be prefilled
+
+3. **AI Chat Test:**
    - Open AI chat
    - Ask: "Can you send me some roles?"
    - AI should respond with a clickable link
-   - Click link → modal opens with prefilled data
+   - Click link → Send 3 Roles modal opens with prefilled data
+   
+   - Ask: "What is RecX Direct?"
+   - AI should respond with a clickable link
+   - Click link → RecX Direct modal opens with prefilled data
 
-3. **URL Cleanup Test:**
+4. **URL Cleanup Test:**
    - Open modal via smart link
    - Close modal
    - URL params should be removed
@@ -302,7 +325,7 @@ interface SmartLinkData {
 
 ## Performance
 
-- **Bundle Size:** +2KB (ModalController + updates)
+- **Bundle Size:** +3KB (ModalController + updates)
 - **Runtime:** Minimal overhead (URL param parsing only)
 - **SEO:** No impact (modals don't affect page content)
 - **Accessibility:** Keyboard navigation supported
@@ -336,7 +359,7 @@ interface SmartLinkData {
 
 **Prefill data not working:**
 - Verify URL encoding is correct
-- Check SendRolesForm props are passed through
+- Check form props are passed through
 - Ensure useEffect dependencies are correct
 
 **URL params not clearing:**
