@@ -106,7 +106,7 @@ export default function FloatingChat() {
         payload.name = userName; payload.email = userEmail; payload.persona = userPersona;
         if (userPersona === 'hiring-manager') payload.companyName = companyName;
       } else { payload.contactId = contactId; payload.conversationId = conversationId; }
-      const response = await fetch('/api/ghl/ai-chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      const response = await fetch('/api/groq/ai-chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
       if (!response.ok) throw new Error('Failed to get response');
       const data = await response.json();
       if (data.contactId) setContactId(data.contactId);
