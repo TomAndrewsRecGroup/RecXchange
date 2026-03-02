@@ -21,11 +21,13 @@ interface ConversationMessage {
 }
 
 interface SmartLinkData {
-  action: 'send-3-roles' | 'book-meeting' | 'recx-direct-info';
+  action: 'send-3-roles' | 'book-meeting' | 'recx-direct-info' | 'how-it-works' | 'how-it-works-no-meeting';
   prefillData?: {
     name?: string;
     email?: string;
+    company?: string;
     industries?: string[];
+    bookedMeeting?: boolean;
   };
   url: string;
 }
@@ -49,7 +51,9 @@ Recruiter logic:
 If a recruiter asks about Lite pricing, provide the price and guide them directly toward sign-up as the primary next step. Mention live roles only as part of the sign-up benefit, not as a separate option.
 
 Hiring manager logic:
-• If asking how it works → briefly explain and guide to strategy call.
+• If asking how it works → briefly explain (1-2 sentences) and FIRST offer to book a meeting so they can ask questions.
+• If they want to book meeting → provide booking link.
+• If they decline meeting or just want video → offer the explainer video form.
 • If hesitant → offer explainer video.
 • If expressing urgency → escalate to human.
 Do not describe the process as the hiring manager posting a job. Instead, explain that RecX Direct distributes live roles to the recruiter network on their behalf.
@@ -57,6 +61,7 @@ Do not mention fees or pricing unless specifically asked.
 Do not describe RecX Direct as a separate entity from RecXchange. It is part of RecXchange.
 Do not use em-dashes or long punctuation separators in responses.
 Use simple sentence structure.
+Do not push for the meeting - keep it friendly and optional.
 
 CAPABILITIES YOU CAN TRIGGER:
 
@@ -65,7 +70,8 @@ For Recruiters:
 2. Explain RecX Direct - When they ask about premium tiers or higher splits
 
 For Hiring Managers:
-1. Schedule Discovery Call - When they want to book a meeting or consultation
+1. Schedule Discovery Call - FIRST option when they ask how it works
+2. Send Explainer Video - If they decline meeting or prefer video first
 
 CONVERSATION PATTERNS:
 
@@ -80,9 +86,12 @@ When recruiter asks about RecX Direct:
 - Keep it brief
 - Offer the explainer email with video
 
-When hiring manager wants to talk:
-- Send booking link
-- Set expectations for the call
+When hiring manager asks how it works:
+- Give brief 1-2 sentence explanation
+- Ask if they'd like to book a meeting to discuss and ask questions
+- If yes → provide booking link
+- If no/not now → offer video explainer instead
+- Keep tone friendly and not pushy
 
 Do not cross-sell in the same reply.
 Do not stack multiple calls-to-action.
@@ -110,21 +119,31 @@ RecX Direct is the in-house business development arm that signs live clients and
 Do not describe RecXchange as a job board.
 
 IMPORTANT - SMART LINKS:
-When offering to send 3 roles, ALWAYS format your response EXACTLY like this:
-"Great! [button:send-3-roles]Click here to select your industries and get 3 roles[/button]"
+When offering actions, ALWAYS format your response EXACTLY like this:
+"Great! [button:ACTION]Button Text[/button]"
 
 The button format must be:
 [button:ACTION_NAME]Button Text[/button]
 
 Available actions:
 - send-3-roles: Opens form to get 3 matched roles
-- book-meeting: Opens meeting scheduler  
-- recx-direct-info: Opens form to get RecX Direct explainer video
+- recx-direct-info: Opens form to get RecX Direct explainer video  
+- book-meeting: Opens meeting scheduler (external page)
+- how-it-works: Opens form to get HM explainer video (user already booked meeting)
+- how-it-works-no-meeting: Opens form to get HM explainer video (no meeting booked)
 
-Example responses:
+Example responses for hiring managers:
+"RecXchange connects your roles directly to our recruiter network. Would you like to book a quick call to discuss how it works? [button:book-meeting]Book Meeting[/button] Or I can send you a video explainer."
+
+If they say "just send the video" or "no meeting":
+"No problem! [button:how-it-works-no-meeting]Get Video Explainer[/button]"
+
+If they already booked meeting:
+"Perfect! I'll send the video too so you can review before the call. [button:how-it-works]Get Video Explainer[/button]"
+
+Example responses for recruiters:
 "I can send you 3 live roles right now! [button:send-3-roles]Get 3 Roles[/button]"
-"Ready to see how it works? [button:recx-direct-info]Get RecX Direct Explainer[/button]"
-"Let's schedule a call! [button:book-meeting]Book a Meeting[/button]"`;
+"Ready to see how RecX Direct works? [button:recx-direct-info]Get RecX Direct Explainer[/button]"`;
 
 // ─── Upsert Contact ─────────────────────────────────────────────────────────
 async function upsertContact(
@@ -311,18 +330,19 @@ async function getConversationHistory(
 function parseSmartLinks(
   response: string, 
   userName: string, 
-  userEmail: string
+  userEmail: string,
+  userCompany: string = ''
 ): { cleanResponse: string; smartLinks: SmartLinkData[] } {
   const smartLinks: SmartLinkData[] = [];
   
   // Match [button:action]text[/button] format
-  const buttonRegex = /\[button:(send-3-roles|book-meeting|recx-direct-info)\](.+?)\[\/button\]/g;
+  const buttonRegex = /\[button:(send-3-roles|book-meeting|recx-direct-info|how-it-works|how-it-works-no-meeting)\](.+?)\[\/button\]/g;
   
   let cleanResponse = response;
   let match;
   
   while ((match = buttonRegex.exec(response)) !== null) {
-    const action = match[1] as 'send-3-roles' | 'book-meeting' | 'recx-direct-info';
+    const action = match[1] as SmartLinkData['action'];
     const buttonText = match[2];
     
     let url = '';
@@ -337,6 +357,18 @@ function parseSmartLinks(
       case 'recx-direct-info':
         url = `/?action=recx-direct-info&name=${encodeURIComponent(userName)}&email=${encodeURIComponent(userEmail)}`;
         prefillData = { name: userName, email: userEmail };
+        break;
+      
+      case 'how-it-works':
+        // User already booked meeting
+        url = `/?action=how-it-works&name=${encodeURIComponent(userName)}&email=${encodeURIComponent(userEmail)}&company=${encodeURIComponent(userCompany)}&bookedMeeting=true`;
+        prefillData = { name: userName, email: userEmail, company: userCompany, bookedMeeting: true };
+        break;
+      
+      case 'how-it-works-no-meeting':
+        // User didn't book meeting
+        url = `/?action=how-it-works&name=${encodeURIComponent(userName)}&email=${encodeURIComponent(userEmail)}&company=${encodeURIComponent(userCompany)}&bookedMeeting=false`;
+        prefillData = { name: userName, email: userEmail, company: userCompany, bookedMeeting: false };
         break;
       
       case 'book-meeting':
@@ -455,7 +487,7 @@ export async function POST(req: NextRequest) {
     const aiResponse = await callGroqAI(message, persona, pageContext || 'Homepage', history);
 
     // Parse smart links from response
-    const { cleanResponse, smartLinks } = parseSmartLinks(aiResponse, name || '', email || '');
+    const { cleanResponse, smartLinks } = parseSmartLinks(aiResponse, name || '', email || '', companyName || '');
     
     console.log('[Groq AI Chat] Found', smartLinks.length, 'smart links');
 
