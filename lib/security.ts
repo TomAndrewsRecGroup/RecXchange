@@ -268,7 +268,7 @@ export function sanitizeObject<T extends Record<string, any>>(
 
       case 'array':
         if (Array.isArray(value)) {
-          sanitized[key] = value.map(item => 
+          sanitized[key] = value.map((item: any) => 
             typeof item === 'string' ? sanitizeInput(item, config.maxLength) : item
           ) as T[Extract<keyof T, string>];
         }
