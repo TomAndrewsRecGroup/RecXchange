@@ -1,5 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { trackEvent } from '@/lib/analytics';
+import { 
+  checkRateLimit, 
+  getClientIP, 
+  validateFormData,
+  getSecurityHeaders 
+} from '@/lib/security';
 
 interface QuickActionRequest {
   firstName: string;
@@ -61,42 +67,81 @@ const ACTION_CONFIG = {
 };
 
 /**
- * Validate email address using RFC 5322 compliant regex
- */
-function isValidEmail(email: string): boolean {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
-}
-
-/**
  * POST /api/quick-action
  * 
  * Handles quick action form submissions:
- * 1. Creates/updates contact in GHL with appropriate tag
- * 2. Tags contacts based on marketing consent (GDPR compliance)
- * 3. Sends auto-response to user
- * 4. Tracks analytics event
+ * 1. Rate limiting and security checks
+ * 2. Input validation and sanitization
+ * 3. Creates/updates contact in GHL with appropriate tag
+ * 4. Tags contacts based on marketing consent (GDPR compliance)
+ * 5. Sends auto-response to user
+ * 6. Tracks analytics event
  * 
  * Note: Team notifications are handled by GHL automation workflows
  */
 export async function POST(request: NextRequest) {
-  try {
-    const body: QuickActionRequest = await request.json();
-    const { firstName, lastName, email, actionType, source, industries, marketingConsent } = body;
+  const securityHeaders = getSecurityHeaders();
 
-    // Validate input
-    if (!firstName || !lastName || !email || !actionType || !source) {
+  try {
+    // 1. Rate limiting - prevent spam and abuse
+    const clientIP = getClientIP(request);
+    const ipRateLimit = checkRateLimit(clientIP, 'form');
+    
+    if (!ipRateLimit.success) {
       return NextResponse.json(
-        { error: 'Missing required fields' },
-        { status: 400 }
+        { 
+          error: 'Too many requests. Please try again later.',
+          resetIn: Math.ceil(ipRateLimit.resetIn / 1000)
+        },
+        { 
+          status: 429,
+          headers: {
+            ...securityHeaders,
+            'Retry-After': String(Math.ceil(ipRateLimit.resetIn / 1000)),
+          }
+        }
       );
     }
 
-    // Validate email format
-    if (!isValidEmail(email)) {
+    const body: QuickActionRequest = await request.json();
+    const { actionType, source, industries, marketingConsent } = body;
+
+    // 2. Validate and sanitize input
+    let sanitizedData;
+    try {
+      sanitizedData = validateFormData(body);
+    } catch (error) {
       return NextResponse.json(
-        { error: 'Invalid email address' },
-        { status: 400 }
+        { error: error instanceof Error ? error.message : 'Invalid input data' },
+        { status: 400, headers: securityHeaders }
+      );
+    }
+
+    const { firstName, lastName, email } = sanitizedData;
+
+    // Validate action type and source
+    if (!actionType || !source) {
+      return NextResponse.json(
+        { error: 'Missing required fields' },
+        { status: 400, headers: securityHeaders }
+      );
+    }
+
+    // Email-based rate limiting - prevent email spam
+    const emailRateLimit = checkRateLimit(`email:${email}`, 'email');
+    if (!emailRateLimit.success) {
+      return NextResponse.json(
+        { 
+          error: 'Too many submissions from this email. Please try again later.',
+          resetIn: Math.ceil(emailRateLimit.resetIn / 1000)
+        },
+        { 
+          status: 429,
+          headers: {
+            ...securityHeaders,
+            'Retry-After': String(Math.ceil(emailRateLimit.resetIn / 1000)),
+          }
+        }
       );
     }
 
@@ -104,23 +149,28 @@ export async function POST(request: NextRequest) {
     if (!config) {
       return NextResponse.json(
         { error: 'Invalid action type' },
-        { status: 400 }
+        { status: 400, headers: securityHeaders }
       );
     }
 
     const GHL_API_KEY = process.env.GHL_API_KEY;
     const GHL_LOCATION_ID = process.env.GHL_LOCATION_ID;
     const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
-    const FROM_EMAIL = process.env.SENDGRID_FROM_EMAIL || 'analytics@recxchange.com';
+    const FROM_EMAIL = process.env.SENDGRID_FROM_EMAIL || 'tom@recxchange.io';
 
-    // 1. Create/update contact in GHL
+    // 3. Create/update contact in GHL
     if (GHL_API_KEY && GHL_LOCATION_ID) {
       try {
         // Build tags array with industries and consent status
         const tags = [config.ghlTag, 'website', 'quick-action'];
         
         if (industries && industries.length > 0) {
-          tags.push(...industries);
+          // Sanitize industry tags
+          const sanitizedIndustries = industries
+            .filter(ind => typeof ind === 'string')
+            .map(ind => ind.substring(0, 50))
+            .slice(0, 10); // Max 10 industries
+          tags.push(...sanitizedIndustries);
         }
 
         // Add marketing consent tags
@@ -163,7 +213,7 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // 2. Send auto-response to user (always send transactional email)
+    // 4. Send auto-response to user (always send transactional email)
     if (SENDGRID_API_KEY) {
       try {
         await fetch('https://api.sendgrid.com/v3/mail/send', {
@@ -191,27 +241,30 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // 3. Track analytics event
+    // 5. Track analytics event (bypasses consent check for transactional events)
     try {
       trackEvent('quick_action_form_submitted', {
         action_type: actionType,
         page: source,
         industries: industries && industries.length > 0 ? industries.join(', ') : 'none',
         marketing_consent: marketingConsent === true ? 'given' : marketingConsent === false ? 'declined' : 'not_asked',
-      });
+      }, { bypassConsent: true }); // Transactional event
     } catch (error) {
       console.error('[Quick Action] Failed to track event:', error);
     }
 
-    return NextResponse.json({
-      success: true,
-      message: 'Quick action processed successfully',
-    });
+    return NextResponse.json(
+      {
+        success: true,
+        message: 'Quick action processed successfully',
+      },
+      { headers: securityHeaders }
+    );
   } catch (error) {
     console.error('[Quick Action] Error:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
-      { status: 500 }
+      { status: 500, headers: securityHeaders }
     );
   }
 }
