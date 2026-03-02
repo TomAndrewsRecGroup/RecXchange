@@ -10,6 +10,7 @@ interface HiringManagerActionRequest {
   companyName: string;
   industries?: string; // Comma-separated list
   bookedMeeting?: boolean;
+  marketingConsent?: boolean; // GDPR marketing consent
   source: string;
 }
 
@@ -27,16 +28,17 @@ function isValidEmail(email: string): boolean {
  * Handles hiring manager form submissions:
  * 1. Creates client company in GHL
  * 2. Creates contact within that client company
- * 3. Sends auto-response with video explainer
- * 4. Tracks analytics event
- * 5. Tags contact based on meeting status (meeting-booked or no-meeting)
+ * 3. Tags contact based on meeting status (meeting-booked or no-meeting)
+ * 4. Tags contact based on marketing consent (GDPR compliance)
+ * 5. Sends auto-response with video explainer
+ * 6. Tracks analytics event
  * 
  * Note: Team notifications are handled by GHL automation workflows
  */
 export async function POST(request: NextRequest) {
   try {
     const body: HiringManagerActionRequest = await request.json();
-    const { name, firstName, lastName, email, companyName, industries, bookedMeeting, source } = body;
+    const { name, firstName, lastName, email, companyName, industries, bookedMeeting, marketingConsent, source } = body;
 
     // Support both old format (firstName/lastName) and new format (name)
     let finalFirstName = firstName || '';
@@ -72,7 +74,7 @@ export async function POST(request: NextRequest) {
     // 1. Create/update contact in GHL with company information
     if (GHL_API_KEY && GHL_LOCATION_ID) {
       try {
-        // Build tags based on meeting status
+        // Build tags based on meeting status and marketing consent
         const tags = [
           'Website - QA Hiring Manager',
           'client',
@@ -81,10 +83,18 @@ export async function POST(request: NextRequest) {
           'how-it-works-requested'
         ];
         
+        // Meeting status tags
         if (bookedMeeting === true) {
           tags.push('meeting-booked');
         } else if (bookedMeeting === false) {
           tags.push('no-meeting');
+        }
+
+        // Marketing consent tags
+        if (marketingConsent === true) {
+          tags.push('marketing-consent-given');
+        } else if (marketingConsent === false) {
+          tags.push('marketing-consent-declined');
         }
 
         const ghlResponse = await fetch('https://rest.gohighlevel.com/v1/contacts/', {
@@ -108,6 +118,8 @@ export async function POST(request: NextRequest) {
               inquiry_date: new Date().toISOString(),
               industries: industries || '',
               meeting_status: bookedMeeting === true ? 'booked' : bookedMeeting === false ? 'declined' : 'unknown',
+              marketing_consent: marketingConsent === true ? 'yes' : marketingConsent === false ? 'no' : 'not_asked',
+              marketing_consent_date: marketingConsent !== undefined ? new Date().toISOString() : '',
             }
           })
         });
@@ -121,7 +133,7 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // 2. Send auto-response with video explainer
+    // 2. Send auto-response with video explainer (always send transactional email)
     if (SENDGRID_API_KEY) {
       try {
         await fetch('https://api.sendgrid.com/v3/mail/send', {
@@ -210,6 +222,7 @@ export async function POST(request: NextRequest) {
         page: source,
         industries: industries || 'not specified',
         meeting_status: bookedMeeting === true ? 'booked' : bookedMeeting === false ? 'declined' : 'unknown',
+        marketing_consent: marketingConsent === true ? 'given' : marketingConsent === false ? 'declined' : 'not_asked',
       });
     } catch (error) {
       console.error('[Hiring Manager Action] Failed to track event:', error);
