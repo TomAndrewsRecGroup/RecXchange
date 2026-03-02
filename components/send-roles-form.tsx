@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { X } from 'lucide-react';
 import ModalWrapper from './ModalWrapper';
@@ -67,15 +67,44 @@ const INDUSTRIES = [
 
 interface SendRolesFormProps {
   className?: string;
+  isOpen?: boolean;
+  onClose?: () => void;
+  prefillName?: string;
+  prefillEmail?: string;
+  prefillIndustries?: string[];
+  autoFocus?: boolean;
 }
 
-export default function SendRolesForm({ className = '' }: SendRolesFormProps) {
-  const [isOpen, setIsOpen] = useState(false);
+export default function SendRolesForm({ 
+  className = '',
+  isOpen: externalIsOpen,
+  onClose: externalOnClose,
+  prefillName = '',
+  prefillEmail = '',
+  prefillIndustries = [],
+  autoFocus = false
+}: SendRolesFormProps) {
+  const [internalIsOpen, setInternalIsOpen] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [selectedIndustries, setSelectedIndustries] = useState<string[]>([]);
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
+
+  // Use external control if provided, otherwise internal state
+  const isOpen = externalIsOpen !== undefined ? externalIsOpen : internalIsOpen;
+  const setIsOpen = externalOnClose ? (value: boolean) => {
+    if (!value) externalOnClose();
+  } : setInternalIsOpen;
+
+  // Set prefill values when modal opens
+  useEffect(() => {
+    if (isOpen) {
+      setName(prefillName);
+      setEmail(prefillEmail);
+      setSelectedIndustries(prefillIndustries);
+    }
+  }, [isOpen, prefillName, prefillEmail, prefillIndustries]);
 
   const handleIndustryToggle = (industry: string) => {
     if (selectedIndustries.includes(industry)) {
@@ -156,12 +185,14 @@ export default function SendRolesForm({ className = '' }: SendRolesFormProps) {
 
   return (
     <>
-      <button
-        onClick={() => setIsOpen(true)}
-        className="px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl border border-cyan-400/30 bg-cyan-400/5 text-cyan-400 text-xs font-bold uppercase tracking-widest hover:bg-cyan-400/10 transition-all"
-      >
-        SEND ME 3 ROLES
-      </button>
+      {!externalIsOpen && (
+        <button
+          onClick={() => setInternalIsOpen(true)}
+          className="px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl border border-cyan-400/30 bg-cyan-400/5 text-cyan-400 text-xs font-bold uppercase tracking-widest hover:bg-cyan-400/10 transition-all"
+        >
+          SEND ME 3 ROLES
+        </button>
+      )}
 
       <ModalWrapper
         isOpen={isOpen}
@@ -191,6 +222,7 @@ export default function SendRolesForm({ className = '' }: SendRolesFormProps) {
                 onChange={(e) => setName(e.target.value)}
                 required
                 disabled={status === 'loading'}
+                autoFocus={autoFocus && !name}
                 className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 text-sm text-white outline-none focus:border-cyan-400/50 transition-all disabled:opacity-50"
                 placeholder="John Smith"
               />
