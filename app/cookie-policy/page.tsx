@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import ManageCookiesButton from '@/components/ManageCookiesButton';
 
 export const metadata: Metadata = {
   title: 'Cookie Policy | RecXchange',
@@ -152,15 +153,7 @@ export default function CookiePolicyPage() {
               <p className="text-sm mb-3">
                 Click the button below to reopen the cookie consent banner and change your preferences at any time.
               </p>
-              <button
-                onClick={() => {
-                  localStorage.removeItem('cookie-consent');
-                  window.location.reload();
-                }}
-                className="px-6 py-3 bg-gradient-to-r from-cyan-500 to-purple-500 text-white font-bold rounded-lg hover:shadow-lg transition-all"
-              >
-                Manage Cookie Preferences
-              </button>
+              <ManageCookiesButton />
             </div>
 
             <h3 className="text-lg font-bold text-white mb-3 mt-6">Browser Settings</h3>
