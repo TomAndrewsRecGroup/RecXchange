@@ -461,7 +461,7 @@ const ACTION_CONFIG = {
   },
   explain_recx_direct: {
     ghlTag: 'Website - QA RecX Direct',
-    autoResponseSubject: 'RecX Direct - Explainer & Fee Pool',
+    autoResponseSubject: 'How RecXchange Works - Your Complete Guide',
     autoResponseTemplate: (firstName: string) => {
       const LOGO_URL = 'https://images.squarespace-cdn.com/content/v1/68120154725429476150f64b/00d296cd-6741-4c0a-a711-08a3f35db445/REX-Logo-GW-25.png?format=1500w';
       
@@ -473,85 +473,240 @@ const ACTION_CONFIG = {
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
           <meta http-equiv="X-UA-Compatible" content="IE=edge">
           <meta name="x-apple-disable-message-reformatting">
-          <title>RecX Direct Explainer</title>
+          <title>How RecXchange Works</title>
           <!--[if mso]>
           <style>
             * { font-family: sans-serif !important; }
           </style>
           <![endif]-->
+          <!--[if !mso]><!-->
+          <style>
+            @media only screen and (max-width: 600px) {
+              .mobile-padding { padding: 20px 16px !important; }
+              .mobile-text { font-size: 24px !important; }
+            }
+          </style>
+          <!--<![endif]-->
         </head>
-        <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif; background: #0a0a0a; color: #e5e5e5;">
+        <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif; background: #0a0a0a; color: #e5e5e5; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;">
           <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #0a0a0a; min-height: 100%;">
             <tr>
               <td align="center" style="padding: 20px 10px;">
                 <table cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width: 680px; background: #0a0a0a;">
                   
+                  <!-- Header -->
                   <tr>
-                    <td style="background: #0a0a0a; padding: 40px 24px; text-align: center; border-bottom: 1px solid #222;">
+                    <td style="background: #0a0a0a; padding: 40px 24px; text-align: center; border-bottom: 1px solid #222;" class="mobile-padding">
                       <img src="${LOGO_URL}" alt="RecXchange Logo" width="180" style="max-width: 180px; height: auto; margin-bottom: 20px; display: block; margin-left: auto; margin-right: auto;" />
-                      <h1 style="margin: 0; color: #fff; font-size: 28px; font-weight: 800;">RecX Direct Explainer</h1>
-                      <p style="margin: 8px 0 0 0; color: #888; font-size: 14px;">For ${firstName || 'you'}</p>
+                      <h1 style="margin: 0; color: #fff; font-size: 28px; font-weight: 800;" class="mobile-text">How RecXchange Works</h1>
+                      <p style="margin: 12px 0 0 0; color: #888; font-size: 14px;">Everything you need to know${firstName ? `, ${firstName}` : ''}</p>
                     </td>
                   </tr>
-                  
+
+                  <!-- Content -->
                   <tr>
-                    <td style="padding: 40px 24px;">
+                    <td style="padding: 40px 24px;" class="mobile-padding">
+                      
+                      <!-- What is RecXchange -->
                       <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #111; border: 1px solid #222; border-radius: 16px; margin-bottom: 24px;">
                         <tr>
                           <td style="padding: 28px;">
-                            <h3 style="color: rgb(59, 130, 246); margin: 0 0 12px 0; font-size: 18px;">What is RecX Direct?</h3>
-                            <p style="color: #888; line-height: 1.6; margin: 0; font-size: 15px;">RecX Direct is our revolutionary fee pooling model that makes premium recruitment accessible at any scale. Instead of paying traditional 15-20% fees, you pay a transparent monthly subscription and access a shared fee pool.</p>
+                            <h2 style="color: rgb(168, 85, 247); font-size: 20px; font-weight: 700; margin: 0 0 16px 0;">What is RecXchange?</h2>
+                            <p style="color: #e5e5e5; font-size: 15px; line-height: 1.7; margin: 0 0 12px 0;">RecXchange is a global network where recruiters collaborate to fill roles faster and place candidates easier than working alone.</p>
+                            <p style="color: #888; font-size: 14px; line-height: 1.7; margin: 0;">When you post a role or upload a candidate, our AI instantly connects you with partners who have what you need. Split the fee 50/50, close deals faster, and earn money on placements you'd never have made alone.</p>
                           </td>
                         </tr>
                       </table>
-                      
-                      <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%); background-color: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; margin-bottom: 24px;">
+
+                      <!-- Key Stats -->
+                      <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 24px;">
                         <tr>
-                          <td style="padding: 28px; text-align: center;">
-                            <p style="color: #666; font-size: 11px; font-weight: 700; text-transform: uppercase; margin: 0 0 12px 0;">Current Active Pool</p>
-                            <p style="color: rgb(59, 130, 246); font-size: 36px; font-weight: 900; margin: 0 0 8px 0;">£XXX,XXX</p>
-                            <p style="color: #888; margin: 0; font-size: 13px;">Updated weekly</p>
+                          <td width="32%" style="padding: 0 4px 0 0;">
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.08) 0%, rgba(59, 130, 246, 0.08) 100%); background-color: rgba(168, 85, 247, 0.08); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 12px;">
+                              <tr>
+                                <td style="padding: 20px; text-align: center;">
+                                  <p style="color: #666; font-size: 11px; font-weight: 700; text-transform: uppercase; margin: 0 0 8px 0;">Network</p>
+                                  <p style="color: rgb(168, 85, 247); font-size: 24px; font-weight: 900; margin: 0; line-height: 1;">15,000+</p>
+                                  <p style="color: #888; font-size: 12px; margin: 8px 0 0 0;">Recruiters</p>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                          <td width="32%" style="padding: 0 4px;">
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(168, 85, 247, 0.08) 100%); background-color: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 12px;">
+                              <tr>
+                                <td style="padding: 20px; text-align: center;">
+                                  <p style="color: #666; font-size: 11px; font-weight: 700; text-transform: uppercase; margin: 0 0 8px 0;">Live Fees</p>
+                                  <p style="color: rgb(59, 130, 246); font-size: 24px; font-weight: 900; margin: 0; line-height: 1;">£750k+</p>
+                                  <p style="color: #888; font-size: 12px; margin: 8px 0 0 0;">Available Now</p>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                          <td width="32%" style="padding: 0 0 0 4px;">
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.08) 0%, rgba(59, 130, 246, 0.08) 100%); background-color: rgba(168, 85, 247, 0.08); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 12px;">
+                              <tr>
+                                <td style="padding: 20px; text-align: center;">
+                                  <p style="color: #666; font-size: 11px; font-weight: 700; text-transform: uppercase; margin: 0 0 8px 0;">Candidates</p>
+                                  <p style="color: rgb(168, 85, 247); font-size: 24px; font-weight: 900; margin: 0; line-height: 1;">270M+</p>
+                                  <p style="color: #888; font-size: 12px; margin: 8px 0 0 0;">Searchable</p>
+                                </td>
+                              </tr>
+                            </table>
                           </td>
                         </tr>
                       </table>
-                      
+
+                      <!-- How It Works -->
                       <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #111; border: 1px solid #222; border-radius: 16px; margin-bottom: 24px;">
                         <tr>
                           <td style="padding: 28px;">
-                            <h3 style="color: rgb(59, 130, 246); margin: 0 0 16px 0; font-size: 18px;">How It Works</h3>
-                            <ol style="color: #888; line-height: 1.8; padding-left: 20px; margin: 0; font-size: 15px;">
-                              <li style="margin-bottom: 12px;">Subscribe to your tier (Entry, Lite, Pro, or Teams)</li>
-                              <li style="margin-bottom: 12px;">Post roles and access our candidate network</li>
-                              <li style="margin-bottom: 12px;">Make hires from the shared fee pool</li>
-                              <li>Pay only your subscription - no per-hire fees</li>
-                            </ol>
+                            <h2 style="color: rgb(59, 130, 246); font-size: 20px; font-weight: 700; margin: 0 0 20px 0;">How It Works (3 Simple Steps)</h2>
+                            
+                            <!-- Step 1 -->
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 16px;">
+                              <tr>
+                                <td width="40" style="padding: 0 12px 0 0; vertical-align: top;">
+                                  <div style="width: 32px; height: 32px; background: linear-gradient(135deg, rgb(168, 85, 247) 0%, rgb(59, 130, 246) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 900; font-size: 16px; text-align: center; line-height: 32px;">1</div>
+                                </td>
+                                <td style="vertical-align: top;">
+                                  <h3 style="color: #fff; font-size: 16px; font-weight: 700; margin: 0 0 8px 0;">Post Your Role or Candidate</h3>
+                                  <p style="color: #888; font-size: 14px; line-height: 1.6; margin: 0;">Upload a role you're struggling to fill, or a candidate you can't place. Takes 2 minutes.</p>
+                                </td>
+                              </tr>
+                            </table>
+
+                            <!-- Step 2 -->
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 16px;">
+                              <tr>
+                                <td width="40" style="padding: 0 12px 0 0; vertical-align: top;">
+                                  <div style="width: 32px; height: 32px; background: linear-gradient(135deg, rgb(59, 130, 246) 0%, rgb(168, 85, 247) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 900; font-size: 16px; text-align: center; line-height: 32px;">2</div>
+                                </td>
+                                <td style="vertical-align: top;">
+                                  <h3 style="color: #fff; font-size: 16px; font-weight: 700; margin: 0 0 8px 0;">AI Finds Perfect Matches</h3>
+                                  <p style="color: #888; font-size: 14px; line-height: 1.6; margin: 0;">Our Xchange Engine instantly alerts relevant partners. They have the candidates for your roles, or the roles for your candidates.</p>
+                                </td>
+                              </tr>
+                            </table>
+
+                            <!-- Step 3 -->
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                              <tr>
+                                <td width="40" style="padding: 0 12px 0 0; vertical-align: top;">
+                                  <div style="width: 32px; height: 32px; background: linear-gradient(135deg, rgb(168, 85, 247) 0%, rgb(59, 130, 246) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 900; font-size: 16px; text-align: center; line-height: 32px;">3</div>
+                                </td>
+                                <td style="vertical-align: top;">
+                                  <h3 style="color: #fff; font-size: 16px; font-weight: 700; margin: 0 0 8px 0;">Split the Fee & Get Paid</h3>
+                                  <p style="color: #888; font-size: 14px; line-height: 1.6; margin: 0;">Close the deal together. Automated contracts split fees 50/50. Payment handled securely through RecXchange escrow.</p>
+                                </td>
+                              </tr>
+                            </table>
                           </td>
                         </tr>
                       </table>
-                      
-                      <table cellpadding="0" cellspacing="0" border="0" width="100%">
+
+                      <!-- RecX Direct Explainer -->
+                      <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.08) 0%, rgba(59, 130, 246, 0.08) 100%); background-color: rgba(168, 85, 247, 0.08); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 16px; margin-bottom: 24px;">
                         <tr>
-                          <td align="center" style="padding: 32px 0;">
+                          <td style="padding: 28px;">
+                            <h2 style="color: rgb(168, 85, 247); font-size: 20px; font-weight: 700; margin: 0 0 16px 0;">What is RecX Direct?</h2>
+                            <p style="color: #e5e5e5; font-size: 15px; line-height: 1.7; margin: 0 0 12px 0;">RecX Direct is our revolutionary fee-pooling model. Instead of paying 15-20% per hire, you pay one flat monthly subscription and access a shared fee pool.</p>
+                            <p style="color: #888; font-size: 14px; line-height: 1.7; margin: 0 0 20px 0;">Perfect for companies hiring regularly. Make unlimited placements from the pool—no per-hire fees, no surprises, just predictable recruitment costs.</p>
+                            
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: rgba(0, 0, 0, 0.3); border-radius: 12px; padding: 20px; margin-bottom: 20px;">
+                              <tr>
+                                <td style="text-align: center;">
+                                  <p style="color: #666; font-size: 11px; font-weight: 700; text-transform: uppercase; margin: 0 0 10px 0;">Current Active Fee Pool</p>
+                                  <p style="color: rgb(168, 85, 247); font-size: 36px; font-weight: 900; margin: 0; line-height: 1;">£XXX,XXX</p>
+                                  <p style="color: #888; font-size: 13px; margin: 10px 0 0 0;">Updated weekly</p>
+                                </td>
+                              </tr>
+                            </table>
+                            
+                            <p style="color: #888; font-size: 13px; line-height: 1.6; margin: 0; text-align: center;"><strong style="color: #e5e5e5;">Pricing starts at £1/month</strong> (Entry Tier) with higher tiers for teams making multiple hires per quarter.</p>
+                          </td>
+                        </tr>
+                      </table>
+
+                      <!-- Success Stories -->
+                      <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #111; border: 1px solid #222; border-radius: 16px; margin-bottom: 24px;">
+                        <tr>
+                          <td style="padding: 28px;">
+                            <h2 style="color: rgb(59, 130, 246); font-size: 20px; font-weight: 700; margin: 0 0 20px 0;">Real Success Stories</h2>
+                            
+                            <!-- Story 1 - Purple accent -->
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: rgba(168, 85, 247, 0.05); border-left: 3px solid rgb(168, 85, 247); border-radius: 8px; margin-bottom: 16px;">
+                              <tr>
+                                <td style="padding: 16px;">
+                                  <p style="color: #e5e5e5; font-size: 14px; line-height: 1.6; margin: 0 0 12px 0; font-style: italic;">"💼 I posted a Senior DevOps role that was stuck for 6 weeks. Within 48 hours, a partner in Manchester submitted a perfect candidate. Hired. £7,500 split fee—I'd have earned £0 working alone."</p>
+                                  <p style="color: rgb(168, 85, 247); font-size: 13px; font-weight: 700; margin: 0;">— Sarah M., Tech Recruiter, London</p>
+                                </td>
+                              </tr>
+                            </table>
+
+                            <!-- Story 2 - Blue accent -->
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: rgba(59, 130, 246, 0.05); border-left: 3px solid rgb(59, 130, 246); border-radius: 8px; margin-bottom: 16px;">
+                              <tr>
+                                <td style="padding: 16px;">
+                                  <p style="color: #e5e5e5; font-size: 14px; line-height: 1.6; margin: 0 0 12px 0; font-style: italic;">"💰 I had a great Finance candidate but no matching roles. RecXchange matched her to 3 roles in 24 hours. Placed her via a partner—split £6,000. Easiest money I've ever made."</p>
+                                  <p style="color: rgb(59, 130, 246); font-size: 13px; font-weight: 700; margin: 0;">— James T., Finance Recruiter, Edinburgh</p>
+                                </td>
+                              </tr>
+                            </table>
+
+                            <!-- Story 3 - Purple accent -->
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: rgba(168, 85, 247, 0.05); border-left: 3px solid rgb(168, 85, 247); border-radius: 8px;">
+                              <tr>
+                                <td style="padding: 16px;">
+                                  <p style="color: #e5e5e5; font-size: 14px; line-height: 1.6; margin: 0 0 12px 0; font-style: italic;">"🚀 RecX Direct changed everything. We're a small team hiring 3-5 people per quarter. We went from £30k+ annual agency fees to £3,600 yearly subscription. ROI is insane."</p>
+                                  <p style="color: rgb(168, 85, 247); font-size: 13px; font-weight: 700; margin: 0;">— Emma L., Head of Talent, SaaS Startup</p>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+
+                      <!-- Reviews Stats -->
+                      <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(168, 85, 247, 0.08) 100%); background-color: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; margin-bottom: 24px;">
+                        <tr>
+                          <td style="padding: 24px; text-align: center;">
+                            <p style="color: #666; font-size: 12px; font-weight: 700; text-transform: uppercase; margin: 0 0 12px 0;">Platform Rating</p>
+                            <p style="color: #fff; font-size: 32px; font-weight: 900; margin: 0; line-height: 1;">⭐️⭐️⭐️⭐️⭐️</p>
+                            <p style="color: rgb(59, 130, 246); font-size: 24px; font-weight: 700; margin: 10px 0 0 0;">4.8/5</p>
+                            <p style="color: #888; font-size: 13px; margin: 8px 0 0 0;">From 2,400+ verified recruiter reviews</p>
+                          </td>
+                        </tr>
+                      </table>
+
+                      <!-- Final CTA -->
+                      <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #111; border: 1px solid #222; border-radius: 16px;">
+                        <tr>
+                          <td style="padding: 32px; text-align: center;">
+                            <h3 style="color: #fff; font-size: 22px; font-weight: 700; margin: 0 0 12px 0;">Ready to Get Started?</h3>
+                            <p style="color: #888; font-size: 15px; line-height: 1.7; margin: 0 0 24px 0;">Join 15,000+ recruiters already earning more by working together. Start at £1/month—cancel anytime.</p>
+                            
                             <!--[if mso]>
-                            <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://recxchange.io/pricing" style="height:50px;v-text-anchor:middle;width:220px;" arcsize="20%" stroke="f" fillcolor="rgb(59, 130, 246)">
+                            <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://app.recxchange.io/register?trigger_link=jYQNc9YXcMkYPvo3HZfC" style="height:50px;v-text-anchor:middle;width:220px;" arcsize="20%" stroke="f" fillcolor="rgb(59, 130, 246)">
                               <w:anchorlock/>
-                              <center style="color:#ffffff;font-family:sans-serif;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;">View Pricing Tiers</center>
+                              <center style="color:#ffffff;font-family:sans-serif;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;">Join RecXchange Now</center>
                             </v:roundrect>
                             <![endif]-->
                             <!--[if !mso]><!-->
-                            <a href="https://recxchange.io/pricing" style="display: inline-block; background: linear-gradient(135deg, rgb(59, 130, 246) 0%, rgb(168, 85, 247) 100%); background-color: rgb(59, 130, 246); color: #fff; text-decoration: none; font-weight: 700; font-size: 14px; padding: 16px 40px; border-radius: 10px; text-transform: uppercase; letter-spacing: 0.1em;">View Pricing Tiers</a>
+                            <a href="https://app.recxchange.io/register?trigger_link=jYQNc9YXcMkYPvo3HZfC" style="display: inline-block; background: linear-gradient(135deg, rgb(59, 130, 246) 0%, rgb(168, 85, 247) 100%); background-color: rgb(59, 130, 246); color: #fff; text-decoration: none; font-weight: 700; font-size: 14px; padding: 16px 40px; border-radius: 10px; text-transform: uppercase; letter-spacing: 0.1em;">Join RecXchange Now</a>
                             <!--<![endif]-->
                           </td>
                         </tr>
                       </table>
-                      
-                      <p style="color: #666; line-height: 1.6; margin: 24px 0 0 0; font-size: 13px; text-align: center;">Questions? Reply to this email or book a call with our team.</p>
                     </td>
                   </tr>
-                  
+
+                  <!-- Footer -->
                   <tr>
                     <td style="text-align: center; padding: 32px 24px; color: #666; font-size: 12px; border-top: 1px solid #222;">
+                      <p style="margin: 0 0 8px 0;">Questions? Reply to this email or <a href="https://recxchange.io/contact" style="color: rgb(59, 130, 246); text-decoration: none;">book a call with our team</a></p>
                       <p style="margin: 0;"><strong style="color: #fff;">The RecXchange Team</strong></p>
+                      <p style="margin: 8px 0 0 0; font-size: 11px;">Generated on ${new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
                     </td>
                   </tr>
                   
