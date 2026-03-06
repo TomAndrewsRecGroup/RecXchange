@@ -289,9 +289,9 @@ const generateRoleCard = (role: {
     </div>
     
     <!-- Salary -->
-    <div style="background: linear-gradient(135deg, rgba(0,255,255,0.05) 0%, rgba(199,29,241,0.05) 100%); border: 1px solid rgba(0,255,255,0.2); border-radius: 12px; padding: 16px; margin-bottom: 20px;">
+    <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(168, 85, 247, 0.08) 100%); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 12px; padding: 16px; margin-bottom: 20px;">
       <p style="color: #666; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin: 0 0 8px 0;">💰 Salary Range</p>
-      <p style="color: #00ffff; font-size: 22px; font-weight: 700; margin: 0;">${role.salary}</p>
+      <p style="color: rgb(59, 130, 246); font-size: 22px; font-weight: 700; margin: 0;">${role.salary}</p>
     </div>
     
     <!-- Description -->
@@ -304,13 +304,13 @@ const generateRoleCard = (role: {
       <p style="color: #666; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin: 0 0 12px 0;">🎯 Key Skills Required</p>
       <div style="display: flex; flex-wrap: wrap; gap: 8px;">
         ${role.keySkills.map(skill => `
-          <span style="background: rgba(0,255,255,0.1); border: 1px solid rgba(0,255,255,0.2); border-radius: 6px; padding: 6px 12px; color: #00ffff; font-size: 12px; font-weight: 600;">${skill}</span>
+          <span style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 6px; padding: 6px 12px; color: rgb(59, 130, 246); font-size: 12px; font-weight: 600;">${skill}</span>
         `).join('')}
       </div>
     </div>
     
     <!-- CTA Button -->
-    <a href="https://app.recxchange.io/register?trigger_link=jYQNc9YXcMkYPvo3HZfC" style="display: block; text-align: center; background: linear-gradient(135deg, #00ffff 0%, #c71df1 100%); color: #000; text-decoration: none; font-weight: 700; font-size: 13px; padding: 14px 28px; border-radius: 10px; text-transform: uppercase; letter-spacing: 0.1em;">View Role & Apply</a>
+    <a href="https://app.recxchange.io/register?trigger_link=jYQNc9YXcMkYPvo3HZfC" style="display: block; text-align: center; background: linear-gradient(135deg, rgb(59, 130, 246) 0%, rgb(168, 85, 247) 100%); color: #fff; text-decoration: none; font-weight: 700; font-size: 13px; padding: 14px 28px; border-radius: 10px; text-transform: uppercase; letter-spacing: 0.1em;">Work This Role</a>
   </div>
 `;
 
@@ -349,10 +349,10 @@ const ACTION_CONFIG = {
         <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif; background: #0a0a0a; color: #e5e5e5;">
           <div style="max-width: 680px; margin: 0 auto;">
             <!-- Header with Logo -->
-            <div style="background: #000; padding: 40px 24px; text-align: center; border-bottom: 1px solid #222;">
+            <div style="background: #0a0a0a; padding: 40px 24px; text-align: center; border-bottom: 1px solid #222;">
               <img src="${LOGO_URL}" alt="RecXchange Logo" style="max-width: 180px; height: auto; margin-bottom: 20px;" />
               <h1 style="margin: 0; color: #fff; font-size: 28px; font-weight: 800;">Your 3 Matching Live Roles</h1>
-              <div style="margin: 16px 0 0 0; color: #00ffff; font-size: 16px; font-weight: 600;">${industryText}</div>
+              <div style="margin: 16px 0 0 0; color: rgb(59, 130, 246); font-size: 16px; font-weight: 600;">${industryText}</div>
               <p style="margin: 8px 0 0 0; color: #888; font-size: 14px;">Curated for ${firstName || 'you'}</p>
             </div>
 
@@ -362,23 +362,23 @@ const ACTION_CONFIG = {
               <div style="background: #111; border: 1px solid #222; border-radius: 16px; padding: 28px; margin-bottom: 32px;">
                 <h2 style="color: #fff; font-size: 18px; font-weight: 700; margin: 0 0 12px 0;">Thanks for your interest${firstName ? `, ${firstName}` : ''}! 🎯</h2>
                 <p style="color: #888; font-size: 15px; line-height: 1.7; margin: 0 0 12px 0;">We've curated 3 live roles from our network that match your industry focus. These are real opportunities from verified hiring managers.</p>
-                <p style="color: #888; font-size: 15px; line-height: 1.7; margin: 0;">All roles below are part of our <strong style="color: #00ffff;">RecXchange</strong> network where recruiters collaborate and split fees 50/50.</p>
+                <p style="color: #888; font-size: 15px; line-height: 1.7; margin: 0;">All roles below are part of our <strong style="color: rgb(59, 130, 246);">RecXchange</strong> network where recruiters collaborate and split fees 50/50.</p>
               </div>
 
               <!-- Role Cards -->
               ${selectedRoles.map((role, index) => generateRoleCard(role, index)).join('')}
 
               <!-- CTA Section -->
-              <div style="background: linear-gradient(135deg, rgba(0,255,255,0.05) 0%, rgba(199,29,241,0.05) 100%); border: 1px solid rgba(0,255,255,0.2); border-radius: 16px; padding: 32px 24px; text-align: center; margin-top: 32px;">
+              <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(168, 85, 247, 0.08) 100%); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 32px 24px; text-align: center; margin-top: 32px;">
                 <h3 style="color: #fff; font-size: 22px; font-weight: 700; margin: 0 0 12px 0;">Ready to Access All Live Roles?</h3>
                 <p style="color: #888; font-size: 15px; line-height: 1.7; margin: 0 0 24px 0;">Join RecXchange and unlock 100+ live roles with AI-powered matching. Collaborate with pre-vetted recruiters and split fees on every placement.</p>
-                <a href="https://app.recxchange.io/register?trigger_link=jYQNc9YXcMkYPvo3HZfC" style="display: inline-block; background: linear-gradient(135deg, #00ffff 0%, #c71df1 100%); color: #000; text-decoration: none; font-weight: 700; font-size: 14px; padding: 16px 40px; border-radius: 10px; text-transform: uppercase; letter-spacing: 0.1em;">Get Started Now</a>
+                <a href="https://app.recxchange.io/register?trigger_link=jYQNc9YXcMkYPvo3HZfC" style="display: inline-block; background: linear-gradient(135deg, rgb(59, 130, 246) 0%, rgb(168, 85, 247) 100%); color: #fff; text-decoration: none; font-weight: 700; font-size: 14px; padding: 16px 40px; border-radius: 10px; text-transform: uppercase; letter-spacing: 0.1em;">Get Started Now</a>
               </div>
             </div>
 
             <!-- Footer -->
             <div style="text-align: center; padding: 32px 24px; color: #666; font-size: 12px; border-top: 1px solid #222;">
-              <p style="margin: 0 0 8px 0;">Questions? Reply to this email or <a href="https://recxchange.io/contact" style="color: #00ffff; text-decoration: none;">contact our team</a></p>
+              <p style="margin: 0 0 8px 0;">Questions? Reply to this email or <a href="https://recxchange.io/contact" style="color: rgb(59, 130, 246); text-decoration: none;">contact our team</a></p>
               <p style="margin: 0;"><strong style="color: #fff;">The RecXchange Team</strong></p>
               <p style="margin: 8px 0 0 0; font-size: 11px;">Generated on ${new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
             </div>
@@ -403,7 +403,7 @@ const ACTION_CONFIG = {
         </head>
         <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif; background: #0a0a0a; color: #e5e5e5;">
           <div style="max-width: 680px; margin: 0 auto;">
-            <div style="background: #000; padding: 40px 24px; text-align: center; border-bottom: 1px solid #222;">
+            <div style="background: #0a0a0a; padding: 40px 24px; text-align: center; border-bottom: 1px solid #222;">
               <img src="${LOGO_URL}" alt="RecXchange Logo" style="max-width: 180px; height: auto; margin-bottom: 20px;" />
               <h1 style="margin: 0; color: #fff; font-size: 28px; font-weight: 800;">RecX Direct Explainer</h1>
               <p style="margin: 8px 0 0 0; color: #888; font-size: 14px;">For ${firstName || 'you'}</p>
@@ -411,18 +411,18 @@ const ACTION_CONFIG = {
             
             <div style="padding: 40px 24px;">
               <div style="background: #111; border: 1px solid #222; border-radius: 16px; padding: 28px; margin-bottom: 24px;">
-                <h3 style="color: #00ffff; margin: 0 0 12px 0; font-size: 18px;">What is RecX Direct?</h3>
+                <h3 style="color: rgb(59, 130, 246); margin: 0 0 12px 0; font-size: 18px;">What is RecX Direct?</h3>
                 <p style="color: #888; line-height: 1.6; margin: 0; font-size: 15px;">RecX Direct is our revolutionary fee pooling model that makes premium recruitment accessible at any scale. Instead of paying traditional 15-20% fees, you pay a transparent monthly subscription and access a shared fee pool.</p>
               </div>
               
-              <div style="background: linear-gradient(135deg, rgba(0,255,255,0.1) 0%, rgba(199,29,241,0.1) 100%); border: 1px solid rgba(0,255,255,0.3); border-radius: 16px; padding: 28px; margin-bottom: 24px; text-align: center;">
+              <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 28px; margin-bottom: 24px; text-align: center;">
                 <p style="color: #666; font-size: 11px; font-weight: 700; text-transform: uppercase; margin: 0 0 12px 0;">Current Active Pool</p>
-                <p style="color: #00ffff; font-size: 36px; font-weight: 900; margin: 0 0 8px 0;">£XXX,XXX</p>
+                <p style="color: rgb(59, 130, 246); font-size: 36px; font-weight: 900; margin: 0 0 8px 0;">£XXX,XXX</p>
                 <p style="color: #888; margin: 0; font-size: 13px;">Updated weekly</p>
               </div>
               
               <div style="background: #111; border: 1px solid #222; border-radius: 16px; padding: 28px; margin-bottom: 24px;">
-                <h3 style="color: #00ffff; margin: 0 0 16px 0; font-size: 18px;">How It Works</h3>
+                <h3 style="color: rgb(59, 130, 246); margin: 0 0 16px 0; font-size: 18px;">How It Works</h3>
                 <ol style="color: #888; line-height: 1.8; padding-left: 20px; margin: 0; font-size: 15px;">
                   <li style="margin-bottom: 12px;">Subscribe to your tier (Entry, Lite, Pro, or Teams)</li>
                   <li style="margin-bottom: 12px;">Post roles and access our candidate network</li>
@@ -432,7 +432,7 @@ const ACTION_CONFIG = {
               </div>
               
               <div style="text-align: center; margin: 32px 0;">
-                <a href="https://recxchange.io/pricing" style="display: inline-block; background: linear-gradient(135deg, #00ffff 0%, #c71df1 100%); color: #000; text-decoration: none; font-weight: 700; font-size: 14px; padding: 16px 40px; border-radius: 10px; text-transform: uppercase; letter-spacing: 0.1em;">View Pricing Tiers</a>
+                <a href="https://recxchange.io/pricing" style="display: inline-block; background: linear-gradient(135deg, rgb(59, 130, 246) 0%, rgb(168, 85, 247) 100%); color: #fff; text-decoration: none; font-weight: 700; font-size: 14px; padding: 16px 40px; border-radius: 10px; text-transform: uppercase; letter-spacing: 0.1em;">View Pricing Tiers</a>
               </div>
               
               <p style="color: #666; line-height: 1.6; margin: 24px 0 0 0; font-size: 13px; text-align: center;">Questions? Reply to this email or book a call with our team.</p>
