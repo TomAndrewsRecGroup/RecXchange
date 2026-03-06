@@ -17,6 +17,7 @@ export default function TestEmailPage() {
     qaRecruiterRecx: null,
     qaHmRecx: null,
   });
+  const [testEmail, setTestEmail] = useState('');
 
   const testRecruiterEmail = async () => {
     setLoading({ ...loading, recruiter: true });
@@ -69,6 +70,13 @@ export default function TestEmailPage() {
   };
 
   const testQuickAction = async (actionType: 'match_candidate' | 'explain_recx_direct', key: 'qa3roles' | 'qaRecruiterRecx' | 'qaHmRecx', userType: string) => {
+    const emailToUse = testEmail.trim() || undefined;
+    
+    if (!emailToUse) {
+      alert('⚠️ Please enter your email address in the input field above to receive test emails.');
+      return;
+    }
+
     setLoading({ ...loading, [key]: true });
     setResults({ ...results, [key]: null });
     
@@ -79,7 +87,7 @@ export default function TestEmailPage() {
         body: JSON.stringify({
           firstName: 'Test',
           lastName: 'User',
-          email: process.env.NEXT_PUBLIC_TEST_EMAIL || 'test@example.com',
+          email: emailToUse,
           actionType,
           source: '/test-email',
           industries: actionType === 'match_candidate' ? ['Technology', 'Finance'] : undefined,
@@ -91,7 +99,7 @@ export default function TestEmailPage() {
       setResults({ ...results, [key]: { success: response.ok, status: response.status, data } });
       
       if (response.ok) {
-        alert(`✅ ${userType} email sent successfully! Check your inbox.`);
+        alert(`✅ ${userType} email sent to ${emailToUse}! Check your inbox.`);
       } else {
         alert(`❌ Failed: ${data.error || 'Unknown error'}`);
       }
@@ -187,7 +195,23 @@ export default function TestEmailPage() {
           {/* Quick Action Emails */}
           <div className="bg-white/10 backdrop-blur-xl border border-green-500/20 rounded-2xl p-6 shadow-2xl shadow-green-500/10">
             <h2 className="text-2xl font-semibold mb-4 text-green-400">⚡ Quick Action Auto-Response Emails</h2>
-            <p className="text-gray-400 text-sm mb-6">These are sent immediately when users submit quick action forms</p>
+            <p className="text-gray-400 text-sm mb-4">These are sent immediately when users submit quick action forms</p>
+            
+            {/* Email Input */}
+            <div className="mb-6 bg-white/5 backdrop-blur-md border border-green-500/30 rounded-xl p-4">
+              <label htmlFor="test-email" className="block text-sm font-semibold text-green-400 mb-2">
+                Your Email (to receive test emails):
+              </label>
+              <input
+                id="test-email"
+                type="email"
+                value={testEmail}
+                onChange={(e) => setTestEmail(e.target.value)}
+                placeholder="tom@andrewsrecruitmentgroup.com"
+                className="w-full bg-black/50 backdrop-blur-sm border border-green-500/30 text-white placeholder-gray-500 px-4 py-3 rounded-lg focus:outline-none focus:border-green-400 transition-colors"
+              />
+              <p className="text-xs text-gray-400 mt-2">Enter your email to receive the quick action test emails</p>
+            </div>
             
             <div className="space-y-4">
               {/* Send 3 Roles */}
@@ -256,14 +280,11 @@ export default function TestEmailPage() {
           <div className="bg-gradient-to-br from-blue-500/20 to-blue-600/20 backdrop-blur-xl border border-blue-500/40 rounded-2xl p-6 shadow-2xl shadow-blue-500/10">
             <h3 className="text-lg font-semibold mb-2 text-blue-400">ℹ️ How to Test</h3>
             <ol className="list-decimal list-inside space-y-2 text-sm text-gray-300">
-              <li>Click "Check Health" buttons to verify endpoints are working (no email sent)</li>
-              <li>Click "Send Test Email" to actually send the email to your inbox</li>
-              <li>Check the response JSON below the buttons for details</li>
-              <li>Quick action emails go to the email defined in the request (default: test@example.com)</li>
+              <li><strong>Weekly Funnel Emails:</strong> These go to your FUNNEL_EMAIL_TO address automatically. Just click "Send Test Email".</li>
+              <li><strong>Quick Action Emails:</strong> Enter your email in the input field above, then click the test buttons.</li>
+              <li>Check "Health" buttons first to verify endpoints work (no email sent).</li>
+              <li>Response JSON appears below each button with success/error details.</li>
             </ol>
-            <div className="mt-4 p-3 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
-              <p className="text-yellow-400 text-xs"><strong>⚠️ Note:</strong> Quick action test emails use a test email address. To receive them in your inbox, update NEXT_PUBLIC_TEST_EMAIL in your environment variables.</p>
-            </div>
           </div>
         </div>
       </div>
