@@ -1,7 +1,11 @@
 {
   "crons": [
     {
-      "path": "/api/analytics/email-funnel",
+      "path": "/api/analytics/email-recruiter-funnel",
+      "schedule": "0 9 * * 1"
+    },
+    {
+      "path": "/api/analytics/email-hiring-manager-funnel",
       "schedule": "0 9 * * 1"
     }
   ]
