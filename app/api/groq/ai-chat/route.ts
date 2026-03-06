@@ -2,6 +2,19 @@ import { NextRequest, NextResponse } from 'next/server';
 import { visitorContactIds } from '../webhook/route';
 import Groq from 'groq-sdk';
 
+// Import secure configuration and utilities
+import { GROQ_CONFIG, buildContextPrompt } from '@/lib/groq/config';
+import { validateChatInputs } from '@/lib/groq/validation';
+import { performSecurityCheck, sanitizeAIResponse, logSecurityEvent } from '@/lib/groq/security';
+import type { 
+  ConversationMessage, 
+  SmartLinkData, 
+  ChatSuccessResponse,
+  ChatErrorResponse,
+  GHLContactPayload,
+  MessageDirection 
+} from '@/lib/groq/types';
+
 const GHL_BASE = 'https://services.leadconnectorhq.com';
 const API_KEY = process.env.GHL_API_KEY!;
 const LOCATION_ID = process.env.GHL_LOCATION_ID!;
@@ -14,136 +27,6 @@ const ghlHeaders = {
 };
 
 const groq = new Groq({ apiKey: GROQ_API_KEY });
-
-interface ConversationMessage {
-  role: 'system' | 'user' | 'assistant';
-  content: string;
-}
-
-interface SmartLinkData {
-  action: 'send-3-roles' | 'book-meeting' | 'recx-direct-info' | 'how-it-works' | 'how-it-works-no-meeting';
-  prefillData?: {
-    name?: string;
-    email?: string;
-    company?: string;
-    industries?: string[];
-    bookedMeeting?: boolean;
-  };
-  url: string;
-}
-
-// System prompt based on your Groq configuration
-const SYSTEM_PROMPT = `You are the RecXchange Revenue Assistant.
-
-Your role is to guide recruiters and hiring managers toward the most relevant next action based on their specific question.
-
-You do not act as a general support bot.
-You do not provide long explanations.
-You move conversations forward efficiently.
-
-If the user expresses a clear intent, respond only to that intent. Do not introduce additional options unless the conversation requires it.
-
-Recruiter logic:
-• If asking for live roles → guide to 3 live roles form only.
-• If asking about RecX Direct → explain briefly and offer the explainer video.
-• If asking about Lite or Pro pricing → provide clear pricing and short positioning. Only escalate if they express intent to subscribe or upgrade.
-• If asking how to join → guide to sign-up.
-If a recruiter asks about Lite pricing, provide the price and guide them directly toward sign-up as the primary next step. Mention live roles only as part of the sign-up benefit, not as a separate option.
-
-Hiring manager logic:
-• If asking how it works → briefly explain (1-2 sentences) and FIRST offer to book a meeting so they can ask questions.
-• If they want to book meeting → provide booking link.
-• If they decline meeting or just want video → offer the explainer video form.
-• If hesitant → offer explainer video.
-• If expressing urgency → escalate to human.
-Do not describe the process as the hiring manager posting a job. Instead, explain that RecX Direct distributes live roles to the recruiter network on their behalf.
-Do not mention fees or pricing unless specifically asked.
-Do not describe RecX Direct as a separate entity from RecXchange. It is part of RecXchange.
-Do not use em-dashes or long punctuation separators in responses.
-Use simple sentence structure.
-Do not push for the meeting - keep it friendly and optional.
-
-CAPABILITIES YOU CAN TRIGGER:
-
-For Recruiters:
-1. Send 3 Matched Roles - When they ask for roles
-2. Explain RecX Direct - When they ask about premium tiers or higher splits
-
-For Hiring Managers:
-1. Schedule Discovery Call - FIRST option when they ask how it works
-2. Send Explainer Video - If they decline meeting or prefer video first
-
-CONVERSATION PATTERNS:
-
-When recruiter asks about roles:
-- Ask their industries first
-- Then mention you can send 3 matched roles to their email
-- Confirm email was sent
-
-When recruiter asks about RecX Direct:
-- Explain the 70% split benefit
-- Highlight premium advantages
-- Keep it brief
-- Offer the explainer email with video
-
-When hiring manager asks how it works:
-- Give brief 1-2 sentence explanation
-- Ask if they'd like to book a meeting to discuss and ask questions
-- If yes → provide booking link
-- If no/not now → offer video explainer instead
-- Keep tone friendly and not pushy
-
-Do not cross-sell in the same reply.
-Do not stack multiple calls-to-action.
-Keep responses under 100 words.
-Avoid jargon.
-Use clear recruiter language.
-
-Escalate only when:
-• The user explicitly requests a human.
-• The user confirms buying or upgrading intent.
-
-Conversation Guidelines:
-• Keep responses concise and controlled.
-• Move toward a clear action within 3 replies.
-• Avoid long educational explanations.
-• Do not answer unrelated questions.
-• Escalate high-intent users immediately.
-• Do not discuss detailed pricing.
-
-Core Positioning:
-RecXchange is a recruiter collaboration platform.
-Recruiters collaborate with other recruiters through structured split-fee partnerships.
-RecX Direct is the in-house business development arm that signs live clients and distributes their roles to the RecXchange network.
-
-Do not describe RecXchange as a job board.
-
-IMPORTANT - SMART LINKS:
-When offering actions, ALWAYS format your response EXACTLY like this:
-"Great! [button:ACTION]Button Text[/button]"
-
-The button format must be:
-[button:ACTION_NAME]Button Text[/button]
-
-Available actions:
-- send-3-roles: Opens form to get 3 matched roles
-- recx-direct-info: Opens form to get RecX Direct explainer video  
-- book-meeting: Opens meeting scheduler (external page)
-- how-it-works: Opens form to get HM explainer video (user already booked meeting)
-- how-it-works-no-meeting: Opens form to get HM explainer video (no meeting booked)
-
-Example responses for hiring managers:
-"RecXchange connects your roles directly to our recruiter network. Would you like to book a quick call to discuss how it works? [button:book-meeting]Book Meeting[/button] Or I can send you a video explainer."
-
-If they say "just send the video" or "no meeting":
-"No problem! [button:how-it-works-no-meeting]Get Video Explainer[/button]"
-
-If they already booked meeting:
-"Perfect! I'll send the video too so you can review before the call. [button:how-it-works]Get Video Explainer[/button]"
-
-Example responses for recruiters:
-"I can send you 3 live roles right now! [button:send-3-roles]Get 3 Roles[/button]"
-"Ready to see how RecX Direct works? [button:recx-direct-info]Get RecX Direct Explainer[/button]"`;
 
 // ─── Upsert Contact ─────────────────────────────────────────────────────────
 async function upsertContact(
@@ -179,7 +62,7 @@ async function upsertContact(
     tags.push(`page-${pageContext.toLowerCase().replace(/\s+/g, '-')}`);
   }
 
-  const contactPayload: Record<string, unknown> = {
+  const contactPayload: GHLContactPayload = {
     locationId: LOCATION_ID,
     firstName,
     lastName,
@@ -253,7 +136,7 @@ async function getOrCreateConversation(
 async function logMessageToGHL(
   conversationId: string,
   message: string,
-  direction: 'inbound' | 'outbound'
+  direction: MessageDirection
 ): Promise<void> {
   console.log(`[Groq AI Chat] Logging ${direction} message to GHL`);
   
@@ -292,7 +175,7 @@ async function getConversationHistory(
   
   try {
     const response = await fetch(
-      `${GHL_BASE}/conversations/${conversationId}/messages?limit=20`,
+      `${GHL_BASE}/conversations/${conversationId}/messages?limit=${GROQ_CONFIG.maxHistoryToFetch}`,
       { headers: ghlHeaders }
     );
     
@@ -396,27 +279,27 @@ async function callGroqAI(
   conversationHistory: ConversationMessage[] = []
 ): Promise<string> {
   console.log('[Groq AI Chat] Calling Groq API');
-  console.log('[Groq AI Chat] Model: llama-3.1-8b-instant');
+  console.log('[Groq AI Chat] Model:', GROQ_CONFIG.model);
   console.log('[Groq AI Chat] User persona:', persona);
   console.log('[Groq AI Chat] Page context:', pageContext);
   
-  // Build context-aware system message
-  const contextPrompt = `${SYSTEM_PROMPT}\n\nCurrent context:\n- User type: ${persona}\n- Page: ${pageContext}\n- Conversation has ${conversationHistory.length} previous messages`;
+  // Build context-aware system message using secure config
+  const contextPrompt = buildContextPrompt(persona, pageContext, conversationHistory.length);
   
-  // Build messages array
+  // Build messages array with limited history
   const messages: ConversationMessage[] = [
     { role: 'system', content: contextPrompt },
-    ...conversationHistory.slice(-6), // Last 6 messages for context
+    ...conversationHistory.slice(-GROQ_CONFIG.maxHistoryMessages),
     { role: 'user', content: message },
   ];
   
   try {
     const completion = await groq.chat.completions.create({
       messages,
-      model: 'llama-3.1-8b-instant',
-      temperature: 0.7,
-      max_tokens: 300, // Keep responses concise
-      top_p: 1,
+      model: GROQ_CONFIG.model,
+      temperature: GROQ_CONFIG.temperature,
+      max_tokens: GROQ_CONFIG.maxTokens,
+      top_p: GROQ_CONFIG.topP,
     });
     
     const response = completion.choices[0]?.message?.content || '';
@@ -450,28 +333,63 @@ export async function POST(req: NextRequest) {
       pageContext,
     } = body;
 
-    if (!message?.trim()) {
-      return NextResponse.json({ error: 'Message is required' }, { status: 400 });
+    const isFirstMessage = !existingContactId;
+
+    // Validate all inputs with security checks
+    const validation = validateChatInputs(
+      { name, email, message, persona, companyName, pageContext },
+      isFirstMessage
+    );
+
+    if (!validation.valid || !validation.data) {
+      console.warn('[Groq AI Chat] Validation failed:', validation.error);
+      return NextResponse.json(
+        { error: validation.error } as ChatErrorResponse,
+        { status: 400 }
+      );
     }
 
-    console.log('[Groq AI Chat] Page:', pageContext || 'unknown');
-    console.log('[Groq AI Chat] Persona:', persona);
-    console.log('[Groq AI Chat] Message preview:', message.substring(0, 50));
+    const validatedData = validation.data;
+
+    console.log('[Groq AI Chat] Page:', validatedData.pageContext);
+    console.log('[Groq AI Chat] Persona:', validatedData.persona);
+    console.log('[Groq AI Chat] Message preview:', validatedData.message.substring(0, 50));
 
     let contactId = existingContactId;
     let conversationId = existingConvId;
 
     // Create/get contact
     if (!contactId) {
-      if (!name || !email || !persona) {
+      if (!validatedData.name || !validatedData.email || !validatedData.persona) {
         return NextResponse.json(
-          { error: 'Name, email and persona required for first message' },
+          { error: 'Name, email and persona required for first message' } as ChatErrorResponse,
           { status: 400 }
         );
       }
-      contactId = await upsertContact(name, email, persona, companyName, pageContext);
+      contactId = await upsertContact(
+        validatedData.name,
+        validatedData.email,
+        validatedData.persona,
+        validatedData.companyName,
+        validatedData.pageContext
+      );
     } else {
       visitorContactIds.add(contactId);
+    }
+
+    // Perform security checks (rate limiting, injection detection)
+    const securityCheck = performSecurityCheck(validatedData.message, contactId);
+    if (!securityCheck.passed) {
+      console.warn('[Groq AI Chat] Security check failed:', securityCheck.reason);
+      logSecurityEvent('suspicious_activity', contactId, { reason: securityCheck.reason });
+      
+      return NextResponse.json(
+        { 
+          error: 'Request blocked',
+          message: securityCheck.reason || 'Your request could not be processed.',
+        } as ChatErrorResponse,
+        { status: 429 }
+      );
     }
 
     // Create/get conversation
@@ -484,17 +402,30 @@ export async function POST(req: NextRequest) {
 
     // Call Groq AI
     console.log('[Groq AI Chat] → Calling Groq AI');
-    const aiResponse = await callGroqAI(message, persona, pageContext || 'Homepage', history);
+    const aiResponse = await callGroqAI(
+      validatedData.message,
+      validatedData.persona!,
+      validatedData.pageContext,
+      history
+    );
+
+    // Sanitize AI response to prevent data leakage
+    const sanitizedResponse = sanitizeAIResponse(aiResponse);
 
     // Parse smart links from response
-    const { cleanResponse, smartLinks } = parseSmartLinks(aiResponse, name || '', email || '', companyName || '');
+    const { cleanResponse, smartLinks } = parseSmartLinks(
+      sanitizedResponse,
+      validatedData.name || '',
+      validatedData.email || '',
+      validatedData.companyName || ''
+    );
     
     console.log('[Groq AI Chat] Found', smartLinks.length, 'smart links');
 
     // Log both messages to GHL for CRM tracking
     await Promise.all([
-      logMessageToGHL(conversationId, message, 'inbound'),
-      logMessageToGHL(conversationId, aiResponse, 'outbound'),
+      logMessageToGHL(conversationId, validatedData.message, 'inbound'),
+      logMessageToGHL(conversationId, sanitizedResponse, 'outbound'),
     ]);
 
     const elapsed = Date.now() - startTime;
@@ -506,7 +437,7 @@ export async function POST(req: NextRequest) {
       conversationId,
       message: cleanResponse,
       smartLinks: smartLinks.length > 0 ? smartLinks : undefined,
-    });
+    } as ChatSuccessResponse);
     
   } catch (err) {
     const elapsed = Date.now() - startTime;
@@ -516,7 +447,7 @@ export async function POST(req: NextRequest) {
       { 
         error: 'Internal server error',
         message: 'Technical issue. Please email support@recxchange.io or try again.',
-      },
+      } as ChatErrorResponse,
       { status: 500 }
     );
   }
