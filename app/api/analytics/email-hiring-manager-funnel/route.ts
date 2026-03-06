@@ -6,6 +6,23 @@ import {
 } from '@/lib/funnel';
 
 /**
+ * GET /api/analytics/email-hiring-manager-funnel
+ * Returns status and configuration info
+ */
+export async function GET(request: NextRequest) {
+  return NextResponse.json({
+    endpoint: 'Hiring Manager Weekly Email',
+    method: 'POST',
+    status: 'ready',
+    config: {
+      sendgridConfigured: !!process.env.SENDGRID_API_KEY,
+      emailTo: process.env.FUNNEL_EMAIL_TO || 'tom@andrewsrecruitmentgroup.com',
+      emailFrom: process.env.SENDGRID_FROM_EMAIL || 'analytics@recxchange.com',
+    },
+  });
+}
+
+/**
  * POST /api/analytics/email-hiring-manager-funnel
  * 
  * Sends weekly HIRING MANAGER funnel report via SendGrid
@@ -18,6 +35,8 @@ export async function POST(request: NextRequest) {
     const EMAIL_TO = process.env.FUNNEL_EMAIL_TO || 'tom@andrewsrecruitmentgroup.com';
     const EMAIL_FROM = process.env.SENDGRID_FROM_EMAIL || 'analytics@recxchange.com';
 
+    console.log('[HM Funnel] Starting email generation...');
+
     if (!SENDGRID_API_KEY) {
       console.error('[HM Funnel] SENDGRID_API_KEY not configured');
       return NextResponse.json(
@@ -27,12 +46,25 @@ export async function POST(request: NextRequest) {
     }
 
     // Get events from storage
+    console.log('[HM Funnel] Fetching analytics events...');
     const eventsResponse = await fetch(
       new URL('/api/analytics/track', request.url).toString()
     );
-    const { events } = await eventsResponse.json();
+    
+    if (!eventsResponse.ok) {
+      console.error('[HM Funnel] Failed to fetch events:', eventsResponse.status);
+      return NextResponse.json(
+        { error: 'Failed to fetch analytics events', status: eventsResponse.status },
+        { status: 500 }
+      );
+    }
+
+    const eventsData = await eventsResponse.json();
+    const events = eventsData.events || [];
+    console.log('[HM Funnel] Found', events.length, 'events');
 
     // Calculate hiring manager funnel metrics
+    console.log('[HM Funnel] Calculating funnel metrics...');
     const hiringManagerMetrics = getWeeklyFunnelMetrics(events, hiringManagerBookingFunnel);
 
     // Count quick action events
@@ -40,11 +72,14 @@ export async function POST(request: NextRequest) {
       (e: any) => e.event === 'quick_action_submitted' && 
                   e.properties?.action_type === 'explain_recx_direct'
     ).length;
+    console.log('[HM Funnel] Found', recxDirectRequests, 'RecX Direct requests');
 
     // Generate HTML email content
+    console.log('[HM Funnel] Generating email HTML...');
     const htmlContent = generateHiringManagerEmail(hiringManagerMetrics, recxDirectRequests);
 
     // Send via SendGrid
+    console.log('[HM Funnel] Sending email to', EMAIL_TO);
     const emailResponse = await fetch('https://api.sendgrid.com/v3/mail/send', {
       method: 'POST',
       headers: {
@@ -73,16 +108,26 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    console.log('[HM Funnel] Email sent successfully!');
     return NextResponse.json({
       success: true,
-      hiringManagerMetrics,
+      message: 'Hiring manager funnel email sent successfully',
+      hiringManagerMetrics: {
+        totalUsers: hiringManagerMetrics.totalUsers,
+        conversionRate: hiringManagerMetrics.conversionRate,
+        stageCount: hiringManagerMetrics.stages.length,
+      },
       recxDirectRequests,
       sentTo: EMAIL_TO
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error('[HM Funnel] Error:', error);
     return NextResponse.json(
-      { error: 'Failed to send hiring manager funnel email' },
+      { 
+        error: 'Failed to send hiring manager funnel email',
+        message: error.message,
+        stack: process.env.NODE_ENV === 'development' ? error.stack : undefined,
+      },
       { status: 500 }
     );
   }
