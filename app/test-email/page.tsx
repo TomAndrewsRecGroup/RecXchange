@@ -6,6 +6,7 @@ import { generateHowItWorksRecruiterEmail } from '@/lib/emails/templates/how-it-
 import { generateHowItWorksHiringManagerEmail } from '@/lib/emails/templates/how-it-works-hiring-manager';
 import { generateRecruiterFunnelEmail } from '@/lib/emails/templates/recruiter-funnel';
 import { generateHiringManagerFunnelEmail } from '@/lib/emails/templates/hiring-manager-funnel';
+import { INDUSTRY_ROLES } from '@/lib/emails/data/industry-roles';
 
 type EmailTemplate = 'match-candidate' | 'how-it-works-recruiter' | 'how-it-works-hiring-manager' | 'recruiter-funnel' | 'hiring-manager-funnel';
 
@@ -34,7 +35,24 @@ export default function TestEmailPage() {
     'match-candidate': {
       label: '3 Matching Roles',
       description: 'Shows 3 industry-specific roles with full details',
-      generator: (firstName, industries) => generateMatchCandidateEmail(firstName, industries || [])
+      generator: (firstName, industries) => {
+        const industryArray = industries || [];
+        // Get roles from first industry or default
+        const normalizedIndustries = industryArray.map(i => 
+          i.trim().charAt(0).toUpperCase() + i.trim().slice(1).toLowerCase()
+        );
+        let roles = INDUSTRY_ROLES['Default'];
+        for (const industry of normalizedIndustries) {
+          if (INDUSTRY_ROLES[industry]) {
+            roles = INDUSTRY_ROLES[industry];
+            break;
+          }
+        }
+        const industryText = normalizedIndustries.length > 0 
+          ? normalizedIndustries.join(' • ') 
+          : 'Technology';
+        return generateMatchCandidateEmail(firstName, roles, industryText);
+      }
     },
     'how-it-works-recruiter': {
       label: 'How It Works (Recruiter)',
