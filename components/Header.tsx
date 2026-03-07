@@ -16,7 +16,7 @@ export default function Header() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between">
 
           {/* Left: Logo */}
-          <Link href="/home" className="flex-shrink-0 z-[110] relative">
+          <Link href="/" className="flex-shrink-0 z-[110] relative">
             <Image
               src="https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Main-Logo-25.png"
               alt="RecXchange Logo"
@@ -30,7 +30,7 @@ export default function Header() {
 
           {/* Desktop Nav - Hidden on mobile/tablet */}
           <nav className="hidden lg:flex items-center gap-7">
-            <Link href="/home" className="text-sm text-gray-400 hover:text-cyan-400 transition-colors">Home</Link>
+            <Link href="/" className="text-sm text-gray-400 hover:text-cyan-400 transition-colors">Home</Link>
 
             {/* Recruiters Dropdown */}
             <div className="group relative py-4">
@@ -139,7 +139,7 @@ export default function Header() {
                 {/* Mobile Nav Links */}
                 <nav className="space-y-4">
                   <Link 
-                    href="/home" 
+                    href="/" 
                     className="block text-base font-medium text-gray-300 hover:text-cyan-400 transition-colors py-2"
                     onClick={() => setMobileMenuOpen(false)}
                   >
