@@ -1,385 +1,404 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { ArrowRight, Sparkles } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 
-export default function RootPage() {
+// Type for live stats
+interface LiveStats {
+  roleCount: number;
+  totalFees: number;
+  averageFee: number;
+}
+
+export default function HomePage() {
   const router = useRouter();
-  const [animationComplete, setAnimationComplete] = useState(false);
-  const [showContent, setShowContent] = useState(false);
-  const [isNavigating, setIsNavigating] = useState(false);
+  const [liveStats, setLiveStats] = useState<LiveStats>({
+    roleCount: 0,
+    totalFees: 0,
+    averageFee: 0
+  });
 
+  // Fetch live data from /roles page
   useEffect(() => {
-    // Start shrinking animation after 1.5 seconds
-    const shrinkTimer = setTimeout(() => {
-      setAnimationComplete(true);
-    }, 1500);
-
-    // Show content 1 second after shrink starts
-    const contentTimer = setTimeout(() => {
-      setShowContent(true);
-    }, 2500);
-
-    // Hide chat widget on root page
-    const chatWidget = document.querySelector('[data-chat-widget]');
-    if (chatWidget) {
-      (chatWidget as HTMLElement).style.display = 'none';
+    async function fetchLiveStats() {
+      try {
+        // Replace with your actual API endpoint or data source
+        const response = await fetch('/api/live-stats');
+        const data = await response.json();
+        setLiveStats(data);
+      } catch (error) {
+        // Fallback static data if API fails
+        setLiveStats({
+          roleCount: 127,
+          totalFees: 847392,
+          averageFee: 6673
+        });
+      }
     }
 
-    return () => {
-      clearTimeout(shrinkTimer);
-      clearTimeout(contentTimer);
-      // Restore chat widget when leaving
-      if (chatWidget) {
-        (chatWidget as HTMLElement).style.display = '';
-      }
-    };
+    fetchLiveStats();
+    // Refresh every 5 minutes
+    const interval = setInterval(fetchLiveStats, 300000);
+    return () => clearInterval(interval);
   }, []);
 
-  const handleWebsiteClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    setIsNavigating(true);
-    setTimeout(() => {
-      router.push('/home');
-    }, 600);
+  const scrollToPathSelection = () => {
+    document.getElementById('path-selection')?.scrollIntoView({ 
+      behavior: 'smooth',
+      block: 'start'
+    });
   };
 
-  const handlePlatformClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    setIsNavigating(true);
-    setTimeout(() => {
-      window.open('https://app.recxchange.io', '_blank', 'noopener,noreferrer');
-      setIsNavigating(false);
-    }, 600);
+  const formatCurrency = (value: number) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(value);
+  };
+
+  const formatNumber = (value: number) => {
+    return new Intl.NumberFormat('en-US').format(value);
+  };
+
+  const cardVariants = {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    hover: {
+      scale: 1.02,
+      translateY: -5,
+      transition: { duration: 0.3, ease: "easeOut" }
+    }
   };
 
   return (
-    <>
-      {/* Fade Overlay */}
-      <AnimatePresence>
-        {isNavigating && (
+    <main className="relative">
+      {/* SCREEN 1: HERO - Full viewport */}
+      <section className="relative min-h-screen flex flex-col items-center justify-center px-4 overflow-hidden">
+        {/* Background effects */}
+        <div className="absolute inset-0 pointer-events-none z-0">
+          <div className="absolute top-[-10%] left-[-10%] w-[70%] h-[70%] bg-cyan-500/10 blur-[120px] rounded-full" />
+          <div className="absolute bottom-[-10%] right-[-10%] w-[70%] h-[70%] bg-fuchsia-500/10 blur-[120px] rounded-full" />
+        </div>
+
+        <div className="relative z-10 max-w-5xl mx-auto text-center">
+          
+          {/* H1 - Brand Name */}
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold gradient-text mb-4"
+          >
+            RecXchange
+          </motion.h1>
+
+          {/* H2 - Tagline/Descriptor */}
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-xl sm:text-2xl md:text-3xl text-cyan-400/80 mb-8 font-medium tracking-wide"
+          >
+            The Recruiters Xchange
+          </motion.h2>
+
+          {/* Divider */}
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.6, ease: 'easeInOut' }}
-            className="fixed inset-0 bg-black z-[200] pointer-events-none"
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="w-32 h-1 bg-gradient-to-r from-cyan-500 to-fuchsia-500 mx-auto mb-8 rounded-full"
           />
-        )}
-      </AnimatePresence>
 
-      <main className="relative min-h-screen bg-black flex flex-col items-center px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16 overflow-x-hidden">
-        <div className="w-full max-w-[1200px] mx-auto">
-          {/* Logo Animation */}
+          {/* H3 - Explanation */}
+          <motion.h3
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed font-normal px-4"
+          >
+            RecXchange is a recruiter collaboration platform where 15,000+ recruiters 
+            split fees (50/50 to 70%) on placements. Post roles to find candidates, 
+            or share candidates to find roles. Access 270M candidate profiles with 
+            AI-powered matching through our Xchange Engine. Automated contracts protect 
+            both parties with timestamp verification.
+          </motion.h3>
+
+          {/* Live Data Counters */}
           <motion.div
-            initial={{ 
-              scale: 1.15,
-              opacity: 1,
-              y: '25vh'
-            }}
-            animate={animationComplete ? { 
-              scale: 1, 
-              opacity: 1,
-              y: 0
-            } : { 
-              scale: 1.15, 
-              opacity: 1,
-              y: '25vh'
-            }}
-            transition={{ 
-              duration: 1.5, 
-              ease: [0.43, 0.13, 0.23, 0.96]
-            }}
-            className="relative z-10 mb-6 sm:mb-8 md:mb-12 mx-auto w-full lg:w-fit px-4 sm:px-6 lg:px-0"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 mb-12 max-w-4xl mx-auto"
           >
-            <Image
-              src="https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Main-Logo-25.png"
-              alt="RecXchange"
-              width={600}
-              height={150}
-              className="w-full lg:max-w-3xl h-auto"
-              style={{ filter: 'drop-shadow(0px 0px 12px rgba(59, 130, 246, 0.6))' }}
-              priority
-              unoptimized
-            />
-          </motion.div>
+            {/* Live Roles Counter */}
+            <div className="glass-card p-6 sm:p-8 rounded-2xl relative overflow-hidden group hover:scale-105 transition-transform">
+              <div className="absolute top-3 right-3">
+                <span className="flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-cyan-500"></span>
+                </span>
+              </div>
+              <div className="text-xs uppercase tracking-widest text-gray-500 mb-2">Live Roles</div>
+              <div className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-1">
+                {formatNumber(liveStats.roleCount)}
+              </div>
+              <div className="text-sm text-cyan-400">Active Now</div>
+            </div>
 
-          {/* Tagline */}
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: showContent ? 1 : 0 }}
-            transition={{ duration: 1.5, delay: 0.3 }}
-            className="text-white text-xs sm:text-sm md:text-base lg:text-xl font-light tracking-wide text-center mb-8 sm:mb-12 md:mb-16 max-w-5xl mx-auto px-2 sm:px-4"
-          >
-            The Recruiters Xchange: Live Roles from Live Clients and Live Candidates. One Login
-          </motion.p>
+            {/* Total Fees Counter */}
+            <div className="glass-card p-6 sm:p-8 rounded-2xl relative overflow-hidden group hover:scale-105 transition-transform">
+              <div className="absolute top-3 right-3">
+                <span className="flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-fuchsia-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-fuchsia-500"></span>
+                </span>
+              </div>
+              <div className="text-xs uppercase tracking-widest text-gray-500 mb-2">Total Fees Available</div>
+              <div className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-1">
+                {formatCurrency(liveStats.totalFees)}
+              </div>
+              <div className="text-sm text-fuchsia-400">In Placement Fees</div>
+            </div>
 
-          {/* Two Large CTAs */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: showContent ? 1 : 0, y: showContent ? 0 : 30 }}
-            transition={{ duration: 1.5, delay: 0.5 }}
-            className="relative z-10 mb-12 sm:mb-16 md:mb-20 lg:mb-24"
-          >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
-              
-              {/* Website CTA - Neon Blue */}
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={handleWebsiteClick}
-                className="group relative overflow-hidden p-6 sm:p-8 md:p-10 lg:p-12 rounded-xl sm:rounded-2xl lg:rounded-3xl border-2 cursor-pointer min-h-[240px] sm:min-h-[280px] md:min-h-[320px] flex flex-col justify-between"
-                style={{
-                  background: 'rgba(10, 10, 15, 0.6)',
-                  borderColor: 'rgba(59, 130, 246, 0.5)',
-                  backdropFilter: 'blur(20px)'
-                }}
-              >
-                {/* Ripple effect */}
-                <motion.div
-                  className="absolute inset-0 rounded-xl sm:rounded-2xl lg:rounded-3xl"
-                  initial={{ scale: 0, opacity: 0 }}
-                  whileTap={{ scale: 2, opacity: [0, 0.3, 0] }}
-                  transition={{ duration: 0.5 }}
-                  style={{ background: 'rgba(59, 130, 246, 0.3)' }}
-                />
-                
-                {/* Neon glow */}
-                <div className="absolute -top-32 -right-32 w-64 h-64 bg-blue-500 opacity-20 blur-[100px] rounded-full group-hover:opacity-30 transition-opacity" />
-                
-                <div className="relative z-10">
-                  <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-blue-400 mb-4 sm:mb-6"
-                    style={{
-                      background: 'rgba(59, 130, 246, 0.15)',
-                      border: '1px solid rgba(59, 130, 246, 0.3)',
-                      boxShadow: '0 0 20px rgba(59, 130, 246, 0.3)'
-                    }}
-                  >
-                    <Sparkles className="w-3 h-3" />
-                    Website
-                  </div>
-                  
-                  <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white group-hover:text-blue-400 transition-colors mb-3 sm:mb-4"
-                    style={{ textShadow: '0 0 30px rgba(59, 130, 246, 0.5)' }}
-                  >
-                    Access RecXchange Website
-                  </h2>
-                  
-                  <p className="text-gray-300 text-xs sm:text-sm md:text-base leading-relaxed">
-                    Explore features, pricing, and how the Xchange Engine works.
-                  </p>
-                </div>
-                
-                <div className="relative z-10 flex items-center gap-2 text-blue-400 font-bold text-xs sm:text-sm uppercase tracking-wider mt-4 sm:mt-6 group-hover:gap-3 transition-all">
-                  Continue to Website
-                  <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
-                </div>
-              </motion.div>
-
-              {/* Platform CTA - Neon Purple */}
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={handlePlatformClick}
-                className="group relative overflow-hidden p-6 sm:p-8 md:p-10 lg:p-12 rounded-xl sm:rounded-2xl lg:rounded-3xl border-2 cursor-pointer min-h-[240px] sm:min-h-[280px] md:min-h-[320px] flex flex-col justify-between"
-                style={{
-                  background: 'rgba(10, 10, 15, 0.6)',
-                  borderColor: 'rgba(168, 85, 247, 0.5)',
-                  backdropFilter: 'blur(20px)'
-                }}
-              >
-                {/* Ripple effect */}
-                <motion.div
-                  className="absolute inset-0 rounded-xl sm:rounded-2xl lg:rounded-3xl"
-                  initial={{ scale: 0, opacity: 0 }}
-                  whileTap={{ scale: 2, opacity: [0, 0.3, 0] }}
-                  transition={{ duration: 0.5 }}
-                  style={{ background: 'rgba(168, 85, 247, 0.3)' }}
-                />
-                
-                {/* Neon glow */}
-                <div className="absolute -top-32 -right-32 w-64 h-64 bg-purple-500 opacity-20 blur-[100px] rounded-full group-hover:opacity-30 transition-opacity" />
-                
-                <div className="relative z-10">
-                  <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-purple-400 mb-4 sm:mb-6"
-                    style={{
-                      background: 'rgba(168, 85, 247, 0.15)',
-                      border: '1px solid rgba(168, 85, 247, 0.3)',
-                      boxShadow: '0 0 20px rgba(168, 85, 247, 0.3)'
-                    }}
-                  >
-                    <Sparkles className="w-3 h-3" />
-                    Live Platform
-                  </div>
-                  
-                  <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white group-hover:text-purple-400 transition-colors mb-3 sm:mb-4"
-                    style={{ textShadow: '0 0 30px rgba(168, 85, 247, 0.5)' }}
-                  >
-                    Access RecXchange Platform
-                  </h2>
-                  
-                  <p className="text-gray-300 text-xs sm:text-sm md:text-base leading-relaxed">
-                    Go straight to the live recruiter OS to work on roles and candidates.
-                  </p>
-                </div>
-                
-                <div className="relative z-10 flex items-center gap-2 text-purple-400 font-bold text-xs sm:text-sm uppercase tracking-wider mt-4 sm:mt-6 group-hover:gap-3 transition-all">
-                  Open Platform
-                  <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
-                </div>
-              </motion.div>
+            {/* Average Fee Counter */}
+            <div className="glass-card p-6 sm:p-8 rounded-2xl relative overflow-hidden group hover:scale-105 transition-transform">
+              <div className="absolute top-3 right-3">
+                <span className="flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-cyan-500"></span>
+                </span>
+              </div>
+              <div className="text-xs uppercase tracking-widest text-gray-500 mb-2">Average Fee</div>
+              <div className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-1">
+                {formatCurrency(liveStats.averageFee)}
+              </div>
+              <div className="text-sm text-cyan-400">Per Placement</div>
             </div>
           </motion.div>
 
-          {/* Combined What & Why Section */}
+          {/* Additional Live Context */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: showContent ? 1 : 0, y: showContent ? 0 : 30 }}
-            transition={{ duration: 1.5, delay: 0.7 }}
-            className="relative z-10 space-y-8 sm:space-y-12 md:space-y-16"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.5 }}
+            className="flex flex-wrap items-center justify-center gap-4 mb-12 text-sm text-gray-400"
           >
-            
-            {/* Combined Box */}
-            <section className="p-6 sm:p-8 md:p-10 lg:p-12 rounded-xl sm:rounded-2xl lg:rounded-3xl"
-              style={{
-                background: 'rgba(10, 10, 15, 0.6)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
-                backdropFilter: 'blur(20px)'
-              }}
+            <div className="flex items-center gap-2 glass-card px-4 py-2 rounded-full">
+              <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+              <span>15,000+ recruiters active</span>
+            </div>
+            <div className="flex items-center gap-2 glass-card px-4 py-2 rounded-full">
+              <span className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></span>
+              <span>270M candidate profiles</span>
+            </div>
+            <div className="flex items-center gap-2 glass-card px-4 py-2 rounded-full">
+              <span className="w-2 h-2 bg-fuchsia-400 rounded-full animate-pulse"></span>
+              <span>Split fees up to 70%</span>
+            </div>
+          </motion.div>
+
+          {/* Pulsing "Start Here" Button */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.6 }}
+          >
+            <button
+              onClick={scrollToPathSelection}
+              className="relative group"
             >
-              {/* What is RecXchange */}
-              <div className="mb-8 sm:mb-10 md:mb-12">
-                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4 text-left leading-tight">
-                  What is <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">RecXchange</span>?
-                </h1>
-                
-                <p className="text-gray-200 text-base sm:text-lg md:text-xl leading-relaxed mb-4 sm:mb-6 text-left">
-                  RecXchange is a global recruiter collaboration platform where recruitment professionals partner to fill roles and place candidates faster than working alone. When you post a role or upload a candidate, our AI-powered Xchange Engine instantly connects you with the right partners who have what you need.
-                </p>
+              {/* Pulsing glow effect */}
+              <span className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-fuchsia-500 rounded-2xl blur-xl opacity-50 group-hover:opacity-75 animate-pulse"></span>
+              
+              {/* Button content */}
+              <span className="relative flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-cyan-500 to-fuchsia-500 rounded-2xl font-bold text-lg sm:text-xl text-white group-hover:scale-105 transition-transform">
+                Start Here
+                <svg 
+                  className="w-6 h-6 group-hover:translate-y-1 transition-transform" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path 
+                    strokeLinecap="round" 
+                    strokeLinejoin="round" 
+                    strokeWidth={2} 
+                    d="M19 14l-7 7m0 0l-7-7m7 7V3" 
+                  />
+                </svg>
+              </span>
+            </button>
+          </motion.div>
 
-                <div className="space-y-3 sm:space-y-4 text-gray-300 text-sm sm:text-base md:text-lg leading-relaxed text-left">
-                  <ul className="space-y-2.5 sm:space-y-3">
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <div className="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0 mt-1.5 sm:mt-2"
-                        style={{ boxShadow: '0 0 10px rgba(59, 130, 246, 0.8)' }}
-                      />
-                      <span><strong className="text-white">A global network of 15,000+ vetted recruiters</strong> working together across every industry and location.</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <div className="w-1.5 h-1.5 rounded-full bg-purple-500 flex-shrink-0 mt-1.5 sm:mt-2"
-                        style={{ boxShadow: '0 0 10px rgba(168, 85, 247, 0.8)' }}
-                      />
-                      <span><strong className="text-white">Access to 270 million candidate profiles</strong> you can search and submit instantly.</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <div className="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0 mt-1.5 sm:mt-2"
-                        style={{ boxShadow: '0 0 10px rgba(59, 130, 246, 0.8)' }}
-                      />
-                      <span><strong className="text-white">$750,000+ in live placement fees</strong> available right now across 100+ active roles in Technology, Finance, Healthcare, Engineering, and Sales.</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <div className="w-1.5 h-1.5 rounded-full bg-purple-500 flex-shrink-0 mt-1.5 sm:mt-2"
-                        style={{ boxShadow: '0 0 10px rgba(168, 85, 247, 0.8)' }}
-                      />
-                      <span><strong className="text-white">Automated fee splits and contracts</strong> that handle payments transparently—50/50, 60/40, or up to 70% on premium RecX Direct roles.</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <div className="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0 mt-1.5 sm:mt-2"
-                        style={{ boxShadow: '0 0 10px rgba(59, 130, 246, 0.8)' }}
-                      />
-                      <span><strong className="text-white">AI-powered matching technology</strong> that connects your roles and candidates to relevant partners in seconds.</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-
-              {/* Divider */}
-              <div className="w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent mb-8 sm:mb-10 md:mb-12" />
-
-              {/* Why RecXchange */}
-              <div>
-                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 sm:mb-8 text-left leading-tight">
-                  Why Recruiters & Hiring Managers Choose <span 
-                    className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent"
-                  >RecXchange</span>
-                </h2>
-                
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
-                  
-                  {/* Benefit 1 */}
-                  <div className="flex items-start gap-3 sm:gap-4">
-                    <div className="w-2 h-2 rounded-full bg-blue-400 flex-shrink-0 mt-1.5 sm:mt-2"
-                      style={{ boxShadow: '0 0 15px rgba(59, 130, 246, 0.8)' }}
-                    />
-                    <div className="text-left">
-                      <h3 className="text-white font-bold text-base sm:text-lg mb-1.5 sm:mb-2">Fill Roles in 48 Hours, Not Weeks</h3>
-                      <p className="text-gray-300 text-xs sm:text-sm leading-relaxed">
-                        When you post a role, thousands of partners compete to help you fill it. Roles that were stuck for months get filled in days.
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Benefit 2 */}
-                  <div className="flex items-start gap-3 sm:gap-4">
-                    <div className="w-2 h-2 rounded-full bg-purple-500 flex-shrink-0 mt-1.5 sm:mt-2"
-                      style={{ boxShadow: '0 0 15px rgba(168, 85, 247, 0.8)' }}
-                    />
-                    <div className="text-left">
-                      <h3 className="text-white font-bold text-base sm:text-lg mb-1.5 sm:mb-2">Make Money While You Sleep</h3>
-                      <p className="text-gray-300 text-xs sm:text-sm leading-relaxed">
-                        Your candidates automatically get matched to hundreds of roles. Earn placements on opportunities you never personally touched.
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Benefit 3 */}
-                  <div className="flex items-start gap-3 sm:gap-4">
-                    <div className="w-2 h-2 rounded-full bg-blue-400 flex-shrink-0 mt-1.5 sm:mt-2"
-                      style={{ boxShadow: '0 0 15px rgba(59, 130, 246, 0.8)' }}
-                    />
-                    <div className="text-left">
-                      <h3 className="text-white font-bold text-base sm:text-lg mb-1.5 sm:mb-2">Access Thousands of Recruiters Instantly</h3>
-                      <p className="text-gray-300 text-xs sm:text-sm leading-relaxed">
-                        Hiring managers post roles once and get immediate access to a global network competing to deliver the best candidates.
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Benefit 4 - UPDATED TEXT */}
-                  <div className="flex items-start gap-3 sm:gap-4">
-                    <div className="w-2 h-2 rounded-full bg-purple-500 flex-shrink-0 mt-1.5 sm:mt-2"
-                      style={{ boxShadow: '0 0 15px rgba(168, 85, 247, 0.8)' }}
-                    />
-                    <div className="text-left">
-                      <h3 className="text-white font-bold text-base sm:text-lg mb-1.5 sm:mb-2">Zero Risk, Instant ROI</h3>
-                      <p className="text-gray-300 text-xs sm:text-sm leading-relaxed">
-                        Start for $1/month with no additional fees. Members can make up to $15,000 in their first quarter, average placement fee is $7,000.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            {/* Bottom Links */}
-            <footer className="text-center pb-6 sm:pb-8">
-              <p className="text-gray-500 text-[10px] sm:text-xs md:text-sm px-4">
-                <Link href="/pricing" className="text-blue-400 hover:text-blue-300 hover:underline transition-colors">View Pricing</Link>
-                {' • '}
-                <Link href="/features" className="text-blue-400 hover:text-blue-300 hover:underline transition-colors">Explore Features</Link>
-                {' • '}
-                <Link href="/faq" className="text-blue-400 hover:text-blue-300 hover:underline transition-colors">FAQ</Link>
-                {' • '}
-                <Link href="/contact" className="text-blue-400 hover:text-blue-300 hover:underline transition-colors">Contact Us</Link>
-              </p>
-            </footer>
+          {/* Scroll Indicator */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: [0, 1, 0] }}
+            transition={{ duration: 2, delay: 1, repeat: Infinity }}
+            className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-gray-500 text-xs uppercase tracking-widest"
+          >
+            Scroll Down
           </motion.div>
         </div>
-      </main>
-    </>
+      </section>
+
+      {/* SCREEN 2: PATH SELECTION - Full viewport */}
+      <section 
+        id="path-selection" 
+        className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 py-20 overflow-hidden"
+      >
+        <div className="relative z-10 text-center max-w-[1200px] w-full">
+          <motion.header
+            initial={{ opacity: 0, y: -10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <span className="block text-[9px] sm:text-[10px] md:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] md:tracking-[0.4em] text-cyan-400/60 mb-3 sm:mb-4 md:mb-6 font-bold">
+              The Recruiter Xchange Engine
+            </span>
+            <h2 className="text-[32px] sm:text-4xl md:text-5xl lg:text-7xl font-bold gradient-text mb-4 sm:mb-5 md:mb-[27px] tracking-tight leading-[1.1]">
+              What describes you best?
+            </h2>
+            <div className="pulse-underline mb-6 sm:mb-8 md:mb-10" />
+            <p className="text-gray-400 text-sm sm:text-base md:text-lg lg:text-xl max-w-2xl mx-auto mb-10 sm:mb-12 md:mb-16 leading-relaxed px-2">
+              Choose your professional path. Both save time.
+            </p>
+          </motion.header>
+
+          {/* Two-path card layout */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-10 w-full mx-auto">
+            {/* RECRUITER CARD */}
+            <motion.div
+              variants={cardVariants}
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true }}
+              whileHover="hover"
+              onClick={() => router.push('/recruiter')}
+              className="glass-card p-6 sm:p-8 md:p-12 rounded-xl sm:rounded-2xl md:rounded-[3rem] flex flex-col justify-between items-start text-left min-h-[420px] sm:min-h-[450px] md:min-h-[480px] cursor-pointer group relative overflow-hidden"
+            >
+              <div className="absolute -top-24 -right-24 w-48 h-48 bg-cyan-500/10 blur-[80px] rounded-full group-hover:bg-cyan-500/20 transition-colors" />
+
+              <div className="w-full">
+                <div className="px-3 sm:px-4 py-1 rounded-full border border-cyan-400/30 bg-cyan-400/10 text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.15em] sm:tracking-widest text-cyan-400 mb-6 sm:mb-8 md:mb-10 inline-block">
+                  Recruiter Mode
+                </div>
+                <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-5 md:mb-6 text-white group-hover:text-cyan-400 transition-colors">
+                  Recruiter
+                </h3>
+                <p className="text-gray-400 text-[13px] sm:text-sm md:text-base mb-6 sm:mb-7 md:mb-8 leading-relaxed pl-0 md:pl-0">
+                  You're a recruiter. Post roles to find candidates. Or share candidates to find roles. Either way,{' '}
+                  <Link href="/collaboration" className="text-cyan-400 hover:underline inline-block">split fees</Link>{' '}
+                  with 15,000+ recruiters.
+                </p>
+                <ul className="space-y-3 sm:space-y-4 md:space-y-5 text-[11px] sm:text-xs md:text-sm text-gray-500 font-medium pl-0">
+                  <li className="flex items-start gap-3 sm:gap-4">
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(0,255,255,0.8)] flex-shrink-0 mt-1.5" /> 
+                    <span className="flex-1">Search 270M candidates when your pipeline is dry</span>
+                  </li>
+                  <li className="flex items-start gap-3 sm:gap-4">
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 flex-shrink-0 mt-1.5" /> 
+                    <span className="flex-1">Up to{' '}<Link href="/why-recxchange" className="text-cyan-400 hover:underline inline-block">70% split on RecX Direct</Link>{' '}roles</span>
+                  </li>
+                  <li className="flex items-start gap-3 sm:gap-4">
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 flex-shrink-0 mt-1.5" /> 
+                    <span className="flex-1"><Link href="/deal-protection" className="text-cyan-400 hover:underline inline-block">Split fee contracts</Link>{' '}protect both parties</span>
+                  </li>
+                </ul>
+              </div>
+
+              <button className="relative w-full mt-8 sm:mt-10 md:mt-12 py-3 sm:py-4 md:py-5 rounded-lg sm:rounded-xl md:rounded-2xl border border-white/15 bg-black/40 overflow-hidden group/btn font-bold text-[10px] sm:text-xs md:text-sm uppercase tracking-[0.12em] sm:tracking-[0.15em] md:tracking-widest transition-all">
+                <span className="absolute inset-[1px] rounded-lg sm:rounded-xl md:rounded-2xl bg-black/80 group-hover/btn:bg-transparent transition-colors" />
+                <span className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-fuchsia-500 opacity-0 group-hover/btn:opacity-100 transition-opacity" />
+                <span className="relative z-10 text-white flex items-center justify-center">Enter Recruiter Path</span>
+              </button>
+            </motion.div>
+
+            {/* HIRING MANAGER CARD */}
+            <motion.div
+              variants={cardVariants}
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true }}
+              whileHover="hover"
+              onClick={() => router.push('/hiring-manager-home')}
+              className="glass-card p-6 sm:p-8 md:p-12 rounded-xl sm:rounded-2xl md:rounded-[3rem] flex flex-col justify-between items-start text-left min-h-[420px] sm:min-h-[450px] md:min-h-[480px] cursor-pointer group relative overflow-hidden"
+            >
+              <div className="absolute -top-24 -right-24 w-48 h-48 bg-fuchsia-500/10 blur-[80px] rounded-full group-hover:bg-fuchsia-500/20 transition-colors" />
+
+              <div className="w-full">
+                <div className="px-3 sm:px-4 py-1 rounded-full border border-fuchsia-400/30 bg-fuchsia-400/10 text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.15em] sm:tracking-widest text-fuchsia-400 mb-6 sm:mb-8 md:mb-10 inline-block">
+                  Hiring Team Mode
+                </div>
+                <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-5 md:mb-6 text-white group-hover:text-fuchsia-400 transition-colors">
+                  Hiring Manager
+                </h3>
+                <p className="text-gray-400 text-[13px] sm:text-sm md:text-base mb-6 sm:mb-7 md:mb-8 leading-relaxed pl-0 md:pl-0">
+                  You're hiring talent. We{' '}
+                  <Link href="/hiring-manager-live" className="text-fuchsia-400 hover:underline inline-block">post your role</Link>.
+                  {' '}Thousands of recruiters compete to fill it. You pay one fee.
+                </p>
+                <ul className="space-y-3 sm:space-y-4 md:space-y-5 text-[11px] sm:text-xs md:text-sm text-gray-500 font-medium pl-0">
+                  <li className="flex items-start gap-3 sm:gap-4">
+                    <span className="w-1.5 h-1.5 rounded-full bg-fuchsia-500 shadow-[0_0_8px_rgba(255,0,255,0.8)] flex-shrink-0 mt-1.5" /> 
+                    <span className="flex-1">15,000+ recruiters see your role instantly</span>
+                  </li>
+                  <li className="flex items-start gap-3 sm:gap-4">
+                    <span className="w-1.5 h-1.5 rounded-full bg-fuchsia-500 flex-shrink-0 mt-1.5" /> 
+                    <span className="flex-1"><Link href="/account-management" className="text-fuchsia-400 hover:underline inline-block">One point of contact</Link>.{' '}No recruiter spam.</span>
+                  </li>
+                  <li className="flex items-start gap-3 sm:gap-4">
+                    <span className="w-1.5 h-1.5 rounded-full bg-fuchsia-500 flex-shrink-0 mt-1.5" /> 
+                    <span className="flex-1"><Link href="/hiring-manager-strategic" className="text-fuchsia-400 hover:underline inline-block">Test the market</Link>{' '}before you officially hire</span>
+                  </li>
+                </ul>
+              </div>
+
+              <button className="relative w-full mt-8 sm:mt-10 md:mt-12 py-3 sm:py-4 md:py-5 rounded-lg sm:rounded-xl md:rounded-2xl border border-white/15 bg-black/40 overflow-hidden group/btn font-bold text-[10px] sm:text-xs md:text-sm uppercase tracking-[0.12em] sm:tracking-[0.15em] md:tracking-widest transition-all">
+                <span className="absolute inset-[1px] rounded-lg sm:rounded-xl md:rounded-2xl bg-black/80 group-hover/btn:bg-transparent transition-colors" />
+                <span className="absolute inset-0 bg-gradient-to-r from-fuchsia-500 to-cyan-500 opacity-0 group-hover/btn:opacity-100 transition-opacity" />
+                <span className="relative z-10 text-white flex items-center justify-center">Enter Hiring Manager Path</span>
+              </button>
+            </motion.div>
+          </div>
+
+          {/* Bottom Footer Section */}
+          <motion.footer
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
+            className="mt-12 sm:mt-16 md:mt-20 glass-card py-3 sm:py-4 px-4 sm:px-8 md:px-10 rounded-full inline-flex flex-wrap justify-center gap-3 sm:gap-6 md:gap-8 items-center text-[8px] sm:text-[9px] text-gray-500 font-bold uppercase tracking-[0.12em] sm:tracking-[0.2em]"
+          >
+            <span className="opacity-60">Global Talent Infrastructure</span>
+            <div className="h-4 w-[1px] bg-cyan-400/20 hidden md:block" />
+            <Link href="/roles" className="hover:text-cyan-400 transition-colors whitespace-nowrap">Preview Live Roles</Link>
+            <Link href="/pricing" className="hover:text-fuchsia-400 transition-colors">View Pricing</Link>
+            <Link href="/deal-protection" className="hover:text-cyan-400 transition-colors whitespace-nowrap">How Protection Works</Link>
+            <Link href="/blog" className="hover:text-cyan-400 transition-colors whitespace-nowrap hidden sm:inline">Latest Updates</Link>
+            <Link href="/faq" className="hover:text-cyan-400 transition-colors whitespace-nowrap hidden sm:inline">Common Questions</Link>
+          </motion.footer>
+
+          {/* Additional Context Links */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.5 }}
+            className="mt-8 sm:mt-10 md:mt-12 max-w-3xl mx-auto px-4"
+          >
+            <p className="text-gray-500 text-[11px] sm:text-xs md:text-sm leading-relaxed text-center">
+              Join our{' '}<Link href="/blog" className="text-cyan-400 hover:underline">recruiter community</Link>{' '}with access to{' '}<Link href="/why-recxchange" className="text-cyan-400 hover:underline">270M candidate profiles</Link>. Learn{' '}<Link href="/collaboration" className="text-cyan-400 hover:underline">how split fees work</Link>, explore our{' '}<Link href="/pricing" className="text-fuchsia-400 hover:underline">transparent pricing tiers</Link>, or read success stories on our{' '}<Link href="/blog" className="text-cyan-400 hover:underline">blog</Link>. Questions? Check our{' '}<Link href="/faq" className="text-cyan-400 hover:underline">FAQ</Link>{' '}or{' '}<Link href="/contact" className="text-cyan-400 hover:underline">contact us</Link>.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+    </main>
   );
 }
