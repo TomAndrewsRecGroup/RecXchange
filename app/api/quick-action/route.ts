@@ -223,7 +223,7 @@ export async function POST(request: NextRequest) {
 
     // 5. Track analytics event
     try {
-      trackEvent('quick_action_submitted', {
+      trackEvent('quick_action_form_submitted', {
         action_type: actionType,
         source: sanitizedSource,
         industries: sanitizedIndustries.join(', '),
