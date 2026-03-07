@@ -173,10 +173,11 @@ export async function POST(request: NextRequest) {
 
     // 5. Track analytics event
     try {
-      trackEvent('how_it_works_requested', {
+      trackEvent('quick_action_form_submitted', {
         company_name: sanitizedCompany || 'not provided',
         page: '/hiring-manager-home',
-        user_type: 'hiring_manager',
+        persona: 'hiring-manager',
+        form_type: 'how-it-works',
       }, { bypassConsent: true });
     } catch (error) {
       console.error('[How It Works] Failed to track event:', error);
