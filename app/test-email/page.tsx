@@ -114,7 +114,7 @@ export default function TestEmailPage() {
     }
   };
 
-  const testQuickAction = async (actionType: 'match_candidate' | 'explain_recx_direct', key: 'qa3roles' | 'qaRecruiterRecx' | 'qaHmRecx', userType: string) => {
+  const testQuickAction = async (actionType: 'match_candidate' | 'explain_recx_direct' | 'explain_recx_direct_hm', key: 'qa3roles' | 'qaRecruiterRecx' | 'qaHmRecx', userType: string) => {
     const emailToUse = testEmail.trim() || undefined;
     
     if (!emailToUse) {
@@ -403,16 +403,24 @@ export default function TestEmailPage() {
                 )}
               </div>
 
-              {/* RecX Direct Explainer (Hiring Manager) - PLACEHOLDER */}
-              <div className="bg-white/5 backdrop-blur-md border border-orange-500/30 rounded-xl p-4 opacity-50">
-                <h3 className="text-lg font-semibold mb-2 text-orange-400">📧 "Email me the explainer" (Hiring Manager) - COMING SOON</h3>
-                <p className="text-gray-400 text-xs mb-3">Template: <strong>how-it-works-hiring-manager.ts</strong> - Will be wired up when hiring manager quick actions are added</p>
+              {/* RecX Direct Explainer (Hiring Manager) - NOW WIRED UP */}
+              <div className="bg-white/5 backdrop-blur-md border border-orange-500/30 rounded-xl p-4">
+                <h3 className="text-lg font-semibold mb-2 text-orange-400">📧 "Email me the explainer" (Hiring Manager)</h3>
+                <p className="text-gray-400 text-xs mb-3">Template: <strong>how-it-works-hiring-manager.ts</strong> - Hiring Manager quick action from /hiring-manager pages</p>
                 <button
-                  disabled
-                  className="w-full bg-gray-600/50 border border-gray-500/30 text-white/50 text-sm font-semibold py-3 px-4 rounded-lg cursor-not-allowed"
+                  onClick={() => testQuickAction('explain_recx_direct_hm', 'qaHmRecx', 'RecX Direct explainer (Hiring Manager)')}
+                  disabled={loading.qaHmRecx}
+                  className="w-full bg-gradient-to-r from-orange-500/80 to-orange-600/80 backdrop-blur-md hover:from-orange-500 hover:to-orange-600 disabled:from-gray-600/50 disabled:to-gray-600/50 border border-orange-400/30 text-white text-sm font-semibold py-3 px-4 rounded-lg transition-all duration-300 shadow-xl hover:shadow-orange-500/50 hover:scale-[1.02] disabled:cursor-not-allowed disabled:hover:scale-100"
                 >
-                  Not Yet Configured
+                  {loading.qaHmRecx ? 'Sending...' : 'Send Test Email'}
                 </button>
+                {results.qaHmRecx && (
+                  <div className="bg-black/50 backdrop-blur-lg border border-orange-500/20 p-3 rounded-lg shadow-lg mt-3">
+                    <pre className="text-xs overflow-auto">
+                      {JSON.stringify(results.qaHmRecx, null, 2)}
+                    </pre>
+                  </div>
+                )}
               </div>
             </div>
           </div>
