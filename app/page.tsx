@@ -104,22 +104,20 @@ export default function HomePage() {
           
           {/* Floating energy orbs */}
           <motion.div 
-            style={{ y: y1 }}
-            className="absolute top-[-15%] left-[5%] w-[50%] h-[50%] rounded-full"
-            style={{
+            style={{ 
+              y: y1,
               background: 'radial-gradient(circle, rgba(0,240,255,0.15) 0%, rgba(0,240,255,0.05) 40%, transparent 70%)',
-              filter: 'blur(60px)',
-              animation: 'float 8s ease-in-out infinite'
+              filter: 'blur(60px)'
             }}
+            className="absolute top-[-15%] left-[5%] w-[50%] h-[50%] rounded-full animate-float"
           />
           <motion.div 
-            style={{ y: y2 }}
-            className="absolute bottom-[-15%] right-[5%] w-[50%] h-[50%] rounded-full"
-            style={{
+            style={{ 
+              y: y2,
               background: 'radial-gradient(circle, rgba(255,0,255,0.15) 0%, rgba(255,0,255,0.05) 40%, transparent 70%)',
-              filter: 'blur(60px)',
-              animation: 'float-delayed 8s ease-in-out infinite 2s'
+              filter: 'blur(60px)'
             }}
+            className="absolute bottom-[-15%] right-[5%] w-[50%] h-[50%] rounded-full animate-float-delayed"
           />
           
           {/* Scan line effect */}
@@ -678,6 +676,8 @@ export default function HomePage() {
           50% { opacity: 0.5; }
         }
         .animate-scan { animation: scan 4s linear infinite; }
+        .animate-float { animation: float 8s ease-in-out infinite; }
+        .animate-float-delayed { animation: float-delayed 8s ease-in-out infinite 2s; }
         .animate-pulse-slow { animation: pulse-slow 3s ease-in-out infinite; }
       `}</style>
     </main>
