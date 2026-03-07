@@ -1,15 +1,8 @@
 "use client";
 
-import { usePathname } from 'next/navigation';
 import Header from '@/components/Header';
 
 export default function ConditionalHeader() {
-  const pathname = usePathname();
-  
-  // Hide header on root page only
-  if (pathname === '/') {
-    return null;
-  }
-  
+  // Always show header now, including on homepage
   return <Header />;
 }
