@@ -1,6 +1,13 @@
 'use client';
 
 import { useState } from 'react';
+import { generateMatchCandidateEmail } from '@/lib/emails/templates/match-candidate';
+import { generateHowItWorksRecruiterEmail } from '@/lib/emails/templates/how-it-works-recruiter';
+import { generateHowItWorksHiringManagerEmail } from '@/lib/emails/templates/how-it-works-hiring-manager';
+import { generateRecruiterFunnelEmail } from '@/lib/emails/templates/recruiter-funnel';
+import { generateHiringManagerFunnelEmail } from '@/lib/emails/templates/hiring-manager-funnel';
+
+type EmailTemplate = 'match-candidate' | 'how-it-works-recruiter' | 'how-it-works-hiring-manager' | 'recruiter-funnel' | 'hiring-manager-funnel';
 
 export default function TestEmailPage() {
   const [loading, setLoading] = useState({ 
@@ -18,6 +25,44 @@ export default function TestEmailPage() {
     qaHmRecx: null,
   });
   const [testEmail, setTestEmail] = useState('');
+  const [showPreview, setShowPreview] = useState(false);
+  const [previewTemplate, setPreviewTemplate] = useState<EmailTemplate>('match-candidate');
+  const [previewFirstName, setPreviewFirstName] = useState('Tom');
+  const [previewIndustries, setPreviewIndustries] = useState('Technology,Finance');
+
+  const templates: Record<EmailTemplate, { label: string; description: string; generator: (firstName: string, industries?: string[]) => string }> = {
+    'match-candidate': {
+      label: '3 Matching Roles',
+      description: 'Shows 3 industry-specific roles with full details',
+      generator: (firstName, industries) => generateMatchCandidateEmail(firstName, industries || [])
+    },
+    'how-it-works-recruiter': {
+      label: 'How It Works (Recruiter)',
+      description: 'Complete RecXchange explainer for recruiters',
+      generator: (firstName) => generateHowItWorksRecruiterEmail(firstName)
+    },
+    'how-it-works-hiring-manager': {
+      label: 'How It Works (Hiring Manager)',
+      description: 'Platform benefits for hiring managers/clients',
+      generator: (firstName) => generateHowItWorksHiringManagerEmail(firstName)
+    },
+    'recruiter-funnel': {
+      label: 'Recruiter Onboarding',
+      description: 'Welcome and onboarding email for new recruiters',
+      generator: (firstName) => generateRecruiterFunnelEmail(firstName)
+    },
+    'hiring-manager-funnel': {
+      label: 'Hiring Manager Onboarding',
+      description: 'Welcome and onboarding email for new clients',
+      generator: (firstName) => generateHiringManagerFunnelEmail(firstName)
+    }
+  };
+
+  const getPreviewHTML = () => {
+    const template = templates[previewTemplate];
+    const industryArray = previewIndustries.split(',').map(i => i.trim()).filter(Boolean);
+    return template.generator(previewFirstName, industryArray);
+  };
 
   const testRecruiterEmail = async () => {
     setLoading({ ...loading, recruiter: true });
@@ -32,7 +77,7 @@ export default function TestEmailPage() {
       setResults({ ...results, recruiter: { success: response.ok, status: response.status, data } });
       
       if (response.ok) {
-        alert('✅ Recruiter email sent successfully! Check your inbox.');
+        alert('✅ Recruiter funnel analytics email sent successfully! Check your inbox.');
       } else {
         alert(`❌ Failed: ${data.error || 'Unknown error'}`);
       }
@@ -57,7 +102,7 @@ export default function TestEmailPage() {
       setResults({ ...results, hm: { success: response.ok, status: response.status, data } });
       
       if (response.ok) {
-        alert('✅ Hiring Manager email sent successfully! Check your inbox.');
+        alert('✅ Hiring Manager funnel analytics email sent successfully! Check your inbox.');
       } else {
         alert(`❌ Failed: ${data.error || 'Unknown error'}`);
       }
@@ -121,24 +166,128 @@ export default function TestEmailPage() {
     }
   };
 
+  if (showPreview) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-[#0a0a0a] via-[#1a1a2e] to-[#0a0a0a] text-white p-8">
+        <div className="max-width-7xl mx-auto">
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+                📧 Email Template Preview
+              </h1>
+              <p className="text-gray-400 text-sm mt-2">Live preview of quick action email templates</p>
+            </div>
+            <button
+              onClick={() => setShowPreview(false)}
+              className="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-6 py-3 rounded-lg transition-all"
+            >
+              ← Back to Tests
+            </button>
+          </div>
+
+          <div className="grid grid-cols-[300px_1fr] gap-8">
+            {/* Left Sidebar */}
+            <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-6 h-fit sticky top-8">
+              <h3 className="text-lg font-semibold mb-4">Select Template</h3>
+              
+              {Object.entries(templates).map(([key, { label, description }]) => (
+                <button
+                  key={key}
+                  onClick={() => setPreviewTemplate(key as EmailTemplate)}
+                  className={`w-full text-left p-4 mb-3 rounded-xl transition-all ${
+                    previewTemplate === key
+                      ? 'bg-gradient-to-r from-cyan-500 to-purple-500 border-0'
+                      : 'bg-white/5 border border-white/10 hover:bg-white/10'
+                  }`}
+                >
+                  <div className="font-semibold text-sm mb-1">{label}</div>
+                  <div className={`text-xs ${previewTemplate === key ? 'text-white/90' : 'text-gray-400'}`}>
+                    {description}
+                  </div>
+                </button>
+              ))}
+
+              <div className="mt-6 pt-6 border-t border-white/10">
+                <h3 className="text-sm font-semibold mb-4">Customization</h3>
+                
+                <label className="block mb-4">
+                  <span className="text-xs text-gray-400 font-semibold mb-2 block">First Name</span>
+                  <input
+                    type="text"
+                    value={previewFirstName}
+                    onChange={(e) => setPreviewFirstName(e.target.value)}
+                    className="w-full px-3 py-2 bg-black/50 border border-white/20 rounded-lg text-white text-sm"
+                  />
+                </label>
+
+                {previewTemplate === 'match-candidate' && (
+                  <label className="block mb-4">
+                    <span className="text-xs text-gray-400 font-semibold mb-2 block">Industries (comma-separated)</span>
+                    <input
+                      type="text"
+                      value={previewIndustries}
+                      onChange={(e) => setPreviewIndustries(e.target.value)}
+                      placeholder="Technology,Finance,Healthcare"
+                      className="w-full px-3 py-2 bg-black/50 border border-white/20 rounded-lg text-white text-sm"
+                    />
+                  </label>
+                )}
+
+                <button
+                  onClick={() => {
+                    const html = getPreviewHTML();
+                    navigator.clipboard.writeText(html);
+                    alert('✅ HTML copied to clipboard!');
+                  }}
+                  className="w-full bg-white/5 hover:bg-white/10 border border-white/20 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all"
+                >
+                  📋 Copy HTML
+                </button>
+              </div>
+            </div>
+
+            {/* Right Preview */}
+            <div className="bg-white rounded-2xl overflow-hidden shadow-2xl">
+              <iframe
+                srcDoc={getPreviewHTML()}
+                className="w-full h-[85vh] border-0"
+                title="Email Preview"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0a0a0a] via-[#1a1a2e] to-[#0a0a0a] text-white p-8">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
-          Email Test Page
-        </h1>
-        <p className="text-gray-400 mb-8 text-sm">Test all weekly funnel emails and quick action auto-responses</p>
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+              Email Test Page
+            </h1>
+            <p className="text-gray-400 mb-8 text-sm">Test all weekly funnel emails and quick action auto-responses</p>
+          </div>
+          <button
+            onClick={() => setShowPreview(true)}
+            className="bg-gradient-to-r from-purple-500 to-cyan-500 hover:from-purple-600 hover:to-cyan-600 border-0 text-white px-6 py-3 rounded-lg font-semibold transition-all shadow-lg hover:shadow-purple-500/30 hover:scale-105"
+          >
+            👁️ Preview Email Templates
+          </button>
+        </div>
         
         <div className="space-y-6">
           {/* Weekly Funnel Emails */}
           <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-6 shadow-2xl">
-            <h2 className="text-2xl font-semibold mb-4 text-white">📊 Weekly Funnel Emails</h2>
-            <p className="text-gray-400 text-sm mb-6">These are sent automatically every Monday at 9am UTC</p>
+            <h2 className="text-2xl font-semibold mb-4 text-white">📊 Weekly Funnel Analytics Emails</h2>
+            <p className="text-gray-400 text-sm mb-6">These are sent automatically every Monday at 9am UTC to {process.env.NEXT_PUBLIC_FUNNEL_EMAIL_TO || 'your analytics email'}</p>
             
             <div className="grid md:grid-cols-2 gap-4">
               {/* Recruiter Email */}
               <div className="bg-white/5 backdrop-blur-md border border-cyan-500/30 rounded-xl p-4">
-                <h3 className="text-lg font-semibold mb-3 text-cyan-400">💼 Recruiter Funnel</h3>
+                <h3 className="text-lg font-semibold mb-3 text-cyan-400">💼 Recruiter Funnel Analytics</h3>
                 <div className="space-y-3">
                   <button
                     onClick={() => checkHealth('/api/analytics/email-recruiter-funnel')}
@@ -165,7 +314,7 @@ export default function TestEmailPage() {
 
               {/* Hiring Manager Email */}
               <div className="bg-white/5 backdrop-blur-md border border-purple-500/30 rounded-xl p-4">
-                <h3 className="text-lg font-semibold mb-3 text-purple-400">📋 Hiring Manager Funnel</h3>
+                <h3 className="text-lg font-semibold mb-3 text-purple-400">📋 Hiring Manager Funnel Analytics</h3>
                 <div className="space-y-3">
                   <button
                     onClick={() => checkHealth('/api/analytics/email-hiring-manager-funnel')}
@@ -217,7 +366,7 @@ export default function TestEmailPage() {
               {/* Send 3 Roles */}
               <div className="bg-white/5 backdrop-blur-md border border-green-500/30 rounded-xl p-4">
                 <h3 className="text-lg font-semibold mb-2 text-green-400">📧 "Send me 3 matching roles"</h3>
-                <p className="text-gray-400 text-xs mb-3">Recruiter quick action from /recruiters-with-candidates</p>
+                <p className="text-gray-400 text-xs mb-3">Template: <strong>match-candidate.ts</strong> - Recruiter quick action from /recruiters-with-candidates</p>
                 <button
                   onClick={() => testQuickAction('match_candidate', 'qa3roles', '3 matching roles')}
                   disabled={loading.qa3roles}
@@ -237,7 +386,7 @@ export default function TestEmailPage() {
               {/* RecX Direct Explainer (Recruiter) */}
               <div className="bg-white/5 backdrop-blur-md border border-yellow-500/30 rounded-xl p-4">
                 <h3 className="text-lg font-semibold mb-2 text-yellow-400">📧 "Email me the explainer" (Recruiter)</h3>
-                <p className="text-gray-400 text-xs mb-3">Recruiter RecX Direct request from /recruiter-roles or /pricing</p>
+                <p className="text-gray-400 text-xs mb-3">Template: <strong>how-it-works-recruiter.ts</strong> - Recruiter RecX Direct request from /recruiter-roles or /pricing</p>
                 <button
                   onClick={() => testQuickAction('explain_recx_direct', 'qaRecruiterRecx', 'RecX Direct explainer (Recruiter)')}
                   disabled={loading.qaRecruiterRecx}
@@ -254,24 +403,16 @@ export default function TestEmailPage() {
                 )}
               </div>
 
-              {/* RecX Direct Explainer (Hiring Manager) */}
-              <div className="bg-white/5 backdrop-blur-md border border-orange-500/30 rounded-xl p-4">
-                <h3 className="text-lg font-semibold mb-2 text-orange-400">📧 "Email me the explainer" (Hiring Manager)</h3>
-                <p className="text-gray-400 text-xs mb-3">Hiring Manager RecX Direct request from /hiring-manager</p>
+              {/* RecX Direct Explainer (Hiring Manager) - PLACEHOLDER */}
+              <div className="bg-white/5 backdrop-blur-md border border-orange-500/30 rounded-xl p-4 opacity-50">
+                <h3 className="text-lg font-semibold mb-2 text-orange-400">📧 "Email me the explainer" (Hiring Manager) - COMING SOON</h3>
+                <p className="text-gray-400 text-xs mb-3">Template: <strong>how-it-works-hiring-manager.ts</strong> - Will be wired up when hiring manager quick actions are added</p>
                 <button
-                  onClick={() => testQuickAction('explain_recx_direct', 'qaHmRecx', 'RecX Direct explainer (Hiring Manager)')}
-                  disabled={loading.qaHmRecx}
-                  className="w-full bg-gradient-to-r from-orange-500/80 to-orange-600/80 backdrop-blur-md hover:from-orange-500 hover:to-orange-600 disabled:from-gray-600/50 disabled:to-gray-600/50 border border-orange-400/30 text-white text-sm font-semibold py-3 px-4 rounded-lg transition-all duration-300 shadow-xl hover:shadow-orange-500/50 hover:scale-[1.02] disabled:cursor-not-allowed disabled:hover:scale-100"
+                  disabled
+                  className="w-full bg-gray-600/50 border border-gray-500/30 text-white/50 text-sm font-semibold py-3 px-4 rounded-lg cursor-not-allowed"
                 >
-                  {loading.qaHmRecx ? 'Sending...' : 'Send Test Email'}
+                  Not Yet Configured
                 </button>
-                {results.qaHmRecx && (
-                  <div className="bg-black/50 backdrop-blur-lg border border-orange-500/20 p-3 rounded-lg shadow-lg mt-3">
-                    <pre className="text-xs overflow-auto">
-                      {JSON.stringify(results.qaHmRecx, null, 2)}
-                    </pre>
-                  </div>
-                )}
               </div>
             </div>
           </div>
@@ -280,6 +421,7 @@ export default function TestEmailPage() {
           <div className="bg-gradient-to-br from-blue-500/20 to-blue-600/20 backdrop-blur-xl border border-blue-500/40 rounded-2xl p-6 shadow-2xl shadow-blue-500/10">
             <h3 className="text-lg font-semibold mb-2 text-blue-400">ℹ️ How to Test</h3>
             <ol className="list-decimal list-inside space-y-2 text-sm text-gray-300">
+              <li><strong>Preview Templates:</strong> Click "Preview Email Templates" button to see live rendered HTML of all quick action emails</li>
               <li><strong>Weekly Funnel Emails:</strong> These go to your FUNNEL_EMAIL_TO address automatically. Just click "Send Test Email".</li>
               <li><strong>Quick Action Emails:</strong> Enter your email in the input field above, then click the test buttons.</li>
               <li>Check "Health" buttons first to verify endpoints work (no email sent).</li>
