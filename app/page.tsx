@@ -156,18 +156,23 @@ export default function HomePage() {
             </div>
           </motion.div>
           
-          {/* H1 - White to match header logo */}
+          {/* H1 - White with larger X */}
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black mb-4 text-white tracking-tight"
+            className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black mb-4 text-white tracking-tight flex items-center justify-center"
             style={{
               textShadow: '0 0 60px rgba(0,240,255,0.3), 0 0 100px rgba(255,0,255,0.2)',
               letterSpacing: '-0.02em'
             }}
           >
-            RecXchange
+            <span>Rec</span>
+            <span className="inline-block" style={{ 
+              fontSize: 'calc(1em + 2px)',
+              margin: '0 -0.02em'
+            }}>X</span>
+            <span>change</span>
           </motion.h1>
 
           {/* H2 - Holographic subtitle */}
@@ -252,7 +257,7 @@ export default function HomePage() {
                 </div>
                 
                 <div className="text-[8px] sm:text-[10px] uppercase tracking-[0.15em] sm:tracking-[0.2em] font-bold text-cyan-400/80 mb-1 sm:mb-2">ROLES</div>
-                <div className="text-2xl sm:text-4xl md:text-5xl font-black text-white mb-0.5 sm:mb-1 group-hover:text-cyan-300 transition-colors" style={{
+                <div className="text-xl sm:text-3xl md:text-4xl font-black text-white mb-0.5 sm:mb-1 group-hover:text-cyan-300 transition-colors leading-none" style={{
                   fontVariantNumeric: 'tabular-nums',
                   textShadow: '0 0 20px rgba(0,240,255,0.4)'
                 }}>
@@ -288,7 +293,7 @@ export default function HomePage() {
                 </div>
                 
                 <div className="text-[8px] sm:text-[10px] uppercase tracking-[0.15em] sm:tracking-[0.2em] font-bold text-fuchsia-400/80 mb-1 sm:mb-2">FEES</div>
-                <div className="text-xl sm:text-3xl md:text-4xl font-black text-white mb-0.5 sm:mb-1 group-hover:text-fuchsia-300 transition-colors" style={{
+                <div className="text-base sm:text-2xl md:text-3xl font-black text-white mb-0.5 sm:mb-1 group-hover:text-fuchsia-300 transition-colors leading-none" style={{
                   fontVariantNumeric: 'tabular-nums',
                   textShadow: '0 0 20px rgba(255,0,255,0.4)'
                 }}>
@@ -323,7 +328,7 @@ export default function HomePage() {
                 </div>
                 
                 <div className="text-[8px] sm:text-[10px] uppercase tracking-[0.15em] sm:tracking-[0.2em] font-bold text-purple-400/80 mb-1 sm:mb-2">AVG</div>
-                <div className="text-2xl sm:text-4xl md:text-5xl font-black text-white mb-0.5 sm:mb-1 group-hover:text-purple-300 transition-colors" style={{
+                <div className="text-xl sm:text-3xl md:text-4xl font-black text-white mb-0.5 sm:mb-1 group-hover:text-purple-300 transition-colors leading-none" style={{
                   fontVariantNumeric: 'tabular-nums',
                   textShadow: '0 0 20px rgba(168,85,247,0.4)'
                 }}>
