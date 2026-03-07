@@ -856,14 +856,14 @@ const ACTION_CONFIG = {
 export async function POST(request: NextRequest) {
   const ip = getClientIP(request);
   
-  // Rate limiting check
-  const rateLimitResult = checkRateLimit(ip, 'quick-action');
-  if (!rateLimitResult.allowed) {
+  // Rate limiting check - using 'form' type as this is a form submission
+  const rateLimitResult = checkRateLimit(ip, 'form');
+  if (!rateLimitResult.success) {
     return NextResponse.json(
       { 
         success: false, 
         error: 'Too many requests. Please try again later.',
-        retryAfter: rateLimitResult.retryAfter 
+        retryAfter: rateLimitResult.resetIn 
       },
       { status: 429, headers: getSecurityHeaders() }
     );
