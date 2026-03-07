@@ -10,6 +10,7 @@ import {
 import { generateMatchCandidateEmail } from '@/lib/emails/templates/match-candidate-email';
 import { generateHowItWorksRecruiterEmail } from '@/lib/emails/templates/how-it-works-recruiter';
 import { generateHowItWorksHiringManagerEmail } from '@/lib/emails/templates/how-it-works-hiring-manager';
+import { type Role, INDUSTRY_ROLES } from '@/lib/emails/data/industry-roles';
 
 interface QuickActionRequest {
   firstName: string;
@@ -19,6 +20,40 @@ interface QuickActionRequest {
   source: string;
   industries?: string[];
   marketingConsent?: boolean;
+}
+
+/**
+ * Helper function to select 3 roles based on provided industries
+ */
+function selectRoles(industries: string[]): { roles: Role[], industryText: string } {
+  // Normalize industry names
+  const normalizedIndustries = industries.map(i => 
+    i.trim().charAt(0).toUpperCase() + i.trim().slice(1).toLowerCase()
+  );
+  
+  // Try to get roles from first valid industry, fallback to Default
+  let selectedIndustry = 'Default';
+  let roles: Role[] = [];
+  
+  for (const industry of normalizedIndustries) {
+    if (INDUSTRY_ROLES[industry]) {
+      selectedIndustry = industry;
+      roles = INDUSTRY_ROLES[industry];
+      break;
+    }
+  }
+  
+  // Fallback to Default if no match
+  if (roles.length === 0) {
+    roles = INDUSTRY_ROLES['Default'];
+  }
+  
+  // Generate industry text
+  const industryText = normalizedIndustries.length > 0 
+    ? normalizedIndustries.join(' • ') 
+    : 'Technology';
+  
+  return { roles, industryText };
 }
 
 /**
@@ -152,7 +187,8 @@ export async function POST(request: NextRequest) {
         let subject = '';
         
         if (actionType === 'match_candidate') {
-          emailHTML = generateMatchCandidateEmail(sanitizedFirstName, sanitizedIndustries);
+          const { roles, industryText } = selectRoles(sanitizedIndustries);
+          emailHTML = generateMatchCandidateEmail(sanitizedFirstName, roles, industryText);
           subject = 'Your 3 Matching Roles from RecXchange';
         } else if (actionType === 'explain_recx_direct') {
           emailHTML = generateHowItWorksRecruiterEmail(sanitizedFirstName);
