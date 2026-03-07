@@ -124,12 +124,6 @@ export default function HomePage() {
           <div className="absolute inset-0 opacity-10">
             <div className="absolute w-full h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-scan" />
           </div>
-          
-          {/* Corner brackets */}
-          <div className="absolute top-24 left-4 w-12 h-12 border-l-2 border-t-2 border-cyan-400/30" />
-          <div className="absolute top-24 right-4 w-12 h-12 border-r-2 border-t-2 border-fuchsia-400/30" />
-          <div className="absolute bottom-24 left-4 w-12 h-12 border-l-2 border-b-2 border-cyan-400/30" />
-          <div className="absolute bottom-24 right-4 w-12 h-12 border-r-2 border-b-2 border-fuchsia-400/30" />
         </div>
 
         <div className="relative z-10 max-w-5xl mx-auto text-center" style={{ perspective: '1000px' }}>
@@ -229,7 +223,7 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.5 }}
-            className="grid grid-cols-3 gap-4 mb-10 max-w-4xl mx-auto"
+            className="grid grid-cols-3 gap-3 sm:gap-4 mb-10 max-w-4xl mx-auto"
             style={{ perspective: '1000px' }}
           >
             {/* Live Roles Panel */}
@@ -242,33 +236,29 @@ export default function HomePage() {
               <div className="absolute -inset-1 bg-gradient-to-br from-cyan-500/40 via-cyan-600/30 to-cyan-500/40 rounded-2xl blur-xl opacity-50 group-hover:opacity-80 transition duration-300" />
               
               {/* Main panel */}
-              <div className="relative backdrop-blur-xl bg-black/40 p-4 sm:p-5 rounded-2xl border border-cyan-400/40 group-hover:border-cyan-300/60 transition-all duration-300 overflow-hidden"
+              <div className="relative backdrop-blur-xl bg-black/40 p-3 sm:p-5 rounded-2xl border border-cyan-400/40 group-hover:border-cyan-300/60 transition-all duration-300 overflow-hidden"
                 style={{
                   boxShadow: '0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(0,240,255,0.2), 0 0 40px rgba(0,240,255,0.1)'
                 }}
               >
-                {/* Corner accents */}
-                <div className="absolute top-2 right-2 w-4 h-4 border-r border-t border-cyan-400/60" />
-                <div className="absolute bottom-2 left-2 w-4 h-4 border-l border-b border-cyan-400/60" />
-                
                 {/* Status indicator */}
-                <div className="absolute top-3 left-3">
-                  <div className="relative flex h-2 w-2">
+                <div className="absolute top-2 left-2">
+                  <div className="relative flex h-1.5 w-1.5">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-400" style={{
+                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-cyan-400" style={{
                       boxShadow: '0 0 8px rgba(0,240,255,1)'
                     }} />
                   </div>
                 </div>
                 
-                <div className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] font-bold text-cyan-400/80 mb-2">LIVE_ROLES</div>
-                <div className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-1 group-hover:text-cyan-300 transition-colors" style={{
+                <div className="text-[8px] sm:text-[10px] uppercase tracking-[0.15em] sm:tracking-[0.2em] font-bold text-cyan-400/80 mb-1 sm:mb-2">ROLES</div>
+                <div className="text-2xl sm:text-4xl md:text-5xl font-black text-white mb-0.5 sm:mb-1 group-hover:text-cyan-300 transition-colors" style={{
                   fontVariantNumeric: 'tabular-nums',
                   textShadow: '0 0 20px rgba(0,240,255,0.4)'
                 }}>
                   {formatNumber(liveStats.roleCount)}
                 </div>
-                <div className="text-[10px] sm:text-xs font-semibold text-cyan-400/80">ACTIVE</div>
+                <div className="text-[8px] sm:text-xs font-semibold text-cyan-400/80">ACTIVE</div>
                 
                 {/* Data scan line */}
                 <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-50" />
@@ -283,31 +273,28 @@ export default function HomePage() {
             >
               <div className="absolute -inset-1 bg-gradient-to-br from-fuchsia-500/40 via-pink-600/30 to-fuchsia-500/40 rounded-2xl blur-xl opacity-50 group-hover:opacity-80 transition duration-300" />
               
-              <div className="relative backdrop-blur-xl bg-black/40 p-4 sm:p-5 rounded-2xl border border-fuchsia-400/40 group-hover:border-fuchsia-300/60 transition-all duration-300 overflow-hidden"
+              <div className="relative backdrop-blur-xl bg-black/40 p-3 sm:p-5 rounded-2xl border border-fuchsia-400/40 group-hover:border-fuchsia-300/60 transition-all duration-300 overflow-hidden"
                 style={{
                   boxShadow: '0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,0,255,0.2), 0 0 40px rgba(255,0,255,0.1)'
                 }}
               >
-                <div className="absolute top-2 right-2 w-4 h-4 border-r border-t border-fuchsia-400/60" />
-                <div className="absolute bottom-2 left-2 w-4 h-4 border-l border-b border-fuchsia-400/60" />
-                
-                <div className="absolute top-3 left-3">
-                  <div className="relative flex h-2 w-2">
+                <div className="absolute top-2 left-2">
+                  <div className="relative flex h-1.5 w-1.5">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-fuchsia-400 opacity-75" />
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-fuchsia-400" style={{
+                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-fuchsia-400" style={{
                       boxShadow: '0 0 8px rgba(255,0,255,1)'
                     }} />
                   </div>
                 </div>
                 
-                <div className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] font-bold text-fuchsia-400/80 mb-2">TOTAL_FEES</div>
-                <div className="text-2xl sm:text-3xl md:text-4xl font-black text-white mb-1 group-hover:text-fuchsia-300 transition-colors" style={{
+                <div className="text-[8px] sm:text-[10px] uppercase tracking-[0.15em] sm:tracking-[0.2em] font-bold text-fuchsia-400/80 mb-1 sm:mb-2">FEES</div>
+                <div className="text-xl sm:text-3xl md:text-4xl font-black text-white mb-0.5 sm:mb-1 group-hover:text-fuchsia-300 transition-colors" style={{
                   fontVariantNumeric: 'tabular-nums',
                   textShadow: '0 0 20px rgba(255,0,255,0.4)'
                 }}>
                   {formatCurrency(liveStats.totalFees)}
                 </div>
-                <div className="text-[10px] sm:text-xs font-semibold text-fuchsia-400/80">AVAILABLE</div>
+                <div className="text-[8px] sm:text-xs font-semibold text-fuchsia-400/80">AVAILABLE</div>
                 
                 <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-fuchsia-400 to-transparent opacity-50" />
               </div>
@@ -321,31 +308,28 @@ export default function HomePage() {
             >
               <div className="absolute -inset-1 bg-gradient-to-br from-purple-500/40 via-purple-600/30 to-cyan-500/40 rounded-2xl blur-xl opacity-50 group-hover:opacity-80 transition duration-300" />
               
-              <div className="relative backdrop-blur-xl bg-black/40 p-4 sm:p-5 rounded-2xl border border-purple-400/40 group-hover:border-purple-300/60 transition-all duration-300 overflow-hidden"
+              <div className="relative backdrop-blur-xl bg-black/40 p-3 sm:p-5 rounded-2xl border border-purple-400/40 group-hover:border-purple-300/60 transition-all duration-300 overflow-hidden"
                 style={{
                   boxShadow: '0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(168,85,247,0.2), 0 0 40px rgba(168,85,247,0.1)'
                 }}
               >
-                <div className="absolute top-2 right-2 w-4 h-4 border-r border-t border-purple-400/60" />
-                <div className="absolute bottom-2 left-2 w-4 h-4 border-l border-b border-purple-400/60" />
-                
-                <div className="absolute top-3 left-3">
-                  <div className="relative flex h-2 w-2">
+                <div className="absolute top-2 left-2">
+                  <div className="relative flex h-1.5 w-1.5">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75" />
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-400" style={{
+                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-purple-400" style={{
                       boxShadow: '0 0 8px rgba(168,85,247,1)'
                     }} />
                   </div>
                 </div>
                 
-                <div className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] font-bold text-purple-400/80 mb-2">AVG_FEE</div>
-                <div className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-1 group-hover:text-purple-300 transition-colors" style={{
+                <div className="text-[8px] sm:text-[10px] uppercase tracking-[0.15em] sm:tracking-[0.2em] font-bold text-purple-400/80 mb-1 sm:mb-2">AVG</div>
+                <div className="text-2xl sm:text-4xl md:text-5xl font-black text-white mb-0.5 sm:mb-1 group-hover:text-purple-300 transition-colors" style={{
                   fontVariantNumeric: 'tabular-nums',
                   textShadow: '0 0 20px rgba(168,85,247,0.4)'
                 }}>
                   {formatCurrency(liveStats.averageFee)}
                 </div>
-                <div className="text-[10px] sm:text-xs font-semibold text-purple-400/80">PER_DEAL</div>
+                <div className="text-[8px] sm:text-xs font-semibold text-purple-400/80">PER DEAL</div>
                 
                 <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-purple-400 to-transparent opacity-50" />
               </div>
@@ -357,21 +341,21 @@ export default function HomePage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.6 }}
-            className="flex flex-wrap items-center justify-center gap-3 mb-10"
+            className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-10"
           >
             {[
-              { color: 'emerald', text: '15K+ RECRUITERS', icon: '●' },
-              { color: 'cyan', text: '270M PROFILES', icon: '●' },
-              { color: 'fuchsia', text: '70% SPLITS', icon: '●' }
+              { color: 'emerald', text: '15K+', icon: '●' },
+              { color: 'cyan', text: '270M', icon: '●' },
+              { color: 'fuchsia', text: '70%', icon: '●' }
             ].map((chip, i) => (
               <div key={i} className="group relative">
                 <div className={`absolute -inset-0.5 bg-gradient-to-r from-${chip.color}-500/30 to-${chip.color}-600/30 rounded-full blur opacity-50 group-hover:opacity-80 transition`} />
-                <div className={`relative backdrop-blur-lg bg-black/30 px-4 py-2 rounded-full border border-${chip.color}-400/30 group-hover:border-${chip.color}-300/50 transition-all`}
+                <div className={`relative backdrop-blur-lg bg-black/30 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-${chip.color}-400/30 group-hover:border-${chip.color}-300/50 transition-all`}
                   style={{
                     boxShadow: `0 4px 16px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1)`
                   }}
                 >
-                  <span className={`text-[10px] font-bold text-${chip.color}-300 tracking-[0.15em] uppercase flex items-center gap-2`}>
+                  <span className={`text-[9px] sm:text-[10px] font-bold text-${chip.color}-300 tracking-[0.12em] sm:tracking-[0.15em] uppercase flex items-center gap-1.5 sm:gap-2`}>
                     <span className="animate-pulse" style={{
                       textShadow: `0 0 10px currentColor`
                     }}>{chip.icon}</span>
@@ -397,14 +381,14 @@ export default function HomePage() {
               <span className="absolute -inset-1.5 bg-gradient-to-r from-cyan-500 via-purple-500 to-fuchsia-500 rounded-xl blur-xl opacity-40 group-hover:opacity-70 transition-opacity" />
               
               {/* Button shell with holographic effect */}
-              <span className="relative flex items-center gap-3 px-10 py-4 bg-gradient-to-r from-cyan-500 via-purple-500 to-fuchsia-500 rounded-xl font-black text-base text-white group-hover:scale-105 transition-all duration-300"
+              <span className="relative flex items-center gap-2 sm:gap-3 px-8 sm:px-10 py-3 sm:py-4 bg-gradient-to-r from-cyan-500 via-purple-500 to-fuchsia-500 rounded-xl font-black text-sm sm:text-base text-white group-hover:scale-105 transition-all duration-300"
                 style={{
                   boxShadow: '0 0 40px rgba(0,240,255,0.5), inset 0 1px 0 rgba(255,255,255,0.3)'
                 }}
               >
                 <span className="relative z-10 tracking-wider">START HERE</span>
                 <svg 
-                  className="w-5 h-5 group-hover:translate-y-1 transition-transform relative z-10" 
+                  className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-y-1 transition-transform relative z-10" 
                   fill="none" 
                   stroke="currentColor" 
                   viewBox="0 0 24 24"
@@ -417,12 +401,6 @@ export default function HomePage() {
                 <span className="absolute inset-0 rounded-xl overflow-hidden">
                   <span className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12" />
                 </span>
-                
-                {/* Corner brackets */}
-                <span className="absolute -top-1 -left-1 w-3 h-3 border-l-2 border-t-2 border-white/50" />
-                <span className="absolute -top-1 -right-1 w-3 h-3 border-r-2 border-t-2 border-white/50" />
-                <span className="absolute -bottom-1 -left-1 w-3 h-3 border-l-2 border-b-2 border-white/50" />
-                <span className="absolute -bottom-1 -right-1 w-3 h-3 border-r-2 border-b-2 border-white/50" />
               </span>
             </button>
           </motion.div>
@@ -479,7 +457,7 @@ export default function HomePage() {
           </motion.header>
 
           {/* 3D Floating Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full mx-auto max-w-5xl px-4" style={{ perspective: '2000px' }}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 w-full mx-auto max-w-5xl px-4" style={{ perspective: '2000px' }}>
             {/* RECRUITER CARD */}
             <motion.div
               variants={cardVariants}
@@ -495,17 +473,11 @@ export default function HomePage() {
               <div className="absolute -inset-1 bg-gradient-to-br from-cyan-500/40 via-cyan-600/20 to-cyan-500/40 rounded-[3rem] blur-2xl opacity-40 group-hover:opacity-70 transition duration-500" />
               
               {/* Main card */}
-              <div className="relative backdrop-blur-2xl bg-black/50 p-8 rounded-[3rem] min-h-[460px] flex flex-col border border-cyan-400/30 group-hover:border-cyan-300/50 transition-all duration-500 overflow-hidden"
+              <div className="relative backdrop-blur-2xl bg-black/50 p-6 sm:p-8 rounded-[3rem] min-h-[420px] sm:min-h-[460px] flex flex-col border border-cyan-400/30 group-hover:border-cyan-300/50 transition-all duration-500 overflow-hidden"
                 style={{
                   boxShadow: '0 20px 60px rgba(0,0,0,0.5), inset 0 2px 0 rgba(0,240,255,0.2), 0 0 60px rgba(0,240,255,0.1)'
                 }}
               >
-                {/* Corner UI elements */}
-                <div className="absolute top-3 left-3 w-6 h-6 border-l-2 border-t-2 border-cyan-400/50" />
-                <div className="absolute top-3 right-3 w-6 h-6 border-r-2 border-t-2 border-cyan-400/50" />
-                <div className="absolute bottom-3 left-3 w-6 h-6 border-l-2 border-b-2 border-cyan-400/50" />
-                <div className="absolute bottom-3 right-3 w-6 h-6 border-r-2 border-b-2 border-cyan-400/50" />
-                
                 {/* Floating orb */}
                 <div className="absolute -top-20 -right-20 w-40 h-40 rounded-full"
                   style={{
@@ -516,15 +488,15 @@ export default function HomePage() {
 
                 <div className="w-full relative z-10">
                   {/* Mode badge */}
-                  <div className="inline-flex px-4 py-1.5 rounded-full border border-cyan-400/50 bg-cyan-400/10 mb-6"
+                  <div className="inline-flex px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-cyan-400/50 bg-cyan-400/10 mb-5 sm:mb-6"
                     style={{
                       boxShadow: '0 0 20px rgba(0,240,255,0.2), inset 0 1px 0 rgba(255,255,255,0.1)'
                     }}
                   >
-                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-cyan-300">RECRUITER_MODE</span>
+                    <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.18em] sm:tracking-[0.2em] text-cyan-300">RECRUITER</span>
                   </div>
                   
-                  <h3 className="text-3xl md:text-4xl font-black mb-5 text-white group-hover:text-cyan-300 transition-colors"
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-black mb-4 sm:mb-5 text-white group-hover:text-cyan-300 transition-colors"
                     style={{
                       textShadow: '0 0 30px rgba(0,240,255,0.3)'
                     }}
@@ -532,18 +504,18 @@ export default function HomePage() {
                     Recruiter
                   </h3>
                   
-                  <p className="text-sm md:text-base text-gray-300 mb-6 leading-relaxed">
+                  <p className="text-xs sm:text-sm md:text-base text-gray-300 mb-5 sm:mb-6 leading-relaxed">
                     Post roles to find candidates, or share candidates to find roles. Split fees with 15,000+ recruiters.
                   </p>
                   
-                  <ul className="space-y-3.5 text-xs md:text-sm text-gray-400 mb-6">
+                  <ul className="space-y-2.5 sm:space-y-3.5 text-[11px] sm:text-xs md:text-sm text-gray-400 mb-5 sm:mb-6">
                     {[
-                      'Search 270M candidates instantly',
-                      'Up to 70% split on RecX Direct roles',
-                      'Automated split fee contracts'
+                      'Search 270M candidates',
+                      '70% split on RecX Direct',
+                      'Automated fee contracts'
                     ].map((item, i) => (
-                      <li key={i} className="flex items-start gap-3">
-                        <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 mt-1.5 flex-shrink-0"
+                      <li key={i} className="flex items-start gap-2 sm:gap-3">
+                        <span className="w-1 sm:w-1.5 h-1 sm:h-1.5 rounded-full bg-cyan-400 mt-1 sm:mt-1.5 flex-shrink-0"
                           style={{
                             boxShadow: '0 0 8px rgba(0,240,255,0.8)'
                           }}
@@ -555,14 +527,15 @@ export default function HomePage() {
                 </div>
 
                 {/* Futuristic CTA */}
-                <button className="relative w-full mt-auto py-4 rounded-xl border border-cyan-400/40 bg-black/40 group/btn font-black text-xs uppercase tracking-[0.2em] transition-all hover:border-cyan-300/60 overflow-hidden"
+                <button className="relative w-full mt-auto py-3 sm:py-4 rounded-xl border border-cyan-400/40 bg-black/40 group/btn font-black text-[10px] sm:text-xs uppercase tracking-[0.15em] sm:tracking-[0.2em] transition-all hover:border-cyan-300/60 overflow-hidden"
                   style={{
                     boxShadow: '0 4px 20px rgba(0,0,0,0.3), inset 0 1px 0 rgba(0,240,255,0.1)'
                   }}
                 >
                   <span className="absolute inset-0 bg-gradient-to-r from-cyan-500/0 via-cyan-500/20 to-cyan-500/0 opacity-0 group-hover/btn:opacity-100 transition-opacity" />
                   <span className="relative z-10 text-white flex items-center justify-center gap-2">
-                    ENTER_RECRUITER_PATH
+                    <span className="hidden sm:inline">ENTER_RECRUITER_PATH</span>
+                    <span className="sm:hidden">ENTER_PATH</span>
                     <span className="text-cyan-400">→</span>
                   </span>
                   {/* Scan line */}
@@ -584,16 +557,11 @@ export default function HomePage() {
             >
               <div className="absolute -inset-1 bg-gradient-to-br from-fuchsia-500/40 via-pink-600/20 to-fuchsia-500/40 rounded-[3rem] blur-2xl opacity-40 group-hover:opacity-70 transition duration-500" />
               
-              <div className="relative backdrop-blur-2xl bg-black/50 p-8 rounded-[3rem] min-h-[460px] flex flex-col border border-fuchsia-400/30 group-hover:border-fuchsia-300/50 transition-all duration-500 overflow-hidden"
+              <div className="relative backdrop-blur-2xl bg-black/50 p-6 sm:p-8 rounded-[3rem] min-h-[420px] sm:min-h-[460px] flex flex-col border border-fuchsia-400/30 group-hover:border-fuchsia-300/50 transition-all duration-500 overflow-hidden"
                 style={{
                   boxShadow: '0 20px 60px rgba(0,0,0,0.5), inset 0 2px 0 rgba(255,0,255,0.2), 0 0 60px rgba(255,0,255,0.1)'
                 }}
               >
-                <div className="absolute top-3 left-3 w-6 h-6 border-l-2 border-t-2 border-fuchsia-400/50" />
-                <div className="absolute top-3 right-3 w-6 h-6 border-r-2 border-t-2 border-fuchsia-400/50" />
-                <div className="absolute bottom-3 left-3 w-6 h-6 border-l-2 border-b-2 border-fuchsia-400/50" />
-                <div className="absolute bottom-3 right-3 w-6 h-6 border-r-2 border-b-2 border-fuchsia-400/50" />
-                
                 <div className="absolute -top-20 -right-20 w-40 h-40 rounded-full"
                   style={{
                     background: 'radial-gradient(circle, rgba(255,0,255,0.2) 0%, transparent 70%)',
@@ -602,15 +570,15 @@ export default function HomePage() {
                 />
 
                 <div className="w-full relative z-10">
-                  <div className="inline-flex px-4 py-1.5 rounded-full border border-fuchsia-400/50 bg-fuchsia-400/10 mb-6"
+                  <div className="inline-flex px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-fuchsia-400/50 bg-fuchsia-400/10 mb-5 sm:mb-6"
                     style={{
                       boxShadow: '0 0 20px rgba(255,0,255,0.2), inset 0 1px 0 rgba(255,255,255,0.1)'
                     }}
                   >
-                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-fuchsia-300">HIRING_TEAM_MODE</span>
+                    <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.18em] sm:tracking-[0.2em] text-fuchsia-300">HIRING</span>
                   </div>
                   
-                  <h3 className="text-3xl md:text-4xl font-black mb-5 text-white group-hover:text-fuchsia-300 transition-colors"
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-black mb-4 sm:mb-5 text-white group-hover:text-fuchsia-300 transition-colors"
                     style={{
                       textShadow: '0 0 30px rgba(255,0,255,0.3)'
                     }}
@@ -618,18 +586,18 @@ export default function HomePage() {
                     Hiring Manager
                   </h3>
                   
-                  <p className="text-sm md:text-base text-gray-300 mb-6 leading-relaxed">
+                  <p className="text-xs sm:text-sm md:text-base text-gray-300 mb-5 sm:mb-6 leading-relaxed">
                     We post your role. Thousands of recruiters compete to fill it. You pay one fee.
                   </p>
                   
-                  <ul className="space-y-3.5 text-xs md:text-sm text-gray-400 mb-6">
+                  <ul className="space-y-2.5 sm:space-y-3.5 text-[11px] sm:text-xs md:text-sm text-gray-400 mb-5 sm:mb-6">
                     {[
-                      '15,000+ recruiters see your role instantly',
-                      'One point of contact - no recruiter spam',
-                      'Test the market before official hiring'
+                      '15,000+ recruiters instantly',
+                      'One point of contact',
+                      'Test market before hiring'
                     ].map((item, i) => (
-                      <li key={i} className="flex items-start gap-3">
-                        <span className="w-1.5 h-1.5 rounded-full bg-fuchsia-400 mt-1.5 flex-shrink-0"
+                      <li key={i} className="flex items-start gap-2 sm:gap-3">
+                        <span className="w-1 sm:w-1.5 h-1 sm:h-1.5 rounded-full bg-fuchsia-400 mt-1 sm:mt-1.5 flex-shrink-0"
                           style={{
                             boxShadow: '0 0 8px rgba(255,0,255,0.8)'
                           }}
@@ -640,14 +608,15 @@ export default function HomePage() {
                   </ul>
                 </div>
 
-                <button className="relative w-full mt-auto py-4 rounded-xl border border-fuchsia-400/40 bg-black/40 group/btn font-black text-xs uppercase tracking-[0.2em] transition-all hover:border-fuchsia-300/60 overflow-hidden"
+                <button className="relative w-full mt-auto py-3 sm:py-4 rounded-xl border border-fuchsia-400/40 bg-black/40 group/btn font-black text-[10px] sm:text-xs uppercase tracking-[0.15em] sm:tracking-[0.2em] transition-all hover:border-fuchsia-300/60 overflow-hidden"
                   style={{
                     boxShadow: '0 4px 20px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,0,255,0.1)'
                   }}
                 >
                   <span className="absolute inset-0 bg-gradient-to-r from-fuchsia-500/0 via-fuchsia-500/20 to-fuchsia-500/0 opacity-0 group-hover/btn:opacity-100 transition-opacity" />
                   <span className="relative z-10 text-white flex items-center justify-center gap-2">
-                    ENTER_HIRING_MANAGER_PATH
+                    <span className="hidden sm:inline">ENTER_HIRING_PATH</span>
+                    <span className="sm:hidden">ENTER_PATH</span>
                     <span className="text-fuchsia-400">→</span>
                   </span>
                   <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-fuchsia-400 to-transparent" />
