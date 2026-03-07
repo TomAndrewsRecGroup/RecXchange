@@ -4,9 +4,10 @@ import {
   checkRateLimit, 
   getClientIP, 
   validateFormData,
+  sanitizeInput,
   getSecurityHeaders 
 } from '@/lib/security';
-import { generateMatchCandidateEmail } from '@/lib/emails/templates/match-candidate';
+import { generateMatchCandidateEmail } from '@/lib/emails/templates/match-candidate-email';
 import { generateHowItWorksRecruiterEmail } from '@/lib/emails/templates/how-it-works-recruiter';
 import { generateHowItWorksHiringManagerEmail } from '@/lib/emails/templates/how-it-works-hiring-manager';
 
@@ -16,37 +17,23 @@ interface QuickActionRequest {
   email: string;
   actionType: 'match_candidate' | 'explain_recx_direct' | 'explain_recx_direct_hm';
   source: string;
-  industries?: string[]; // Optional industries for match_candidate
-  marketingConsent?: boolean; // GDPR marketing consent
+  industries?: string[];
+  marketingConsent?: boolean;
 }
-
-const ACTION_CONFIG = {
-  match_candidate: {
-    ghlTag: 'Website - QA 3 roles',
-    autoResponseSubject: '3 Matching Live Roles For You',
-    autoResponseTemplate: generateMatchCandidateEmail,
-  },
-  explain_recx_direct: {
-    ghlTag: 'Website - QA RecX Direct Recruiter',
-    autoResponseSubject: 'How RecXchange Works - Your Complete Guide',
-    autoResponseTemplate: generateHowItWorksRecruiterEmail,
-  },
-  explain_recx_direct_hm: {
-    ghlTag: 'Website - QA RecX Direct Hiring Manager',
-    autoResponseSubject: 'How RecXchange Works - For Hiring Managers',
-    autoResponseTemplate: generateHowItWorksHiringManagerEmail,
-  },
-};
 
 /**
  * POST /api/quick-action
  * 
- * Handles quick action form submissions
+ * Handles quick action submissions from landing pages:
+ * 1. "Send me 3 matching roles" - Sends match-candidate email
+ * 2. "Email me the explainer" (Recruiter) - Sends how-it-works-recruiter email
+ * 3. "Email me the explainer" (Hiring Manager) - Sends how-it-works-hiring-manager email
  */
 export async function POST(request: NextRequest) {
   const securityHeaders = getSecurityHeaders();
 
   try {
+    // 1. Rate limiting
     const clientIP = getClientIP(request);
     const ipRateLimit = checkRateLimit(clientIP, 'form');
     
@@ -67,11 +54,16 @@ export async function POST(request: NextRequest) {
     }
 
     const body: QuickActionRequest = await request.json();
-    const { actionType, source, industries, marketingConsent } = body;
+    const { firstName, lastName, email, actionType, source, industries, marketingConsent } = body;
 
+    // 2. Validate and sanitize input
     let sanitizedData;
     try {
-      sanitizedData = validateFormData(body);
+      sanitizedData = validateFormData({
+        firstName,
+        lastName,
+        email,
+      });
     } catch (error) {
       return NextResponse.json(
         { error: error instanceof Error ? error.message : 'Invalid input data' },
@@ -79,16 +71,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { firstName, lastName, email } = sanitizedData;
+    const sanitizedFirstName = sanitizedData.firstName;
+    const sanitizedLastName = sanitizedData.lastName;
+    const sanitizedEmail = sanitizedData.email;
+    const sanitizedSource = sanitizeInput(source, 200);
+    const sanitizedIndustries = industries?.map(i => sanitizeInput(i, 100)) || [];
 
-    if (!actionType || !source) {
-      return NextResponse.json(
-        { error: 'Missing required fields' },
-        { status: 400, headers: securityHeaders }
-      );
-    }
-
-    const emailRateLimit = checkRateLimit(`email:${email}`, 'email');
+    // Email-based rate limiting
+    const emailRateLimit = checkRateLimit(`email:${sanitizedEmail}`, 'email');
     if (!emailRateLimit.success) {
       return NextResponse.json(
         { 
@@ -105,36 +95,26 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const config = ACTION_CONFIG[actionType];
-    if (!config) {
-      return NextResponse.json(
-        { error: 'Invalid action type' },
-        { status: 400, headers: securityHeaders }
-      );
-    }
-
     const GHL_API_KEY = process.env.GHL_API_KEY;
     const GHL_LOCATION_ID = process.env.GHL_LOCATION_ID;
     const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
     const FROM_EMAIL = process.env.SENDGRID_FROM_EMAIL || 'tom@recxchange.io';
 
-    // Create/update GHL contact
+    // 3. Create/update contact in GHL with appropriate tags
     if (GHL_API_KEY && GHL_LOCATION_ID) {
       try {
-        const tags = [config.ghlTag, 'website', 'quick-action'];
+        let tags: string[] = [];
+        let contactType = '';
         
-        if (industries && industries.length > 0) {
-          const sanitizedIndustries = industries
-            .filter(ind => typeof ind === 'string')
-            .map(ind => ind.substring(0, 50))
-            .slice(0, 10);
-          tags.push(...sanitizedIndustries);
-        }
-
-        if (marketingConsent === true) {
-          tags.push('marketing-consent-given');
-        } else if (marketingConsent === false) {
-          tags.push('marketing-consent-declined');
+        if (actionType === 'match_candidate') {
+          tags = ['Website - 3 Roles', 'recruiter', 'candidate-matcher', 'website'];
+          contactType = 'Recruiter';
+        } else if (actionType === 'explain_recx_direct') {
+          tags = ['Website - RecX Explainer', 'recruiter', 'website', 'explainer-requested'];
+          contactType = 'Recruiter';
+        } else if (actionType === 'explain_recx_direct_hm') {
+          tags = ['Website - RecX Explainer', 'client', 'hiring-manager', 'website', 'explainer-requested'];
+          contactType = 'Hiring Manager';
         }
 
         await fetch('https://rest.gohighlevel.com/v1/contacts/', {
@@ -144,19 +124,19 @@ export async function POST(request: NextRequest) {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            firstName,
-            lastName,
-            email,
+            firstName: sanitizedFirstName,
+            lastName: sanitizedLastName,
+            email: sanitizedEmail,
             locationId: GHL_LOCATION_ID,
             tags,
-            source: `RecXchange Quick Action - ${source}`,
+            source: `RecXchange - Quick Action (${actionType})`,
             customFields: {
+              contact_type: contactType,
               action_type: actionType,
-              source_page: source,
-              action_date: new Date().toISOString(),
-              industries: industries && industries.length > 0 ? industries.join(', ') : '',
-              marketing_consent: marketingConsent === true ? 'yes' : marketingConsent === false ? 'no' : 'not_asked',
-              marketing_consent_date: marketingConsent !== undefined ? new Date().toISOString() : '',
+              source_page: sanitizedSource,
+              inquiry_date: new Date().toISOString(),
+              industries: sanitizedIndustries.join(', '),
+              marketing_consent: marketingConsent ? 'Yes' : 'No'
             }
           })
         });
@@ -165,9 +145,23 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Send auto-response email
+    // 4. Send appropriate auto-response email based on action type
     if (SENDGRID_API_KEY) {
       try {
+        let emailHTML = '';
+        let subject = '';
+        
+        if (actionType === 'match_candidate') {
+          emailHTML = generateMatchCandidateEmail(sanitizedFirstName, sanitizedIndustries);
+          subject = 'Your 3 Matching Roles from RecXchange';
+        } else if (actionType === 'explain_recx_direct') {
+          emailHTML = generateHowItWorksRecruiterEmail(sanitizedFirstName);
+          subject = 'How RecX Direct Works - Your Complete Guide';
+        } else if (actionType === 'explain_recx_direct_hm') {
+          emailHTML = generateHowItWorksHiringManagerEmail(sanitizedFirstName);
+          subject = 'How RecX Direct Works - Your Complete Guide';
+        }
+        
         await fetch('https://api.sendgrid.com/v3/mail/send', {
           method: 'POST',
           headers: {
@@ -176,30 +170,28 @@ export async function POST(request: NextRequest) {
           },
           body: JSON.stringify({
             personalizations: [{
-              to: [{ email, name: `${firstName} ${lastName}` }],
-              subject: config.autoResponseSubject
+              to: [{ email: sanitizedEmail, name: `${sanitizedFirstName} ${sanitizedLastName}`.trim() }],
+              subject
             }],
             from: { email: FROM_EMAIL, name: 'RecXchange' },
             content: [{
               type: 'text/html',
-              value: actionType === 'match_candidate' 
-                ? config.autoResponseTemplate(firstName, industries)
-                : config.autoResponseTemplate(firstName)
+              value: emailHTML
             }]
           })
         });
       } catch (error) {
-        console.error('[Quick Action] Failed to send auto-response:', error);
+        console.error('[Quick Action] Failed to send email:', error);
       }
     }
 
-    // Track analytics
+    // 5. Track analytics event
     try {
-      trackEvent('quick_action_form_submitted', {
+      trackEvent('quick_action_submitted', {
         action_type: actionType,
-        page: source,
-        industries: industries && industries.length > 0 ? industries.join(', ') : 'none',
-        marketing_consent: marketingConsent === true ? 'given' : marketingConsent === false ? 'declined' : 'not_asked',
+        source: sanitizedSource,
+        industries: sanitizedIndustries.join(', '),
+        marketing_consent: marketingConsent || false
       }, { bypassConsent: true });
     } catch (error) {
       console.error('[Quick Action] Failed to track event:', error);
@@ -208,7 +200,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         success: true,
-        message: 'Quick action processed successfully',
+        message: 'Email sent successfully',
       },
       { headers: securityHeaders }
     );

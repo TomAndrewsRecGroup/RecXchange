@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { generateMatchCandidateEmail } from '@/lib/emails/templates/match-candidate';
+import { generateMatchCandidateEmail } from '@/lib/emails/templates/match-candidate-email';
 import { generateHowItWorksRecruiterEmail } from '@/lib/emails/templates/how-it-works-recruiter';
 import { generateHowItWorksHiringManagerEmail } from '@/lib/emails/templates/how-it-works-hiring-manager';
 import { generateRecruiterFunnelEmail } from '@/lib/emails/templates/recruiter-funnel';
@@ -366,7 +366,7 @@ export default function TestEmailPage() {
               {/* Send 3 Roles */}
               <div className="bg-white/5 backdrop-blur-md border border-green-500/30 rounded-xl p-4">
                 <h3 className="text-lg font-semibold mb-2 text-green-400">📧 "Send me 3 matching roles"</h3>
-                <p className="text-gray-400 text-xs mb-3">Template: <strong>match-candidate.ts</strong> - Recruiter quick action from /recruiters-with-candidates</p>
+                <p className="text-gray-400 text-xs mb-3">Template: <strong>match-candidate-email.ts</strong> - Recruiter quick action from /recruiters-with-candidates</p>
                 <button
                   onClick={() => testQuickAction('match_candidate', 'qa3roles', '3 matching roles')}
                   disabled={loading.qa3roles}
@@ -403,7 +403,7 @@ export default function TestEmailPage() {
                 )}
               </div>
 
-              {/* RecX Direct Explainer (Hiring Manager) - NOW WIRED UP */}
+              {/* RecX Direct Explainer (Hiring Manager) */}
               <div className="bg-white/5 backdrop-blur-md border border-orange-500/30 rounded-xl p-4">
                 <h3 className="text-lg font-semibold mb-2 text-orange-400">📧 "Email me the explainer" (Hiring Manager)</h3>
                 <p className="text-gray-400 text-xs mb-3">Template: <strong>how-it-works-hiring-manager.ts</strong> - Hiring Manager quick action from /hiring-manager pages</p>
