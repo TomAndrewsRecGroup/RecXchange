@@ -90,18 +90,8 @@ export default function HomePage() {
     <main className="relative bg-[#0a0a0f] font-[family-name:var(--font-lexend)] overflow-hidden">
       {/* SCREEN 1: FUTURISTIC HERO */}
       <section className="relative h-screen flex flex-col items-center justify-center px-4 pt-20">
-        {/* Futuristic Grid Background */}
+        {/* Smooth Background with Floating Elements */}
         <div className="absolute inset-0 pointer-events-none z-0">
-          {/* Animated perspective grid */}
-          <div className="absolute inset-0" style={{
-            background: `
-              linear-gradient(90deg, transparent 0%, rgba(0,240,255,0.03) 50%, transparent 100%),
-              linear-gradient(0deg, transparent 0%, rgba(0,240,255,0.03) 50%, transparent 100%)
-            `,
-            backgroundSize: '80px 80px',
-            maskImage: 'linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)'
-          }} />
-          
           {/* Floating energy orbs */}
           <motion.div 
             style={{ 
@@ -417,15 +407,8 @@ export default function HomePage() {
         id="path-selection" 
         className="relative min-h-screen flex flex-col items-center justify-center px-4 py-20"
       >
-        <div className="absolute inset-0 pointer-events-none opacity-30">
-          <div className="absolute inset-0" style={{
-            background: `
-              linear-gradient(90deg, transparent 0%, rgba(0,240,255,0.02) 50%, transparent 100%),
-              linear-gradient(0deg, transparent 0%, rgba(255,0,255,0.02) 50%, transparent 100%)
-            `,
-            backgroundSize: '100px 100px'
-          }} />
-        </div>
+        {/* Smooth background - no grid */}
+        <div className="absolute inset-0 pointer-events-none opacity-30" />
 
         <div className="relative z-10 text-center max-w-6xl w-full">
           <motion.header
