@@ -465,107 +465,710 @@ const ACTION_CONFIG = {
     autoResponseTemplate: (firstName: string) => {
       const LOGO_URL = 'https://images.squarespace-cdn.com/content/v1/68120154725429476150f64b/00d296cd-6741-4c0a-a711-08a3f35db445/REX-Logo-GW-25.png?format=1500w';
       
-      // NOTE: This template is intentionally large (full explainer email)
-      // See commit history for full content
-      return `<!DOCTYPE html>...(full explainer email - preserved from original)`;
+      return `
+        <!DOCTYPE html>
+        <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <meta http-equiv="X-UA-Compatible" content="IE=edge">
+          <meta name="x-apple-disable-message-reformatting">
+          <title>How RecXchange Works - Complete Guide</title>
+          <!--[if mso]>
+          <style>
+            * { font-family: sans-serif !important; }
+          </style>
+          <![endif]-->
+          <!--[if !mso]><!-->
+          <style>
+            @media only screen and (max-width: 600px) {
+              .mobile-padding { padding: 20px 16px !important; }
+              .mobile-text { font-size: 22px !important; }
+              .mobile-subtitle { font-size: 14px !important; }
+              .stat-box { width: 100% !important; display: block !important; margin-bottom: 12px !important; }
+            }
+          </style>
+          <!--<![endif]-->
+        </head>
+        <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif; background: #0a0a0a; color: #e5e5e5; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;">
+          <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #0a0a0a; min-height: 100%;">
+            <tr>
+              <td align="center" style="padding: 20px 10px;">
+                <table cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width: 800px; background: #0a0a0a;">
+                  
+                  <!-- Header -->
+                  <tr>
+                    <td style="background: #0a0a0a; padding: 40px 24px; text-align: center; border-bottom: 1px solid #222;" class="mobile-padding">
+                      <img src="${LOGO_URL}" alt="RecXchange Logo" width="180" style="max-width: 180px; height: auto; margin-bottom: 20px; display: block; margin-left: auto; margin-right: auto;" />
+                      <h1 style="margin: 0; color: #fff; font-size: 28px; font-weight: 800; line-height: 1.2;" class="mobile-text">How RecXchange Works</h1>
+                      <p style="margin: 12px 0 0 0; color: #888; font-size: 15px; line-height: 1.5;">Everything you need to know${firstName ? `, ${firstName}` : ''}</p>
+                    </td>
+                  </tr>
+
+                  <!-- Content -->
+                  <tr>
+                    <td style="padding: 40px 24px;" class="mobile-padding">
+                      
+                      <!-- Intro -->
+                      <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 28px;">
+                        <tr>
+                          <td style="padding: 0;">
+                            <p style="color: #e5e5e5; font-size: 16px; line-height: 1.7; margin: 0 0 16px 0; text-align: center;">Thanks for requesting the RecXchange explainer${firstName ? `, ${firstName}` : ''}! This email covers everything: what we do, how it works, pricing options, real success stories, and answers to common questions.</p>
+                            <p style="color: #888; font-size: 14px; line-height: 1.6; margin: 0; text-align: center;"><em>Reading time: 8 minutes. Bookmark this email for future reference.</em></p>
+                          </td>
+                        </tr>
+                      </table>
+
+                      <!-- SECTION 1: What is RecXchange -->
+                      <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.08) 0%, rgba(59, 130, 246, 0.05) 100%); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 16px; margin-bottom: 24px;">
+                        <tr>
+                          <td style="padding: 28px;">
+                            <h2 style="color: rgb(168, 85, 247); font-size: 22px; font-weight: 800; margin: 0 0 16px 0; text-transform: uppercase; letter-spacing: 0.05em;">🔵 What is RecXchange?</h2>
+                            <p style="color: #e5e5e5; font-size: 16px; line-height: 1.8; margin: 0 0 16px 0; font-weight: 600;">RecXchange is a global recruiter collaboration platform where recruitment professionals work together to fill roles and place candidates faster than they could working alone.</p>
+                            <p style="color: #ccc; font-size: 15px; line-height: 1.7; margin: 0 0 16px 0;">Think of it like this: You have a role you can't fill, or a candidate you can't place. Instead of letting them sit in your database gathering dust, you post them to RecXchange. Our AI-powered Xchange Engine instantly matches your role to recruiters who have perfect candidates, or matches your candidate to recruiters who have perfect roles.</p>
+                            <p style="color: #ccc; font-size: 15px; line-height: 1.7; margin: 0 0 16px 0;">When a match is made and a placement happens, you split the fee 50/50. Automated contracts, secure escrow payments, and full transparency throughout.</p>
+                            
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: rgba(0, 0, 0, 0.4); border-radius: 12px; padding: 20px; margin-top: 20px;">
+                              <tr>
+                                <td>
+                                  <p style="color: rgb(168, 85, 247); font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin: 0 0 12px 0;">💡 Simple Example</p>
+                                  <p style="color: #e5e5e5; font-size: 14px; line-height: 1.7; margin: 0;">You're a tech recruiter in London with a Senior DevOps role you've been unable to fill for 6 weeks. You post it to RecXchange. Within 24 hours, a recruiter in Manchester submits a perfect candidate they've been sitting on. You interview. You hire. £15,000 fee splits 50/50. You both walk away with £7,500. <strong style="color: rgb(168, 85, 247);">Role filled. Candidate placed. Everyone wins.</strong></p>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+
+                      <!-- Platform Stats Grid -->
+                      <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 28px;">
+                        <tr>
+                          <td width="32%" style="padding: 0 6px 0 0;" class="stat-box">
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 14px;">
+                              <tr>
+                                <td style="padding: 22px 16px; text-align: center;">
+                                  <p style="color: #666; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; margin: 0 0 10px 0;">Global Network</p>
+                                  <p style="color: rgb(168, 85, 247); font-size: 28px; font-weight: 900; margin: 0 0 6px 0; line-height: 1;">15,000+</p>
+                                  <p style="color: #888; font-size: 12px; font-weight: 600; margin: 0;">Vetted Recruiters</p>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                          <td width="32%" style="padding: 0 6px;" class="stat-box">
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(168, 85, 247, 0.05) 100%); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 14px;">
+                              <tr>
+                                <td style="padding: 22px 16px; text-align: center;">
+                                  <p style="color: #666; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; margin: 0 0 10px 0;">Live Placement Fees</p>
+                                  <p style="color: rgb(59, 130, 246); font-size: 28px; font-weight: 900; margin: 0 0 6px 0; line-height: 1;">£750k+</p>
+                                  <p style="color: #888; font-size: 12px; font-weight: 600; margin: 0;">Available Right Now</p>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                          <td width="32%" style="padding: 0 0 0 6px;" class="stat-box">
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 14px;">
+                              <tr>
+                                <td style="padding: 22px 16px; text-align: center;">
+                                  <p style="color: #666; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; margin: 0 0 10px 0;">Candidate Database</p>
+                                  <p style="color: rgb(168, 85, 247); font-size: 28px; font-weight: 900; margin: 0 0 6px 0; line-height: 1;">270M+</p>
+                                  <p style="color: #888; font-size: 12px; font-weight: 600; margin: 0;">Searchable Profiles</p>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+
+                      <!-- SECTION 2: How It Works (3 Steps) -->
+                      <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #111; border: 1px solid #222; border-radius: 16px; margin-bottom: 24px;">
+                        <tr>
+                          <td style="padding: 32px 28px;">
+                            <h2 style="color: rgb(59, 130, 246); font-size: 22px; font-weight: 800; margin: 0 0 24px 0; text-transform: uppercase; letter-spacing: 0.05em;">⚡ How It Works (3 Simple Steps)</h2>
+                            
+                            <!-- Step 1 -->
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 20px;">
+                              <tr>
+                                <td width="50" style="padding: 0 16px 0 0; vertical-align: top;">
+                                  <table cellpadding="0" cellspacing="0" border="0" width="40" height="40" style="background: linear-gradient(135deg, rgb(168, 85, 247) 0%, rgb(59, 130, 246) 100%); border-radius: 50%;">
+                                    <tr>
+                                      <td style="text-align: center; vertical-align: middle; color: #fff; font-weight: 900; font-size: 18px; padding: 0;">1</td>
+                                    </tr>
+                                  </table>
+                                </td>
+                                <td style="vertical-align: top;">
+                                  <h3 style="color: #fff; font-size: 17px; font-weight: 700; margin: 0 0 10px 0; line-height: 1.3;">📤 Post Your Role or Candidate</h3>
+                                  <p style="color: #ccc; font-size: 15px; line-height: 1.7; margin: 0;">Upload a role you're struggling to fill, or a candidate you can't place. It takes 2 minutes. Include key details like location, salary, required skills, and any deal-breakers. The more detail you provide, the better the AI matching works.</p>
+                                </td>
+                              </tr>
+                            </table>
+
+                            <!-- Step 2 -->
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 20px;">
+                              <tr>
+                                <td width="50" style="padding: 0 16px 0 0; vertical-align: top;">
+                                  <table cellpadding="0" cellspacing="0" border="0" width="40" height="40" style="background: linear-gradient(135deg, rgb(59, 130, 246) 0%, rgb(168, 85, 247) 100%); border-radius: 50%;">
+                                    <tr>
+                                      <td style="text-align: center; vertical-align: middle; color: #fff; font-weight: 900; font-size: 18px; padding: 0;">2</td>
+                                    </tr>
+                                  </table>
+                                </td>
+                                <td style="vertical-align: top;">
+                                  <h3 style="color: #fff; font-size: 17px; font-weight: 700; margin: 0 0 10px 0; line-height: 1.3;">🤖 AI Finds Perfect Matches in Seconds</h3>
+                                  <p style="color: #ccc; font-size: 15px; line-height: 1.7; margin: 0;">Our Xchange Engine instantly scans 15,000+ recruiters and 270M+ candidates to find matches. Relevant partners get instant alerts. They have the candidates for your roles, or the roles for your candidates. You'll typically see matches within 24-48 hours.</p>
+                                </td>
+                              </tr>
+                            </table>
+
+                            <!-- Step 3 -->
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                              <tr>
+                                <td width="50" style="padding: 0 16px 0 0; vertical-align: top;">
+                                  <table cellpadding="0" cellspacing="0" border="0" width="40" height="40" style="background: linear-gradient(135deg, rgb(168, 85, 247) 0%, rgb(59, 130, 246) 100%); border-radius: 50%;">
+                                    <tr>
+                                      <td style="text-align: center; vertical-align: middle; color: #fff; font-weight: 900; font-size: 18px; padding: 0;">3</td>
+                                    </tr>
+                                  </table>
+                                </td>
+                                <td style="vertical-align: top;">
+                                  <h3 style="color: #fff; font-size: 17px; font-weight: 700; margin: 0 0 10px 0; line-height: 1.3;">💰 Split the Fee & Get Paid Automatically</h3>
+                                  <p style="color: #ccc; font-size: 15px; line-height: 1.7; margin: 0;">When a placement happens, an automated Split Fee Agreement (SFA) is generated. Default split is 50/50, but you can negotiate 60/40 or even 70/30 for premium roles. Payment is handled securely through RecXchange escrow. No chasing invoices. No payment disputes.</p>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+
+                      <!-- SECTION 3: Key Features -->
+                      <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(168, 85, 247, 0.05) 100%); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; margin-bottom: 24px;">
+                        <tr>
+                          <td style="padding: 28px;">
+                            <h2 style="color: rgb(59, 130, 246); font-size: 22px; font-weight: 800; margin: 0 0 20px 0; text-transform: uppercase; letter-spacing: 0.05em;">🚀 Platform Features</h2>
+                            
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 16px;">
+                              <tr>
+                                <td style="padding: 0 0 16px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                                  <p style="color: #e5e5e5; font-size: 15px; font-weight: 700; margin: 0 0 8px 0;">✅ Verified Recruiter Network</p>
+                                  <p style="color: #aaa; font-size: 14px; line-height: 1.6; margin: 0;">Every recruiter on the platform is vetted. We verify business registration, check professional credentials, and monitor placement history to maintain network quality.</p>
+                                </td>
+                              </tr>
+                            </table>
+
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 16px;">
+                              <tr>
+                                <td style="padding: 0 0 16px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                                  <p style="color: #e5e5e5; font-size: 15px; font-weight: 700; margin: 0 0 8px 0;">✅ 270M+ Candidate Database</p>
+                                  <p style="color: #aaa; font-size: 14px; line-height: 1.6; margin: 0;">Search our aggregated candidate database with advanced filters for skills, location, salary expectations, availability, and more. Candidates come from LinkedIn, Indeed, and partner recruiters' own databases.</p>
+                                </td>
+                              </tr>
+                            </table>
+
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 16px;">
+                              <tr>
+                                <td style="padding: 0 0 16px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                                  <p style="color: #e5e5e5; font-size: 15px; font-weight: 700; margin: 0 0 8px 0;">✅ AI-Powered Matching (Xchange Engine)</p>
+                                  <p style="color: #aaa; font-size: 14px; line-height: 1.6; margin: 0;">Our proprietary AI analyzes role requirements, candidate skills, location preferences, salary expectations, and industry specialization to find perfect matches instantly. No manual searching required.</p>
+                                </td>
+                              </tr>
+                            </table>
+
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 16px;">
+                              <tr>
+                                <td style="padding: 0 0 16px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                                  <p style="color: #e5e5e5; font-size: 15px; font-weight: 700; margin: 0 0 8px 0;">✅ Automated Split Fee Agreements (SFAs)</p>
+                                  <p style="color: #aaa; font-size: 14px; line-height: 1.6; margin: 0;">Legal contracts generated automatically when a candidate is submitted. Locks in fee split terms, payment schedule, and guarantees. Signed digitally by both parties. No paperwork, no lawyers, no hassle.</p>
+                                </td>
+                              </tr>
+                            </table>
+
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 16px;">
+                              <tr>
+                                <td style="padding: 0 0 16px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                                  <p style="color: #e5e5e5; font-size: 15px; font-weight: 700; margin: 0 0 8px 0;">✅ Secure Escrow Payments</p>
+                                  <p style="color: #aaa; font-size: 14px; line-height: 1.6; margin: 0;">Client pays RecXchange. We hold the fee in escrow. When the candidate passes probation, funds are released 50/50 to both recruiters. Transparent, secure, and eliminates payment disputes.</p>
+                                </td>
+                              </tr>
+                            </table>
+
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 16px;">
+                              <tr>
+                                <td style="padding: 0 0 16px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                                  <p style="color: #e5e5e5; font-size: 15px; font-weight: 700; margin: 0 0 8px 0;">✅ Circle of Trust (Private Network)</p>
+                                  <p style="color: #aaa; font-size: 14px; line-height: 1.6; margin: 0;">Don't want to broadcast sensitive roles to the entire network? Create your own private Circle of Trust with recruiters you already know and trust. Perfect for confidential C-suite searches or exclusive mandates.</p>
+                                </td>
+                              </tr>
+                            </table>
+
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                              <tr>
+                                <td style="padding: 0;">
+                                  <p style="color: #e5e5e5; font-size: 15px; font-weight: 700; margin: 0 0 8px 0;">✅ Real-Time Dashboard & Analytics</p>
+                                  <p style="color: #aaa; font-size: 14px; line-height: 1.6; margin: 0;">Track all your roles, candidates, matches, and earnings in one unified dashboard. See which partners are submitting, interview progress, placement status, and revenue projections in real-time.</p>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+
+                      <!-- SECTION 4: RecX Direct Detailed Explainer -->
+                      <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.12) 0%, rgba(59, 130, 246, 0.08) 100%); border: 2px solid rgba(168, 85, 247, 0.4); border-radius: 16px; margin-bottom: 24px;">
+                        <tr>
+                          <td style="padding: 32px 28px;">
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 4px;">
+                              <tr>
+                                <td>
+                                  <p style="color: rgb(168, 85, 247); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; margin: 0 0 12px 0;">💎 Premium Feature</p>
+                                  <h2 style="color: rgb(168, 85, 247); font-size: 24px; font-weight: 800; margin: 0 0 20px 0; text-transform: uppercase; letter-spacing: 0.03em; text-shadow: 0 0 20px rgba(168, 85, 247, 0.3);">What is RecX Direct?</h2>
+                                </td>
+                              </tr>
+                            </table>
+                            
+                            <p style="color: #fff; font-size: 17px; line-height: 1.8; margin: 0 0 16px 0; font-weight: 700;">RecX Direct is our revolutionary Bounty subscription model that flips traditional recruitment pricing on its head.</p>
+                            
+                            <p style="color: #ddd; font-size: 15px; line-height: 1.7; margin: 0 0 20px 0;"><strong style="color: #fff;">The Old Way:</strong> Pay 15-20% of salary <em>per hire</em>. Hire 5 people? That's 5 separate agency fees. Unpredictable costs. Budget nightmares.</p>
+                            
+                            <p style="color: #ddd; font-size: 15px; line-height: 1.7; margin: 0 0 24px 0;"><strong style="color: #fff;">The RecX Direct Way:</strong> Pay one flat monthly subscription. Make <em>unlimited placements</em> from the shared Bounty. Predictable costs. Zero per-hire fees. Insane ROI.</p>
+
+                            <!-- Bounty Display -->
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(168, 85, 247, 0.4); border-radius: 16px; padding: 24px; margin-bottom: 24px;">
+                              <tr>
+                                <td style="text-align: center;">
+                                  <p style="color: #888; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; margin: 0 0 12px 0;">🏆 Current Active Bounty</p>
+                                  <p style="color: rgb(168, 85, 247); font-size: 48px; font-weight: 900; margin: 0 0 8px 0; line-height: 1; text-shadow: 0 0 30px rgba(168, 85, 247, 0.5);">£XXX,XXX</p>
+                                  <p style="color: #aaa; font-size: 14px; margin: 0;">Updated weekly • Available to all RecX Direct subscribers</p>
+                                </td>
+                              </tr>
+                            </table>
+
+                            <h3 style="color: rgb(168, 85, 247); font-size: 18px; font-weight: 700; margin: 0 0 16px 0;">How Does the Bounty Work?</h3>
+                            <p style="color: #ccc; font-size: 14px; line-height: 1.7; margin: 0 0 16px 0;">Companies hiring regularly contribute to a shared Bounty based on their subscription tier. When you make a hire, the fee comes from the Bounty, not from a per-hire invoice. You're pre-paying for recruitment capacity, not individual placements.</p>
+
+                            <p style="color: #ccc; font-size: 14px; line-height: 1.7; margin: 0 0 16px 0;"><strong style="color: #fff;">Example:</strong> A SaaS startup hires 4 people per quarter. Traditional agency fees = £60,000/year. RecX Direct Pro tier = £3,600/year. <strong style="color: rgb(168, 85, 247);">Savings: £56,400 annually.</strong></p>
+
+                            <p style="color: #ccc; font-size: 14px; line-height: 1.7; margin: 0;">Perfect for: Tech startups, scale-ups, and any business making 3+ hires per quarter. The more you hire, the more you save.</p>
+                          </td>
+                        </tr>
+                      </table>
+
+                      <!-- SECTION 5: Pricing Tiers -->
+                      <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #111; border: 1px solid #222; border-radius: 16px; margin-bottom: 24px;">
+                        <tr>
+                          <td style="padding: 32px 28px;">
+                            <h2 style="color: rgb(59, 130, 246); font-size: 22px; font-weight: 800; margin: 0 0 24px 0; text-transform: uppercase; letter-spacing: 0.05em;">💷 Pricing Tiers</h2>
+
+                            <!-- Entry Tier -->
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: rgba(168, 85, 247, 0.05); border: 1px solid rgba(168, 85, 247, 0.2); border-radius: 12px; margin-bottom: 16px;">
+                              <tr>
+                                <td style="padding: 20px;">
+                                  <p style="color: rgb(168, 85, 247); font-size: 16px; font-weight: 700; margin: 0 0 8px 0;">🟣 Entry Tier - £1/month</p>
+                                  <p style="color: #ccc; font-size: 14px; line-height: 1.7; margin: 0;">Perfect for solo recruiters testing the platform. Post 1 role OR 1 candidate. Access to full network. 50/50 fee splits. No credit card required for first month.</p>
+                                </td>
+                              </tr>
+                            </table>
+
+                            <!-- Lite Tier -->
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: rgba(59, 130, 246, 0.05); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 12px; margin-bottom: 16px;">
+                              <tr>
+                                <td style="padding: 20px;">
+                                  <p style="color: rgb(59, 130, 246); font-size: 16px; font-weight: 700; margin: 0 0 8px 0;">🔵 Lite Tier - £99/month</p>
+                                  <p style="color: #ccc; font-size: 14px; line-height: 1.7; margin: 0;">For active recruiters making 1-2 placements/month. Post up to 5 roles + 10 candidates. AI matching priority. 50/50 or 60/40 split options. Circle of Trust access.</p>
+                                </td>
+                              </tr>
+                            </table>
+
+                            <!-- Pro Tier -->
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: rgba(168, 85, 247, 0.05); border: 1px solid rgba(168, 85, 247, 0.2); border-radius: 12px; margin-bottom: 16px;">
+                              <tr>
+                                <td style="padding: 20px;">
+                                  <p style="color: rgb(168, 85, 247); font-size: 16px; font-weight: 700; margin: 0 0 8px 0;">🟣 Pro Tier - £299/month</p>
+                                  <p style="color: #ccc; font-size: 14px; line-height: 1.7; margin: 0;">For agencies and high-volume recruiters. Unlimited roles + candidates. 70/30 split options on premium roles. Advanced analytics dashboard. Dedicated account manager. RecX Direct Bounty access.</p>
+                                </td>
+                              </tr>
+                            </table>
+
+                            <!-- Teams Tier -->
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: rgba(59, 130, 246, 0.05); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 12px;">
+                              <tr>
+                                <td style="padding: 20px;">
+                                  <p style="color: rgb(59, 130, 246); font-size: 16px; font-weight: 700; margin: 0 0 8px 0;">🔵 Teams Tier - Custom Pricing</p>
+                                  <p style="color: #ccc; font-size: 14px; line-height: 1.7; margin: 0;">For recruitment agencies with 5+ consultants. Everything in Pro + team collaboration tools, white-label options, API access, custom integrations, and enterprise SLAs. Contact for quote.</p>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+
+                      <!-- SECTION 6: Success Stories (Expanded) -->
+                      <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(168, 85, 247, 0.05) 100%); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; margin-bottom: 24px;">
+                        <tr>
+                          <td style="padding: 32px 28px;">
+                            <h2 style="color: rgb(59, 130, 246); font-size: 22px; font-weight: 800; margin: 0 0 20px 0; text-transform: uppercase; letter-spacing: 0.05em;">🏆 Real Success Stories</h2>
+                            
+                            <!-- Story 1 -->
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: rgba(168, 85, 247, 0.08); border-left: 4px solid rgb(168, 85, 247); border-radius: 10px; margin-bottom: 20px;">
+                              <tr>
+                                <td style="padding: 20px;">
+                                  <p style="color: #e5e5e5; font-size: 15px; line-height: 1.7; margin: 0 0 16px 0; font-style: italic;">"💼 I'm a tech recruiter in London. Posted a Senior DevOps role that had been stuck for 6 weeks - client was getting frustrated. Within 48 hours of posting on RecXchange, a partner in Manchester submitted a perfect candidate they'd been sitting on for months. Interviewed Monday. Offered Wednesday. Started the following Monday. <strong style="color: rgb(168, 85, 247);">£15,000 fee split 50/50 = £7,500 for me.</strong> I'd have earned £0 without RecXchange."</p>
+                                  <p style="color: rgb(168, 85, 247); font-size: 14px; font-weight: 700; margin: 0;">— Sarah Mitchell, Tech Recruiter @ TechSource London</p>
+                                  <p style="color: #888; font-size: 12px; margin: 6px 0 0 0;">Joined: August 2025 • Placements: 7 • Total Earnings: £42,000</p>
+                                </td>
+                              </tr>
+                            </table>
+
+                            <!-- Story 2 -->
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: rgba(59, 130, 246, 0.08); border-left: 4px solid rgb(59, 130, 246); border-radius: 10px; margin-bottom: 20px;">
+                              <tr>
+                                <td style="padding: 20px;">
+                                  <p style="color: #e5e5e5; font-size: 15px; line-height: 1.7; margin: 0 0 16px 0; font-style: italic;">"💰 I had an amazing Finance candidate - CFA qualified, 8 years investment banking experience. Problem? I had zero roles for her. Posted her profile on RecXchange. Got matched to 3 different roles within 24 hours. Placed her with a partner in Edinburgh. <strong style="color: rgb(59, 130, 246);">Split fee: £12,000. My half: £6,000.</strong> Easiest money I've ever made. Now I upload every unplaced candidate immediately."</p>
+                                  <p style="color: rgb(59, 130, 246); font-size: 14px; font-weight: 700; margin: 0;">— James Thompson, Finance Recruiter @ Capital Talent Partners</p>
+                                  <p style="color: #888; font-size: 12px; margin: 6px 0 0 0;">Joined: June 2025 • Placements: 11 • Total Earnings: £68,500</p>
+                                </td>
+                              </tr>
+                            </table>
+
+                            <!-- Story 3 -->
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: rgba(168, 85, 247, 0.08); border-left: 4px solid rgb(168, 85, 247); border-radius: 10px; margin-bottom: 20px;">
+                              <tr>
+                                <td style="padding: 20px;">
+                                  <p style="color: #e5e5e5; font-size: 15px; line-height: 1.7; margin: 0 0 16px 0; font-style: italic;">"🚀 We're a small SaaS startup hiring 3-5 people per quarter. Used to pay traditional agency fees - costing us £30k+ annually. Switched to RecX Direct Pro tier (£299/month = £3,588/year). <strong style="color: rgb(168, 85, 247);">We're saving £26,412 per year.</strong> Same quality candidates. Zero per-hire invoices. Game-changer for startups watching burn rate."</p>
+                                  <p style="color: rgb(168, 85, 247); font-size: 14px; font-weight: 700; margin: 0;">— Emma Lewis, Head of Talent @ CloudSync (Series A SaaS)</p>
+                                  <p style="color: #888; font-size: 12px; margin: 6px 0 0 0;">RecX Direct subscriber since: January 2025 • Hires made: 14</p>
+                                </td>
+                              </tr>
+                            </table>
+
+                            <!-- Story 4 -->
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: rgba(59, 130, 246, 0.08); border-left: 4px solid rgb(59, 130, 246); border-radius: 10px; margin-bottom: 20px;">
+                              <tr>
+                                <td style="padding: 20px;">
+                                  <p style="color: #e5e5e5; font-size: 15px; line-height: 1.7; margin: 0 0 16px 0; font-style: italic;">"🎯 I'm a healthcare recruiter specializing in NHS roles. Posted 2 Consultant Radiologist positions (notoriously hard to fill). Got 4 qualified candidate submissions within one week. <strong style="color: rgb(59, 130, 246);">Filled both roles. Combined fees: £28,000. My share: £14,000.</strong> One month of work. RecXchange gives me access to specialists I'd never have found alone."</p>
+                                  <p style="color: rgb(59, 130, 246); font-size: 14px; font-weight: 700; margin: 0;">— Dr. Priya Patel, Healthcare Recruiter @ MedStaff Solutions</p>
+                                  <p style="color: #888; font-size: 12px; margin: 6px 0 0 0;">Joined: September 2025 • Placements: 9 • Total Earnings: £51,000</p>
+                                </td>
+                              </tr>
+                            </table>
+
+                            <!-- Story 5 -->
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: rgba(168, 85, 247, 0.08); border-left: 4px solid rgb(168, 85, 247); border-radius: 10px;">
+                              <tr>
+                                <td style="padding: 20px;">
+                                  <p style="color: #e5e5e5; font-size: 15px; line-height: 1.7; margin: 0 0 16px 0; font-style: italic;">"⚡ Solo recruiter, no team. I used to turn down roles if I didn't have an immediate candidate match - couldn't justify the sourcing time. Now I post every role to RecXchange. Even if I don't have a candidate, someone else does. <strong style="color: rgb(168, 85, 247);">Made £15,000 in Q4 2025 on roles I would have rejected.</strong> It's like having an army of sourcers working for you."</p>
+                                  <p style="color: rgb(168, 85, 247); font-size: 14px; font-weight: 700; margin: 0;">— Marcus Reynolds, Independent Recruiter (Engineering & Construction)</p>
+                                  <p style="color: #888; font-size: 12px; margin: 6px 0 0 0;">Joined: July 2025 • Placements: 6 • Total Earnings: £34,500</p>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+
+                      <!-- Platform Reviews -->
+                      <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 16px; margin-bottom: 24px;">
+                        <tr>
+                          <td style="padding: 28px; text-align: center;">
+                            <p style="color: #888; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; margin: 0 0 16px 0;">Verified Platform Rating</p>
+                            <p style="color: #fff; font-size: 42px; font-weight: 900; margin: 0 0 10px 0; line-height: 1;">⭐️⭐️⭐️⭐️⭐️</p>
+                            <p style="color: rgb(168, 85, 247); font-size: 32px; font-weight: 900; margin: 0 0 10px 0; line-height: 1;">4.8 / 5.0</p>
+                            <p style="color: #aaa; font-size: 15px; margin: 0;">Based on 2,400+ verified recruiter reviews</p>
+                          </td>
+                        </tr>
+                      </table>
+
+                      <!-- SECTION 7: FAQs -->
+                      <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #111; border: 1px solid #222; border-radius: 16px; margin-bottom: 24px;">
+                        <tr>
+                          <td style="padding: 32px 28px;">
+                            <h2 style="color: rgb(59, 130, 246); font-size: 22px; font-weight: 800; margin: 0 0 24px 0; text-transform: uppercase; letter-spacing: 0.05em;">❓ Frequently Asked Questions</h2>
+
+                            <!-- FAQ 1 -->
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 20px;">
+                              <tr>
+                                <td style="padding: 0 0 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                                  <p style="color: rgb(168, 85, 247); font-size: 16px; font-weight: 700; margin: 0 0 10px 0;">Q: How do I know the recruiters are vetted and trustworthy?</p>
+                                  <p style="color: #ccc; font-size: 14px; line-height: 1.7; margin: 0;"><strong style="color: #fff;">A:</strong> Every recruiter must verify their business registration, professional credentials, and go through a compliance check before joining. We monitor placement success rates and partner feedback. Poor performers are removed from the network.</p>
+                                </td>
+                              </tr>
+                            </table>
+
+                            <!-- FAQ 2 -->
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 20px;">
+                              <tr>
+                                <td style="padding: 0 0 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                                  <p style="color: rgb(59, 130, 246); font-size: 16px; font-weight: 700; margin: 0 0 10px 0;">Q: What if I have a confidential role I can't share publicly?</p>
+                                  <p style="color: #ccc; font-size: 14px; line-height: 1.7; margin: 0;"><strong style="color: #fff;">A:</strong> Use Circle of Trust. Create a private network with recruiters you already know and trust. Share confidential C-suite searches, exclusive mandates, or sensitive roles with only your chosen partners. No public broadcast.</p>
+                                </td>
+                              </tr>
+                            </table>
+
+                            <!-- FAQ 3 -->
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 20px;">
+                              <tr>
+                                <td style="padding: 0 0 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                                  <p style="color: rgb(168, 85, 247); font-size: 16px; font-weight: 700; margin: 0 0 10px 0;">Q: Who pays the RecXchange fee?</p>
+                                  <p style="color: #ccc; font-size: 14px; line-height: 1.7; margin: 0;"><strong style="color: #fff;">A:</strong> The hiring client pays one total fee (negotiated upfront). RecXchange takes a small platform fee (typically 5-8%), then splits the remaining fee 50/50 (or 60/40 or 70/30 depending on your tier and agreement) between the two collaborating recruiters.</p>
+                                </td>
+                              </tr>
+                            </table>
+
+                            <!-- FAQ 4 -->
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 20px;">
+                              <tr>
+                                <td style="padding: 0 0 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                                  <p style="color: rgb(59, 130, 246); font-size: 16px; font-weight: 700; margin: 0 0 10px 0;">Q: Can I cancel my subscription anytime?</p>
+                                  <p style="color: #ccc; font-size: 14px; line-height: 1.7; margin: 0;"><strong style="color: #fff;">A:</strong> Yes. All tiers (except Teams/Enterprise) are month-to-month with no long-term contracts. Cancel anytime from your dashboard. Any active placements in progress will still pay out according to existing SFAs.</p>
+                                </td>
+                              </tr>
+                            </table>
+
+                            <!-- FAQ 5 -->
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 20px;">
+                              <tr>
+                                <td style="padding: 0 0 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                                  <p style="color: rgb(168, 85, 247); font-size: 16px; font-weight: 700; margin: 0 0 10px 0;">Q: What happens if the candidate doesn't pass probation?</p>
+                                  <p style="color: #ccc; font-size: 14px; line-height: 1.7; margin: 0;"><strong style="color: #fff;">A:</strong> Standard SFAs include probation protection. If the candidate leaves or is terminated during probation (typically 3 months), you get a free replacement candidate from the same partner, or a pro-rata refund. Terms are clearly defined in the automated SFA.</p>
+                                </td>
+                              </tr>
+                            </table>
+
+                            <!-- FAQ 6 -->
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                              <tr>
+                                <td style="padding: 0;">
+                                  <p style="color: rgb(59, 130, 246); font-size: 16px; font-weight: 700; margin: 0 0 10px 0;">Q: How long does it take to see my first placement?</p>
+                                  <p style="color: #ccc; font-size: 14px; line-height: 1.7; margin: 0;"><strong style="color: #fff;">A:</strong> Depends on your network activity. Active recruiters posting roles + candidates typically see their first match within 48-72 hours. First placement usually happens within 2-4 weeks. Best results come from uploading 3+ roles AND 5+ candidates to maximize matching opportunities.</p>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+
+                      <!-- Final CTA -->
+                      <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.12) 0%, rgba(59, 130, 246, 0.12) 100%); border: 2px solid rgba(168, 85, 247, 0.4); border-radius: 16px;">
+                        <tr>
+                          <td style="padding: 40px 28px; text-align: center;">
+                            <h3 style="color: #fff; font-size: 26px; font-weight: 800; margin: 0 0 16px 0; line-height: 1.3;">Ready to Transform Your Recruitment?</h3>
+                            <p style="color: #ccc; font-size: 16px; line-height: 1.7; margin: 0 0 28px 0;">Join 15,000+ recruiters already earning more by working together. <strong style="color: rgb(168, 85, 247);">Start at £1/month</strong> with zero long-term commitments. Cancel anytime.</p>
+                            
+                            <!--[if mso]>
+                            <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://app.recxchange.io/register?trigger_link=jYQNc9YXcMkYPvo3HZfC" style="height:56px;v-text-anchor:middle;width:280px;" arcsize="18%" stroke="f" fillcolor="rgb(168, 85, 247)">
+                              <w:anchorlock/>
+                              <center style="color:#ffffff;font-family:sans-serif;font-size:15px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;">Join RecXchange Now</center>
+                            </v:roundrect>
+                            <![endif]-->
+                            <!--[if !mso]><!-->
+                            <a href="https://app.recxchange.io/register?trigger_link=jYQNc9YXcMkYPvo3HZfC" style="display: inline-block; background: linear-gradient(135deg, rgb(168, 85, 247) 0%, rgb(59, 130, 246) 100%); background-color: rgb(168, 85, 247); color: #fff; text-decoration: none; font-weight: 700; font-size: 15px; padding: 18px 48px; border-radius: 10px; text-transform: uppercase; letter-spacing: 0.1em;">Join RecXchange Now</a>
+                            <!--<![endif]-->
+                            
+                            <p style="color: #888; font-size: 13px; margin: 20px 0 0 0;">✅ No credit card required for Entry tier • ✅ Cancel anytime • ✅ First placement fee-free trial</p>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+
+                  <!-- Footer -->
+                  <tr>
+                    <td style="text-align: center; padding: 36px 24px; color: #666; font-size: 12px; border-top: 1px solid #222;">
+                      <p style="margin: 0 0 12px 0;">Questions? Reply to this email or <a href="https://recxchange.io/contact" style="color: rgb(59, 130, 246); text-decoration: none; font-weight: 600;">book a call with our team</a></p>
+                      <p style="margin: 0 0 4px 0;"><strong style="color: #fff; font-size: 14px;">The RecXchange Team</strong></p>
+                      <p style="margin: 0; font-size: 11px;">Transforming recruitment through collaboration</p>
+                      <p style="margin: 12px 0 0 0; font-size: 11px;">Generated on ${new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
+                    </td>
+                  </tr>
+                  
+                </table>
+              </td>
+            </tr>
+          </table>
+        </body>
+        </html>
+      `;
     },
   },
 };
 
+/**
+ * POST /api/quick-action
+ * 
+ * Handles quick action form submissions
+ */
 export async function POST(request: NextRequest) {
-  const ip = getClientIP(request);
-  
-  // Rate limiting check
-  const rateLimitResult = checkRateLimit(ip, 'form');
-  if (!rateLimitResult.success) {
-    return NextResponse.json(
-      { 
-        success: false, 
-        error: 'Too many requests. Please try again later.',
-        retryAfter: rateLimitResult.resetIn 
-      },
-      { status: 429, headers: getSecurityHeaders() }
-    );
-  }
+  const securityHeaders = getSecurityHeaders();
 
   try {
-    const body: QuickActionRequest = await request.json();
-
-    // Validate form data - validateFormData throws error if validation fails
-    try {
-      validateFormData(body);
-    } catch (validationError) {
+    const clientIP = getClientIP(request);
+    const ipRateLimit = checkRateLimit(clientIP, 'form');
+    
+    if (!ipRateLimit.success) {
       return NextResponse.json(
-        { success: false, error: validationError instanceof Error ? validationError.message : 'Invalid form data' },
-        { status: 400, headers: getSecurityHeaders() }
+        { 
+          error: 'Too many requests. Please try again later.',
+          resetIn: Math.ceil(ipRateLimit.resetIn / 1000)
+        },
+        { 
+          status: 429,
+          headers: {
+            ...securityHeaders,
+            'Retry-After': String(Math.ceil(ipRateLimit.resetIn / 1000)),
+          }
+        }
       );
     }
 
-    const { firstName, lastName, email, actionType, source, industries, marketingConsent } = body;
+    const body: QuickActionRequest = await request.json();
+    const { actionType, source, industries, marketingConsent } = body;
 
-    // Get action configuration
+    let sanitizedData;
+    try {
+      sanitizedData = validateFormData(body);
+    } catch (error) {
+      return NextResponse.json(
+        { error: error instanceof Error ? error.message : 'Invalid input data' },
+        { status: 400, headers: securityHeaders }
+      );
+    }
+
+    const { firstName, lastName, email } = sanitizedData;
+
+    if (!actionType || !source) {
+      return NextResponse.json(
+        { error: 'Missing required fields' },
+        { status: 400, headers: securityHeaders }
+      );
+    }
+
+    const emailRateLimit = checkRateLimit(`email:${email}`, 'email');
+    if (!emailRateLimit.success) {
+      return NextResponse.json(
+        { 
+          error: 'Too many submissions from this email. Please try again later.',
+          resetIn: Math.ceil(emailRateLimit.resetIn / 1000)
+        },
+        { 
+          status: 429,
+          headers: {
+            ...securityHeaders,
+            'Retry-After': String(Math.ceil(emailRateLimit.resetIn / 1000)),
+          }
+        }
+      );
+    }
+
     const config = ACTION_CONFIG[actionType];
     if (!config) {
       return NextResponse.json(
-        { success: false, error: 'Invalid action type' },
-        { status: 400, headers: getSecurityHeaders() }
+        { error: 'Invalid action type' },
+        { status: 400, headers: securityHeaders }
       );
     }
 
-    // Track analytics event - FIXED: use correct event name from analytics.ts EventName type
-    trackEvent('quick_action_form_submitted', {
-      form_type: actionType,
-      source,
-    });
+    const GHL_API_KEY = process.env.GHL_API_KEY;
+    const GHL_LOCATION_ID = process.env.GHL_LOCATION_ID;
+    const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
+    const FROM_EMAIL = process.env.SENDGRID_FROM_EMAIL || 'tom@recxchange.io';
 
-    // TODO: Send to GoHighLevel
-    // await sendToGHL({
-    //   email,
-    //   firstName,
-    //   lastName,
-    //   tags: [config.ghlTag],
-    //   source,
-    //   marketingConsent,
-    //   customFields: { industries }
-    // });
+    // Create/update GHL contact
+    if (GHL_API_KEY && GHL_LOCATION_ID) {
+      try {
+        const tags = [config.ghlTag, 'website', 'quick-action'];
+        
+        if (industries && industries.length > 0) {
+          const sanitizedIndustries = industries
+            .filter(ind => typeof ind === 'string')
+            .map(ind => ind.substring(0, 50))
+            .slice(0, 10);
+          tags.push(...sanitizedIndustries);
+        }
 
-    // TODO: Send auto-response email via SendGrid
-    // await sendEmail({
-    //   to: email,
-    //   subject: config.autoResponseSubject,
-    //   html: config.autoResponseTemplate(firstName, industries),
-    // });
+        if (marketingConsent === true) {
+          tags.push('marketing-consent-given');
+        } else if (marketingConsent === false) {
+          tags.push('marketing-consent-declined');
+        }
 
-    console.log('Quick action processed:', {
-      email,
-      actionType,
-      ghlTag: config.ghlTag,
-      subject: config.autoResponseSubject,
-    });
+        await fetch('https://rest.gohighlevel.com/v1/contacts/', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${GHL_API_KEY}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            firstName,
+            lastName,
+            email,
+            locationId: GHL_LOCATION_ID,
+            tags,
+            source: `RecXchange Quick Action - ${source}`,
+            customFields: {
+              action_type: actionType,
+              source_page: source,
+              action_date: new Date().toISOString(),
+              industries: industries && industries.length > 0 ? industries.join(', ') : '',
+              marketing_consent: marketingConsent === true ? 'yes' : marketingConsent === false ? 'no' : 'not_asked',
+              marketing_consent_date: marketingConsent !== undefined ? new Date().toISOString() : '',
+            }
+          })
+        });
+      } catch (error) {
+        console.error('[Quick Action] Failed to create GHL contact:', error);
+      }
+    }
+
+    // Send auto-response email
+    if (SENDGRID_API_KEY) {
+      try {
+        await fetch('https://api.sendgrid.com/v3/mail/send', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${SENDGRID_API_KEY}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            personalizations: [{
+              to: [{ email, name: `${firstName} ${lastName}` }],
+              subject: config.autoResponseSubject
+            }],
+            from: { email: FROM_EMAIL, name: 'RecXchange' },
+            content: [{
+              type: 'text/html',
+              value: actionType === 'match_candidate' 
+                ? config.autoResponseTemplate(firstName, industries)
+                : config.autoResponseTemplate(firstName)
+            }]
+          })
+        });
+      } catch (error) {
+        console.error('[Quick Action] Failed to send auto-response:', error);
+      }
+    }
+
+    // Track analytics
+    try {
+      trackEvent('quick_action_form_submitted', {
+        action_type: actionType,
+        page: source,
+        industries: industries && industries.length > 0 ? industries.join(', ') : 'none',
+        marketing_consent: marketingConsent === true ? 'given' : marketingConsent === false ? 'declined' : 'not_asked',
+      }, { bypassConsent: true });
+    } catch (error) {
+      console.error('[Quick Action] Failed to track event:', error);
+    }
 
     return NextResponse.json(
       {
         success: true,
-        message: 'Request processed successfully. Check your email for details!',
+        message: 'Quick action processed successfully',
       },
-      { status: 200, headers: getSecurityHeaders() }
+      { headers: securityHeaders }
     );
-
   } catch (error) {
-    console.error('Quick action error:', error);
+    console.error('[Quick Action] Error:', error);
     return NextResponse.json(
-      { 
-        success: false, 
-        error: 'An error occurred processing your request. Please try again.' 
-      },
-      { status: 500, headers: getSecurityHeaders() }
+      { error: 'Internal server error' },
+      { status: 500, headers: securityHeaders }
     );
   }
-}
-
-export async function GET() {
-  return NextResponse.json(
-    { error: 'Method not allowed' },
-    { status: 405, headers: getSecurityHeaders() }
-  );
 }
