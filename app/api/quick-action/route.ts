@@ -8,12 +8,13 @@ import {
 } from '@/lib/security';
 import { generateMatchCandidateEmail } from '@/lib/emails/templates/match-candidate';
 import { generateHowItWorksRecruiterEmail } from '@/lib/emails/templates/how-it-works-recruiter';
+import { generateHowItWorksHiringManagerEmail } from '@/lib/emails/templates/how-it-works-hiring-manager';
 
 interface QuickActionRequest {
   firstName: string;
   lastName: string;
   email: string;
-  actionType: 'match_candidate' | 'explain_recx_direct';
+  actionType: 'match_candidate' | 'explain_recx_direct' | 'explain_recx_direct_hm';
   source: string;
   industries?: string[]; // Optional industries for match_candidate
   marketingConsent?: boolean; // GDPR marketing consent
@@ -26,9 +27,14 @@ const ACTION_CONFIG = {
     autoResponseTemplate: generateMatchCandidateEmail,
   },
   explain_recx_direct: {
-    ghlTag: 'Website - QA RecX Direct',
+    ghlTag: 'Website - QA RecX Direct Recruiter',
     autoResponseSubject: 'How RecXchange Works - Your Complete Guide',
     autoResponseTemplate: generateHowItWorksRecruiterEmail,
+  },
+  explain_recx_direct_hm: {
+    ghlTag: 'Website - QA RecX Direct Hiring Manager',
+    autoResponseSubject: 'How RecXchange Works - For Hiring Managers',
+    autoResponseTemplate: generateHowItWorksHiringManagerEmail,
   },
 };
 
