@@ -54,7 +54,7 @@ export function generateHowItWorksHiringManagerEmail(firstName: string): string 
           <tr>
             <td style="padding: 32px 24px 24px 24px;">
               <p style="margin: 0; color: #1e293b; font-size: 17px; line-height: 1.6; font-weight: 600;">Hi ${firstName},</p>
-              <p style="margin: 18px 0 0 0; color: #475569; font-size: 15px; line-height: 1.7;">You're evaluating whether RecX Direct is the right hiring solution for your organization. Smart move—this decision will impact your team's performance for years to come.</p>
+              <p style="margin: 18px 0 0 0; color: #475569; font-size: 15px; line-height: 1.7;">You're evaluating whether RecX Direct is the right hiring solution for your organization. Smart move. This decision will impact your team's performance for years to come.</p>
               <p style="margin: 14px 0 0 0; color: #475569; font-size: 15px; line-height: 1.7;">Here's everything you need to make an informed decision in the next <strong style="color: #667eea;">10 minutes</strong>.</p>
             </td>
           </tr>
@@ -66,7 +66,7 @@ export function generateHowItWorksHiringManagerEmail(firstName: string): string 
                 <tr>
                   <td style="padding: 18px 20px;">
                     <p style="margin: 0 0 8px 0; color: #065f46; font-size: 14px; line-height: 1.6; font-weight: 600;">🏆 <strong>247 companies</strong> have hired through RecX Direct in the last 90 days</p>
-                    <p style="margin: 0; color: #047857; font-size: 13px; line-height: 1.5;">Average time-to-hire: <strong>18 days</strong> | Average cost saving: <strong>$8,200 per hire</strong></p>
+                    <p style="margin: 0; color: #047857; font-size: 13px; line-height: 1.5;">Average time-to-offer: <strong>12 days</strong> | Average fee: <strong>14.5%</strong> (vs industry 25%+)</p>
                   </td>
                 </tr>
               </table>
@@ -101,7 +101,7 @@ export function generateHowItWorksHiringManagerEmail(firstName: string): string 
                 </tr>
               </table>
               
-              <p style="margin: 16px 0 0 0; color: #475569; font-size: 14px; line-height: 1.7; font-style: italic; padding: 0 4px;">For a company making 10 hires/year at $100k average salary, you're spending <strong style="color: #ef4444;">$250,000 in recruitment fees alone</strong>—not including lost productivity from slow fills.</p>
+              <p style="margin: 16px 0 0 0; color: #475569; font-size: 14px; line-height: 1.7; font-style: italic; padding: 0 4px;">For a company making 10 hires per year at $100k average salary, you're spending <strong style="color: #ef4444;">$250,000 in recruitment fees alone</strong>. Plus lost productivity from slow fills.</p>
             </td>
           </tr>
 
@@ -111,17 +111,23 @@ export function generateHowItWorksHiringManagerEmail(firstName: string): string 
               <table role="presentation" style="width: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 16px;">
                 <tr>
                   <td style="padding: 32px 24px;">
-                    <h2 style="margin: 0 0 20px 0; color: #ffffff; font-size: 24px; font-weight: 800; line-height: 1.3;">RecX Direct: The Smart Alternative</h2>
+                    <h2 style="margin: 0 0 24px 0; color: #ffffff; font-size: 24px; font-weight: 800; line-height: 1.3; text-align: center;">RecX Direct: The Smart Alternative</h2>
                     
                     <!-- Benefit 1 -->
                     <table role="presentation" style="width: 100%; background-color: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px); border-radius: 12px; margin-bottom: 16px;">
                       <tr>
                         <td style="padding: 20px;">
-                          <div style="margin-bottom: 12px;">
-                            <span style="font-size: 22px; margin-right: 10px;">💰</span>
-                            <span style="color: #ffffff; font-size: 17px; font-weight: 700;">12-18% fees (vs 25-30%)</span>
-                          </div>
-                          <p style="margin: 0; padding-left: 32px; color: rgba(255, 255, 255, 0.9); font-size: 14px; line-height: 1.6;">Save <strong>$7,000-$12,000 per hire</strong>. Set your own fee. Pay only on successful placement.</p>
+                          <table role="presentation" style="width: 100%;">
+                            <tr>
+                              <td style="width: 36px; vertical-align: top;">
+                                <span style="font-size: 24px;">💰</span>
+                              </td>
+                              <td style="vertical-align: top;">
+                                <div style="color: #ffffff; font-size: 17px; font-weight: 700; margin-bottom: 8px;">12-18% fees (vs 25-30%)</div>
+                                <p style="margin: 0; color: rgba(255, 255, 255, 0.9); font-size: 14px; line-height: 1.6;">Save $7,000 to $12,000 per hire. Set your own fee. Pay only on successful placement.</p>
+                              </td>
+                            </tr>
+                          </table>
                         </td>
                       </tr>
                     </table>
@@ -130,11 +136,17 @@ export function generateHowItWorksHiringManagerEmail(firstName: string): string 
                     <table role="presentation" style="width: 100%; background-color: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px); border-radius: 12px; margin-bottom: 16px;">
                       <tr>
                         <td style="padding: 20px;">
-                          <div style="margin-bottom: 12px;">
-                            <span style="font-size: 22px; margin-right: 10px;">⚡</span>
-                            <span style="color: #ffffff; font-size: 17px; font-weight: 700;">First candidates in 48 hours</span>
-                          </div>
-                          <p style="margin: 0; padding-left: 32px; color: rgba(255, 255, 255, 0.9); font-size: 14px; line-height: 1.6;"><strong>15,000+ recruiters</strong> compete for your role. Average time-to-hire: <strong>18 days</strong> (vs 45-60).</p>
+                          <table role="presentation" style="width: 100%;">
+                            <tr>
+                              <td style="width: 36px; vertical-align: top;">
+                                <span style="font-size: 24px;">⚡</span>
+                              </td>
+                              <td style="vertical-align: top;">
+                                <div style="color: #ffffff; font-size: 17px; font-weight: 700; margin-bottom: 8px;">First candidates in 48 hours</div>
+                                <p style="margin: 0; color: rgba(255, 255, 255, 0.9); font-size: 14px; line-height: 1.6;">15,000+ recruiters compete for your role. Average time-to-offer: 12 days (vs 45-60 days).</p>
+                              </td>
+                            </tr>
+                          </table>
                         </td>
                       </tr>
                     </table>
@@ -143,11 +155,17 @@ export function generateHowItWorksHiringManagerEmail(firstName: string): string 
                     <table role="presentation" style="width: 100%; background-color: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px); border-radius: 12px; margin-bottom: 16px;">
                       <tr>
                         <td style="padding: 20px;">
-                          <div style="margin-bottom: 12px;">
-                            <span style="font-size: 22px; margin-right: 10px;">🎯</span>
-                            <span style="color: #ffffff; font-size: 17px; font-weight: 700;">One dedicated account manager</span>
-                          </div>
-                          <p style="margin: 0; padding-left: 32px; color: rgba(255, 255, 255, 0.9); font-size: 14px; line-height: 1.6;">No agency spam. No juggling emails. One point of contact manages <strong>everything</strong>.</p>
+                          <table role="presentation" style="width: 100%;">
+                            <tr>
+                              <td style="width: 36px; vertical-align: top;">
+                                <span style="font-size: 24px;">🎯</span>
+                              </td>
+                              <td style="vertical-align: top;">
+                                <div style="color: #ffffff; font-size: 17px; font-weight: 700; margin-bottom: 8px;">One dedicated account manager</div>
+                                <p style="margin: 0; color: rgba(255, 255, 255, 0.9); font-size: 14px; line-height: 1.6;">No agency spam. No juggling emails. One point of contact manages everything.</p>
+                              </td>
+                            </tr>
+                          </table>
                         </td>
                       </tr>
                     </table>
@@ -156,11 +174,17 @@ export function generateHowItWorksHiringManagerEmail(firstName: string): string 
                     <table role="presentation" style="width: 100%; background-color: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px); border-radius: 12px;">
                       <tr>
                         <td style="padding: 20px;">
-                          <div style="margin-bottom: 12px;">
-                            <span style="font-size: 22px; margin-right: 10px;">✅</span>
-                            <span style="color: #ffffff; font-size: 17px; font-weight: 700;">Zero upfront costs</span>
-                          </div>
-                          <p style="margin: 0; padding-left: 32px; color: rgba(255, 255, 255, 0.9); font-size: 14px; line-height: 1.6;">No retainers. No subscriptions. No exclusivity. Post unlimited roles free. Cancel anytime.</p>
+                          <table role="presentation" style="width: 100%;">
+                            <tr>
+                              <td style="width: 36px; vertical-align: top;">
+                                <span style="font-size: 24px;">✅</span>
+                              </td>
+                              <td style="vertical-align: top;">
+                                <div style="color: #ffffff; font-size: 17px; font-weight: 700; margin-bottom: 8px;">Zero upfront costs</div>
+                                <p style="margin: 0; color: rgba(255, 255, 255, 0.9); font-size: 14px; line-height: 1.6;">No retainers. No subscriptions. No exclusivity. Post unlimited roles free. Cancel anytime.</p>
+                              </td>
+                            </tr>
+                          </table>
                         </td>
                       </tr>
                     </table>
@@ -184,7 +208,7 @@ export function generateHowItWorksHiringManagerEmail(firstName: string): string 
                         <td style="padding: 16px;">
                           <div style="color: #047857; font-size: 13px; font-weight: 600; margin-bottom: 8px;">TRADITIONAL AGENCY</div>
                           <div style="color: #065f46; font-size: 15px; margin-bottom: 4px;">25% fee × $100k salary = <strong style="font-size: 18px;">$25,000</strong></div>
-                          <div style="color: #047857; font-size: 13px;">+ 45 days time-to-hire</div>
+                          <div style="color: #047857; font-size: 13px;">+ 45 days time-to-offer</div>
                         </td>
                       </tr>
                     </table>
@@ -195,7 +219,7 @@ export function generateHowItWorksHiringManagerEmail(firstName: string): string 
                         <td style="padding: 16px;">
                           <div style="color: #065f46; font-size: 13px; font-weight: 600; margin-bottom: 8px;">RECX DIRECT</div>
                           <div style="color: #065f46; font-size: 15px; margin-bottom: 4px;">15% fee × $100k salary = <strong style="font-size: 18px;">$15,000</strong></div>
-                          <div style="color: #047857; font-size: 13px;">+ 18 days time-to-hire</div>
+                          <div style="color: #047857; font-size: 13px;">+ 12 days time-to-offer</div>
                         </td>
                       </tr>
                     </table>
@@ -216,7 +240,7 @@ export function generateHowItWorksHiringManagerEmail(firstName: string): string 
                       </tr>
                     </table>
                     
-                    <p style="margin: 16px 0 0 0; text-align: center; color: #065f46; font-size: 15px; font-weight: 600;">10 hires/year = <span style="color: #10b981; font-size: 18px; font-weight: 800;">$100,000 saved</span></p>
+                    <p style="margin: 16px 0 0 0; text-align: center; color: #065f46; font-size: 15px; font-weight: 600;">10 hires per year = <span style="color: #10b981; font-size: 18px; font-weight: 800;">$100,000 saved</span></p>
                   </td>
                 </tr>
               </table>
@@ -323,7 +347,7 @@ export function generateHowItWorksHiringManagerEmail(firstName: string): string 
                 <tr>
                   <td style="padding: 20px; text-align: center;">
                     <p style="margin: 0 0 10px 0; color: #92400e; font-size: 15px; font-weight: 700; line-height: 1.6;">🛡️ <strong>100% Risk-Free Guarantee</strong></p>
-                    <p style="margin: 0; color: #b45309; font-size: 14px; line-height: 1.6;">Post your first role completely free. If you don't receive qualified candidates within 48 hours, we'll <strong>personally</strong> source 3 candidates for you at no cost.</p>
+                    <p style="margin: 0; color: #b45309; font-size: 14px; line-height: 1.6;">Post your first role completely free. If you don't receive qualified candidates within 48 hours, we'll personally source 3 candidates for you at no cost.</p>
                   </td>
                 </tr>
               </table>
@@ -338,7 +362,7 @@ export function generateHowItWorksHiringManagerEmail(firstName: string): string 
               <table role="presentation" style="width: 100%; background-color: #f8fafc; border-radius: 12px; border-left: 4px solid #667eea; margin-bottom: 14px;">
                 <tr>
                   <td style="padding: 18px 20px;">
-                    <p style="margin: 0 0 10px 0; color: #475569; font-size: 14px; line-height: 1.7; font-style: italic;">"We filled 3 senior engineering roles in 21 days and saved $32,000 in recruitment fees. The quality was better than our previous agency."</p>
+                    <p style="margin: 0 0 10px 0; color: #475569; font-size: 14px; line-height: 1.7; font-style: italic;">"We went from offer to acceptance in 8 days. The senior recruiters we worked with really understood our technical requirements. Having 400+ recruiters working on our role gave us options no single agency could provide."</p>
                     <p style="margin: 0; color: #667eea; font-size: 13px; font-weight: 700;">— Sarah Chen, VP Engineering at TechCorp</p>
                   </td>
                 </tr>
@@ -347,7 +371,7 @@ export function generateHowItWorksHiringManagerEmail(firstName: string): string 
               <table role="presentation" style="width: 100%; background-color: #f8fafc; border-radius: 12px; border-left: 4px solid #667eea; margin-bottom: 14px;">
                 <tr>
                   <td style="padding: 18px 20px;">
-                    <p style="margin: 0 0 10px 0; color: #475569; font-size: 14px; line-height: 1.7; font-style: italic;">"Finally, a platform that actually works. No more spam from 50 agencies. Just one account manager and top-tier candidates."</p>
+                    <p style="margin: 0 0 10px 0; color: #475569; font-size: 14px; line-height: 1.7; font-style: italic;">"The quality of candidates was exceptional. Every recruiter we dealt with was senior level and knew exactly what they were doing. We filled 3 roles at half the fee our previous agency charged."</p>
                     <p style="margin: 0; color: #667eea; font-size: 13px; font-weight: 700;">— Michael Rodriguez, Head of Talent at GrowthLabs</p>
                   </td>
                 </tr>
@@ -356,7 +380,7 @@ export function generateHowItWorksHiringManagerEmail(firstName: string): string 
               <table role="presentation" style="width: 100%; background-color: #f8fafc; border-radius: 12px; border-left: 4px solid #667eea;">
                 <tr>
                   <td style="padding: 18px 20px;">
-                    <p style="margin: 0 0 10px 0; color: #475569; font-size: 14px; line-height: 1.7; font-style: italic;">"We've made 12 hires through RecX Direct this year. Average fee: 14%. Our CFO is thrilled with the cost savings."</p>
+                    <p style="margin: 0 0 10px 0; color: #475569; font-size: 14px; line-height: 1.7; font-style: italic;">"Our internal team and RPO could never match this level of market coverage. 400+ experienced recruiters competing on our roles means we see candidates within days, not weeks. Game changer."</p>
                     <p style="margin: 0; color: #667eea; font-size: 13px; font-weight: 700;">— Amanda Park, Director of HR at FinanceFlow</p>
                   </td>
                 </tr>
