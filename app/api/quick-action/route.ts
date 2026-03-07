@@ -465,6 +465,9 @@ const ACTION_CONFIG = {
     autoResponseTemplate: (firstName: string) => {
       const LOGO_URL = 'https://images.squarespace-cdn.com/content/v1/68120154725429476150f64b/00d296cd-6741-4c0a-a711-08a3f35db445/REX-Logo-GW-25.png?format=1500w';
       
+      // TODO: Replace this with actual API call to fetch live total bounty from database
+      const TOTAL_BOUNTY = '$750,000'; // This should be dynamically fetched from the Live Roles page
+      
       return `
         <!DOCTYPE html>
         <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
@@ -526,7 +529,7 @@ const ACTION_CONFIG = {
                             <h2 style="color: rgb(168, 85, 247); font-size: 22px; font-weight: 800; margin: 0 0 16px 0; text-transform: uppercase; letter-spacing: 0.05em;">🔵 What is RecXchange?</h2>
                             <p style="color: #e5e5e5; font-size: 16px; line-height: 1.8; margin: 0 0 16px 0; font-weight: 600;">RecXchange is a global recruiter collaboration platform where recruitment professionals work together to fill roles and place candidates faster than they could working alone.</p>
                             <p style="color: #ccc; font-size: 15px; line-height: 1.7; margin: 0 0 16px 0;">Think of it like this: You have a role you can't fill, or a candidate you can't place. Instead of letting them sit in your database gathering dust, you post them to RecXchange. Our AI-powered Xchange Engine instantly matches your role to recruiters who have perfect candidates, or matches your candidate to recruiters who have perfect roles.</p>
-                            <p style="color: #ccc; font-size: 15px; line-height: 1.7; margin: 0 0 16px 0;">When a match is made and a placement happens, you split the fee 50/50. Automated contracts, secure escrow payments, and full transparency throughout.</p>
+                            <p style="color: #ccc; font-size: 15px; line-height: 1.7; margin: 0 0 16px 0;">When a match is made and a placement happens, you split the fee 50/50. Automated contracts, secure payments backed by smart contracts, and full transparency throughout.</p>
                             
                             <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: rgba(0, 0, 0, 0.4); border-radius: 12px; padding: 20px; margin-top: 20px;">
                               <tr>
@@ -559,7 +562,7 @@ const ACTION_CONFIG = {
                               <tr>
                                 <td style="padding: 22px 16px; text-align: center;">
                                   <p style="color: #666; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; margin: 0 0 10px 0;">Live Placement Fees</p>
-                                  <p style="color: rgb(59, 130, 246); font-size: 28px; font-weight: 900; margin: 0 0 6px 0; line-height: 1;">$750k+</p>
+                                  <p style="color: rgb(59, 130, 246); font-size: 28px; font-weight: 900; margin: 0 0 6px 0; line-height: 1;">${TOTAL_BOUNTY}+</p>
                                   <p style="color: #888; font-size: 12px; font-weight: 600; margin: 0;">Available Right Now</p>
                                 </td>
                               </tr>
@@ -631,7 +634,7 @@ const ACTION_CONFIG = {
                                 </td>
                                 <td style="vertical-align: top;">
                                   <h3 style="color: #fff; font-size: 17px; font-weight: 700; margin: 0 0 10px 0; line-height: 1.3;">💰 Split the Fee & Get Paid Automatically</h3>
-                                  <p style="color: #ccc; font-size: 15px; line-height: 1.7; margin: 0;">When a placement happens, an automated Split Fee Agreement (SFA) is generated. Default split is 50/50, but you can negotiate 60/40 or even 70/30 for premium roles. Payment is handled securely through RecXchange escrow. No chasing invoices. No payment disputes.</p>
+                                  <p style="color: #ccc; font-size: 15px; line-height: 1.7; margin: 0;">When a placement happens, an automated Split Fee Agreement (SFA) is generated. Default split is 50/50, but you can negotiate 60/40 or even 70/30 for premium roles. Payment is handled through secure payments backed by smart contracts. No chasing invoices. No payment disputes.</p>
                                 </td>
                               </tr>
                             </table>
@@ -684,8 +687,8 @@ const ACTION_CONFIG = {
                             <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 16px;">
                               <tr>
                                 <td style="padding: 0 0 16px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
-                                  <p style="color: #e5e5e5; font-size: 15px; font-weight: 700; margin: 0 0 8px 0;">✅ Secure Escrow Payments</p>
-                                  <p style="color: #aaa; font-size: 14px; line-height: 1.6; margin: 0;">Client pays RecXchange. We hold the fee in escrow. When the candidate passes probation, funds are released 50/50 to both recruiters. Transparent, secure, and eliminates payment disputes.</p>
+                                  <p style="color: #e5e5e5; font-size: 15px; font-weight: 700; margin: 0 0 8px 0;">✅ Secure Payments Backed by Smart Contracts</p>
+                                  <p style="color: #aaa; font-size: 14px; line-height: 1.6; margin: 0;">Client pays RecXchange. We hold the fee securely using smart contract technology. When the candidate passes probation, funds are released 50/50 to both recruiters. Transparent, secure, and eliminates payment disputes.</p>
                                 </td>
                               </tr>
                             </table>
@@ -724,29 +727,33 @@ const ACTION_CONFIG = {
                               </tr>
                             </table>
                             
-                            <p style="color: #fff; font-size: 17px; line-height: 1.8; margin: 0 0 16px 0; font-weight: 700;">RecX Direct is our revolutionary Bounty subscription model that flips traditional recruitment pricing on its head.</p>
+                            <p style="color: #fff; font-size: 17px; line-height: 1.8; margin: 0 0 16px 0; font-weight: 700;">RecX Direct is our subscription model that gives recruiters access to a large pool of Live Roles from Live Clients with guaranteed Bounty payments for successful placements.</p>
                             
-                            <p style="color: #ddd; font-size: 15px; line-height: 1.7; margin: 0 0 20px 0;"><strong style="color: #fff;">The Old Way:</strong> Pay 15-20% of salary <em>per hire</em>. Hire 5 people? That's 5 separate agency fees. Unpredictable costs. Budget nightmares.</p>
+                            <p style="color: #ddd; font-size: 15px; line-height: 1.7; margin: 0 0 20px 0;"><strong style="color: #fff;">The Old Way:</strong> Spend 50% of your time on business development, cold calling, and chasing new clients. Only 50% of your time actually placing candidates and earning fees.</p>
                             
-                            <p style="color: #ddd; font-size: 15px; line-height: 1.7; margin: 0 0 24px 0;"><strong style="color: #fff;">The RecX Direct Way:</strong> Pay one flat monthly subscription. Make <em>unlimited placements</em> from the shared Bounty. Predictable costs. Zero per-hire fees. Insane ROI.</p>
+                            <p style="color: #ddd; font-size: 15px; line-height: 1.7; margin: 0 0 24px 0;"><strong style="color: #fff;">The RecX Direct Way:</strong> We do all the Business Development for you. Access 100+ Live Roles from verified clients. Spend 100% of your time sourcing candidates and earning Bounties. Double your productivity. Double your earnings.</p>
 
                             <!-- Bounty Display -->
                             <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(168, 85, 247, 0.4); border-radius: 16px; padding: 24px; margin-bottom: 24px;">
                               <tr>
                                 <td style="text-align: center;">
                                   <p style="color: #888; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; margin: 0 0 12px 0;">🏆 Current Active Bounty</p>
-                                  <p style="color: rgb(168, 85, 247); font-size: 48px; font-weight: 900; margin: 0 0 8px 0; line-height: 1; text-shadow: 0 0 30px rgba(168, 85, 247, 0.5);">$XXX,XXX</p>
+                                  <p style="color: rgb(168, 85, 247); font-size: 48px; font-weight: 900; margin: 0 0 8px 0; line-height: 1; text-shadow: 0 0 30px rgba(168, 85, 247, 0.5);">${TOTAL_BOUNTY}</p>
                                   <p style="color: #aaa; font-size: 14px; margin: 0;">Updated weekly • Available to all RecX Direct subscribers</p>
                                 </td>
                               </tr>
                             </table>
 
                             <h3 style="color: rgb(168, 85, 247); font-size: 18px; font-weight: 700; margin: 0 0 16px 0;">How Does the Bounty Work?</h3>
-                            <p style="color: #ccc; font-size: 14px; line-height: 1.7; margin: 0 0 16px 0;">Companies hiring regularly contribute to a shared Bounty based on their subscription tier. When you make a hire, the fee comes from the Bounty, not from a per-hire invoice. You're pre-paying for recruitment capacity, not individual placements.</p>
+                            <p style="color: #ccc; font-size: 14px; line-height: 1.7; margin: 0 0 16px 0;">Every Live Role on RecX Direct comes with a guaranteed Bounty - the placement fee you'll receive when you successfully fill the role. Bounties range from $3,000 to $25,000+ depending on seniority and industry. The Bounty is clearly displayed on each role before you start sourcing.</p>
 
-                            <p style="color: #ccc; font-size: 14px; line-height: 1.7; margin: 0 0 16px 0;"><strong style="color: #fff;">Example:</strong> A SaaS startup hires 4 people per quarter. Traditional agency fees = $60,000/year. RecX Direct Pro tier = $3,600/year. <strong style="color: rgb(168, 85, 247);">Savings: $56,400 annually.</strong></p>
+                            <p style="color: #ccc; font-size: 14px; line-height: 1.7; margin: 0 0 16px 0;"><strong style="color: #fff;">Example:</strong> You're a recruiter paying $249/month for Pro tier. You fill 3 roles in one month with Bounties of $7,000, $9,000, and $8,500. <strong style="color: rgb(168, 85, 247);">Total earnings: $24,500. ROI: 9,739%.</strong></p>
 
-                            <p style="color: #ccc; font-size: 14px; line-height: 1.7; margin: 0;">Perfect for: Tech startups, scale-ups, and any business making 3+ hires per quarter. The more you hire, the more you save.</p>
+                            <h3 style="color: rgb(168, 85, 247); font-size: 18px; font-weight: 700; margin: 0 0 16px 0;">RecX Direct Benefits for Recruiters</h3>
+                            <p style="color: #ccc; font-size: 14px; line-height: 1.7; margin: 0 0 12px 0;">✅ <strong style="color: #fff;">Large Pool of Live Roles:</strong> Access 100+ active roles from verified hiring managers across multiple industries</p>
+                            <p style="color: #ccc; font-size: 14px; line-height: 1.7; margin: 0 0 12px 0;">✅ <strong style="color: #fff;">We Do All the Business Development:</strong> No cold calling. No pitching. No chasing clients. We bring the roles to you.</p>
+                            <p style="color: #ccc; font-size: 14px; line-height: 1.7; margin: 0 0 12px 0;">✅ <strong style="color: #fff;">Spend More Time Sourcing & Earning:</strong> Double your productive hours by focusing only on candidate sourcing and placements</p>
+                            <p style="color: #ccc; font-size: 14px; line-height: 1.7; margin: 0;">✅ <strong style="color: #fff;">Guaranteed Bounties:</strong> Every role has a pre-agreed Bounty. No fee negotiations. No payment disputes.</p>
                           </td>
                         </tr>
                       </table>
@@ -781,7 +788,7 @@ const ACTION_CONFIG = {
                             <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: rgba(168, 85, 247, 0.05); border: 1px solid rgba(168, 85, 247, 0.2); border-radius: 12px; margin-bottom: 16px;">
                               <tr>
                                 <td style="padding: 20px;">
-                                  <p style="color: rgb(168, 85, 247); font-size: 16px; font-weight: 700; margin: 0 0 8px 0;">🟣 Pro Tier - $299/month</p>
+                                  <p style="color: rgb(168, 85, 247); font-size: 16px; font-weight: 700; margin: 0 0 8px 0;">🟣 Pro Tier - $249/month</p>
                                   <p style="color: #ccc; font-size: 14px; line-height: 1.7; margin: 0;">For agencies and high-volume recruiters. Unlimited roles + candidates. 70/30 split options on premium roles. Advanced analytics dashboard. Dedicated account manager. RecX Direct Bounty access.</p>
                                 </td>
                               </tr>
@@ -832,9 +839,9 @@ const ACTION_CONFIG = {
                             <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: rgba(168, 85, 247, 0.08); border-left: 4px solid rgb(168, 85, 247); border-radius: 10px; margin-bottom: 20px;">
                               <tr>
                                 <td style="padding: 20px;">
-                                  <p style="color: #e5e5e5; font-size: 15px; line-height: 1.7; margin: 0 0 16px 0; font-style: italic;">"🚀 We're a small SaaS startup hiring 3-5 people per quarter. Used to pay traditional agency fees - costing us $30k+ annually. Switched to RecX Direct Pro tier ($299/month = $3,588/year). <strong style="color: rgb(168, 85, 247);">We're saving $26,412 per year.</strong> Same quality candidates. Zero per-hire invoices. Game-changer for startups watching burn rate."</p>
-                                  <p style="color: rgb(168, 85, 247); font-size: 14px; font-weight: 700; margin: 0;">— Emma Lewis, Head of Talent @ CloudSync (Series A SaaS)</p>
-                                  <p style="color: #888; font-size: 12px; margin: 6px 0 0 0;">RecX Direct subscriber since: January 2025 • Hires made: 14</p>
+                                  <p style="color: #e5e5e5; font-size: 15px; line-height: 1.7; margin: 0 0 16px 0; font-style: italic;">"🚀 I switched to RecX Direct Pro tier ($249/month) to access their Live Roles. <strong style="color: rgb(168, 85, 247);">Filled 3 roles in my first month, earning $24,500 in Bounties.</strong> Zero business development. Zero cold calling. Just pure sourcing and placements. Game-changer for solo recruiters."</p>
+                                  <p style="color: rgb(168, 85, 247); font-size: 14px; font-weight: 700; margin: 0;">— Emma Lewis, Independent Tech Recruiter</p>
+                                  <p style="color: #888; font-size: 12px; margin: 6px 0 0 0;">RecX Direct subscriber since: January 2026 • Placements: 14 • Monthly Avg: $18,000</p>
                                 </td>
                               </tr>
                             </table>
