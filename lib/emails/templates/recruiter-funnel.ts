@@ -4,7 +4,7 @@
  */
 
 export const generateRecruiterFunnelEmail = (firstName: string, step: number = 1): string => {
-  const LOGO_URL = 'https://images.squarespace-cdn.com/content/v1/68120154725429476150f64b/00d296cd-6741-4c0a-a711-08a3f35db445/REX-Logo-GW-25.png?format=1500w';
+  const LOGO_URL = 'https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Main-Logo-25.png';
   
   return `
 <!DOCTYPE html>

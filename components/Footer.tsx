@@ -11,7 +11,7 @@ export default function Footer() {
           <div className="lg:col-span-1">
             <Link href="/" aria-label="RecXchange Homepage">
               <Image
-                src="https://images.squarespace-cdn.com/content/v1/68120154725429476150f64b/00d296cd-6741-4c0a-a711-08a3f35db445/REX-Logo-GW-25.png?format=1500w"
+                src="https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Main-Logo-25.png"
                 alt="RecXchange - Recruiter collaboration platform connecting 15,000+ recruiters for split fee recruitment" 
                 width={120}
                 height={30}
