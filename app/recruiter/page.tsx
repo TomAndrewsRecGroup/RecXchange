@@ -11,6 +11,9 @@ import GlowButton from '@/components/design-system/GlowButton';
 import NeonDivider from '@/components/design-system/NeonDivider';
 import StatusBadge from '@/components/design-system/StatusBadge';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import FAQSection from '@/components/FAQSection';
+import { recruiterGeneralFAQs } from '@/data/faqs/recruiter-faqs';
+import { internalLinks } from '@/lib/internal-links';
 
 export default function RecruiterDiagnostic() {
   const scrollToTop = () => {
@@ -40,7 +43,7 @@ export default function RecruiterDiagnostic() {
               </h1>
               <NeonDivider width="w-40" color="mixed" />
               <p className="text-gray-300 text-sm sm:text-base md:text-lg lg:text-xl max-w-2xl mx-auto leading-relaxed px-2 mt-6">
-                Pick one. We'll show you how to make money from it.
+                Pick one. We'll show you how to make money from it. Check our <Link href={internalLinks.pricing} className="text-cyan-400 hover:text-cyan-300 underline">transparent pricing</Link> or learn more about <Link href={internalLinks.whyRecXchange} className="text-fuchsia-400 hover:text-fuchsia-300 underline">why recruiters choose RecXchange</Link>.
               </p>
             </motion.div>
           </header>
@@ -129,7 +132,7 @@ export default function RecruiterDiagnostic() {
                   <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse shadow-[0_0_8px_rgba(0,255,255,0.8)] flex-shrink-0" />
                   <span>Switch between paths at any time.</span>
                 </p>
-                <Link href="/pricing" className="text-cyan-400 hover:text-white transition-colors font-bold uppercase tracking-[0.15em] flex items-center gap-2">
+                <Link href={internalLinks.pricing} className="text-cyan-400 hover:text-white transition-colors font-bold uppercase tracking-[0.15em] flex items-center gap-2">
                   <span className="whitespace-nowrap">Review Membership Tiers</span> <span className="text-base sm:text-lg">→</span>
                 </Link>
               </div>
@@ -146,7 +149,7 @@ export default function RecruiterDiagnostic() {
                 Both paths unlock the same platform
               </h2>
               <p className="text-gray-300 text-[13px] sm:text-sm md:text-base lg:text-lg max-w-3xl mx-auto leading-relaxed px-2">
-                Whether you need candidates or roles right now, you're getting the full RecXchange recruiter operating system.
+                Whether you need candidates or roles right now, you're getting the full RecXchange recruiter operating system. Learn about our <Link href={internalLinks.collaboration} className="text-purple-400 hover:text-purple-300 underline">collaborative workflow</Link>.
               </p>
             </div>
 
@@ -246,6 +249,18 @@ export default function RecruiterDiagnostic() {
 
           <NeonDivider width="w-full" color="mixed" />
 
+          {/* FAQ Section */}
+          <section className="my-10 sm:my-16 md:my-20">
+            <div className="text-center mb-6 sm:mb-8 md:mb-12">
+              <StatusBadge label="COMMON QUESTIONS" color="cyan" />
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2.5 sm:mb-3 md:mb-4 mt-6">Frequently Asked Questions</h2>
+              <p className="text-gray-400 text-[13px] sm:text-sm md:text-base px-2">Everything you need to know about getting started on RecXchange</p>
+            </div>
+            <FAQSection faqs={recruiterGeneralFAQs} color="cyan" />
+          </section>
+
+          <NeonDivider width="w-full" color="mixed" />
+
           {/* Final CTA */}
           <section className="my-10 sm:my-16 md:my-20">
             <HolographicCard color="purple" variant="content" glowIntensity="high" className="text-center">
@@ -253,7 +268,7 @@ export default function RecruiterDiagnostic() {
                 Ready to <span className="gradient-text">start making placements?</span>
               </h3>
               <p className="text-gray-300 text-[13px] sm:text-sm md:text-base lg:text-lg mb-6 sm:mb-8 md:mb-10 max-w-2xl mx-auto leading-relaxed px-2">
-                Join 15,000+ recruiters already using RecXchange. Recruiters earn an average of $7,000 per placement. Most active recruiters make 2-5 placements per quarter.
+                Join 15,000+ recruiters already using RecXchange. Recruiters earn an average of $7,000 per placement. Most active recruiters make 2-5 placements per quarter. See all <Link href={internalLinks.pricing} className="text-cyan-400 hover:text-cyan-300 underline">pricing tiers</Link>.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-stretch sm:items-center max-w-xl mx-auto">
                 <GlowButton 

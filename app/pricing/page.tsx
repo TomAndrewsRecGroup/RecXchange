@@ -9,6 +9,10 @@ import NeonDivider from '@/components/design-system/NeonDivider';
 import StatusBadge from '@/components/design-system/StatusBadge';
 import RecXDirectForm from '@/components/recx-direct-form';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import FAQSection from '@/components/FAQSection';
+import { pricingFAQs } from '@/data/faqs/recruiter-faqs';
+import { internalLinks } from '@/lib/internal-links';
+import Link from 'next/link';
 
 const tiers = [
   {
@@ -107,7 +111,7 @@ export default function PricingPage() {
               Pricing & <span className="gradient-text">Tiers</span>
             </h1>
             <NeonDivider width="w-40" color="mixed" />
-            <p className="text-gray-300 text-sm sm:text-base md:text-lg px-2 mt-6">Pick a tier. Make placements. One placement pays for the year.</p>
+            <p className="text-gray-300 text-sm sm:text-base md:text-lg px-2 mt-6">Pick a tier. Make placements. One placement pays for the year. Learn more about <Link href={internalLinks.whyRecXchange} className="text-cyan-400 hover:text-cyan-300 underline">why recruiters choose RecXchange</Link> or see our <Link href={internalLinks.collaboration} className="text-fuchsia-400 hover:text-fuchsia-300 underline">collaborative workflow</Link>.</p>
           </div>
 
           {/* Pricing Tiers */}
@@ -180,70 +184,14 @@ export default function PricingPage() {
 
           <NeonDivider width="w-full" color="mixed" />
 
-          {/* Common Questions */}
+          {/* FAQ Section */}
           <section className="my-10 sm:my-16 md:my-20">
             <div className="text-center mb-6 sm:mb-8 md:mb-12">
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2.5 sm:mb-3 md:mb-4">Common Pricing Questions</h2>
+              <StatusBadge label="PRICING FAQ" color="purple" />
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2.5 sm:mb-3 md:mb-4 mt-6">Common Pricing Questions</h2>
               <p className="text-gray-400 text-[13px] sm:text-sm md:text-base px-2">Everything you need to know about RecXchange membership costs</p>
             </div>
-
-            <div className="space-y-4 sm:space-y-5 md:space-y-6">
-              <HolographicCard color="cyan" variant="content">
-                <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-white mb-2.5 sm:mb-3 md:mb-4">Which tier should I choose?</h3>
-                <p className="text-gray-300 text-[13px] sm:text-sm md:text-base leading-relaxed mb-3 sm:mb-4">
-                  It depends on your activity level. Recruiters earn an average of <strong className="text-white">$7,000 per placement</strong>:
-                </p>
-                <ul className="space-y-2.5 sm:space-y-3 text-[13px] sm:text-sm md:text-base text-gray-300">
-                  <li className="flex items-start gap-2 sm:gap-3">
-                    <span className="text-cyan-400 mt-1">•</span>
-                    <span><strong className="text-white">Entry ($1/month):</strong> Testing the platform or making 1-2 placements per year</span>
-                  </li>
-                  <li className="flex items-start gap-2 sm:gap-3">
-                    <span className="text-cyan-400 mt-1">•</span>
-                    <span><strong className="text-white">Lite ($99/month):</strong> Making 1-2 placements per quarter. One placement pays for the entire year</span>
-                  </li>
-                  <li className="flex items-start gap-2 sm:gap-3">
-                    <span className="text-cyan-400 mt-1">•</span>
-                    <span><strong className="text-white">Pro ($250/month):</strong> Making 3+ placements per quarter with instant RecX Direct access</span>
-                  </li>
-                </ul>
-              </HolographicCard>
-
-              <HolographicCard color="purple" variant="content">
-                <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-white mb-2.5 sm:mb-3 md:mb-4">Are there any platform fees on placements?</h3>
-                <p className="text-gray-300 text-[13px] sm:text-sm md:text-base leading-relaxed">
-                  <strong className="text-white">No platform fees.</strong> RecXchange only charges the monthly membership fee ($1, $99, or $250 depending on tier). Recruiters earn an average of $7,000 per placement and keep 100% of their agreed split.
-                </p>
-              </HolographicCard>
-
-              <HolographicCard color="fuchsia" variant="content">
-                <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-white mb-2.5 sm:mb-3 md:mb-4">Can I switch between tiers?</h3>
-                <p className="text-gray-300 text-[13px] sm:text-sm md:text-base leading-relaxed">
-                  Yes, you can upgrade or downgrade at any time. When you upgrade, your unused tokens roll over for 30 days. If you're on Lite ($99/month) and run out of the 150 monthly tokens, you can upgrade to Pro ($250/month) mid-month to get 400 tokens immediately, plus retain any unused tokens from Lite.
-                </p>
-              </HolographicCard>
-
-              <HolographicCard color="emerald" variant="content">
-                <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-white mb-2.5 sm:mb-3 md:mb-4">What's the actual ROI on RecXchange membership?</h3>
-                <p className="text-gray-300 text-[13px] sm:text-sm md:text-base leading-relaxed mb-3 sm:mb-4">
-                  Recruiters earn an average of <strong className="text-white">$7,000 per placement</strong>:
-                </p>
-                <ul className="space-y-2.5 sm:space-y-3 text-[13px] sm:text-sm md:text-base text-gray-300">
-                  <li className="flex items-start gap-2 sm:gap-3">
-                    <span className="text-emerald-400 mt-1">•</span>
-                    <span><strong className="text-white">Lite ($99/month):</strong> One placement covers 70+ months of membership</span>
-                  </li>
-                  <li className="flex items-start gap-2 sm:gap-3">
-                    <span className="text-emerald-400 mt-1">•</span>
-                    <span><strong className="text-white">Pro ($250/month):</strong> One placement covers 28+ months of membership</span>
-                  </li>
-                  <li className="flex items-start gap-2 sm:gap-3">
-                    <span className="text-emerald-400 mt-1">•</span>
-                    <span>Most active recruiters make 2-5 placements per quarter, earning $14,000-$35,000 quarterly</span>
-                  </li>
-                </ul>
-              </HolographicCard>
-            </div>
+            <FAQSection faqs={pricingFAQs} color="purple" />
           </section>
 
           <NeonDivider width="w-full" color="mixed" />
@@ -273,7 +221,7 @@ export default function PricingPage() {
             <HolographicCard color="purple" variant="content" className="text-center">
               <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4 md:mb-6 text-white">Average Recruiter <span className="gradient-text">Earnings</span></h2>
               <p className="text-gray-300 text-[13px] sm:text-sm md:text-base mb-6 sm:mb-7 md:mb-8 leading-relaxed px-2">
-                Partner with recruiters from the network of 15,000+. Set your split. Contracts auto-generated. Both parties protected.
+                Partner with recruiters from the network of 15,000+. Set your split. Contracts auto-generated. Both parties protected. Learn about <Link href={internalLinks.collaboration} className="text-purple-400 hover:text-purple-300 underline">how collaboration works</Link>.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-6 md:gap-8">
                 <div>

@@ -8,6 +8,7 @@ import CookieBanner from "@/components/CookieBanner";
 import ClientProviders from "@/components/ClientProviders";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import SkipToContent from "@/components/SkipToContent";
 import { Analytics } from "@vercel/analytics/next";
 import { WebVitals } from "@/app/components/WebVitals";
 import type { Metadata, Viewport } from "next";
@@ -650,6 +651,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
         
         <ErrorBoundary>
           <ClientProviders>
+            {/* Skip to Content Link (WCAG 2.1 AA) */}
+            <SkipToContent />
+            
             {/* Web Vitals Monitoring */}
             <WebVitals />
             
@@ -667,7 +671,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <Breadcrumbs />
 
             <div className="relative z-10 flex flex-col min-h-screen w-full">
-              <main className="flex-grow w-full">
+              <main id="main-content" className="flex-grow w-full">
                 {children}
               </main>
               <Footer />
