@@ -142,17 +142,25 @@ export default function ContactPage() {
     }}>
       <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-center">
         
-        {/* Header Section */}
-        <div className="text-center mb-6 sm:mb-8 md:mb-12 lg:mb-16 w-full">
-          <h3 className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] md:tracking-[0.4em] font-bold text-purple-400 mb-3 sm:mb-4 md:mb-6">Get In Touch</h3>
-          <h1 className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-bold gradient-text mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2">
-            Connect with the <br />
-            Engineers of Talent.
-          </h1>
-          <div className="pulse-underline mb-4 sm:mb-6 md:mb-8 mx-auto" />
-          <p className="text-gray-400 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed px-2">
-            Whether you are scaling a team in California or sourcing from London, our team provides the human oversight for our AI-driven Xchange.
-          </p>
+        {/* UPDATED Header Section */}
+        <div className="text-center mb-6 sm:mb-8 md:mb-12 lg:mb-16 w-full max-w-5xl mx-auto px-2 sm:px-4">
+          <div className="space-y-4 md:space-y-6">
+            {/* Badge */}
+            <span className="inline-block text-[9px] md:text-[10px] uppercase tracking-[0.25em] md:tracking-[0.4em] text-purple-400/60 font-bold">
+              Get In Touch
+            </span>
+
+            {/* Main Headline */}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.1] tracking-tight px-2">
+              Connect with the <br />
+              Engineers of Talent.
+            </h1>
+
+            {/* Subheadline */}
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed px-2">
+              Whether you are scaling a team in California or sourcing from London, our team provides the human oversight for our AI-driven Xchange.
+            </p>
+          </div>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-12 items-start w-full">
