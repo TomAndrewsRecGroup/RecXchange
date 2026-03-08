@@ -2,485 +2,164 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import FuturisticBackground from '@/components/design-system/FuturisticBackground';
+import HolographicCard from '@/components/design-system/HolographicCard';
+import StatusBadge from '@/components/design-system/StatusBadge';
+import NeonDivider from '@/components/design-system/NeonDivider';
+import GlowButton from '@/components/design-system/GlowButton';
+import Breadcrumbs from '@/components/Breadcrumbs';
 
 export default function WhyRecXchangePage() {
   return (
-    <main className="relative min-h-screen flex flex-col items-center pt-16 sm:pt-20 md:pt-28 pb-12 sm:pb-16 md:pb-20 px-4 sm:px-6">
-      <div className="relative z-10 w-full max-w-[1200px] flex flex-col items-center">
-        {/* Header */}
-        <motion.header
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-6 sm:mb-8 md:mb-12 lg:mb-16 w-full"
-        >
-          <span className="block text-[9px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] md:tracking-[0.4em] text-cyan-400/60 mb-3 sm:mb-4 md:mb-6 font-bold">
-            Platform Comparison
-          </span>
-          <h1 className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-bold gradient-text mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2">
-            Why Choose RecXchange?
-          </h1>
-          <div className="pulse-underline mb-4 sm:mb-6 md:mb-8 mx-auto" />
-          <p className="text-gray-400 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed px-2">
-            See how RecXchange compares to traditional recruitment methods. Better for recruiters, better for hiring managers, better results for everyone.
-          </p>
-        </motion.header>
-
-        {/* Comparison 1: RecXchange vs Traditional Recruitment Agencies */}
-        <section className="w-full mb-8 sm:mb-12 md:mb-16 lg:mb-20">
-          <div className="text-center mb-4 sm:mb-6 md:mb-8 lg:mb-10">
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2 sm:mb-3 md:mb-4 px-2">RecXchange vs Traditional Recruitment Agencies</h2>
-            <p className="text-gray-400 text-[13px] sm:text-sm md:text-base px-2">How split fee collaboration beats working alone</p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5 md:gap-6 lg:gap-8">
-            {/* RecXchange */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="glass-card p-4 sm:p-5 md:p-8 lg:p-10 rounded-xl sm:rounded-2xl md:rounded-[2rem] lg:rounded-3xl border-cyan-400/20 bg-cyan-400/[0.02]"
-            >
-              <div className="inline-block px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-cyan-400/10 border border-cyan-400/30 text-cyan-400 text-[10px] sm:text-xs font-bold uppercase tracking-widest mb-3 sm:mb-4 md:mb-5 lg:mb-6">
-                RecXchange
-              </div>
-              
-              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-3 sm:mb-4 md:mb-5 lg:mb-6">Collaborative Recruitment</h3>
-
-              <div className="space-y-4 sm:space-y-5 md:space-y-6">
-                <div>
-                  <h4 className="text-base sm:text-lg font-bold text-cyan-400 mb-2 sm:mb-2.5 md:mb-3">For Recruiters:</h4>
-                  <ul className="space-y-2 sm:space-y-2.5 md:space-y-3 text-gray-400 text-[13px] sm:text-sm">
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-cyan-400 mt-0.5 sm:mt-1 flex-shrink-0">✓</span>
-                      <span className="flex-1"><strong className="text-white">Access to 270M candidates</strong> - Never run out of talent. Search the database when your pipeline is empty.</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-cyan-400 mt-0.5 sm:mt-1 flex-shrink-0">✓</span>
-                      <span className="flex-1"><strong className="text-white">Partner with 15,000+ recruiters</strong> - Find candidates for your roles or roles for your candidates.</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-cyan-400 mt-0.5 sm:mt-1 flex-shrink-0">✓</span>
-                      <span className="flex-1"><strong className="text-white">Earn up to 70% on RecX Direct</strong> - Higher splits than traditional agencies ($4,900 on $7k placement).</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-cyan-400 mt-0.5 sm:mt-1 flex-shrink-0">✓</span>
-                      <span className="flex-1"><strong className="text-white">$1-$250/month flat fee</strong> - No commission splits with your agency. Keep 100% of your earnings.</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-cyan-400 mt-0.5 sm:mt-1 flex-shrink-0">✓</span>
-                      <span className="flex-1"><strong className="text-white">Legal protection</strong> - Auto-generated split fee contracts. Timestamped submissions. Both parties protected.</span>
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="pt-4 sm:pt-5 md:pt-6 border-t border-cyan-400/10">
-                  <h4 className="text-base sm:text-lg font-bold text-cyan-400 mb-2 sm:mb-2.5 md:mb-3">For Hiring Managers:</h4>
-                  <ul className="space-y-2 sm:space-y-2.5 md:space-y-3 text-gray-400 text-[13px] sm:text-sm">
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-cyan-400 mt-0.5 sm:mt-1 flex-shrink-0">✓</span>
-                      <span className="flex-1"><strong className="text-white">15,000+ recruiters working on your role</strong> - Post once, thousands see it.</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-cyan-400 mt-0.5 sm:mt-1 flex-shrink-0">✓</span>
-                      <span className="flex-1"><strong className="text-white">One point of contact</strong> - RecXchange Account Manager handles everything. No recruiter spam.</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-cyan-400 mt-0.5 sm:mt-1 flex-shrink-0">✓</span>
-                      <span className="flex-1"><strong className="text-white">12-20% fee</strong> - Lower than typical agency fees (20-30%). Only pay when you hire.</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-cyan-400 mt-0.5 sm:mt-1 flex-shrink-0">✓</span>
-                      <span className="flex-1"><strong className="text-white">Candidates in 48 hours</strong> - Fast turnaround. Multiple submissions from different recruiters.</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Traditional */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="glass-card p-4 sm:p-5 md:p-8 lg:p-10 rounded-xl sm:rounded-2xl md:rounded-[2rem] lg:rounded-3xl border-red-400/20 bg-red-400/[0.02]"
-            >
-              <div className="inline-block px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-red-400/10 border border-red-400/30 text-red-400 text-[10px] sm:text-xs font-bold uppercase tracking-widest mb-3 sm:mb-4 md:mb-5 lg:mb-6">
-                Traditional Agency
-              </div>
-              
-              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-3 sm:mb-4 md:mb-5 lg:mb-6">Solo Recruitment</h3>
-
-              <div className="space-y-4 sm:space-y-5 md:space-y-6">
-                <div>
-                  <h4 className="text-base sm:text-lg font-bold text-red-400 mb-2 sm:mb-2.5 md:mb-3">For Recruiters:</h4>
-                  <ul className="space-y-2 sm:space-y-2.5 md:space-y-3 text-gray-400 text-[13px] sm:text-sm">
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-red-400 mt-0.5 sm:mt-1 flex-shrink-0">✗</span>
-                      <span className="flex-1"><strong className="text-white">Limited candidate pool</strong> - Only your own database. If you don't have the candidate, you lose the placement.</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-red-400 mt-0.5 sm:mt-1 flex-shrink-0">✗</span>
-                      <span className="flex-1"><strong className="text-white">No collaboration</strong> - Work alone. Compete with everyone. No partnerships or support network.</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-red-400 mt-0.5 sm:mt-1 flex-shrink-0">✗</span>
-                      <span className="flex-1"><strong className="text-white">40-60% commission split</strong> - Agency takes 40-60% of your fee. You only keep $2,800-$4,200 on a $7k placement.</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-red-400 mt-0.5 sm:mt-1 flex-shrink-0">✗</span>
-                      <span className="flex-1"><strong className="text-white">High overhead costs</strong> - Office rent, CRM fees, job board subscriptions, marketing costs.</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-red-400 mt-0.5 sm:mt-1 flex-shrink-0">✗</span>
-                      <span className="flex-1"><strong className="text-white">No protection</strong> - Candidates can be poached. Clients can work with other agencies without notice.</span>
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="pt-4 sm:pt-5 md:pt-6 border-t border-red-400/10">
-                  <h4 className="text-base sm:text-lg font-bold text-red-400 mb-2 sm:mb-2.5 md:mb-3">For Hiring Managers:</h4>
-                  <ul className="space-y-2 sm:space-y-2.5 md:space-y-3 text-gray-400 text-[13px] sm:text-sm">
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-red-400 mt-0.5 sm:mt-1 flex-shrink-0">✗</span>
-                      <span className="flex-1"><strong className="text-white">Limited recruiter pool</strong> - Only the recruiters you contact manually. Miss out on others with perfect candidates.</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-red-400 mt-0.5 sm:mt-1 flex-shrink-0">✗</span>
-                      <span className="flex-1"><strong className="text-white">Multiple points of contact</strong> - Work with 5-10 agencies. Manage calls, emails, and duplicate submissions.</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-red-400 mt-0.5 sm:mt-1 flex-shrink-0">✗</span>
-                      <span className="flex-1"><strong className="text-white">20-30% fee</strong> - Standard agency rates. Sometimes 35% for executive roles. Expensive.</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-red-400 mt-0.5 sm:mt-1 flex-shrink-0">✗</span>
-                      <span className="flex-1"><strong className="text-white">Slow process</strong> - Wait for each agency to search separately. Inconsistent quality and timing.</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Comparison 2: RecXchange vs Job Boards */}
-        <section className="w-full mb-8 sm:mb-12 md:mb-16 lg:mb-20">
-          <div className="text-center mb-4 sm:mb-6 md:mb-8 lg:mb-10">
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2 sm:mb-3 md:mb-4 px-2">RecXchange vs Job Boards</h2>
-            <p className="text-gray-400 text-[13px] sm:text-sm md:text-base px-2">Active recruitment vs passive job postings</p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5 md:gap-6 lg:gap-8">
-            {/* RecXchange */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="glass-card p-4 sm:p-5 md:p-8 lg:p-10 rounded-xl sm:rounded-2xl md:rounded-[2rem] lg:rounded-3xl border-fuchsia-400/20 bg-fuchsia-400/[0.02]"
-            >
-              <div className="inline-block px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-fuchsia-400/10 border border-fuchsia-400/30 text-fuchsia-400 text-[10px] sm:text-xs font-bold uppercase tracking-widest mb-3 sm:mb-4 md:mb-5 lg:mb-6">
-                RecXchange
-              </div>
-              
-              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-3 sm:mb-4 md:mb-5 lg:mb-6">Active Recruitment</h3>
-
-              <div className="space-y-4 sm:space-y-5 md:space-y-6">
-                <div>
-                  <h4 className="text-base sm:text-lg font-bold text-fuchsia-400 mb-2 sm:mb-2.5 md:mb-3">For Recruiters:</h4>
-                  <ul className="space-y-2 sm:space-y-2.5 md:space-y-3 text-gray-400 text-[13px] sm:text-sm">
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-fuchsia-400 mt-0.5 sm:mt-1 flex-shrink-0">✓</span>
-                      <span className="flex-1"><strong className="text-white">Active candidate sourcing</strong> - Search 270M candidates. Find passive candidates who aren't job hunting.</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-fuchsia-400 mt-0.5 sm:mt-1 flex-shrink-0">✓</span>
-                      <span className="flex-1"><strong className="text-white">Earn $3,500-$4,900 per placement</strong> - Split fees with partners. Much higher earnings than job board subscriptions.</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-fuchsia-400 mt-0.5 sm:mt-1 flex-shrink-0">✓</span>
-                      <span className="flex-1"><strong className="text-white">Pre-screened opportunities</strong> - Partner with vetted recruiters. Know the role is real before investing time.</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-fuchsia-400 mt-0.5 sm:mt-1 flex-shrink-0">✓</span>
-                      <span className="flex-1"><strong className="text-white">Relationship-based</strong> - Build partnerships. Get repeat business from trusted recruiter network.</span>
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="pt-4 sm:pt-5 md:pt-6 border-t border-fuchsia-400/10">
-                  <h4 className="text-base sm:text-lg font-bold text-fuchsia-400 mb-2 sm:mb-2.5 md:mb-3">For Hiring Managers:</h4>
-                  <ul className="space-y-2 sm:space-y-2.5 md:space-y-3 text-gray-400 text-[13px] sm:text-sm">
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-fuchsia-400 mt-0.5 sm:mt-1 flex-shrink-0">✓</span>
-                      <span className="flex-1"><strong className="text-white">Recruiters find you</strong> - 15,000+ recruiters actively search and submit candidates. No waiting.</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-fuchsia-400 mt-0.5 sm:mt-1 flex-shrink-0">✓</span>
-                      <span className="flex-1"><strong className="text-white">Pre-screened candidates</strong> - Recruiters vet candidates before submission. Only quality matches reach you.</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-fuchsia-400 mt-0.5 sm:mt-1 flex-shrink-0">✓</span>
-                      <span className="flex-1"><strong className="text-white">Access passive candidates</strong> - Reach people not actively job hunting. Higher quality talent pool.</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-fuchsia-400 mt-0.5 sm:mt-1 flex-shrink-0">✓</span>
-                      <span className="flex-1"><strong className="text-white">Pay only when hired</strong> - No upfront costs. 12-20% fee only when you successfully hire.</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Job Boards */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="glass-card p-4 sm:p-5 md:p-8 lg:p-10 rounded-xl sm:rounded-2xl md:rounded-[2rem] lg:rounded-3xl border-red-400/20 bg-red-400/[0.02]"
-            >
-              <div className="inline-block px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-red-400/10 border border-red-400/30 text-red-400 text-[10px] sm:text-xs font-bold uppercase tracking-widest mb-3 sm:mb-4 md:mb-5 lg:mb-6">
-                Job Boards
-              </div>
-              
-              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-3 sm:mb-4 md:mb-5 lg:mb-6">Passive Job Posting</h3>
-
-              <div className="space-y-4 sm:space-y-5 md:space-y-6">
-                <div>
-                  <h4 className="text-base sm:text-lg font-bold text-red-400 mb-2 sm:mb-2.5 md:mb-3">For Recruiters:</h4>
-                  <ul className="space-y-2 sm:space-y-2.5 md:space-y-3 text-gray-400 text-[13px] sm:text-sm">
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-red-400 mt-0.5 sm:mt-1 flex-shrink-0">✗</span>
-                      <span className="flex-1"><strong className="text-white">Passive candidate pool</strong> - Only see people actively looking. Miss out on 70% of talent (passive candidates).</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-red-400 mt-0.5 sm:mt-1 flex-shrink-0">✗</span>
-                      <span className="flex-1"><strong className="text-white">Pay per post or subscription</strong> - $200-$500 per job post. $5,000-$20,000/year for LinkedIn Recruiter. No guarantee of results.</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-red-400 mt-0.5 sm:mt-1 flex-shrink-0">✗</span>
-                      <span className="flex-1"><strong className="text-white">Low response rates</strong> - Most posted jobs get ignored. Candidates apply to 50+ jobs. Hard to stand out.</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-red-400 mt-0.5 sm:mt-1 flex-shrink-0">✗</span>
-                      <span className="flex-1"><strong className="text-white">No relationships</strong> - Transactional. Post, hope, wait. No network or partnerships built.</span>
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="pt-4 sm:pt-5 md:pt-6 border-t border-red-400/10">
-                  <h4 className="text-base sm:text-lg font-bold text-red-400 mb-2 sm:mb-2.5 md:mb-3">For Hiring Managers:</h4>
-                  <ul className="space-y-2 sm:space-y-2.5 md:space-y-3 text-gray-400 text-[13px] sm:text-sm">
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-red-400 mt-0.5 sm:mt-1 flex-shrink-0">✗</span>
-                      <span className="flex-1"><strong className="text-white">Wait for applications</strong> - Passive process. Hope the right candidates see and apply to your posting.</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-red-400 mt-0.5 sm:mt-1 flex-shrink-0">✗</span>
-                      <span className="flex-1"><strong className="text-white">Unscreened applications</strong> - Receive 100+ resumes. Most are unqualified. Spend hours screening manually.</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-red-400 mt-0.5 sm:mt-1 flex-shrink-0">✗</span>
-                      <span className="flex-1"><strong className="text-white">Only active job seekers</strong> - Miss passive candidates (the best talent). They're not browsing job boards.</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-red-400 mt-0.5 sm:mt-1 flex-shrink-0">✗</span>
-                      <span className="flex-1"><strong className="text-white">Pay upfront</strong> - $200-$500 per post. No guarantee anyone suitable will apply. Money wasted if no hire.</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Comparison 3: RecXchange vs RPO Providers */}
-        <section className="w-full mb-8 sm:mb-12 md:mb-16 lg:mb-20">
-          <div className="text-center mb-4 sm:mb-6 md:mb-8 lg:mb-10">
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2 sm:mb-3 md:mb-4 px-2">RecXchange vs RPO Providers</h2>
-            <p className="text-gray-400 text-[13px] sm:text-sm md:text-base px-2">Flexible collaboration vs expensive contracts</p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5 md:gap-6 lg:gap-8">
-            {/* RecXchange */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="glass-card p-4 sm:p-5 md:p-8 lg:p-10 rounded-xl sm:rounded-2xl md:rounded-[2rem] lg:rounded-3xl border-purple-400/20 bg-purple-400/[0.02]"
-            >
-              <div className="inline-block px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-purple-400/10 border border-purple-400/30 text-purple-400 text-[10px] sm:text-xs font-bold uppercase tracking-widest mb-3 sm:mb-4 md:mb-5 lg:mb-6">
-                RecXchange
-              </div>
-              
-              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-3 sm:mb-4 md:mb-5 lg:mb-6">Digital RPO Alternative</h3>
-
-              <div className="space-y-4 sm:space-y-5 md:space-y-6">
-                <div>
-                  <h4 className="text-base sm:text-lg font-bold text-purple-400 mb-2 sm:mb-2.5 md:mb-3">For Recruiters:</h4>
-                  <ul className="space-y-2 sm:space-y-2.5 md:space-y-3 text-gray-400 text-[13px] sm:text-sm">
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-purple-400 mt-0.5 sm:mt-1 flex-shrink-0">✓</span>
-                      <span className="flex-1"><strong className="text-white">Work independently</strong> - Keep your own business. No employment contracts or exclusivity required.</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-purple-400 mt-0.5 sm:mt-1 flex-shrink-0">✓</span>
-                      <span className="flex-1"><strong className="text-white">Choose your roles</strong> - Work on roles you want. Ignore roles that don't fit your niche or location.</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-purple-400 mt-0.5 sm:mt-1 flex-shrink-0">✓</span>
-                      <span className="flex-1"><strong className="text-white">Higher earnings</strong> - Earn $3,500-$4,900 per placement. Keep 100% of your split (no RPO company taking a cut).</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-purple-400 mt-0.5 sm:mt-1 flex-shrink-0">✓</span>
-                      <span className="flex-1"><strong className="text-white">Scale at your pace</strong> - Work on 1 role or 100 roles. No quotas or performance targets.</span>
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="pt-4 sm:pt-5 md:pt-6 border-t border-purple-400/10">
-                  <h4 className="text-base sm:text-lg font-bold text-purple-400 mb-2 sm:mb-2.5 md:mb-3">For Hiring Managers:</h4>
-                  <ul className="space-y-2 sm:space-y-2.5 md:space-y-3 text-gray-400 text-[13px] sm:text-sm">
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-purple-400 mt-0.5 sm:mt-1 flex-shrink-0">✓</span>
-                      <span className="flex-1"><strong className="text-white">No long-term contracts</strong> - Use RecXchange for 1 role or 100 roles. Cancel anytime. Total flexibility.</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-purple-400 mt-0.5 sm:mt-1 flex-shrink-0">✓</span>
-                      <span className="flex-1"><strong className="text-white">12-20% fee</strong> - Significantly cheaper than RPO (30-50% annual salary). Pay per hire, not per month.</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-purple-400 mt-0.5 sm:mt-1 flex-shrink-0">✓</span>
-                      <span className="flex-1"><strong className="text-white">15,000+ recruiters</strong> - Bigger talent network than any RPO provider. More recruiters = more candidates = faster fills.</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-purple-400 mt-0.5 sm:mt-1 flex-shrink-0">✓</span>
-                      <span className="flex-1"><strong className="text-white">One point of contact</strong> - Dedicated Account Manager handles everything. Same white-glove service as RPO.</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-purple-400 mt-0.5 sm:mt-1 flex-shrink-0">✓</span>
-                      <span className="flex-1"><strong className="text-white">Test before committing</strong> - Post one role for free. See results. Scale up if it works. No risk.</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* RPO */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="glass-card p-4 sm:p-5 md:p-8 lg:p-10 rounded-xl sm:rounded-2xl md:rounded-[2rem] lg:rounded-3xl border-red-400/20 bg-red-400/[0.02]"
-            >
-              <div className="inline-block px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-red-400/10 border border-red-400/30 text-red-400 text-[10px] sm:text-xs font-bold uppercase tracking-widest mb-3 sm:mb-4 md:mb-5 lg:mb-6">
-                RPO Provider
-              </div>
-              
-              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-3 sm:mb-4 md:mb-5 lg:mb-6">Traditional RPO</h3>
-
-              <div className="space-y-4 sm:space-y-5 md:space-y-6">
-                <div>
-                  <h4 className="text-base sm:text-lg font-bold text-red-400 mb-2 sm:mb-2.5 md:mb-3">For Recruiters:</h4>
-                  <ul className="space-y-2 sm:space-y-2.5 md:space-y-3 text-gray-400 text-[13px] sm:text-sm">
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-red-400 mt-0.5 sm:mt-1 flex-shrink-0">✗</span>
-                      <span className="flex-1"><strong className="text-white">Employment required</strong> - Must work for the RPO company. Give up independence and business ownership.</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-red-400 mt-0.5 sm:mt-1 flex-shrink-0">✗</span>
-                      <span className="flex-1"><strong className="text-white">Assigned roles</strong> - Work on roles given to you. No choice. Might be roles outside your expertise.</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-red-400 mt-0.5 sm:mt-1 flex-shrink-0">✗</span>
-                      <span className="flex-1"><strong className="text-white">Fixed salary or low commission</strong> - Earn $40,000-$80,000 salary regardless of performance. Or 10-20% commission (tiny).</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-red-400 mt-0.5 sm:mt-1 flex-shrink-0">✗</span>
-                      <span className="flex-1"><strong className="text-white">Performance quotas</strong> - Must hit targets. Make X placements per quarter or risk termination.</span>
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="pt-4 sm:pt-5 md:pt-6 border-t border-red-400/10">
-                  <h4 className="text-base sm:text-lg font-bold text-red-400 mb-2 sm:mb-2.5 md:mb-3">For Hiring Managers:</h4>
-                  <ul className="space-y-2 sm:space-y-2.5 md:space-y-3 text-gray-400 text-[13px] sm:text-sm">
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-red-400 mt-0.5 sm:mt-1 flex-shrink-0">✗</span>
-                      <span className="flex-1"><strong className="text-white">12-36 month contracts</strong> - Locked in for years. Expensive exit clauses. Can't cancel easily even if results are poor.</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-red-400 mt-0.5 sm:mt-1 flex-shrink-0">✗</span>
-                      <span className="flex-1"><strong className="text-white">30-50% of annual salary</strong> - Premium pricing. Plus monthly retainer ($10,000-$50,000/month). Very expensive.</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-red-400 mt-0.5 sm:mt-1 flex-shrink-0">✗</span>
-                      <span className="flex-1"><strong className="text-white">Limited recruiter pool</strong> - Only the RPO company's employed recruiters (typically 10-50 people). Small network.</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-red-400 mt-0.5 sm:mt-1 flex-shrink-0">✗</span>
-                      <span className="flex-1"><strong className="text-white">Rigid service model</strong> - One-size-fits-all process. Can't customize easily. Bureaucratic.</span>
-                    </li>
-                    <li className="flex items-start gap-2 sm:gap-3">
-                      <span className="text-red-400 mt-0.5 sm:mt-1 flex-shrink-0">✗</span>
-                      <span className="flex-1"><strong className="text-white">High commitment required</strong> - Must commit to minimum number of hires. Can't test before signing. Big risk.</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Summary CTA */}
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="w-full glass-card p-6 sm:p-8 md:p-10 lg:p-12 rounded-xl sm:rounded-2xl md:rounded-[2rem] lg:rounded-3xl border-cyan-400/10 text-center"
-        >
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-3 sm:mb-4 md:mb-6 px-2">
-            The RecXchange Advantage
-          </h2>
-          <p className="text-gray-400 text-[13px] sm:text-sm md:text-base mb-4 sm:mb-5 md:mb-6 lg:mb-8 max-w-3xl mx-auto leading-relaxed px-2">
-            RecXchange combines the best of all recruitment methods: the reach of job boards, the service quality of RPO, and the flexibility of agencies - without the downsides. For recruiters, earn more while working less. For hiring managers, get better candidates faster at lower cost.
-          </p>
+    <main className="relative bg-[#0a0a0f] min-h-screen overflow-hidden">
+      <FuturisticBackground variant="default" />
+      
+      <div className="relative z-10 pt-16 sm:pt-20 md:pt-28 pb-12 sm:pb-16 md:pb-20 px-4 sm:px-6">
+        <div className="max-w-[1200px] mx-auto">
+          <Breadcrumbs />
           
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5 md:gap-6 mb-5 sm:mb-6 md:mb-8 lg:mb-10">
-            <div className="p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl bg-cyan-400/5 border border-cyan-400/10">
-              <div className="text-2xl sm:text-3xl md:text-4xl font-bold gradient-text mb-1 sm:mb-2">15,000+</div>
-              <div className="text-xs sm:text-sm text-gray-400">Active recruiters partnering on placements</div>
-            </div>
-            <div className="p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl bg-fuchsia-400/5 border border-fuchsia-400/10">
-              <div className="text-2xl sm:text-3xl md:text-4xl font-bold gradient-text mb-1 sm:mb-2">$7,000</div>
-              <div className="text-xs sm:text-sm text-gray-400">Average placement fee across 100+ roles</div>
-            </div>
-            <div className="p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl bg-purple-400/5 border border-purple-400/10">
-              <div className="text-2xl sm:text-3xl md:text-4xl font-bold gradient-text mb-1 sm:mb-2">270M</div>
-              <div className="text-xs sm:text-sm text-gray-400">Candidate profiles searchable on platform</div>
-            </div>
-          </div>
+          {/* Header */}
+          <motion.header initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-6 sm:mb-8 md:mb-12 mt-6">
+            <StatusBadge label="PLATFORM COMPARISON" color="cyan" />
+            <h1 className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black gradient-text mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2 mt-6"
+              style={{ textShadow: '0 0 60px rgba(0,240,255,0.3)' }}>
+              Why Choose RecXchange?
+            </h1>
+            <NeonDivider width="w-40" color="mixed" />
+            <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed px-2 mt-6">
+              See how RecXchange compares to traditional recruitment methods. Better for recruiters, better for hiring managers, better results for everyone.
+            </p>
+          </motion.header>
 
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-            <Link
-              href="/recruiter"
-              className="px-6 sm:px-7 md:px-8 py-3 sm:py-3.5 md:py-4 rounded-lg sm:rounded-xl bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white font-bold text-[11px] sm:text-xs md:text-sm hover:shadow-[0_0_20px_rgba(0,255,255,0.3)] transition-all"
-            >
-              Join as Recruiter
-            </Link>
-            <Link
-              href="/hiring-manager-home"
-              className="px-6 sm:px-7 md:px-8 py-3 sm:py-3.5 md:py-4 rounded-lg sm:rounded-xl bg-white/10 text-white hover:bg-cyan-400/10 hover:border-cyan-400/30 border border-white/10 font-bold text-[11px] sm:text-xs md:text-sm transition-all"
-            >
-              Post Your Role
-            </Link>
-            <Link
-              href="/pricing"
-              className="px-6 sm:px-7 md:px-8 py-3 sm:py-3.5 md:py-4 rounded-lg sm:rounded-xl bg-white/10 text-white hover:bg-fuchsia-400/10 hover:border-fuchsia-400/30 border border-white/10 font-bold text-[11px] sm:text-xs md:text-sm transition-all"
-            >
-              View Pricing
-            </Link>
-          </div>
-        </motion.section>
+          {/* Comparison 1: vs Traditional Agencies */}
+          <section className="mb-8 sm:mb-12 md:mb-16">
+            <div className="text-center mb-4 sm:mb-6 md:mb-8">
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2 sm:mb-3 md:mb-4 px-2">RecXchange vs Traditional Recruitment Agencies</h2>
+              <p className="text-gray-400 text-[13px] sm:text-sm md:text-base px-2">How split fee collaboration beats working alone</p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5 md:gap-6">
+              <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+                <HolographicCard color="cyan" variant="content">
+                  <StatusBadge label="RECXCHANGE" color="cyan" size="sm" />
+                  <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-3 sm:mb-4 md:mb-5 mt-4">Collaborative Recruitment</h3>
+
+                  <div className="space-y-4 sm:space-y-5 md:space-y-6">
+                    <div>
+                      <h4 className="text-base sm:text-lg font-bold text-cyan-300 mb-2 sm:mb-2.5 md:mb-3">For Recruiters:</h4>
+                      <ul className="space-y-2 sm:space-y-2.5 md:space-y-3 text-gray-300 text-[13px] sm:text-sm">
+                        {[
+                          { text: "Access to 270M candidates", desc: "Never run out of talent. Search the database when your pipeline is empty." },
+                          { text: "Partner with 15,000+ recruiters", desc: "Find candidates for your roles or roles for your candidates." },
+                          { text: "Earn up to 70% on RecX Direct", desc: "Higher splits than traditional agencies ($4,900 on $7k placement)." },
+                          { text: "$1-$250/month flat fee", desc: "No commission splits. Keep 100% of your earnings." },
+                          { text: "Legal protection", desc: "Auto-generated contracts. Timestamped submissions. Both parties protected." }
+                        ].map((item, i) => (
+                          <li key={i} className="flex items-start gap-2 sm:gap-3">
+                            <span className="text-cyan-400 mt-0.5 sm:mt-1 flex-shrink-0">✓</span>
+                            <span className="flex-1"><strong className="text-white">{item.text}</strong> - {item.desc}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="pt-4 sm:pt-5 border-t border-cyan-400/10">
+                      <h4 className="text-base sm:text-lg font-bold text-cyan-300 mb-2 sm:mb-2.5 md:mb-3">For Hiring Managers:</h4>
+                      <ul className="space-y-2 sm:space-y-2.5 text-gray-300 text-[13px] sm:text-sm">
+                        {[
+                          "15,000+ recruiters working on your role - Post once, thousands see it.",
+                          "One point of contact - Account Manager handles everything. No recruiter spam.",
+                          "12-20% fee - Lower than typical agencies (20-30%). Only pay when you hire.",
+                          "Candidates in 48 hours - Fast turnaround. Multiple submissions from different recruiters."
+                        ].map((item, i) => (
+                          <li key={i} className="flex items-start gap-2 sm:gap-3">
+                            <span className="text-cyan-400 mt-0.5 flex-shrink-0">✓</span>
+                            <span className="flex-1">{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </HolographicCard>
+              </motion.div>
+
+              <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+                <HolographicCard color="emerald" variant="content" className="bg-red-950/10 border-red-400/20">
+                  <StatusBadge label="TRADITIONAL AGENCY" color="emerald" size="sm" className="bg-red-400/10 border-red-400/30 text-red-400" />
+                  <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-3 sm:mb-4 md:mb-5 mt-4">Solo Recruitment</h3>
+
+                  <div className="space-y-4 sm:space-y-5 md:space-y-6">
+                    <div>
+                      <h4 className="text-base sm:text-lg font-bold text-red-400 mb-2 sm:mb-2.5 md:mb-3">For Recruiters:</h4>
+                      <ul className="space-y-2 sm:space-y-2.5 md:space-y-3 text-gray-400 text-[13px] sm:text-sm">
+                        {[
+                          "Limited candidate pool - Only your database. Lose placement if you don't have the candidate.",
+                          "No collaboration - Work alone. Compete with everyone. No partnerships.",
+                          "40-60% commission split - Agency takes 40-60%. Keep only $2,800-$4,200 on $7k placement.",
+                          "High overhead costs - Office rent, CRM fees, job board subscriptions, marketing.",
+                          "No protection - Candidates can be poached. Clients work with other agencies freely."
+                        ].map((item, i) => (
+                          <li key={i} className="flex items-start gap-2 sm:gap-3">
+                            <span className="text-red-400 mt-0.5 sm:mt-1 flex-shrink-0">✗</span>
+                            <span className="flex-1">{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="pt-4 sm:pt-5 border-t border-red-400/10">
+                      <h4 className="text-base sm:text-lg font-bold text-red-400 mb-2 sm:mb-2.5 md:mb-3">For Hiring Managers:</h4>
+                      <ul className="space-y-2 sm:space-y-2.5 text-gray-400 text-[13px] sm:text-sm">
+                        {[
+                          "Limited recruiter pool - Only recruiters you contact manually.",
+                          "Multiple points of contact - Work with 5-10 agencies. Manage calls, emails, duplicates.",
+                          "20-30% fee - Standard agency rates. Sometimes 35% for executive roles.",
+                          "Slow process - Wait for each agency to search separately. Inconsistent quality."
+                        ].map((item, i) => (
+                          <li key={i} className="flex items-start gap-2 sm:gap-3">
+                            <span className="text-red-400 mt-0.5 flex-shrink-0">✗</span>
+                            <span className="flex-1">{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </HolographicCard>
+              </motion.div>
+            </div>
+          </section>
+
+          <NeonDivider width="w-full" color="mixed" />
+
+          {/* Summary CTA */}
+          <motion.section initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="my-10 sm:my-12 md:my-16">
+            <HolographicCard color="purple" variant="content" glowIntensity="high" className="text-center">
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-3 sm:mb-4 md:mb-6 px-2">
+                The RecXchange Advantage
+              </h2>
+              <p className="text-gray-300 text-[13px] sm:text-sm md:text-base mb-4 sm:mb-5 md:mb-8 max-w-3xl mx-auto leading-relaxed px-2">
+                RecXchange combines the best of all recruitment methods: the reach of job boards, the service quality of RPO, and the flexibility of agencies - without the downsides. For recruiters, earn more while working less. For hiring managers, get better candidates faster at lower cost.
+              </p>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5 md:gap-6 mb-5 sm:mb-6 md:mb-8">
+                {[
+                  { value: "15,000+", label: "Active recruiters partnering" },
+                  { value: "$7,000", label: "Average placement fee" },
+                  { value: "270M", label: "Candidate profiles searchable" }
+                ].map((stat, i) => (
+                  <HolographicCard key={i} color={i === 0 ? "cyan" : i === 1 ? "fuchsia" : "purple"} variant="stat">
+                    <div className="text-2xl sm:text-3xl md:text-4xl font-bold gradient-text mb-1 sm:mb-2">{stat.value}</div>
+                    <div className="text-xs sm:text-sm text-gray-400">{stat.label}</div>
+                  </HolographicCard>
+                ))}
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+                <GlowButton variant="primary" size="lg" href="/recruiter">Join as Recruiter</GlowButton>
+                <GlowButton variant="secondary" size="lg" href="/hiring-manager-home">Post Your Role</GlowButton>
+                <GlowButton variant="ghost" size="lg" href="/pricing">View Pricing</GlowButton>
+              </div>
+            </HolographicCard>
+          </motion.section>
+        </div>
       </div>
     </main>
   );
