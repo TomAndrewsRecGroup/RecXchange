@@ -44,12 +44,11 @@ export const metadata: Metadata = {
     "recruitment marketplace",
     "RecXchange",
     "RecX Direct",
-    "Andrews Recruitment Group",
     "recruitment fee split",
     "recruiter collaboration"
   ],
-  authors: [{ name: "RecXchange" }, { name: "AMIVY Designs", url: "https://andrews-recruitment.com/about" }],
-  creator: "AMIVY Designs",
+  authors: [{ name: "RecXchange Portal LLC" }],
+  creator: "RecXchange Portal LLC",
   publisher: "RecXchange",
   metadataBase: new URL("https://recxchange.io"),
   alternates: {
@@ -161,7 +160,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         "name": "What is RecX Direct?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "RecX Direct is RecXchange's premium tier offering exclusive roles with higher commission rates of up to 70% (compared to 50% on standard roles). These are direct client relationships where RecXchange has negotiated exclusive partnerships with hiring companies. Recruiters get priority access to high-value roles, faster payment processing (15-30 days vs. 30-45 days), and dedicated account management."
+          "text": "RecX Direct is RecXchange's premium tier offering exclusive roles with higher commission rates of up to 70% (compared to 50% on standard roles). These are direct client relationships where RecXchange has negotiated exclusive partnerships with hiring companies. Recruiters get priority access to high-value roles, faster payment processing (15-30 days vs. 30-45 days), and dedicated account management. RecX Direct trades under Andrews Recruitment Group."
         }
       },
       {
@@ -252,7 +251,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         "@type": "Organization",
         "@id": "https://recxchange.io/#organization",
         "name": "RecXchange",
-        "legalName": "Andrews Recruitment Group Ltd",
+        "legalName": "RecXchange Portal LLC",
         "url": "https://recxchange.io",
         "logo": {
           "@type": "ImageObject",
@@ -260,16 +259,26 @@ export default function RootLayout({ children }: RootLayoutProps) {
           "width": 512,
           "height": 512
         },
-        "founder": {
-          "@id": "https://recxchange.io/#person"
-        },
+        "founder": [
+          {
+            "@id": "https://recxchange.io/#person"
+          }
+        ],
         "foundingDate": "2024",
+        "foundingLocation": {
+          "@type": "Place",
+          "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "AE",
+            "addressLocality": "Dubai"
+          }
+        },
         "sameAs": [
           "https://www.linkedin.com/company/recxchange",
           "https://twitter.com/RecXchange",
           "https://youtube.com/@recxchange"
         ],
-        "description": "RecXchange is a recruiter collaboration platform where 15,000+ recruiters partner on placements and split fees automatically. This marketing website (recxchange.io) provides information and guides. The actual platform is at app.recxchange.io. Average placement fee: $7,000. Access to 270M candidate profiles. $750,000 in fees available across 100+ live roles. Weekly live streams and video tutorials on YouTube.",
+        "description": "RecXchange is operated by RecXchange Portal LLC (UAE). A recruiter collaboration platform where 15,000+ recruiters partner on placements and split fees automatically. This marketing website (recxchange.io) provides information and guides. The actual platform is at app.recxchange.io. Average placement fee: $7,000. Access to 270M candidate profiles. $750,000 in fees available across 100+ live roles. Weekly live streams and video tutorials on YouTube.",
         "numberOfEmployees": {
           "@type": "QuantitativeValue",
           "value": 15000,
@@ -287,34 +296,27 @@ export default function RootLayout({ children }: RootLayoutProps) {
           "@id": "https://recxchange.io/#softwareapplication"
         }
       },
-      // Person Schema (Founder)
+      // Person Schema (Co-Founder)
       {
         "@type": "Person",
         "@id": "https://recxchange.io/#person",
         "name": "Tom Andrews",
-        "jobTitle": "CEO & Co-Founder",
-        "worksFor": {
-          "@id": "https://recxchange.io/#organization"
-        },
-        "url": "https://recxchange.io",
+        "jobTitle": "Co-Founder",
+        "worksFor": [
+          {
+            "@id": "https://recxchange.io/#organization"
+          },
+          {
+            "@type": "Organization",
+            "name": "Andrews Recruitment Group",
+            "url": "https://andrews-recruitment.com"
+          }
+        ],
+        "url": "https://andrews-recruitment.com",
         "sameAs": [
           "https://www.linkedin.com/in/tomandrews"
-        ]
-      },
-      // Design Agency Schema - AMIVY Designs (UPDATED URL)
-      {
-        "@type": "Organization",
-        "@id": "https://andrews-recruitment.com/about#organization",
-        "name": "AMIVY Designs",
-        "url": "https://andrews-recruitment.com/about",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/79a68aec-f3cc-44c3-8b5b-500176059f26_20260228_053107_0000.png",
-          "width": 180,
-          "height": 45
-        },
-        "description": "Premium web design, development, and digital branding agency specializing in custom websites and digital solutions.",
-        "serviceType": ["Web Design", "Web Development", "Digital Branding", "UI/UX Design"]
+        ],
+        "description": "Co-Founder of RecXchange and Founder of Andrews Recruitment Group. RecX Direct (RecXchange's internal agency model) trades under Andrews Recruitment Group."
       },
       // Software Application Schema - Platform distinction
       {
@@ -328,9 +330,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
         "softwareHelp": "https://recxchange.io/faq",
         "provider": {
           "@id": "https://recxchange.io/#organization"
-        },
-        "creator": {
-          "@id": "https://andrews-recruitment.com/about#organization"
         },
         "description": "The recruiter collaboration platform (app.recxchange.io) where 15,000+ recruiters partner on placements. Average placement fee: $7,000. Split fees up to 70% on RecX Direct roles. Access 270M candidate profiles. Post roles to find candidates, or share candidates to find roles. $750,000 in fees available across 100+ live roles in UK, USA, Europe, Africa, Middle East, Australia covering Engineering, Healthcare, Tech, HR, Sales, Finance. This marketing site (recxchange.io) provides information only.",
         "offers": [
@@ -568,9 +567,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
         "description": "Marketing and information website for RecXchange recruitment collaboration platform. The actual platform application is at app.recxchange.io. This site provides product information, pricing, guides, and educational content.",
         "publisher": {
           "@id": "https://recxchange.io/#organization"
-        },
-        "creator": {
-          "@id": "https://andrews-recruitment.com/about#organization"
         },
         "copyrightHolder": {
           "@id": "https://recxchange.io/#organization"
