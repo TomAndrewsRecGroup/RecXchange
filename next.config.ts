@@ -28,9 +28,6 @@ const nextConfig: NextConfig = {
   // Optimize production builds
   productionBrowserSourceMaps: false, // Disable source maps in production
   
-  // SWC compiler optimizations
-  swcMinify: true, // Use SWC for faster minification
-  
   // Compiler optimizations for better performance
   compiler: {
     // Remove console.log in production for smaller bundle
