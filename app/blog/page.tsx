@@ -162,29 +162,35 @@ export default function BlogPage() {
   return (
     <main className="min-h-screen py-12 sm:py-16 md:py-20 px-4 sm:px-6">
       <div className="max-w-[1200px] mx-auto">
-        {/* Header */}
+        {/* UPDATED Header */}
         <motion.header
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-8 sm:mb-12 md:mb-16"
+          className="text-center mb-8 sm:mb-12 md:mb-16 max-w-5xl mx-auto px-2 sm:px-4"
         >
-          <span className="block text-[9px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] md:tracking-[0.4em] text-cyan-400/60 mb-3 sm:mb-4 md:mb-6 font-bold">
-            Social Updates
-          </span>
-          <h1 className="text-[28px] sm:text-4xl md:text-5xl lg:text-6xl font-bold gradient-text mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2">
-            RecXchange Social Feed
-          </h1>
-          <div className="pulse-underline mb-4 sm:mb-6 md:mb-8 mx-auto" />
-          <p className="text-gray-400 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-6 sm:mb-8 px-2">
-            Latest updates, insights, and stories from our social media channels.
-          </p>
+          <div className="space-y-4 md:space-y-6">
+            {/* Badge */}
+            <span className="inline-block text-[9px] md:text-[10px] uppercase tracking-[0.25em] md:tracking-[0.4em] text-cyan-400/60 font-bold">
+              Social Updates
+            </span>
+
+            {/* Main Headline */}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.1] tracking-tight px-2">
+              RecXchange Social Feed
+            </h1>
+
+            {/* Subheadline */}
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed px-2">
+              Latest updates, insights, and stories from our social media channels.
+            </p>
+          </div>
           
           {/* Newsletter CTA */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
-            className="inline-block"
+            className="mt-6 sm:mt-8"
           >
             <Link
               href="https://www.linkedin.com/build-relation/newsletter-follow?entityUrn=7330859663111901185"
