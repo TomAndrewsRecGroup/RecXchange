@@ -7,22 +7,28 @@ export default function WhyRecXchangePage() {
   return (
     <main className="relative min-h-screen flex flex-col items-center pt-16 sm:pt-20 md:pt-28 pb-12 sm:pb-16 md:pb-20 px-4 sm:px-6">
       <div className="relative z-10 w-full max-w-[1200px] flex flex-col items-center">
-        {/* Header */}
+        {/* UPDATED Header */}
         <motion.header
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-6 sm:mb-8 md:mb-12 lg:mb-16 w-full"
+          className="text-center mb-6 sm:mb-8 md:mb-12 lg:mb-16 max-w-5xl mx-auto px-2 sm:px-4 w-full"
         >
-          <span className="block text-[9px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] md:tracking-[0.4em] text-cyan-400/60 mb-3 sm:mb-4 md:mb-6 font-bold">
-            Platform Comparison
-          </span>
-          <h1 className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-bold gradient-text mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2">
-            Why Choose RecXchange?
-          </h1>
-          <div className="pulse-underline mb-4 sm:mb-6 md:mb-8 mx-auto" />
-          <p className="text-gray-400 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed px-2">
-            See how RecXchange compares to traditional recruitment methods. Better for recruiters, better for hiring managers, better results for everyone.
-          </p>
+          <div className="space-y-4 md:space-y-6">
+            {/* Badge */}
+            <span className="inline-block text-[9px] md:text-[10px] uppercase tracking-[0.25em] md:tracking-[0.4em] text-cyan-400/60 font-bold">
+              Platform Comparison
+            </span>
+
+            {/* Main Headline */}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.1] tracking-tight px-2">
+              Why Choose RecXchange?
+            </h1>
+
+            {/* Subheadline */}
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed px-2">
+              See how RecXchange compares to traditional recruitment methods. Better for recruiters, better for hiring managers, better results for everyone.
+            </p>
+          </div>
         </motion.header>
 
         {/* Comparison 1: RecXchange vs Traditional Recruitment Agencies */}
