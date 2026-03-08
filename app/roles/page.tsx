@@ -140,27 +140,34 @@ export default function RolesMarketplace() {
     }}>
       <div className="max-w-[1200px] mx-auto relative z-10">
 
-        {/* Hero Header */}
-        <header className="text-center mb-8 sm:mb-12 md:mb-16">
+        {/* UPDATED Hero Header */}
+        <header className="text-center mb-8 sm:mb-12 md:mb-16 max-w-5xl mx-auto px-2 sm:px-4">
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
+            className="space-y-4 md:space-y-6"
           >
-            <span className="block text-[9px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] md:tracking-[0.4em] text-purple-400/60 mb-3 sm:mb-4 md:mb-6 font-bold">
+            {/* Badge */}
+            <span className="inline-block text-[9px] md:text-[10px] uppercase tracking-[0.25em] md:tracking-[0.4em] text-purple-400/60 font-bold">
               Live Roles · Live Revenue
             </span>
-            <h1 className="text-[28px] sm:text-4xl md:text-5xl lg:text-6xl font-bold gradient-text mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2">
+
+            {/* Main Headline */}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.1] tracking-tight px-2">
               One placement pays for 12 months
             </h1>
-            <div className="pulse-underline mb-4 sm:mb-6 md:mb-8 mx-auto" />
-            <p className="text-gray-400 text-sm sm:text-base md:text-lg lg:text-xl max-w-2xl mx-auto leading-relaxed px-2">
+
+            {/* Subheadline */}
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed px-2">
               Browse live roles. Submit candidates. Split fees 50/50, 60/40, or take 70% on RecX Direct placements.
             </p>
-            <div className="mt-4 sm:mt-6 flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4 text-[10px] sm:text-xs text-gray-500 px-2">
-              <span className="px-2 sm:px-3 py-1 rounded-full bg-white/5 border border-white/10">${Math.round(totalFeePool / roles.length).toLocaleString()} avg fee</span>
-              <span className="px-2 sm:px-3 py-1 rounded-full bg-white/5 border border-white/10">${Math.round(totalFeePool / 1000)}k fees available</span>
-              <span className="hidden sm:inline-flex px-2 sm:px-3 py-1 rounded-full bg-white/5 border border-white/10">UK · USA · Europe · Africa · Middle East · Australia</span>
+
+            {/* Stats Pills */}
+            <div className="flex flex-wrap justify-center gap-2 sm:gap-3 text-[9px] sm:text-[10px] text-gray-400 px-2 pt-2">
+              <span className="px-2.5 py-1 rounded-full bg-white/5 border border-white/10">${Math.round(totalFeePool / roles.length).toLocaleString()} avg fee</span>
+              <span className="px-2.5 py-1 rounded-full bg-white/5 border border-white/10">${Math.round(totalFeePool / 1000)}k fees available</span>
+              <span className="hidden sm:inline-flex px-2.5 py-1 rounded-full bg-white/5 border border-white/10">UK · USA · Europe · Africa · Middle East · Australia</span>
             </div>
           </motion.div>
         </header>
