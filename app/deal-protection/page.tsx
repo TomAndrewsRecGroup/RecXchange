@@ -23,20 +23,26 @@ export default function DealProtection() {
       <div className="fixed top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_0%,_rgba(0,255,255,0.04)_0%,_transparent_50%)] pointer-events-none" />
 
       <div className="relative z-10 w-full max-w-[1200px] flex flex-col items-center">
-        <header className="text-center mb-6 sm:mb-8 md:mb-12">
+        {/* UPDATED Header */}
+        <header className="text-center mb-6 sm:mb-8 md:mb-12 max-w-5xl mx-auto px-2 sm:px-4">
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
+            className="space-y-4 md:space-y-6"
           >
-            <span className="block text-[9px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] md:tracking-[0.4em] text-cyan-400/60 mb-3 sm:mb-4 md:mb-6 font-bold">
+            {/* Badge */}
+            <span className="inline-block text-[9px] md:text-[10px] uppercase tracking-[0.25em] md:tracking-[0.4em] text-cyan-400/60 font-bold">
               Protocol — Trust Infrastructure
             </span>
-            <h1 className="text-[28px] sm:text-4xl md:text-5xl lg:text-6xl font-bold gradient-text mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2">
+
+            {/* Main Headline */}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.1] tracking-tight px-2">
               Every submission has a timestamp, a trail, and an agreement.
             </h1>
-            <div className="pulse-underline mb-4 sm:mb-6 md:mb-8 mx-auto" />
-            <p className="text-gray-400 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed px-2">
+
+            {/* Subheadline */}
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed px-2">
               We log who shared what, when they shared it, and under which terms—so your split-fee placements feel secure, not fragile.
             </p>
           </motion.div>
