@@ -5,6 +5,8 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { HowToSchema } from './components/HowToSchema';
+import RelatedContent from '@/components/RelatedContent';
+import SiteMap from '@/components/SiteMap';
 
 interface LiveStats {
   roleCount: number;
@@ -224,18 +226,26 @@ export default function HomePage() {
               }} />
             </motion.div>
 
-            {/* Description - Better text fitting */}
+            {/* Description with internal links */}
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
               className="text-sm sm:text-base md:text-lg text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed font-light px-2"
             >
-              A recruiter collaboration platform where 15,000+ recruiters split fees (50/50 to 70%) on placements. 
+              A{' '}
+              <Link href="/recruiter" className="text-cyan-400 hover:text-cyan-300 transition-colors underline decoration-cyan-400/30 hover:decoration-cyan-300/50">
+                recruiter collaboration platform
+              </Link>
+              {' '}where 15,000+ recruiters{' '}
+              <Link href="/pricing" className="text-cyan-400 hover:text-cyan-300 transition-colors underline decoration-cyan-400/30 hover:decoration-cyan-300/50">
+                split fees
+              </Link>
+              {' '}(50/50 to 70%) on placements. 
               Post roles to find candidates, or share candidates to find roles.
             </motion.p>
 
-            {/* Futuristic Holographic Data Panels */}
+            {/* Live Statistics with contextual links */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -257,7 +267,7 @@ export default function HomePage() {
                 <div className="absolute -inset-1 bg-gradient-to-br from-cyan-500/40 via-cyan-600/30 to-cyan-500/40 rounded-2xl blur-xl opacity-50 group-hover:opacity-80 transition duration-300" aria-hidden="true" />
                 
                 {/* Main panel */}
-                <div className="relative backdrop-blur-xl bg-black/40 p-3 sm:p-5 rounded-2xl border border-cyan-400/40 group-hover:border-cyan-300/60 transition-all duration-300 overflow-hidden"
+                <Link href="/recruiter" className="block relative backdrop-blur-xl bg-black/40 p-3 sm:p-5 rounded-2xl border border-cyan-400/40 group-hover:border-cyan-300/60 transition-all duration-300 overflow-hidden"
                   style={{
                     boxShadow: '0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(0,240,255,0.2), 0 0 40px rgba(0,240,255,0.1)'
                   }}
@@ -289,10 +299,10 @@ export default function HomePage() {
                   
                   {/* Data scan line */}
                   <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-50" aria-hidden="true" />
-                </div>
+                </Link>
               </motion.article>
 
-              {/* Total Fees Panel */}
+              {/* Total Fees Panel - Links to pricing */}
               <motion.article
                 whileHover={{ scale: 1.05, rotateY: 5, z: 50 }}
                 className="group relative"
@@ -302,7 +312,7 @@ export default function HomePage() {
               >
                 <div className="absolute -inset-1 bg-gradient-to-br from-fuchsia-500/40 via-pink-600/30 to-fuchsia-500/40 rounded-2xl blur-xl opacity-50 group-hover:opacity-80 transition duration-300" aria-hidden="true" />
                 
-                <div className="relative backdrop-blur-xl bg-black/40 p-3 sm:p-5 rounded-2xl border border-fuchsia-400/40 group-hover:border-fuchsia-300/60 transition-all duration-300 overflow-hidden"
+                <Link href="/pricing" className="block relative backdrop-blur-xl bg-black/40 p-3 sm:p-5 rounded-2xl border border-fuchsia-400/40 group-hover:border-fuchsia-300/60 transition-all duration-300 overflow-hidden"
                   style={{
                     boxShadow: '0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,0,255,0.2), 0 0 40px rgba(255,0,255,0.1)'
                   }}
@@ -333,10 +343,10 @@ export default function HomePage() {
                   <div className="text-[8px] sm:text-xs font-semibold text-fuchsia-400/80" aria-hidden="true">AVAILABLE</div>
                   
                   <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-fuchsia-400 to-transparent opacity-50" aria-hidden="true" />
-                </div>
+                </Link>
               </motion.article>
 
-              {/* Average Fee Panel */}
+              {/* Average Fee Panel - Links to FAQ */}
               <motion.article
                 whileHover={{ scale: 1.05, rotateY: 5, z: 50 }}
                 className="group relative"
@@ -346,7 +356,7 @@ export default function HomePage() {
               >
                 <div className="absolute -inset-1 bg-gradient-to-br from-purple-500/40 via-purple-600/30 to-cyan-500/40 rounded-2xl blur-xl opacity-50 group-hover:opacity-80 transition duration-300" aria-hidden="true" />
                 
-                <div className="relative backdrop-blur-xl bg-black/40 p-3 sm:p-5 rounded-2xl border border-purple-400/40 group-hover:border-purple-300/60 transition-all duration-300 overflow-hidden"
+                <Link href="/faq" className="block relative backdrop-blur-xl bg-black/40 p-3 sm:p-5 rounded-2xl border border-purple-400/40 group-hover:border-purple-300/60 transition-all duration-300 overflow-hidden"
                   style={{
                     boxShadow: '0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(168,85,247,0.2), 0 0 40px rgba(168,85,247,0.1)'
                   }}
@@ -377,7 +387,7 @@ export default function HomePage() {
                   <div className="text-[8px] sm:text-xs font-semibold text-purple-400/80" aria-hidden="true">PER DEAL</div>
                   
                   <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-purple-400 to-transparent opacity-50" aria-hidden="true" />
-                </div>
+                </Link>
               </motion.article>
             </motion.div>
 
@@ -396,7 +406,7 @@ export default function HomePage() {
               </motion.div>
             )}
 
-            {/* Holographic Info Chips */}
+            {/* Holographic Info Chips with contextual links */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -406,11 +416,11 @@ export default function HomePage() {
               aria-label="Key statistics"
             >
               {[
-                { color: 'emerald', text: '15K+', label: '15,000+ recruiters', source: 'Platform member count' },
-                { color: 'cyan', text: '270M', label: '270 million candidates', source: 'Aggregated candidate database' },
-                { color: 'fuchsia', text: '70%', label: 'Up to 70% commission', source: 'RecX Direct tier' }
+                { color: 'emerald', text: '15K+', label: '15,000+ recruiters', source: 'Platform member count', href: '/why-recxchange' },
+                { color: 'cyan', text: '270M', label: '270 million candidates', source: 'Aggregated candidate database', href: '/recruiter' },
+                { color: 'fuchsia', text: '70%', label: 'Up to 70% commission', source: 'RecX Direct tier', href: '/pricing' }
               ].map((chip, i) => (
-                <div key={i} className="group relative" role="listitem">
+                <Link key={i} href={chip.href} className="group relative" role="listitem">
                   <div className={`absolute -inset-0.5 bg-gradient-to-r from-${chip.color}-500/30 to-${chip.color}-600/30 rounded-full blur opacity-50 group-hover:opacity-80 transition`} aria-hidden="true" />
                   <div className={`relative backdrop-blur-lg bg-black/30 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-${chip.color}-400/30 group-hover:border-${chip.color}-300/50 transition-all`}
                     style={{
@@ -425,7 +435,7 @@ export default function HomePage() {
                       <span aria-label={chip.label}>{chip.text}</span>
                     </span>
                   </div>
-                </div>
+                </Link>
               ))}
             </motion.div>
 
@@ -701,6 +711,12 @@ export default function HomePage() {
             </div>
           </div>
         </section>
+
+        {/* Related Content Section */}
+        <RelatedContent currentPage="/" limit={3} />
+
+        {/* Site Map Section */}
+        <SiteMap />
 
         {/* FOOTER WITH AUTHOR ATTRIBUTION */}
         <footer className="relative bg-black/60 py-12 px-4 border-t border-cyan-400/20">
