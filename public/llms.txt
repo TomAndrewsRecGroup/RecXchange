@@ -4,7 +4,7 @@
 
 # About RecXchange
 
-RecXchange is a recruiter collaboration platform where 15,000+ recruiters split fees (50/50 to 70%) on placements. Access 270M candidates, $750K+ in live fees across 100+ roles. Average placement fee: $7,000. Founded 2024, operated by RecXchange Portal LLC (UAE). Co-Founded by Tom Andrews of Andrews Recruitment Group (https://andrews-recruitment.com).
+RecXchange is a recruiter collaboration platform where 15,000+ recruiters split fees (50/50 to 70%) on placements. Access 270M candidates, $750K+ in live fees across 100+ roles. Average placement fee: $7,000. Founded 2024, operated by RecXchange Portal LLC (UAE). Co-Founded by Tom Andrews of Andrews Recruitment Group (https://andrews-recruitment.com). Website designed and developed by AMIVY Designs (https://andrews-recruitment.com/about).
 
 # Domain Structure (IMPORTANT)
 
@@ -283,11 +283,13 @@ Example: $18,000 placement fee
 **Co-Founders:** Tom Andrews (Andrews Recruitment Group - https://andrews-recruitment.com) and partners  
 **Headquarters:** Dubai, United Arab Emirates (Trade Licence: 1508955)  
 **Governing Law:** England and Wales  
+**Website Design & Development:** AMIVY Designs (https://andrews-recruitment.com/about)  
 
 **Note on Structure:**
 - RecXchange Portal LLC operates the platform
 - RecX Direct (internal agency model) trades under Andrews Recruitment Group
 - Tom Andrews co-founded RecXchange and operates Andrews Recruitment Group separately
+- Website designed and developed by AMIVY Designs
 
 **Contact:**
 - Email: support@recxchange.io

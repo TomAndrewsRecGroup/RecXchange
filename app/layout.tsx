@@ -47,8 +47,8 @@ export const metadata: Metadata = {
     "recruitment fee split",
     "recruiter collaboration"
   ],
-  authors: [{ name: "RecXchange Portal LLC" }],
-  creator: "RecXchange Portal LLC",
+  authors: [{ name: "RecXchange Portal LLC" }, { name: "AMIVY Designs", url: "https://andrews-recruitment.com/about" }],
+  creator: "AMIVY Designs",
   publisher: "RecXchange",
   metadataBase: new URL("https://recxchange.io"),
   alternates: {
@@ -318,6 +318,21 @@ export default function RootLayout({ children }: RootLayoutProps) {
         ],
         "description": "Co-Founder of RecXchange and Founder of Andrews Recruitment Group. RecX Direct (RecXchange's internal agency model) trades under Andrews Recruitment Group."
       },
+      // Design Agency Schema - AMIVY Designs
+      {
+        "@type": "Organization",
+        "@id": "https://andrews-recruitment.com/about#organization",
+        "name": "AMIVY Designs",
+        "url": "https://andrews-recruitment.com/about",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/79a68aec-f3cc-44c3-8b5b-500176059f26_20260228_053107_0000.png",
+          "width": 180,
+          "height": 45
+        },
+        "description": "Premium web design, development, and digital branding agency specializing in custom websites and digital solutions. Designer and developer of RecXchange platform.",
+        "serviceType": ["Web Design", "Web Development", "Digital Branding", "UI/UX Design"]
+      },
       // Software Application Schema - Platform distinction
       {
         "@type": "SoftwareApplication",
@@ -331,7 +346,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
         "provider": {
           "@id": "https://recxchange.io/#organization"
         },
-        "description": "The recruiter collaboration platform (app.recxchange.io) where 15,000+ recruiters partner on placements. Average placement fee: $7,000. Split fees up to 70% on RecX Direct roles. Access 270M candidate profiles. Post roles to find candidates, or share candidates to find roles. $750,000 in fees available across 100+ live roles in UK, USA, Europe, Africa, Middle East, Australia covering Engineering, Healthcare, Tech, HR, Sales, Finance. This marketing site (recxchange.io) provides information only.",
+        "creator": {
+          "@id": "https://andrews-recruitment.com/about#organization"
+        },
+        "description": "The recruiter collaboration platform (app.recxchange.io) where 15,000+ recruiters partner on placements. Average placement fee: $7,000. Split fees up to 70% on RecX Direct roles. Access 270M candidate profiles. Post roles to find candidates, or share candidates to find roles. $750,000 in fees available across 100+ live roles in UK, USA, Europe, Africa, Middle East, Australia covering Engineering, Healthcare, Tech, HR, Sales, Finance. This marketing site (recxchange.io) provides information only. Website designed and developed by AMIVY Designs.",
         "offers": [
           {
             "@type": "Offer",
@@ -567,6 +585,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
         "description": "Marketing and information website for RecXchange recruitment collaboration platform. The actual platform application is at app.recxchange.io. This site provides product information, pricing, guides, and educational content.",
         "publisher": {
           "@id": "https://recxchange.io/#organization"
+        },
+        "creator": {
+          "@id": "https://andrews-recruitment.com/about#organization"
         },
         "copyrightHolder": {
           "@id": "https://recxchange.io/#organization"
