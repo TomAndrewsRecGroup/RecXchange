@@ -206,7 +206,7 @@ export default function ContactPage() {
 
             {/* Right: Chat Interface */}
             <div className="relative">
-              <HolographicCard color="purple" variant="content" className="overflow-hidden" style={{ minHeight: stage === 'chat' ? '500px' : 'auto' }}>
+              <HolographicCard color="purple" variant="content" className="overflow-hidden">
                 {/* Chat Header */}
                 <div className="mb-4 sm:mb-6 pb-3 sm:pb-4 border-b border-white/5">
                   <div className="flex items-center gap-3 sm:gap-4">
@@ -308,7 +308,7 @@ export default function ContactPage() {
 
                 {/* Live Chat */}
                 {stage === 'chat' && (
-                  <div className="flex flex-col" style={{ height: '450px' }}>
+                  <div className="flex flex-col min-h-[450px]">
                     <div className="flex-grow p-3 sm:p-4 space-y-3 sm:space-y-4 overflow-y-auto">
                       {messages.map(msg => (
                         <div key={msg.id} className={`flex flex-col gap-0.5 sm:gap-1 ${msg.from === 'visitor' ? 'items-end' : 'items-start'}`}>
