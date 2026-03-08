@@ -84,7 +84,7 @@ export default function WhyRecXchangePage() {
 
               <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
                 <HolographicCard color="emerald" variant="content" className="bg-red-950/10 border-red-400/20">
-                  <StatusBadge label="TRADITIONAL AGENCY" color="emerald" size="sm" className="bg-red-400/10 border-red-400/30 text-red-400" />
+                  <StatusBadge label="TRADITIONAL AGENCY" color="emerald" size="sm" />
                   <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-3 sm:mb-4 md:mb-5 mt-4">Solo Recruitment</h3>
 
                   <div className="space-y-4 sm:space-y-5 md:space-y-6">
