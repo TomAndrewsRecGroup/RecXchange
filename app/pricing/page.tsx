@@ -57,22 +57,7 @@ const tiers = [
     ],
     buttonText: "Choose Pro",
     highlight: false,
-  },
-  {
-    name: "RecX Teams",
-    price: "Custom",
-    description: "For agencies with 5+ recruiters.",
-    features: [
-      { text: "Everything in Pro for your entire team", hasTooltip: false },
-      { text: "Shared token pool across team members", hasTooltip: true },
-      { text: "Shared candidate database (ATS)", hasTooltip: false },
-      { text: "Shared client CRM", hasTooltip: false },
-      { text: "Private roles visible to your team only", hasTooltip: false },
-      { text: "Up to 70% split on RecX Direct placements", hasTooltip: false }
-    ],
-    buttonText: "Talk to Sales",
-    highlight: false,
-  },
+  }
 ];
 
 export default function PricingPage() {
@@ -85,12 +70,27 @@ export default function PricingPage() {
 
   return (
     <div className="py-10 sm:py-16 md:py-20 px-4 sm:px-6">
-      <div className="max-w-[1200px] mx-auto text-center mb-8 sm:mb-12 md:mb-16">
-        <h1 className="text-[28px] sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4">Pricing & <span className="gradient-text">Tiers</span></h1>
-        <p className="text-gray-400 text-sm sm:text-base md:text-lg px-2">Pick a tier. Make placements. One placement pays for the year.</p>
+      {/* UPDATED Header */}
+      <div className="max-w-5xl mx-auto text-center mb-8 sm:mb-12 md:mb-16 px-2 sm:px-4">
+        <div className="space-y-4 md:space-y-6">
+          {/* Badge */}
+          <span className="inline-block text-[9px] md:text-[10px] uppercase tracking-[0.25em] md:tracking-[0.4em] text-purple-400/60 font-bold">
+            Pricing & Tiers
+          </span>
+
+          {/* Main Headline */}
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.1] tracking-tight px-2">
+            Pick a tier. Make placements.
+          </h1>
+
+          {/* Subheadline */}
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed px-2">
+            One placement pays for the year.
+          </p>
+        </div>
       </div>
 
-      <div className="max-w-[1200px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6 mb-10 sm:mb-16 md:mb-20">
+      <div className="max-w-[1200px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 mb-10 sm:mb-16 md:mb-20">
         {tiers.map((tier, index) => (
           <div
             key={index}
