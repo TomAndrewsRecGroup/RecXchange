@@ -79,24 +79,31 @@ export default function HiringManagerHome() {
 
       <div className="relative z-10 w-full max-w-[1200px] flex flex-col items-center">
 
-        {/* Intro Context */}
-        <header className="text-center mb-8 md:mb-12">
+        {/* UPDATED Hero Section */}
+        <header className="text-center mb-8 md:mb-12 w-full max-w-5xl mx-auto px-2 sm:px-4">
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
+            className="space-y-4 md:space-y-6"
           >
-            <span className="block text-[9px] md:text-[10px] uppercase tracking-[0.25em] md:tracking-[0.4em] text-fuchsia-400/60 mb-4 md:mb-6 font-bold">
+            {/* Badge */}
+            <span className="inline-block text-[9px] md:text-[10px] uppercase tracking-[0.25em] md:tracking-[0.4em] text-fuchsia-400/60 font-bold">
               RecX Direct
             </span>
-            <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold gradient-text mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2">
+
+            {/* Main Headline */}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.1] tracking-tight px-2">
               Post your role for free.
             </h1>
-            <div className="pulse-underline mb-6 md:mb-8 mx-auto" />
-            <p className="text-gray-400 text-sm sm:text-base md:text-xl max-w-2xl mx-auto leading-relaxed px-2">
+
+            {/* Subheadline */}
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed px-2">
               15,000+ recruiters compete to fill it. You pay one fee when hired.
             </p>
-            <div className="mt-5 sm:mt-6 flex flex-wrap justify-center gap-2 sm:gap-3 text-[9px] sm:text-[10px] text-gray-500 px-2 max-w-lg mx-auto">
+
+            {/* Stats Pills */}
+            <div className="flex flex-wrap justify-center gap-2 sm:gap-3 text-[9px] sm:text-[10px] text-gray-400 px-2 pt-2">
               <span className="px-2.5 py-1 rounded-full bg-white/5 border border-white/10 whitespace-nowrap">15,000+ Recruiters</span>
               <span className="px-2.5 py-1 rounded-full bg-white/5 border border-white/10 whitespace-nowrap">270M candidates</span>
               <span className="px-2.5 py-1 rounded-full bg-white/5 border border-white/10">Engineering • Healthcare • Tech</span>
