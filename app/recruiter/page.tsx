@@ -30,21 +30,26 @@ export default function RecruiterDiagnostic() {
 
       {/* Hero Content */}
       <div className="relative z-10 w-full max-w-[1200px] flex flex-col items-center">
-        <header className="text-center mb-6 sm:mb-8 md:mb-12">
+        <header className="text-center mb-6 sm:mb-8 md:mb-12 max-w-5xl mx-auto px-2 sm:px-4">
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
+            className="space-y-4 md:space-y-6"
           >
-            <span className="block text-[9px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] md:tracking-[0.4em] text-cyan-400/60 mb-3 sm:mb-4 md:mb-6 font-bold">
+            {/* Badge */}
+            <span className="inline-block text-[9px] md:text-[10px] uppercase tracking-[0.25em] md:tracking-[0.4em] text-cyan-400/60 font-bold">
               Share Roles. Split Fees. Fill Roles. Get Paid.
             </span>
-            <h1 className="text-[28px] sm:text-4xl md:text-5xl lg:text-6xl font-bold gradient-text mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2">
+
+            {/* Main Headline */}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.1] tracking-tight px-2">
               What do you need <br className="hidden sm:block" />
               <span className="sm:inline">right now?</span>
             </h1>
-            <div className="pulse-underline mb-4 sm:mb-6 md:mb-8 mx-auto" />
-            <p className="text-gray-400 text-sm sm:text-base md:text-lg lg:text-xl max-w-2xl mx-auto leading-relaxed px-2">
+
+            {/* Subheadline */}
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed px-2">
               Pick one. We'll show you how to make money from it.
             </p>
           </motion.div>
@@ -111,8 +116,7 @@ export default function RecruiterDiagnostic() {
                 initial="initial"
                 animate="animate"
                 whileHover="hover"
-                className="h-full min-h-[400px] sm:min-h-[420px] md:min-h-[480px] border border-fuchsia-400/10 rounded-lg sm:rounded-xl md:rounded-2xl p-4 sm:p-5 md:p-6 lg:p-8 flex flex-col justify-between bg-white/[0.01] transition-all"
-              >
+                className="h-full min-h-[400px] sm:min-h-[420px] md:min-h-[480px] border border-fuchsia-400/10 rounded-lg sm:rounded-xl md:rounded-2xl p-4 sm:p-5 md:p-6 lg:p-8 flex flex-col justify-between bg-white/[0.01] transition-all">
                 <div>
                   <div className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-lg sm:rounded-xl bg-fuchsia-500/10 border border-fuchsia-400/20 flex items-center justify-center mb-4 sm:mb-5 md:mb-6 text-fuchsia-400">
                     <svg width="16" height="16" className="sm:w-[18px] sm:h-[18px] md:w-5 md:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
