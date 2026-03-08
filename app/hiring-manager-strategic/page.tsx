@@ -40,36 +40,33 @@ export default function HiringManagerStrategic() {
 
       <div className="relative z-10 w-full max-w-[1200px] flex flex-col items-center">
         
-        {/* 1. Header Section */}
-        <header className="text-center mb-6 sm:mb-8 md:mb-12 w-full">
-          <motion.span 
-            initial={{ opacity: 0, y: 10 }}
+        {/* Header Section */}
+        <header className="text-center mb-6 sm:mb-8 md:mb-12 w-full max-w-5xl mx-auto px-2 sm:px-4">
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="block text-[9px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] md:tracking-[0.4em] text-purple-400/60 mb-3 sm:mb-4 md:mb-6 font-bold"
+            transition={{ duration: 0.5 }}
+            className="space-y-4 md:space-y-6"
           >
-            Strategic Support — Talent Infrastructure
-          </motion.span>
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-[28px] sm:text-4xl md:text-5xl lg:text-6xl font-bold gradient-text mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2"
-          >
-            Pre-warm the market <br/>
-            <span className="gradient-text">before you hire.</span>
-          </motion.h1>
-          <div className="pulse-underline mb-4 sm:mb-6 md:mb-8 mx-auto" />
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-gray-400 text-sm sm:text-base md:text-lg lg:text-xl max-w-2xl mx-auto leading-relaxed px-2"
-          >
-            Stop the cycle of reactive "firefighting." We build your talent infrastructure ahead of time, ensuring high-velocity growth that doesn&apos;t sacrifice quality.
-          </motion.p>
+            {/* Badge */}
+            <span className="inline-block text-[9px] md:text-[10px] uppercase tracking-[0.25em] md:tracking-[0.4em] text-purple-400/60 font-bold">
+              Strategic Support — Talent Infrastructure
+            </span>
+
+            {/* Main Headline */}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.1] tracking-tight px-2">
+              Pre-warm the market <br/>
+              before you hire.
+            </h1>
+
+            {/* Subheadline */}
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed px-2">
+              Stop the cycle of reactive "firefighting." We build your talent infrastructure ahead of time, ensuring high-velocity growth that doesn&apos;t sacrifice quality.
+            </p>
+          </motion.div>
         </header>
 
-        {/* 2. Interactive Timeline & Deliverables */}
+        {/* Interactive Timeline & Deliverables */}
         <div className="grid grid-cols-1 lg:grid-cols-[1.4fr,1fr] gap-4 sm:gap-5 md:gap-6 lg:gap-8 items-start mb-8 sm:mb-10 md:mb-12 lg:mb-16 w-full">
           
           {/* Timeline Section */}

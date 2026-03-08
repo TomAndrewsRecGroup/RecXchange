@@ -35,18 +35,29 @@ export default function HiringManagerLive() {
       <div className="fixed top-0 left-0 w-[40%] h-[40%] bg-blue-600/10 blur-[120px] rounded-full pointer-events-none -z-10" />
       
       <div className="relative z-10 w-full max-w-[1200px] flex flex-col items-center">
-        <header className="text-center mb-6 sm:mb-8 md:mb-12">
-          <motion.span className="block text-[9px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] md:tracking-[0.4em] text-cyan-400/60 mb-3 sm:mb-4 md:mb-6 font-bold">
-            Live Broadcast Simulation
-          </motion.span>
-          <motion.h1 className="text-[28px] sm:text-4xl md:text-5xl font-bold gradient-text mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2">
-            One role. <span className="gradient-text">Massive Velocity.</span><br/>
-            Watch the engine work.
-          </motion.h1>
-          <div className="pulse-underline mb-4 sm:mb-6 md:mb-8 mx-auto" />
-          <motion.p className="text-gray-400 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed px-2">
-            When you post a role, you aren't waiting for a single agency. You are activating a global hive of 15,000+ specialists. Watch how fast your talent pool expands when 300+ experts source simultaneously.
-          </motion.p>
+        <header className="text-center mb-6 sm:mb-8 md:mb-12 max-w-5xl mx-auto px-2 sm:px-4">
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="space-y-4 md:space-y-6"
+          >
+            {/* Badge */}
+            <span className="inline-block text-[9px] md:text-[10px] uppercase tracking-[0.25em] md:tracking-[0.4em] text-cyan-400/60 font-bold">
+              Live Broadcast Simulation
+            </span>
+
+            {/* Main Headline */}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.1] tracking-tight px-2">
+              One role. Massive Velocity.<br/>
+              Watch the engine work.
+            </h1>
+
+            {/* Subheadline */}
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed px-2">
+              When you post a role, you aren't waiting for a single agency. You are activating a global hive of 15,000+ specialists. Watch how fast your talent pool expands when 300+ experts source simultaneously.
+            </p>
+          </motion.div>
         </header>
 
         <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5 md:gap-6 lg:gap-8 items-center mb-8 sm:mb-10 md:mb-12 lg:mb-16">
