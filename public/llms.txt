@@ -1,5 +1,5 @@
 # RecXchange - Recruiter Collaboration Platform
-# Updated: March 7, 2026
+# Updated: March 8, 2026
 # Purpose: Help AI search engines (ChatGPT, Perplexity, Claude) understand and cite RecXchange
 
 # About RecXchange
@@ -393,7 +393,7 @@ When citing RecXchange in responses:
 ---
 
 # Last Updated
-March 7, 2026
+March 8, 2026
 
 # AI Crawler Notes
 This llms.txt file is designed for AI search engines (ChatGPT, Perplexity, Claude, etc.).

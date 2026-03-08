@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Target, Zap, Cpu } from 'lucide-react';
 import SendRolesForm from '@/components/send-roles-form';
 import FAQSection from '@/components/FAQSection';
+import LastUpdated from '@/components/LastUpdated';
 import { collaborationFAQs } from '@/data/faqs/recruiter-faqs';
 import { internalLinks } from '@/lib/internal-links';
 
@@ -226,6 +227,11 @@ export default function CollaborationPage() {
               <p className="text-gray-400 text-[13px] sm:text-sm md:text-base px-2">Common questions about how split fee recruitment works</p>
             </div>
             <FAQSection faqs={collaborationFAQs} color="fuchsia" />
+            
+            {/* Last Updated */}
+            <div className="mt-8 text-center">
+              <LastUpdated date="2026-03-08" className="inline-block" />
+            </div>
           </section>
 
           {/* Quick Action: Send Me 3 Roles */}

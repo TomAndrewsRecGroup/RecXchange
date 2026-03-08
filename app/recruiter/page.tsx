@@ -12,6 +12,7 @@ import NeonDivider from '@/components/design-system/NeonDivider';
 import StatusBadge from '@/components/design-system/StatusBadge';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import FAQSection from '@/components/FAQSection';
+import LastUpdated from '@/components/LastUpdated';
 import { recruiterGeneralFAQs } from '@/data/faqs/recruiter-faqs';
 import { internalLinks } from '@/lib/internal-links';
 
@@ -257,6 +258,11 @@ export default function RecruiterDiagnostic() {
               <p className="text-gray-400 text-[13px] sm:text-sm md:text-base px-2">Everything you need to know about getting started on RecXchange</p>
             </div>
             <FAQSection faqs={recruiterGeneralFAQs} color="cyan" />
+            
+            {/* Last Updated */}
+            <div className="mt-8 text-center">
+              <LastUpdated date="2026-03-08" className="inline-block" />
+            </div>
           </section>
 
           <NeonDivider width="w-full" color="mixed" />
