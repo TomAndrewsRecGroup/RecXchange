@@ -10,6 +10,7 @@ interface LiveStats {
   roleCount: number;
   totalFees: number;
   averageFee: number;
+  lastUpdated?: string;
 }
 
 export default function HomePage() {
@@ -22,7 +23,8 @@ export default function HomePage() {
   const [liveStats, setLiveStats] = useState<LiveStats>({
     roleCount: 0,
     totalFees: 0,
-    averageFee: 0
+    averageFee: 0,
+    lastUpdated: undefined
   });
 
   useEffect(() => {
@@ -30,12 +32,16 @@ export default function HomePage() {
       try {
         const response = await fetch('/api/live-stats');
         const data = await response.json();
-        setLiveStats(data);
+        setLiveStats({
+          ...data,
+          lastUpdated: new Date().toISOString()
+        });
       } catch (error) {
         setLiveStats({
           roleCount: 127,
           totalFees: 847392,
-          averageFee: 6673
+          averageFee: 6673,
+          lastUpdated: new Date().toISOString()
         });
       }
     }
@@ -74,6 +80,16 @@ export default function HomePage() {
 
   const formatNumber = (value: number) => {
     return new Intl.NumberFormat('en-US').format(value);
+  };
+
+  const formatTimestamp = (isoString: string | undefined) => {
+    if (!isoString) return 'Updating...';
+    const date = new Date(isoString);
+    return date.toLocaleTimeString('en-US', { 
+      hour: '2-digit', 
+      minute: '2-digit',
+      hour12: true 
+    });
   };
 
   const cardVariants = {
@@ -234,6 +250,8 @@ export default function HomePage() {
                 whileHover={{ scale: 1.05, rotateY: 5, z: 50 }}
                 className="group relative"
                 style={{ transformStyle: 'preserve-3d' }}
+                itemScope
+                itemType="https://schema.org/Dataset"
               >
                 {/* Glow layer */}
                 <div className="absolute -inset-1 bg-gradient-to-br from-cyan-500/40 via-cyan-600/30 to-cyan-500/40 rounded-2xl blur-xl opacity-50 group-hover:opacity-80 transition duration-300" aria-hidden="true" />
@@ -254,12 +272,17 @@ export default function HomePage() {
                     </div>
                   </div>
                   
-                  <h3 className="sr-only">Live Roles</h3>
+                  <h3 className="sr-only" itemProp="name">Live Roles Count</h3>
                   <div className="text-[8px] sm:text-[10px] uppercase tracking-[0.15em] sm:tracking-[0.2em] font-bold text-cyan-400/80 mb-1 sm:mb-2" aria-hidden="true">ROLES</div>
-                  <data value={liveStats.roleCount} className="text-xl sm:text-3xl md:text-4xl font-black text-white mb-0.5 sm:mb-1 group-hover:text-cyan-300 transition-colors leading-none block" style={{
-                    fontVariantNumeric: 'tabular-nums',
-                    textShadow: '0 0 20px rgba(0,240,255,0.4)'
-                  }}>
+                  <data 
+                    value={liveStats.roleCount} 
+                    className="text-xl sm:text-3xl md:text-4xl font-black text-white mb-0.5 sm:mb-1 group-hover:text-cyan-300 transition-colors leading-none block" 
+                    style={{
+                      fontVariantNumeric: 'tabular-nums',
+                      textShadow: '0 0 20px rgba(0,240,255,0.4)'
+                    }}
+                    itemProp="distribution"
+                  >
                     {formatNumber(liveStats.roleCount)}
                   </data>
                   <div className="text-[8px] sm:text-xs font-semibold text-cyan-400/80" aria-hidden="true">ACTIVE</div>
@@ -274,6 +297,8 @@ export default function HomePage() {
                 whileHover={{ scale: 1.05, rotateY: 5, z: 50 }}
                 className="group relative"
                 style={{ transformStyle: 'preserve-3d' }}
+                itemScope
+                itemType="https://schema.org/MonetaryAmount"
               >
                 <div className="absolute -inset-1 bg-gradient-to-br from-fuchsia-500/40 via-pink-600/30 to-fuchsia-500/40 rounded-2xl blur-xl opacity-50 group-hover:opacity-80 transition duration-300" aria-hidden="true" />
                 
@@ -293,10 +318,16 @@ export default function HomePage() {
                   
                   <h3 className="sr-only">Total Fees Available</h3>
                   <div className="text-[8px] sm:text-[10px] uppercase tracking-[0.15em] sm:tracking-[0.2em] font-bold text-fuchsia-400/80 mb-1 sm:mb-2" aria-hidden="true">FEES</div>
-                  <data value={liveStats.totalFees} className="text-base sm:text-2xl md:text-3xl font-black text-white mb-0.5 sm:mb-1 group-hover:text-fuchsia-300 transition-colors leading-none block" style={{
-                    fontVariantNumeric: 'tabular-nums',
-                    textShadow: '0 0 20px rgba(255,0,255,0.4)'
-                  }}>
+                  <data 
+                    value={liveStats.totalFees} 
+                    className="text-base sm:text-2xl md:text-3xl font-black text-white mb-0.5 sm:mb-1 group-hover:text-fuchsia-300 transition-colors leading-none block" 
+                    style={{
+                      fontVariantNumeric: 'tabular-nums',
+                      textShadow: '0 0 20px rgba(255,0,255,0.4)'
+                    }}
+                    itemProp="value"
+                  >
+                    <span itemProp="currency" content="USD" className="sr-only">USD</span>
                     {formatCurrency(liveStats.totalFees)}
                   </data>
                   <div className="text-[8px] sm:text-xs font-semibold text-fuchsia-400/80" aria-hidden="true">AVAILABLE</div>
@@ -310,6 +341,8 @@ export default function HomePage() {
                 whileHover={{ scale: 1.05, rotateY: 5, z: 50 }}
                 className="group relative"
                 style={{ transformStyle: 'preserve-3d' }}
+                itemScope
+                itemType="https://schema.org/MonetaryAmount"
               >
                 <div className="absolute -inset-1 bg-gradient-to-br from-purple-500/40 via-purple-600/30 to-cyan-500/40 rounded-2xl blur-xl opacity-50 group-hover:opacity-80 transition duration-300" aria-hidden="true" />
                 
@@ -329,10 +362,16 @@ export default function HomePage() {
                   
                   <h3 className="sr-only">Average Fee Per Deal</h3>
                   <div className="text-[8px] sm:text-[10px] uppercase tracking-[0.15em] sm:tracking-[0.2em] font-bold text-purple-400/80 mb-1 sm:mb-2" aria-hidden="true">AVG</div>
-                  <data value={liveStats.averageFee} className="text-xl sm:text-3xl md:text-4xl font-black text-white mb-0.5 sm:mb-1 group-hover:text-purple-300 transition-colors leading-none block" style={{
-                    fontVariantNumeric: 'tabular-nums',
-                    textShadow: '0 0 20px rgba(168,85,247,0.4)'
-                  }}>
+                  <data 
+                    value={liveStats.averageFee} 
+                    className="text-xl sm:text-3xl md:text-4xl font-black text-white mb-0.5 sm:mb-1 group-hover:text-purple-300 transition-colors leading-none block" 
+                    style={{
+                      fontVariantNumeric: 'tabular-nums',
+                      textShadow: '0 0 20px rgba(168,85,247,0.4)'
+                    }}
+                    itemProp="value"
+                  >
+                    <span itemProp="currency" content="USD" className="sr-only">USD</span>
                     {formatCurrency(liveStats.averageFee)}
                   </data>
                   <div className="text-[8px] sm:text-xs font-semibold text-purple-400/80" aria-hidden="true">PER DEAL</div>
@@ -341,6 +380,21 @@ export default function HomePage() {
                 </div>
               </motion.article>
             </motion.div>
+
+            {/* Data Freshness Indicator */}
+            {liveStats.lastUpdated && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.4, delay: 0.55 }}
+                className="text-[9px] sm:text-[10px] text-gray-500 mb-8 flex items-center justify-center gap-1.5"
+              >
+                <span className="inline-block w-1 h-1 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true" />
+                <time dateTime={liveStats.lastUpdated} itemProp="dateModified">
+                  Data refreshed at {formatTimestamp(liveStats.lastUpdated)}
+                </time>
+              </motion.div>
+            )}
 
             {/* Holographic Info Chips */}
             <motion.div
@@ -352,9 +406,9 @@ export default function HomePage() {
               aria-label="Key statistics"
             >
               {[
-                { color: 'emerald', text: '15K+', label: '15,000+ recruiters' },
-                { color: 'cyan', text: '270M', label: '270 million candidates' },
-                { color: 'fuchsia', text: '70%', label: 'Up to 70% commission' }
+                { color: 'emerald', text: '15K+', label: '15,000+ recruiters', source: 'Platform member count' },
+                { color: 'cyan', text: '270M', label: '270 million candidates', source: 'Aggregated candidate database' },
+                { color: 'fuchsia', text: '70%', label: 'Up to 70% commission', source: 'RecX Direct tier' }
               ].map((chip, i) => (
                 <div key={i} className="group relative" role="listitem">
                   <div className={`absolute -inset-0.5 bg-gradient-to-r from-${chip.color}-500/30 to-${chip.color}-600/30 rounded-full blur opacity-50 group-hover:opacity-80 transition`} aria-hidden="true" />
@@ -362,6 +416,7 @@ export default function HomePage() {
                     style={{
                       boxShadow: `0 4px 16px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1)`
                     }}
+                    title={chip.source}
                   >
                     <span className={`text-[9px] sm:text-[10px] font-bold text-${chip.color}-300 tracking-[0.12em] sm:tracking-[0.15em] uppercase flex items-center gap-1.5 sm:gap-2`}>
                       <span className="animate-pulse" style={{
