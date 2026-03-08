@@ -8,6 +8,7 @@ import CookieBanner from "@/components/CookieBanner";
 import ClientProviders from "@/components/ClientProviders";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Analytics } from "@vercel/analytics/next";
+import { WebVitals } from "@/app/components/WebVitals";
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 
@@ -15,7 +16,7 @@ const inter = Inter({
   subsets: ["latin"], 
   weight: ["300", "400", "500", "600", "700", "800", "900"],
   variable: '--font-inter',
-  display: 'swap',
+  display: 'swap', // Optimized for FCP (First Contentful Paint)
 });
 
 export const viewport: Viewport = {
@@ -648,6 +649,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
         
         <ErrorBoundary>
           <ClientProviders>
+            {/* Web Vitals Monitoring */}
+            <WebVitals />
+            
             {/* Background Layer */}
             <div className="fixed inset-0 pointer-events-none z-0">
               <div className="absolute inset-0 opacity-[0.02] mix-blend-overlay bg-[url('https://res.cloudinary.com/dzv9rqg49/image/upload/v1695123456/noise_z7p5vj.png')]" />
