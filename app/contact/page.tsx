@@ -136,10 +136,10 @@ export default function ContactPage() {
           {/* Header */}
           <div className="text-center mb-6 sm:mb-8 md:mb-12 mt-6">
             <StatusBadge label="GET IN TOUCH" color="purple" />
-            <h1 className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black gradient-text mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2 mt-6"
+            <h1 className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2 mt-6"
               style={{ textShadow: '0 0 60px rgba(0,240,255,0.3)' }}>
-              Connect with the <br />
-              Engineers of Talent.
+              <span className="text-cyan-400">Connect</span> with the <br />
+              <span className="text-fuchsia-400">Engineers</span> of <span className="text-emerald-400">Talent</span>.
             </h1>
             <NeonDivider width="w-40" color="mixed" />
             <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed px-2 mt-6">
@@ -206,135 +206,80 @@ export default function ContactPage() {
             <div className="relative">
               <HolographicCard color="purple" variant="content" className="overflow-hidden">
                 {/* Chat Header */}
-                <div className="mb-4 sm:mb-6 pb-3 sm:pb-4 border-b border-white/5">
-                  <div className="flex items-center gap-3 sm:gap-4">
-                    <div className="relative">
-                      <div className="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-xl sm:rounded-2xl bg-gradient-to-br from-cyan-500 to-fuchsia-500 flex items-center justify-center p-1.5">
-                        <img src="https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png" alt="RecXchange" className="w-full h-full object-contain" />
-                      </div>
-                      <span className="absolute -bottom-0.5 sm:-bottom-1 -right-0.5 sm:-right-1 w-3 h-3 sm:w-3.5 sm:h-3.5 bg-green-400 rounded-full border-2 border-black animate-pulse" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-sm sm:text-base md:text-lg font-bold text-white">RecXchange Team</h3>
-                      <p className="text-[9px] sm:text-[10px] md:text-xs text-green-400 font-bold uppercase tracking-widest flex items-center gap-1 sm:gap-1.5">
-                        <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-400 rounded-full" />
-                        Online Now
-                      </p>
-                    </div>
+                <div className="flex items-center gap-3 pb-4 border-b border-purple-400/20 mb-5">
+                  <div className="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400 border border-purple-400/20">
+                    <MessageCircle className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-white">Live Chat</h3>
+                    <p className="text-xs text-gray-400">Our team is standing by</p>
                   </div>
                 </div>
 
-                {/* Persona Selection */}
                 {stage === 'persona' && (
-                  <div className="space-y-4 sm:space-y-5 md:space-y-6">
-                    <div>
-                      <p className="text-white text-sm sm:text-base font-bold mb-1 sm:mb-2">How can we help?</p>
-                      <p className="text-gray-400 text-xs sm:text-sm">Tell us who you are so we can route you correctly.</p>
-                    </div>
-                    
-                    <button onClick={() => handlePersonaSelect('recruiter')} className="w-full p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl border border-cyan-400/20 bg-cyan-400/5 hover:bg-cyan-400/10 hover:border-cyan-400/40 transition-all text-left group">
-                      <div className="flex items-center justify-between">
-                        <div className="flex-1">
-                          <p className="text-sm sm:text-base font-bold text-white mb-0.5 sm:mb-1">I'm a Recruiter</p>
-                          <p className="text-[11px] sm:text-xs text-gray-400">I have candidates or need roles to fill</p>
-                        </div>
-                        <div className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-lg sm:rounded-xl bg-cyan-400/10 border border-cyan-400/30 flex items-center justify-center text-cyan-400 group-hover:translate-x-1 transition-transform text-base sm:text-lg flex-shrink-0">→</div>
-                      </div>
-                    </button>
-
-                    <button onClick={() => handlePersonaSelect('hiring-manager')} className="w-full p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl border border-fuchsia-400/20 bg-fuchsia-400/5 hover:bg-fuchsia-400/10 hover:border-fuchsia-400/40 transition-all text-left group">
-                      <div className="flex items-center justify-between">
-                        <div className="flex-1">
-                          <p className="text-sm sm:text-base font-bold text-white mb-0.5 sm:mb-1">I'm a Hiring Manager</p>
-                          <p className="text-[11px] sm:text-xs text-gray-400">I'm looking to hire for my company</p>
-                        </div>
-                        <div className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-lg sm:rounded-xl bg-fuchsia-400/10 border border-fuchsia-400/30 flex items-center justify-center text-fuchsia-400 group-hover:translate-x-1 transition-transform text-base sm:text-lg flex-shrink-0">→</div>
-                      </div>
-                    </button>
-                    <p className="text-[10px] sm:text-xs text-gray-500 text-center pt-2 sm:pt-4">Typically replies within a few minutes.</p>
-                  </div>
-                )}
-
-                {/* Capture Details */}
-                {stage === 'capture' && (
-                  <form onSubmit={handleCaptureSubmit} className="space-y-4 sm:space-y-5 md:space-y-6">
-                    <div>
-                      <p className="text-white text-sm sm:text-base font-bold mb-1 sm:mb-2">
-                        {persona === 'hiring-manager' ? 'Hiring Manager Details' : 'Your Details'}
-                      </p>
-                      <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
-                        {persona === 'hiring-manager' ? "We'll add you to our Clients directory." : "We'll add you to our Recruiter network."}
-                      </p>
-                    </div>
-
-                    <div className="space-y-3 sm:space-y-4">
-                      <div className="grid grid-cols-2 gap-3 sm:gap-4">
-                        <div>
-                          <label className="text-[9px] sm:text-[10px] uppercase font-black text-gray-500 tracking-widest block mb-1.5 sm:mb-2">First Name</label>
-                          <input type="text" value={firstName} onChange={e => setFirstName(e.target.value)} placeholder="John" className="w-full bg-white/[0.03] border border-white/10 rounded-lg sm:rounded-xl px-3 sm:px-4 py-2 sm:py-2.5 md:py-3 text-xs sm:text-sm text-white placeholder-gray-600 outline-none focus:border-cyan-400/40 transition-colors" />
-                        </div>
-                        <div>
-                          <label className="text-[9px] sm:text-[10px] uppercase font-black text-gray-500 tracking-widest block mb-1.5 sm:mb-2">Last Name</label>
-                          <input type="text" value={lastName} onChange={e => setLastName(e.target.value)} placeholder="Smith" className="w-full bg-white/[0.03] border border-white/10 rounded-lg sm:rounded-xl px-3 sm:px-4 py-2 sm:py-2.5 md:py-3 text-xs sm:text-sm text-white placeholder-gray-600 outline-none focus:border-cyan-400/40 transition-colors" />
-                        </div>
-                      </div>
-
-                      <div>
-                        <label className="text-[9px] sm:text-[10px] uppercase font-black text-gray-500 tracking-widest block mb-1.5 sm:mb-2">Email</label>
-                        <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="john@company.com" className="w-full bg-white/[0.03] border border-white/10 rounded-lg sm:rounded-xl px-3 sm:px-4 py-2 sm:py-2.5 md:py-3 text-xs sm:text-sm text-white placeholder-gray-600 outline-none focus:border-cyan-400/40 transition-colors" />
-                      </div>
-
-                      {persona === 'hiring-manager' && (
-                        <div>
-                          <label className="text-[9px] sm:text-[10px] uppercase font-black text-gray-500 tracking-widest block mb-1.5 sm:mb-2">Company Name</label>
-                          <input type="text" value={companyName} onChange={e => setCompanyName(e.target.value)} placeholder="Your Company Ltd" className="w-full bg-white/[0.03] border border-white/10 rounded-lg sm:rounded-xl px-3 sm:px-4 py-2 sm:py-2.5 md:py-3 text-xs sm:text-sm text-white placeholder-gray-600 outline-none focus:border-fuchsia-400/40 transition-colors" />
-                        </div>
-                      )}
-                    </div>
-
-                    {captureError && <p className="text-[10px] sm:text-xs text-red-400 font-bold">{captureError}</p>}
-
-                    <GlowButton type="submit" variant={persona === 'hiring-manager' ? 'secondary' : 'primary'} size="md" className="w-full">
-                      Start Chatting
-                    </GlowButton>
-
-                    <button type="button" onClick={() => setStage('persona')} className="text-[10px] sm:text-xs text-gray-500 hover:text-gray-400 transition-colors w-full text-center">
-                      ← Back
-                    </button>
-                  </form>
-                )}
-
-                {/* Live Chat */}
-                {stage === 'chat' && (
-                  <div className="flex flex-col min-h-[450px]">
-                    <div className="flex-grow p-3 sm:p-4 space-y-3 sm:space-y-4 overflow-y-auto">
-                      {messages.map(msg => (
-                        <div key={msg.id} className={`flex flex-col gap-0.5 sm:gap-1 ${msg.from === 'visitor' ? 'items-end' : 'items-start'}`}>
-                          <div className={`max-w-[85%] px-3 sm:px-4 py-2 sm:py-2.5 md:py-3 rounded-xl sm:rounded-2xl text-xs sm:text-sm leading-relaxed ${
-                            msg.from === 'visitor' ? 'bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 border border-cyan-400/20 text-white rounded-br-sm' : 'bg-white/5 border border-white/10 text-gray-300 rounded-bl-sm'}`}>
-                            {msg.body}
-                          </div>
-                          <span className="text-[8px] sm:text-[9px] text-gray-600">{msg.from === 'visitor' ? 'You' : 'RecXchange'} &middot; {formatTime(msg.timestamp)}</span>
-                        </div>
-                      ))}
-                      {isSending && (
-                        <div className="flex items-start">
-                          <div className="bg-white/5 border border-white/10 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl rounded-bl-sm flex items-center gap-1.5 sm:gap-2">
-                            <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                            <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                            <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
-                          </div>
-                        </div>
-                      )}
-                      <div ref={messagesEndRef} />
-                    </div>
-                    <div className="p-3 sm:p-4 bg-white/[0.02] border-t border-cyan-400/10 flex gap-2 sm:gap-3 items-center">
-                      <input ref={inputRef} type="text" value={inputValue} onChange={e => setInputValue(e.target.value)} onKeyDown={handleKeyDown} placeholder="Type a message..." disabled={isSending} className="flex-grow bg-white/[0.03] border border-white/10 rounded-lg sm:rounded-xl px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm text-white placeholder-gray-600 outline-none focus:border-purple-400 transition-colors disabled:opacity-50" />
-                      <button onClick={handleSend} disabled={isSending || !inputValue.trim()} className="w-9 h-9 sm:w-10 sm:h-10 md:w-11 md:h-11 rounded-lg sm:rounded-xl bg-gradient-to-r from-cyan-500 to-fuchsia-500 flex items-center justify-center text-white hover:shadow-[0_0_16px_rgba(0,255,255,0.4)] transition-all disabled:opacity-30 disabled:cursor-not-allowed flex-shrink-0">
-                        {isSending ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
+                  <div>
+                    <h2 className="text-xl font-bold text-white mb-4 text-center">Welcome! How can we help?</h2>
+                    <div className="space-y-3">
+                      <button onClick={() => handlePersonaSelect('recruiter')} className="w-full px-5 py-4 rounded-xl bg-cyan-500/10 border border-cyan-400/20 text-cyan-400 hover:bg-cyan-500/20 transition-all text-left">
+                        <div className="font-bold text-base">I'm a Recruiter</div>
+                        <p className="text-xs text-gray-400 mt-1">Access roles, collaborate, and earn split fees</p>
+                      </button>
+                      <button onClick={() => handlePersonaSelect('hiring-manager')} className="w-full px-5 py-4 rounded-xl bg-purple-500/10 border border-purple-400/20 text-purple-400 hover:bg-purple-500/20 transition-all text-left">
+                        <div className="font-bold text-base">I'm a Hiring Manager</div>
+                        <p className="text-xs text-gray-400 mt-1">Broadcast roles to 15,000+ recruiters</p>
                       </button>
                     </div>
                   </div>
+                )}
+
+                {stage === 'capture' && (
+                  <form onSubmit={handleCaptureSubmit} className="space-y-4">
+                    <h2 className="text-xl font-bold text-white mb-4">Let's get started</h2>
+                    {captureError && <p className="text-red-400 text-sm">{captureError}</p>}
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="text-xs text-gray-400 block mb-1.5">First Name</label>
+                        <input value={firstName} onChange={e => setFirstName(e.target.value)} type="text" className="w-full px-3 py-2.5 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-purple-400/50" />
+                      </div>
+                      <div>
+                        <label className="text-xs text-gray-400 block mb-1.5">Last Name</label>
+                        <input value={lastName} onChange={e => setLastName(e.target.value)} type="text" className="w-full px-3 py-2.5 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-purple-400/50" />
+                      </div>
+                    </div>
+                    <div>
+                      <label className="text-xs text-gray-400 block mb-1.5">Email</label>
+                      <input value={email} onChange={e => setEmail(e.target.value)} type="email" className="w-full px-3 py-2.5 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-purple-400/50" />
+                    </div>
+                    {persona === 'hiring-manager' && (
+                      <div>
+                        <label className="text-xs text-gray-400 block mb-1.5">Company Name</label>
+                        <input value={companyName} onChange={e => setCompanyName(e.target.value)} type="text" className="w-full px-3 py-2.5 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-purple-400/50" />
+                      </div>
+                    )}
+                    <GlowButton type="submit" variant="purple" fullWidth>Start Chat</GlowButton>
+                  </form>
+                )}
+
+                {stage === 'chat' && (
+                  <>
+                    <div className="h-[350px] overflow-y-auto mb-4 space-y-3 scrollbar-thin scrollbar-thumb-purple-400/20 scrollbar-track-transparent">
+                      {messages.map((msg) => (
+                        <div key={msg.id} className={`flex ${msg.from === 'visitor' ? 'justify-end' : 'justify-start'}`}>
+                          <div className={`max-w-[85%] px-4 py-2.5 rounded-2xl ${msg.from === 'visitor' ? 'bg-purple-500/20 text-white' : 'bg-white/5 text-gray-200'}`}>
+                            <p className="text-sm leading-relaxed">{msg.body}</p>
+                            <p className="text-[10px] text-gray-500 mt-1">{formatTime(msg.timestamp)}</p>
+                          </div>
+                        </div>
+                      ))}
+                      <div ref={messagesEndRef} />
+                    </div>
+                    <div className="flex gap-2 items-center">
+                      <input ref={inputRef} value={inputValue} onChange={e => setInputValue(e.target.value)} onKeyDown={handleKeyDown} placeholder="Type your message..." disabled={isSending} className="flex-1 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-purple-400/50 disabled:opacity-50" />
+                      <button onClick={handleSend} disabled={isSending || !inputValue.trim()} className="w-10 h-10 rounded-xl bg-purple-500/20 border border-purple-400/20 text-purple-400 hover:bg-purple-500/30 transition-all flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed">
+                        {isSending ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5" />}
+                      </button>
+                    </div>
+                  </>
                 )}
               </HolographicCard>
             </div>
