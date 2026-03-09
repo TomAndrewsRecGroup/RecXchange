@@ -2,6 +2,10 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import FuturisticBackground from '@/components/design-system/FuturisticBackground';
+import HolographicCard from '@/components/design-system/HolographicCard';
+import StatusBadge from '@/components/design-system/StatusBadge';
+import NeonDivider from '@/components/design-system/NeonDivider';
 
 interface SocialPost {
   id: string;
@@ -160,122 +164,106 @@ export default function BlogPage() {
     : posts.filter(post => post.category?.toLowerCase() === selectedCategory.toLowerCase());
 
   return (
-    <main className="min-h-screen py-12 sm:py-16 md:py-20 px-4 sm:px-6">
-      <div className="max-w-[1200px] mx-auto">
-        {/* UPDATED Header */}
-        <motion.header
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-8 sm:mb-12 md:mb-16 max-w-5xl mx-auto px-2 sm:px-4"
-        >
-          <div className="space-y-4 md:space-y-6">
-            {/* Badge */}
-            <span className="inline-block text-[9px] md:text-[10px] uppercase tracking-[0.25em] md:tracking-[0.4em] text-cyan-400/60 font-bold">
-              Social Updates
-            </span>
+    <main className="relative bg-[#0a0a0f] min-h-screen overflow-hidden">
+      <FuturisticBackground variant="default" />
 
-            {/* Main Headline */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.1] tracking-tight px-2">
+      <div className="relative z-10 pt-16 sm:pt-20 md:pt-28 pb-12 sm:pb-16 md:pb-20 px-4 sm:px-6">
+        <div className="max-w-[1200px] mx-auto">
+          {/* Header */}
+          <motion.header initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-8 sm:mb-12 md:mb-16 mt-6">
+            <StatusBadge label="SOCIAL UPDATES" color="cyan" />
+            <h1 className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black gradient-text mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2 mt-6"
+              style={{ textShadow: '0 0 60px rgba(0,240,255,0.3)' }}>
               RecXchange Social Feed
             </h1>
-
-            {/* Subheadline */}
-            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed px-2">
+            <NeonDivider width="w-40" color="mixed" />
+            <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed px-2 mt-6">
               Latest updates, insights, and stories from our social media channels.
             </p>
-          </div>
-          
-          {/* Newsletter CTA */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2 }}
-            className="mt-6 sm:mt-8"
-          >
-            <Link
-              href="https://www.linkedin.com/build-relation/newsletter-follow?entityUrn=7330859663111901185"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg sm:rounded-xl bg-[#0077B5]/10 border border-[#0077B5]/30 text-[#0077B5] hover:bg-[#0077B5]/20 transition-all font-bold text-xs sm:text-sm"
-            >
-              <span className="text-lg sm:text-xl">📧</span>
-              <span className="hidden sm:inline">Subscribe to Our LinkedIn Newsletter</span>
-              <span className="sm:hidden">LinkedIn Newsletter</span>
-            </Link>
-          </motion.div>
-        </motion.header>
-
-        {/* Category Filter */}
-        <div className="flex gap-2 sm:gap-3 mb-8 sm:mb-10 md:mb-12 justify-center flex-wrap px-2">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setSelectedCategory(cat)}
-              className={`px-3 sm:px-4 md:px-6 py-1.5 sm:py-2 rounded-lg sm:rounded-xl border text-[9px] sm:text-xs font-bold uppercase tracking-[0.12em] sm:tracking-[0.15em] md:tracking-widest transition-all ${
-                selectedCategory === cat
-                  ? 'border-cyan-400/40 bg-cyan-400/10 text-cyan-400'
-                  : 'border-white/5 bg-white/[0.02] text-gray-500 hover:text-gray-300'
-              }`}
-            >
-              <span className="hidden md:inline">{cat}</span>
-              <span className="md:hidden">{cat.split(' ')[0]}</span>
-            </button>
-          ))}
-        </div>
-
-        {/* Loading State */}
-        {loading && (
-          <div className="text-center py-16 sm:py-20">
-            <div className="inline-block w-7 h-7 sm:w-8 sm:h-8 border-4 border-cyan-400/20 border-t-cyan-400 rounded-full animate-spin"></div>
-            <p className="text-gray-400 mt-4 text-sm sm:text-base">Loading posts...</p>
-          </div>
-        )}
-
-        {/* Posts Grid */}
-        {!loading && filteredPosts.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 mb-12 sm:mb-16">
-            {filteredPosts.map((post, index) => (
-              <motion.article
-                key={post.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                className="glass-card p-5 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl border-cyan-400/10 hover:border-cyan-400/20 transition-all group"
+            
+            {/* Newsletter CTA */}
+            <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 }} className="mt-6 sm:mt-8">
+              <Link
+                href="https://www.linkedin.com/build-relation/newsletter-follow?entityUrn=7330859663111901185"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg sm:rounded-xl bg-[#0077B5]/10 border border-[#0077B5]/30 text-[#0077B5] hover:bg-[#0077B5]/20 transition-all font-bold text-xs sm:text-sm"
               >
-                <div className="flex justify-between items-start mb-3 sm:mb-4">
-                  <span className="text-xl sm:text-2xl">{getPlatformIcon(post.platform)}</span>
-                  <span className="text-[9px] sm:text-[10px] text-gray-500 font-bold uppercase tracking-widest">{formatDate(post.publishedAt)}</span>
-                </div>
-                
-                {post.category && (
-                  <span className="inline-block px-2 sm:px-3 py-1 rounded-lg bg-cyan-400/10 text-cyan-400 text-[8px] sm:text-[9px] font-bold uppercase tracking-widest mb-3 sm:mb-4">
-                    {post.category}
-                  </span>
-                )}
-                
-                <p className="text-xs sm:text-sm text-gray-300 leading-relaxed whitespace-pre-line mb-4 sm:mb-6 group-hover:text-gray-200 transition-colors">
-                  {post.content}
-                </p>
-                
-                {post.tags && post.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                    {post.tags.map((tag, i) => (
-                      <span key={i} className="text-[8px] sm:text-[9px] text-gray-600 font-medium px-2 py-0.5 rounded bg-white/[0.02] border border-white/5">
-                        #{tag}
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </motion.article>
+                <span className="text-lg sm:text-xl">📧</span>
+                <span className="hidden sm:inline">Subscribe to Our LinkedIn Newsletter</span>
+                <span className="sm:hidden">LinkedIn Newsletter</span>
+              </Link>
+            </motion.div>
+          </motion.header>
+
+          {/* Category Filter */}
+          <div className="flex gap-2 sm:gap-3 mb-8 sm:mb-10 md:mb-12 justify-center flex-wrap px-2">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setSelectedCategory(cat)}
+                className={`px-3 sm:px-4 md:px-6 py-1.5 sm:py-2 rounded-lg sm:rounded-xl border text-[9px] sm:text-xs font-bold uppercase tracking-[0.12em] sm:tracking-[0.15em] md:tracking-widest transition-all ${
+                  selectedCategory === cat
+                    ? 'border-cyan-400/40 bg-cyan-400/10 text-cyan-400'
+                    : 'border-white/5 bg-white/[0.02] text-gray-500 hover:text-gray-300'
+                }`}
+              >
+                <span className="hidden md:inline">{cat}</span>
+                <span className="md:hidden">{cat.split(' ')[0]}</span>
+              </button>
             ))}
           </div>
-        )}
 
-        {!loading && filteredPosts.length === 0 && (
-          <div className="text-center py-16 sm:py-20">
-            <p className="text-gray-500 text-sm sm:text-base">No posts found in this category.</p>
-          </div>
-        )}
+          {/* Loading State */}
+          {loading && (
+            <div className="text-center py-16 sm:py-20">
+              <div className="inline-block w-7 h-7 sm:w-8 sm:h-8 border-4 border-cyan-400/20 border-t-cyan-400 rounded-full animate-spin"></div>
+              <p className="text-gray-400 mt-4 text-sm sm:text-base">Loading posts...</p>
+            </div>
+          )}
+
+          {/* Posts Grid */}
+          {!loading && filteredPosts.length > 0 && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 mb-12 sm:mb-16">
+              {filteredPosts.map((post, index) => (
+                <motion.div key={post.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.1 }}>
+                  <HolographicCard color="cyan" variant="feature" className="h-full">
+                    <div className="flex justify-between items-start mb-3 sm:mb-4">
+                      <span className="text-xl sm:text-2xl">{getPlatformIcon(post.platform)}</span>
+                      <span className="text-[9px] sm:text-[10px] text-gray-500 font-bold uppercase tracking-widest">{formatDate(post.publishedAt)}</span>
+                    </div>
+                    
+                    {post.category && (
+                      <span className="inline-block px-2 sm:px-3 py-1 rounded-lg bg-cyan-400/10 text-cyan-400 text-[8px] sm:text-[9px] font-bold uppercase tracking-widest mb-3 sm:mb-4">
+                        {post.category}
+                      </span>
+                    )}
+                    
+                    <p className="text-xs sm:text-sm text-gray-300 leading-relaxed whitespace-pre-line mb-4 sm:mb-6">
+                      {post.content}
+                    </p>
+                    
+                    {post.tags && post.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                        {post.tags.map((tag, i) => (
+                          <span key={i} className="text-[8px] sm:text-[9px] text-gray-600 font-medium px-2 py-0.5 rounded bg-white/[0.02] border border-white/5">
+                            #{tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </HolographicCard>
+                </motion.div>
+              ))}
+            </div>
+          )}
+
+          {!loading && filteredPosts.length === 0 && (
+            <div className="text-center py-16 sm:py-20">
+              <p className="text-gray-500 text-sm sm:text-base">No posts found in this category.</p>
+            </div>
+          )}
+        </div>
       </div>
     </main>
   );

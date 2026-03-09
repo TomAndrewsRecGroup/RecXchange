@@ -8,6 +8,10 @@ import FAQSection from '@/components/FAQSection';
 import LastUpdated from '@/components/LastUpdated';
 import { collaborationFAQs } from '@/data/faqs/recruiter-faqs';
 import { internalLinks } from '@/lib/internal-links';
+import FuturisticBackground from '@/components/design-system/FuturisticBackground';
+import HolographicCard from '@/components/design-system/HolographicCard';
+import StatusBadge from '@/components/design-system/StatusBadge';
+import NeonDivider from '@/components/design-system/NeonDivider';
 
 export default function CollaborationPage() {
   // HowTo Schema for split fee recruitment process
@@ -127,130 +131,120 @@ export default function CollaborationPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
       />
       
-      <main className="relative min-h-screen flex flex-col items-center pt-16 sm:pt-20 md:pt-28 pb-12 sm:pb-16 md:pb-20 px-4 sm:px-6 overflow-x-hidden">
-        <div className="relative z-10 w-full max-w-[1200px] flex flex-col items-center">
+      <main className="relative bg-[#0a0a0f] min-h-screen overflow-hidden">
+        <FuturisticBackground variant="default" />
 
-          {/* UPDATED Hero */}
-          <header className="text-center mb-6 sm:mb-8 md:mb-12 max-w-5xl mx-auto px-2 sm:px-4">
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="space-y-4 md:space-y-6"
-            >
-              {/* Badge */}
-              <span className="inline-block text-[9px] md:text-[10px] uppercase tracking-[0.25em] md:tracking-[0.4em] text-cyan-400/60 font-bold">
-                The RecXchange Engine
-              </span>
+        <div className="relative z-10 pt-16 sm:pt-20 md:pt-28 pb-12 sm:pb-16 md:pb-20 px-4 sm:px-6">
+          <div className="max-w-[1200px] mx-auto">
 
-              {/* Main Headline */}
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.1] tracking-tight px-2">
+            {/* Header */}
+            <motion.header initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-6 sm:mb-8 md:mb-12 mt-6">
+              <StatusBadge label="THE RECXCHANGE ENGINE" color="cyan" />
+              <h1 className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black gradient-text mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2 mt-6"
+                style={{ textShadow: '0 0 60px rgba(0,240,255,0.3)' }}>
                 Split Fees. Zero Friction.
               </h1>
-              <div className="pulse-underline mb-4 sm:mb-6 md:mb-8 mx-auto" />
-              <p className="text-gray-400 text-sm sm:text-base md:text-lg lg:text-xl max-w-2xl mx-auto leading-relaxed px-2">
+              <NeonDivider width="w-40" color="mixed" />
+              <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed px-2 mt-6">
                 RecXchange isn't just a marketplace; it's a high-performance engine designed to protect your deals and automate your matchmaking. Learn about <Link href={internalLinks.pricing} className="text-cyan-400 hover:text-cyan-300 underline">our pricing tiers</Link> or see <Link href={internalLinks.whyRecXchange} className="text-fuchsia-400 hover:text-fuchsia-300 underline">why recruiters choose us</Link>.
               </p>
-            </motion.div>
-          </header>
+            </motion.header>
 
-          {/* The Split Logic */}
-          <section className="w-full grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 md:gap-6 lg:gap-8 mb-10 sm:mb-12 md:mb-16 lg:mb-20">
-            <div className="glass-card p-4 sm:p-6 md:p-8 lg:p-10 rounded-lg sm:rounded-xl md:rounded-2xl lg:rounded-3xl border-t-2 sm:border-t-4 border-cyan-500">
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-3 md:mb-4">50/50 Standard</h2>
-              <p className="text-gray-500 text-[13px] sm:text-sm md:text-base mb-4 sm:mb-5 md:mb-6">The classic collaboration model. You bring the candidate, they bring the role (or vice versa). Our engine handles the legal framework so you can focus on the placement.</p>
-              <div className="inline-block px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-cyan-500/10 text-cyan-400 font-bold border border-cyan-400/20 text-[10px] sm:text-xs">Standard Xchange</div>
-            </div>
+            {/* The Split Logic */}
+            <section className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 md:gap-8 mb-10 sm:mb-12 md:mb-16">
+              <HolographicCard color="cyan" variant="feature">
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-3 md:mb-4 text-white">50/50 Standard</h2>
+                <p className="text-gray-400 text-[13px] sm:text-sm md:text-base mb-4 sm:mb-5 md:mb-6 leading-relaxed">The classic collaboration model. You bring the candidate, they bring the role (or vice versa). Our engine handles the legal framework so you can focus on the placement.</p>
+                <div className="inline-block px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-cyan-500/10 text-cyan-400 font-bold border border-cyan-400/20 text-[10px] sm:text-xs">Standard Xchange</div>
+              </HolographicCard>
 
-            <div className="glass-card p-4 sm:p-6 md:p-8 lg:p-10 rounded-lg sm:rounded-xl md:rounded-2xl lg:rounded-3xl border-t-2 sm:border-t-4 border-fuchsia-500">
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-3 md:mb-4">Up to 70% Retained</h2>
-              <p className="text-gray-500 text-[13px] sm:text-sm md:text-base mb-4 sm:mb-5 md:mb-6">Work on high-priority <strong className="text-white">RecXDirect</strong> roles verified by our team. These roles offer aggressive splits for recruiters who deliver speed and quality.</p>
-              <div className="inline-block px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-fuchsia-500/10 text-fuchsia-400 font-bold border border-fuchsia-400/20 text-[10px] sm:text-xs">RecXDirect Access</div>
-            </div>
-          </section>
+              <HolographicCard color="fuchsia" variant="feature">
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-3 md:mb-4 text-white">Up to 70% Retained</h2>
+                <p className="text-gray-400 text-[13px] sm:text-sm md:text-base mb-4 sm:mb-5 md:mb-6 leading-relaxed">Work on high-priority <strong className="text-white">RecXDirect</strong> roles verified by our team. These roles offer aggressive splits for recruiters who deliver speed and quality.</p>
+                <div className="inline-block px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-fuchsia-500/10 text-fuchsia-400 font-bold border border-fuchsia-400/20 text-[10px] sm:text-xs">RecXDirect Access</div>
+              </HolographicCard>
+            </section>
 
-          {/* Xchange Engine Section */}
-          <section className="w-full relative overflow-hidden glass-card rounded-lg sm:rounded-xl md:rounded-2xl lg:rounded-[3rem] p-4 sm:p-6 md:p-8 lg:p-12 xl:p-20 border-cyan-400/10 mb-8 sm:mb-10 md:mb-12 lg:mb-16">
-            <div className="absolute top-0 right-0 -mr-10 sm:-mr-20 -mt-10 sm:-mt-20 w-48 sm:w-64 md:w-96 h-48 sm:h-64 md:h-96 bg-fuchsia-500/10 blur-[80px] sm:blur-[120px] rounded-full" />
-            <div className="absolute bottom-0 left-0 -ml-10 sm:-ml-20 -mb-10 sm:-mb-20 w-48 sm:w-64 md:w-96 h-48 sm:h-64 md:h-96 bg-cyan-500/5 blur-[80px] sm:blur-[120px] rounded-full" />
+            {/* Xchange Engine Section */}
+            <HolographicCard color="purple" variant="content" className="mb-8 sm:mb-10 md:mb-12 lg:mb-16">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-16 items-center">
+                <div>
+                  <h3 className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] font-bold text-fuchsia-400 mb-2 sm:mb-3 md:mb-4">The Heavy Lifting</h3>
+                  <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4 md:mb-5 lg:mb-6 text-white">Proprietary <span className="gradient-text">Xchange Engine</span></h2>
+                  <p className="text-gray-400 text-[13px] sm:text-sm md:text-base mb-5 sm:mb-6 md:mb-8 leading-relaxed">
+                    Stop digging through spreadsheets. Our AI-powered candidate-role matching system operates 24/7 in the background to surface the perfect placement.
+                  </p>
 
-            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-16 items-center">
-              <div>
-                <h3 className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] font-bold text-fuchsia-400 mb-2 sm:mb-3 md:mb-4">The Heavy Lifting</h3>
-                <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4 md:mb-5 lg:mb-6">Proprietary <span className="gradient-text">Xchange Engine</span></h2>
-                <p className="text-gray-400 text-[13px] sm:text-sm md:text-base mb-5 sm:mb-6 md:mb-8 leading-relaxed">
-                  Stop digging through spreadsheets. Our AI-powered candidate-role matching system operates 24/7 in the background to surface the perfect placement.
-                </p>
-
-                <div className="space-y-3 sm:space-y-4 md:space-y-5 lg:space-y-6">
-                  {[
-                    { Icon: Target, color: "text-cyan-400", title: "Semantic Matching", desc: "We look beyond keywords to understand experience, career trajectory, and industry relevance." },
-                    { Icon: Zap, color: "text-fuchsia-400", title: "Instant Notifications", desc: "Get alerted the second a high-quality match enters the engine." },
-                    { Icon: Cpu, color: "text-white", title: "Continuous Scanning", desc: "The engine never sleeps, re-ranking your entire database as new roles go live." }
-                  ].map((item, i) => {
-                    const IconComponent = item.Icon;
-                    return (
-                      <div key={i} className="flex gap-2 sm:gap-3 md:gap-4 items-start">
-                        <div className="mt-0.5 sm:mt-1 flex-shrink-0">
-                          <IconComponent className={`w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 ${item.color}`} />
+                  <div className="space-y-3 sm:space-y-4 md:space-y-5 lg:space-y-6">
+                    {[
+                      { Icon: Target, color: "text-cyan-400", title: "Semantic Matching", desc: "We look beyond keywords to understand experience, career trajectory, and industry relevance." },
+                      { Icon: Zap, color: "text-fuchsia-400", title: "Instant Notifications", desc: "Get alerted the second a high-quality match enters the engine." },
+                      { Icon: Cpu, color: "text-white", title: "Continuous Scanning", desc: "The engine never sleeps, re-ranking your entire database as new roles go live." }
+                    ].map((item, i) => {
+                      const IconComponent = item.Icon;
+                      return (
+                        <div key={i} className="flex gap-2 sm:gap-3 md:gap-4 items-start">
+                          <div className="mt-0.5 sm:mt-1 flex-shrink-0">
+                            <IconComponent className={`w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 ${item.color}`} />
+                          </div>
+                          <div className="flex-1">
+                            <h4 className="font-bold text-white text-[13px] sm:text-sm">{item.title}</h4>
+                            <p className="text-gray-500 text-[11px] sm:text-xs">{item.desc}</p>
+                          </div>
                         </div>
-                        <div className="flex-1">
-                          <h4 className="font-bold text-white text-[13px] sm:text-sm">{item.title}</h4>
-                          <p className="text-gray-500 text-[11px] sm:text-xs">{item.desc}</p>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              <div className="glass-card p-4 sm:p-5 md:p-6 lg:p-8 rounded-lg sm:rounded-xl md:rounded-2xl border-cyan-400/10 bg-white/[0.01]">
-                <h4 className="font-mono text-[9px] sm:text-[10px] text-gray-500 uppercase mb-3 sm:mb-4">Engine Impact</h4>
-                <div className="space-y-3 sm:space-y-4">
-                  <div className="flex justify-between items-end border-b border-cyan-400/10 pb-1.5 sm:pb-2">
-                    <span className="text-[13px] sm:text-sm text-gray-400">Search Time Reduction</span>
-                    <span className="text-xl sm:text-2xl font-bold text-fuchsia-400">80%</span>
-                  </div>
-                  <div className="flex justify-between items-end border-b border-cyan-400/10 pb-1.5 sm:pb-2">
-                    <span className="text-[13px] sm:text-sm text-gray-400">Database Utilization</span>
-                    <span className="text-xl sm:text-2xl font-bold text-cyan-400">100%</span>
-                  </div>
-                  <div className="flex justify-between items-end border-b border-cyan-400/10 pb-1.5 sm:pb-2">
-                    <span className="text-[13px] sm:text-sm text-gray-400">Time-to-Fill</span>
-                    <span className="text-xl sm:text-2xl font-bold text-white">Instant</span>
+                      );
+                    })}
                   </div>
                 </div>
+
+                <HolographicCard color="cyan" variant="stat">
+                  <h4 className="font-mono text-[9px] sm:text-[10px] text-gray-500 uppercase mb-3 sm:mb-4">Engine Impact</h4>
+                  <div className="space-y-3 sm:space-y-4">
+                    <div className="flex justify-between items-end border-b border-cyan-400/10 pb-1.5 sm:pb-2">
+                      <span className="text-[13px] sm:text-sm text-gray-400">Search Time Reduction</span>
+                      <span className="text-xl sm:text-2xl font-bold text-fuchsia-400">80%</span>
+                    </div>
+                    <div className="flex justify-between items-end border-b border-cyan-400/10 pb-1.5 sm:pb-2">
+                      <span className="text-[13px] sm:text-sm text-gray-400">Database Utilization</span>
+                      <span className="text-xl sm:text-2xl font-bold text-cyan-400">100%</span>
+                    </div>
+                    <div className="flex justify-between items-end border-b border-cyan-400/10 pb-1.5 sm:pb-2">
+                      <span className="text-[13px] sm:text-sm text-gray-400">Time-to-Fill</span>
+                      <span className="text-xl sm:text-2xl font-bold text-white">Instant</span>
+                    </div>
+                  </div>
+                </HolographicCard>
               </div>
-            </div>
-          </section>
+            </HolographicCard>
 
-          {/* FAQ Section */}
-          <section className="w-full mb-8 sm:mb-10 md:mb-12 lg:mb-16">
-            <div className="text-center mb-6 sm:mb-8 md:mb-10">
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2 sm:mb-3">Collaboration FAQ</h2>
-              <p className="text-gray-400 text-[13px] sm:text-sm md:text-base px-2">Common questions about how split fee recruitment works</p>
-            </div>
-            <FAQSection faqs={collaborationFAQs} color="fuchsia" />
-            
-            {/* Last Updated */}
-            <div className="mt-8 text-center">
-              <LastUpdated date="2026-03-08" className="inline-block" />
-            </div>
-          </section>
+            {/* FAQ Section */}
+            <section className="mb-8 sm:mb-10 md:mb-12 lg:mb-16">
+              <div className="text-center mb-6 sm:mb-8 md:mb-10">
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2 sm:mb-3">Collaboration FAQ</h2>
+                <p className="text-gray-400 text-[13px] sm:text-sm md:text-base px-2">Common questions about how split fee recruitment works</p>
+              </div>
+              <FAQSection faqs={collaborationFAQs} color="fuchsia" />
+              
+              {/* Last Updated */}
+              <div className="mt-8 text-center">
+                <LastUpdated date="2026-03-08" className="inline-block" />
+              </div>
+            </section>
 
-          {/* Quick Action: Send Me 3 Roles */}
-          <section className="w-full glass-card rounded-lg sm:rounded-xl md:rounded-2xl lg:rounded-[3rem] p-4 sm:p-6 md:p-8 lg:p-10 xl:p-14 border-cyan-400/10 text-center">
-            <div className="inline-block px-2.5 sm:px-3 md:px-4 py-1.5 rounded-full border border-cyan-400/20 bg-cyan-400/5 text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] text-cyan-400 mb-3 sm:mb-4 md:mb-6">
-              Try the Engine
-            </div>
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2.5 sm:mb-3 md:mb-4">See the matching engine in action</h2>
-            <p className="text-gray-400 text-[13px] sm:text-sm md:text-base mb-5 sm:mb-6 md:mb-8 max-w-2xl mx-auto px-2">
-              Tell us your industries and we'll show you 3 matching roles from our live database.
-            </p>
-            <div className="flex justify-center">
-              <SendRolesForm className="" />
-            </div>
-          </section>
+            {/* Quick Action: Send Me 3 Roles */}
+            <HolographicCard color="purple" variant="content" className="text-center">
+              <div className="inline-block px-2.5 sm:px-3 md:px-4 py-1.5 rounded-full border border-cyan-400/20 bg-cyan-400/5 text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] text-cyan-400 mb-3 sm:mb-4 md:mb-6">
+                Try the Engine
+              </div>
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2.5 sm:mb-3 md:mb-4">See the matching engine in action</h2>
+              <p className="text-gray-400 text-[13px] sm:text-sm md:text-base mb-5 sm:mb-6 md:mb-8 max-w-2xl mx-auto px-2">
+                Tell us your industries and we'll show you 3 matching roles from our live database.
+              </p>
+              <div className="flex justify-center">
+                <SendRolesForm className="" />
+              </div>
+            </HolographicCard>
+          </div>
         </div>
       </main>
     </>
