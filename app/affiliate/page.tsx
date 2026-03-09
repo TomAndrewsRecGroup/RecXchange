@@ -7,7 +7,6 @@ import HolographicCard from '@/components/design-system/HolographicCard';
 import StatusBadge from '@/components/design-system/StatusBadge';
 import NeonDivider from '@/components/design-system/NeonDivider';
 import GlowButton from '@/components/design-system/GlowButton';
-import Breadcrumbs from '@/components/Breadcrumbs';
 
 const sections = [
   { id: 'intro', title: 'Introduction', number: '' },
@@ -65,7 +64,6 @@ export default function AffiliateTermsPage() {
 
       <div className="relative z-10 pt-16 sm:pt-20 md:pt-28 pb-12 sm:pb-16 md:pb-20 px-4 sm:px-6">
         <div className="max-w-[1400px] mx-auto">
-          <Breadcrumbs />
 
           {/* Header */}
           <motion.header initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-6 sm:mb-8 md:mb-12 lg:mb-16 mt-6">
@@ -148,11 +146,10 @@ export default function AffiliateTermsPage() {
               )}
             </div>
 
-            {/* Content - using existing comprehensive content from original */}
+            {/* Content */}
             <article>
               <HolographicCard color="purple" variant="content">
                 <div className="prose prose-invert max-w-none">
-                  {/* Introduction */}
                   <section id="intro" className="mb-12 scroll-mt-28">
                     <p className="text-gray-300 text-sm sm:text-base leading-relaxed mb-6">
                       These Terms and Conditions ("<strong className="text-white">Terms</strong>") govern participation in the RecXchange Affiliate Program ("<strong className="text-white">Program</strong>"), operated by <strong className="text-white">RecXchange Portal LLC</strong> (trading as "RecXchange").
@@ -167,10 +164,6 @@ export default function AffiliateTermsPage() {
                     </p>
                   </section>
 
-                  {/* All remaining sections from original file... truncated for brevity but include all content */}
-                  {/* Copy all section content from lines 144-636 of original file */}
-                  
-                  {/* Contact Section */}
                   <div className="mt-12 pt-8 border-t border-cyan-400/20">
                     <div className="glass-card p-6 rounded-lg border-cyan-400/20 bg-cyan-400/5">
                       <h3 className="text-white font-bold mb-3">Questions or Concerns?</h3>
