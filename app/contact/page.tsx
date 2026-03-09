@@ -6,7 +6,6 @@ import HolographicCard from '@/components/design-system/HolographicCard';
 import StatusBadge from '@/components/design-system/StatusBadge';
 import NeonDivider from '@/components/design-system/NeonDivider';
 import GlowButton from '@/components/design-system/GlowButton';
-import Breadcrumbs from '@/components/Breadcrumbs';
 
 type Persona = 'recruiter' | 'hiring-manager';
 type Stage = 'persona' | 'capture' | 'chat';
@@ -133,7 +132,6 @@ export default function ContactPage() {
       
       <div className="relative z-10 pt-16 sm:pt-20 md:pt-28 pb-12 sm:pb-16 md:pb-20 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto">
-          <Breadcrumbs />
           
           {/* Header */}
           <div className="text-center mb-6 sm:mb-8 md:mb-12 mt-6">
