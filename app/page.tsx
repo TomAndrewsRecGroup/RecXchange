@@ -82,7 +82,7 @@ export default function HomePage() {
   };
 
   const formatNumber = (value: number) => {
-    return new Intl.NumberFormat('en-US').n(value);
+    return new Intl.NumberFormat('en-US').format(value);
   };
 
   const formatTimestamp = (isoString: string | undefined) => {
