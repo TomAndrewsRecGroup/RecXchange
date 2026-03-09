@@ -38,13 +38,13 @@ export default function GlowButton({
       glow: 'from-cyan-500 via-purple-500 to-fuchsia-500',
       bg: 'bg-gradient-to-r from-cyan-500 via-purple-500 to-fuchsia-500',
       text: 'text-white',
-      shadow: '0 0 40px rgba(0,240,255,0.5), inset 0 1px 0 rgba(255,255,255,0.3)'
+      shadow: '0 0 20px rgba(0,240,255,0.3), inset 0 1px 0 rgba(255,255,255,0.3)'
     },
     secondary: {
       glow: 'from-cyan-500/50 via-purple-500/50 to-fuchsia-500/50',
       bg: 'bg-black/40 border-2 border-cyan-400/40 hover:border-cyan-300/60',
       text: 'text-cyan-300',
-      shadow: '0 4px 20px rgba(0,0,0,0.3), inset 0 1px 0 rgba(0,240,255,0.1)'
+      shadow: '0 2px 15px rgba(0,0,0,0.3), inset 0 1px 0 rgba(0,240,255,0.1)'
     },
     ghost: {
       glow: 'from-cyan-500/30 via-purple-500/30 to-fuchsia-500/30',
@@ -63,16 +63,16 @@ export default function GlowButton({
       transition={{ duration: 0.2 }}
       className={disabled ? 'opacity-50 cursor-not-allowed' : ''}
     >
-      <div className="relative group">
-        {/* Triple glow layers */}
+      <div className="relative group isolate">
+        {/* Softened glow layers */}
         {variant === 'primary' && (
           <>
             <span 
-              className={`absolute -inset-3 bg-gradient-to-r ${variantStyles.glow} rounded-2xl blur-2xl opacity-30 group-hover:opacity-60 animate-pulse-slow`}
+              className={`absolute -inset-3 bg-gradient-to-r ${variantStyles.glow} rounded-2xl blur-2xl opacity-15 group-hover:opacity-30 animate-pulse-slow pointer-events-none`}
               aria-hidden="true" 
             />
             <span 
-              className={`absolute -inset-1.5 bg-gradient-to-r ${variantStyles.glow} rounded-xl blur-xl opacity-40 group-hover:opacity-70 transition-opacity`}
+              className={`absolute -inset-1.5 bg-gradient-to-r ${variantStyles.glow} rounded-xl blur-xl opacity-20 group-hover:opacity-35 transition-opacity pointer-events-none`}
               aria-hidden="true" 
             />
           </>
@@ -80,7 +80,7 @@ export default function GlowButton({
         
         {variant === 'secondary' && (
           <span 
-            className={`absolute -inset-1 bg-gradient-to-r ${variantStyles.glow} rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity`}
+            className={`absolute -inset-1 bg-gradient-to-r ${variantStyles.glow} rounded-xl blur opacity-0 group-hover:opacity-50 transition-opacity pointer-events-none`}
             aria-hidden="true" 
           />
         )}
