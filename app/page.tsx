@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { HowToSchema } from './components/HowToSchema';
 import RelatedContent from '@/components/RelatedContent';
-import SiteMap from '@/components/SiteMap';
 
 interface LiveStats {
   roleCount: number;
@@ -715,44 +714,9 @@ export default function HomePage() {
         {/* Related Content Section */}
         <RelatedContent currentPage="/" limit={3} />
 
-        {/* Site Map Section */}
-        <SiteMap />
-
-        {/* FOOTER WITH AUTHOR ATTRIBUTION */}
+        {/* GLOBAL FOOTER */}
         <footer className="relative bg-black/60 py-12 px-4 border-t border-cyan-400/20">
           <div className="max-w-6xl mx-auto text-center">
-            <address className="not-italic text-sm text-gray-400 mb-4">
-              <p>
-                Founded by{' '}
-                <a 
-                  href="https://www.linkedin.com/in/tom-andrews" 
-                  className="text-cyan-400 hover:text-cyan-300 transition-colors" 
-                  rel="author"
-                  target="_blank"
-                >
-                  Tom Andrews
-                </a>
-                {', '}
-                <a 
-                  href="https://andrews-recruitment.com/about" 
-                  className="text-cyan-400 hover:text-cyan-300 transition-colors"
-                  target="_blank"
-                >
-                  Andrews Recruitment Group
-                </a>
-              </p>
-              <p className="mt-2">
-                Website by{' '}
-                <a 
-                  href="https://andrews-recruitment.com/about" 
-                  className="text-purple-400 hover:text-purple-300 transition-colors"
-                  target="_blank"
-                >
-                  AMIVY Designs
-                </a>
-              </p>
-            </address>
-            
             <p className="text-xs text-gray-500 mb-4">
               <time dateTime="2026-03-08">Last Updated: March 8, 2026</time>
             </p>
