@@ -117,7 +117,7 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Consolidated About Section - Optimized for SEO/AIO/GEO */}
+        {/* Consolidated About Section */}
         <div className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-cyan-400/10">
           <h3 className="text-white font-bold text-xs sm:text-sm mb-3 flex items-center gap-2">
             <span className="inline-block w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></span>
@@ -131,14 +131,11 @@ export default function Footer() {
           </p>
         </div>
 
-        {/* Copyright Row with Design Credit */}
+        {/* Copyright Row */}
         <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-cyan-400/10">
-          {/* Main Row: Copyright | Label + Logo | Links */}
           <div className="flex flex-col lg:flex-row justify-between items-center gap-4 text-gray-600 text-[10px] sm:text-xs">
-            {/* Left: Copyright */}
-            <p className="order-2 lg:order-1">© {new Date().getFullYear()} RecXchange Engine. All rights reserved.</p>
+            <p className="order-2 lg:order-1">© {new Date().getFullYear()} RecXchange. All rights reserved.</p>
             
-            {/* Center: Label + Logo */}
             <div className="order-1 lg:order-2 flex items-center gap-3">
               <p className="text-gray-600 text-[9px] sm:text-[10px] uppercase tracking-wider whitespace-nowrap">Website Designed & Developed by</p>
               <Link 
@@ -158,7 +155,6 @@ export default function Footer() {
               </Link>
             </div>
             
-            {/* Right: Platform Links */}
             <div className="flex gap-6 sm:gap-8 order-3">
               <Link href="https://app.recxchange.io?trigger_link=Hc9mpfL0JxjX06kwNpd1" rel="external" data-intent="platform-access" className="hover:text-cyan-400 transition-colors">Platform Login</Link>
               <Link href="https://app.recxchange.io/register?trigger_link=jYQNc9YXcMkYPvo3HZfC" className="hover:text-fuchsia-400 transition-colors">Create Account</Link>

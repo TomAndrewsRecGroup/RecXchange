@@ -52,7 +52,6 @@ export default function HomePage() {
     return () => clearInterval(interval);
   }, []);
 
-  // Auto-scroll after page load
   useEffect(() => {
     setPageLoaded(true);
     
@@ -83,7 +82,7 @@ export default function HomePage() {
   };
 
   const formatNumber = (value: number) => {
-    return new Intl.NumberFormat('en-US').format(value);
+    return new Intl.NumberFormat('en-US').n(value);
   };
 
   const formatTimestamp = (isoString: string | undefined) => {
@@ -100,11 +99,8 @@ export default function HomePage() {
     <>
       <HowToSchema />
       <main className="relative bg-[#0a0a0f] font-[family-name:var(--font-lexend)] overflow-x-hidden">
-        {/* SCREEN 1: FUTURISTIC HERO */}
         <section className="relative h-screen flex flex-col items-center justify-center px-4 pt-20" aria-label="Hero section">
-          {/* Smooth Background with Floating Elements */}
           <div className="absolute inset-0 pointer-events-none z-0" aria-hidden="true">
-            {/* Floating energy orbs */}
             <motion.div 
               style={{ 
                 y: y1,
@@ -122,7 +118,6 @@ export default function HomePage() {
               className="absolute bottom-[-15%] right-[5%] w-[50%] h-[50%] rounded-full animate-float-delayed"
             />
             
-            {/* Scan line effect */}
             <div className="absolute inset-0 opacity-10">
               <div className="absolute w-full h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-scan" />
             </div>
@@ -130,7 +125,6 @@ export default function HomePage() {
 
           <header className="relative z-10 max-w-5xl mx-auto text-center" style={{ perspective: '1000px' }}>
             
-            {/* Holographic Status Badge */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8, y: -20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -144,7 +138,6 @@ export default function HomePage() {
                 boxShadow: '0 0 15px rgba(0,240,255,0.1), inset 0 1px 0 rgba(255,255,255,0.1)'
               }}
             >
-              {/* Animated status indicator */}
               <div className="relative flex items-center justify-center w-3 h-3" aria-hidden="true">
                 <span className="absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75 animate-ping" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-400" style={{
@@ -154,13 +147,11 @@ export default function HomePage() {
               <span className="text-xs font-bold text-cyan-300 tracking-[0.2em] uppercase" style={{
                 textShadow: '0 0 8px rgba(0,240,255,0.3)'
               }}>SYSTEM ONLINE</span>
-              {/* Holographic shimmer */}
               <div className="absolute inset-0 rounded-full overflow-hidden" aria-hidden="true">
                 <div className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12" />
               </div>
             </motion.div>
             
-            {/* H1 - White with larger X */}
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -179,7 +170,6 @@ export default function HomePage() {
               <span>change</span>
             </motion.h1>
 
-            {/* H2 - Holographic subtitle */}
             <motion.h2
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -196,7 +186,6 @@ export default function HomePage() {
               The Recruiters Xchange
             </motion.h2>
 
-            {/* Futuristic divider with energy pulse */}
             <motion.div
               initial={{ scaleX: 0, opacity: 0 }}
               animate={{ scaleX: 1, opacity: 1 }}
@@ -208,7 +197,6 @@ export default function HomePage() {
               <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 via-purple-400 to-fuchsia-400 animate-pulse-slow" style={{
                 filter: 'blur(4px)'
               }} />
-              {/* Energy dots */}
               <div className="absolute left-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-cyan-400" style={{
                 boxShadow: '0 0 8px rgba(0,240,255,0.6)'
               }} />
@@ -217,7 +205,6 @@ export default function HomePage() {
               }} />
             </motion.div>
 
-            {/* Description with internal links */}
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -236,7 +223,6 @@ export default function HomePage() {
               Post roles to find candidates, or share candidates to find roles.
             </motion.p>
 
-            {/* Live Statistics with contextual links */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -246,7 +232,6 @@ export default function HomePage() {
               aria-label="Live platform statistics"
               style={{ perspective: '1000px' }}
             >
-              {/* Live Roles Panel */}
               <motion.article
                 whileHover={{ scale: 1.05, rotateY: 5, z: 50 }}
                 className="group relative isolate"
@@ -254,16 +239,13 @@ export default function HomePage() {
                 itemScope
                 itemType="https://schema.org/Dataset"
               >
-                {/* Glow layer - softened */}
                 <div className="absolute -inset-1 bg-gradient-to-br from-cyan-500/20 via-cyan-600/15 to-cyan-500/20 rounded-2xl blur-lg opacity-30 group-hover:opacity-50 transition duration-300 pointer-events-none" aria-hidden="true" />
                 
-                {/* Main panel */}
                 <Link href="/recruiter" className="block relative backdrop-blur-xl bg-black/40 p-3 sm:p-5 rounded-2xl border border-cyan-400/40 group-hover:border-cyan-300/60 transition-all duration-300 overflow-hidden"
                   style={{
                     boxShadow: '0 4px 20px rgba(0,0,0,0.4), inset 0 1px 0 rgba(0,240,255,0.15), 0 0 20px rgba(0,240,255,0.05)'
                   }}
                 >
-                  {/* Status indicator */}
                   <div className="absolute top-2 left-2" aria-hidden="true">
                     <div className="relative flex h-1.5 w-1.5">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
@@ -288,12 +270,10 @@ export default function HomePage() {
                   </data>
                   <div className="text-[8px] sm:text-xs font-semibold text-cyan-400/80" aria-hidden="true">ACTIVE</div>
                   
-                  {/* Data scan line */}
                   <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-50" aria-hidden="true" />
                 </Link>
               </motion.article>
 
-              {/* Total Fees Panel */}
               <motion.article
                 whileHover={{ scale: 1.05, rotateY: 5, z: 50 }}
                 className="group relative isolate"
@@ -337,7 +317,6 @@ export default function HomePage() {
                 </Link>
               </motion.article>
 
-              {/* Average Fee Panel */}
               <motion.article
                 whileHover={{ scale: 1.05, rotateY: 5, z: 50 }}
                 className="group relative isolate"
@@ -382,7 +361,6 @@ export default function HomePage() {
               </motion.article>
             </motion.div>
 
-            {/* Data Freshness Indicator */}
             {liveStats.lastUpdated && (
               <motion.div
                 initial={{ opacity: 0 }}
@@ -397,7 +375,6 @@ export default function HomePage() {
               </motion.div>
             )}
 
-            {/* Holographic Info Chips */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -407,9 +384,9 @@ export default function HomePage() {
               aria-label="Key statistics"
             >
               {[
-                { color: 'emerald', text: '15K+', label: '15,000+ recruiters', source: 'Platform member count', href: '/why-recxchange' },
-                { color: 'cyan', text: '270M', label: '270 million candidates', source: 'Aggregated candidate database', href: '/recruiter' },
-                { color: 'fuchsia', text: '70%', label: 'Up to 70% commission', source: 'RecX Direct tier', href: '/pricing' }
+                { color: 'emerald', text: '15K+ Recruiters', label: '15,000+ recruiters', source: 'Platform member count', href: '/why-recxchange' },
+                { color: 'cyan', text: '270M Candidates', label: '270 million candidates', source: 'Aggregated candidate database', href: '/recruiter' },
+                { color: 'fuchsia', text: 'Up to 70% Split', label: 'Up to 70% commission', source: 'RecX Direct tier', href: '/pricing' }
               ].map((chip, i) => (
                 <Link key={i} href={chip.href} className="group relative isolate" role="listitem">
                   <div className={`absolute -inset-0.5 bg-gradient-to-r from-${chip.color}-500/20 to-${chip.color}-600/20 rounded-full blur opacity-30 group-hover:opacity-50 transition pointer-events-none`} aria-hidden="true" />
@@ -430,7 +407,6 @@ export default function HomePage() {
               ))}
             </motion.div>
 
-            {/* Subtle scroll prompt - replaces button */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -442,7 +418,7 @@ export default function HomePage() {
                 className="text-xs sm:text-sm text-gray-400 hover:text-cyan-300 transition-colors cursor-pointer flex items-center gap-2 group"
                 aria-label="Scroll to path selection"
               >
-                <span>Choose your path below</span>
+                <span>Start Here</span>
                 <svg 
                   className="w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-y-1 transition-transform" 
                   fill="none" 
@@ -458,7 +434,6 @@ export default function HomePage() {
           </header>
         </section>
 
-        {/* SCREEN 2: PATH SELECTION */}
         <section 
           id="path-selection" 
           className="relative min-h-screen flex flex-col items-center justify-center px-4 py-20"
@@ -500,9 +475,7 @@ export default function HomePage() {
               </p>
             </motion.header>
 
-            {/* Cards - No animation variants, increased glow */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 w-full mx-auto max-w-5xl px-4" style={{ perspective: '2000px' }} role="list">
-              {/* RECRUITER CARD */}
               <motion.article
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -513,7 +486,6 @@ export default function HomePage() {
                 style={{ transformStyle: 'preserve-3d' }}
                 role="listitem"
               >
-                {/* Increased glow */}
                 <div className="absolute -inset-1 bg-gradient-to-br from-cyan-500/30 via-cyan-600/20 to-cyan-500/30 rounded-[3rem] blur-xl opacity-40 group-hover:opacity-60 transition duration-500 pointer-events-none" aria-hidden="true" />
                 
                 <div className="relative backdrop-blur-2xl bg-black/50 p-6 sm:p-8 rounded-[3rem] min-h-[420px] sm:min-h-[460px] flex flex-col border border-cyan-400/30 group-hover:border-cyan-300/50 transition-all duration-500 overflow-hidden"
@@ -549,10 +521,10 @@ export default function HomePage() {
                       Post roles to find candidates, or share candidates to find roles. Split fees with 15,000+ recruiters.
                     </p>
                     
-                    <ul className="space-y-2.5 sm:space-y-3.5 text-[11px] sm:text-xs md:text-sm text-gray-400 mb-5 sm:mb-6">
+                    <ul className="space-y-2.5 sm:space-y-3.5 text-[11px] sm:text-xs md:text-sm text-gray-400 mb-3 sm:mb-4">
                       {[
                         'Search 270M candidates',
-                        '70% split on RecX Direct',
+                        'Up to 70% Split on RecX Direct',
                         'Automated fee contracts'
                       ].map((item, i) => (
                         <li key={i} className="flex items-start gap-2 sm:gap-3">
@@ -590,7 +562,6 @@ export default function HomePage() {
                 </div>
               </motion.article>
 
-              {/* HIRING MANAGER CARD */}
               <motion.article
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -601,7 +572,6 @@ export default function HomePage() {
                 style={{ transformStyle: 'preserve-3d' }}
                 role="listitem"
               >
-                {/* Increased glow */}
                 <div className="absolute -inset-1 bg-gradient-to-br from-fuchsia-500/30 via-pink-600/20 to-fuchsia-500/30 rounded-[3rem] blur-xl opacity-40 group-hover:opacity-60 transition duration-500 pointer-events-none" aria-hidden="true" />
                 
                 <div className="relative backdrop-blur-2xl bg-black/50 p-6 sm:p-8 rounded-[3rem] min-h-[420px] sm:min-h-[460px] flex flex-col border border-fuchsia-400/30 group-hover:border-fuchsia-300/50 transition-all duration-500 overflow-hidden"
@@ -634,14 +604,14 @@ export default function HomePage() {
                     </h3>
                     
                     <p className="text-xs sm:text-sm md:text-base text-gray-300 mb-5 sm:mb-6 leading-relaxed">
-                      We post your role. Thousands of recruiters compete to fill it. You pay one fee.
+                      We post your role. Thousands of Recruiters source your role immediately. Dedicated Account Manager and only one fee.
                     </p>
                     
-                    <ul className="space-y-2.5 sm:space-y-3.5 text-[11px] sm:text-xs md:text-sm text-gray-400 mb-5 sm:mb-6">
+                    <ul className="space-y-2.5 sm:space-y-3.5 text-[11px] sm:text-xs md:text-sm text-gray-400 mb-3 sm:mb-4">
                       {[
-                        '15,000+ recruiters instantly',
+                        'Work with 15,000+ recruiters instantly',
                         'One point of contact',
-                        'Test market before hiring'
+                        'Test and Strategize before going live'
                       ].map((item, i) => (
                         <li key={i} className="flex items-start gap-2 sm:gap-3">
                           <span className="w-1 sm:w-1.5 h-1 sm:h-1.5 rounded-full bg-fuchsia-400 mt-1 sm:mt-1.5 flex-shrink-0" aria-hidden="true"
@@ -681,7 +651,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Related Content Section */}
         <RelatedContent currentPage="/" limit={3} />
 
         <style jsx>{`
