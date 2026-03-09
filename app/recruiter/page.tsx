@@ -35,7 +35,7 @@ export default function RecruiterDiagnostic() {
               transition={{ duration: 0.5 }}
             >
               <StatusBadge label="SHARE. SPLIT. FILL. PAID." color="cyan" />
-              <h1 className="text-[28px] sm:text-4xl md:text-5xl lg:text-6xl font-black gradient-text mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2 mt-6"
+              <h1 className="text-[28px] sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2 mt-6"
                 style={{ textShadow: '0 0 60px rgba(0,240,255,0.3)' }}>
                 What do you need <br className="hidden sm:block" />
                 <span className="sm:inline">right now?</span>
