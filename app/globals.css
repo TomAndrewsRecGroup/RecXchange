@@ -90,9 +90,9 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Custom Scrollbar */
+/* Custom Scrollbar - Blended to background */
 ::-webkit-scrollbar {
-  width: 12px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
@@ -100,13 +100,19 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #00f0ff 0%, #a855f7 50%, #ff00ff 100%);
-  border-radius: 6px;
+  background: rgba(20, 20, 30, 0.8);
+  border-radius: 5px;
   border: 2px solid #0a0a0f;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #00f0ff 0%, #ff00ff 100%);
+  background: rgba(30, 30, 45, 0.9);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(20, 20, 30, 0.8) #0a0a0f;
 }
 
 /* Text Selection */
