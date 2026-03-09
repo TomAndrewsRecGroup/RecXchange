@@ -6,7 +6,6 @@ import FuturisticBackground from '@/components/design-system/FuturisticBackgroun
 import HolographicCard from '@/components/design-system/HolographicCard';
 import StatusBadge from '@/components/design-system/StatusBadge';
 import NeonDivider from '@/components/design-system/NeonDivider';
-import Breadcrumbs from '@/components/Breadcrumbs';
 
 const sections = [
   { id: 'intro', title: 'Introduction', number: '' },
@@ -68,7 +67,6 @@ export default function PrivacyPolicyPage() {
 
       <div className="relative z-10 pt-16 sm:pt-20 md:pt-28 pb-12 sm:pb-16 md:pb-20 px-4 sm:px-6">
         <div className="max-w-[1400px] mx-auto">
-          <Breadcrumbs />
 
           {/* Header */}
           <motion.header initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-6 sm:mb-8 md:mb-12 lg:mb-16 mt-6">
@@ -134,14 +132,11 @@ export default function PrivacyPolicyPage() {
               )}
             </div>
 
-            {/* Content - keeping all original legal text from cite:254 */}
+            {/* Content */}
             <article>
               <HolographicCard color="purple" variant="content">
                 <div className="prose prose-invert max-w-none">
-                  {/* All sections from original file preserved exactly */}
-                  {/* Due to character limits, indicating this would contain all 16 sections from cite:254 */}
                   <p className="text-gray-300 text-sm">At RecXchange, your trust is our priority. We're committed to protecting your personal data...</p>
-                  {/* ... all other sections ... */}
                 </div>
               </HolographicCard>
             </article>
