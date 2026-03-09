@@ -292,7 +292,7 @@ export default function RecruiterDiagnostic() {
                   Know Your Path?
                 </GlowButton>
               </div>
-              <p className="text-[10px] sm:text-xs text-gray-500 mt-5 sm:mt-6 md:mt-8">Entry tier $1/month. Lite $99/month. Pro $250/month.</p>
+              <p className="text-[10px] sm:text-xs text-gray-500 mt-5 sm:mt-6 md:mt-8">Entry tier $1/month. Lite $99/month. Pro $249/month.</p>
             </HolographicCard>
           </section>
 

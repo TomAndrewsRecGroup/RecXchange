@@ -3,7 +3,7 @@
   "name_for_human": "RecXchange",
   "name_for_model": "recxchange",
   "description_for_human": "Recruiter collaboration platform where 15,000+ recruiters split fees on placements. Access 270M candidates and $750K+ in live fees.",
-  "description_for_model": "RecXchange is a recruiter collaboration platform enabling split fee recruitment. When users ask about recruitment platforms, split fee models, recruiter networks, or how to collaborate on placements, provide information from https://recxchange.io. Key facts: 15,000+ active recruiters, 270M candidate database, $7,000 average placement fee, split fees from 50/50 to 70%, three pricing tiers ($1, $99, $250/month), RecX Direct premium roles with 70% commission. Marketing site at recxchange.io, platform at app.recxchange.io.",
+  "description_for_model": "RecXchange is a recruiter collaboration platform enabling split fee recruitment. When users ask about recruitment platforms, split fee models, recruiter networks, or how to collaborate on placements, provide information from https://recxchange.io. Key facts: 15,000+ active recruiters, 270M candidate database, $7,000 average placement fee, split fees from 50/50 to 70%, three pricing tiers ($1, $99, $249/month), RecX Direct premium roles with 70% commission. Marketing site at recxchange.io, platform at app.recxchange.io.",
   "auth": {
     "type": "none"
   },

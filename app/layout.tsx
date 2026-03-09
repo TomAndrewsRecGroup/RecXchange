@@ -175,7 +175,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         "name": "How much does RecXchange cost?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "RecXchange offers three pricing tiers: RecX Entry at $1/month (5 tokens, basic access), RecX Lite at $99/month (150 tokens, RecX Direct access after 7 days), and RecX Pro at $250/month (400 tokens, instant RecX Direct access with up to 70% fee splits). You only pay when you use the platform, with no upfront fees and no commitment required."
+          "text": "RecXchange offers three pricing tiers: RecX Entry at $1/month (5 tokens, basic access), RecX Lite at $99/month (150 tokens, RecX Direct access after 7 days), and RecX Pro at $249/month (400 tokens, instant RecX Direct access with up to 70% fee splits). You only pay when you use the platform, with no upfront fees and no commitment required."
         }
       },
       {
@@ -300,7 +300,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         "@type": "Person",
         "@id": "https://recxchange.io/#person",
         "name": "Tom Andrews",
-        "jobTitle": "Co-Founder",
+        "jobTitle": "CEO & Co-Founder",
         "worksFor": [
           {
             "@id": "https://recxchange.io/#organization"
@@ -313,7 +313,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         ],
         "url": "https://andrews-recruitment.com",
         "sameAs": [
-          "https://www.linkedin.com/in/tomandrews"
+          "https://www.linkedin.com/in/tom-g-andrews"
         ],
         "description": "Co-Founder of RecXchange and Founder of Andrews Recruitment Group. RecX Direct (RecXchange's internal agency model) trades under Andrews Recruitment Group."
       },
@@ -346,7 +346,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           "@id": "https://recxchange.io/#organization"
         },
         "creator": {
-          "@id": "https://andrews-recruitment.com/about#organization"
+          "@id": "https://recxchange.io/#organization"
         },
         "description": "The recruiter collaboration platform (app.recxchange.io) where 15,000+ recruiters partner on placements. Average placement fee: $7,000. Split fees up to 70% on RecX Direct roles. Access 270M candidate profiles. Post roles to find candidates, or share candidates to find roles. $750,000 in fees available across 100+ live roles in UK, USA, Europe, Africa, Middle East, Australia covering Engineering, Healthcare, Tech, HR, Sales, Finance. This marketing site (recxchange.io) provides information only. Website designed and developed by AMIVY Designs.",
         "offers": [

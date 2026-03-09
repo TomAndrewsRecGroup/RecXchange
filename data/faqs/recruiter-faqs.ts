@@ -11,7 +11,7 @@
 export const recruiterGeneralFAQs = [
   {
     question: "Do I need to pay upfront fees to join RecXchange?",
-    answer: "No upfront placement fees. You only pay the monthly subscription ($1, $99, or $250 depending on tier). When you make a placement and earn commission, RecXchange takes no additional cut - you keep your full agreed split percentage (50-70%)."
+    answer: "No upfront placement fees. You only pay the monthly subscription ($1, $99, or $249 depending on tier). When you make a placement and earn commission, RecXchange takes no additional cut - you keep your full agreed split percentage (50-70%)."
   },
   {
     question: "How long until I make my first placement?",
@@ -50,7 +50,7 @@ export const recXDirectFAQs = [
   },
   {
     question: "How do I qualify for RecX Direct access?",
-    answer: "Pro members ($250/month) get instant RecX Direct access. Lite members ($99/month) gain access after 7 days of active platform use. You need to complete your profile and demonstrate platform engagement through posting roles or submitting candidates."
+    answer: "Pro members ($249/month) get instant RecX Direct access. Lite members ($99/month) gain access after 7 days of active platform use. You need to complete your profile and demonstrate platform engagement through posting roles or submitting candidates."
   },
   {
     question: "Are RecX Direct roles harder to fill?",

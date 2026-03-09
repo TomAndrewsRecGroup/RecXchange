@@ -31,7 +31,7 @@ const siteStructure: SiteMapSection[] = [
       { title: 'Pricing', href: '/pricing', description: 'View all pricing tiers' },
       { title: 'RecX Entry', href: '/pricing#recx-entry', description: '$1/month starter plan' },
       { title: 'RecX Lite', href: '/pricing#recx-lite', description: '$99/month with RecX Direct' },
-      { title: 'RecX Pro', href: '/pricing#recx-pro', description: '$250/month with 70% splits' },
+      { title: 'RecX Pro', href: '/pricing#recx-pro', description: '$249/month with 70% splits' },
     ],
   },
   {

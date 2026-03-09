@@ -33,7 +33,7 @@ const mockPosts: SocialPost[] = [
   },
   {
     id: '2',
-    content: `📊 Real numbers from Sarah, a healthcare recruiter:\n\nMonth 1 on RecXchange:\n✅ 3 placements made\n✅ $15,200 earned\n✅ 50/50, 60/40, and 70% splits\n\nHer secret? She upgraded to Pro ($250/month) for instant access to RecX Direct roles.\n\nOne placement paid for 5 months of membership.\n\nThe ROI speaks for itself 💯`,
+    content: `📊 Real numbers from Sarah, a healthcare recruiter:\n\nMonth 1 on RecXchange:\n✅ 3 placements made\n✅ $15,200 earned\n✅ 50/50, 60/40, and 70% splits\n\nHer secret? She upgraded to Pro ($249/month) for instant access to RecX Direct roles.\n\nOne placement paid for 5 months of membership.\n\nThe ROI speaks for itself 💯`,
     publishedAt: '2026-02-24T14:30:00Z',
     platform: 'LinkedIn',
     category: 'Success Stories',
@@ -81,7 +81,7 @@ const mockPosts: SocialPost[] = [
   },
   {
     id: '8',
-    content: `💰 RecXchange pricing breakdown:\n\nEntry: $1/month (5 tokens) - Test the waters\nLite: $99/month (150 tokens) - Serious recruiters\nPro: $250/month (400 tokens) - Instant RecX Direct access\nTeams: Custom - 5+ recruiters\n\n1 token = Post 1 role OR Submit 1 candidate\n\nZero platform fees. Zero hidden costs. Zero surprises.\n\nOne placement pays for 3-12 months of membership 📊`,
+    content: `💰 RecXchange pricing breakdown:\n\nEntry: $1/month (5 tokens) - Test the waters\nLite: $99/month (150 tokens) - Serious recruiters\nPro: $249/month (400 tokens) - Instant RecX Direct access\nTeams: Custom - 5+ recruiters\n\n1 token = Post 1 role OR Submit 1 candidate\n\nZero platform fees. Zero hidden costs. Zero surprises.\n\nOne placement pays for 3-12 months of membership 📊`,
     publishedAt: '2026-02-18T15:00:00Z',
     platform: 'LinkedIn',
     category: 'Platform Updates',

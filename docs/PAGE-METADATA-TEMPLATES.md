@@ -81,8 +81,8 @@ export const metadata: Metadata = {
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Pricing: $1 to $250/month | RecXchange Recruiter Platform",
-  description: "RecXchange pricing: Entry at $1/month (5 tokens), Lite at $99/month (150 tokens + RecX Direct access), or Pro at $250/month (400 tokens + instant RecX Direct with 70% splits). No upfront fees.",
+  title: "Pricing: $1 to $249/month | RecXchange Recruiter Platform",
+  description: "RecXchange pricing: Entry at $1/month (5 tokens), Lite at $99/month (150 tokens + RecX Direct access), or Pro at $249/month (400 tokens + instant RecX Direct with 70% splits). No upfront fees.",
   keywords: [
     "RecXchange pricing",
     "recruitment platform cost",
@@ -95,14 +95,14 @@ export const metadata: Metadata = {
     canonical: '/pricing',
   },
   openGraph: {
-    title: "Pricing: $1 to $250/month | RecXchange",
-    description: "Three tiers to fit your needs: Entry $1/month, Lite $99/month, Pro $250/month. Earn up to 70% on placements.",
+    title: "Pricing: $1 to $249/month | RecXchange",
+    description: "Three tiers to fit your needs: Entry $1/month, Lite $99/month, Pro $249/month. Earn up to 70% on placements.",
     url: 'https://recxchange.io/pricing',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: "RecXchange Pricing: Entry $1, Lite $99, Pro $250/month",
+    title: "RecXchange Pricing: Entry $1, Lite $99, Pro $249/month",
     description: "Flexible pricing for recruiters. Earn up to 70% on split fee placements.",
   },
 };

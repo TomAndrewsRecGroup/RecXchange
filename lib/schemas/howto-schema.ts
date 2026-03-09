@@ -104,7 +104,7 @@ export const collaborationHowToSchema = generateHowToSchema({
   steps: [
     {
       name: "Sign up and choose pricing tier",
-      text: "Create a RecXchange account and select your membership tier: Entry ($1/month with 5 tokens), Lite ($99/month with 150 tokens), or Pro ($250/month with 400 tokens). Pro tier gives instant access to RecX Direct premium roles with up to 70% commission.",
+      text: "Create a RecXchange account and select your membership tier: Entry ($1/month with 5 tokens), Lite ($99/month with 150 tokens), or Pro ($249/month with 400 tokens). Pro tier gives instant access to RecX Direct premium roles with up to 70% commission.",
       url: "https://app.recxchange.io/register"
     },
     {
@@ -155,7 +155,7 @@ export const recXDirectHowToSchema = generateHowToSchema({
   steps: [
     {
       name: "Choose the right membership tier",
-      text: "RecX Direct access requires either Lite ($99/month) or Pro ($250/month) membership. Pro members get instant access, while Lite members must be active on the platform for 7 days first. Pro tier also offers 70% splits vs 60% on Lite.",
+      text: "RecX Direct access requires either Lite ($99/month) or Pro ($249/month) membership. Pro members get instant access, while Lite members must be active on the platform for 7 days first. Pro tier also offers 70% splits vs 60% on Lite.",
       url: "https://recxchange.io/pricing"
     },
     {

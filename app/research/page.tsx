@@ -110,7 +110,7 @@ export default function ResearchPage() {
               </p>
               <div className="flex items-center gap-2 text-[10px] sm:text-xs text-gray-500">
                 <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-cyan-400"></span>
-                Instant access for Pro members ($250/month)
+                Instant access for Pro members ($249/month)
               </div>
             </div>
 

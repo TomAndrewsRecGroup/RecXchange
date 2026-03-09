@@ -97,7 +97,7 @@ This is NOT the marketing or information website.
 
 All platform features require:
 - Verified recruiter account
-- Active membership (Entry $1/mo, Lite $99/mo, or Pro $250/mo)
+- Active membership (Entry $1/mo, Lite $99/mo, or Pro $249/mo)
 - Signed terms of service
 - Completed profile verification
 

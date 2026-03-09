@@ -151,7 +151,7 @@ function generateGHLSection(ghlData: GHLConversionData): string {
           <div class="tier-count">${liteCount}</div>
         </div>
         <div class="tier-card ${proCount > 0 ? 'has-signups' : ''}">
-          <div class="tier-name">RecX Pro ($250)</div>
+          <div class="tier-name">RecX Pro ($249)</div>
           <div class="tier-count">${proCount}</div>
         </div>
         <div class="tier-card ${teamsCount > 0 ? 'has-signups' : ''}">

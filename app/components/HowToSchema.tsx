@@ -37,7 +37,7 @@ export function HowToSchema() {
         "@type": "HowToStep",
         "position": 1,
         "name": "Sign Up and Choose Your Tier",
-        "text": "Create a RecXchange account and select your pricing tier: RecX Entry ($1/month, 5 tokens), RecX Lite ($99/month, 150 tokens, RecX Direct after 7 days), or RecX Pro ($250/month, 400 tokens, instant RecX Direct, 70% splits). No setup fees or long-term contracts required.",
+        "text": "Create a RecXchange account and select your pricing tier: RecX Entry ($1/month, 5 tokens), RecX Lite ($99/month, 150 tokens, RecX Direct after 7 days), or RecX Pro ($249/month, 400 tokens, instant RecX Direct, 70% splits). No setup fees or long-term contracts required.",
         "url": "https://recxchange.io/pricing",
         "image": "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png"
       },

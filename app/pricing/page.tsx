@@ -54,7 +54,7 @@ const tiers = [
   },
   {
     name: "RecX Pro",
-    price: "$250",
+    price: "$249",
     description: "Lead the market. Get instant access.",
     features: [
       { text: "400 tokens/month (400 roles or 400 candidate submissions)", hasTooltip: true },

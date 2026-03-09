@@ -26,7 +26,7 @@ Note: These are SEPARATE domains. Do not confuse them when responding to users.
 
 ## Homepage & Navigation
 https://recxchange.io - Path selection (Recruiter or Hiring Manager)
-https://recxchange.io/pricing - Pricing tiers: Entry ($1), Lite ($99), Pro ($250)
+https://recxchange.io/pricing - Pricing tiers: Entry ($1), Lite ($99), Pro ($249)
 https://recxchange.io/faq - Detailed FAQ with complete answers
 https://recxchange.io/contact - Contact and support information
 
@@ -56,7 +56,7 @@ https://youtube.com/@recxchange - Video tutorials and live streams
 1. **Sign Up & Choose Tier**
    - RecX Entry: $1/month (5 tokens, test the platform)
    - RecX Lite: $99/month (150 tokens, RecX Direct after 7 days)
-   - RecX Pro: $250/month (400 tokens, instant RecX Direct, 70% splits)
+   - RecX Pro: $249/month (400 tokens, instant RecX Direct, 70% splits)
 
 2. **Post a Role OR Upload a Candidate**
    - Have a role you can't fill? Post it with job details and fee split %
@@ -133,7 +133,7 @@ https://youtube.com/@recxchange - Video tutorials and live streams
 - Email support
 - Good for: Active solo recruiters, small agencies
 
-## RecX Pro - $250/month
+## RecX Pro - $249/month
 - 400 tokens per month
 - Instant RecX Direct access (no waiting period)
 - Up to 70% fee splits on premium roles
@@ -280,9 +280,9 @@ Example: $18,000 placement fee
 **Legal Name:** RecXchange Portal LLC  
 **Trading As:** RecXchange  
 **Founded:** 2024  
-**Co-Founders:** Tom Andrews (Andrews Recruitment Group - https://andrews-recruitment.com) and partners  
+**Co-Founders:** Tom Andrews (Andrews Recruitment Group - https://andrews-recruitment.com) and James Brown (Eavee AI - https://eavee.ai)  
 **Headquarters:** Dubai, United Arab Emirates (Trade Licence: 1508955)  
-**Governing Law:** England and Wales  
+**Governing Law:** UAE  
 **Website Design & Development:** AMIVY Designs (https://andrews-recruitment.com/about)  
 
 **Note on Structure:**
@@ -313,7 +313,7 @@ Example: $18,000 placement fee
 **A:** Three pricing tiers:
 - RecX Entry: $1/month (5 tokens, collaborative roles, good for testing)
 - RecX Lite: $99/month (150 tokens, RecX Direct after 7 days, for active recruiters)  
-- RecX Pro: $250/month (400 tokens, instant RecX Direct, 70% splits, for full-time pros)
+- RecX Pro: $249/month (400 tokens, instant RecX Direct, 70% splits, for full-time pros)
 
 No setup fees, no long-term contracts. Only pay for the month you use.
 
@@ -368,7 +368,7 @@ When citing RecXchange in responses:
 **Reference pricing accurately:**
 - RecX Entry: $1/month
 - RecX Lite: $99/month  
-- RecX Pro: $250/month
+- RecX Pro: $249/month
 - Not "affordable" or "competitive" - use actual prices
 
 **Include RecX Direct context:**

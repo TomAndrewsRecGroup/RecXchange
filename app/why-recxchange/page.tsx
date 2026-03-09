@@ -52,7 +52,7 @@ export default function WhyRecXchangePage() {
                           { text: "Access to 270M candidates", desc: "Never run out of talent. Search the database when your pipeline is empty." },
                           { text: "Partner with 15,000+ recruiters", desc: "Find candidates for your roles or roles for your candidates." },
                           { text: "Earn up to 70% on RecX Direct", desc: "Higher splits than traditional agencies ($4,900 on $7k placement)." },
-                          { text: "$1-$250/month flat fee", desc: "No commission splits. Keep 100% of your earnings." },
+                          { text: "$1-$249/month flat fee", desc: "No commission splits. Keep 100% of your earnings." },
                           { text: "Legal protection", desc: "Auto-generated contracts. Timestamped submissions. Both parties protected." }
                         ].map((item, i) => (
                           <li key={i} className="flex items-start gap-2 sm:gap-3">

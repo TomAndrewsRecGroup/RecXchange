@@ -101,7 +101,7 @@ export function generateHowItWorksHiringManagerEmail(firstName: string): string 
                 </tr>
               </table>
               
-              <p style="margin: 16px 0 0 0; color: #475569; font-size: 14px; line-height: 1.7; font-style: italic; padding: 0 4px;">For a company making 10 hires per year at $100k average salary, you're spending <strong style="color: #ef4444;">$250,000 in recruitment fees alone</strong>. Plus lost productivity from slow fills.</p>
+              <p style="margin: 16px 0 0 0; color: #475569; font-size: 14px; line-height: 1.7; font-style: italic; padding: 0 4px;">For a company making 10 hires per year at $100k average salary, you're spending <strong style="color: #ef4444;">$249,000 in recruitment fees alone</strong>. Plus lost productivity from slow fills.</p>
             </td>
           </tr>
 
