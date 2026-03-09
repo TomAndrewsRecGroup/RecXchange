@@ -43,10 +43,12 @@ export const internalLinks = {
   twitter: 'https://twitter.com/RecXchange',
   youtube: 'https://youtube.com/@recxchange',
   
-  // Legal
-  privacyPolicy: '/privacy-policy',
-  termsOfService: '/terms-of-service',
+  // Legal (top-level pages for SEO)
+  privacy: '/privacy',
+  terms: '/terms',
   cookiePolicy: '/cookie-policy',
+  gdpr: '/gdpr',
+  affiliate: '/affiliate',
 };
 
 /**
