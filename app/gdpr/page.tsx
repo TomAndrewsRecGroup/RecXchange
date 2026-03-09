@@ -1,4 +1,3 @@
-"use client";
 import React from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
@@ -22,7 +21,7 @@ export default function GDPRPage() {
         <div className="max-w-[900px] mx-auto">
 
           {/* Header */}
-          <motion.header initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-8 sm:mb-10 md:mb-12 lg:mb-16 mt-6">
+          <header className="text-center mb-8 sm:mb-10 md:mb-12 lg:mb-16 mt-6">
             <StatusBadge label="DATA PROTECTION COMPLIANCE" color="cyan" />
             <h1 className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black gradient-text mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2 mt-6"
               style={{ textShadow: '0 0 60px rgba(0,240,255,0.3)' }}>
@@ -32,7 +31,7 @@ export default function GDPRPage() {
             <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed px-2 mt-6">
               RecXchange is fully compliant with the General Data Protection Regulation (GDPR). We take data protection seriously and are committed to safeguarding your personal information.
             </p>
-          </motion.header>
+          </header>
 
           {/* Main Content */}
           <div className="space-y-6 sm:space-y-8">
