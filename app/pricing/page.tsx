@@ -8,7 +8,6 @@ import GlowButton from '@/components/design-system/GlowButton';
 import NeonDivider from '@/components/design-system/NeonDivider';
 import StatusBadge from '@/components/design-system/StatusBadge';
 import RecXDirectForm from '@/components/recx-direct-form';
-import Breadcrumbs from '@/components/Breadcrumbs';
 import FAQSection from '@/components/FAQSection';
 import LastUpdated from '@/components/LastUpdated';
 import { pricingFAQs } from '@/data/faqs/recruiter-faqs';
@@ -71,22 +70,6 @@ const tiers = [
     highlight: false,
     color: "purple" as const,
   },
-  {
-    name: "RecX Teams",
-    price: "Custom",
-    description: "For agencies with 5+ recruiters.",
-    features: [
-      { text: "Everything in Pro for your entire team", hasTooltip: false },
-      { text: "Shared token pool across team members", hasTooltip: true },
-      { text: "Shared candidate database (ATS)", hasTooltip: false },
-      { text: "Shared client CRM", hasTooltip: false },
-      { text: "Private roles visible to your team only", hasTooltip: false },
-      { text: "Up to 70% split on RecX Direct placements", hasTooltip: false }
-    ],
-    buttonText: "Talk to Sales",
-    highlight: false,
-    color: "emerald" as const,
-  },
 ];
 
 export default function PricingPage() {
@@ -103,8 +86,6 @@ export default function PricingPage() {
       
       <div className="relative z-10 py-10 sm:py-16 md:py-20 px-4 sm:px-6">
         <div className="max-w-[1200px] mx-auto">
-          <Breadcrumbs />
-          
           <div className="text-center mb-8 sm:mb-12 md:mb-16 mt-6">
             <StatusBadge label="TRANSPARENT PRICING" color="cyan" />
             <h1 className="text-[28px] sm:text-3xl md:text-4xl lg:text-5xl font-black mb-3 sm:mb-4 mt-6 text-white" 
@@ -116,7 +97,7 @@ export default function PricingPage() {
           </div>
 
           {/* Pricing Tiers */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6 mb-10 sm:mb-16 md:mb-20">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 mb-10 sm:mb-16 md:mb-20">
             {tiers.map((tier, index) => (
               <div key={index} className="relative">
                 {tier.highlight && (
