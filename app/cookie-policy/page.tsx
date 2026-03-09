@@ -6,7 +6,6 @@ import FuturisticBackground from '@/components/design-system/FuturisticBackgroun
 import HolographicCard from '@/components/design-system/HolographicCard';
 import StatusBadge from '@/components/design-system/StatusBadge';
 import NeonDivider from '@/components/design-system/NeonDivider';
-import Breadcrumbs from '@/components/Breadcrumbs';
 
 export default function CookiePolicyPage() {
   return (
@@ -15,7 +14,6 @@ export default function CookiePolicyPage() {
 
       <div className="relative z-10 pt-16 sm:pt-20 md:pt-28 pb-12 sm:pb-16 md:pb-20 px-4 sm:px-6">
         <div className="max-w-[900px] mx-auto">
-          <Breadcrumbs />
 
           {/* Header */}
           <motion.header initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-8 sm:mb-12 md:mb-16 mt-6">
