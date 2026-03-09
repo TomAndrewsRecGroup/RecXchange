@@ -54,8 +54,6 @@ export default function ResearchPage() {
             </HolographicCard>
           </section>
 
-          {/* ... rest of research page content remains the same ... */}
-
           {/* Footer Note */}
           <div className="mt-10 sm:mt-12 md:mt-16 text-center">
             <p className="text-[10px] sm:text-xs text-gray-600 leading-relaxed max-w-2xl mx-auto px-4">
