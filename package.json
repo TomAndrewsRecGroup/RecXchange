@@ -13,6 +13,7 @@
     "vercel-build": "next build"
   },
   "dependencies": {
+    "@heroicons/react": "^2.2.0",
     "@sendgrid/mail": "^8.1.4",
     "@vercel/analytics": "^1.5.0",
     "clsx": "^2.1.1",

@@ -7,7 +7,10 @@ import FloatingChat from "@/components/FloatingChat";
 import CookieBanner from "@/components/CookieBanner";
 import ClientProviders from "@/components/ClientProviders";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import SkipToContent from "@/components/SkipToContent";
 import { Analytics } from "@vercel/analytics/next";
+import { WebVitals } from "@/app/components/WebVitals";
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 
@@ -15,7 +18,7 @@ const inter = Inter({
   subsets: ["latin"], 
   weight: ["300", "400", "500", "600", "700", "800", "900"],
   variable: '--font-inter',
-  display: 'swap',
+  display: 'swap', // Optimized for FCP (First Contentful Paint)
 });
 
 export const viewport: Viewport = {
@@ -41,11 +44,10 @@ export const metadata: Metadata = {
     "recruitment marketplace",
     "RecXchange",
     "RecX Direct",
-    "Andrews Recruitment Group",
     "recruitment fee split",
     "recruiter collaboration"
   ],
-  authors: [{ name: "RecXchange" }, { name: "AMIVY Designs", url: "https://andrews-recruitment.com/about" }],
+  authors: [{ name: "RecXchange Portal LLC" }, { name: "AMIVY Designs", url: "https://andrews-recruitment.com/about" }],
   creator: "AMIVY Designs",
   publisher: "RecXchange",
   metadataBase: new URL("https://recxchange.io"),
@@ -158,7 +160,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         "name": "What is RecX Direct?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "RecX Direct is RecXchange's premium tier offering exclusive roles with higher commission rates of up to 70% (compared to 50% on standard roles). These are direct client relationships where RecXchange has negotiated exclusive partnerships with hiring companies. Recruiters get priority access to high-value roles, faster payment processing (15-30 days vs. 30-45 days), and dedicated account management."
+          "text": "RecX Direct is RecXchange's premium tier offering exclusive roles with higher commission rates of up to 70% (compared to 50% on standard roles). These are direct client relationships where RecXchange has negotiated exclusive partnerships with hiring companies. Recruiters get priority access to high-value roles, faster payment processing (15-30 days vs. 30-45 days), and dedicated account management. RecX Direct trades under Andrews Recruitment Group."
         }
       },
       {
@@ -249,7 +251,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         "@type": "Organization",
         "@id": "https://recxchange.io/#organization",
         "name": "RecXchange",
-        "legalName": "Andrews Recruitment Group Ltd",
+        "legalName": "RecXchange Portal LLC",
         "url": "https://recxchange.io",
         "logo": {
           "@type": "ImageObject",
@@ -257,16 +259,26 @@ export default function RootLayout({ children }: RootLayoutProps) {
           "width": 512,
           "height": 512
         },
-        "founder": {
-          "@id": "https://recxchange.io/#person"
-        },
+        "founder": [
+          {
+            "@id": "https://recxchange.io/#person"
+          }
+        ],
         "foundingDate": "2024",
+        "foundingLocation": {
+          "@type": "Place",
+          "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "AE",
+            "addressLocality": "Dubai"
+          }
+        },
         "sameAs": [
           "https://www.linkedin.com/company/recxchange",
           "https://twitter.com/RecXchange",
           "https://youtube.com/@recxchange"
         ],
-        "description": "RecXchange is a recruiter collaboration platform where 15,000+ recruiters partner on placements and split fees automatically. This marketing website (recxchange.io) provides information and guides. The actual platform is at app.recxchange.io. Average placement fee: $7,000. Access to 270M candidate profiles. $750,000 in fees available across 100+ live roles. Weekly live streams and video tutorials on YouTube.",
+        "description": "RecXchange is operated by RecXchange Portal LLC (UAE). A recruiter collaboration platform where 15,000+ recruiters partner on placements and split fees automatically. This marketing website (recxchange.io) provides information and guides. The actual platform is at app.recxchange.io. Average placement fee: $7,000. Access to 270M candidate profiles. $750,000 in fees available across 100+ live roles. Weekly live streams and video tutorials on YouTube.",
         "numberOfEmployees": {
           "@type": "QuantitativeValue",
           "value": 15000,
@@ -284,21 +296,29 @@ export default function RootLayout({ children }: RootLayoutProps) {
           "@id": "https://recxchange.io/#softwareapplication"
         }
       },
-      // Person Schema (Founder)
+      // Person Schema (Co-Founder)
       {
         "@type": "Person",
         "@id": "https://recxchange.io/#person",
         "name": "Tom Andrews",
-        "jobTitle": "CEO & Co-Founder",
-        "worksFor": {
-          "@id": "https://recxchange.io/#organization"
-        },
-        "url": "https://recxchange.io",
+        "jobTitle": "Co-Founder",
+        "worksFor": [
+          {
+            "@id": "https://recxchange.io/#organization"
+          },
+          {
+            "@type": "Organization",
+            "name": "Andrews Recruitment Group",
+            "url": "https://andrews-recruitment.com"
+          }
+        ],
+        "url": "https://andrews-recruitment.com",
         "sameAs": [
           "https://www.linkedin.com/in/tomandrews"
-        ]
+        ],
+        "description": "Co-Founder of RecXchange and Founder of Andrews Recruitment Group. RecX Direct (RecXchange's internal agency model) trades under Andrews Recruitment Group."
       },
-      // Design Agency Schema - AMIVY Designs (UPDATED URL)
+      // Design Agency Schema - AMIVY Designs
       {
         "@type": "Organization",
         "@id": "https://andrews-recruitment.com/about#organization",
@@ -310,7 +330,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           "width": 180,
           "height": 45
         },
-        "description": "Premium web design, development, and digital branding agency specializing in custom websites and digital solutions.",
+        "description": "Premium web design, development, and digital branding agency specializing in custom websites and digital solutions. Designer and developer of RecXchange platform.",
         "serviceType": ["Web Design", "Web Development", "Digital Branding", "UI/UX Design"]
       },
       // Software Application Schema - Platform distinction
@@ -329,7 +349,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         "creator": {
           "@id": "https://andrews-recruitment.com/about#organization"
         },
-        "description": "The recruiter collaboration platform (app.recxchange.io) where 15,000+ recruiters partner on placements. Average placement fee: $7,000. Split fees up to 70% on RecX Direct roles. Access 270M candidate profiles. Post roles to find candidates, or share candidates to find roles. $750,000 in fees available across 100+ live roles in UK, USA, Europe, Africa, Middle East, Australia covering Engineering, Healthcare, Tech, HR, Sales, Finance. This marketing site (recxchange.io) provides information only.",
+        "description": "The recruiter collaboration platform (app.recxchange.io) where 15,000+ recruiters partner on placements. Average placement fee: $7,000. Split fees up to 70% on RecX Direct roles. Access 270M candidate profiles. Post roles to find candidates, or share candidates to find roles. $750,000 in fees available across 100+ live roles in UK, USA, Europe, Africa, Middle East, Australia covering Engineering, Healthcare, Tech, HR, Sales, Finance. This marketing site (recxchange.io) provides information only. Website designed and developed by AMIVY Designs.",
         "offers": [
           {
             "@type": "Offer",
@@ -648,6 +668,12 @@ export default function RootLayout({ children }: RootLayoutProps) {
         
         <ErrorBoundary>
           <ClientProviders>
+            {/* Skip to Content Link (WCAG 2.1 AA) */}
+            <SkipToContent />
+            
+            {/* Web Vitals Monitoring */}
+            <WebVitals />
+            
             {/* Background Layer */}
             <div className="fixed inset-0 pointer-events-none z-0">
               <div className="absolute inset-0 opacity-[0.02] mix-blend-overlay bg-[url('https://res.cloudinary.com/dzv9rqg49/image/upload/v1695123456/noise_z7p5vj.png')]" />
@@ -658,8 +684,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
             {/* Conditional Navigation - hides on root page */}
             <ConditionalHeader />
 
+            {/* Breadcrumbs - shows on all pages except homepage */}
+            <Breadcrumbs />
+
             <div className="relative z-10 flex flex-col min-h-screen w-full">
-              <main className="flex-grow w-full">
+              <main id="main-content" className="flex-grow w-full">
                 {children}
               </main>
               <Footer />

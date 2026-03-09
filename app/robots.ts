@@ -10,42 +10,76 @@ export default function robots(): MetadataRoute.Robots {
         disallow: [
           '/api/',              // Block API routes from indexing
           '/admin/',            // Block admin pages
-          '/account-management/', // Block user account pages (private)
           '/_next/',            // Block Next.js internal files
           '/static/',           // Block static build files (if any)
         ],
       },
-      // Specific rule for Google (most permissive)
+      // Traditional Search Engines
       {
         userAgent: 'Googlebot',
         allow: '/',
         disallow: [
           '/api/',
           '/admin/',
-          '/account-management/',
         ],
         crawlDelay: 0,        // No delay for Google (fast indexing)
       },
-      // Specific rule for Bing
       {
         userAgent: 'Bingbot',
         allow: '/',
         disallow: [
           '/api/',
           '/admin/',
-          '/account-management/',
         ],
         crawlDelay: 0,
       },
-      // Block bad bots and scrapers
+      // AI Search Engines & Crawlers (CRITICAL for AIO/GEO)
+      {
+        userAgent: 'GPTBot',           // OpenAI ChatGPT crawler
+        allow: '/',
+        disallow: ['/api/', '/admin/'],
+      },
+      {
+        userAgent: 'ChatGPT-User',     // ChatGPT browsing
+        allow: '/',
+      },
+      {
+        userAgent: 'Claude-Web',       // Anthropic Claude
+        allow: '/',
+      },
+      {
+        userAgent: 'anthropic-ai',
+        allow: '/',
+      },
+      {
+        userAgent: 'PerplexityBot',    // Perplexity AI
+        allow: '/',
+      },
+      {
+        userAgent: 'Google-Extended',  // Google Bard/Gemini
+        allow: '/',
+      },
+      {
+        userAgent: 'CCBot',            // Common Crawl (used by many AI systems)
+        allow: '/',
+      },
+      {
+        userAgent: 'cohere-ai',        // Cohere AI
+        allow: '/',
+      },
+      {
+        userAgent: 'FacebookBot',      // Meta AI
+        allow: '/',
+      },
+      // Block bad bots and scrapers (optional)
       {
         userAgent: [
-          'AhrefsBot',        // SEO tool bot (optional - blocks competitor analysis)
+          'AhrefsBot',        // SEO tool bot
           'SemrushBot',       // SEO tool bot
           'MJ12bot',          // Majestic bot
           'DotBot',           // Moz bot
         ],
-        disallow: '/',        // Block these entirely (optional - you can allow if you want SEO tool data)
+        disallow: '/',
       },
     ],
     sitemap: 'https://recxchange.io/sitemap.xml',

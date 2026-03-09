@@ -4,6 +4,10 @@ import { motion, Variants } from 'framer-motion';
 import Link from 'next/link';
 import { Target, Zap, Cpu } from 'lucide-react';
 import SendRolesForm from '@/components/send-roles-form';
+import FAQSection from '@/components/FAQSection';
+import LastUpdated from '@/components/LastUpdated';
+import { collaborationFAQs } from '@/data/faqs/recruiter-faqs';
+import { internalLinks } from '@/lib/internal-links';
 
 export default function CollaborationPage() {
   // HowTo Schema for split fee recruitment process
@@ -143,10 +147,9 @@ export default function CollaborationPage() {
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.1] tracking-tight px-2">
                 Split Fees. Zero Friction.
               </h1>
-
-              {/* Subheadline */}
-              <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed px-2">
-                RecXchange isn't just a marketplace; it's a high-performance engine designed to protect your deals and automate your matchmaking.
+              <div className="pulse-underline mb-4 sm:mb-6 md:mb-8 mx-auto" />
+              <p className="text-gray-400 text-sm sm:text-base md:text-lg lg:text-xl max-w-2xl mx-auto leading-relaxed px-2">
+                RecXchange isn't just a marketplace; it's a high-performance engine designed to protect your deals and automate your matchmaking. Learn about <Link href={internalLinks.pricing} className="text-cyan-400 hover:text-cyan-300 underline">our pricing tiers</Link> or see <Link href={internalLinks.whyRecXchange} className="text-fuchsia-400 hover:text-fuchsia-300 underline">why recruiters choose us</Link>.
               </p>
             </motion.div>
           </header>
@@ -218,6 +221,20 @@ export default function CollaborationPage() {
                   </div>
                 </div>
               </div>
+            </div>
+          </section>
+
+          {/* FAQ Section */}
+          <section className="w-full mb-8 sm:mb-10 md:mb-12 lg:mb-16">
+            <div className="text-center mb-6 sm:mb-8 md:mb-10">
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2 sm:mb-3">Collaboration FAQ</h2>
+              <p className="text-gray-400 text-[13px] sm:text-sm md:text-base px-2">Common questions about how split fee recruitment works</p>
+            </div>
+            <FAQSection faqs={collaborationFAQs} color="fuchsia" />
+            
+            {/* Last Updated */}
+            <div className="mt-8 text-center">
+              <LastUpdated date="2026-03-08" className="inline-block" />
             </div>
           </section>
 

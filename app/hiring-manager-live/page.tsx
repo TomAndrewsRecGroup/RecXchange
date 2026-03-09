@@ -1,21 +1,25 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { motion, animate } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { Zap, MapPin, DollarSign, Briefcase } from 'lucide-react';
+import FuturisticBackground from '@/components/design-system/FuturisticBackground';
+import HolographicCard from '@/components/design-system/HolographicCard';
+import StatusBadge from '@/components/design-system/StatusBadge';
+import NeonDivider from '@/components/design-system/NeonDivider';
+import GlowButton from '@/components/design-system/GlowButton';
+import Breadcrumbs from '@/components/Breadcrumbs';
 import ManagerFinalCTA from '@/components/ManagerFinalCTA';
-import { Zap, MapPin, DollarSign, Users, Briefcase } from 'lucide-react';
 
 export default function HiringManagerLive() {
   const [recruiters, setRecruiters] = useState(0);
   const [applicants, setApplicants] = useState(0);
 
   useEffect(() => {
-    // Simulating the "Broadcast" effect
     const recruiterInterval = setInterval(() => {
       setRecruiters(prev => (prev < 342 ? prev + 1 : prev));
     }, 40);
 
-    // Applicants grow exponentially as more recruiters join
     const applicantInterval = setInterval(() => {
       setApplicants(prev => {
         const growthFactor = Math.floor(recruiters / 50) + 1;
@@ -30,137 +34,125 @@ export default function HiringManagerLive() {
   }, [recruiters]);
 
   return (
-    <main className="relative min-h-screen flex flex-col items-center pt-16 sm:pt-20 md:pt-28 pb-12 sm:pb-16 md:pb-20 px-4 sm:px-6 overflow-x-hidden text-white">
-      {/* Background Accents */}
-      <div className="fixed top-0 left-0 w-[40%] h-[40%] bg-blue-600/10 blur-[120px] rounded-full pointer-events-none -z-10" />
+    <main className="relative bg-[#0a0a0f] min-h-screen overflow-hidden">
+      <FuturisticBackground variant="default" />
       
-      <div className="relative z-10 w-full max-w-[1200px] flex flex-col items-center">
-        <header className="text-center mb-6 sm:mb-8 md:mb-12 max-w-5xl mx-auto px-2 sm:px-4">
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="space-y-4 md:space-y-6"
-          >
-            {/* Badge */}
-            <span className="inline-block text-[9px] md:text-[10px] uppercase tracking-[0.25em] md:tracking-[0.4em] text-cyan-400/60 font-bold">
-              Live Broadcast Simulation
-            </span>
-
-            {/* Main Headline */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.1] tracking-tight px-2">
+      <div className="relative z-10 pt-16 sm:pt-20 md:pt-28 pb-12 sm:pb-16 md:pb-20 px-4 sm:px-6">
+        <div className="max-w-[1200px] mx-auto">
+          <Breadcrumbs />
+          
+          {/* Header */}
+          <motion.header initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-6 sm:mb-8 md:mb-12 mt-6">
+            <StatusBadge label="LIVE BROADCAST SIMULATION" color="cyan" />
+            <h1 className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black gradient-text mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2 mt-6"
+              style={{ textShadow: '0 0 60px rgba(0,240,255,0.3)' }}>
               One role. Massive Velocity.<br/>
               Watch the engine work.
             </h1>
-
-            {/* Subheadline */}
-            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed px-2">
+            <NeonDivider width="w-40" color="mixed" />
+            <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed px-2 mt-6">
               When you post a role, you aren't waiting for a single agency. You are activating a global hive of 15,000+ specialists. Watch how fast your talent pool expands when 300+ experts source simultaneously.
             </p>
-          </motion.div>
-        </header>
+          </motion.header>
 
-        <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5 md:gap-6 lg:gap-8 items-center mb-8 sm:mb-10 md:mb-12 lg:mb-16">
-          
-          {/* Left: Tactical Stats */}
-          <div className="space-y-4 sm:space-y-5 md:space-y-6 lg:space-y-8">
-            <div className="glass-card p-4 sm:p-5 md:p-6 lg:p-8 rounded-lg sm:rounded-xl md:rounded-2xl lg:rounded-3xl border-white/5 bg-gradient-to-br from-[#c71df1]/10 to-transparent">
-              <h3 className="text-base sm:text-lg md:text-xl font-bold mb-2 sm:mb-3 md:mb-4 italic">The Network Effect</h3>
-              <p className="text-[13px] sm:text-sm text-gray-400 leading-relaxed mb-4 sm:mb-5 md:mb-6">
-                Your role for a <strong>Senior Software Engineer</strong> is currently being broadcast across the Xchange. The acceleration you see is the result of 15,000+ recruiters scanning their private, vetted databases for your specific requirements.
-              </p>
-              <div className="flex gap-3 sm:gap-4">
-                <div className="flex-1 p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-black/40 border border-white/10">
-                  <p className="text-[9px] sm:text-[10px] text-gray-500 uppercase font-black mb-1 sm:mb-1.5">Active Recruiters</p>
-                  <p className="text-2xl sm:text-3xl font-bold text-white tracking-tighter">{recruiters}</p>
-                </div>
-                <div className="flex-1 p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-black/40 border border-white/10">
-                  <p className="text-[9px] sm:text-[10px] text-gray-500 uppercase font-black mb-1 sm:mb-1.5">Vetted Candidates</p>
-                  <p className="text-2xl sm:text-3xl font-bold text-[#c71df1] tracking-tighter">{applicants}</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 gap-3 sm:gap-4">
-              <div className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 glass-card rounded-xl sm:rounded-2xl border-white/5">
-                <Zap size={16} className="sm:w-5 sm:h-5 text-yellow-400 flex-shrink-0" />
-                <p className="text-[11px] sm:text-xs text-gray-400 flex-1"><strong>Real-time Matching:</strong> Engine is currently re-ranking 270M+ profiles.</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Right: The Live Job Card Visual */}
-          <div className="relative">
-            {/* Glow Effect behind card */}
-            <div className="absolute inset-0 bg-[#c71df1]/20 blur-[60px] sm:blur-[80px] rounded-full" />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 items-center mb-10 sm:mb-12 md:mb-16">
             
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="relative glass-card p-4 sm:p-5 md:p-6 lg:p-8 rounded-lg sm:rounded-xl md:rounded-2xl lg:rounded-[2.5rem] border-white/20 bg-black/80 backdrop-blur-xl shadow-2xl"
-            >
-              <div className="flex justify-between items-start mb-4 sm:mb-5 md:mb-6 lg:mb-8">
-                <div className="p-2 sm:p-2.5 md:p-3 bg-white/5 rounded-xl sm:rounded-2xl">
-                  <Briefcase className="text-white" size={20} />
+            {/* Left: Stats */}
+            <div className="space-y-5 sm:space-y-6">
+              <HolographicCard color="fuchsia" variant="content">
+                <h3 className="text-base sm:text-lg md:text-xl font-bold mb-3 sm:mb-4 text-white">The Network Effect</h3>
+                <p className="text-gray-300 text-[13px] sm:text-sm leading-relaxed mb-5 sm:mb-6">
+                  Your role for a <strong>Senior Software Engineer</strong> is currently being broadcast across the Xchange. The acceleration you see is the result of 15,000+ recruiters scanning their private, vetted databases for your specific requirements.
+                </p>
+                <div className="grid grid-cols-2 gap-4">
+                  <HolographicCard color="cyan" variant="stat">
+                    <div className="text-[9px] sm:text-[10px] text-gray-500 uppercase font-black mb-1">Active Recruiters</div>
+                    <div className="text-2xl sm:text-3xl font-bold text-white">{recruiters}</div>
+                  </HolographicCard>
+                  <HolographicCard color="fuchsia" variant="stat">
+                    <div className="text-[9px] sm:text-[10px] text-gray-500 uppercase font-black mb-1">Vetted Candidates</div>
+                    <div className="text-2xl sm:text-3xl font-bold text-fuchsia-400">{applicants}</div>
+                  </HolographicCard>
                 </div>
-                <div className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-2.5 md:px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20">
-                  <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-green-500 animate-pulse" />
-                  <span className="text-[8px] sm:text-[9px] md:text-[10px] font-bold text-green-500 uppercase">Live Broadcast</span>
-                </div>
-              </div>
+              </HolographicCard>
 
-              <h2 className="text-lg sm:text-xl md:text-2xl font-bold mb-1.5 sm:mb-2">Senior Software Engineer</h2>
-              <div className="flex flex-wrap gap-2 sm:gap-3 md:gap-4 text-gray-400 text-[11px] sm:text-xs md:text-sm mb-4 sm:mb-5 md:mb-6 lg:mb-8">
-                <span className="flex items-center gap-1 sm:gap-1.5"><MapPin size={12} className="sm:w-[14px] sm:h-[14px]" /> California, USA</span>
-                <span className="flex items-center gap-1 sm:gap-1.5"><DollarSign size={12} className="sm:w-[14px] sm:h-[14px]" /> $100k - $120k</span>
-              </div>
-
-              <div className="space-y-4 sm:space-y-5 md:space-y-6">
-                {/* Progress Bar: Recruiters */}
-                <div>
-                  <div className="flex justify-between mb-1.5 sm:mb-2">
-                    <span className="text-[9px] sm:text-[10px] uppercase font-bold text-gray-500 tracking-[0.12em] sm:tracking-[0.15em] md:tracking-widest">Recruiters Sourcing</span>
-                    <span className="text-[10px] sm:text-[11px] md:text-xs font-bold text-white">{recruiters} / 300+</span>
-                  </div>
-                  <div className="h-1.5 sm:h-2 w-full bg-white/5 rounded-full overflow-hidden">
-                    <motion.div 
-                      className="h-full bg-blue-500 shadow-[0_0_15px_#3b82f6]" 
-                      style={{ width: `${(recruiters / 342) * 100}%` }}
-                    />
-                  </div>
+              <HolographicCard color="cyan" variant="feature" showStatusIndicator={true}>
+                <div className="flex items-center gap-3">
+                  <Zap className="text-yellow-400 flex-shrink-0" size={20} />
+                  <p className="text-[11px] sm:text-xs text-gray-300"><strong>Real-time Matching:</strong> Engine is currently re-ranking 270M+ profiles.</p>
                 </div>
+              </HolographicCard>
+            </div>
 
-                {/* Progress Bar: Applicants */}
-                <div>
-                  <div className="flex justify-between mb-1.5 sm:mb-2">
-                    <span className="text-[9px] sm:text-[10px] uppercase font-bold text-gray-500 tracking-[0.12em] sm:tracking-[0.15em] md:tracking-widest">AI Matched Candidates</span>
-                    <span className="text-[10px] sm:text-[11px] md:text-xs font-bold text-[#c71df1]">{applicants} Found</span>
+            {/* Right: Live Job Card */}
+            <div className="relative">
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+              >
+                <HolographicCard color="purple" variant="content" glowIntensity="high">
+                  <div className="flex justify-between items-start mb-6">
+                    <div className="w-12 h-12 bg-purple-500/10 rounded-2xl border border-purple-400/20 flex items-center justify-center">
+                      <Briefcase className="text-purple-400" size={24} />
+                    </div>
+                    <StatusBadge label="LIVE BROADCAST" color="emerald" size="sm" />
                   </div>
-                  <div className="h-1.5 sm:h-2 w-full bg-white/5 rounded-full overflow-hidden">
-                    <motion.div 
-                      className="h-full bg-[#c71df1] shadow-[0_0_15px_#c71df1]" 
-                      style={{ width: `${(applicants / 1240) * 100}%` }}
-                    />
-                  </div>
-                </div>
-              </div>
 
-              <div className="mt-6 sm:mt-8 md:mt-10 pt-4 sm:pt-5 md:pt-6 lg:pt-8 border-t border-white/10">
-                <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
-                  <div className="flex -space-x-2 sm:-space-x-3">
-                    {[1,2,3,4].map(i => (
-                      <div key={i} className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full border-2 border-black bg-gray-800" />
-                    ))}
-                    <div className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full border-2 border-black bg-[#c71df1] flex items-center justify-center text-[7px] sm:text-[8px] font-bold">+{recruiters - 4}</div>
+                  <h2 className="text-xl sm:text-2xl font-bold mb-2 text-white">Senior Software Engineer</h2>
+                  <div className="flex flex-wrap gap-3 text-gray-400 text-xs mb-6">
+                    <span className="flex items-center gap-1.5"><MapPin size={14} /> California, USA</span>
+                    <span className="flex items-center gap-1.5"><DollarSign size={14} /> $100k - $120k</span>
                   </div>
-                  <p className="text-[8px] sm:text-[9px] text-gray-500 font-medium flex-1">Recruiters from the Xchange currently reviewing this role...</p>
-                </div>
-              </div>
-            </motion.div>
+
+                  <div className="space-y-5">
+                    {/* Recruiters Progress */}
+                    <div>
+                      <div className="flex justify-between mb-2">
+                        <span className="text-[10px] uppercase font-bold text-gray-500 tracking-widest">Recruiters Sourcing</span>
+                        <span className="text-xs font-bold text-white">{recruiters} / 300+</span>
+                      </div>
+                      <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
+                        <motion.div 
+                          className="h-full bg-cyan-500 shadow-[0_0_15px_#06b6d4]" 
+                          style={{ width: `${(recruiters / 342) * 100}%` }}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Applicants Progress */}
+                    <div>
+                      <div className="flex justify-between mb-2">
+                        <span className="text-[10px] uppercase font-bold text-gray-500 tracking-widest">AI Matched Candidates</span>
+                        <span className="text-xs font-bold text-fuchsia-400">{applicants} Found</span>
+                      </div>
+                      <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
+                        <motion.div 
+                          className="h-full bg-fuchsia-500 shadow-[0_0_15px_#d946ef]" 
+                          style={{ width: `${(applicants / 1240) * 100}%` }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-8 pt-6 border-t border-white/10">
+                    <div className="flex items-center gap-3">
+                      <div className="flex -space-x-3">
+                        {[1,2,3,4].map(i => (
+                          <div key={i} className="w-8 h-8 rounded-full border-2 border-[#0a0a0f] bg-gradient-to-br from-cyan-500/20 to-fuchsia-500/20" />
+                        ))}
+                        <div className="w-8 h-8 rounded-full border-2 border-[#0a0a0f] bg-fuchsia-500 flex items-center justify-center text-[8px] font-bold text-white">+{recruiters - 4}</div>
+                      </div>
+                      <p className="text-[9px] text-gray-500 font-medium flex-1">Recruiters from the Xchange currently reviewing this role...</p>
+                    </div>
+                  </div>
+                </HolographicCard>
+              </motion.div>
+            </div>
           </div>
-        </div>
 
-        <ManagerFinalCTA />
+          <ManagerFinalCTA />
+        </div>
       </div>
     </main>
   );
