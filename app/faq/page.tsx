@@ -7,7 +7,6 @@ import HolographicCard from '@/components/design-system/HolographicCard';
 import GlowButton from '@/components/design-system/GlowButton';
 import NeonDivider from '@/components/design-system/NeonDivider';
 import StatusBadge from '@/components/design-system/StatusBadge';
-import Breadcrumbs from '@/components/Breadcrumbs';
 
 interface FAQItem {
   category: string;
@@ -84,7 +83,6 @@ export default function FAQPage() {
         
         <div className="relative z-10 pt-16 sm:pt-20 md:pt-28 pb-12 sm:pb-16 md:pb-20 px-4 sm:px-6">
           <div className="max-w-[1200px] mx-auto">
-            <Breadcrumbs />
             
             {/* Header */}
             <motion.header
