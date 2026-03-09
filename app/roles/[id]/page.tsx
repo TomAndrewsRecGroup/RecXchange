@@ -67,7 +67,7 @@ export default function IndividualRoleView() {
                   </span>
                   <span className="text-[10px] text-gray-600 font-bold uppercase tracking-widest">{role.posted}</span>
                 </div>
-                <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">{role.title}</h1>
+                <h1 className="text-4xl md:text-5xl font-bold text-white tracking-tight mb-4">{role.title}</h1>
                 <p className="text-xl text-gray-400 font-medium">{role.loc} • <span className="text-blue-500/80">{role.industry}</span></p>
               </header>
 
