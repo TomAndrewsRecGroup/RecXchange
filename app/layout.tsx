@@ -7,7 +7,6 @@ import FloatingChat from "@/components/FloatingChat";
 import CookieBanner from "@/components/CookieBanner";
 import ClientProviders from "@/components/ClientProviders";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
-import Breadcrumbs from "@/components/Breadcrumbs";
 import SkipToContent from "@/components/SkipToContent";
 import { Analytics } from "@vercel/analytics/next";
 import { WebVitals } from "@/app/components/WebVitals";
@@ -683,9 +682,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
 
             {/* Conditional Navigation - hides on root page */}
             <ConditionalHeader />
-
-            {/* Breadcrumbs - shows on all pages except homepage */}
-            <Breadcrumbs />
 
             <div className="relative z-10 flex flex-col min-h-screen w-full">
               <main id="main-content" className="flex-grow w-full">
