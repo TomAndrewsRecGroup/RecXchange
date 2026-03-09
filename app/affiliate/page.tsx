@@ -138,7 +138,7 @@ export default function AffiliateTermsPage() {
                 <HolographicCard color="purple" variant="content">
                   <div className="prose prose-invert max-w-none">
                     <p className="text-gray-300 text-sm sm:text-base leading-relaxed mb-4">
-                      These Terms and Conditions ("<strong className="text-white">Terms</strong>") govern participation in the RecXchange Affiliate Program ("<strong className="text-white">Program</strong>"), operated by <strong className="text-white">Eavee AI Ltd</strong> (trading as "RecXchange").
+                      These Terms and Conditions ("<strong className="text-white">Terms</strong>") govern participation in the RecXchange Affiliate Program ("<strong className="text-white">Program</strong>"), operated by <strong className="text-white">RecXchange Portal LLC</strong> (trading as "RecXchange").
                     </p>
                     <div className="p-4 rounded-xl bg-cyan-400/5 border border-cyan-400/20">
                       <p className="text-sm text-gray-300">
@@ -500,7 +500,7 @@ export default function AffiliateTermsPage() {
                   <h2 className="text-xl sm:text-2xl font-bold mb-4 text-white">11. Liability Limitation</h2>
                   <div className="prose prose-invert max-w-none space-y-4">
                     <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
-                      To the fullest extent permitted by law, RecXchange (Eavee AI Ltd) is <strong className="text-white">not liable</strong> for any indirect, incidental, special, or consequential damages arising out of or in connection with your participation in the Affiliate Program or use of RecX Tokens.
+                      To the fullest extent permitted by law, RecXchange (RecXchange Portal LLC) is <strong className="text-white">not liable</strong> for any indirect, incidental, special, or consequential damages arising out of or in connection with your participation in the Affiliate Program or use of RecX Tokens.
                     </p>
 
                     <div className="p-4 rounded-xl bg-yellow-500/5 border border-yellow-500/20">
