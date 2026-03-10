@@ -47,7 +47,7 @@ export default function HiringManagerLive() {
               Watch the engine work.
             </h1>
             <NeonDivider width="w-40" color="mixed" />
-            <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed px-2 mt-6">
+            <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed px-2 mt-6">
               When you post a role, you aren't waiting for a single agency. You are activating a global hive of 15,000+ specialists. Watch how fast your talent pool expands when 300+ experts source simultaneously.
             </p>
           </motion.header>

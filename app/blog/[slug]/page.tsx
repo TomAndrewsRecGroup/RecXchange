@@ -243,7 +243,7 @@ export default function BlogPostPage() {
             className="glass-card p-10 rounded-3xl border-cyan-400/10 text-center mb-12"
           >
             <h2 className="text-2xl font-bold text-white mb-4">Ready to Start Earning?</h2>
-            <p className="text-gray-400 mb-6 max-w-2xl mx-auto">
+            <p className="text-gray-400 mb-6 max-w-3xl mx-auto">
               Join 15,000+ recruiters partnering on placements. Split fees up to 70% with zero platform fees.
             </p>
             <div className="flex gap-4 justify-center flex-wrap">

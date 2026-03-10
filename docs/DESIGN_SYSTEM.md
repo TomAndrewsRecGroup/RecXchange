@@ -376,7 +376,7 @@ export default function ExamplePage() {
         <NeonDivider color="mixed" />
         
         {/* Description */}
-        <p className="text-center text-gray-300 text-lg max-w-2xl mx-auto mb-12">
+        <p className="text-center text-gray-300 text-lg max-w-3xl mx-auto mb-12">
           Experience the future of recruitment collaboration
         </p>
         

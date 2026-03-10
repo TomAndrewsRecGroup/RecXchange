@@ -145,7 +145,7 @@ export default function CollaborationPage() {
                 Split Fees. Zero Friction.
               </h1>
               <NeonDivider width="w-40" color="mixed" />
-              <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed px-2 mt-6">
+              <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed px-2 mt-6">
                 RecXchange isn't just a marketplace; it's a high-performance engine designed to protect your deals and automate your matchmaking. Learn about <Link href={internalLinks.pricing} className="text-cyan-400 hover:text-cyan-300 underline">our pricing tiers</Link> or see <Link href={internalLinks.whyRecXchange} className="text-fuchsia-400 hover:text-fuchsia-300 underline">why recruiters choose us</Link>.
               </p>
             </motion.header>
@@ -237,7 +237,7 @@ export default function CollaborationPage() {
                 Try the Engine
               </div>
               <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2.5 sm:mb-3 md:mb-4">See the matching engine in action</h2>
-              <p className="text-gray-400 text-[13px] sm:text-sm md:text-base mb-5 sm:mb-6 md:mb-8 max-w-2xl mx-auto px-2">
+              <p className="text-gray-400 text-[13px] sm:text-sm md:text-base mb-5 sm:mb-6 md:mb-8 max-w-3xl mx-auto px-2">
                 Tell us your industries and we'll show you 3 matching roles from our live database.
               </p>
               <div className="flex justify-center">

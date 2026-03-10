@@ -41,7 +41,7 @@ export default function RecruiterDiagnostic() {
                 <span className="sm:inline">right now?</span>
               </h1>
               <NeonDivider width="w-40" color="mixed" />
-              <p className="text-gray-300 text-sm sm:text-base md:text-lg lg:text-xl max-w-2xl mx-auto leading-relaxed px-2 mt-6">
+              <p className="text-gray-300 text-sm sm:text-base md:text-lg lg:text-xl max-w-3xl mx-auto leading-relaxed px-2 mt-6">
                 Pick one. We'll show you how to make money from it. Check our <Link href={internalLinks.pricing} className="text-cyan-400 hover:text-cyan-300 underline">transparent pricing</Link> or learn more about <Link href={internalLinks.whyRecXchange} className="text-fuchsia-400 hover:text-fuchsia-300 underline">why recruiters choose RecXchange</Link>.
               </p>
             </motion.div>
@@ -210,7 +210,7 @@ export default function RecruiterDiagnostic() {
               <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold mb-2 sm:mb-3 md:mb-4 text-center leading-tight text-white">
                 What You Get <span className="gradient-text">No Matter What</span>
               </h3>
-              <p className="text-gray-300 text-center text-[13px] sm:text-sm md:text-base max-w-2xl mx-auto mb-6 sm:mb-8 md:mb-10 leading-relaxed">
+              <p className="text-gray-300 text-center text-[13px] sm:text-sm md:text-base max-w-3xl mx-auto mb-6 sm:mb-8 md:mb-10 leading-relaxed">
                 Both paths include full access to the recruiter operating system. ATS, CRM, AI tools, split fee protection, and collaboration infrastructure.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-6 md:gap-8">
@@ -271,7 +271,7 @@ export default function RecruiterDiagnostic() {
               <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4 md:mb-6 leading-tight text-white">
                 Ready to <span className="gradient-text">start making placements?</span>
               </h3>
-              <p className="text-gray-300 text-[13px] sm:text-sm md:text-base lg:text-lg mb-6 sm:mb-8 md:mb-10 max-w-2xl mx-auto leading-relaxed px-2">
+              <p className="text-gray-300 text-[13px] sm:text-sm md:text-base lg:text-lg mb-6 sm:mb-8 md:mb-10 max-w-3xl mx-auto leading-relaxed px-2">
                 Join 15,000+ recruiters already using RecXchange. Recruiters earn an average of $7,000 per placement. Most active recruiters make 2-5 placements per quarter. See all <Link href={internalLinks.pricing} className="text-cyan-400 hover:text-cyan-300 underline">pricing tiers</Link>.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-stretch sm:items-center max-w-xl mx-auto">
@@ -299,7 +299,7 @@ export default function RecruiterDiagnostic() {
             <HolographicCard color="cyan" variant="content" className="text-center">
               <StatusBadge label="QUICK START" color="cyan" size="sm" />
               <h2 className="text-base sm:text-lg md:text-2xl lg:text-3xl font-bold text-white mb-2.5 sm:mb-3 md:mb-4 mt-4 leading-snug">Want to see live roles?</h2>
-              <p className="text-gray-300 text-[13px] sm:text-sm md:text-base mb-5 sm:mb-6 md:mb-8 max-w-2xl mx-auto">
+              <p className="text-gray-300 text-[13px] sm:text-sm md:text-base mb-5 sm:mb-6 md:mb-8 max-w-3xl mx-auto">
                 Tell us your industries and we'll send you 3 example roles that recruiters are working on right now.
               </p>
               <div className="flex justify-center">

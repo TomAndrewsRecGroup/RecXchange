@@ -470,7 +470,7 @@ export default function HomePage() {
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400 to-transparent" />
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-fuchsia-400 to-transparent blur-sm" />
               </div>
-              <p className="text-gray-300 text-base md:text-lg max-w-2xl mx-auto mb-12 leading-relaxed font-light">
+              <p className="text-gray-300 text-base md:text-lg max-w-3xl mx-auto mb-12 leading-relaxed font-light">
                 Choose your professional path.
               </p>
             </motion.header>

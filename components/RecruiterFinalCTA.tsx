@@ -21,7 +21,7 @@ export default function RecruiterFinalCTA() {
           Ready to plug into the network?
         </h2>
 
-        <p className="text-gray-400 max-w-2xl mx-auto mb-12 text-lg leading-relaxed relative z-10">
+        <p className="text-gray-400 max-w-3xl mx-auto mb-12 text-lg leading-relaxed relative z-10">
           Join 2,000+ verified recruiters sharing roles, candidates, and split fees under one protected framework. Secure your seat in the Xchange Engine.
         </p>
 

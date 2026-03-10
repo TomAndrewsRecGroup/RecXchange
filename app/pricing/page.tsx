@@ -110,7 +110,7 @@ export default function PricingPage() {
               Pay Monthly, <span className="text-white">Split Fees Forever</span>
             </h1>
             <NeonDivider width="w-40" color="mixed" />
-            <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed px-2 mt-6">
+            <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed px-2 mt-6">
               No placement fees. No hidden charges. Just monthly membership and 100% of your split fee.
             </p>
           </motion.header>
@@ -201,7 +201,7 @@ export default function PricingPage() {
               <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2.5 sm:mb-3 md:mb-4">
                 What Are Tokens?
               </h2>
-              <p className="text-gray-300 text-sm sm:text-base max-w-2xl mx-auto">
+              <p className="text-gray-300 text-sm sm:text-base max-w-3xl mx-auto">
                 Tokens are how you participate in RecXchange. Every action costs 1 token.
               </p>
             </div>
@@ -249,7 +249,7 @@ export default function PricingPage() {
               <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2.5 sm:mb-3 md:mb-4 mt-4">
                 Earn 70% on RecX Direct Placements
               </h2>
-              <p className="text-gray-300 text-sm sm:text-base max-w-2xl mx-auto">
+              <p className="text-gray-300 text-sm sm:text-base max-w-3xl mx-auto">
                 End clients post roles for free. Recruiters compete to fill them. Winners earn up to 70% of the placement fee.
               </p>
             </div>
@@ -340,7 +340,7 @@ export default function PricingPage() {
                 <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2.5 sm:mb-3 md:mb-4 mt-4">
                   Post Your Roles to RecX Direct (Free)
                 </h2>
-                <p className="text-gray-300 text-sm sm:text-base max-w-2xl mx-auto">
+                <p className="text-gray-300 text-sm sm:text-base max-w-3xl mx-auto">
                   End clients post their roles to RecX Direct for free. Thousands of recruiters compete to fill them.
                 </p>
               </div>

@@ -56,7 +56,7 @@ export default function HiringManagerStrategic() {
               Scale Your Team at the Speed of Strategy
             </h1>
             <NeonDivider width="w-40" color="mixed" />
-            <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed px-2 mt-6">
+            <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed px-2 mt-6">
               RecX Direct gives you instant access to a global network of specialist recruiters, coordinated by a dedicated Account Manager who manages the complexity while you focus on growth.
             </p>
           </motion.header>
@@ -86,7 +86,7 @@ export default function HiringManagerStrategic() {
                 <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 sm:mb-6 gradient-text">
                   One Point of Contact. 15,000+ Recruiters.
                 </h2>
-                <p className="text-gray-300 text-sm sm:text-base max-w-2xl mx-auto mb-6 sm:mb-8 leading-relaxed">
+                <p className="text-gray-300 text-sm sm:text-base max-w-3xl mx-auto mb-6 sm:mb-8 leading-relaxed">
                   Your Account Manager acts as the single orchestration layer between your hiring needs and the global recruiter network. You brief once. They manage the rest.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
@@ -112,7 +112,7 @@ export default function HiringManagerStrategic() {
               <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-white">
                 Ready to scale your hiring strategy?
               </h3>
-              <p className="text-gray-400 text-[13px] sm:text-sm md:text-base mb-6 sm:mb-8 px-2 max-w-2xl mx-auto">
+              <p className="text-gray-400 text-[13px] sm:text-sm md:text-base mb-6 sm:mb-8 px-2 max-w-3xl mx-auto">
                 Book a strategic briefing with your Account Manager to map out your next 6-12 months of hiring.
               </p>
               <GlowButton variant="primary" size="lg" href="{{trigger_link.vJPDrwl8k6nFBhkZeZJH}}">

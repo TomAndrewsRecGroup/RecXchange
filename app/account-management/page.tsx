@@ -51,7 +51,7 @@ export default function AccountManagement() {
               Your Dedicated Account Manager
             </h1>
             <NeonDivider width="w-40" color="mixed" />
-            <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed px-2 mt-6">
+            <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed px-2 mt-6">
               Hiring at speed shouldn't mean sacrificing quality. Every client is assigned a specialist Account Manager to navigate the Xchange Engine and manage the global recruiter community for you.
             </p>
           </motion.header>
@@ -104,7 +104,7 @@ export default function AccountManagement() {
                 </div>
               </div>
               <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-white">Ready to brief your Account Manager?</h3>
-              <p className="text-gray-400 text-[13px] sm:text-sm md:text-base mb-6 sm:mb-8 px-2 max-w-2xl mx-auto">
+              <p className="text-gray-400 text-[13px] sm:text-sm md:text-base mb-6 sm:mb-8 px-2 max-w-3xl mx-auto">
                 Experience the efficiency of the Xchange Engine backed by the expertise of a dedicated recruitment partner.
               </p>
               <GlowButton variant="primary" size="lg" href="{{trigger_link.vJPDrwl8k6nFBhkZeZJH}}">

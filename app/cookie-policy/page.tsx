@@ -23,7 +23,7 @@ export default function CookiePolicyPage() {
               Cookie Policy
             </h1>
             <NeonDivider width="w-40" color="mixed" />
-            <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed px-2 mt-6">
+            <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed px-2 mt-6">
               We use cookies to improve your experience. Here's exactly what we track and why.
             </p>
           </motion.header>

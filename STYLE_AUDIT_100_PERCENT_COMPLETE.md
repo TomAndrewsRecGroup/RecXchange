@@ -204,7 +204,7 @@ Every public-facing page on RecXchange now uses the unified design system with:
     Page Title
   </h1>
   <NeonDivider width="w-40" color="mixed" />
-  <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed px-2 mt-6">
+  <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed px-2 mt-6">
     Description
   </p>
 </motion.header>

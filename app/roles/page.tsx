@@ -148,7 +148,7 @@ export default function RolesMarketplace() {
               One placement pays for 12 months
             </h1>
             <NeonDivider width="w-40" color="mixed" />
-            <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed px-2 mt-6">
+            <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed px-2 mt-6">
               Browse live roles. Submit candidates. Split fees 50/50, 60/40, or take 70% on RecX Direct placements.
             </p>
             <div className="mt-5 sm:mt-6 flex flex-wrap justify-center gap-2 sm:gap-3 px-2">
@@ -329,7 +329,7 @@ export default function RolesMarketplace() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+              className="relative max-w-3xl w-full max-h-[90vh] overflow-y-auto"
             >
               <HolographicCard color="purple" variant="content" className="relative">
                 <button

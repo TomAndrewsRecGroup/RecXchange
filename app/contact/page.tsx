@@ -142,7 +142,7 @@ export default function ContactPage() {
               <span className="text-fuchsia-400">Engineers</span> of <span className="text-emerald-400">Talent</span>.
             </h1>
             <NeonDivider width="w-40" color="mixed" />
-            <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed px-2 mt-6">
+            <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed px-2 mt-6">
               Whether you are scaling a team in California or sourcing from London, our team provides the human oversight for our AI-driven Xchange.
             </p>
           </div>

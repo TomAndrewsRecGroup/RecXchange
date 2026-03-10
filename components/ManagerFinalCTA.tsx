@@ -19,7 +19,7 @@ export default function ManagerFinalCTA() {
           Design your hiring roadmap.
         </h2>
 
-        <p className="text-gray-400 max-w-2xl mx-auto mb-10 text-lg leading-relaxed relative z-10">
+        <p className="text-gray-400 max-w-3xl mx-auto mb-10 text-lg leading-relaxed relative z-10">
           Speak directly with our leadership team to see how the RecXchange network can scale your internal talent function and reduce time-to-hire.
         </p>
 

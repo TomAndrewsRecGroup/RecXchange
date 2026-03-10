@@ -22,7 +22,7 @@ export default function ResearchPage() {
               RecXchange By The Numbers
             </h1>
             <NeonDivider width="w-40" color="mixed" />
-            <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed px-2 mt-6">
+            <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed px-2 mt-6">
               Real data from our growing global recruitment network. These statistics reflect live roles, active recruiters, and real earning potential across our platform.
             </p>
           </motion.header>
@@ -56,7 +56,7 @@ export default function ResearchPage() {
 
           {/* Footer Note */}
           <div className="mt-10 sm:mt-12 md:mt-16 text-center">
-            <p className="text-[10px] sm:text-xs text-gray-600 leading-relaxed max-w-2xl mx-auto px-4">
+            <p className="text-[10px] sm:text-xs text-gray-600 leading-relaxed max-w-3xl mx-auto px-4">
               Statistics are based on live roles and active placements on the RecXchange platform as of February 2026. 
               Average fees and splits may vary by role, industry, and geographic location. Platform is actively growing with new roles and recruiters joining daily.
             </p>

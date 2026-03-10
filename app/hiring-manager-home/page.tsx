@@ -75,7 +75,7 @@ export default function HiringManagerHome() {
               Post your role for free.
             </h1>
             <NeonDivider width="w-40" color="mixed" />
-            <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed px-2 mt-6">
+            <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed px-2 mt-6">
               15,000+ recruiters compete to fill it. You pay one fee when hired.
             </p>
             <div className="mt-5 sm:mt-6 flex flex-wrap justify-center gap-2 sm:gap-3 px-2">
@@ -236,7 +236,7 @@ export default function HiringManagerHome() {
             {/* What You Get */}
             <HolographicCard color="purple" variant="content" glowIntensity="high" className="mb-10 sm:mb-12">
               <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4 text-center gradient-text">What You Get No Matter What</h3>
-              <p className="text-gray-400 text-center text-sm sm:text-base max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed">
+              <p className="text-gray-400 text-center text-sm sm:text-base max-w-3xl mx-auto mb-8 sm:mb-10 leading-relaxed">
                 Both paths include full access to RecX Direct infrastructure. One platform, one fee structure, total control.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
@@ -275,7 +275,7 @@ export default function HiringManagerHome() {
               <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6 gradient-text">
                 Ready to fill your role?
               </h3>
-              <p className="text-gray-400 text-sm sm:text-base max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed">
+              <p className="text-gray-400 text-sm sm:text-base max-w-3xl mx-auto mb-8 sm:mb-10 leading-relaxed">
                 Post for free. 15,000+ recruiters compete. First candidates in 48 hours. Pay one fee only when you hire.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">

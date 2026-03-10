@@ -96,7 +96,7 @@ export default function FAQPage() {
                 How RecXchange Works
               </h1>
               <NeonDivider width="w-40" color="mixed" />
-              <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed px-2 mt-6">
+              <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed px-2 mt-6">
                 Everything you need to know about partnering with recruiters and splitting fees.
               </p>
             </motion.header>
