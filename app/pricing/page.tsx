@@ -346,7 +346,7 @@ export default function PricingPage() {
                 Ready to Start Splitting Fees?
               </h2>
               <p className="text-gray-300 text-xs sm:text-sm md:text-base mb-5 sm:mb-6 md:mb-8 px-2">
-                Join 12,000+ recruiters already on the platform. From $1/month.
+                Join 15,000+ recruiters already on the platform. From $1/month.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                 <GlowButton variant="primary" size="lg" href="https://app.recxchange.io/register?trigger_link=jYQNc9YXcMkYPvo3HZfC">
