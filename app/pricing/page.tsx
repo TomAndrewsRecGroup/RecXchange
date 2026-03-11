@@ -1,7 +1,6 @@
 'use client';
 
 import React from "react";
-import { Check } from "lucide-react";
 import { motion } from 'framer-motion';
 import FuturisticBackground from '@/components/design-system/FuturisticBackground';
 import HolographicCard from '@/components/design-system/HolographicCard';
@@ -30,6 +29,7 @@ const tiers = [
       "Standard support",
     ],
     color: "cyan" as const,
+    bulletColor: "bg-cyan-400",
     highlighted: false,
   },
   {
@@ -48,6 +48,7 @@ const tiers = [
       "Email & in-app support",
     ],
     color: "purple" as const,
+    bulletColor: "bg-purple-400",
     highlighted: true,
     badge: "MOST POPULAR",
   },
@@ -68,15 +69,16 @@ const tiers = [
       "Priority support",
     ],
     color: "fuchsia" as const,
+    bulletColor: "bg-fuchsia-400",
     highlighted: false,
   },
 ];
 
 const tokenPacks = [
-  { tokens: 10, price: 10, color: "cyan" as const },
-  { tokens: 50, price: 40, color: "purple" as const },
-  { tokens: 100, price: 70, color: "fuchsia" as const },
-  { tokens: 500, price: 300, color: "emerald" as const },
+  { tokens: 10,  price: 10,  color: "cyan" as const,    priceClass: "text-cyan-300" },
+  { tokens: 50,  price: 40,  color: "purple" as const,  priceClass: "text-purple-300" },
+  { tokens: 100, price: 70,  color: "fuchsia" as const, priceClass: "text-fuchsia-300" },
+  { tokens: 500, price: 300, color: "emerald" as const, priceClass: "text-emerald-300" },
 ];
 
 export default function PricingPage() {
@@ -141,11 +143,11 @@ export default function PricingPage() {
 
                     <div className="mt-3 sm:mt-4 space-y-1.5 sm:space-y-2">
                       <div className="flex items-center gap-2 text-xs sm:text-sm">
-                        <div className="w-2 h-2 rounded-full" style={{backgroundColor: `var(--${tier.color}-400)`}} />
+                        <div className={`w-2 h-2 rounded-full flex-shrink-0 ${tier.bulletColor}`} />
                         <span className="text-gray-300">{tier.tokens}</span>
                       </div>
                       <div className="flex items-center gap-2 text-xs sm:text-sm">
-                        <div className="w-2 h-2 rounded-full" style={{backgroundColor: `var(--${tier.color}-400)`}} />
+                        <div className={`w-2 h-2 rounded-full flex-shrink-0 ${tier.bulletColor}`} />
                         <span className="text-gray-300">RecX Direct: {tier.recxDirectAccess}</span>
                       </div>
                     </div>
@@ -154,7 +156,7 @@ export default function PricingPage() {
                   <ul className="space-y-2.5 sm:space-y-3 mb-5 sm:mb-6 flex-grow">
                     {tier.features.map((feature, i) => (
                       <li key={i} className="flex items-start gap-2.5 sm:gap-3">
-                        <Check className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0 mt-0.5" style={{color: `var(--${tier.color}-400)`}} />
+                        <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 mt-1.5 ${tier.bulletColor}`} aria-hidden="true" />
                         <span className="text-gray-300 text-xs sm:text-sm leading-snug">{feature}</span>
                       </li>
                     ))}
@@ -234,8 +236,8 @@ export default function PricingPage() {
                   <HolographicCard key={pack.tokens} color={pack.color} variant="stat" className="text-center">
                     <div className="text-xl sm:text-2xl font-black text-white mb-1">{pack.tokens}</div>
                     <div className="text-gray-400 text-[10px] sm:text-xs mb-2">tokens</div>
-                    <div className="text-lg sm:text-xl font-bold" style={{color: `var(--${pack.color}-300)`}}>${pack.price}</div>
-                    <div className="text-gray-500 text-[10px] sm:text-xs mt-1">${(pack.price / pack.tokens).toFixed(2)} per token</div>
+                    <div className={`text-lg sm:text-xl font-bold text-white`}>${pack.price}</div>
+                    <div className={`text-[10px] sm:text-xs mt-1 ${pack.priceClass}`}>${(pack.price / pack.tokens).toFixed(2)} per token</div>
                   </HolographicCard>
                 ))}
               </div>
