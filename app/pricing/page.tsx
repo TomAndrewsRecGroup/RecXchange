@@ -240,17 +240,7 @@ export default function PricingPage() {
                     <div className={`text-[10px] sm:text-xs mt-1 ${pack.priceClass}`}>${(pack.price / pack.tokens).toFixed(2)} per token</div>
                   </HolographicCard>
                 ))}
-              </div>
-              <p className="text-center text-gray-500 text-[11px] sm:text-xs mt-4">
-                💡 Hiring managers post roles to RecX Direct for free — tokens are for recruiters only
-              </p>
-            </div>
-
-            <div className="mt-5 sm:mt-6 md:mt-8 text-center">
-              <p className="text-gray-400 text-xs sm:text-sm">
-                💡 <strong>Pro Tip:</strong> One placement typically pays for 5–12 months of Pro membership
-              </p>
-            </div>
+           
           </motion.section>
 
           <NeonDivider width="w-full" color="mixed" />
