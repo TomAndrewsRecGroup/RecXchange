@@ -256,7 +256,7 @@ export default function ContactPage() {
                         <input value={companyName} onChange={e => setCompanyName(e.target.value)} type="text" className="w-full px-3 py-2.5 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-purple-400/50" />
                       </div>
                     )}
-                    <GlowButton type="submit" variant="purple" fullWidth>Start Chat</GlowButton>
+                    <GlowButton type="submit" variant="primary" className="w-full">Start Chat</GlowButton>
                   </form>
                 )}
 
