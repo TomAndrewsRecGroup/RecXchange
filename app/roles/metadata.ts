@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: "Live Recruitment Roles | RecXchange - Browse 1000s of Split Fee Opportunities",
-  description: "Browse live recruitment roles from 15,000+ recruiters. Submit candidates and split fees 50/50, 60/40, or take 70% on RecX Direct placements. $7,000 average placement fee. $750,000 in fees available. Roles across UK, USA, Europe, Africa, Middle East, Australia in Engineering, Healthcare, Tech, HR, Sales, Finance.",
+  description: "Browse live recruitment roles from 15,000+ recruiters. Submit candidates and split fees 50/50, 60/40, or take 70% on RecX Direct placements. Recruiters earn an average of $7,000 per placement — that's your cut after the split. $750,000 in fees available. Roles across UK, USA, Europe, Africa, Middle East, Australia in Engineering, Healthcare, Tech, HR, Sales, Finance.",
   keywords: [
     "recruitment roles",
     "live recruitment jobs",
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "Live Recruitment Roles | RecXchange",
-    description: "Browse 1000s of live roles. Submit candidates. Split fees automatically. $7,000 average fee.",
+    description: "Browse 1000s of live roles. Submit candidates. Split fees automatically. Recruiters earn an average of $7,000 per placement.",
     url: "https://recxchange.io/roles",
     type: "website"
   },

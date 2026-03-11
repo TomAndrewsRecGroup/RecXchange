@@ -32,7 +32,7 @@ export default function ResearchPage() {
             <HolographicCard color="cyan" variant="stat">
               <div className="text-center">
                 <div className="text-3xl sm:text-4xl md:text-5xl font-bold gradient-text mb-2 sm:mb-3">70%</div>
-                <div className="text-[10px] sm:text-xs uppercase tracking-[0.15em] sm:tracking-widest text-gray-400 font-bold">Average Recruiter Split</div>
+                <div className="text-[10px] sm:text-xs uppercase tracking-[0.15em] sm:tracking-widest text-gray-400 font-bold">Max Recruiter Split</div>
                 <p className="text-[9px] sm:text-xs text-gray-500 mt-2 sm:mt-3">On RecX Direct placements</p>
               </div>
             </HolographicCard>
@@ -40,8 +40,8 @@ export default function ResearchPage() {
             <HolographicCard color="fuchsia" variant="stat">
               <div className="text-center">
                 <div className="text-3xl sm:text-4xl md:text-5xl font-bold gradient-text mb-2 sm:mb-3">$7,000</div>
-                <div className="text-[10px] sm:text-xs uppercase tracking-[0.15em] sm:tracking-widest text-gray-400 font-bold">Average Placement Fee</div>
-                <p className="text-[9px] sm:text-xs text-gray-500 mt-2 sm:mt-3">Across 100+ live roles</p>
+                <div className="text-[10px] sm:text-xs uppercase tracking-[0.15em] sm:tracking-widest text-gray-400 font-bold">Average Recruiter Earnings</div>
+                <p className="text-[9px] sm:text-xs text-gray-500 mt-2 sm:mt-3">Per placement — what you take home</p>
               </div>
             </HolographicCard>
             

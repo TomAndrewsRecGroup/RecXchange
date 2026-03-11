@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: "Hire Talent Faster | RecXchange - Digital RPO with Agency Terms",
-  description: "Post your role for free. 15,000+ recruiters compete to fill it across UK, USA, Europe, Africa, Middle East, Australia. Pay one fee (12-20%) only when you hire. Get candidates in 48 hours. Average placement fee $7,000. Digital RPO process with flexible agency-style terms.",
+  description: "Post your role for free. 15,000+ recruiters compete to fill it across UK, USA, Europe, Africa, Middle East, Australia. Pay one fee (12-20%) only when you hire. Get candidates in 48 hours. Digital RPO process with flexible agency-style terms.",
   keywords: [
     "hire talent fast",
     "recruitment platform for hiring managers",
