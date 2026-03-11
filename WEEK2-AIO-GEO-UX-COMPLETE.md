@@ -195,7 +195,7 @@ const links = getContextualLinks('recruiter');
    <FAQSection faqs={pricingFAQs} color="purple" />
    ```
 
-3. **Add HowTo Schema to /collaboration** (10 mins)
+3. **Add HowTo Schema to /split-fees** (10 mins)
    ```typescript
    import { collaborationHowToSchema } from '@/lib/schemas/howto-schema';
    
@@ -234,7 +234,7 @@ const links = getContextualLinks('recruiter');
 1. **Add FAQs to 3 More Pages** (20 mins)
    - /why-recxchange
    - /deal-protection
-   - /collaboration
+   - /split-fees
 
 2. **Add LastUpdated to All Pages** (20 mins)
    ```typescript
@@ -456,7 +456,7 @@ export default function RecruiterPage() {
 
 ---
 
-### Example 2: /collaboration Page with HowTo Schema
+### Example 2: /split-fees Page with HowTo Schema
 
 ```typescript
 import { Metadata } from 'next';

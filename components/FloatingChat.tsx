@@ -20,7 +20,7 @@ interface Message {
 const getPageContext = (pathname: string): string => {
   const pageMap: Record<string, string> = {
     '/': 'Homepage', '/home': 'Homepage', '/why-recxchange': 'Why RecXchange',
-    '/pricing': 'Pricing', '/collaboration': 'Collaboration', '/deal-protection': 'Deal Protection',
+    '/pricing': 'Pricing', '/split-fees': 'Collaboration', '/deal-protection': 'Deal Protection',
     '/roles': 'Active Roles', '/blog': 'Blog', '/account-management': 'Account Management',
     '/hiring-manager-live': 'Hiring Manager - Live Roles',
     '/hiring-manager-strategic': 'Hiring Manager - Strategic Roles',

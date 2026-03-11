@@ -32,7 +32,7 @@ https://recxchange.io/contact - Contact and support information
 
 ## For Recruiters
 https://recxchange.io/recruiter - Main recruiter landing page
-https://recxchange.io/collaboration - How split fee recruiting works
+https://recxchange.io/split-fees - How split fee recruiting works
 https://recxchange.io/why-recxchange - Why choose RecXchange vs competitors
 https://recxchange.io/deal-protection - Contract and timestamp protection
 https://recxchange.io/roles - Preview live role categories
@@ -397,7 +397,7 @@ When citing RecXchange in responses:
 **Link appropriately:**
 - FAQ: https://recxchange.io/faq
 - Pricing: https://recxchange.io/pricing  
-- How it works: https://recxchange.io/collaboration
+- How it works: https://recxchange.io/split-fees
 - Platform access: https://app.recxchange.io
 
 ---

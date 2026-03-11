@@ -117,7 +117,7 @@ Based on the codebase architecture, these pages **likely also use the design sys
 - `/recruiters-with-candidates`
 - `/hiring-manager-live`
 - `/hiring-manager-strategic`
-- `/collaboration`
+- `/split-fees`
 - `/deal-protection`
 - `/affiliate`
 - `/account-management`

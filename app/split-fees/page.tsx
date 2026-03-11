@@ -53,7 +53,7 @@ export default function CollaborationPage() {
         "position": 1,
         "name": "Find a Match",
         "text": "Browse roles or candidates on the RecXchange platform. Use the AI-powered matching engine to find opportunities that align with your candidate skills or role requirements. Filter by industry, location, salary range, and experience level.",
-        "url": "https://recxchange.io/collaboration#step1",
+        "url": "https://recxchange.io/split-fees#step1",
         "image": "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png"
       },
       {
@@ -61,7 +61,7 @@ export default function CollaborationPage() {
         "position": 2,
         "name": "Request Partnership",
         "text": "Click 'Request Partnership' on the role or candidate listing. Review the other recruiter's profile, rating (4+ stars recommended), and past placement history. Send a partnership request with your proposed split percentage (typically 50/50, 60/40, or 70/30).",
-        "url": "https://recxchange.io/collaboration#step2",
+        "url": "https://recxchange.io/split-fees#step2",
         "image": "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png"
       },
       {
@@ -69,7 +69,7 @@ export default function CollaborationPage() {
         "position": 3,
         "name": "Agree on Split Terms",
         "text": "Discuss and agree on the fee split percentage with your partner recruiter. Common splits are 50/50 (equal partnership), 60/40 (one recruiter has the client relationship), or up to 70% for RecX Direct roles. Both parties must agree before proceeding.",
-        "url": "https://recxchange.io/collaboration#step3",
+        "url": "https://recxchange.io/split-fees#step3",
         "image": "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png"
       },
       {
@@ -77,7 +77,7 @@ export default function CollaborationPage() {
         "position": 4,
         "name": "Sign Auto-Generated Contract",
         "text": "RecXchange automatically generates a legally binding split fee agreement containing both recruiter names, company names, role details, candidate details, agreed split percentage, and a permanent timestamp. Both parties digitally sign the contract. This protects both recruiters and creates a permanent record.",
-        "url": "https://recxchange.io/collaboration#step4",
+        "url": "https://recxchange.io/split-fees#step4",
         "image": "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png"
       },
       {
@@ -85,7 +85,7 @@ export default function CollaborationPage() {
         "position": 5,
         "name": "Share Private Details",
         "text": "Only after the contract is signed, share private information with your partner. This includes full candidate contact details, complete CVs, client company names, and hiring manager information. Your data is protected until this step.",
-        "url": "https://recxchange.io/collaboration#step5",
+        "url": "https://recxchange.io/split-fees#step5",
         "image": "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png"
       },
       {
@@ -93,7 +93,7 @@ export default function CollaborationPage() {
         "position": 6,
         "name": "Submit Candidate and Interview",
         "text": "Submit the candidate to the client role. Coordinate with your partner recruiter throughout the interview process. Share feedback, schedule interviews, and manage client expectations together. The partnership requires collaboration and communication.",
-        "url": "https://recxchange.io/collaboration#step6",
+        "url": "https://recxchange.io/split-fees#step6",
         "image": "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png"
       },
       {
@@ -101,7 +101,7 @@ export default function CollaborationPage() {
         "position": 7,
         "name": "Close the Placement",
         "text": "When the candidate receives and accepts the job offer, the placement is complete. Both recruiters invoice their respective clients for their agreed percentage. RecXchange charges zero platform fees - you keep 100% of your split.",
-        "url": "https://recxchange.io/collaboration#step7",
+        "url": "https://recxchange.io/split-fees#step7",
         "image": "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png"
       },
       {
@@ -109,7 +109,7 @@ export default function CollaborationPage() {
         "position": 8,
         "name": "Split and Receive Fees",
         "text": "Each recruiter invoices their own client for their portion of the fee. For example, on a $10,000 placement with 50/50 split: you invoice your client for $5,000, your partner invoices theirs for $5,000. Average placement fee is $7,000. RecXchange takes no platform fees.",
-        "url": "https://recxchange.io/collaboration#step8",
+        "url": "https://recxchange.io/split-fees#step8",
         "image": "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png"
       }
     ],

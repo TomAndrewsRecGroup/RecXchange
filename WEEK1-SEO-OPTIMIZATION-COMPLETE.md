@@ -176,7 +176,7 @@ const inter = Inter({
 
 ### 📋 Week 2 Tasks
 - [ ] Add FAQ sections to pages
-- [ ] Add HowTo schema to /collaboration
+- [ ] Add HowTo schema to /split-fees
 - [ ] Enhance entity relationships in content
 - [ ] Add "last updated" dates
 - [ ] Internal linking audit

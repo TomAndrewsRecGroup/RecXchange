@@ -144,7 +144,7 @@ export const metadata: Metadata = {
 
 ---
 
-### 4. `/collaboration` Page
+### 4. `/split-fees` Page
 
 ```typescript
 import { Metadata } from 'next';
@@ -160,12 +160,12 @@ export const metadata: Metadata = {
     "fee sharing how to",
   ],
   alternates: {
-    canonical: '/collaboration',
+    canonical: '/split-fees',
   },
   openGraph: {
     title: "How Split Fee Recruitment Works | RecXchange",
     description: "Post roles to get candidates, or share candidates to find roles. Automated split fee agreements and timestamped protection.",
-    url: 'https://recxchange.io/collaboration',
+    url: 'https://recxchange.io/split-fees',
     type: 'website',
   },
   twitter: {
@@ -472,7 +472,7 @@ Check in browser:
 
 2. 🟡 **High** (Do this week)
    - /why-recxchange
-   - /collaboration
+   - /split-fees
    - /faq
    - /contact
 

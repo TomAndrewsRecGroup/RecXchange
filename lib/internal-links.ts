@@ -22,7 +22,7 @@ export const internalLinks = {
   // Recruiter journey
   recruiterRoles: '/recruiter-roles',
   recruiterCandidates: '/recruiters-with-candidates',
-  collaboration: '/collaboration',
+  collaboration: '/split-fees',
   whyRecXchange: '/why-recxchange',
   dealProtection: '/deal-protection',
   roles: '/roles',

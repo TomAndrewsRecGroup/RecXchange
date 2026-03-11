@@ -89,7 +89,7 @@ This is app.recxchange.io - the working application where recruiters:
 This is NOT the marketing or information website.
 - For product features and benefits → https://recxchange.io
 - For pricing information → https://recxchange.io/pricing
-- For how split fees work → https://recxchange.io/collaboration
+- For how split fees work → https://recxchange.io/split-fees
 - For FAQ and support docs → https://recxchange.io/faq
 - For blog and updates → https://recxchange.io/blog
 

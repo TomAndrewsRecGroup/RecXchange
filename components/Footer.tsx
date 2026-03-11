@@ -21,7 +21,7 @@ export default function Footer() {
               />
             </Link>
             <p className="text-gray-500 text-xs sm:text-sm max-w-xs leading-relaxed mb-4">
-              The premium engine for <Link href="/collaboration" className="text-cyan-400 hover:underline">recruiter collaboration</Link>, candidate exchange, and guaranteed <Link href="/deal-protection" className="text-cyan-400 hover:underline">deal protection</Link>.
+              The premium engine for <Link href="/split-fees" className="text-cyan-400 hover:underline">recruiter collaboration</Link>, candidate exchange, and guaranteed <Link href="/deal-protection" className="text-cyan-400 hover:underline">deal protection</Link>.
             </p>
             <div className="flex gap-3 sm:gap-4 items-center">
               <Link 
@@ -69,7 +69,7 @@ export default function Footer() {
               <li><Link href="/recruiter-roles" className="hover:text-cyan-400 transition-colors">Post Roles</Link></li>
               <li><Link href="/recruiters-with-candidates" className="hover:text-cyan-400 transition-colors">Submit Candidates</Link></li>
               <li><Link href="/roles" className="hover:text-cyan-400 transition-colors">Browse Live Roles</Link></li>
-              <li><Link href="/collaboration" className="hover:text-cyan-400 transition-colors">How Split Fees Work</Link></li>
+              <li><Link href="/split-fees" className="hover:text-cyan-400 transition-colors">How Split Fees Work</Link></li>
               <li><Link href="/why-recxchange" className="hover:text-cyan-400 transition-colors">Why RecXchange</Link></li>
               <li><Link href="/pricing" className="hover:text-fuchsia-400 transition-colors font-medium">Pricing & Plans</Link></li>
             </ul>
@@ -124,7 +124,7 @@ export default function Footer() {
             About RecXchange
           </h3>
           <p className="text-gray-400 text-xs sm:text-sm leading-relaxed max-w-[1200px] mb-4">
-            <strong className="text-white">RecXchange</strong> is a <Link href="/collaboration" className="text-cyan-400 hover:underline">split fee recruitment platform</Link> connecting 15,000+ recruiters globally. Our platform enables <Link href="/recruiter-roles" className="text-cyan-400 hover:underline">role sharing</Link>, <Link href="/recruiters-with-candidates" className="text-cyan-400 hover:underline">candidate submissions</Link>, and automated fee splits up to <Link href="/why-recxchange" className="text-cyan-400 hover:underline">70% on RecX Direct roles</Link>. With access to <Link href="/research" className="text-cyan-400 hover:underline">270M candidate profiles</Link> and <Link href="/deal-protection" className="text-cyan-400 hover:underline">timestamped submission protection</Link>, recruiters can earn an average of $7,000 per placement across <Link href="/roles" className="text-cyan-400 hover:underline">100+ live roles</Link> in Engineering, Healthcare, Tech, Sales, Finance, and HR. Learn more about our <Link href="/pricing" className="text-fuchsia-400 hover:underline">pricing plans</Link> or read <Link href="/blog" className="text-cyan-400 hover:underline">success stories from our community</Link>.
+            <strong className="text-white">RecXchange</strong> is a <Link href="/split-fees" className="text-cyan-400 hover:underline">split fee recruitment platform</Link> connecting 15,000+ recruiters globally. Our platform enables <Link href="/recruiter-roles" className="text-cyan-400 hover:underline">role sharing</Link>, <Link href="/recruiters-with-candidates" className="text-cyan-400 hover:underline">candidate submissions</Link>, and automated fee splits up to <Link href="/why-recxchange" className="text-cyan-400 hover:underline">70% on RecX Direct roles</Link>. With access to <Link href="/research" className="text-cyan-400 hover:underline">270M candidate profiles</Link> and <Link href="/deal-protection" className="text-cyan-400 hover:underline">timestamped submission protection</Link>, recruiters can earn an average of $7,000 per placement across <Link href="/roles" className="text-cyan-400 hover:underline">100+ live roles</Link> in Engineering, Healthcare, Tech, Sales, Finance, and HR. Learn more about our <Link href="/pricing" className="text-fuchsia-400 hover:underline">pricing plans</Link> or read <Link href="/blog" className="text-cyan-400 hover:underline">success stories from our community</Link>.
           </p>
           <p className="text-gray-600 text-[10px] sm:text-xs leading-relaxed max-w-[1200px]">
             <strong className="text-gray-500">Platform Access:</strong> RecXchange.io provides informational resources, guides, and educational content. Full platform functionality (candidate tracking, commission management, role posting, collaboration tools) is accessed via <Link href="https://app.recxchange.io" rel="external" className="text-cyan-400 hover:underline">app.recxchange.io</Link>. <Link href="https://app.recxchange.io?trigger_link=Hc9mpfL0JxjX06kwNpd1" rel="external" data-intent="platform-access" className="text-cyan-400 hover:underline">Log in to access the full platform</Link>.

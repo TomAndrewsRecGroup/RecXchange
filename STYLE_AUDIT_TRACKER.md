@@ -73,7 +73,7 @@ For each page, verify:
 - [ ] **/hiring-manager-strategic** - Need to verify
 
 #### Supporting Pages
-- [ ] **/collaboration** - Need to verify
+- [ ] **/split-fees** - Need to verify
 - [ ] **/deal-protection** - Need to verify
 - [ ] **/contact** - Need to verify
 - [ ] **/affiliate** - Need to verify
@@ -106,7 +106,7 @@ For each page, verify:
 These should already be styled correctly. Quick visual audit needed:
 1. `/hiring-manager-home`
 2. `/faq`
-3. `/collaboration`
+3. `/split-fees`
 4. `/deal-protection`
 5. `/roles`
 6. `/recruiter-roles`

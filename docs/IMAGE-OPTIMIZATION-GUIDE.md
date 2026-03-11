@@ -128,7 +128,7 @@ import OptimizedImage from '@/components/OptimizedImage';
 ### 🟡 Important (Do Second)
 
 4. `/why-recxchange`
-5. `/collaboration`
+5. `/split-fees`
 6. `/hiring-manager-home`
 7. `/contact`
 8. `/faq`
@@ -355,7 +355,7 @@ open http://localhost:3000
 
 ### Phase 2: Important Pages (Day 2)
 - [ ] /why-recxchange
-- [ ] /collaboration
+- [ ] /split-fees
 - [ ] /hiring-manager-home
 - [ ] /contact
 - [ ] /faq

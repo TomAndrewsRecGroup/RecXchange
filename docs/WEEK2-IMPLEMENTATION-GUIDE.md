@@ -170,10 +170,10 @@ import { pricingFAQs } from '@/data/faqs/recruiter-faqs';
 
 ---
 
-#### 3. Add HowTo Schema to `/collaboration` Page
+#### 3. Add HowTo Schema to `/split-fees` Page
 
 ```typescript
-// In app/collaboration/page.tsx or layout.tsx
+// In app/split-fees/page.tsx or layout.tsx
 import { collaborationHowToSchema } from '@/lib/schemas/howto-schema';
 
 export default function CollaborationPage() {
@@ -275,7 +275,7 @@ import { internalLinks } from '@/lib/internal-links';
 
 **Pages to update:**
 - `/why-recxchange` - Add general FAQs
-- `/collaboration` - Add collaboration FAQs
+- `/split-fees` - Add collaboration FAQs
 - `/deal-protection` - Add deal protection FAQs
 - `/hiring-manager-home` - Create hiring manager FAQs
 
@@ -357,7 +357,7 @@ const [isLoading, setIsLoading] = useState(false);
 3. LastUpdated component
 ```
 
-### `/collaboration` Page
+### `/split-fees` Page
 ```typescript
 // Add:
 1. HowTo schema (collaborationHowToSchema)

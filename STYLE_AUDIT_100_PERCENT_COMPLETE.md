@@ -33,7 +33,7 @@ Every public-facing page on RecXchange now uses the unified design system with:
 
 ## 🔧 Pages Updated in Final Push
 
-### 1. `/collaboration` ✅
+### 1. `/split-fees` ✅
 **Changed from:** `glass-card` divs  
 **Changed to:** `HolographicCard` components  
 **Components added:** `FuturisticBackground`, `StatusBadge`, `NeonDivider`  
@@ -69,7 +69,7 @@ Every public-facing page on RecXchange now uses the unified design system with:
 9. ✅ `/hiring-manager-strategic` — Strategic hiring
 
 ### **Feature Pages**
-10. ✅ `/collaboration` — Split fee collaboration (✨ UPDATED TODAY)
+10. ✅ `/split-fees` — Split fee collaboration (✨ UPDATED TODAY)
 11. ✅ `/deal-protection` — Protection features
 12. ✅ `/account-management` — Account manager support
 13. ✅ `/affiliate` — Affiliate program

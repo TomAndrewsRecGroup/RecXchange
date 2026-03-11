@@ -41,7 +41,7 @@ export default function Header() {
                 <Link href="/recruiter" className="block px-4 py-2 text-sm text-gray-400 hover:text-cyan-400 hover:bg-cyan-400/5 rounded">Recruiter Home</Link>
                 <Link href="/recruiter-roles" className="block px-4 py-2 text-sm text-gray-400 hover:text-cyan-400 hover:bg-cyan-400/5 rounded">Recruiters with Roles</Link>
                 <Link href="/recruiters-with-candidates" className="block px-4 py-2 text-sm text-gray-400 hover:text-cyan-400 hover:bg-cyan-400/5 rounded">Recruiters with Candidates</Link>
-                <Link href="/collaboration" className="block px-4 py-2 text-sm text-fuchsia-400 hover:text-fuchsia-300 hover:bg-fuchsia-400/5 rounded border-t border-white/5 mt-1 font-medium">Split Fees</Link>
+                <Link href="/split-fees" className="block px-4 py-2 text-sm text-fuchsia-400 hover:text-fuchsia-300 hover:bg-fuchsia-400/5 rounded border-t border-white/5 mt-1 font-medium">Split Fees</Link>
               </div>
             </div>
 
@@ -59,7 +59,7 @@ export default function Header() {
             </div>
 
             <Link href="/pricing" className="text-sm text-gray-400 hover:text-cyan-400 transition-colors">Pricing</Link>
-            <Link href="/collaboration" className="text-sm text-gray-400 hover:text-cyan-400 transition-colors">Collaboration</Link>
+            <Link href="/split-fees" className="text-sm text-gray-400 hover:text-cyan-400 transition-colors">Collaboration</Link>
             <Link href="/contact" className="text-sm text-gray-400 hover:text-cyan-400 transition-colors">Contact Us</Link>
             <Link href="/roles" className="text-sm text-gray-400 hover:text-cyan-400 transition-colors">Live Roles</Link>
           </nav>
@@ -189,7 +189,7 @@ export default function Header() {
                             Recruiters with Candidates
                           </Link>
                           <Link 
-                            href="/collaboration" 
+                            href="/split-fees" 
                             className="block text-sm text-fuchsia-400 hover:text-fuchsia-300 font-medium py-2"
                             onClick={() => setMobileMenuOpen(false)}
                           >
@@ -262,7 +262,7 @@ export default function Header() {
                     Pricing
                   </Link>
                   <Link 
-                    href="/collaboration" 
+                    href="/split-fees" 
                     className="block text-base font-medium text-gray-300 hover:text-cyan-400 transition-colors py-2"
                     onClick={() => setMobileMenuOpen(false)}
                   >

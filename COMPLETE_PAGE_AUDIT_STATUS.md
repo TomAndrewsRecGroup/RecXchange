@@ -35,7 +35,7 @@ These pages fully use `FuturisticBackground`, `HolographicCard`, `StatusBadge`, 
 
 ### 🔴 **Needs Update (1 Page)**
 
-#### `/collaboration`
+#### `/split-fees`
 **Issue:** Uses `glass-card` className instead of `HolographicCard` component
 
 **Current Pattern:**
@@ -48,7 +48,7 @@ These pages fully use `FuturisticBackground`, `HolographicCard`, `StatusBadge`, 
 <HolographicCard color="cyan" variant="content">
 ```
 
-**File:** `app/collaboration/page.tsx`  
+**File:** `app/split-fees/page.tsx`  
 **Lines:** Multiple instances throughout (timeline section, split logic section, engine section, etc.)
 
 **Action Required:** Replace all `glass-card` divs with `HolographicCard` components
@@ -79,7 +79,7 @@ These are development/testing pages, not public-facing:
 
 ### **Immediate (High Priority)**
 
-1. **Update `/collaboration` page**
+1. **Update `/split-fees` page**
    - Replace all `glass-card` with `HolographicCard`
    - Ensure proper color schemes (cyan/fuchsia/purple)
    - Add `FuturisticBackground` if missing
@@ -105,7 +105,7 @@ These are development/testing pages, not public-facing:
 
 ---
 
-## 📋 Update Checklist for `/collaboration`
+## 📋 Update Checklist for `/split-fees`
 
 - [ ] Import design system components at top:
   ```tsx
@@ -220,7 +220,7 @@ All checked pages successfully implement:
 
 ## 🚀 Next Steps
 
-1. **Now:** Update `/collaboration` page (5-10 min)
+1. **Now:** Update `/split-fees` page (5-10 min)
 2. **Soon:** Check `/blog` and `/research` pages (2 min each)
 3. **Later:** Final verification of 6 unchecked pages (1 min each)
 4. **Done:** Mark project as 100% complete
@@ -229,7 +229,7 @@ All checked pages successfully implement:
 
 **Last Updated:** March 9, 2026, 3:50 PM GMT  
 **Updated By:** Style Audit Process  
-**Next Review:** After `/collaboration` update
+**Next Review:** After `/split-fees` update
 
 ---
 
