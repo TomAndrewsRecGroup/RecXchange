@@ -7,6 +7,9 @@ import HolographicCard from '@/components/design-system/HolographicCard';
 import StatusBadge from '@/components/design-system/StatusBadge';
 import NeonDivider from '@/components/design-system/NeonDivider';
 import GlowButton from '@/components/design-system/GlowButton';
+import FAQSection from '@/components/FAQSection';
+import LastUpdated from '@/components/LastUpdated';
+import { recruiterGeneralFAQs } from '@/data/faqs/recruiter-faqs';
 
 export default function WhyRecXchangePage() {
   return (
@@ -81,8 +84,9 @@ export default function WhyRecXchangePage() {
               </motion.div>
 
               <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-                <HolographicCard color="emerald" variant="content" className="bg-red-950/10 border-red-400/20">
-                  <StatusBadge label="TRADITIONAL AGENCY" color="emerald" size="sm" />
+                {/* FIX #10: changed color from "emerald" to "fuchsia" (neutral/contrast) and overrides to red */}
+                <HolographicCard color="fuchsia" variant="content" className="border-red-400/20">
+                  <StatusBadge label="TRADITIONAL AGENCY" color="fuchsia" size="sm" />
                   <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-3 sm:mb-4 md:mb-5 mt-4">Solo Recruitment</h3>
 
                   <div className="space-y-4 sm:space-y-5 md:space-y-6">
@@ -140,7 +144,7 @@ export default function WhyRecXchangePage() {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5 md:gap-6 mb-5 sm:mb-6 md:mb-8">
                 {[
                   { value: "15,000+", label: "Active recruiters partnering" },
-                  { value: "$7,000", label: "Average placement fee" },
+                  { value: "$7,000", label: "Average recruiter earnings per placement" },
                   { value: "270M", label: "Candidate profiles searchable" }
                 ].map((stat, i) => (
                   <HolographicCard key={i} color={i === 0 ? "cyan" : i === 1 ? "fuchsia" : "purple"} variant="stat">
@@ -157,6 +161,17 @@ export default function WhyRecXchangePage() {
               </div>
             </HolographicCard>
           </motion.section>
+
+          <NeonDivider width="w-full" color="mixed" />
+
+          {/* FIX #20: FAQ Section */}
+          <FAQSection faqs={recruiterGeneralFAQs} />
+
+          {/* FIX #19: LastUpdated */}
+          <div className="mt-8 sm:mt-10 md:mt-12">
+            <LastUpdated date="2026-03-11" />
+          </div>
+
         </div>
       </div>
     </main>
