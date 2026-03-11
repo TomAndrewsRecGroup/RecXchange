@@ -30,7 +30,7 @@ const faqs: FAQItem[] = [
   { category: "For Recruiters", color: "cyan", question: "What if two recruiters submit the same candidate?", answer: "RecXchange timestamps every submission. If two recruiters submit the same candidate to the same role, the first timestamp wins. No arguments. The system decides." },
   
   // RecX Direct
-  { category: "RecX Direct", color: "fuchsia", question: "What is RecX Direct?", answer: "RecX Direct is a service where end clients post their roles for free. Thousands of recruiters can work on these roles, and clients only deal with one point of contact (Andrews Recruitment Group or Senior RecXchange Account Managers)." },
+  { category: "RecX Direct", color: "fuchsia", question: "What is RecX Direct?", answer: "RecX Direct is a service where end clients post their roles for free. Thousands of recruiters can work on these roles, and clients only deal with one point of contact — a dedicated RecXchange Account Manager." },
   { category: "RecX Direct", color: "purple", question: "How do I access RecX Direct roles?", answer: "Pro members get instant access to RecX Direct roles as soon as they're posted. Lite members get access 7 days after posting. Entry members get access 30 days after posting (if applications are still being considered)." },
   { category: "RecX Direct", color: "emerald", question: "What's the split on RecX Direct placements?", answer: "Standard RecX Direct splits are up to 70% to the recruiter who makes the placement. Recruiters earn an average of $7,000 per placement on RecX Direct roles." },
   
@@ -146,7 +146,7 @@ export default function FAQPage() {
                     🎥 Watch Video Tutorials
                   </GlowButton>
                   <GlowButton variant="ghost" size="sm" href="/why-recxchange">
-                    Why Choose RecXchange?
+                    Why Choose RecXchange
                   </GlowButton>
                 </div>
               </HolographicCard>
@@ -230,7 +230,7 @@ export default function FAQPage() {
                   Still have questions?
                 </h2>
                 <p className="text-gray-300 text-[13px] sm:text-sm md:text-base mb-5 sm:mb-6 md:mb-8 px-2">
-                  Talk to our team, watch our tutorials, or start with a free trial.
+                  Talk to our team, watch our tutorials, or get started today.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                   <GlowButton variant="secondary" size="md" href="/contact">
@@ -239,8 +239,8 @@ export default function FAQPage() {
                   <GlowButton variant="ghost" size="md" href="https://youtube.com/@recxchange">
                     🎥 Watch Tutorials
                   </GlowButton>
-                  <GlowButton variant="primary" size="md" href="/pricing">
-                    View Pricing
+                  <GlowButton variant="primary" size="md" href="https://app.recxchange.io/register?trigger_link=jYQNc9YXcMkYPvo3HZfC">
+                    Get Started
                   </GlowButton>
                 </div>
               </HolographicCard>
