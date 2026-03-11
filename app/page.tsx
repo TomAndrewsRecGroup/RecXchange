@@ -326,7 +326,8 @@ export default function HomePage() {
               >
                 <div className="absolute -inset-1 bg-gradient-to-br from-purple-500/20 via-purple-600/15 to-cyan-500/20 rounded-2xl blur-lg opacity-30 group-hover:opacity-50 transition duration-300 pointer-events-none" aria-hidden="true" />
                 
-                <Link href="/faq" className="block relative backdrop-blur-xl bg-black/40 p-3 sm:p-5 rounded-2xl border border-purple-400/40 group-hover:border-purple-300/60 transition-all duration-300 overflow-hidden"
+                {/* FIX #22: changed href from /faq to /why-recxchange — avg earnings is explained there */}
+                <Link href="/why-recxchange" className="block relative backdrop-blur-xl bg-black/40 p-3 sm:p-5 rounded-2xl border border-purple-400/40 group-hover:border-purple-300/60 transition-all duration-300 overflow-hidden"
                   style={{
                     boxShadow: '0 4px 20px rgba(0,0,0,0.4), inset 0 1px 0 rgba(168,85,247,0.15), 0 0 20px rgba(168,85,247,0.05)'
                   }}
@@ -611,7 +612,7 @@ export default function HomePage() {
                       {[
                         'Work with 15,000+ recruiters instantly',
                         'One point of contact',
-                        'Test and Strategize before going live'
+                        'Test and strategize before going live'
                       ].map((item, i) => (
                         <li key={i} className="flex items-start gap-2 sm:gap-3">
                           <span className="w-1 sm:w-1.5 h-1 sm:h-1.5 rounded-full bg-fuchsia-400 mt-1 sm:mt-1.5 flex-shrink-0" aria-hidden="true"
