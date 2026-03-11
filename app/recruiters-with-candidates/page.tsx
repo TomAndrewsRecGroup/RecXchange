@@ -108,24 +108,9 @@ function ScanCounter({ phase }: { phase: EnginePhase }) {
   );
 }
 
-// ─── NeuronCore — branching dendrite tree with electric pulse firing ────────────
-//
-// Structure mirrors a real neuron image:
-//   • Central soma (bright glowing body)
-//   • ~7 primary dendrite arms radiating outward at different angles
-//   • Each arm branches 2–3 times, tapering in width toward tips
-//   • Tips are fine hair-like endings
-//   • Electric pulses travel outward from soma along each branch
-//   • All in cyan → purple gradient glow matching brand palette
-//
-// Represented as a tree of path segments. Each segment:
-//   { id, x1,y1,x2,y2, width, parentId }
-// Pulses are spawned at root segments and travel toward tips.
-
 type Seg = { id: number; x1: number; y1: number; x2: number; y2: number; w: number; children: number[] };
 type NPulse = { id: number; segId: number; t: number; color: string };
 
-// Build the neuron tree. CX/CY = soma centre in SVG coords (viewBox 0 0 200 200)
 const CX = 100, CY = 100;
 
 function branch(segs: Seg[], id: number, x1: number, y1: number, angle: number, length: number, width: number, depth: number) {
@@ -135,8 +120,6 @@ function branch(segs: Seg[], id: number, x1: number, y1: number, angle: number, 
   const y2 = y1 + Math.sin(rad) * length;
   const children: number[] = [];
   segs.push({ id, x1, y1, x2, y2, w: width, children });
-
-  // 2–3 sub-branches
   const numBranches = depth > 2 ? 2 : Math.random() > 0.4 ? 3 : 2;
   const spread = depth > 3 ? 18 : 30;
   for (let i = 0; i < numBranches; i++) {
@@ -149,7 +132,6 @@ function branch(segs: Seg[], id: number, x1: number, y1: number, angle: number, 
 
 function buildNeuronSegs(): Seg[] {
   const segs: Seg[] = [];
-  // 7 primary arms at evenly-spaced angles with slight random offset
   const arms = 7;
   for (let i = 0; i < arms; i++) {
     const baseAngle = (360 / arms) * i - 90 + (Math.random() - 0.5) * 20;
@@ -158,9 +140,7 @@ function buildNeuronSegs(): Seg[] {
   return segs;
 }
 
-// Build once at module level so it's stable across renders
 const NEURON_SEGS: Seg[] = buildNeuronSegs();
-// Root segment ids = segments whose x1/y1 == soma centre (approx)
 const ROOT_IDS = NEURON_SEGS
   .filter(s => Math.hypot(s.x1 - CX, s.y1 - CY) < 5)
   .map(s => s.id);
@@ -173,7 +153,6 @@ function NeuronCore({ phase }: { phase: EnginePhase }) {
   const fireTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const aliveRef = useRef(true);
 
-  // rAF loop: advance all pulses
   useEffect(() => {
     aliveRef.current = true;
     const speed = phase === 'scanning' ? 0.022 : 0.008;
@@ -192,7 +171,6 @@ function NeuronCore({ phase }: { phase: EnginePhase }) {
     };
   }, [phase]);
 
-  // Firing scheduler: spawn a pulse on a random root segment
   useEffect(() => {
     aliveRef.current = true;
     const scheduleNext = () => {
@@ -224,8 +202,6 @@ function NeuronCore({ phase }: { phase: EnginePhase }) {
   }, [phase]);
 
   const isResult = phase === 'result';
-
-  // Soma colour
   const somaFill = isResult ? 'rgba(52,211,153,0.95)' : 'rgba(0,240,255,0.95)';
   const somaGlow = isResult ? '0 0 18px 6px rgba(52,211,153,0.6)' : '0 0 18px 6px rgba(0,240,255,0.5)';
 
@@ -245,14 +221,11 @@ function NeuronCore({ phase }: { phase: EnginePhase }) {
           <feGaussianBlur stdDeviation="3.5" result="blur" />
           <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
         </filter>
-        {/* Gradient along dendrites: bright cyan at soma end, fades to purple at tips */}
         <linearGradient id="axon-grad" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse">
           <stop offset="0%" stopColor="rgba(0,240,255,0.55)" />
           <stop offset="100%" stopColor="rgba(168,85,247,0.15)" />
         </linearGradient>
       </defs>
-
-      {/* Dendrite segments — tapered, glowing */}
       {NEURON_SEGS.map(s => (
         <line key={s.id}
           x1={s.x1} y1={s.y1} x2={s.x2} y2={s.y2}
@@ -262,14 +235,11 @@ function NeuronCore({ phase }: { phase: EnginePhase }) {
           filter="url(#nc-glow)"
         />
       ))}
-
-      {/* Travelling pulse dots along segments */}
       {pulses.map(p => {
         const seg = NEURON_SEGS[p.segId];
         if (!seg) return null;
         const x = seg.x1 + (seg.x2 - seg.x1) * p.t;
         const y = seg.y1 + (seg.y2 - seg.y1) * p.t;
-        // Fade in/out at edges
         const op = p.t < 0.18 ? p.t / 0.18 : p.t > 0.82 ? (1 - p.t) / 0.18 : 1;
         const r = seg.w * 1.2 + 0.8;
         return (
@@ -281,8 +251,6 @@ function NeuronCore({ phase }: { phase: EnginePhase }) {
           />
         );
       })}
-
-      {/* Soma — bright central body with halo */}
       <circle cx={CX} cy={CY} r={9}
         fill="rgba(0,240,255,0.06)"
         filter="url(#nc-glow-strong)"
@@ -292,7 +260,6 @@ function NeuronCore({ phase }: { phase: EnginePhase }) {
         filter="url(#nc-glow-strong)"
         style={{ filter: somaGlow }}
       />
-      {/* Soma highlight */}
       <circle cx={CX - 1.5} cy={CY - 1.5} r={2}
         fill="rgba(255,255,255,0.7)"
       />
@@ -421,8 +388,6 @@ function XchangeEngine() {
 
         {/* Centre: core */}
         <div className="relative flex items-center justify-center min-h-[300px] lg:min-h-[420px]">
-
-          {/* Scanning rings */}
           {[1,2,3].map(i => (
             <motion.div key={i} className="absolute rounded-full border border-cyan-400/20"
               style={{ width: `${i * 30 + 60}%`, height: `${i * 30 + 60}%` }}
@@ -433,30 +398,22 @@ function XchangeEngine() {
               transition={{ duration: phase === 'scanning' ? 0.9 : 3.5, delay: i * 0.22, repeat: Infinity }}
             />
           ))}
-
-          {/* Outer arc */}
           <motion.div className="absolute w-52 h-52 xl:w-64 xl:h-64 rounded-full border-2"
             style={{ borderTopColor: 'rgba(0,240,255,0.5)', borderRightColor: 'rgba(168,85,247,0.3)', borderBottomColor: 'transparent', borderLeftColor: 'transparent' }}
             animate={{ rotate: 360 }}
             transition={{ duration: phase === 'scanning' ? 0.9 : 4, repeat: Infinity, ease: 'linear' }}
           />
-          {/* Inner counter-arc */}
           <motion.div className="absolute w-40 h-40 xl:w-52 xl:h-52 rounded-full border"
             style={{ borderTopColor: 'transparent', borderRightColor: 'transparent', borderBottomColor: 'rgba(255,0,255,0.45)', borderLeftColor: 'rgba(0,240,255,0.25)' }}
             animate={{ rotate: -360 }}
             transition={{ duration: phase === 'scanning' ? 1.3 : 6, repeat: Infinity, ease: 'linear' }}
           />
-          {/* Slow outer arc */}
           <motion.div className="absolute w-60 h-60 xl:w-72 xl:h-72 rounded-full border"
             style={{ borderTopColor: 'transparent', borderRightColor: 'rgba(168,85,247,0.2)', borderBottomColor: 'transparent', borderLeftColor: 'rgba(0,240,255,0.1)' }}
             animate={{ rotate: 360 }}
             transition={{ duration: phase === 'scanning' ? 2 : 12, repeat: Infinity, ease: 'linear' }}
           />
-
-          {/* Orbital dots */}
           <OrbitalDots phase={phase} />
-
-          {/* Core sphere — neuron lives inside */}
           <motion.div
             className="relative rounded-full flex items-center justify-center"
             style={{
@@ -469,12 +426,9 @@ function XchangeEngine() {
             }
             transition={{ duration: phase === 'scanning' ? 0.9 : 3.5, repeat: Infinity }}
           >
-            {/* Neuron fills the whole sphere area */}
             <div className="absolute inset-0">
               <NeuronCore phase={phase} />
             </div>
-
-            {/* Phase icon — centre only, sits on top of neuron */}
             <AnimatePresence mode="wait">
               {phase === 'result' && (
                 <motion.div key="result"
@@ -489,13 +443,9 @@ function XchangeEngine() {
               )}
             </AnimatePresence>
           </motion.div>
-
-          {/* Scan counter */}
           <AnimatePresence>
             {phase !== 'idle' && <ScanCounter phase={phase} />}
           </AnimatePresence>
-
-          {/* MATCH FOUND flash */}
           <AnimatePresence>
             {phase === 'result' && (
               <motion.p
@@ -557,8 +507,9 @@ export default function RecruiterCandidatesPage() {
             </p>
           </motion.header>
           <XchangeEngine />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-16 sm:mb-20">
-            <HolographicCard color="fuchsia" variant="feature">
+          {/* Feature cards — equal height via items-stretch on the grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-16 sm:mb-20 items-stretch">
+            <HolographicCard color="fuchsia" variant="feature" className="h-full">
               <div className="flex gap-3 sm:gap-4 items-start">
                 <div className="p-2 sm:p-3 bg-fuchsia-500/10 rounded-xl text-fuchsia-400 flex-shrink-0"><Cpu size={20} className="sm:w-6 sm:h-6" /></div>
                 <div>
@@ -567,7 +518,7 @@ export default function RecruiterCandidatesPage() {
                 </div>
               </div>
             </HolographicCard>
-            <HolographicCard color="cyan" variant="feature">
+            <HolographicCard color="cyan" variant="feature" className="h-full">
               <div className="flex gap-3 sm:gap-4 items-start">
                 <div className="p-2 sm:p-3 bg-cyan-500/10 rounded-xl text-cyan-400 flex-shrink-0"><Zap size={20} className="sm:w-6 sm:h-6" /></div>
                 <div>

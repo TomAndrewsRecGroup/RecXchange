@@ -160,7 +160,8 @@ export default function PostRolesPage() {
 
                     <HolographicCard color="cyan" variant="stat">
                       <span className="text-[9px] sm:text-[10px] text-gray-400 block mb-2 sm:mb-3 uppercase tracking-widest font-black">Your Estimated Take-Home</span>
-                      <span className="text-4xl sm:text-5xl md:text-6xl font-bold gradient-text tabular-nums tracking-tighter block">
+                      {/* Reduced from text-4xl sm:text-5xl md:text-6xl → text-3xl sm:text-4xl md:text-5xl */}
+                      <span className="text-3xl sm:text-4xl md:text-5xl font-bold gradient-text tabular-nums tracking-tighter block">
                         {selectedCurrency.symbol}{Math.floor(yourShare).toLocaleString()}
                       </span>
                       <div className="mt-4 sm:mt-5 pt-4 sm:pt-5 border-t border-white/5">
