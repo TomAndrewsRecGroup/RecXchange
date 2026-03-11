@@ -1,6 +1,6 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { Database, Search, Zap, Cpu, Upload, Check, Globe } from "lucide-react";
+import React, { useState, useEffect, useRef } from "react";
+import { Search, Zap, Cpu, Check, Globe, X } from "lucide-react";
 import { motion, AnimatePresence } from 'framer-motion';
 import { trackEvent } from '@/lib/analytics';
 import FuturisticBackground from '@/components/design-system/FuturisticBackground';
@@ -9,144 +9,402 @@ import StatusBadge from '@/components/design-system/StatusBadge';
 import NeonDivider from '@/components/design-system/NeonDivider';
 import GlowButton from '@/components/design-system/GlowButton';
 
-type EnginePhase = 'idle' | 'uploading' | 'matching' | 'result';
+type EnginePhase = 'idle' | 'scanning' | 'result';
 
-// Keep all existing job matching logic from original file
-const JOB_TITLE_PATTERNS = [
-  /\b(registered nurse|nurse practitioner|clinical nurse specialist)\b/gi,
-  /\b(software engineer|senior software engineer|lead software engineer)\b/gi,
-  /\b(data scientist|machine learning engineer)\b/gi,
+// Seeded example roles shown in the modal — job title/location/skills/fee are
+// swapped in based on what the user entered so the result always feels personal.
+const ROLE_TEMPLATES = [
+  { company: 'Global Staffing Partner', daysAgo: 2,  feeMin: 5500,  feeMax: 8000  },
+  { company: 'Boutique Search Firm',    daysAgo: 5,  feeMin: 6000,  feeMax: 9500  },
+  { company: 'Independent Recruiter',   daysAgo: 1,  feeMin: 4500,  feeMax: 7000  },
 ];
 
-const jobMappings: Record<string, string[]> = {
-  'Senior Software Engineer': ['software', 'developer', 'programming', 'javascript', 'python'],
-  'Data Scientist': ['data science', 'machine learning', 'ml', 'analytics'],
-};
+function randomInRange(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
-function FakeXchangeEngine() {
-  const [phase, setPhase] = useState<EnginePhase>('idle');
-  const [matchScore, setMatchScore] = useState(0);
-  const [splitFee, setSplitFee] = useState(0);
-  const [jobTitle, setJobTitle] = useState('');
+// Neuron SVG — animated nodes + connecting lines drawn as SVG paths
+function NeuronCore({ phase }: { phase: EnginePhase }) {
+  const nodes = [
+    { cx: 50,  cy: 50  },
+    { cx: 78,  cy: 28  },
+    { cx: 82,  cy: 68  },
+    { cx: 22,  cy: 32  },
+    { cx: 18,  cy: 72  },
+    { cx: 50,  cy: 88  },
+    { cx: 90,  cy: 50  },
+    { cx: 10,  cy: 50  },
+  ];
+  const edges = [
+    [0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],
+    [1,2],[3,4],[5,6],[2,5],[1,6],[3,7],[4,5],
+  ];
+  const isActive = phase === 'scanning';
+  return (
+    <svg viewBox="0 0 100 100" className="w-full h-full" aria-hidden="true">
+      {edges.map(([a,b], i) => (
+        <motion.line
+          key={i}
+          x1={nodes[a].cx} y1={nodes[a].cy}
+          x2={nodes[b].cx} y2={nodes[b].cy}
+          stroke="rgba(0,240,255,0.35)"
+          strokeWidth="0.8"
+          initial={{ pathLength: 0, opacity: 0 }}
+          animate={isActive
+            ? { pathLength: 1, opacity: [0.2, 0.7, 0.2] }
+            : { pathLength: 1, opacity: 0.15 }
+          }
+          transition={{ duration: 1.2, delay: i * 0.08, repeat: isActive ? Infinity : 0, repeatType: 'loop' }}
+        />
+      ))}
+      {nodes.map((n, i) => (
+        <motion.circle
+          key={i}
+          cx={n.cx} cy={n.cy} r={i === 0 ? 5 : 2.5}
+          fill={i === 0 ? 'rgba(0,240,255,0.9)' : 'rgba(168,85,247,0.8)'}
+          animate={isActive
+            ? { opacity: [0.6, 1, 0.6], r: i === 0 ? [5,6.5,5] : [2.5,3.5,2.5] }
+            : { opacity: 0.4 }
+          }
+          transition={{ duration: 0.9, delay: i * 0.1, repeat: isActive ? Infinity : 0 }}
+        />
+      ))}
+    </svg>
+  );
+}
 
-  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    trackEvent('fake_engine_cv_uploaded', { page: '/recruiters-with-candidates' });
-    setPhase('uploading');
-
-    const randomScore = Math.floor(Math.random() * (97 - 85 + 1)) + 85;
-    const randomFee = Math.floor(Math.random() * (9000 - 4500 + 1)) + 4500;
-    const matchedJob = 'Senior Software Engineer';
-
-    setMatchScore(randomScore);
-    setSplitFee(randomFee);
-    setJobTitle(matchedJob);
-
-    setTimeout(() => setPhase('matching'), 800);
-    setTimeout(() => setPhase('result'), 2800);
-    e.target.value = '';
-  };
-
-  const resetEngine = () => {
-    trackEvent('fake_engine_try_another_clicked', { page: '/recruiters-with-candidates' });
-    setPhase('idle');
-  };
+function MatchModal({
+  jobTitle, location, skills, onClose
+}: {
+  jobTitle: string;
+  location: string;
+  skills: string;
+  onClose: () => void;
+}) {
+  const skillList = skills.split(',').map(s => s.trim()).filter(Boolean).slice(0, 4);
+  const roles = ROLE_TEMPLATES.map(t => ({
+    ...t,
+    fee: randomInRange(t.feeMin, t.feeMax),
+  }));
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px_1fr] xl:grid-cols-[1fr_400px_1fr] gap-6 sm:gap-8 lg:gap-6 items-start mb-16 sm:mb-20">
-      {/* Left: Upload */}
-      <HolographicCard color="purple" variant="content">
-        <h3 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 gradient-text">Try the Xchange Engine</h3>
-        <p className="text-gray-400 text-xs sm:text-sm mb-4 sm:mb-6 leading-relaxed">
-          Upload a candidate CV and watch the AI find matching roles in real-time.
-        </p>
+    <motion.div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      {/* Backdrop */}
+      <motion.div
+        className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+        onClick={onClose}
+      />
 
-        {phase !== 'result' ? (
-          <div>
-            <label className="block w-full cursor-pointer">
-              <div className="relative w-full py-5 sm:py-6 px-6 sm:px-8 rounded-xl border-2 border-dashed border-cyan-400/30 bg-cyan-400/5 hover:bg-cyan-400/10 hover:border-cyan-400/50 transition-all text-center group">
-                <Upload size={28} className="mx-auto mb-2 sm:mb-3 text-cyan-400 group-hover:scale-110 transition-transform" />
-                <p className="text-xs sm:text-sm font-bold text-white mb-1">Upload Candidate CV</p>
-                <p className="text-[10px] sm:text-xs text-gray-500">PDF, DOC, DOCX, or TXT</p>
+      {/* Modal */}
+      <motion.div
+        className="relative w-full max-w-lg z-10 rounded-3xl border border-cyan-400/30 bg-[#0a0a0f]/95 overflow-hidden"
+        initial={{ scale: 0.85, opacity: 0, y: 30 }}
+        animate={{ scale: 1, opacity: 1, y: 0 }}
+        exit={{ scale: 0.9, opacity: 0, y: 20 }}
+        transition={{ type: 'spring', stiffness: 260, damping: 22 }}
+        style={{ boxShadow: '0 0 60px rgba(0,240,255,0.15), 0 0 120px rgba(168,85,247,0.1)' }}
+      >
+        {/* Top glow bar */}
+        <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-cyan-400 to-transparent" />
+
+        <div className="p-6 sm:p-8">
+          {/* Header */}
+          <div className="flex items-start justify-between mb-6">
+            <div>
+              <StatusBadge label="MATCH FOUND" color="emerald" />
+              <h2 className="text-xl sm:text-2xl font-black text-white mt-2">{jobTitle}</h2>
+              <div className="flex flex-wrap gap-2 mt-2">
+                <span className="text-[10px] text-gray-400 bg-white/5 border border-white/10 rounded-full px-2.5 py-1">{location}</span>
+                {skillList.map((s, i) => (
+                  <span key={i} className="text-[10px] text-cyan-300 bg-cyan-400/5 border border-cyan-400/20 rounded-full px-2.5 py-1">{s}</span>
+                ))}
               </div>
-              <input type="file" accept=".pdf,.doc,.docx,.txt" onChange={handleFileUpload} className="hidden" disabled={phase !== 'idle'} />
-            </label>
-
-            {(phase === 'uploading' || phase === 'matching') && (
-              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mt-4 sm:mt-6 p-3 sm:p-4 rounded-lg bg-purple-400/5 border border-purple-400/10">
-                <div className="flex items-center gap-2 sm:gap-3">
-                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-purple-400 rounded-full animate-pulse" />
-                  <p className="text-[10px] sm:text-xs text-gray-400 font-medium">
-                    {phase === 'uploading' ? 'Extracting job title...' : 'Scanning 100+ roles...'}
-                  </p>
-                </div>
-              </motion.div>
-            )}
+            </div>
+            <button
+              onClick={onClose}
+              className="p-2 rounded-full bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white transition-all flex-shrink-0 ml-3"
+              aria-label="Close"
+            >
+              <X size={16} />
+            </button>
           </div>
-        ) : (
-          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="space-y-4 sm:space-y-6">
-            <HolographicCard color="emerald" variant="stat">
-              <div className="flex items-start justify-between mb-4 gap-2">
-                <div>
-                  <StatusBadge label="MATCH FOUND" color="emerald" size="sm" />
-                  <h4 className="text-lg sm:text-xl font-bold text-white mt-2">{jobTitle}</h4>
-                  <p className="text-[10px] sm:text-xs text-gray-500">RecX Direct Role</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-[9px] text-gray-500 font-black uppercase tracking-widest mb-0.5">Match Score</p>
-                  <p className="text-2xl sm:text-3xl font-bold gradient-text">{matchScore}%</p>
-                </div>
-              </div>
-              <div className="pt-4 border-t border-white/10">
-                <p className="text-[9px] text-gray-500 font-black uppercase tracking-widest mb-1.5">Estimated Split Fee</p>
-                <p className="text-3xl sm:text-4xl font-bold gradient-text">${splitFee.toLocaleString()}</p>
-              </div>
-            </HolographicCard>
 
-            <div className="flex gap-3">
-              <button onClick={resetEngine} className="flex-1 py-3 px-4 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 text-white text-xs font-bold uppercase tracking-widest transition-all">
-                Try Another
-              </button>
-              <GlowButton variant="primary" size="sm" href="{{trigger_link.Hc9mpfL0JxjX06kwNpd1}}" className="flex-1">
-                See Live Roles
-              </GlowButton>
-            </div>
-          </motion.div>
-        )}
-      </HolographicCard>
+          <NeonDivider width="w-full" color="mixed" />
 
-      {/* Middle: Animated Core (LG+) */}
-      <div className="hidden lg:flex relative items-center justify-center min-h-[400px]">
-        <div className="relative w-56 h-56 xl:w-64 xl:h-64">
-          <motion.div className="absolute inset-0 rounded-full border-4 border-transparent" style={{ borderTopColor: 'rgba(0, 255, 255, 0.4)', borderRightColor: 'rgba(0, 255, 255, 0.2)' }}
-            animate={{ rotate: phase === 'matching' ? 360 : 0 }} transition={{ duration: phase === 'matching' ? 2 : 4, repeat: phase === 'matching' ? Infinity : 0, ease: 'linear' }} />
-          <motion.div className="absolute inset-12 rounded-full bg-gradient-to-br from-cyan-500 via-purple-500 to-fuchsia-500 shadow-[0_0_60px_rgba(0,255,255,0.3)]" animate={{ scale: phase === 'matching' ? [1, 1.1, 1] : 1 }}>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <AnimatePresence mode="wait">
-                {phase === 'idle' && <motion.div key="idle" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-white text-center"><Upload size={28} className="mx-auto mb-2" /><p className="text-[10px] font-bold uppercase tracking-widest">Ready</p></motion.div>}
-                {phase === 'matching' && <motion.div key="matching" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-white text-center"><Cpu size={28} className="mx-auto mb-2 animate-pulse" /><p className="text-[10px] font-bold uppercase tracking-widest">Matching</p></motion.div>}
-                {phase === 'result' && <motion.div key="result" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-green-400 text-center"><Check size={36} className="mx-auto mb-2" strokeWidth={3} /><p className="text-[10px] font-bold uppercase tracking-widest">Match Found</p></motion.div>}
-              </AnimatePresence>
+          {/* Recent matches */}
+          <div className="mt-5 mb-6">
+            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 mb-4">Recent Matches on RecXchange</p>
+            <div className="space-y-3">
+              {roles.map((role, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.15 + i * 0.1 }}
+                  className="p-3 sm:p-4 rounded-xl bg-white/[0.03] border border-white/10 hover:border-cyan-400/30 transition-all"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-bold text-white truncate">{jobTitle}</p>
+                      <p className="text-[10px] text-gray-500 mt-0.5">{role.company} · {role.daysAgo}d ago</p>
+                      <div className="flex flex-wrap gap-1.5 mt-2">
+                        <span className="text-[9px] text-gray-400 bg-white/5 rounded-full px-2 py-0.5">{location}</span>
+                        {skillList.slice(0, 2).map((s, j) => (
+                          <span key={j} className="text-[9px] text-cyan-400/70 bg-cyan-400/5 rounded-full px-2 py-0.5">{s}</span>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="text-right flex-shrink-0">
+                      <p className="text-[9px] text-gray-500 uppercase tracking-widest mb-0.5">Split Fee</p>
+                      <p className="text-base sm:text-lg font-black text-white">${role.fee.toLocaleString()}</p>
+                      <p className="text-[9px] text-emerald-400">up to 70%</p>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
             </div>
-          </motion.div>
+          </div>
+
+          {/* CTA */}
+          <GlowButton
+            variant="primary"
+            size="lg"
+            href="https://app.recxchange.io/register?trigger_link=jYQNc9YXcMkYPvo3HZfC"
+            className="w-full text-center"
+          >
+            Join Free &amp; See Live Roles
+          </GlowButton>
+          <p className="text-center text-[10px] text-gray-600 mt-3">Free to join · No credit card required</p>
         </div>
+
+        {/* Bottom glow bar */}
+        <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-fuchsia-400 to-transparent" />
+      </motion.div>
+    </motion.div>
+  );
+}
+
+function XchangeEngine() {
+  const [phase, setPhase] = useState<EnginePhase>('idle');
+  const [showModal, setShowModal] = useState(false);
+  const [jobTitle, setJobTitle] = useState('');
+  const [location, setLocation] = useState('');
+  const [skills, setSkills] = useState('');
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const canSubmit = jobTitle.trim().length > 1 && location.trim().length > 1 && skills.trim().length > 1;
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!canSubmit || phase !== 'idle') return;
+    trackEvent('xchange_engine_submitted', { page: '/recruiters-with-candidates' });
+    setPhase('scanning');
+    timerRef.current = setTimeout(() => {
+      setPhase('result');
+      setShowModal(true);
+    }, 2800);
+  };
+
+  const handleReset = () => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    setPhase('idle');
+    setShowModal(false);
+    setJobTitle('');
+    setLocation('');
+    setSkills('');
+  };
+
+  useEffect(() => () => { if (timerRef.current) clearTimeout(timerRef.current); }, []);
+
+  return (
+    <>
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px_1fr] xl:grid-cols-[1fr_420px_1fr] gap-6 sm:gap-8 lg:gap-6 items-center mb-16 sm:mb-20">
+
+        {/* Left: Input Form */}
+        <HolographicCard color="purple" variant="content">
+          <h3 className="text-lg sm:text-xl font-bold mb-1 gradient-text">Find Matching Roles</h3>
+          <p className="text-gray-400 text-xs sm:text-sm mb-5 leading-relaxed">
+            Enter your candidate details and see what live roles are waiting on RecXchange.
+          </p>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1.5">Job Title *</label>
+              <input
+                type="text"
+                value={jobTitle}
+                onChange={e => setJobTitle(e.target.value)}
+                disabled={phase !== 'idle'}
+                placeholder="e.g. Electrical Engineer"
+                className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white outline-none focus:border-purple-400/50 transition-all disabled:opacity-50 placeholder:text-gray-600"
+              />
+            </div>
+            <div>
+              <label className="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1.5">Location *</label>
+              <input
+                type="text"
+                value={location}
+                onChange={e => setLocation(e.target.value)}
+                disabled={phase !== 'idle'}
+                placeholder="e.g. London, UK"
+                className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white outline-none focus:border-purple-400/50 transition-all disabled:opacity-50 placeholder:text-gray-600"
+              />
+            </div>
+            <div>
+              <label className="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1.5">Key Skills *</label>
+              <input
+                type="text"
+                value={skills}
+                onChange={e => setSkills(e.target.value)}
+                disabled={phase !== 'idle'}
+                placeholder="e.g. AutoCAD, 18th Edition, HV"
+                className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white outline-none focus:border-purple-400/50 transition-all disabled:opacity-50 placeholder:text-gray-600"
+              />
+              <p className="text-[10px] text-gray-600 mt-1">Separate with commas</p>
+            </div>
+            <button
+              type="submit"
+              disabled={!canSubmit || phase !== 'idle'}
+              className="relative w-full py-3 rounded-xl border border-purple-400/40 bg-black/40 overflow-hidden group font-black text-xs uppercase tracking-widest transition-all disabled:opacity-40 disabled:cursor-not-allowed hover:border-purple-300/60"
+            >
+              <span className="absolute inset-0 bg-gradient-to-r from-purple-500/0 via-purple-500/20 to-purple-500/0 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <span className="relative z-10 text-white flex items-center justify-center gap-2">
+                {phase === 'scanning' ? (
+                  <><span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />Scanning...</>
+                ) : (
+                  <><Search size={14} />Find Matches</>
+                )}
+              </span>
+            </button>
+          </form>
+        </HolographicCard>
+
+        {/* Centre: Neuron Core */}
+        <div className="relative flex items-center justify-center min-h-[300px] lg:min-h-[420px]">
+          {/* Scanning rings */}
+          {[1,2,3].map(i => (
+            <motion.div
+              key={i}
+              className="absolute rounded-full border border-cyan-400/20"
+              style={{ width: `${i * 30 + 60}%`, height: `${i * 30 + 60}%` }}
+              animate={phase === 'scanning'
+                ? { scale: [1, 1.08, 1], opacity: [0.15, 0.4, 0.15] }
+                : phase === 'result'
+                ? { opacity: 0.05 }
+                : { opacity: 0.08 }
+              }
+              transition={{ duration: 1.4, delay: i * 0.25, repeat: phase === 'scanning' ? Infinity : 0 }}
+            />
+          ))}
+
+          {/* Outer spinning ring */}
+          <motion.div
+            className="absolute w-52 h-52 xl:w-64 xl:h-64 rounded-full border-2"
+            style={{ borderTopColor: 'rgba(0,240,255,0.5)', borderRightColor: 'rgba(168,85,247,0.3)', borderBottomColor: 'transparent', borderLeftColor: 'transparent' }}
+            animate={{ rotate: phase === 'scanning' ? 360 : 0 }}
+            transition={{ duration: 1.6, repeat: phase === 'scanning' ? Infinity : 0, ease: 'linear' }}
+          />
+          <motion.div
+            className="absolute w-40 h-40 xl:w-52 xl:h-52 rounded-full border"
+            style={{ borderTopColor: 'transparent', borderRightColor: 'transparent', borderBottomColor: 'rgba(255,0,255,0.4)', borderLeftColor: 'rgba(0,240,255,0.2)' }}
+            animate={{ rotate: phase === 'scanning' ? -360 : 0 }}
+            transition={{ duration: 2.2, repeat: phase === 'scanning' ? Infinity : 0, ease: 'linear' }}
+          />
+
+          {/* Core */}
+          <motion.div
+            className="relative w-32 h-32 xl:w-40 xl:h-40 rounded-full flex items-center justify-center"
+            style={{ background: 'radial-gradient(circle, rgba(0,240,255,0.15) 0%, rgba(168,85,247,0.1) 60%, transparent 100%)' }}
+            animate={phase === 'scanning' ? { scale: [1, 1.06, 1] } : {}}
+            transition={{ duration: 0.9, repeat: phase === 'scanning' ? Infinity : 0 }}
+          >
+            {/* Neuron */}
+            <div className="absolute inset-4">
+              <NeuronCore phase={phase} />
+            </div>
+
+            {/* Centre state icon */}
+            <AnimatePresence mode="wait">
+              {phase === 'idle' && (
+                <motion.div key="idle" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 flex flex-col items-center justify-center">
+                  <Cpu size={22} className="text-cyan-400/50 mb-1" />
+                  <p className="text-[8px] font-black uppercase tracking-widest text-cyan-400/40">Ready</p>
+                </motion.div>
+              )}
+              {phase === 'scanning' && (
+                <motion.div key="scanning" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 flex flex-col items-center justify-center">
+                  <Cpu size={22} className="text-cyan-400 mb-1 animate-pulse" />
+                  <p className="text-[8px] font-black uppercase tracking-widest text-cyan-400">Scanning</p>
+                </motion.div>
+              )}
+              {phase === 'result' && (
+                <motion.div key="result" initial={{ opacity: 0, scale: 0.7 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ type: 'spring', stiffness: 300 }} className="absolute inset-0 flex flex-col items-center justify-center">
+                  <Check size={28} strokeWidth={3} className="text-emerald-400 mb-1" />
+                  <p className="text-[8px] font-black uppercase tracking-widest text-emerald-400">Match Found</p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+
+          {/* MATCH FOUND flash text */}
+          <AnimatePresence>
+            {phase === 'result' && (
+              <motion.p
+                className="absolute bottom-4 text-[10px] font-black uppercase tracking-[0.25em] text-emerald-400"
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: [0, 1, 0.7, 1] }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.6 }}
+                style={{ textShadow: '0 0 12px rgba(52,211,153,0.6)' }}
+              >
+                ● MATCH FOUND
+              </motion.p>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Right: Database Utilization */}
+        <HolographicCard color="cyan" variant="content">
+          <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-white">Utilize Your Existing <span className="text-cyan-400">Database</span></h2>
+          <p className="text-gray-400 mb-4 sm:mb-6 leading-relaxed text-xs sm:text-sm">
+            The Xchange Engine automatically analyses your candidates to extract insights and matches them across multiple dimensions.
+          </p>
+          <ul className="space-y-3 sm:space-y-4">
+            {["Semantic matching beyond keywords", "Continuous 24/7 scanning", "Instant notifications"].map((item, i) => (
+              <li key={i} className="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm text-gray-300">
+                <Zap size={14} className="text-cyan-400 flex-shrink-0" />{item}
+              </li>
+            ))}
+          </ul>
+          {phase === 'result' && (
+            <motion.button
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              onClick={handleReset}
+              className="mt-6 w-full py-2.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-white text-xs font-bold uppercase tracking-widest transition-all"
+            >
+              Try Another
+            </motion.button>
+          )}
+        </HolographicCard>
       </div>
 
-      {/* Right: Database Utilization */}
-      <HolographicCard color="cyan" variant="content">
-        <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-white">Utilize Your Existing <span className="text-cyan-400">Database</span></h2>
-        <p className="text-gray-400 mb-4 sm:mb-6 leading-relaxed text-xs sm:text-sm">
-          The Xchange Engine automatically analyzes your CVs to extract insights and matches candidates across multiple dimensions.
-        </p>
-        <ul className="space-y-3 sm:space-y-4">
-          {["Semantic matching beyond keywords", "Continuous 24/7 scanning", "Instant notifications"].map((item, i) => (
-            <li key={i} className="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm text-gray-300"><Zap size={14} className="text-cyan-400 flex-shrink-0" />{item}</li>
-          ))}
-        </ul>
-      </HolographicCard>
-    </div>
+      {/* Match Modal */}
+      <AnimatePresence>
+        {showModal && (
+          <MatchModal
+            jobTitle={jobTitle}
+            location={location}
+            skills={skills}
+            onClose={() => setShowModal(false)}
+          />
+        )}
+      </AnimatePresence>
+    </>
   );
 }
 
@@ -166,15 +424,15 @@ export default function RecruiterCandidatesPage() {
           <motion.header initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-12 sm:mb-16 md:mb-20 mt-6">
             <StatusBadge label="MONETIZE YOUR TALENT" color="cyan" />
             <h1 className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2 mt-6" style={{ textShadow: '0 0 60px rgba(0,240,255,0.3)' }}>
-              Effecient Candidate Matching
+              Efficient Candidate Matching
             </h1>
             <NeonDivider width="w-40" color="mixed" />
             <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed px-2 mt-6">
-              Stop letting your goldmine of candidates gather dust. Share your top candidates with the Xchange Engine and let our AI find the roles they were meant for.
+              Stop letting your goldmine of candidates gather dust. Enter their details below and see what live roles are waiting on RecXchange right now.
             </p>
           </motion.header>
 
-          <FakeXchangeEngine />
+          <XchangeEngine />
 
           {/* Trust Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-16 sm:mb-20">
@@ -203,10 +461,10 @@ export default function RecruiterCandidatesPage() {
             <Globe className="mx-auto text-fuchsia-400 mb-6 sm:mb-8 opacity-50" size={48} />
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6 text-white">No Candidates? <span className="gradient-text">No Problem.</span></h2>
             <p className="text-gray-400 max-w-3xl mx-auto mb-8 sm:mb-12 text-sm sm:text-base px-2">
-              If your internal database doesn't have the right fit, tap into our global search engine. Access over 270 million candidate profiles instantly through our Data Source partner, Apollo. Seemlessly built into RecXchange so you can access candidates and roles, with one login.
+              If your internal database doesn&apos;t have the right fit, tap into our global search engine. Access over 270 million candidate profiles instantly through our Data Source partner, Apollo. Seamlessly built into RecXchange so you can access candidates and roles, with one login.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
-              <GlowButton variant="primary" size="lg" href="{{trigger_link.Hc9mpfL0JxjX06kwNpd1}}">
+              <GlowButton variant="primary" size="lg" href="https://app.recxchange.io/register?trigger_link=jYQNc9YXcMkYPvo3HZfC">
                 <Search size={16} className="inline mr-2" /> Search 270M Candidates
               </GlowButton>
             </div>
