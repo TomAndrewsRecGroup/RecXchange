@@ -34,7 +34,6 @@ export default function ModalWrapper({
   preventClose = false,
   className = '',
 }: ModalWrapperProps) {
-  // Track whether we are mounted on the client so createPortal is safe
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
 
@@ -42,70 +41,75 @@ export default function ModalWrapper({
     if (!preventClose) onClose();
   };
 
-  const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (e.target === e.currentTarget) handleClose();
-  };
-
   const modal = (
     <AnimatePresence>
       {isOpen && (
+        // Root: fixed full-screen container, pointer-events-none so it never
+        // intercepts clicks itself. Children opt back in with pointer-events-auto.
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          // z-[9999] ensures it sits above every page element regardless of DOM position
-          className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6 md:p-8 bg-black/90"
-          onClick={handleBackdropClick}
+          className="fixed inset-0 z-[9999] pointer-events-none"
         >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            transition={{ duration: 0.2 }}
-            className={`w-full ${maxWidthClasses[maxWidth]} max-h-[90vh] overflow-y-auto rounded-2xl sm:rounded-3xl md:rounded-[2.5rem] relative ${className}`}
-            style={{
-              background: '#0a0a0a',
-              border: '1px solid rgba(0, 255, 255, 0.2)',
-            }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Close Button */}
-            <button
-              onClick={handleClose}
-              disabled={preventClose}
-              className="absolute top-4 right-4 sm:top-6 sm:right-6 text-gray-500 hover:text-white transition-colors z-10 disabled:opacity-50 disabled:cursor-not-allowed"
-              aria-label="Close modal"
+          {/* Backdrop — separate element, pointer-events-auto only here.
+              Clicking it calls handleClose; it never overlaps the panel. */}
+          <div
+            className="absolute inset-0 bg-black/90 pointer-events-auto"
+            onClick={handleClose}
+          />
+
+          {/* Panel container — sits on top of backdrop via z-index, flex-centred */}
+          <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-6 md:p-8 pointer-events-none">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ duration: 0.2 }}
+              // pointer-events-auto re-enables interactions on the panel only
+              className={`relative w-full ${maxWidthClasses[maxWidth]} max-h-[90vh] overflow-y-auto rounded-2xl sm:rounded-3xl md:rounded-[2.5rem] pointer-events-auto ${className}`}
+              style={{
+                background: '#0a0a0a',
+                border: '1px solid rgba(0, 255, 255, 0.2)',
+              }}
             >
-              <X size={20} className="sm:w-6 sm:h-6" />
-            </button>
-
-            {/* Header */}
-            <div className="p-6 sm:p-8 md:p-10 border-b border-white/5">
-              <h2
-                className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-3 md:mb-4 pr-8"
-                style={{
-                  background: 'linear-gradient(135deg, #00ffff, #c71df1)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                }}
+              {/* Close Button */}
+              <button
+                onClick={handleClose}
+                disabled={preventClose}
+                className="absolute top-4 right-4 sm:top-6 sm:right-6 text-gray-500 hover:text-white transition-colors z-10 disabled:opacity-50 disabled:cursor-not-allowed"
+                aria-label="Close modal"
               >
-                {title}
-              </h2>
-              {subtitle && (
-                <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">{subtitle}</p>
-              )}
-            </div>
+                <X size={20} className="sm:w-6 sm:h-6" />
+              </button>
 
-            {/* Content */}
-            <div className="p-6 sm:p-8 md:p-10">{children}</div>
-          </motion.div>
+              {/* Header */}
+              <div className="p-6 sm:p-8 md:p-10 border-b border-white/5">
+                <h2
+                  className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-3 md:mb-4 pr-8"
+                  style={{
+                    background: 'linear-gradient(135deg, #00ffff, #c71df1)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                  }}
+                >
+                  {title}
+                </h2>
+                {subtitle && (
+                  <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">{subtitle}</p>
+                )}
+              </div>
+
+              {/* Content */}
+              <div className="p-6 sm:p-8 md:p-10">{children}</div>
+            </motion.div>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>
   );
 
-  // Render into document.body via portal — escapes any parent overflow/transform/stacking context
   if (!mounted) return null;
   return createPortal(modal, document.body);
 }
