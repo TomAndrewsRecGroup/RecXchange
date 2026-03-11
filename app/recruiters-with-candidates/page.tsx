@@ -136,7 +136,7 @@ function FakeXchangeEngine() {
 
       {/* Right: Database Utilization */}
       <HolographicCard color="cyan" variant="content">
-        <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4">Utilize Your Existing <span className="text-cyan-400">Database</span></h2>
+        <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-white">Utilize Your Existing <span className="text-cyan-400">Database</span></h2>
         <p className="text-gray-400 mb-4 sm:mb-6 leading-relaxed text-xs sm:text-sm">
           The Xchange Engine automatically analyzes your CVs to extract insights and matches candidates across multiple dimensions.
         </p>
@@ -201,7 +201,7 @@ export default function RecruiterCandidatesPage() {
           {/* 270M Search Section */}
           <HolographicCard color="purple" variant="content" glowIntensity="high" className="text-center">
             <Globe className="mx-auto text-fuchsia-400 mb-6 sm:mb-8 opacity-50" size={48} />
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6">No Candidates? <span className="gradient-text">No Problem.</span></h2>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6 text-white">No Candidates? <span className="gradient-text">No Problem.</span></h2>
             <p className="text-gray-400 max-w-3xl mx-auto mb-8 sm:mb-12 text-sm sm:text-base px-2">
               If your internal database doesn't have the right fit, tap into our global AI search engine. Access over 270 million candidate profiles instantly.
             </p>
