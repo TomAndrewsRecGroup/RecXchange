@@ -40,6 +40,8 @@ export type EventName =
   | 'fake_engine_result_shown'
   | 'fake_engine_signup_clicked'
   | 'fake_engine_try_another_clicked'
+  | 'xchange_engine_submitted'
+  | 'xchange_engine_reset'
   | 'pricing_page_viewed'
   | 'roles_page_viewed'
   | 'faq_section_viewed'
