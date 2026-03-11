@@ -21,6 +21,12 @@ const currencies: Currency[] = [
   { code: 'EUR', symbol: '€', name: 'Euro' },
   { code: 'AUD', symbol: '$', name: 'Australian Dollar' },
   { code: 'CAD', symbol: '$', name: 'Canadian Dollar' },
+  { code: 'AED', symbol: 'د.إ', name: 'UAE Dirham' },
+  { code: 'JPY', symbol: '¥', name: 'Japanese Yen' },
+  { code: 'CHF', symbol: 'Fr', name: 'Swiss Franc' },
+  { code: 'CNY', symbol: '¥', name: 'Chinese Yuan' },
+  { code: 'INR', symbol: '₹', name: 'Indian Rupee' },
+  { code: 'NZD', symbol: '$', name: 'New Zealand Dollar' },
 ];
 
 export default function PostRolesPage() {
@@ -43,11 +49,11 @@ export default function PostRolesPage() {
             <StatusBadge label="NEED CANDIDATES?" color="purple" />
             <h1 className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2 mt-6"
               style={{ textShadow: '0 0 60px rgba(0,240,255,0.3)' }}>
-              See how much you'll take home
+              See how much you'll still take home
             </h1>
             <NeonDivider width="w-40" color="mixed" />
             <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed px-2 mt-6">
-              After collaborating with a pre-vetted recruiter. Split the work. Split the fee. Keep more than you think.
+              Post your role. Collaborating with a pre-vetted recruiter. Split the work. Split the fee. Keep more than you think.
             </p>
           </motion.header>
 
@@ -58,8 +64,8 @@ export default function PostRolesPage() {
                 <h2 className="text-lg sm:text-xl md:text-2xl font-bold mb-6 sm:mb-8 text-white">Role Liquidity. Partnered Success.</h2>
                 <div className="space-y-6 sm:space-y-8">
                   {[
-                    { t: "Verified Roles", d: "Broadcast roles with pre-agreed fee structures. RecXchange ensures every partner is pre-vetted for quality." },
-                    { t: "Tiered Visibility", d: "Total control. Broadcast to the open marketplace or limit visibility to your private 'Circle of Trust'." },
+                    { t: "Verified Roles", d: "Broadcast roles with pre-agreed fee. RecXchange ensures every partner is pre-vetted for quality." },
+                    { t: "Controlled Visibility", d: "Total control. Submit what you only want to share. Keep your clients private." },
                     { t: "Unified Pipeline", d: "Track candidate flows from multiple partners in one dashboard. No more messy email chains or lost CVs." }
                   ].map((item, i) => (
                     <motion.div 
@@ -88,7 +94,7 @@ export default function PostRolesPage() {
                   Secure Transaction Layer
                 </h3>
                 <p className="text-[11px] sm:text-xs text-gray-400 leading-relaxed">
-                  RecXchange acts as the neutral escrow and contract guardian. Automated Split Fee Agreements (SFAs) are generated at the point of candidate submission to lock in your commercial protection.
+                  RecXchange acts as the neutral contract guardian. Automated Split Fee Agreements (SFAs) are generated at the point of candidate match to lock in your commercial protection and non-circumvention.
                 </p>
               </HolographicCard>
             </div>
@@ -99,7 +105,7 @@ export default function PostRolesPage() {
                 <HolographicCard color="fuchsia" variant="content" glowIntensity="high">
                   <div className="mb-6 sm:mb-8">
                     <h2 className="text-xl sm:text-2xl font-bold text-white mb-1.5 sm:mb-2 text-center">Split Fee Calculator</h2>
-                    <p className="text-[10px] sm:text-[11px] text-gray-500 text-center uppercase tracking-widest font-black">Revenue Projection Engine</p>
+                    <p className="text-[10px] sm:text-[11px] text-gray-500 text-center uppercase tracking-widest font-black">Post. Split. See what you still earn</p>
                   </div>
                   
                   <div className="space-y-6 sm:space-y-8">
