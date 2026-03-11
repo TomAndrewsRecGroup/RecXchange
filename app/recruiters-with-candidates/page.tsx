@@ -164,13 +164,13 @@ export default function RecruiterCandidatesPage() {
 
           {/* Header */}
           <motion.header initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-12 sm:mb-16 md:mb-20 mt-6">
-            <StatusBadge label="MONETIZE YOUR DATABASE" color="cyan" />
+            <StatusBadge label="MONETIZE YOUR TALENT" color="cyan" />
             <h1 className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2 mt-6" style={{ textShadow: '0 0 60px rgba(0,240,255,0.3)' }}>
-              AI-Powered Candidate Matching
+              Effecient Candidate Matching
             </h1>
             <NeonDivider width="w-40" color="mixed" />
             <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed px-2 mt-6">
-              Stop letting your goldmine of candidates gather dust. Share your database with the Xchange Engine and let our AI find the roles they were meant for.
+              Stop letting your goldmine of candidates gather dust. Share your top candidates with the Xchange Engine and let our AI find the roles they were meant for.
             </p>
           </motion.header>
 
@@ -203,7 +203,7 @@ export default function RecruiterCandidatesPage() {
             <Globe className="mx-auto text-fuchsia-400 mb-6 sm:mb-8 opacity-50" size={48} />
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6 text-white">No Candidates? <span className="gradient-text">No Problem.</span></h2>
             <p className="text-gray-400 max-w-3xl mx-auto mb-8 sm:mb-12 text-sm sm:text-base px-2">
-              If your internal database doesn't have the right fit, tap into our global AI search engine. Access over 270 million candidate profiles instantly.
+              If your internal database doesn't have the right fit, tap into our global search engine. Access over 270 million candidate profiles instantly through our Data Source partner, Apollo. Seemlessly built into RecXchange so you can access candidates and roles, with one login.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
               <GlowButton variant="primary" size="lg" href="{{trigger_link.Hc9mpfL0JxjX06kwNpd1}}">
