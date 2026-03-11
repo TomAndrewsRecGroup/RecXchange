@@ -11,29 +11,82 @@ import GlowButton from '@/components/design-system/GlowButton';
 
 type EnginePhase = 'idle' | 'scanning' | 'result';
 
-// Seeded example roles shown in the modal — job title/location/skills/fee are
-// swapped in based on what the user entered so the result always feels personal.
 const ROLE_TEMPLATES = [
-  { company: 'Global Staffing Partner', daysAgo: 2,  feeMin: 5500,  feeMax: 8000  },
-  { company: 'Boutique Search Firm',    daysAgo: 5,  feeMin: 6000,  feeMax: 9500  },
-  { company: 'Independent Recruiter',   daysAgo: 1,  feeMin: 4500,  feeMax: 7000  },
+  { company: 'Global Staffing Partner', daysAgo: 2, feeMin: 5500, feeMax: 8000 },
+  { company: 'Boutique Search Firm',    daysAgo: 5, feeMin: 6000, feeMax: 9500 },
+  { company: 'Independent Recruiter',   daysAgo: 1, feeMin: 4500, feeMax: 7000 },
 ];
+
+// Generate 3 varied but related role titles from the entered job title
+function generateRoleTitles(baseTitle: string): string[] {
+  const t = baseTitle.trim();
+  const lower = t.toLowerCase();
+
+  // Strip any existing seniority prefix to get the core title
+  const coreTitle = t
+    .replace(/^(senior|lead|principal|junior|associate|staff|chief|head of|vp of|director of)\s+/i, '')
+    .trim();
+
+  // Build a pool of 3 distinct variants — different seniority or phrasing
+  const variants: string[] = [];
+
+  // Variant 1: Senior prefix (unless already senior)
+  if (!lower.startsWith('senior')) {
+    variants.push(`Senior ${coreTitle}`);
+  } else {
+    variants.push(`Lead ${coreTitle}`);
+  }
+
+  // Variant 2: exact title as entered
+  variants.push(t);
+
+  // Variant 3: a natural related form
+  if (lower.includes('engineer')) {
+    variants.push(coreTitle.replace(/engineer$/i, 'Specialist'));
+  } else if (lower.includes('manager')) {
+    variants.push(coreTitle.replace(/manager$/i, 'Lead'));
+  } else if (lower.includes('developer')) {
+    variants.push(coreTitle.replace(/developer$/i, 'Engineer'));
+  } else if (lower.includes('consultant')) {
+    variants.push(`Senior ${coreTitle}`);
+    // avoid duplicate — use Associate instead
+    variants[2] = `Associate ${coreTitle}`;
+  } else if (lower.includes('analyst')) {
+    variants.push(`${coreTitle} – Contract`);
+  } else if (lower.includes('director')) {
+    variants.push(`VP of ${coreTitle.replace(/director( of)?/i, '').trim()}`);
+  } else {
+    variants.push(`${coreTitle} – Contract`);
+  }
+
+  // Deduplicate just in case
+  const seen = new Set<string>();
+  const unique: string[] = [];
+  for (const v of variants) {
+    const key = v.toLowerCase();
+    if (!seen.has(key)) { seen.add(key); unique.push(v); }
+  }
+
+  // Pad to 3 if deduplication removed something
+  if (unique.length < 3) unique.push(`${coreTitle} – Permanent`);
+
+  return unique.slice(0, 3);
+}
 
 function randomInRange(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// Neuron SVG — animated nodes + connecting lines drawn as SVG paths
 function NeuronCore({ phase }: { phase: EnginePhase }) {
   const nodes = [
-    { cx: 50,  cy: 50  },
-    { cx: 78,  cy: 28  },
-    { cx: 82,  cy: 68  },
-    { cx: 22,  cy: 32  },
-    { cx: 18,  cy: 72  },
-    { cx: 50,  cy: 88  },
-    { cx: 90,  cy: 50  },
-    { cx: 10,  cy: 50  },
+    { cx: 50, cy: 50 },
+    { cx: 78, cy: 28 },
+    { cx: 82, cy: 68 },
+    { cx: 22, cy: 32 },
+    { cx: 18, cy: 72 },
+    { cx: 50, cy: 88 },
+    { cx: 90, cy: 50 },
+    { cx: 10, cy: 50 },
   ];
   const edges = [
     [0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],
@@ -82,8 +135,10 @@ function MatchModal({
   onClose: () => void;
 }) {
   const skillList = skills.split(',').map(s => s.trim()).filter(Boolean).slice(0, 4);
-  const roles = ROLE_TEMPLATES.map(t => ({
+  const roleTitles = generateRoleTitles(jobTitle);
+  const roles = ROLE_TEMPLATES.map((t, i) => ({
     ...t,
+    title: roleTitles[i],
     fee: randomInRange(t.feeMin, t.feeMax),
   }));
 
@@ -94,13 +149,11 @@ function MatchModal({
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      {/* Backdrop */}
       <motion.div
         className="absolute inset-0 bg-black/80 backdrop-blur-sm"
         onClick={onClose}
       />
 
-      {/* Modal */}
       <motion.div
         className="relative w-full max-w-lg z-10 rounded-3xl border border-cyan-400/30 bg-[#0a0a0f]/95 overflow-hidden"
         initial={{ scale: 0.85, opacity: 0, y: 30 }}
@@ -109,11 +162,9 @@ function MatchModal({
         transition={{ type: 'spring', stiffness: 260, damping: 22 }}
         style={{ boxShadow: '0 0 60px rgba(0,240,255,0.15), 0 0 120px rgba(168,85,247,0.1)' }}
       >
-        {/* Top glow bar */}
         <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-cyan-400 to-transparent" />
 
         <div className="p-6 sm:p-8">
-          {/* Header */}
           <div className="flex items-start justify-between mb-6">
             <div>
               <StatusBadge label="MATCH FOUND" color="emerald" />
@@ -136,7 +187,6 @@ function MatchModal({
 
           <NeonDivider width="w-full" color="mixed" />
 
-          {/* Recent matches */}
           <div className="mt-5 mb-6">
             <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 mb-4">Recent Matches on RecXchange</p>
             <div className="space-y-3">
@@ -150,7 +200,7 @@ function MatchModal({
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-bold text-white truncate">{jobTitle}</p>
+                      <p className="text-sm font-bold text-white truncate">{role.title}</p>
                       <p className="text-[10px] text-gray-500 mt-0.5">{role.company} · {role.daysAgo}d ago</p>
                       <div className="flex flex-wrap gap-1.5 mt-2">
                         <span className="text-[9px] text-gray-400 bg-white/5 rounded-full px-2 py-0.5">{location}</span>
@@ -170,19 +220,17 @@ function MatchModal({
             </div>
           </div>
 
-          {/* CTA */}
           <GlowButton
             variant="primary"
             size="lg"
             href="https://app.recxchange.io/register?trigger_link=jYQNc9YXcMkYPvo3HZfC"
             className="w-full text-center"
           >
-            Join Free &amp; See Live Roles
+            Join RecXchange &amp; See Live Roles
           </GlowButton>
-          <p className="text-center text-[10px] text-gray-600 mt-3">Free to join · No credit card required</p>
+          <p className="text-center text-[10px] text-gray-500 mt-3">From $1/month &middot; Cancel anytime</p>
         </div>
 
-        {/* Bottom glow bar */}
         <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-fuchsia-400 to-transparent" />
       </motion.div>
     </motion.div>
@@ -225,7 +273,6 @@ function XchangeEngine() {
     <>
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px_1fr] xl:grid-cols-[1fr_420px_1fr] gap-6 sm:gap-8 lg:gap-6 items-center mb-16 sm:mb-20">
 
-        {/* Left: Input Form */}
         <HolographicCard color="purple" variant="content">
           <h3 className="text-lg sm:text-xl font-bold mb-1 gradient-text">Find Matching Roles</h3>
           <p className="text-gray-400 text-xs sm:text-sm mb-5 leading-relaxed">
@@ -283,9 +330,7 @@ function XchangeEngine() {
           </form>
         </HolographicCard>
 
-        {/* Centre: Neuron Core */}
         <div className="relative flex items-center justify-center min-h-[300px] lg:min-h-[420px]">
-          {/* Scanning rings */}
           {[1,2,3].map(i => (
             <motion.div
               key={i}
@@ -300,8 +345,6 @@ function XchangeEngine() {
               transition={{ duration: 1.4, delay: i * 0.25, repeat: phase === 'scanning' ? Infinity : 0 }}
             />
           ))}
-
-          {/* Outer spinning ring */}
           <motion.div
             className="absolute w-52 h-52 xl:w-64 xl:h-64 rounded-full border-2"
             style={{ borderTopColor: 'rgba(0,240,255,0.5)', borderRightColor: 'rgba(168,85,247,0.3)', borderBottomColor: 'transparent', borderLeftColor: 'transparent' }}
@@ -314,20 +357,15 @@ function XchangeEngine() {
             animate={{ rotate: phase === 'scanning' ? -360 : 0 }}
             transition={{ duration: 2.2, repeat: phase === 'scanning' ? Infinity : 0, ease: 'linear' }}
           />
-
-          {/* Core */}
           <motion.div
             className="relative w-32 h-32 xl:w-40 xl:h-40 rounded-full flex items-center justify-center"
             style={{ background: 'radial-gradient(circle, rgba(0,240,255,0.15) 0%, rgba(168,85,247,0.1) 60%, transparent 100%)' }}
             animate={phase === 'scanning' ? { scale: [1, 1.06, 1] } : {}}
             transition={{ duration: 0.9, repeat: phase === 'scanning' ? Infinity : 0 }}
           >
-            {/* Neuron */}
             <div className="absolute inset-4">
               <NeuronCore phase={phase} />
             </div>
-
-            {/* Centre state icon */}
             <AnimatePresence mode="wait">
               {phase === 'idle' && (
                 <motion.div key="idle" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 flex flex-col items-center justify-center">
@@ -349,8 +387,6 @@ function XchangeEngine() {
               )}
             </AnimatePresence>
           </motion.div>
-
-          {/* MATCH FOUND flash text */}
           <AnimatePresence>
             {phase === 'result' && (
               <motion.p
@@ -367,7 +403,6 @@ function XchangeEngine() {
           </AnimatePresence>
         </div>
 
-        {/* Right: Database Utilization */}
         <HolographicCard color="cyan" variant="content">
           <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-white">Utilize Your Existing <span className="text-cyan-400">Database</span></h2>
           <p className="text-gray-400 mb-4 sm:mb-6 leading-relaxed text-xs sm:text-sm">
@@ -393,7 +428,6 @@ function XchangeEngine() {
         </HolographicCard>
       </div>
 
-      {/* Match Modal */}
       <AnimatePresence>
         {showModal && (
           <MatchModal
@@ -420,7 +454,6 @@ export default function RecruiterCandidatesPage() {
       <div className="relative z-10 pt-16 sm:pt-20 md:pt-28 pb-12 sm:pb-16 md:pb-20 px-4 sm:px-6">
         <div className="max-w-[1400px] mx-auto">
 
-          {/* Header */}
           <motion.header initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-12 sm:mb-16 md:mb-20 mt-6">
             <StatusBadge label="MONETIZE YOUR TALENT" color="cyan" />
             <h1 className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2 mt-6" style={{ textShadow: '0 0 60px rgba(0,240,255,0.3)' }}>
@@ -434,7 +467,6 @@ export default function RecruiterCandidatesPage() {
 
           <XchangeEngine />
 
-          {/* Trust Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-16 sm:mb-20">
             <HolographicCard color="fuchsia" variant="feature">
               <div className="flex gap-3 sm:gap-4 items-start">
@@ -456,7 +488,6 @@ export default function RecruiterCandidatesPage() {
             </HolographicCard>
           </div>
 
-          {/* 270M Search Section */}
           <HolographicCard color="purple" variant="content" glowIntensity="high" className="text-center">
             <Globe className="mx-auto text-fuchsia-400 mb-6 sm:mb-8 opacity-50" size={48} />
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6 text-white">No Candidates? <span className="gradient-text">No Problem.</span></h2>
