@@ -17,20 +17,17 @@ const ROLE_TEMPLATES = [
   { company: 'Independent Recruiter',   daysAgo: 1, feeMin: 4500, feeMax: 7000 },
 ];
 
-// Generate 3 varied but related role titles from the entered job title
 function generateRoleTitles(baseTitle: string): string[] {
   const t = baseTitle.trim();
   const lower = t.toLowerCase();
 
-  // Strip any existing seniority prefix to get the core title
   const coreTitle = t
     .replace(/^(senior|lead|principal|junior|associate|staff|chief|head of|vp of|director of)\s+/i, '')
     .trim();
 
-  // Build a pool of 3 distinct variants — different seniority or phrasing
   const variants: string[] = [];
 
-  // Variant 1: Senior prefix (unless already senior)
+  // Variant 1: seniority prefix
   if (!lower.startsWith('senior')) {
     variants.push(`Senior ${coreTitle}`);
   } else {
@@ -40,7 +37,7 @@ function generateRoleTitles(baseTitle: string): string[] {
   // Variant 2: exact title as entered
   variants.push(t);
 
-  // Variant 3: a natural related form
+  // Variant 3: role-type swap — permanent placements only
   if (lower.includes('engineer')) {
     variants.push(coreTitle.replace(/engineer$/i, 'Specialist'));
   } else if (lower.includes('manager')) {
@@ -48,18 +45,16 @@ function generateRoleTitles(baseTitle: string): string[] {
   } else if (lower.includes('developer')) {
     variants.push(coreTitle.replace(/developer$/i, 'Engineer'));
   } else if (lower.includes('consultant')) {
-    variants.push(`Senior ${coreTitle}`);
-    // avoid duplicate — use Associate instead
-    variants[2] = `Associate ${coreTitle}`;
+    variants.push(`Associate ${coreTitle}`);
   } else if (lower.includes('analyst')) {
-    variants.push(`${coreTitle} – Contract`);
+    variants.push(`Senior ${coreTitle} – Permanent`);
   } else if (lower.includes('director')) {
     variants.push(`VP of ${coreTitle.replace(/director( of)?/i, '').trim()}`);
   } else {
-    variants.push(`${coreTitle} – Contract`);
+    variants.push(`Senior ${coreTitle} – Permanent`);
   }
 
-  // Deduplicate just in case
+  // Deduplicate
   const seen = new Set<string>();
   const unique: string[] = [];
   for (const v of variants) {
@@ -67,7 +62,6 @@ function generateRoleTitles(baseTitle: string): string[] {
     if (!seen.has(key)) { seen.add(key); unique.push(v); }
   }
 
-  // Pad to 3 if deduplication removed something
   if (unique.length < 3) unique.push(`${coreTitle} – Permanent`);
 
   return unique.slice(0, 3);
