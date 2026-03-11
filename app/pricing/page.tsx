@@ -1,7 +1,7 @@
 'use client';
 
 import React from "react";
-import { Check, HelpCircle } from "lucide-react";
+import { Check } from "lucide-react";
 import { motion } from 'framer-motion';
 import FuturisticBackground from '@/components/design-system/FuturisticBackground';
 import HolographicCard from '@/components/design-system/HolographicCard';
@@ -71,26 +71,6 @@ const tiers = [
     highlighted: true,
     badge: "MOST POPULAR",
   },
-  {
-    name: "Teams",
-    price: "Custom",
-    period: "",
-    description: "For agencies with 5+ recruiters",
-    tokens: "Scaled tokens",
-    recxDirectAccess: "Instant access",
-    features: [
-      "Custom CV storage",
-      "Scaled token allocation",
-      "Instant RecX Direct access",
-      "Team performance dashboard",
-      "Shared candidate pools",
-      "White-label options",
-      "API access",
-      "Custom integrations",
-    ],
-    color: "emerald" as const,
-    highlighted: false,
-  },
 ];
 
 export default function PricingPage() {
@@ -116,7 +96,7 @@ export default function PricingPage() {
           </motion.header>
 
           {/* Pricing Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6 mb-8 sm:mb-10 md:mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 md:gap-6 mb-8 sm:mb-10 md:mb-16">
             {tiers.map((tier, index) => (
               <motion.div
                 key={tier.name}
@@ -146,8 +126,7 @@ export default function PricingPage() {
                     
                     <div className="flex items-baseline gap-1">
                       <span className="text-2xl sm:text-3xl md:text-4xl font-black text-white">
-                        {tier.price === "Custom" ? "" : "£"}
-                        {tier.price}
+                        ${tier.price}
                       </span>
                       {tier.period && (
                         <span className="text-gray-400 text-xs sm:text-sm">{tier.period}</span>
@@ -178,10 +157,10 @@ export default function PricingPage() {
                   <GlowButton
                     variant={tier.highlighted ? "primary" : "secondary"}
                     size="md"
-                    href={tier.name === "Teams" ? "/contact" : "#pricing"}
+                    href="https://app.recxchange.io/register?trigger_link=jYQNc9YXcMkYPvo3HZfC"
                     className="w-full"
                   >
-                    {tier.name === "Teams" ? "Contact Sales" : "Get Started"}
+                    Get Started
                   </GlowButton>
                 </HolographicCard>
               </motion.div>
@@ -202,19 +181,19 @@ export default function PricingPage() {
                 What Are Tokens?
               </h2>
               <p className="text-gray-300 text-sm sm:text-base max-w-3xl mx-auto">
-                Tokens are how you participate in RecXchange. Every action costs 1 token.
+                Tokens are your proof of intent. They unlock contact details and let you submit candidates to live roles.
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 md:gap-6">
               <HolographicCard color="cyan" variant="feature" showStatusIndicator={true}>
                 <h3 className="text-base sm:text-lg md:text-xl font-bold text-white mb-3 sm:mb-4">
-                  Post a Role
+                  Unlock Contact Details
                 </h3>
                 <p className="text-gray-300 text-xs sm:text-sm mb-4 sm:mb-5 md:mb-6">
-                  Use 1 token to post your role to the RecXchange community. Other recruiters can submit their candidates. When a placement is made, you split the fee.
+                  Use 1 token to reveal a candidate&apos;s full contact details from the database. Real conversations start here.
                 </p>
-                <div className="text-cyan-300 text-xs sm:text-sm font-bold">1 Token = 1 Role Posted</div>
+                <div className="text-cyan-300 text-xs sm:text-sm font-bold">1 Token = 1 Contact Unlocked</div>
               </HolographicCard>
 
               <HolographicCard color="fuchsia" variant="feature" showStatusIndicator={true}>
@@ -222,7 +201,7 @@ export default function PricingPage() {
                   Submit a Candidate
                 </h3>
                 <p className="text-gray-300 text-xs sm:text-sm mb-4 sm:mb-5 md:mb-6">
-                  Use 1 token to submit your candidate to a role posted by another recruiter. If your candidate gets hired, you split the fee.
+                  Use 1 token to submit your candidate to a live role. If they get hired, you earn your split of the fee.
                 </p>
                 <div className="text-fuchsia-300 text-xs sm:text-sm font-bold">1 Token = 1 Candidate Submitted</div>
               </HolographicCard>
@@ -230,7 +209,7 @@ export default function PricingPage() {
 
             <div className="mt-5 sm:mt-6 md:mt-8 text-center">
               <p className="text-gray-400 text-xs sm:text-sm">
-                💡 <strong>Pro Tip:</strong> One placement typically pays for 5-12 months of Pro membership
+                💡 <strong>Pro Tip:</strong> One placement typically pays for 5–12 months of Pro membership
               </p>
             </div>
           </motion.section>
@@ -274,7 +253,7 @@ export default function PricingPage() {
                   </li>
                   <li className="flex gap-3">
                     <span className="flex-shrink-0 w-6 h-6 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-300 font-bold text-xs">4</span>
-                    <span>Andrews Recruitment Group or Senior RecXchange Account Managers handle all client communication</span>
+                    <span>Your dedicated Account Manager handles all client communication</span>
                   </li>
                   <li className="flex gap-3">
                     <span className="flex-shrink-0 w-6 h-6 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-300 font-bold text-xs">5</span>
@@ -293,7 +272,7 @@ export default function PricingPage() {
                       <span className="text-white font-bold text-xs sm:text-sm">Pro Members</span>
                       <StatusBadge label="INSTANT" color="emerald" />
                     </div>
-                    <p className="text-gray-400 text-[11px] sm:text-xs">Get access to RecX Direct roles the moment they're posted</p>
+                    <p className="text-gray-400 text-[11px] sm:text-xs">Get access to RecX Direct roles the moment they&apos;re posted</p>
                   </div>
                   
                   <div className="p-3 sm:p-4 bg-purple-500/5 border border-purple-500/20 rounded-lg">
@@ -349,7 +328,7 @@ export default function PricingPage() {
 
               <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-white/5 text-center">
                 <p className="text-gray-400 text-xs sm:text-sm">
-                  ℹ️ You'll only deal with one point of contact (Andrews Recruitment Group or Senior RecXchange Account Managers)
+                  ℹ️ You&apos;ll only deal with one point of contact — your dedicated Account Manager.
                 </p>
               </div>
             </HolographicCard>
@@ -367,21 +346,21 @@ export default function PricingPage() {
                 Ready to Start Splitting Fees?
               </h2>
               <p className="text-gray-300 text-xs sm:text-sm md:text-base mb-5 sm:mb-6 md:mb-8 px-2">
-                Join 15,000+ recruiters earning an average of $7,000 per placement
+                Join 12,000+ recruiters already on the platform. From $1/month.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-                <GlowButton variant="primary" size="lg" href="/contact">
-                  Start Free Trial
+                <GlowButton variant="primary" size="lg" href="https://app.recxchange.io/register?trigger_link=jYQNc9YXcMkYPvo3HZfC">
+                  Get Started
                 </GlowButton>
                 <GlowButton variant="ghost" size="lg" href="/why-recxchange">
-                  Why RecXchange?
+                  Why RecXchange
                 </GlowButton>
               </div>
             </HolographicCard>
           </motion.section>
 
           <div className="mt-8 sm:mt-10 md:mt-12">
-            <LastUpdated date="2025-01-27" />
+            <LastUpdated date="2026-03-11" />
           </div>
         </div>
       </div>
