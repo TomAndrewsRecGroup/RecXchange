@@ -42,45 +42,33 @@ function randomInRange(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// ─── Orbital dots — always spinning, 4 dots at different radii/speeds ───────
+// ─── Orbital dots ─────────────────────────────────────────────────────────────
 function OrbitalDots({ phase }: { phase: EnginePhase }) {
   const orbits = [
-    { r: 88,  duration: 3.2, color: 'rgba(0,240,255,0.7)',   size: 4, startAngle: 0   },
-    { r: 104, duration: 5.1, color: 'rgba(168,85,247,0.6)',  size: 3, startAngle: 120 },
-    { r: 76,  duration: 2.4, color: 'rgba(255,0,255,0.5)',   size: 3, startAngle: 240 },
-    { r: 118, duration: 7.8, color: 'rgba(0,240,255,0.4)',   size: 2, startAngle: 60  },
+    { r: 88,  duration: 3.2, color: 'rgba(0,240,255,0.7)',  size: 4, startAngle: 0   },
+    { r: 104, duration: 5.1, color: 'rgba(168,85,247,0.6)', size: 3, startAngle: 120 },
+    { r: 76,  duration: 2.4, color: 'rgba(255,0,255,0.5)',  size: 3, startAngle: 240 },
+    { r: 118, duration: 7.8, color: 'rgba(0,240,255,0.4)',  size: 2, startAngle: 60  },
   ];
   return (
     <>
       {orbits.map((o, i) => (
-        <motion.div
-          key={i}
-          className="absolute"
+        <motion.div key={i} className="absolute"
           style={{ width: o.r * 2, height: o.r * 2, top: '50%', left: '50%', marginTop: -o.r, marginLeft: -o.r }}
           animate={{ rotate: 360 }}
           transition={{ duration: phase === 'scanning' ? o.duration * 0.45 : o.duration, repeat: Infinity, ease: 'linear' }}
         >
-          {/* the dot sits at the top of the circle */}
-          <div
-            className="absolute rounded-full"
-            style={{
-              width: o.size,
-              height: o.size,
-              top: 0,
-              left: '50%',
-              marginLeft: -(o.size / 2),
-              background: o.color,
-              boxShadow: `0 0 ${o.size * 3}px ${o.color}`,
-              transform: `rotate(${o.startAngle}deg) translateY(0)`,
-            }}
-          />
+          <div className="absolute rounded-full" style={{
+            width: o.size, height: o.size, top: 0, left: '50%', marginLeft: -(o.size / 2),
+            background: o.color, boxShadow: `0 0 ${o.size * 3}px ${o.color}`,
+          }} />
         </motion.div>
       ))}
     </>
   );
 }
 
-// ─── Scan counter — counts up during scanning, holds on result ───────────────
+// ─── Scan counter ─────────────────────────────────────────────────────────────
 function ScanCounter({ phase }: { phase: EnginePhase }) {
   const [count, setCount] = useState(0);
   const rafRef = useRef<number | null>(null);
@@ -94,7 +82,6 @@ function ScanCounter({ phase }: { phase: EnginePhase }) {
       const tick = (now: number) => {
         const elapsed = now - (startRef.current ?? now);
         const progress = Math.min(elapsed / DURATION, 1);
-        // ease-out curve so it slows near the end
         const eased = 1 - Math.pow(1 - progress, 3);
         setCount(Math.floor(eased * TARGET));
         if (progress < 1) rafRef.current = requestAnimationFrame(tick);
@@ -112,94 +99,179 @@ function ScanCounter({ phase }: { phase: EnginePhase }) {
   if (phase === 'idle') return null;
 
   return (
-    <motion.div
-      className="absolute flex flex-col items-center"
-      style={{ bottom: 28 }}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
+    <motion.div className="absolute flex flex-col items-center" style={{ bottom: 28 }}
+      initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
     >
       <p className="text-[9px] font-black uppercase tracking-[0.2em] text-gray-600 mb-0.5">Profiles Scanned</p>
-      <p
-        className="text-sm font-black tabular-nums"
-        style={{ color: phase === 'result' ? 'rgb(52,211,153)' : 'rgb(0,240,255)', textShadow: phase === 'result' ? '0 0 10px rgba(52,211,153,0.6)' : '0 0 10px rgba(0,240,255,0.5)' }}
-      >
+      <p className="text-sm font-black tabular-nums" style={{
+        color: phase === 'result' ? 'rgb(52,211,153)' : 'rgb(0,240,255)',
+        textShadow: phase === 'result' ? '0 0 10px rgba(52,211,153,0.6)' : '0 0 10px rgba(0,240,255,0.5)'
+      }}>
         {count.toLocaleString()}
       </p>
     </motion.div>
   );
 }
 
-// ─── Telemetry bar — always-on status lines above the core ──────────────────
-function TelemetryBar({ phase }: { phase: EnginePhase }) {
-  const [tick, setTick] = useState(0);
-  useEffect(() => {
-    const id = setInterval(() => setTick(t => t + 1), 1600);
-    return () => clearInterval(id);
-  }, []);
+// ─── Electric NeuronCore ──────────────────────────────────────────────────────
+// Each edge fires a glowing pulse-dot that travels from one node to the other
+// at a random interval, mimicking real synaptic transmission.
+const NODES = [
+  { cx: 50, cy: 50 },  // 0 — soma (centre)
+  { cx: 76, cy: 24 },  // 1
+  { cx: 84, cy: 62 },  // 2
+  { cx: 24, cy: 30 },  // 3
+  { cx: 16, cy: 68 },  // 4
+  { cx: 52, cy: 90 },  // 5
+  { cx: 92, cy: 46 },  // 6
+  { cx: 8,  cy: 48 },  // 7
+  { cx: 60, cy: 14 },  // 8 — extra dendrite tips
+  { cx: 36, cy: 88 },  // 9
+];
+const EDGES: [number, number][] = [
+  [0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],
+  [1,2],[1,8],[3,4],[3,7],[2,5],[2,6],[4,9],[5,9],[6,8],
+];
 
-  const lines = phase === 'scanning'
-    ? ['DEEP SCAN ACTIVE', 'XCHANGE INDEX LIVE']
-    : phase === 'result'
-    ? ['MATCH CONFIRMED', 'SPLIT FEE UNLOCKED']
-    : ['ENGINE ONLINE', '270M INDEX READY'];
+type Pulse = { id: number; edgeIdx: number; progress: number; color: string };
 
-  return (
-    <div className="absolute flex flex-col items-center gap-1" style={{ top: 16 }}>
-      {lines.map((line, i) => (
-        <motion.p
-          key={`${line}-${tick}`}
-          className="text-[8px] font-black uppercase tracking-[0.18em]"
-          style={{
-            color: phase === 'result' ? 'rgb(52,211,153)'
-              : phase === 'scanning' ? 'rgb(0,240,255)'
-              : i === 0 ? 'rgba(0,240,255,0.5)' : 'rgba(168,85,247,0.4)',
-          }}
-          initial={{ opacity: 0.4 }}
-          animate={{ opacity: [0.4, 1, 0.4] }}
-          transition={{ duration: 1.6, repeat: Infinity, delay: i * 0.4 }}
-        >
-          {phase === 'idle' ? <><span style={{ color: 'rgba(0,240,255,0.3)' }}>▸ </span>{line}</> : <><span>▸ </span>{line}</>}
-        </motion.p>
-      ))}
-    </div>
-  );
-}
-
-// ─── Neuron SVG ──────────────────────────────────────────────────────────────
 function NeuronCore({ phase }: { phase: EnginePhase }) {
-  const nodes = [
-    { cx: 50, cy: 50 }, { cx: 78, cy: 28 }, { cx: 82, cy: 68 },
-    { cx: 22, cy: 32 }, { cx: 18, cy: 72 }, { cx: 50, cy: 88 },
-    { cx: 90, cy: 50 }, { cx: 10, cy: 50 },
-  ];
-  const edges = [[0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],[1,2],[3,4],[5,6],[2,5],[1,6],[3,7],[4,5]];
-  const isActive = phase === 'scanning';
+  const [pulses, setPulses] = useState<Pulse[]>([]);
+  const [firedNodes, setFiredNodes] = useState<Set<number>>(new Set());
+  const pulseIdRef = useRef(0);
+  const rafRef = useRef<number | null>(null);
+  const lastTickRef = useRef<number>(0);
+  const scheduleRef = useRef<ReturnType<typeof setTimeout>[]>([]);
+
+  // Fire a pulse on a random edge, then trigger a node flash at the destination
+  const firePulse = () => {
+    const edgeIdx = Math.floor(Math.random() * EDGES.length);
+    const colors = ['rgba(0,240,255,1)', 'rgba(168,85,247,1)', 'rgba(255,100,255,1)'];
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    const id = ++pulseIdRef.current;
+    setPulses(prev => [...prev, { id, edgeIdx, progress: 0, color }]);
+
+    // schedule node flash at destination when pulse arrives (~400ms travel)
+    const dest = EDGES[edgeIdx][1];
+    const t = setTimeout(() => {
+      setFiredNodes(prev => new Set([...prev, dest]));
+      setTimeout(() => setFiredNodes(prev => { const n = new Set(prev); n.delete(dest); return n; }), 180);
+    }, 420);
+    scheduleRef.current.push(t);
+  };
+
+  // Animate pulse progress via rAF
+  useEffect(() => {
+    const speed = phase === 'scanning' ? 0.028 : 0.012;
+    const animate = (ts: number) => {
+      const dt = ts - lastTickRef.current;
+      if (dt > 16) {
+        lastTickRef.current = ts;
+        setPulses(prev =>
+          prev
+            .map(p => ({ ...p, progress: p.progress + speed }))
+            .filter(p => p.progress < 1)
+        );
+      }
+      rafRef.current = requestAnimationFrame(animate);
+    };
+    rafRef.current = requestAnimationFrame(animate);
+    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); };
+  }, [phase]);
+
+  // Schedule random pulse firings
+  useEffect(() => {
+    let alive = true;
+    const scheduleNext = () => {
+      if (!alive) return;
+      const delay = phase === 'scanning'
+        ? 80 + Math.random() * 140
+        : 300 + Math.random() * 700;
+      const t = setTimeout(() => {
+        if (alive) { firePulse(); scheduleNext(); }
+      }, delay);
+      scheduleRef.current.push(t);
+    };
+    scheduleNext();
+    return () => {
+      alive = false;
+      scheduleRef.current.forEach(clearTimeout);
+      scheduleRef.current = [];
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [phase]);
+
+  const isResult = phase === 'result';
+
   return (
-    <svg viewBox="0 0 100 100" className="w-full h-full" aria-hidden="true">
-      {edges.map(([a,b], i) => (
-        <motion.line key={i} x1={nodes[a].cx} y1={nodes[a].cy} x2={nodes[b].cx} y2={nodes[b].cy}
-          stroke="rgba(0,240,255,0.35)" strokeWidth="0.8"
-          initial={{ pathLength: 0, opacity: 0 }}
-          animate={isActive ? { pathLength: 1, opacity: [0.2, 0.8, 0.2] } : { pathLength: 1, opacity: [0.1, 0.25, 0.1] }}
-          transition={{ duration: isActive ? 1.2 : 3, delay: i * 0.08, repeat: Infinity, repeatType: 'loop' }}
+    <svg viewBox="0 0 100 100" className="w-full h-full overflow-visible" aria-hidden="true">
+      <defs>
+        {/* Glow filter for pulses and fired nodes */}
+        <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="1.8" result="blur" />
+          <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+        <filter id="glow-strong" x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur stdDeviation="3" result="blur" />
+          <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+      </defs>
+
+      {/* Axon lines — always visible, faint */}
+      {EDGES.map(([a, b], i) => (
+        <line key={i}
+          x1={NODES[a].cx} y1={NODES[a].cy}
+          x2={NODES[b].cx} y2={NODES[b].cy}
+          stroke="rgba(0,200,255,0.12)" strokeWidth="0.6"
         />
       ))}
-      {nodes.map((n, i) => (
-        <motion.circle key={i} cx={n.cx} cy={n.cy} r={i === 0 ? 5 : 2.5}
-          fill={i === 0 ? 'rgba(0,240,255,0.9)' : 'rgba(168,85,247,0.8)'}
-          animate={isActive
-            ? { opacity: [0.6, 1, 0.6], r: i === 0 ? [5,6.5,5] : [2.5,3.5,2.5] }
-            : { opacity: [0.25, 0.55, 0.25], r: i === 0 ? [4.5,5.5,4.5] : [2,3,2] }
-          }
-          transition={{ duration: isActive ? 0.9 : 2.5, delay: i * 0.15, repeat: Infinity }}
-        />
-      ))}
+
+      {/* Travelling pulse dots */}
+      {pulses.map(p => {
+        const [a, b] = EDGES[p.edgeIdx];
+        const x = NODES[a].cx + (NODES[b].cx - NODES[a].cx) * p.progress;
+        const y = NODES[a].cy + (NODES[b].cy - NODES[a].cy) * p.progress;
+        // Fade in at start, bright in middle, fade out at end
+        const opacity = p.progress < 0.15
+          ? p.progress / 0.15
+          : p.progress > 0.85
+          ? (1 - p.progress) / 0.15
+          : 1;
+        return (
+          <circle key={p.id} cx={x} cy={y} r={1.6}
+            fill={p.color}
+            opacity={opacity}
+            filter="url(#glow)"
+          />
+        );
+      })}
+
+      {/* Node bodies — synapse flash when a pulse arrives */}
+      {NODES.map((n, i) => {
+        const isSoma = i === 0;
+        const fired = firedNodes.has(i);
+        const baseR = isSoma ? 5 : 2.2;
+        const fireR = isSoma ? 7 : 3.5;
+        return (
+          <circle key={i} cx={n.cx} cy={n.cy}
+            r={fired ? fireR : baseR}
+            fill={
+              fired
+                ? (isSoma ? 'rgba(255,255,255,0.95)' : 'rgba(0,240,255,0.9)')
+                : isResult
+                ? (isSoma ? 'rgba(52,211,153,0.9)' : 'rgba(52,211,153,0.5)')
+                : (isSoma ? 'rgba(0,240,255,0.7)' : 'rgba(168,85,247,0.45)')
+            }
+            filter={fired ? 'url(#glow-strong)' : 'url(#glow)'}
+            style={{ transition: 'r 0.12s ease, fill 0.12s ease' }}
+          />
+        );
+      })}
     </svg>
   );
 }
 
-// ─── Match Modal ─────────────────────────────────────────────────────────────
+// ─── Match Modal ──────────────────────────────────────────────────────────────
 function MatchModal({ jobTitle, location, skills, onClose }: {
   jobTitle: string; location: string; skills: string; onClose: () => void;
 }) {
@@ -265,7 +337,7 @@ function MatchModal({ jobTitle, location, skills, onClose }: {
   );
 }
 
-// ─── Xchange Engine ──────────────────────────────────────────────────────────
+// ─── Xchange Engine ───────────────────────────────────────────────────────────
 function XchangeEngine() {
   const [phase, setPhase] = useState<EnginePhase>('idle');
   const [showModal, setShowModal] = useState(false);
@@ -321,16 +393,12 @@ function XchangeEngine() {
           </form>
         </HolographicCard>
 
-        {/* Centre: Core */}
+        {/* Centre: Core graphic */}
         <div className="relative flex items-center justify-center min-h-[300px] lg:min-h-[420px]">
 
-          {/* Telemetry status lines — top */}
-          <TelemetryBar phase={phase} />
-
-          {/* Scanning rings — pulse faster when active */}
+          {/* Scanning rings */}
           {[1,2,3].map(i => (
-            <motion.div
-              key={i}
+            <motion.div key={i}
               className="absolute rounded-full border border-cyan-400/20"
               style={{ width: `${i * 30 + 60}%`, height: `${i * 30 + 60}%` }}
               animate={phase === 'scanning'
@@ -341,29 +409,26 @@ function XchangeEngine() {
             />
           ))}
 
-          {/* Outer spinning arc — always on, faster when scanning */}
-          <motion.div
-            className="absolute w-52 h-52 xl:w-64 xl:h-64 rounded-full border-2"
+          {/* Outer spinning arc */}
+          <motion.div className="absolute w-52 h-52 xl:w-64 xl:h-64 rounded-full border-2"
             style={{ borderTopColor: 'rgba(0,240,255,0.5)', borderRightColor: 'rgba(168,85,247,0.3)', borderBottomColor: 'transparent', borderLeftColor: 'transparent' }}
             animate={{ rotate: 360 }}
             transition={{ duration: phase === 'scanning' ? 0.9 : 4, repeat: Infinity, ease: 'linear' }}
           />
           {/* Inner counter-arc */}
-          <motion.div
-            className="absolute w-40 h-40 xl:w-52 xl:h-52 rounded-full border"
+          <motion.div className="absolute w-40 h-40 xl:w-52 xl:h-52 rounded-full border"
             style={{ borderTopColor: 'transparent', borderRightColor: 'transparent', borderBottomColor: 'rgba(255,0,255,0.45)', borderLeftColor: 'rgba(0,240,255,0.25)' }}
             animate={{ rotate: -360 }}
             transition={{ duration: phase === 'scanning' ? 1.3 : 6, repeat: Infinity, ease: 'linear' }}
           />
-          {/* Third slow arc — idle life */}
-          <motion.div
-            className="absolute w-60 h-60 xl:w-72 xl:h-72 rounded-full border"
+          {/* Slow outer arc */}
+          <motion.div className="absolute w-60 h-60 xl:w-72 xl:h-72 rounded-full border"
             style={{ borderTopColor: 'transparent', borderRightColor: 'rgba(168,85,247,0.2)', borderBottomColor: 'transparent', borderLeftColor: 'rgba(0,240,255,0.1)' }}
             animate={{ rotate: 360 }}
             transition={{ duration: phase === 'scanning' ? 2 : 12, repeat: Infinity, ease: 'linear' }}
           />
 
-          {/* Orbital dots — always spinning */}
+          {/* Orbital dots */}
           <OrbitalDots phase={phase} />
 
           {/* Core sphere */}
@@ -376,36 +441,41 @@ function XchangeEngine() {
             }
             transition={{ duration: phase === 'scanning' ? 0.9 : 3, repeat: Infinity }}
           >
-            <div className="absolute inset-4"><NeuronCore phase={phase} /></div>
+            {/* Electric neuron network fills the sphere */}
+            <div className="absolute inset-2">
+              <NeuronCore phase={phase} />
+            </div>
 
+            {/* Phase indicator — centre icon only, no text */}
             <AnimatePresence mode="wait">
               {phase === 'idle' && (
-                <motion.div key="idle" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 flex flex-col items-center justify-center">
-                  <Cpu size={22} className="text-cyan-400/50 mb-1" />
-                  <p className="text-[8px] font-black uppercase tracking-widest text-cyan-400/40">Ready</p>
+                <motion.div key="idle" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                  className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <Cpu size={18} className="text-cyan-400/30" />
                 </motion.div>
               )}
               {phase === 'scanning' && (
-                <motion.div key="scanning" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 flex flex-col items-center justify-center">
-                  <Cpu size={22} className="text-cyan-400 mb-1 animate-pulse" />
-                  <p className="text-[8px] font-black uppercase tracking-widest text-cyan-400">Scanning</p>
+                <motion.div key="scanning" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                  className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <Cpu size={18} className="text-cyan-400/50 animate-pulse" />
                 </motion.div>
               )}
               {phase === 'result' && (
-                <motion.div key="result" initial={{ opacity: 0, scale: 0.7 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ type: 'spring', stiffness: 300 }} className="absolute inset-0 flex flex-col items-center justify-center">
-                  <Check size={28} strokeWidth={3} className="text-emerald-400 mb-1" />
-                  <p className="text-[8px] font-black uppercase tracking-widest text-emerald-400">Match Found</p>
+                <motion.div key="result" initial={{ opacity: 0, scale: 0.7 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }}
+                  transition={{ type: 'spring', stiffness: 300 }}
+                  className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <Check size={26} strokeWidth={3} className="text-emerald-400" />
                 </motion.div>
               )}
             </AnimatePresence>
           </motion.div>
 
-          {/* Scan counter — bottom of core area */}
+          {/* Scan counter */}
           <AnimatePresence>
             {phase !== 'idle' && <ScanCounter phase={phase} />}
           </AnimatePresence>
 
-          {/* MATCH FOUND flash text */}
+          {/* MATCH FOUND flash */}
           <AnimatePresence>
             {phase === 'result' && (
               <motion.p
@@ -434,7 +504,8 @@ function XchangeEngine() {
             ))}
           </ul>
           {phase === 'result' && (
-            <motion.button initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} onClick={handleReset} className="mt-6 w-full py-2.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-white text-xs font-bold uppercase tracking-widest transition-all">
+            <motion.button initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} onClick={handleReset}
+              className="mt-6 w-full py-2.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-white text-xs font-bold uppercase tracking-widest transition-all">
               Try Another
             </motion.button>
           )}
