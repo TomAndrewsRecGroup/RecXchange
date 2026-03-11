@@ -12,7 +12,6 @@ import RecXDirectForm from '@/components/recx-direct-form';
 import FAQSection from '@/components/FAQSection';
 import LastUpdated from '@/components/LastUpdated';
 import { pricingFAQs } from '@/data/faqs/recruiter-faqs';
-import { internalLinks } from '@/lib/internal-links';
 import Link from 'next/link';
 
 const tiers = [
@@ -49,7 +48,8 @@ const tiers = [
       "Email & in-app support",
     ],
     color: "purple" as const,
-    highlighted: false,
+    highlighted: true,
+    badge: "MOST POPULAR",
   },
   {
     name: "Pro",
@@ -68,8 +68,7 @@ const tiers = [
       "Priority support",
     ],
     color: "fuchsia" as const,
-    highlighted: true,
-    badge: "MOST POPULAR",
+    highlighted: false,
   },
 ];
 
@@ -236,6 +235,7 @@ export default function PricingPage() {
                     <div className="text-xl sm:text-2xl font-black text-white mb-1">{pack.tokens}</div>
                     <div className="text-gray-400 text-[10px] sm:text-xs mb-2">tokens</div>
                     <div className="text-lg sm:text-xl font-bold" style={{color: `var(--${pack.color}-300)`}}>${pack.price}</div>
+                    <div className="text-gray-500 text-[10px] sm:text-xs mt-1">${(pack.price / pack.tokens).toFixed(2)} per token</div>
                   </HolographicCard>
                 ))}
               </div>
@@ -331,10 +331,9 @@ export default function PricingPage() {
               </HolographicCard>
             </div>
 
+            {/* Learn More CTA — triggers RecX Direct email explainer modal */}
             <div className="mt-6 sm:mt-8 text-center">
-              <GlowButton variant="primary" size="lg" href={internalLinks.collaboration}>
-                Learn More About RecX Direct
-              </GlowButton>
+              <RecXDirectForm />
             </div>
           </motion.section>
 
@@ -342,34 +341,6 @@ export default function PricingPage() {
 
           {/* FAQ Section */}
           <FAQSection faqs={pricingFAQs} />
-
-          {/* Client Form Section */}
-          <motion.section
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="my-10 sm:my-12 md:my-16"
-          >
-            <HolographicCard color="cyan" variant="content" glowIntensity="high" className="overflow-hidden">
-              <div className="text-center mb-6 sm:mb-8">
-                <StatusBadge label="FOR CLIENTS" color="cyan" />
-                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2.5 sm:mb-3 md:mb-4 mt-4">
-                  Post Your Roles to RecX Direct (Free)
-                </h2>
-                <p className="text-gray-300 text-sm sm:text-base max-w-3xl mx-auto">
-                  End clients post their roles to RecX Direct for free. Thousands of recruiters compete to fill them.
-                </p>
-              </div>
-
-              <RecXDirectForm />
-
-              <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-white/5 text-center">
-                <p className="text-gray-400 text-xs sm:text-sm">
-                  ℹ️ You&apos;ll only deal with one point of contact — your dedicated Account Manager.
-                </p>
-              </div>
-            </HolographicCard>
-          </motion.section>
 
           {/* CTA Section */}
           <motion.section
