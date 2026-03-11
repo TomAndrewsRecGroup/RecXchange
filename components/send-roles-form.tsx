@@ -1,68 +1,30 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { X } from 'lucide-react';
 import ModalWrapper from './ModalWrapper';
 
-// Industry list
 const INDUSTRIES = [
-  'Accounting & Finance',
-  'Administrative & Office Support',
-  'Advertising, Arts & Media',
-  'Agriculture, Forestry & Fishing',
-  'Automotive',
-  'Banking & Financial Services',
-  'Biotechnology',
-  'Building & Construction',
-  'Business Consulting & Management',
-  'Call Centre & Customer Service',
-  'Chemicals',
-  'Community Services & Development',
-  'Construction & Architecture',
-  'Consulting & Strategy',
-  'Consumer Products & FMCG',
-  'Defence & Aerospace',
-  'Design & Architecture',
-  'Education & Training',
-  'Electronics & Electrical',
-  'Energy & Utilities',
-  'Engineering',
-  'Entertainment & Events',
-  'Environmental Services',
-  'Facilities Management',
-  'Farming, Animals & Conservation',
-  'Fashion & Beauty',
-  'Food & Beverage',
-  'Government & Public Sector',
-  'Healthcare & Medical',
-  'Hospitality & Tourism',
-  'Human Resources & Recruitment',
-  'Industrial & Manufacturing',
-  'Information & Communication Technology',
-  'Insurance & Superannuation',
-  'Legal',
-  'Logistics, Transport & Distribution',
-  'Manufacturing, Transport & Logistics',
-  'Marketing & Communications',
-  'Media & Digital',
-  'Mining, Resources & Energy',
-  'Non-Profit & Charities',
-  'Oil & Gas',
-  'Pharmaceuticals',
-  'Professional Services',
-  'Property & Real Estate',
-  'Public Relations',
-  'Retail & Consumer Products',
-  'Sales',
-  'Science & Technology',
-  'Security & Law Enforcement',
-  'Sport & Recreation',
-  'Telecommunications',
-  'Tourism & Hospitality',
-  'Trade & Services',
-  'Transport & Logistics',
-  'Warehousing & Supply Chain'
+  'Accounting & Finance', 'Administrative & Office Support', 'Advertising, Arts & Media',
+  'Agriculture, Forestry & Fishing', 'Automotive', 'Banking & Financial Services',
+  'Biotechnology', 'Building & Construction', 'Business Consulting & Management',
+  'Call Centre & Customer Service', 'Chemicals', 'Community Services & Development',
+  'Construction & Architecture', 'Consulting & Strategy', 'Consumer Products & FMCG',
+  'Defence & Aerospace', 'Design & Architecture', 'Education & Training',
+  'Electronics & Electrical', 'Energy & Utilities', 'Engineering',
+  'Entertainment & Events', 'Environmental Services', 'Facilities Management',
+  'Farming, Animals & Conservation', 'Fashion & Beauty', 'Food & Beverage',
+  'Government & Public Sector', 'Healthcare & Medical', 'Hospitality & Tourism',
+  'Human Resources & Recruitment', 'Industrial & Manufacturing',
+  'Information & Communication Technology', 'Insurance & Superannuation', 'Legal',
+  'Logistics, Transport & Distribution', 'Manufacturing, Transport & Logistics',
+  'Marketing & Communications', 'Media & Digital', 'Mining, Resources & Energy',
+  'Non-Profit & Charities', 'Oil & Gas', 'Pharmaceuticals', 'Professional Services',
+  'Property & Real Estate', 'Public Relations', 'Retail & Consumer Products', 'Sales',
+  'Science & Technology', 'Security & Law Enforcement', 'Sport & Recreation',
+  'Telecommunications', 'Tourism & Hospitality', 'Trade & Services',
+  'Transport & Logistics', 'Warehousing & Supply Chain'
 ].sort();
 
 interface SendRolesFormProps {
@@ -75,14 +37,14 @@ interface SendRolesFormProps {
   autoFocus?: boolean;
 }
 
-export default function SendRolesForm({ 
+export default function SendRolesForm({
   className = '',
   isOpen: externalIsOpen,
   onClose: externalOnClose,
   prefillName = '',
   prefillEmail = '',
   prefillIndustries = [],
-  autoFocus = false
+  autoFocus = false,
 }: SendRolesFormProps) {
   const [internalIsOpen, setInternalIsOpen] = useState(false);
   const [name, setName] = useState('');
@@ -92,20 +54,31 @@ export default function SendRolesForm({
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
 
-  // Use external control if provided, otherwise internal state
   const isOpen = externalIsOpen !== undefined ? externalIsOpen : internalIsOpen;
-  const setIsOpen = externalOnClose ? (value: boolean) => {
-    if (!value) externalOnClose();
-  } : setInternalIsOpen;
 
-  // Set prefill values when modal opens
+  const handleClose = () => {
+    if (status !== 'loading') {
+      externalOnClose ? externalOnClose() : setInternalIsOpen(false);
+    }
+  };
+
+  // Track previous open state so we only apply prefills on the
+  // closed→open transition, never during typing.
+  const prevOpenRef = useRef(false);
   useEffect(() => {
-    if (isOpen) {
+    const wasOpen = prevOpenRef.current;
+    prevOpenRef.current = isOpen;
+    if (isOpen && !wasOpen) {
+      // Modal just opened — seed fields with prefill values only
       setName(prefillName);
       setEmail(prefillEmail);
       setSelectedIndustries(prefillIndustries);
+      setStatus('idle');
+      setErrorMessage('');
+      setMarketingConsent(false);
     }
-  }, [isOpen, prefillName, prefillEmail, prefillIndustries]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen]); // intentionally omit prefill* — we only want the open-edge trigger
 
   const handleIndustryToggle = (industry: string) => {
     if (selectedIndustries.includes(industry)) {
@@ -117,27 +90,14 @@ export default function SendRolesForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!name.trim()) {
-      setErrorMessage('Please enter your name');
-      return;
-    }
-    
-    if (!email || !email.includes('@')) {
-      setErrorMessage('Please enter a valid email address');
-      return;
-    }
-
-    if (selectedIndustries.length === 0) {
-      setErrorMessage('Please select at least one industry');
-      return;
-    }
+    if (!name.trim()) { setErrorMessage('Please enter your name'); return; }
+    if (!email || !email.includes('@')) { setErrorMessage('Please enter a valid email address'); return; }
+    if (selectedIndustries.length === 0) { setErrorMessage('Please select at least one industry'); return; }
 
     setStatus('loading');
     setErrorMessage('');
 
     try {
-      // Split name into first and last
       const nameParts = name.trim().split(' ');
       const firstName = nameParts[0];
       const lastName = nameParts.slice(1).join(' ') || nameParts[0];
@@ -157,21 +117,16 @@ export default function SendRolesForm({
       });
 
       const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to submit');
-      }
+      if (!response.ok) throw new Error(data.error || 'Failed to submit');
 
       setStatus('success');
-      
-      // Reset after 3 seconds and close modal
       setTimeout(() => {
         setStatus('idle');
         setName('');
         setEmail('');
         setSelectedIndustries([]);
         setMarketingConsent(false);
-        setIsOpen(false);
+        externalOnClose ? externalOnClose() : setInternalIsOpen(false);
       }, 3000);
     } catch (error) {
       console.error('Send roles error:', error);
@@ -180,15 +135,9 @@ export default function SendRolesForm({
     }
   };
 
-  const handleClose = () => {
-    if (status !== 'loading') {
-      setIsOpen(false);
-    }
-  };
-
   return (
     <>
-      {!externalIsOpen && (
+      {externalIsOpen === undefined && (
         <button
           onClick={() => setInternalIsOpen(true)}
           className="px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl border border-cyan-400/30 bg-cyan-400/5 text-cyan-400 text-xs font-bold uppercase tracking-widest hover:bg-cyan-400/10 transition-all"
@@ -225,12 +174,11 @@ export default function SendRolesForm({
                 onChange={(e) => setName(e.target.value)}
                 required
                 disabled={status === 'loading'}
-                autoFocus={autoFocus && !name}
+                autoFocus={autoFocus}
                 className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 text-sm text-white outline-none focus:border-cyan-400/50 transition-all disabled:opacity-50"
                 placeholder="John Smith"
               />
             </div>
-
             <div>
               <label className="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Email Address *</label>
               <input
@@ -243,20 +191,14 @@ export default function SendRolesForm({
                 placeholder="john@company.com"
               />
             </div>
-
             <div>
               <label className="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">
                 Select Industries ({selectedIndustries.length}/5) *
               </label>
-              
-              {/* Selected Tags */}
               {selectedIndustries.length > 0 && (
                 <div className="flex flex-wrap gap-2 mb-4">
                   {selectedIndustries.map((industry) => (
-                    <button
-                      key={industry}
-                      type="button"
-                      onClick={() => handleIndustryToggle(industry)}
+                    <button key={industry} type="button" onClick={() => handleIndustryToggle(industry)}
                       disabled={status === 'loading'}
                       className="px-2.5 py-1.5 sm:px-3 rounded-full bg-cyan-400/10 border border-cyan-400/30 text-cyan-400 text-[10px] sm:text-xs font-bold flex items-center gap-1.5 sm:gap-2 hover:bg-cyan-400/20 transition-all disabled:opacity-50"
                     >
@@ -266,14 +208,9 @@ export default function SendRolesForm({
                   ))}
                 </div>
               )}
-
-              {/* Industry Dropdown */}
               <div className="max-h-48 sm:max-h-60 overflow-y-auto border border-white/10 rounded-xl bg-white/[0.03] p-2">
                 {INDUSTRIES.map((industry) => (
-                  <button
-                    key={industry}
-                    type="button"
-                    onClick={() => handleIndustryToggle(industry)}
+                  <button key={industry} type="button" onClick={() => handleIndustryToggle(industry)}
                     disabled={(status === 'loading') || (!selectedIndustries.includes(industry) && selectedIndustries.length >= 5)}
                     className={`w-full text-left px-3 py-2 sm:px-4 sm:py-2.5 rounded-lg text-xs sm:text-sm transition-all ${
                       selectedIndustries.includes(industry)
@@ -288,35 +225,26 @@ export default function SendRolesForm({
                 ))}
               </div>
             </div>
-
-            {/* GDPR Marketing Consent Checkbox */}
             <div className="border-t border-white/10 pt-4">
               <label className="flex items-start gap-3 cursor-pointer group">
-                <input
-                  type="checkbox"
-                  checked={marketingConsent}
+                <input type="checkbox" checked={marketingConsent}
                   onChange={(e) => setMarketingConsent(e.target.checked)}
                   disabled={status === 'loading'}
                   className="mt-0.5 w-4 h-4 rounded border-white/20 bg-white/5 text-cyan-400 focus:ring-cyan-400/50 focus:ring-offset-0 cursor-pointer disabled:opacity-50"
                 />
                 <span className="text-xs text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors">
-                  Yes, I'd like to receive updates, role opportunities, and insights from RecXchange by email. You can unsubscribe at any time.
+                  Yes, I’d like to receive updates, role opportunities, and insights from RecXchange by email. You can unsubscribe at any time.
                 </span>
               </label>
             </div>
-
             {errorMessage && (
-              <motion.p
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
+              <motion.p initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }}
                 className="text-xs sm:text-sm text-red-400 bg-red-400/10 border border-red-400/20 rounded-lg px-3 py-2 sm:px-4"
               >
                 {errorMessage}
               </motion.p>
             )}
-
-            <button
-              type="submit"
+            <button type="submit"
               disabled={status === 'loading' || selectedIndustries.length === 0}
               className="relative w-full py-3 sm:py-4 rounded-xl sm:rounded-2xl border border-white/15 bg-black/40 overflow-hidden group/btn font-bold text-xs sm:text-sm uppercase tracking-widest transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { X } from 'lucide-react';
 import ModalWrapper from './ModalWrapper';
@@ -44,25 +44,39 @@ export default function RecXDirectForm({
   prefillName = '',
   prefillEmail = '',
   prefillIndustries = [],
-  autoFocus = false
+  autoFocus = false,
 }: RecXDirectFormProps) {
   const [internalIsOpen, setInternalIsOpen] = useState(false);
-  const [name, setName] = useState(prefillName);
-  const [email, setEmail] = useState(prefillEmail);
-  const [selectedIndustries, setSelectedIndustries] = useState<string[]>(prefillIndustries);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [selectedIndustries, setSelectedIndustries] = useState<string[]>([]);
   const [marketingConsent, setMarketingConsent] = useState(false);
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
 
-  const isControlled = externalIsOpen !== undefined;
-  const isOpen = isControlled ? externalIsOpen : internalIsOpen;
-  const setIsOpen = isControlled ? (externalOnClose || (() => {})) : setInternalIsOpen;
+  const isOpen = externalIsOpen !== undefined ? externalIsOpen : internalIsOpen;
 
+  const handleClose = () => {
+    if (status !== 'loading') {
+      externalOnClose ? externalOnClose() : setInternalIsOpen(false);
+    }
+  };
+
+  // Only seed fields on the closed→open transition, never during typing
+  const prevOpenRef = useRef(false);
   useEffect(() => {
-    if (prefillName) setName(prefillName);
-    if (prefillEmail) setEmail(prefillEmail);
-    if (prefillIndustries.length > 0) setSelectedIndustries(prefillIndustries);
-  }, [prefillName, prefillEmail, prefillIndustries]);
+    const wasOpen = prevOpenRef.current;
+    prevOpenRef.current = isOpen;
+    if (isOpen && !wasOpen) {
+      setName(prefillName);
+      setEmail(prefillEmail);
+      setSelectedIndustries(prefillIndustries);
+      setStatus('idle');
+      setErrorMessage('');
+      setMarketingConsent(false);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen]);
 
   const handleIndustryToggle = (industry: string) => {
     if (selectedIndustries.includes(industry)) {
@@ -74,21 +88,9 @@ export default function RecXDirectForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!name.trim()) {
-      setErrorMessage('Please enter your name');
-      return;
-    }
-    
-    if (!email || !email.includes('@')) {
-      setErrorMessage('Please enter a valid email address');
-      return;
-    }
-
-    if (selectedIndustries.length === 0) {
-      setErrorMessage('Please select at least one industry');
-      return;
-    }
+    if (!name.trim()) { setErrorMessage('Please enter your name'); return; }
+    if (!email || !email.includes('@')) { setErrorMessage('Please enter a valid email address'); return; }
+    if (selectedIndustries.length === 0) { setErrorMessage('Please select at least one industry'); return; }
 
     setStatus('loading');
     setErrorMessage('');
@@ -113,24 +115,16 @@ export default function RecXDirectForm({
       });
 
       const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to submit');
-      }
+      if (!response.ok) throw new Error(data.error || 'Failed to submit');
 
       setStatus('success');
-      
       setTimeout(() => {
         setStatus('idle');
         setName('');
         setEmail('');
         setSelectedIndustries([]);
         setMarketingConsent(false);
-        if (isControlled && externalOnClose) {
-          externalOnClose();
-        } else {
-          setInternalIsOpen(false);
-        }
+        externalOnClose ? externalOnClose() : setInternalIsOpen(false);
       }, 3000);
     } catch (error) {
       console.error('RecX Direct form error:', error);
@@ -139,19 +133,9 @@ export default function RecXDirectForm({
     }
   };
 
-  const handleClose = () => {
-    if (status !== 'loading') {
-      if (isControlled && externalOnClose) {
-        externalOnClose();
-      } else {
-        setInternalIsOpen(false);
-      }
-    }
-  };
-
   return (
     <>
-      {!isControlled && (
+      {externalIsOpen === undefined && (
         <button
           onClick={() => setInternalIsOpen(true)}
           className="px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl border border-fuchsia-400/30 bg-fuchsia-400/5 text-fuchsia-400 text-xs font-bold uppercase tracking-widest hover:bg-fuchsia-400/10 transition-all"
@@ -164,7 +148,7 @@ export default function RecXDirectForm({
         isOpen={isOpen}
         onClose={handleClose}
         title="Learn About RecX Direct"
-        subtitle="Select your industries and we'll send you a detailed explainer of how RecX Direct works, current fee pool size, and how to earn up to 70% on placements."
+        subtitle="Select your industries and we’ll send you a detailed explainer of how RecX Direct works, current fee pool size, and how to earn up to 70% on placements."
         maxWidth="2xl"
         preventClose={status === 'loading'}
       >
@@ -182,43 +166,28 @@ export default function RecXDirectForm({
           <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
             <div>
               <label className="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Your Name *</label>
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-                autoFocus={autoFocus}
-                disabled={status === 'loading'}
+              <input type="text" value={name} onChange={(e) => setName(e.target.value)}
+                required disabled={status === 'loading'} autoFocus={autoFocus}
                 className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 text-sm text-white outline-none focus:border-fuchsia-400/50 transition-all disabled:opacity-50"
                 placeholder="John Smith"
               />
             </div>
-
             <div>
               <label className="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Email Address *</label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                disabled={status === 'loading'}
+              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}
+                required disabled={status === 'loading'}
                 className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 text-sm text-white outline-none focus:border-fuchsia-400/50 transition-all disabled:opacity-50"
                 placeholder="john@company.com"
               />
             </div>
-
             <div>
               <label className="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">
                 Your Industries ({selectedIndustries.length}/5) *
               </label>
-              
               {selectedIndustries.length > 0 && (
                 <div className="flex flex-wrap gap-2 mb-4">
                   {selectedIndustries.map((industry) => (
-                    <button
-                      key={industry}
-                      type="button"
-                      onClick={() => handleIndustryToggle(industry)}
+                    <button key={industry} type="button" onClick={() => handleIndustryToggle(industry)}
                       disabled={status === 'loading'}
                       className="px-2.5 py-1.5 sm:px-3 rounded-full bg-fuchsia-400/10 border border-fuchsia-400/30 text-fuchsia-400 text-[10px] sm:text-xs font-bold flex items-center gap-1.5 sm:gap-2 hover:bg-fuchsia-400/20 transition-all disabled:opacity-50"
                     >
@@ -228,13 +197,9 @@ export default function RecXDirectForm({
                   ))}
                 </div>
               )}
-
               <div className="max-h-48 sm:max-h-60 overflow-y-auto border border-white/10 rounded-xl bg-white/[0.03] p-2">
                 {INDUSTRIES.map((industry) => (
-                  <button
-                    key={industry}
-                    type="button"
-                    onClick={() => handleIndustryToggle(industry)}
+                  <button key={industry} type="button" onClick={() => handleIndustryToggle(industry)}
                     disabled={(status === 'loading') || (!selectedIndustries.includes(industry) && selectedIndustries.length >= 5)}
                     className={`w-full text-left px-3 py-2 sm:px-4 sm:py-2.5 rounded-lg text-xs sm:text-sm transition-all ${
                       selectedIndustries.includes(industry)
@@ -249,35 +214,26 @@ export default function RecXDirectForm({
                 ))}
               </div>
             </div>
-
-            {/* GDPR Marketing Consent Checkbox */}
             <div className="border-t border-white/10 pt-4">
               <label className="flex items-start gap-3 cursor-pointer group">
-                <input
-                  type="checkbox"
-                  checked={marketingConsent}
+                <input type="checkbox" checked={marketingConsent}
                   onChange={(e) => setMarketingConsent(e.target.checked)}
                   disabled={status === 'loading'}
                   className="mt-0.5 w-4 h-4 rounded border-white/20 bg-white/5 text-fuchsia-400 focus:ring-fuchsia-400/50 focus:ring-offset-0 cursor-pointer disabled:opacity-50"
                 />
                 <span className="text-xs text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors">
-                  Yes, I'd like to receive updates, role opportunities, and insights from RecXchange by email. You can unsubscribe at any time.
+                  Yes, I’d like to receive updates, role opportunities, and insights from RecXchange by email. You can unsubscribe at any time.
                 </span>
               </label>
             </div>
-
             {errorMessage && (
-              <motion.p
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
+              <motion.p initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }}
                 className="text-xs sm:text-sm text-red-400 bg-red-400/10 border border-red-400/20 rounded-lg px-3 py-2 sm:px-4"
               >
                 {errorMessage}
               </motion.p>
             )}
-
-            <button
-              type="submit"
+            <button type="submit"
               disabled={status === 'loading' || selectedIndustries.length === 0}
               className="relative w-full py-3 sm:py-4 rounded-xl sm:rounded-2xl border border-white/15 bg-black/40 overflow-hidden group/btn font-bold text-xs sm:text-sm uppercase tracking-widest transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
