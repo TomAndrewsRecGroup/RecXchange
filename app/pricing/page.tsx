@@ -73,6 +73,13 @@ const tiers = [
   },
 ];
 
+const tokenPacks = [
+  { tokens: 10, price: 10, color: "cyan" as const },
+  { tokens: 50, price: 40, color: "purple" as const },
+  { tokens: 100, price: 70, color: "fuchsia" as const },
+  { tokens: 500, price: 300, color: "emerald" as const },
+];
+
 export default function PricingPage() {
   return (
     <main className="relative bg-[#0a0a0f] min-h-screen overflow-hidden">
@@ -185,15 +192,15 @@ export default function PricingPage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 md:gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
               <HolographicCard color="cyan" variant="feature" showStatusIndicator={true}>
                 <h3 className="text-base sm:text-lg md:text-xl font-bold text-white mb-3 sm:mb-4">
-                  Unlock Contact Details
+                  Post a Role
                 </h3>
                 <p className="text-gray-300 text-xs sm:text-sm mb-4 sm:mb-5 md:mb-6">
-                  Use 1 token to reveal a candidate&apos;s full contact details from the database. Real conversations start here.
+                  Use 1 token to post a role to the Xchange network and let 15,000+ recruiters bring you candidates.
                 </p>
-                <div className="text-cyan-300 text-xs sm:text-sm font-bold">1 Token = 1 Contact Unlocked</div>
+                <div className="text-cyan-300 text-xs sm:text-sm font-bold">1 Token = 1 Role Posted</div>
               </HolographicCard>
 
               <HolographicCard color="fuchsia" variant="feature" showStatusIndicator={true}>
@@ -205,6 +212,36 @@ export default function PricingPage() {
                 </p>
                 <div className="text-fuchsia-300 text-xs sm:text-sm font-bold">1 Token = 1 Candidate Submitted</div>
               </HolographicCard>
+
+              <HolographicCard color="purple" variant="feature" showStatusIndicator={true}>
+                <h3 className="text-base sm:text-lg md:text-xl font-bold text-white mb-3 sm:mb-4">
+                  Unlock Contact Details
+                </h3>
+                <p className="text-gray-300 text-xs sm:text-sm mb-4 sm:mb-5 md:mb-6">
+                  Use 1 token to reveal a candidate&apos;s full contact details from the 270M profile database.
+                </p>
+                <div className="text-purple-300 text-xs sm:text-sm font-bold">1 Token = 1 Contact Unlocked</div>
+              </HolographicCard>
+            </div>
+
+            {/* Token Packs */}
+            <div className="mt-8 sm:mt-10">
+              <div className="text-center mb-5 sm:mb-6">
+                <h3 className="text-lg sm:text-xl font-bold text-white mb-2">Need More Tokens?</h3>
+                <p className="text-gray-400 text-xs sm:text-sm">Top up anytime inside the platform. No subscription change needed.</p>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+                {tokenPacks.map((pack) => (
+                  <HolographicCard key={pack.tokens} color={pack.color} variant="stat" className="text-center">
+                    <div className="text-xl sm:text-2xl font-black text-white mb-1">{pack.tokens}</div>
+                    <div className="text-gray-400 text-[10px] sm:text-xs mb-2">tokens</div>
+                    <div className="text-lg sm:text-xl font-bold" style={{color: `var(--${pack.color}-300)`}}>${pack.price}</div>
+                  </HolographicCard>
+                ))}
+              </div>
+              <p className="text-center text-gray-500 text-[11px] sm:text-xs mt-4">
+                💡 Hiring managers post roles to RecX Direct for free — tokens are for recruiters only
+              </p>
             </div>
 
             <div className="mt-5 sm:mt-6 md:mt-8 text-center">
@@ -245,7 +282,7 @@ export default function PricingPage() {
                   </li>
                   <li className="flex gap-3">
                     <span className="flex-shrink-0 w-6 h-6 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-300 font-bold text-xs">2</span>
-                    <span>Thousands of recruiters see the role (access depends on your tier)</span>
+                    <span>15,000+ recruiters see the role (access depends on your tier)</span>
                   </li>
                   <li className="flex gap-3">
                     <span className="flex-shrink-0 w-6 h-6 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-300 font-bold text-xs">3</span>

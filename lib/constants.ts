@@ -41,14 +41,33 @@ export const PRICING = {
     RECX_DIRECT_DELAY_DAYS: 7,
   },
   PRO: {
-    PRICE_USD: 250,
+    PRICE_USD: 249,
     PRICE_GBP: 199,
     TOKENS: 400,
     RECX_DIRECT_DELAY_DAYS: 0, // Instant access
   },
-  TEAMS: {
-    CUSTOM: true,
-  },
+} as const;
+
+/**
+ * Token packs (top-up purchases)
+ * Recruiters only — hiring managers post roles for free
+ */
+export const TOKEN_PACKS = {
+  SMALL: { TOKENS: 10, PRICE_USD: 10 },
+  MEDIUM: { TOKENS: 50, PRICE_USD: 40 },
+  LARGE: { TOKENS: 100, PRICE_USD: 70 },
+  XLARGE: { TOKENS: 500, PRICE_USD: 300 },
+} as const;
+
+/**
+ * Token usage rules
+ * - Recruiters: 1 token = post 1 role OR submit 1 candidate OR unlock 1 contact
+ * - Hiring managers / clients: posting roles to RecX Direct is FREE
+ */
+export const TOKEN_COSTS = {
+  POST_ROLE: 1,        // Recruiter posting a role to the Xchange
+  SUBMIT_CANDIDATE: 1, // Recruiter submitting a candidate to a role
+  UNLOCK_CONTACT: 1,   // Recruiter unlocking candidate contact details
 } as const;
 
 /**

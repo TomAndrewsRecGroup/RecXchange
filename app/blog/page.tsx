@@ -37,7 +37,7 @@ const mockPosts: SocialPost[] = [
   },
   {
     id: '2',
-    content: `📊 Real numbers from Sarah, a healthcare recruiter:\n\nMonth 1 on RecXchange:\n✅ 3 placements made\n✅ $15,200 earned\n✅ 50/50, 60/40, and 70% splits\n\nHer secret? She upgraded to Pro ($249/month) for instant access to RecX Direct roles.\n\nOne placement paid for 5 months of membership.\n\nThe ROI speaks for itself 💯`,
+    content: `📊 Real numbers from Sarah, a healthcare recruiter:\n\nMonth 1 on RecXchange:\n✅ 3 placements made\n✅ $15,200 earned\n✅ 50/50, 60/40, and 70% splits\n\nShe upgraded to Pro ($249/month) for instant access to RecX Direct roles.\n\nOne placement paid for 5 months of membership.\n\nThe ROI speaks for itself 💯`,
     publishedAt: '2026-02-24T14:30:00Z',
     platform: 'LinkedIn',
     category: 'Success Stories',
@@ -69,7 +69,7 @@ const mockPosts: SocialPost[] = [
   },
   {
     id: '6',
-    content: `⚡ Quick wins with RecXchange:\n\nDay 1: Post your hardest-to-fill role\nDay 2: Receive 3-5 candidate submissions\nDay 3: Screen and shortlist top 2\nWeek 2: Client interviews\nWeek 3: Offer made\nWeek 4: Candidate starts, fee splits 50/50\n\nAverage time from post to placement: 21 days.\n\nThat's 3x faster than solo recruiting 🚀\n\nStart your free trial: $1 for the first month`,
+    content: `⚡ Quick wins with RecXchange:\n\nDay 1: Post your hardest-to-fill role (1 token)\nDay 2: Receive 3-5 candidate submissions\nDay 3: Screen and shortlist top 2\nWeek 2: Client interviews\nWeek 3: Offer made\nWeek 4: Candidate starts, fee splits 50/50\n\nAverage time from post to placement: 21 days.\n\nThat's 3x faster than solo recruiting 🚀\n\nEntry tier: $1/month — 5 tokens to get started.`,
     publishedAt: '2026-02-20T13:20:00Z',
     platform: 'LinkedIn',
     category: 'Platform Updates',
@@ -85,7 +85,7 @@ const mockPosts: SocialPost[] = [
   },
   {
     id: '8',
-    content: `💰 RecXchange pricing breakdown:\n\nEntry: $1/month (5 tokens) - Test the waters\nLite: $99/month (150 tokens) - Serious recruiters\nPro: $249/month (400 tokens) - Instant RecX Direct access\nTeams: Custom - 5+ recruiters\n\n1 token = Post 1 role OR Submit 1 candidate\n\nZero platform fees. Zero hidden costs. Zero surprises.\n\nOne placement pays for 3-12 months of membership 📊`,
+    content: `💰 RecXchange pricing breakdown:\n\nEntry: $1/month — 5 tokens\nLite: $99/month — 150 tokens\nPro: $249/month — 400 tokens + instant RecX Direct access\n\n1 token = post 1 role OR submit 1 candidate OR unlock 1 contact\n\nNeed more tokens? Top up anytime:\n10 tokens — $10\n50 tokens — $40\n100 tokens — $70\n500 tokens — $300\n\nZero platform fees. Zero hidden costs.\n\nOne placement pays for months of membership 📊`,
     publishedAt: '2026-02-18T15:00:00Z',
     platform: 'LinkedIn',
     category: 'Platform Updates',

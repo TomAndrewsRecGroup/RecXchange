@@ -27,7 +27,7 @@ export const recruiterGeneralFAQs = [
   },
   {
     question: "How do I get paid after a successful placement?",
-    answer: "After placement is confirmed and candidate starts, payment is processed according to your tier: 15-30 days for Pro members, 30-45 days for Lite/Entry. Fees are split automatically per your contract. Payment sent via bank transfer or platform wallet."
+    answer: "After placement is confirmed and the candidate starts, payment is processed according to your tier: 15-30 days for Pro members, 30-45 days for Lite/Entry. Fees are split per your signed agreement and paid via bank transfer."
   },
   {
     question: "What industries and roles can I work on?",
@@ -50,7 +50,7 @@ export const recXDirectFAQs = [
   },
   {
     question: "How do I qualify for RecX Direct access?",
-    answer: "Pro members ($249/month) get instant RecX Direct access. Lite members ($99/month) gain access after 7 days of active platform use. You need to complete your profile and demonstrate platform engagement through posting roles or submitting candidates."
+    answer: "Pro members ($249/month) get instant RecX Direct access. Lite members ($99/month) gain access after 7 days. Entry members ($1/month) gain access after 30 days."
   },
   {
     question: "Are RecX Direct roles harder to fill?",
@@ -58,7 +58,7 @@ export const recXDirectFAQs = [
   },
   {
     question: "Can I lose RecX Direct access?",
-    answer: "RecX Direct access requires maintaining your Lite or Pro membership. If you downgrade to Entry tier or let your subscription lapse, you'll lose access to premium roles. Access is maintained as long as your subscription is active."
+    answer: "RecX Direct access requires maintaining your Lite or Pro membership. If you downgrade to Entry tier or let your subscription lapse, your access delay resets. Access is maintained as long as your subscription is active."
   }
 ];
 
@@ -69,19 +69,19 @@ export const pricingFAQs = [
   },
   {
     question: "What are tokens and how do they work?",
-    answer: "Tokens are platform credits for actions: posting a role (1 token), submitting a candidate (1 token), viewing detailed profiles (0.5 tokens), messaging (0.2 tokens). Your tier determines monthly token allocation: Entry (5), Lite (150), Pro (400)."
+    answer: "Tokens are platform credits used by recruiters for three actions: posting a role to the Xchange (1 token), submitting a candidate to a role (1 token), or unlocking a candidate's contact details (1 token). Hiring managers and clients post roles to RecX Direct for free — tokens are for recruiters only. Your monthly allocation: Entry (5), Lite (150), Pro (400)."
   },
   {
     question: "What happens if I run out of tokens?",
-    answer: "You can purchase additional token packs or upgrade to a higher tier for more monthly tokens. Token packs available: 25 tokens ($15), 50 tokens ($25), 100 tokens ($45). Most active recruiters find Lite (150 tokens) or Pro (400 tokens) sufficient."
+    answer: "You can purchase additional token packs inside the platform at any time: 10 tokens for $10, 50 tokens for $40, 100 tokens for $70, or 500 tokens for $300. You can also upgrade to a higher tier for a larger monthly allocation."
   },
   {
     question: "Is there a long-term contract?",
-    answer: "No long-term contracts required. All memberships are month-to-month. Cancel anytime with no penalties. If you make a placement and want to take a break, you can downgrade to Entry ($1/month) to maintain access without high commitment."
+    answer: "No long-term contracts required. All memberships are month-to-month. Cancel anytime with no penalties. If you make a placement and want to take a break, you can downgrade to Entry ($1/month) to keep access without high commitment."
   },
   {
-    question: "Do you offer team or agency discounts?",
-    answer: "Yes, agencies with 3+ recruiters qualify for team pricing. Contact sales@recxchange.io for custom enterprise pricing. Team accounts include shared candidate database, team performance analytics, and dedicated account management."
+    question: "Do token packs expire?",
+    answer: "Pro tier tokens accumulate and never reset — they carry over month to month. For Entry and Lite, unused monthly tokens do not roll over, but any purchased token packs are retained."
   }
 ];
 
@@ -115,7 +115,7 @@ export const dealProtectionFAQs = [
   },
   {
     question: "What if a client hires my candidate without telling me?",
-    answer: "RecXchange's timestamp system proves when you submitted the candidate. If a client attempts to bypass fees, your timestamped submission and contract are legal documentation. RecXchange's mediation team can assist with resolving payment disputes."
+    answer: "RecXchange's timestamp system proves when you submitted the candidate. Your timestamped submission and signed contract are legal documentation. RecXchange's mediation team can assist with resolving payment disputes."
   },
   {
     question: "Can I withdraw a candidate submission?",
