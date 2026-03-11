@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, ReactNode } from 'react';
+import { useEffect, useState, ReactNode } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 
@@ -33,19 +34,19 @@ export default function ModalWrapper({
   preventClose = false,
   className = '',
 }: ModalWrapperProps) {
+  // Track whether we are mounted on the client so createPortal is safe
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
+
   const handleClose = () => {
-    if (!preventClose) {
-      onClose();
-    }
+    if (!preventClose) onClose();
   };
 
   const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (e.target === e.currentTarget) {
-      handleClose();
-    }
+    if (e.target === e.currentTarget) handleClose();
   };
 
-  return (
+  const modal = (
     <AnimatePresence>
       {isOpen && (
         <motion.div
@@ -53,7 +54,8 @@ export default function ModalWrapper({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 md:p-8 bg-black/90"
+          // z-[9999] ensures it sits above every page element regardless of DOM position
+          className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6 md:p-8 bg-black/90"
           onClick={handleBackdropClick}
         >
           <motion.div
@@ -61,9 +63,7 @@ export default function ModalWrapper({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ duration: 0.2 }}
-            className={`w-full ${maxWidthClasses[maxWidth]} max-h-[90vh] overflow-y-auto rounded-2xl sm:rounded-3xl md:rounded-[2.5rem] relative ${
-              className
-            }`}
+            className={`w-full ${maxWidthClasses[maxWidth]} max-h-[90vh] overflow-y-auto rounded-2xl sm:rounded-3xl md:rounded-[2.5rem] relative ${className}`}
             style={{
               background: '#0a0a0a',
               border: '1px solid rgba(0, 255, 255, 0.2)',
@@ -93,9 +93,7 @@ export default function ModalWrapper({
                 {title}
               </h2>
               {subtitle && (
-                <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
-                  {subtitle}
-                </p>
+                <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">{subtitle}</p>
               )}
             </div>
 
@@ -106,4 +104,8 @@ export default function ModalWrapper({
       )}
     </AnimatePresence>
   );
+
+  // Render into document.body via portal — escapes any parent overflow/transform/stacking context
+  if (!mounted) return null;
+  return createPortal(modal, document.body);
 }
