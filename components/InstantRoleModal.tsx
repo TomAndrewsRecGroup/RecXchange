@@ -2,7 +2,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Zap, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
-import GlowButton from '@/components/design-system/GlowButton';
 
 type FormState = 'idle' | 'submitting' | 'success' | 'error';
 
@@ -37,7 +36,7 @@ function Field({
   textarea?: boolean;
 }) {
   const base =
-    'w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-cyan-400/60 focus:bg-white/8 transition-all';
+    'w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-cyan-400/60 transition-all';
   return (
     <div>
       <label htmlFor={id} className="block text-xs font-semibold text-gray-400 mb-1.5 uppercase tracking-wide">
@@ -73,13 +72,11 @@ export default function InstantRoleModal({ onClose }: { onClose: () => void }) {
   const [errorMsg, setErrorMsg] = useState('');
   const overlayRef = useRef<HTMLDivElement>(null);
 
-  // Lock body scroll
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     return () => { document.body.style.overflow = ''; };
   }, []);
 
-  // Close on Escape
   useEffect(() => {
     const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
     window.addEventListener('keydown', handler);
@@ -140,6 +137,7 @@ export default function InstantRoleModal({ onClose }: { onClose: () => void }) {
               </div>
             </div>
             <button
+              type="button"
               onClick={onClose}
               className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center text-gray-400 hover:text-white transition-colors"
               aria-label="Close modal"
@@ -164,6 +162,7 @@ export default function InstantRoleModal({ onClose }: { onClose: () => void }) {
                   Your role has been received. Our team will activate recruiter sourcing within the hour and be in touch shortly.
                 </p>
                 <button
+                  type="button"
                   onClick={onClose}
                   className="mt-6 px-6 py-2.5 rounded-full bg-white/5 hover:bg-white/10 text-sm text-gray-300 transition-colors"
                 >
@@ -190,23 +189,20 @@ export default function InstantRoleModal({ onClose }: { onClose: () => void }) {
                   </div>
                 )}
 
-                <div className="pt-2">
-                  <GlowButton
-                    variant="primary"
-                    size="md"
-                    className="w-full"
+                <div className="pt-2 flex justify-center">
+                  <button
+                    type="submit"
                     disabled={state === 'submitting'}
+                    className="relative group inline-flex items-center justify-center gap-2 px-10 py-4 rounded-xl font-black text-white text-sm bg-gradient-to-r from-cyan-500 via-purple-500 to-fuchsia-500 shadow-[0_0_20px_rgba(0,240,255,0.3)] hover:shadow-[0_0_30px_rgba(0,240,255,0.45)] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 active:scale-95 overflow-hidden"
                   >
+                    {/* Energy sweep */}
+                    <span className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 bg-gradient-to-r from-transparent via-white/25 to-transparent skew-x-12 pointer-events-none" />
                     {state === 'submitting' ? (
-                      <span className="flex items-center justify-center gap-2">
-                        <Loader2 size={16} className="animate-spin" /> Sending...
-                      </span>
+                      <><Loader2 size={16} className="animate-spin" /> Sending...</>
                     ) : (
-                      <span className="flex items-center justify-center gap-2">
-                        <Zap size={16} /> Activate Instant Support
-                      </span>
+                      <><Zap size={16} /> Activate Instant Support</>
                     )}
-                  </GlowButton>
+                  </button>
                 </div>
 
                 <p className="text-center text-[11px] text-gray-600 pt-1">
