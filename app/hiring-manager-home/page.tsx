@@ -21,7 +21,6 @@ export default function HiringManagerHome() {
   const [howItWorksError, setHowItWorksError] = useState('');
   const [marketingConsent, setMarketingConsent] = useState(false);
 
-  // Only seed fields on the closed→open transition, never during typing
   const prevOpenRef = useRef(false);
   useEffect(() => {
     const wasOpen = prevOpenRef.current;
@@ -143,7 +142,7 @@ export default function HiringManagerHome() {
                     </div>
                     <h3 className="text-base sm:text-xl font-bold text-white mb-3 sm:mb-4 group-hover:text-fuchsia-400 transition-colors">Build Pipeline</h3>
                     <p className="text-gray-400 text-sm sm:text-[15px] leading-relaxed mb-5 sm:mb-8">
-                      You’re hiring in 3-6 months. Test the market now. See who’s available. Build a pipeline before you officially recruit.
+                      You're hiring in 3-6 months. Test the market now. See who's available. Build a pipeline before you officially recruit.
                     </p>
                     <ul className="space-y-2.5 sm:space-y-4 mb-6 sm:mb-10">
                       {["See candidate availability before you post publicly", "Engage candidates before your role goes live", "Build talent pipeline for future hiring"].map((item, i) => (
@@ -177,7 +176,7 @@ export default function HiringManagerHome() {
               <StatusBadge label="HERE'S WHAT YOU ACTUALLY GET" color="purple" />
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4 mt-6">Both paths unlock the same platform</h2>
               <p className="text-gray-400 text-sm sm:text-base max-w-3xl mx-auto leading-relaxed px-2">
-                Whether you need to fill a role now or build a pipeline for later, you’re getting the full RecXchange hiring infrastructure.
+                Whether you need to fill a role now or build a pipeline for later, you're getting the full RecXchange hiring infrastructure.
               </p>
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-8 mb-10 sm:mb-12">
@@ -263,7 +262,7 @@ export default function HiringManagerHome() {
                 Post for free. 15,000+ recruiters compete. First candidates in 48 hours. Pay one fee only when you hire.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-                <GlowButton variant="primary" size="lg" href="{{trigger_link.vJPDrwl8k6nFBhkZeZJH}}">Post Role Now</GlowButton>
+                <GlowButton variant="primary" size="lg" href="https://link.gohighlevel.com/widget/booking/xp9zWAV1rz40w5WdPSTi">Post Role Now</GlowButton>
                 <GlowButton variant="ghost" size="lg" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Know Your Timeline?</GlowButton>
               </div>
             </HolographicCard>
@@ -271,12 +270,12 @@ export default function HiringManagerHome() {
         </div>
       </div>
 
-      {/* How Does It Work Modal — aligned to Send Me 3 Roles / RecX Direct design */}
+      {/* How Does It Work Modal */}
       <ModalWrapper
         isOpen={howItWorksFormOpen}
         onClose={() => { if (!howItWorksSubmitting) setHowItWorksFormOpen(false); }}
         title="How Does It Work?"
-        subtitle="We’ll send you a short video explainer showing exactly how RecX Direct works and how it helps you hire faster with one simple fee."
+        subtitle="We'll send you a short video explainer showing exactly how RecX Direct works and how it helps you hire faster with one simple fee."
         maxWidth="2xl"
         preventClose={howItWorksSubmitting}
       >
@@ -332,7 +331,7 @@ export default function HiringManagerHome() {
                   className="mt-0.5 w-4 h-4 rounded border-white/20 bg-white/5 text-fuchsia-400 focus:ring-fuchsia-400/50 focus:ring-offset-0 cursor-pointer disabled:opacity-50"
                 />
                 <span className="text-xs text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors">
-                  Yes, I’d like to receive updates and insights from RecXchange by email. You can unsubscribe at any time.
+                  Yes, I'd like to receive updates and insights from RecXchange by email. You can unsubscribe at any time.
                 </span>
               </label>
             </div>

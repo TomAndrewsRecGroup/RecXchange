@@ -120,7 +120,7 @@ export default function HiringManagerStrategic() {
                 Book a strategic briefing with your Account Manager to map out your next 6-12 months of hiring.
               </p>
               <div className="flex justify-center">
-                <GlowButton variant="primary" size="md" href="{{trigger_link.vJPDrwl8k6nFBhkZeZJH}}">
+                <GlowButton variant="primary" size="md" href="https://link.gohighlevel.com/widget/booking/xp9zWAV1rz40w5WdPSTi">
                   Schedule Strategic Briefing
                 </GlowButton>
               </div>

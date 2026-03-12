@@ -34,9 +34,9 @@ export default function ManagerFinalCTA() {
 
           {/* Dual CTAs */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 relative z-10">
-            {/* Primary — Calendly */}
+            {/* Primary — GHL Calendar */}
             <motion.a
-              href="https://calendly.com/recxchange-leadership/30min"
+              href="https://link.gohighlevel.com/widget/booking/xp9zWAV1rz40w5WdPSTi"
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
