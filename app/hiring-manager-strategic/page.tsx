@@ -14,24 +14,28 @@ const features = [
     title: 'Strategic Workforce Planning',
     desc: 'Plan hiring pipelines 6-12 months ahead with predictive talent mapping.',
     color: 'cyan' as const,
+    iconClass: 'text-cyan-400',
   },
   {
     icon: TrendingUp,
     title: 'Scalable Talent Acquisition',
     desc: 'Activate 15,000+ specialist recruiters instantly when you need to scale fast.',
     color: 'fuchsia' as const,
+    iconClass: 'text-fuchsia-400',
   },
   {
     icon: Users,
     title: 'Dedicated Account Management',
     desc: 'Your Senior Account Manager coordinates the network, so you stay focused on strategy.',
     color: 'purple' as const,
+    iconClass: 'text-purple-400',
   },
   {
     icon: Zap,
     title: 'AI-Powered Candidate Matching',
     desc: 'The Xchange Engine filters 270M+ profiles to surface only the top 1% of candidates.',
     color: 'emerald' as const,
+    iconClass: 'text-emerald-400',
   },
 ];
 
@@ -50,7 +54,7 @@ export default function HiringManagerStrategic() {
           >
             <StatusBadge label="STRATEGIC HIRING" color="purple" />
             <h1
-              className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black gradient-text mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2 mt-6"
+              className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2 mt-6"
               style={{ textShadow: '0 0 60px rgba(0,240,255,0.3)' }}
             >
               Scale Your Team at the Speed of Strategy
@@ -67,7 +71,7 @@ export default function HiringManagerStrategic() {
               return (
                 <HolographicCard key={index} color={feature.color} variant="feature">
                   <div className="mb-4 sm:mb-6">
-                    <IconComponent className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-current" />
+                    <IconComponent className={`w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 ${feature.iconClass}`} />
                   </div>
                   <h3 className="text-base sm:text-lg md:text-xl font-bold mb-2 sm:mb-3 text-white">
                     {feature.title}
