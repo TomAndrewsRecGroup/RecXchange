@@ -108,7 +108,7 @@ export default function HiringManagerHome() {
           </div>
 
           {/* Diagnostic Card */}
-          <section className="mb-10 sm:mb-12 md:mb-16">
+          <section id="choose-path" className="mb-10 sm:mb-12 md:mb-16">
             <HolographicCard color="fuchsia" variant="content">
               <StatusBadge label="SELECT YOUR PRIORITY" color="fuchsia" size="sm" />
               <h2 className="text-lg sm:text-2xl md:text-3xl font-bold text-white mb-8 md:mb-12 tracking-tight leading-snug mt-4">
@@ -263,7 +263,7 @@ export default function HiringManagerHome() {
               </p>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                 <GlowButton variant="primary" size="lg" href="https://link.gohighlevel.com/widget/booking/xp9zWAV1rz40w5WdPSTi">Post Role Now</GlowButton>
-                <GlowButton variant="ghost" size="lg" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Know Your Timeline?</GlowButton>
+                <GlowButton variant="ghost" size="lg" onClick={() => document.getElementById('choose-path')?.scrollIntoView({ behavior: 'smooth' })}>Know Your Timeline?</GlowButton>
               </div>
             </HolographicCard>
           </section>
