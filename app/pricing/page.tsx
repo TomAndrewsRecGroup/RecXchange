@@ -258,7 +258,7 @@ export default function PricingPage() {
                 Earn 70% on RecX Direct Placements
               </h2>
               <p className="text-gray-300 text-sm sm:text-base max-w-3xl mx-auto">
-                End clients post roles for free. Recruiters compete to fill them. Winners earn up to 70% of the placement fee.
+                End clients post roles. Recruiters compete to fill them. Winners earn up to 70% of the placement fee.
               </p>
             </div>
 
@@ -270,23 +270,23 @@ export default function PricingPage() {
                 <ol className="space-y-3 sm:space-y-4 text-xs sm:text-sm text-gray-300">
                   <li className="flex gap-3">
                     <span className="flex-shrink-0 w-6 h-6 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-300 font-bold text-xs">1</span>
-                    <span>End client posts a role to RecX Direct (free for them)</span>
+                    <span>End client posts a role to RecX Direct</span>
                   </li>
                   <li className="flex gap-3">
                     <span className="flex-shrink-0 w-6 h-6 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-300 font-bold text-xs">2</span>
-                    <span>15,000+ recruiters see the role (access depends on your tier)</span>
+                    <span>15,000+ recruiters see the role</span>
                   </li>
                   <li className="flex gap-3">
                     <span className="flex-shrink-0 w-6 h-6 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-300 font-bold text-xs">3</span>
-                    <span>Recruiters submit their best candidates using tokens</span>
+                    <span>Recruiters submit their best candidates</span>
                   </li>
                   <li className="flex gap-3">
                     <span className="flex-shrink-0 w-6 h-6 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-300 font-bold text-xs">4</span>
-                    <span>Your dedicated Account Manager handles all client communication</span>
+                    <span>Your dedicated Account Manager handles all Recruiter and Client communication</span>
                   </li>
                   <li className="flex gap-3">
                     <span className="flex-shrink-0 w-6 h-6 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-300 font-bold text-xs">5</span>
-                    <span>When a placement is made, the recruiter earns up to 70% of the fee</span>
+                    <span>When a placement is made, the recruiter earns up to 70% of the total fee (all fees shown are Recruiters cut)</span>
                   </li>
                 </ol>
               </HolographicCard>
