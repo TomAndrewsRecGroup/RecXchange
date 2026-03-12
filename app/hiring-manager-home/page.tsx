@@ -261,9 +261,9 @@ export default function HiringManagerHome() {
               <p className="text-gray-400 text-sm sm:text-base max-w-3xl mx-auto mb-8 sm:mb-10 leading-relaxed">
                 Post for free. 15,000+ recruiters compete. First candidates in 48 hours. Pay one fee only when you hire.
               </p>
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+              <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 justify-center">
                 <GlowButton variant="primary" size="lg" href="https://link.gohighlevel.com/widget/booking/xp9zWAV1rz40w5WdPSTi">Post Role Now</GlowButton>
-                <GlowButton variant="ghost" size="lg" onClick={() => document.getElementById('choose-path')?.scrollIntoView({ behavior: 'smooth' })}>Know Your Timeline?</GlowButton>
+                <GlowButton variant="secondary" size="lg" onClick={() => document.getElementById('choose-path')?.scrollIntoView({ behavior: 'smooth' })}>Know Your Timeline?</GlowButton>
               </div>
             </HolographicCard>
           </section>
