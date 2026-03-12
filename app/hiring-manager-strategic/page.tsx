@@ -119,7 +119,7 @@ export default function HiringManagerStrategic() {
               <p className="text-gray-400 text-[13px] sm:text-sm md:text-base mb-6 sm:mb-8 px-2 max-w-3xl mx-auto">
                 Book a strategic briefing with your Account Manager to map out your next 6-12 months of hiring.
               </p>
-              <GlowButton variant="primary" size="lg" href="{{trigger_link.vJPDrwl8k6nFBhkZeZJH}}">
+              <GlowButton variant="primary" size="md" href="{{trigger_link.vJPDrwl8k6nFBhkZeZJH}}">
                 Schedule Strategic Briefing
               </GlowButton>
             </HolographicCard>

@@ -12,24 +12,28 @@ const supportSteps = [
   {
     Icon: MessageSquare,
     color: "cyan" as const,
+    iconClass: "text-cyan-400",
     title: "Expert Role Briefing",
     description: "Your dedicated Account Manager meets with you to understand the technical requirements, cultural fit, and strategic goals of your roles."
   },
   {
     Icon: Users,
     color: "fuchsia" as const,
+    iconClass: "text-fuchsia-400",
     title: "Global Recruiter Management",
     description: "We manage the 15,000+ specialist recruiters on the platform, directing their sourcing efforts so you don't have to deal with multiple agencies."
   },
   {
     Icon: Trophy,
     color: "purple" as const,
+    iconClass: "text-purple-400",
     title: "Elite Candidate Filtering",
     description: "The Xchange Engine performs semantic matching, and your Account Manager manually vets the results to ensure only the top 1% of candidates reach your desk."
   },
   {
     Icon: Handshake,
     color: "cyan" as const,
+    iconClass: "text-cyan-400",
     title: "End-to-End Support",
     description: "From scheduling interviews to managing offers and onboarding, your Account Manager acts as an extension of your internal HR team."
   }
@@ -63,7 +67,7 @@ export default function AccountManagement() {
               return (
                 <HolographicCard key={index} color={step.color} variant="feature">
                   <div className="mb-4 sm:mb-6">
-                    <IconComponent className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-current" />
+                    <IconComponent className={`w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 ${step.iconClass}`} />
                   </div>
                   <h4 className="text-base sm:text-lg md:text-xl font-bold mb-2 sm:mb-3 text-white">{step.title}</h4>
                   <p className="text-gray-400 text-[13px] sm:text-sm leading-relaxed">
@@ -107,7 +111,7 @@ export default function AccountManagement() {
               <p className="text-gray-400 text-[13px] sm:text-sm md:text-base mb-6 sm:mb-8 px-2 max-w-3xl mx-auto">
                 Experience the efficiency of the Xchange Engine backed by the expertise of a dedicated recruitment partner.
               </p>
-              <GlowButton variant="primary" size="lg" href="{{trigger_link.vJPDrwl8k6nFBhkZeZJH}}">
+              <GlowButton variant="primary" size="md" href="{{trigger_link.vJPDrwl8k6nFBhkZeZJH}}">
                 Schedule Your Briefing
               </GlowButton>
             </HolographicCard>
