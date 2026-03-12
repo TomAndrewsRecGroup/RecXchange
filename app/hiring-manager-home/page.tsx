@@ -122,10 +122,10 @@ export default function HiringManagerHome() {
                     </div>
                     <h3 className="text-base sm:text-xl font-bold text-white mb-3 sm:mb-4 group-hover:text-cyan-400 transition-colors">Fill Role Now</h3>
                     <p className="text-gray-400 text-sm sm:text-[15px] leading-relaxed mb-5 sm:mb-8">
-                      You need someone hired this month. Post your role. Get shortlisted candidates in 48 hours. Pay one fee when you hire.
+                      You need someone hired this month. Post your role. Get candidates in 48 hours.
                     </p>
                     <ul className="space-y-2.5 sm:space-y-4 mb-6 sm:mb-10">
-                      {["Post once, 15,000+ recruiters see it", "Set your fee upfront (12-20% standard)", "First candidates submitted in 48 hours"].map((item, i) => (
+                      {["Post once, 15,000+ recruiters see it", "Fee set up from the start", "First candidates submitted in 48 hours"].map((item, i) => (
                         <li key={i} className="text-gray-400 flex items-start gap-2 sm:gap-3">
                           <span className="w-1 h-1 mt-1.5 bg-cyan-400 rounded-full flex-shrink-0" />
                           <span className="text-[11px] sm:text-xs leading-snug">{item}</span>
