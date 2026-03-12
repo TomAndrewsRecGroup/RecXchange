@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Zap, MapPin, DollarSign, Briefcase, Globe, Clock, Users, TrendingUp, ShieldCheck } from 'lucide-react';
+import { Zap, MapPin, DollarSign, Briefcase, Globe, Clock, Users, TrendingUp } from 'lucide-react';
 import FuturisticBackground from '@/components/design-system/FuturisticBackground';
 import HolographicCard from '@/components/design-system/HolographicCard';
 import StatusBadge from '@/components/design-system/StatusBadge';
@@ -28,21 +28,14 @@ const whyCards = [
     color: 'purple' as const,
     iconClass: 'text-purple-400',
     title: 'Your Account Manager runs point',
-    body: 'You don\'t manage 15,000 recruiters — we do. Your dedicated Account Manager briefs the network, filters quality, and brings you only the strongest submissions. One conversation. Thousands of specialists working.',
+    body: "You don't manage 15,000 recruiters — we do. Your dedicated Account Manager briefs the network, filters quality, and brings you only the strongest submissions. One conversation. Thousands of specialists working.",
   },
   {
     icon: TrendingUp,
     color: 'emerald' as const,
     iconClass: 'text-emerald-400',
     title: 'Competitive sourcing drives better candidates',
-    body: 'When hundreds of recruiters are competing on the same role, the quality of candidates rises fast. Each recruiter surfaces their best from their own private network — giving you access to talent you\'d never find through one agency.',
-  },
-  {
-    icon: ShieldCheck,
-    color: 'cyan' as const,
-    iconClass: 'text-cyan-400',
-    title: 'Full visibility. No chaos.',
-    body: 'Every submission is logged, timestamped, and tracked. You see exactly who submitted, when, and what happened. Clear agreements cover fee amounts and payment dates before anyone starts work.',
+    body: "When hundreds of recruiters are competing on the same role, the quality of candidates rises fast. Each recruiter surfaces their best from their own private network — giving you access to talent you'd never find through one agency.",
   },
 ];
 
