@@ -10,6 +10,14 @@ import NeonDivider from '@/components/design-system/NeonDivider';
 import GlowButton from '@/components/design-system/GlowButton';
 import ModalWrapper from '@/components/ModalWrapper';
 
+function scrollToCenter(id: string) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const rect = el.getBoundingClientRect();
+  const scrollTop = window.scrollY + rect.top - (window.innerHeight / 2) + (rect.height / 2);
+  window.scrollTo({ top: scrollTop, behavior: 'smooth' });
+}
+
 export default function HiringManagerHome() {
   const [howItWorksFormOpen, setHowItWorksFormOpen] = useState(false);
   const [howItWorksName, setHowItWorksName] = useState('');
@@ -263,7 +271,7 @@ export default function HiringManagerHome() {
               </p>
               <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 justify-center">
                 <GlowButton variant="primary" size="lg" href="https://link.gohighlevel.com/widget/booking/xp9zWAV1rz40w5WdPSTi">Post Role Now</GlowButton>
-                <GlowButton variant="secondary" size="lg" onClick={() => document.getElementById('choose-path')?.scrollIntoView({ behavior: 'smooth' })}>Know Your Timeline?</GlowButton>
+                <GlowButton variant="secondary" size="lg" onClick={() => scrollToCenter('choose-path')}>Know Your Timeline?</GlowButton>
               </div>
             </HolographicCard>
           </section>
