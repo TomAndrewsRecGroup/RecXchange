@@ -117,7 +117,6 @@ export default function PricingPage() {
                   color={tier.color}
                   variant={tier.highlighted ? "feature" : "content"}
                   glowIntensity={tier.highlighted ? "high" : "low"}
-                  showStatusIndicator={tier.highlighted}
                   className="h-full flex flex-col"
                 >
                   {tier.badge && (
