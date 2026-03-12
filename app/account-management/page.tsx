@@ -111,9 +111,11 @@ export default function AccountManagement() {
               <p className="text-gray-400 text-[13px] sm:text-sm md:text-base mb-6 sm:mb-8 px-2 max-w-3xl mx-auto">
                 Experience the efficiency of the Xchange Engine backed by the expertise of a dedicated recruitment partner.
               </p>
-              <GlowButton variant="primary" size="md" href="{{trigger_link.vJPDrwl8k6nFBhkZeZJH}}">
-                Schedule Your Briefing
-              </GlowButton>
+              <div className="flex justify-center">
+                <GlowButton variant="primary" size="md" href="{{trigger_link.vJPDrwl8k6nFBhkZeZJH}}">
+                  Schedule Your Briefing
+                </GlowButton>
+              </div>
             </HolographicCard>
           </section>
         </div>
