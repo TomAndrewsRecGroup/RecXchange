@@ -1,14 +1,50 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import Link from 'next/link';
-import { Zap, MapPin, DollarSign, Briefcase } from 'lucide-react';
+import { Zap, MapPin, DollarSign, Briefcase, Globe, Clock, Users, TrendingUp, ShieldCheck } from 'lucide-react';
 import FuturisticBackground from '@/components/design-system/FuturisticBackground';
 import HolographicCard from '@/components/design-system/HolographicCard';
 import StatusBadge from '@/components/design-system/StatusBadge';
 import NeonDivider from '@/components/design-system/NeonDivider';
-import GlowButton from '@/components/design-system/GlowButton';
 import ManagerFinalCTA from '@/components/ManagerFinalCTA';
+
+const whyCards = [
+  {
+    icon: Globe,
+    color: 'cyan' as const,
+    iconClass: 'text-cyan-400',
+    title: 'More recruiters than any single agency — instantly',
+    body: 'The moment your role is live, it broadcasts to 15,000+ specialist recruiters across 80+ countries. No single recruitment company on earth can deploy that many experts on one brief, simultaneously.',
+  },
+  {
+    icon: Clock,
+    color: 'fuchsia' as const,
+    iconClass: 'text-fuchsia-400',
+    title: 'First candidates in hours, not weeks',
+    body: 'Recruiters in the network are actively sourcing right now. Most clients receive their first shortlisted candidates within 24–48 hours of posting. No onboarding lag. No negotiating terms. Just talent.',
+  },
+  {
+    icon: Users,
+    color: 'purple' as const,
+    iconClass: 'text-purple-400',
+    title: 'Your Account Manager runs point',
+    body: 'You don\'t manage 15,000 recruiters — we do. Your dedicated Account Manager briefs the network, filters quality, and brings you only the strongest submissions. One conversation. Thousands of specialists working.',
+  },
+  {
+    icon: TrendingUp,
+    color: 'emerald' as const,
+    iconClass: 'text-emerald-400',
+    title: 'Competitive sourcing drives better candidates',
+    body: 'When hundreds of recruiters are competing on the same role, the quality of candidates rises fast. Each recruiter surfaces their best from their own private network — giving you access to talent you\'d never find through one agency.',
+  },
+  {
+    icon: ShieldCheck,
+    color: 'cyan' as const,
+    iconClass: 'text-cyan-400',
+    title: 'Full visibility. No chaos.',
+    body: 'Every submission is logged, timestamped, and tracked. You see exactly who submitted, when, and what happened. Clear agreements cover fee amounts and payment dates before anyone starts work.',
+  },
+];
 
 export default function HiringManagerLive() {
   const [recruiters, setRecruiters] = useState(0);
@@ -38,6 +74,7 @@ export default function HiringManagerLive() {
       
       <div className="relative z-10 pt-16 sm:pt-20 md:pt-28 pb-12 sm:pb-16 md:pb-20 px-4 sm:px-6">
         <div className="max-w-[1200px] mx-auto">
+
           {/* Header */}
           <motion.header initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-6 sm:mb-8 md:mb-12 mt-6">
             <StatusBadge label="LIVE BROADCAST SIMULATION" color="cyan" />
@@ -48,10 +85,11 @@ export default function HiringManagerLive() {
             </h1>
             <NeonDivider width="w-40" color="mixed" />
             <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed px-2 mt-6">
-              When you post a role, you aren't waiting for a single agency. You are activating a global hive of 15,000+ specialists. Watch how fast your talent pool expands when 300+ experts source simultaneously.
+              When you post a role, you aren&apos;t waiting for a single agency. You are activating a global hive of 15,000+ specialists. Watch how fast your talent pool expands when 300+ experts source simultaneously.
             </p>
           </motion.header>
 
+          {/* Live simulation */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 items-center mb-10 sm:mb-12 md:mb-16">
             
             {/* Left: Stats */}
@@ -103,7 +141,6 @@ export default function HiringManagerLive() {
                   </div>
 
                   <div className="space-y-5">
-                    {/* Recruiters Progress */}
                     <div>
                       <div className="flex justify-between mb-2">
                         <span className="text-[10px] uppercase font-bold text-gray-500 tracking-widest">Recruiters Sourcing</span>
@@ -117,7 +154,6 @@ export default function HiringManagerLive() {
                       </div>
                     </div>
 
-                    {/* Applicants Progress */}
                     <div>
                       <div className="flex justify-between mb-2">
                         <span className="text-[10px] uppercase font-bold text-gray-500 tracking-widest">AI Matched Candidates</span>
@@ -147,6 +183,81 @@ export default function HiringManagerLive() {
               </motion.div>
             </div>
           </div>
+
+          <NeonDivider width="w-full" color="mixed" />
+
+          {/* Why RecXchange section */}
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="my-10 sm:my-12 md:my-16"
+          >
+            <div className="text-center mb-8 sm:mb-10">
+              <StatusBadge label="WHY RECXCHANGE" color="fuchsia" />
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-white mt-4 mb-3 tracking-tight">
+                More recruiters on your role than any other option. Anywhere.
+              </h2>
+              <p className="text-gray-400 text-sm sm:text-base max-w-2xl mx-auto">
+                A traditional agency sends one recruiter to your brief. We send hundreds — simultaneously, each tapping their own private network, competing to bring you the best.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
+              {whyCards.map((card, i) => {
+                const Icon = card.icon;
+                return (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.08 }}
+                  >
+                    <HolographicCard color={card.color} variant="feature">
+                      <div className="mb-4">
+                        <Icon className={`w-7 h-7 ${card.iconClass}`} />
+                      </div>
+                      <h3 className="text-white font-bold text-base sm:text-lg mb-2">{card.title}</h3>
+                      <p className="text-gray-400 text-[13px] sm:text-sm leading-relaxed">{card.body}</p>
+                    </HolographicCard>
+                  </motion.div>
+                );
+              })}
+
+              {/* Stat callout spanning full width on md+ */}
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4 }}
+                className="md:col-span-2"
+              >
+                <HolographicCard color="emerald" variant="content" glowIntensity="high">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
+                    <div>
+                      <div className="text-3xl sm:text-4xl font-black text-white mb-1">15,000+</div>
+                      <div className="text-[10px] sm:text-xs text-gray-500 uppercase tracking-widest font-bold">Active Recruiters</div>
+                    </div>
+                    <div>
+                      <div className="text-3xl sm:text-4xl font-black text-cyan-400 mb-1">270M+</div>
+                      <div className="text-[10px] sm:text-xs text-gray-500 uppercase tracking-widest font-bold">Candidate Profiles</div>
+                    </div>
+                    <div>
+                      <div className="text-3xl sm:text-4xl font-black text-fuchsia-400 mb-1">24–48h</div>
+                      <div className="text-[10px] sm:text-xs text-gray-500 uppercase tracking-widest font-bold">First Candidates</div>
+                    </div>
+                    <div>
+                      <div className="text-3xl sm:text-4xl font-black text-emerald-400 mb-1">80+</div>
+                      <div className="text-[10px] sm:text-xs text-gray-500 uppercase tracking-widest font-bold">Countries Covered</div>
+                    </div>
+                  </div>
+                </HolographicCard>
+              </motion.div>
+            </div>
+          </motion.section>
+
+          <NeonDivider width="w-full" color="mixed" />
 
           <ManagerFinalCTA />
         </div>
