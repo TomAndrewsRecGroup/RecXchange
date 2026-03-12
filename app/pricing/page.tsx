@@ -240,7 +240,8 @@ export default function PricingPage() {
                     <div className={`text-[10px] sm:text-xs mt-1 ${pack.priceClass}`}>${(pack.price / pack.tokens).toFixed(2)} per token</div>
                   </HolographicCard>
                 ))}
-           
+              </div>
+            </div>
           </motion.section>
 
           <NeonDivider width="w-full" color="mixed" />
