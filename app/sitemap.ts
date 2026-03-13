@@ -24,6 +24,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.95,
     },
     {
+      url: `${baseUrl}/collaboration`,
+      lastModified: new Date('2026-03-08'),
+      changeFrequency: 'weekly',
+      priority: 0.90,
+    },
+    {
       url: `${baseUrl}/recruiter-roles`,
       lastModified: new Date('2026-03-08'),
       changeFrequency: 'weekly',
