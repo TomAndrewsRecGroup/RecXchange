@@ -129,6 +129,7 @@ export default function RolesMarketplace() {
     return `${symbols[currency] || currency}${amount.toLocaleString()}`;
   };
 
+  const openModal = (role: Role) => { setSelectedRole(role); setShowModal(true); };
   const closeModal = () => { setShowModal(false); setSelectedRole(null); };
 
   if (loading) {
@@ -252,36 +253,48 @@ export default function RolesMarketplace() {
               {paginatedRoles.length > 0 ? (
                 paginatedRoles.map((role) => (
                   <motion.div key={role.id} layout initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                    <HolographicCard color={role.source === 'recx_direct' ? 'cyan' : 'fuchsia'} variant="feature" className="h-full flex flex-col justify-between">
-                      <div>
-                        <div className="flex justify-between items-center mb-4 gap-2">
-                          <StatusBadge
-                            label={role.source === 'recx_direct' ? 'RECX DIRECT' : 'XCHANGE'}
-                            color={role.source === 'recx_direct' ? 'cyan' : 'fuchsia'}
-                            size="sm"
-                          />
-                          <span className="text-[9px] sm:text-[10px] text-gray-500 font-bold uppercase tracking-widest truncate">{role.location}</span>
-                        </div>
-                        <h3 className="text-lg sm:text-xl font-bold mb-2 text-white leading-tight">{role.title}</h3>
-                        <div className="flex flex-wrap gap-1.5 items-center text-[9px] sm:text-[10px] text-gray-500 font-bold mb-2">
-                          <span className="truncate">{role.company}</span>
-                          <span className="w-1 h-1 rounded-full bg-white/10" />
-                          <span className="text-gray-400 truncate">{role.industry}</span>
-                        </div>
-                        <p className="text-[10px] text-gray-600 capitalize">{role.workModel} · {role.seniorityLevel} · {role.roleType}</p>
-                      </div>
-                      <div className="mt-6 pt-6 border-t border-white/10 flex justify-between items-end gap-3">
+                    {/* Full card is a button — opens modal on click anywhere */}
+                    <button
+                      type="button"
+                      onClick={() => openModal(role)}
+                      className="w-full h-full text-left cursor-pointer group focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 rounded-2xl"
+                    >
+                      <HolographicCard
+                        color={role.source === 'recx_direct' ? 'cyan' : 'fuchsia'}
+                        variant="feature"
+                        className="h-full flex flex-col justify-between transition-transform duration-200 group-hover:scale-[1.01] group-hover:shadow-[0_0_30px_rgba(168,85,247,0.15)]"
+                      >
                         <div>
-                          <span className="text-[8px] text-gray-600 uppercase font-black tracking-widest block mb-1">Fee Share</span>
-                          <span className="text-xl font-bold gradient-text">
-                            {role.splitAmount && role.splitCurrency ? formatSplit(role.splitAmount, role.splitCurrency) : 'TBD'}
+                          <div className="flex justify-between items-center mb-4 gap-2">
+                            <StatusBadge
+                              label={role.source === 'recx_direct' ? 'RECX DIRECT' : 'XCHANGE'}
+                              color={role.source === 'recx_direct' ? 'cyan' : 'fuchsia'}
+                              size="sm"
+                            />
+                            <span className="text-[9px] sm:text-[10px] text-gray-500 font-bold uppercase tracking-widest truncate">{role.location}</span>
+                          </div>
+                          <h3 className="text-lg sm:text-xl font-bold mb-2 text-white leading-tight">{role.title}</h3>
+                          <div className="flex flex-wrap gap-1.5 items-center text-[9px] sm:text-[10px] text-gray-500 font-bold mb-2">
+                            <span className="truncate">{role.company}</span>
+                            <span className="w-1 h-1 rounded-full bg-white/10" />
+                            <span className="text-gray-400 truncate">{role.industry}</span>
+                          </div>
+                          <p className="text-[10px] text-gray-600 capitalize">{role.workModel} · {role.seniorityLevel} · {role.roleType}</p>
+                        </div>
+                        <div className="mt-6 pt-6 border-t border-white/10 flex justify-between items-end gap-3">
+                          <div>
+                            <span className="text-[8px] text-gray-600 uppercase font-black tracking-widest block mb-1">Fee Share</span>
+                            <span className="text-xl font-bold gradient-text">
+                              {role.splitAmount && role.splitCurrency ? formatSplit(role.splitAmount, role.splitCurrency) : 'TBD'}
+                            </span>
+                          </div>
+                          {/* Visual affordance — not a separate click target */}
+                          <span className="text-[9px] font-black uppercase tracking-widest text-purple-400 group-hover:text-cyan-400 transition-colors">
+                            View →
                           </span>
                         </div>
-                        <GlowButton variant="ghost" size="sm" onClick={() => { setSelectedRole(role); setShowModal(true); }}>
-                          View
-                        </GlowButton>
-                      </div>
-                    </HolographicCard>
+                      </HolographicCard>
+                    </button>
                   </motion.div>
                 ))
               ) : (
@@ -393,16 +406,19 @@ export default function RolesMarketplace() {
                     <div className="flex items-center gap-2"><span className="w-1 h-1 bg-purple-400 rounded-full" /><strong>Posted:</strong> {new Date(selectedRole.postedAt).toLocaleDateString()}</div>
                   </div>
                 </div>
+                {/* CTA — same gradient pill style as header "Get Started Now" */}
                 <div className="space-y-3">
-                  <GlowButton
-                    variant="primary"
-                    size="lg"
-                    href="https://app.recxchange.io?trigger_link=Hc9mpfL0JxjX06kwNpd1"
-                    className="w-full"
-                    onClick={closeModal}
-                  >
-                    Work This Role
-                  </GlowButton>
+                  <div className="flex justify-center">
+                    <motion.a
+                      href="https://app.recxchange.io?trigger_link=Hc9mpfL0JxjX06kwNpd1"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={closeModal}
+                      className="inline-block px-7 py-3 rounded-full bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white font-extrabold text-sm shadow-[0_0_25px_rgba(0,255,255,0.3)] transition-all"
+                    >
+                      Work This Role
+                    </motion.a>
+                  </div>
                   <div className="flex justify-center">
                     <SendRolesForm />
                   </div>
