@@ -3,7 +3,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import { X, Search } from 'lucide-react';
+import { Search, ChevronLeft } from 'lucide-react';
 import FuturisticBackground from '@/components/design-system/FuturisticBackground';
 import HolographicCard from '@/components/design-system/HolographicCard';
 import StatusBadge from '@/components/design-system/StatusBadge';
@@ -59,6 +59,21 @@ export default function RolesMarketplace() {
     }
     fetchRoles();
   }, []);
+
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (showModal) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.touchAction = 'none';
+    } else {
+      document.body.style.overflow = '';
+      document.body.style.touchAction = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.touchAction = '';
+    };
+  }, [showModal]);
 
   const filteredRoles = useMemo(() => {
     return roles.filter(role => {
@@ -120,6 +135,8 @@ export default function RolesMarketplace() {
     return `${symbol}${amount.toLocaleString()}`;
   };
 
+  const closeModal = () => { setShowModal(false); setSelectedRole(null); };
+
   if (loading) {
     return (
       <main className="relative bg-[#0a0a0f] min-h-screen overflow-hidden">
@@ -143,8 +160,10 @@ export default function RolesMarketplace() {
           {/* Header */}
           <motion.header initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-8 sm:mb-12 md:mb-16 mt-6">
             <StatusBadge label="LIVE ROLES · LIVE REVENUE" color="purple" />
-            <h1 className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black gradient-text mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2 mt-6"
-              style={{ textShadow: '0 0 60px rgba(0,240,255,0.3)' }}>
+            <h1
+              className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2 mt-6"
+              style={{ textShadow: '0 0 60px rgba(0,240,255,0.3)' }}
+            >
               One placement pays for 12 months
             </h1>
             <NeonDivider width="w-40" color="mixed" />
@@ -321,22 +340,26 @@ export default function RolesMarketplace() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md px-4"
-            onClick={() => { setShowModal(false); setSelectedRole(null); }}
+            className="fixed inset-0 z-50 flex items-start justify-center bg-black/80 backdrop-blur-md px-4 py-6 overflow-y-auto"
+            onClick={closeModal}
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative max-w-3xl w-full max-h-[90vh] overflow-y-auto"
+              className="relative max-w-3xl w-full my-auto"
+              style={{ WebkitOverflowScrolling: 'touch' }}
             >
               <HolographicCard color="purple" variant="content" className="relative">
+
+                {/* Back button — left aligned, above title */}
                 <button
-                  onClick={() => { setShowModal(false); setSelectedRole(null); }}
-                  className="absolute top-4 right-4 w-10 h-10 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 transition-all z-10"
+                  onClick={closeModal}
+                  className="flex items-center gap-1.5 text-gray-400 hover:text-white transition-colors text-xs font-bold uppercase tracking-widest mb-5 group"
                 >
-                  <X size={20} />
+                  <ChevronLeft size={16} className="group-hover:-translate-x-0.5 transition-transform" />
+                  Back
                 </button>
 
                 <div className="mb-6">
@@ -389,7 +412,7 @@ export default function RolesMarketplace() {
                     size="lg" 
                     href="https://app.recxchange.io?trigger_link=Hc9mpfL0JxjX06kwNpd1"
                     className="w-full"
-                    onClick={() => { setShowModal(false); setSelectedRole(null); }}
+                    onClick={closeModal}
                   >
                     Work This Role
                   </GlowButton>
