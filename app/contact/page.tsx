@@ -7,6 +7,7 @@ import FuturisticBackground from '@/components/design-system/FuturisticBackgroun
 import HolographicCard from '@/components/design-system/HolographicCard';
 import StatusBadge from '@/components/design-system/StatusBadge';
 import NeonDivider from '@/components/design-system/NeonDivider';
+import { pickAssistantName, type AssistantName } from '@/lib/groq/config';
 
 // ─── Types (mirrors FloatingChat) ────────────────────────────────────────────
 interface SmartLinkData {
@@ -35,10 +36,14 @@ export default function ContactPage() {
   // Gate
   const [chatOpen, setChatOpen] = useState(false);
 
+  // Assistant name — picked once on mount, stable for the whole session
+  const [assistantName] = useState<AssistantName>(() => pickAssistantName());
+
   // FloatingChat state (identical)
   const [messages, setMessages]           = useState<Message[]>([]);
   const [inputValue, setInputValue]       = useState('');
   const [isLoading, setIsLoading]         = useState(false);
+  const [isRegistering, setIsRegistering] = useState(false);
   const [hasHandedOver, setHasHandedOver] = useState(false);
   const [showUserForm, setShowUserForm]   = useState(true);
   const [userName, setUserName]           = useState('');
@@ -53,12 +58,40 @@ export default function ContactPage() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // ── Handlers (identical to FloatingChat) ────────────────────────────────────
-  const handleStartChat = () => {
+  // ── Handlers ────────────────────────────────────────────────────────────────
+  const handleStartChat = async () => {
     if (!userName || !userEmail || !userPersona) { alert('Please fill in all required fields'); return; }
     if (userPersona === 'hiring-manager' && !companyName) { alert('Please enter your company name'); return; }
+
+    // Immediately register the contact in GHL (non-blocking on failure)
+    setIsRegistering(true);
+    try {
+      const res = await fetch('/api/groq/register-chat-user', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: userName,
+          email: userEmail,
+          persona: userPersona,
+          companyName: userPersona === 'hiring-manager' ? companyName : undefined,
+          pageContext: 'Contact Page',
+        }),
+      });
+      const data = await res.json();
+      if (data.contactId) setContactId(data.contactId);
+    } catch (err) {
+      // Non-blocking — ghl/chat route handles contact creation as fallback
+      console.error('[ContactPage] Failed to register chat user:', err);
+    } finally {
+      setIsRegistering(false);
+    }
+
     setShowUserForm(false);
-    setMessages([{ role: 'assistant', content: `Hi ${userName.split(' ')[0]}! I'm RecXchange Support, your AI assistant. How can I help you today?` }]);
+    const firstName = userName.split(' ')[0];
+    const greeting = userPersona === 'hiring-manager'
+      ? `Hi ${firstName}! I'm ${assistantName} from RecXchange. Our team will be with you shortly. What can we help with today?`
+      : `Hi ${firstName}! I'm ${assistantName} from RecXchange. Great to have a recruiter on board. What are you looking for today?`;
+    setMessages([{ role: 'assistant', content: greeting }]);
   };
 
   const handleSmartLinkClick = (url: string) => { router.push(url); };
@@ -97,6 +130,7 @@ export default function ContactPage() {
         message: userMessage,
         history: messages,
         pageContext: 'Contact Page',
+        assistantName,
       };
       if (!contactId) {
         payload.name = userName; payload.email = userEmail; payload.persona = userPersona;
@@ -211,10 +245,14 @@ export default function ContactPage() {
                 <div className="p-3.5 sm:p-4 border-b border-cyan-400/20 bg-gradient-to-r from-cyan-500/10 to-purple-500/10">
                   <div className="flex items-center justify-between">
                     <div>
-                      <h3 className="text-white font-bold text-sm">RecXchange Support</h3>
+                      <h3 className="text-white font-bold text-sm">
+                        {chatOpen && !showUserForm ? `${assistantName} — RecXchange` : 'RecXchange Support'}
+                      </h3>
                       <p className="text-gray-400 text-xs flex items-center gap-1">
                         <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                        AI Assistant {hasHandedOver && chatOpen && '→ Live Agent'}
+                        {chatOpen && !showUserForm
+                          ? hasHandedOver ? 'Live Agent' : 'Team Member'
+                          : 'AI Assistant'}
                       </p>
                     </div>
                     {chatOpen && (
@@ -228,7 +266,6 @@ export default function ContactPage() {
                 {/* ── Gate: blurred preview ── */}
                 {!chatOpen && (
                   <div className="relative">
-                    {/* Blurred preview messages */}
                     <div className="h-[340px] overflow-hidden p-4 space-y-3 select-none blur-[3px] pointer-events-none">
                       {previewMessages.map((msg, i) => (
                         <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
@@ -266,10 +303,9 @@ export default function ContactPage() {
                   </div>
                 )}
 
-                {/* ── Active chat (identical to FloatingChat internals) ── */}
+                {/* ── Active chat ── */}
                 {chatOpen && (
                   <>
-                    {/* Messages / form area */}
                     <div className="h-[380px] overflow-y-auto p-3 sm:p-4 space-y-3 overscroll-contain">
                       <AnimatePresence mode="wait">
                         {showUserForm ? (
@@ -307,9 +343,12 @@ export default function ContactPage() {
                                   className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2.5 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-cyan-400/50" />
                               </div>
                             )}
-                            <button onClick={handleStartChat}
-                              className="w-full py-3 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-lg text-white font-bold text-sm hover:shadow-lg transition-all active:scale-[0.98]">
-                              Start Chat
+                            <button
+                              onClick={handleStartChat}
+                              disabled={isRegistering}
+                              className="w-full py-3 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-lg text-white font-bold text-sm hover:shadow-lg transition-all active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                            >
+                              {isRegistering ? <><Loader2 className="w-4 h-4 animate-spin" /> Starting...</> : 'Start Chat'}
                             </button>
                             <p className="text-gray-500 text-[10px] text-center">By continuing, you agree to our data collection for support purposes.</p>
                           </motion.div>
