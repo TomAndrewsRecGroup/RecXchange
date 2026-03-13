@@ -59,7 +59,7 @@ export default function Header() {
             </div>
 
             <Link href="/pricing" className="text-sm text-gray-400 hover:text-cyan-400 transition-colors">Pricing</Link>
-            <Link href="/split-fees" className="text-sm text-gray-400 hover:text-cyan-400 transition-colors">Collaboration</Link>
+            <Link href="/collaboration" className="text-sm text-gray-400 hover:text-cyan-400 transition-colors">Collaboration</Link>
             <Link href="/contact" className="text-sm text-gray-400 hover:text-cyan-400 transition-colors">Contact Us</Link>
             <Link href="/roles" className="text-sm text-gray-400 hover:text-cyan-400 transition-colors">Live Roles</Link>
           </nav>
@@ -262,7 +262,7 @@ export default function Header() {
                     Pricing
                   </Link>
                   <Link 
-                    href="/split-fees" 
+                    href="/collaboration" 
                     className="block text-base font-medium text-gray-300 hover:text-cyan-400 transition-colors py-2"
                     onClick={() => setMobileMenuOpen(false)}
                   >
