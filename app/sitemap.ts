@@ -1,129 +1,133 @@
 import { MetadataRoute } from 'next';
 
+// lastModified uses real dates, not new Date().
+// Using new Date() re-stamps every build as "just modified" which pollutes
+// crawl frequency signals and wastes crawl budget on unchanged pages.
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://recxchange.io';
-  
+
   return [
-    // Homepage - Highest priority, updates daily
+    // Homepage
     {
       url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 1,
+      lastModified: new Date('2026-03-08'),
+      changeFrequency: 'weekly',
+      priority: 1.0,
     },
-    
-    // Core User Journeys - Very high priority
+
+    // Core recruiter journey
     {
       url: `${baseUrl}/recruiter`,
-      lastModified: new Date(),
+      lastModified: new Date('2026-03-08'),
       changeFrequency: 'weekly',
-      priority: 0.9,
+      priority: 0.95,
     },
-    {
-      url: `${baseUrl}/hiring-manager-home`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/roles`,
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/pricing`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-    
-    // Key Content Pages - High priority for SEO
-    {
-      url: `${baseUrl}/why-recxchange`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/blog`,
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/faq`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    
-    // Feature Pages - High priority
     {
       url: `${baseUrl}/recruiter-roles`,
-      lastModified: new Date(),
+      lastModified: new Date('2026-03-08'),
       changeFrequency: 'weekly',
-      priority: 0.8,
+      priority: 0.85,
     },
     {
       url: `${baseUrl}/recruiters-with-candidates`,
-      lastModified: new Date(),
+      lastModified: new Date('2026-03-08'),
       changeFrequency: 'weekly',
-      priority: 0.8,
+      priority: 0.85,
     },
+
+    // Hiring manager journey
     {
-      url: `${baseUrl}/split-fees`,
-      lastModified: new Date(),
+      url: `${baseUrl}/hiring-manager-home`,
+      lastModified: new Date('2026-03-08'),
       changeFrequency: 'weekly',
-      priority: 0.8,
+      priority: 0.95,
     },
-    {
-      url: `${baseUrl}/deal-protection`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    
-    // Hiring Manager Pages - Medium-high priority
     {
       url: `${baseUrl}/hiring-manager-live`,
-      lastModified: new Date(),
+      lastModified: new Date('2026-03-08'),
       changeFrequency: 'weekly',
-      priority: 0.7,
+      priority: 0.75,
     },
     {
       url: `${baseUrl}/hiring-manager-strategic`,
-      lastModified: new Date(),
+      lastModified: new Date('2026-03-08'),
       changeFrequency: 'weekly',
-      priority: 0.7,
+      priority: 0.75,
     },
-    
-    // Research & Account Management - Medium priority
+
+    // High-value content pages
+    {
+      url: `${baseUrl}/pricing`,
+      lastModified: new Date('2026-03-08'),
+      changeFrequency: 'weekly',
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/why-recxchange`,
+      lastModified: new Date('2026-03-08'),
+      changeFrequency: 'weekly',
+      priority: 0.90,
+    },
+    {
+      url: `${baseUrl}/split-fees`,
+      lastModified: new Date('2026-03-08'),
+      changeFrequency: 'monthly',
+      priority: 0.85,
+    },
+    {
+      url: `${baseUrl}/deal-protection`,
+      lastModified: new Date('2026-03-08'),
+      changeFrequency: 'monthly',
+      priority: 0.80,
+    },
+    {
+      url: `${baseUrl}/faq`,
+      lastModified: new Date('2026-03-08'),
+      changeFrequency: 'monthly',
+      priority: 0.80,
+    },
+
+    // Live roles feed — daily crawl warranted
+    {
+      url: `${baseUrl}/roles`,
+      lastModified: new Date('2026-03-08'),
+      changeFrequency: 'daily',
+      priority: 0.85,
+    },
+
+    // Blog
+    {
+      url: `${baseUrl}/blog`,
+      lastModified: new Date('2026-03-08'),
+      changeFrequency: 'weekly',
+      priority: 0.75,
+    },
+
+    // Supporting pages
     {
       url: `${baseUrl}/research`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.6,
+      lastModified: new Date('2026-03-08'),
+      changeFrequency: 'monthly',
+      priority: 0.60,
     },
     {
       url: `${baseUrl}/account-management`,
-      lastModified: new Date(),
+      lastModified: new Date('2026-03-08'),
       changeFrequency: 'monthly',
-      priority: 0.6,
+      priority: 0.60,
     },
-    
-    // Contact & Legal - Lower priority but important
     {
       url: `${baseUrl}/contact`,
-      lastModified: new Date(),
+      lastModified: new Date('2026-03-08'),
       changeFrequency: 'monthly',
-      priority: 0.5,
+      priority: 0.50,
     },
     {
       url: `${baseUrl}/legal`,
-      lastModified: new Date(),
+      lastModified: new Date('2026-01-01'),
       changeFrequency: 'yearly',
-      priority: 0.3,
+      priority: 0.30,
     },
   ];
 }
