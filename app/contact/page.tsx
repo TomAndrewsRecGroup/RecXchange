@@ -63,7 +63,6 @@ export default function ContactPage() {
     if (!userName || !userEmail || !userPersona) { alert('Please fill in all required fields'); return; }
     if (userPersona === 'hiring-manager' && !companyName) { alert('Please enter your company name'); return; }
 
-    // Immediately register the contact in GHL (non-blocking on failure)
     setIsRegistering(true);
     try {
       const res = await fetch('/api/groq/register-chat-user', {
@@ -80,7 +79,6 @@ export default function ContactPage() {
       const data = await res.json();
       if (data.contactId) setContactId(data.contactId);
     } catch (err) {
-      // Non-blocking — ghl/chat route handles contact creation as fallback
       console.error('[ContactPage] Failed to register chat user:', err);
     } finally {
       setIsRegistering(false);
@@ -181,7 +179,8 @@ export default function ContactPage() {
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 items-start">
+          {/* ── Two-column grid: left info, right chat ── */}
+          <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:items-stretch">
 
             {/* Left: Contact Info */}
             <div className="space-y-4 sm:space-y-5 md:space-y-6">
@@ -237,12 +236,12 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* Right: Chat Panel */}
-            <div className="relative">
-              <HolographicCard color="purple" variant="content" className="overflow-hidden p-0">
+            {/* Right: Chat Panel — stretches to match left column height */}
+            <div className="relative flex flex-col">
+              <HolographicCard color="purple" variant="content" className="overflow-hidden p-0 flex flex-col flex-1">
 
                 {/* ── Chat header ── */}
-                <div className="p-3.5 sm:p-4 border-b border-cyan-400/20 bg-gradient-to-r from-cyan-500/10 to-purple-500/10">
+                <div className="p-3.5 sm:p-4 border-b border-cyan-400/20 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 flex-shrink-0">
                   <div className="flex items-center justify-between">
                     <div>
                       <h3 className="text-white font-bold text-sm">
@@ -265,8 +264,8 @@ export default function ContactPage() {
 
                 {/* ── Gate: blurred preview ── */}
                 {!chatOpen && (
-                  <div className="relative">
-                    <div className="h-[340px] overflow-hidden p-4 space-y-3 select-none blur-[3px] pointer-events-none">
+                  <div className="relative flex-1 flex flex-col">
+                    <div className="flex-1 overflow-hidden p-4 space-y-3 select-none blur-[3px] pointer-events-none">
                       {previewMessages.map((msg, i) => (
                         <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                           <div className={`max-w-[85%] rounded-lg p-3 text-sm leading-relaxed ${
@@ -306,7 +305,8 @@ export default function ContactPage() {
                 {/* ── Active chat ── */}
                 {chatOpen && (
                   <>
-                    <div className="h-[380px] overflow-y-auto p-3 sm:p-4 space-y-3 overscroll-contain">
+                    {/* Scrollable message / form area — flex-1 fills remaining card height */}
+                    <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 overscroll-contain">
                       <AnimatePresence mode="wait">
                         {showUserForm ? (
                           <motion.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-3">
@@ -385,9 +385,9 @@ export default function ContactPage() {
                       </AnimatePresence>
                     </div>
 
-                    {/* Input bar */}
+                    {/* Input bar — pinned to bottom of card */}
                     {!showUserForm && (
-                      <div className="p-3 sm:p-4 border-t border-cyan-400/20 bg-[#0a0a0f]/95">
+                      <div className="p-3 sm:p-4 border-t border-cyan-400/20 bg-[#0a0a0f]/95 flex-shrink-0">
                         {hasHandedOver ? (
                           <div className="text-center py-2 text-gray-400 text-xs">A team member will respond in your GHL inbox</div>
                         ) : (
