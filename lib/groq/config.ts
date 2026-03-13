@@ -27,6 +27,20 @@ export const GROQ_CONFIG = {
   rateLimitWindowMs: 60000,
 } as const;
 
+// ─── Assistant name rotation (matches FloatingChat widget) ───────────────────
+export type AssistantName = 'Ria' | 'Rex' | 'Stan' | 'Michelle';
+
+const ASSISTANT_NAMES: AssistantName[] = ['Ria', 'Rex', 'Stan', 'Michelle'];
+
+/**
+ * Pick a random assistant name from the pool.
+ * Call once on component mount and store in state so the name is
+ * stable for the entire chat session.
+ */
+export function pickAssistantName(): AssistantName {
+  return ASSISTANT_NAMES[Math.floor(Math.random() * ASSISTANT_NAMES.length)];
+}
+
 /**
  * Main system prompt for the RecXchange AI Assistant
  * 
@@ -135,15 +149,15 @@ Available actions:
 Example responses for hiring managers:
 "RecXchange connects your roles directly to our recruiter network. Would you like to book a quick call to discuss how it works? [button:book-meeting]Book Meeting[/button] Or I can send you a video explainer."
 
-If they say "just send the video" or "no meeting":
-"No problem! [button:how-it-works-no-meeting]Get Video Explainer[/button]"
+If they say \"just send the video\" or \"no meeting\":
+\"No problem! [button:how-it-works-no-meeting]Get Video Explainer[/button]\"
 
 If they already booked meeting:
-"Perfect! I'll send the video too so you can review before the call. [button:how-it-works]Get Video Explainer[/button]"
+\"Perfect! I'll send the video too so you can review before the call. [button:how-it-works]Get Video Explainer[/button]\"
 
 Example responses for recruiters:
-"I can send you 3 live roles right now! [button:send-3-roles]Get 3 Roles[/button]"
-"Ready to see how RecX Direct works? [button:recx-direct-info]Get RecX Direct Explainer[/button]"`;
+\"I can send you 3 live roles right now! [button:send-3-roles]Get 3 Roles[/button]\"
+\"Ready to see how RecX Direct works? [button:recx-direct-info]Get RecX Direct Explainer[/button]\"\`;
 
 /**
  * Information that the AI should NEVER disclose or discuss
