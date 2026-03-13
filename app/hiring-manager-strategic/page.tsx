@@ -1,39 +1,38 @@
 "use client";
 import React from 'react';
 import { motion } from 'framer-motion';
-import { TrendingUp, Target, Users, Zap } from 'lucide-react';
+import { TrendingUp, Target, Users, Zap, Calendar } from 'lucide-react';
 import FuturisticBackground from '@/components/design-system/FuturisticBackground';
 import HolographicCard from '@/components/design-system/HolographicCard';
 import StatusBadge from '@/components/design-system/StatusBadge';
 import NeonDivider from '@/components/design-system/NeonDivider';
-import GlowButton from '@/components/design-system/GlowButton';
 
 const features = [
   {
     icon: Target,
     title: 'Strategic Workforce Planning',
-    desc: 'Plan hiring pipelines 6-12 months ahead with predictive talent mapping.',
+    desc: 'Plan hiring pipelines 3-6 months ahead with predictive talent mapping. Know who is available, what the market looks like, and be ready to move the moment headcount is approved.',
     color: 'cyan' as const,
     iconClass: 'text-cyan-400',
   },
   {
     icon: TrendingUp,
     title: 'Scalable Talent Acquisition',
-    desc: 'Activate 15,000+ specialist recruiters instantly when you need to scale fast.',
+    desc: 'Activate 15,000+ specialist recruiters instantly when you need to scale fast. One brief. Hundreds of experts sourcing simultaneously — without the overhead of managing multiple agencies.',
     color: 'fuchsia' as const,
     iconClass: 'text-fuchsia-400',
   },
   {
     icon: Users,
     title: 'Dedicated Account Management',
-    desc: 'Your Senior Account Manager coordinates the network, so you stay focused on strategy.',
+    desc: 'Your Senior Account Manager coordinates the entire network on your behalf — briefing recruiters, filtering quality, and delivering only the strongest submissions. You stay focused on strategy.',
     color: 'purple' as const,
     iconClass: 'text-purple-400',
   },
   {
     icon: Zap,
     title: 'AI-Powered Candidate Matching',
-    desc: 'The Xchange Engine filters 270M+ profiles to surface only the top 1% of candidates.',
+    desc: 'The RecXchange Recruiters filter 270M+ profiles to surface only the top 1% of candidates — matched by skills, location, experience, and role fit. Your shortlist is built before you even ask for it.',
     color: 'emerald' as const,
     iconClass: 'text-emerald-400',
   },
@@ -117,12 +116,20 @@ export default function HiringManagerStrategic() {
                 Ready to scale your hiring strategy?
               </h3>
               <p className="text-gray-400 text-[13px] sm:text-sm md:text-base mb-6 sm:mb-8 px-2 max-w-3xl mx-auto">
-                Book a strategic briefing with your Account Manager to map out your next 6-12 months of hiring.
+                Book a strategic briefing with your Account Manager to map out your next 3-6 months of hiring. We&apos;ll show you exactly what the market looks like, who&apos;s available, and how to build a pipeline that&apos;s ready the moment you need it.
               </p>
               <div className="flex justify-center">
-                <GlowButton variant="primary" size="md" href="https://link.gohighlevel.com/widget/booking/xp9zWAV1rz40w5WdPSTi">
+                <motion.a
+                  href="https://link.gohighlevel.com/widget/booking/xp9zWAV1rz40w5WdPSTi"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white font-extrabold text-sm shadow-[0_0_25px_rgba(0,255,255,0.3)] transition-all"
+                >
+                  <Calendar size={16} />
                   Schedule Strategic Briefing
-                </GlowButton>
+                </motion.a>
               </div>
             </HolographicCard>
           </section>
