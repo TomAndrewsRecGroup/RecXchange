@@ -83,7 +83,6 @@ export default function Footer() {
               <li><Link href="/hiring-manager-live" className="hover:text-cyan-400 transition-colors">Post a Role Now</Link></li>
               <li><Link href="/hiring-manager-strategic" className="hover:text-cyan-400 transition-colors">Strategic Hiring</Link></li>
               <li><Link href="/account-management" className="hover:text-cyan-400 transition-colors">Account Management</Link></li>
-              <li><Link href="/deal-protection" className="hover:text-cyan-400 transition-colors">Candidate Protection</Link></li>
             </ul>
           </div>
 
@@ -93,6 +92,8 @@ export default function Footer() {
             <ul className="space-y-2 text-xs sm:text-sm text-gray-500">
               <li><Link href="/blog" className="hover:text-cyan-400 transition-colors">Blog & Updates</Link></li>
               <li><Link href="/faq" className="hover:text-cyan-400 transition-colors">FAQ</Link></li>
+              <li><Link href="/collaboration" className="hover:text-cyan-400 transition-colors">Collaboration</Link></li>
+              <li><Link href="/deal-protection" className="hover:text-cyan-400 transition-colors">Candidate Protection</Link></li>
               <li><Link href="/why-recxchange" className="hover:text-cyan-400 transition-colors">Why RecXchange</Link></li>
               <li><Link href="https://youtube.com/@recxchange" target="_blank" rel="noopener noreferrer" className="hover:text-red-400 transition-colors flex items-center gap-1">
                 🎥 Video Tutorials
