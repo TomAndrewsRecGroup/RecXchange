@@ -1,4 +1,4 @@
-// roles/metadata.ts removed — consolidated here.
+// roles/metadata.ts removed - consolidated here.
 import type { Metadata } from 'next';
 import React from 'react';
 
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
       url: "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png",
       width: 1200,
       height: 630,
-      alt: "RecXchange — Live Split Fee Roles & Recruiter Job Board"
+      alt: "RecXchange - Live Split Fee Roles and Recruiter Job Board"
     }]
   },
   twitter: {
@@ -126,7 +126,7 @@ export default function RolesLayout({
         "name": "Is RecXchange a job board for candidates?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "No. RecXchange is a recruiter-to-recruiter and recruiter-to-hiring-manager marketplace. The roles feed is exclusively for professional recruiters to find placement partnerships. Candidates are not posted publicly — they are submitted privately by registered recruiters."
+          "text": "No. RecXchange is a recruiter-to-recruiter and recruiter-to-hiring-manager marketplace. The roles feed is exclusively for professional recruiters to find placement partnerships. Candidates are not posted publicly - they are submitted privately by registered recruiters."
         }
       }
     ]
