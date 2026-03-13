@@ -9,7 +9,6 @@ import StatusBadge from '@/components/design-system/StatusBadge';
 import NeonDivider from '@/components/design-system/NeonDivider';
 import { pickAssistantName, type AssistantName } from '@/lib/groq/config';
 
-// ─── Types (mirrors FloatingChat) ────────────────────────────────────────────
 interface SmartLinkData {
   action: 'send-3-roles' | 'book-meeting' | 'recx-direct-info' | 'how-it-works' | 'how-it-works-no-meeting';
   url: string;
@@ -21,7 +20,6 @@ interface Message {
   smartLinks?: SmartLinkData[];
 }
 
-// ─── Blurred preview messages shown behind the gate ───────────────────────────
 const previewMessages: Message[] = [
   { role: 'assistant', content: 'Hi there! Welcome to RecXchange. How can we help you today?' },
   { role: 'user',      content: 'I\'d like to find out more about posting a role...' },
@@ -30,16 +28,13 @@ const previewMessages: Message[] = [
   { role: 'assistant', content: 'Perfect. Let me pull up the right details for you right away...' },
 ];
 
+// Single source-of-truth height for the chat panel across all 3 states
+const CHAT_HEIGHT = 'h-[560px]';
+
 export default function ContactPage() {
   const router = useRouter();
-
-  // Gate
-  const [chatOpen, setChatOpen] = useState(false);
-
-  // Assistant name — picked once on mount, stable for the whole session
-  const [assistantName] = useState<AssistantName>(() => pickAssistantName());
-
-  // FloatingChat state (identical)
+  const [chatOpen, setChatOpen]           = useState(false);
+  const [assistantName]                   = useState<AssistantName>(() => pickAssistantName());
   const [messages, setMessages]           = useState<Message[]>([]);
   const [inputValue, setInputValue]       = useState('');
   const [isLoading, setIsLoading]         = useState(false);
@@ -58,23 +53,17 @@ export default function ContactPage() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // ── Handlers ────────────────────────────────────────────────────────────────
   const handleStartChat = async () => {
     if (!userName || !userEmail || !userPersona) { alert('Please fill in all required fields'); return; }
     if (userPersona === 'hiring-manager' && !companyName) { alert('Please enter your company name'); return; }
-
     setIsRegistering(true);
     try {
       const res = await fetch('/api/groq/register-chat-user', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: userName,
-          email: userEmail,
-          persona: userPersona,
+        body: JSON.stringify({ name: userName, email: userEmail, persona: userPersona,
           companyName: userPersona === 'hiring-manager' ? companyName : undefined,
-          pageContext: 'Contact Page',
-        }),
+          pageContext: 'Contact Page' }),
       });
       const data = await res.json();
       if (data.contactId) setContactId(data.contactId);
@@ -83,7 +72,6 @@ export default function ContactPage() {
     } finally {
       setIsRegistering(false);
     }
-
     setShowUserForm(false);
     const firstName = userName.split(' ')[0];
     const greeting = userPersona === 'hiring-manager'
@@ -124,26 +112,17 @@ export default function ContactPage() {
     setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
     setIsLoading(true);
     try {
-      const payload: Record<string, unknown> = {
-        message: userMessage,
-        history: messages,
-        pageContext: 'Contact Page',
-        assistantName,
-      };
+      const payload: Record<string, unknown> = { message: userMessage, history: messages, pageContext: 'Contact Page', assistantName };
       if (!contactId) {
         payload.name = userName; payload.email = userEmail; payload.persona = userPersona;
         if (userPersona === 'hiring-manager') payload.companyName = companyName;
       } else {
         payload.contactId = contactId; payload.conversationId = conversationId;
       }
-      const response = await fetch('/api/groq/ai-chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
+      const response = await fetch('/api/groq/ai-chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
       if (!response.ok) throw new Error('Failed to get response');
       const data = await response.json();
-      if (data.contactId) setContactId(data.contactId);
+      if (data.contactId)     setContactId(data.contactId);
       if (data.conversationId) setConversationId(data.conversationId);
       if (data.handover) {
         setHasHandedOver(true);
@@ -179,11 +158,11 @@ export default function ContactPage() {
             </p>
           </div>
 
-          {/* ── Two-column grid: left info, right chat ── */}
-          <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:items-stretch">
+          {/* ── Two-column grid ── */}
+          <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10">
 
-            {/* Left: Contact Info */}
-            <div className="space-y-4 sm:space-y-5 md:space-y-6">
+            {/* ── Left: use flex col so stat cards can be pushed to the bottom ── */}
+            <div className="flex flex-col gap-4 sm:gap-5 md:gap-6">
               <HolographicCard color="purple" variant="content">
                 <div className="flex gap-4 sm:gap-5 items-start">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-xl sm:rounded-2xl bg-purple-500/10 flex items-center justify-center text-purple-400 border border-purple-400/20 flex-shrink-0">
@@ -222,7 +201,9 @@ export default function ContactPage() {
                 </ul>
               </HolographicCard>
 
-              <div className="grid grid-cols-3 gap-3 sm:gap-4">
+              {/* mt-auto pushes stat cards to the bottom of the left column,
+                  aligning their bottom edge with the bottom of the fixed-height chat panel */}
+              <div className="mt-auto grid grid-cols-3 gap-3 sm:gap-4">
                 {[
                   { value: '15k+',  label: 'Active Recruiters' },
                   { value: '270M+', label: 'Candidate Profiles' },
@@ -236,12 +217,14 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* Right: Chat Panel — stretches to match left column height */}
-            <div className="relative flex flex-col">
-              <HolographicCard color="purple" variant="content" className="overflow-hidden p-0 flex flex-col flex-1">
+            {/* ── Right: fixed-height container — single source of truth for all 3 states ── */}
+            <div className={`relative ${CHAT_HEIGHT}`}>
+              {/* HolographicCard fills the fixed-height wrapper absolutely */}
+              <div className="absolute inset-0 rounded-2xl overflow-hidden border border-purple-400/40"
+                style={{ boxShadow: '0 4px 20px rgba(0,0,0,0.4), inset 0 1px 0 rgba(168,85,247,0.15), 0 0 20px rgba(168,85,247,0.05)', background: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(12px)' }}>
 
-                {/* ── Chat header ── */}
-                <div className="p-3.5 sm:p-4 border-b border-cyan-400/20 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 flex-shrink-0">
+                {/* Chat header */}
+                <div className="p-3.5 sm:p-4 border-b border-cyan-400/20 bg-gradient-to-r from-cyan-500/10 to-purple-500/10">
                   <div className="flex items-center justify-between">
                     <div>
                       <h3 className="text-white font-bold text-sm">
@@ -249,9 +232,7 @@ export default function ContactPage() {
                       </h3>
                       <p className="text-gray-400 text-xs flex items-center gap-1">
                         <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                        {chatOpen && !showUserForm
-                          ? hasHandedOver ? 'Live Agent' : 'Team Member'
-                          : 'AI Assistant'}
+                        {chatOpen && !showUserForm ? (hasHandedOver ? 'Live Agent' : 'Team Member') : 'AI Assistant'}
                       </p>
                     </div>
                     {chatOpen && (
@@ -262,19 +243,18 @@ export default function ContactPage() {
                   </div>
                 </div>
 
-                {/* ── Gate: blurred preview ── */}
+                {/* ── Gate: blurred preview — fills remaining height ── */}
                 {!chatOpen && (
-                  <div className="relative flex-1 flex flex-col">
-                    <div className="flex-1 overflow-hidden p-4 space-y-3 select-none blur-[3px] pointer-events-none">
+                  <div className="absolute inset-0 top-[60px]">
+                    {/* Blurred chat bubbles */}
+                    <div className="h-full overflow-hidden p-4 space-y-3 select-none blur-[3px] pointer-events-none">
                       {previewMessages.map((msg, i) => (
                         <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                           <div className={`max-w-[85%] rounded-lg p-3 text-sm leading-relaxed ${
                             msg.role === 'user'
                               ? 'bg-gradient-to-r from-cyan-500 to-purple-500 text-white'
                               : 'bg-white/10 text-gray-200'
-                          }`}>
-                            {msg.content}
-                          </div>
+                          }`}>{msg.content}</div>
                         </div>
                       ))}
                     </div>
@@ -285,27 +265,23 @@ export default function ContactPage() {
                           <MessageCircle className="text-white w-7 h-7" />
                         </div>
                         <p className="text-white text-sm font-semibold mb-1">Welcome to RecXchange!</p>
-                        <p className="text-gray-400 text-xs mb-5 max-w-[240px] mx-auto">
-                          Let&apos;s get started with a few quick details
-                        </p>
+                        <p className="text-gray-400 text-xs mb-5 max-w-[240px] mx-auto">Let&apos;s get started with a few quick details</p>
                         <motion.button
                           onClick={() => setChatOpen(true)}
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.97 }}
+                          whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}
                           className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-gradient-to-r from-cyan-500 to-purple-500 text-white font-extrabold text-sm shadow-[0_0_25px_rgba(0,255,255,0.3)] transition-all"
                         >
-                          <MessageSquare size={15} />
-                          Start Chat
+                          <MessageSquare size={15} /> Start Chat
                         </motion.button>
                       </div>
                     </div>
                   </div>
                 )}
 
-                {/* ── Active chat ── */}
+                {/* ── Active chat — fills remaining height as flex column ── */}
                 {chatOpen && (
-                  <>
-                    {/* Scrollable message / form area — flex-1 fills remaining card height */}
+                  <div className="absolute inset-0 top-[60px] flex flex-col">
+                    {/* Scrollable area */}
                     <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 overscroll-contain">
                       <AnimatePresence mode="wait">
                         {showUserForm ? (
@@ -343,11 +319,8 @@ export default function ContactPage() {
                                   className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2.5 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-cyan-400/50" />
                               </div>
                             )}
-                            <button
-                              onClick={handleStartChat}
-                              disabled={isRegistering}
-                              className="w-full py-3 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-lg text-white font-bold text-sm hover:shadow-lg transition-all active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                            >
+                            <button onClick={handleStartChat} disabled={isRegistering}
+                              className="w-full py-3 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-lg text-white font-bold text-sm hover:shadow-lg transition-all active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2">
                               {isRegistering ? <><Loader2 className="w-4 h-4 animate-spin" /> Starting...</> : 'Start Chat'}
                             </button>
                             <p className="text-gray-500 text-[10px] text-center">By continuing, you agree to our data collection for support purposes.</p>
@@ -363,20 +336,14 @@ export default function ContactPage() {
                                     ? 'bg-green-500/20 border border-green-500/30 text-green-300'
                                     : 'bg-white/10 text-gray-200'
                                 }`}>
-                                  {msg.isHandover && (
-                                    <div className="flex items-center gap-2 mb-2 text-xs font-semibold">
-                                      <User size={14} /> Live Agent
-                                    </div>
-                                  )}
+                                  {msg.isHandover && <div className="flex items-center gap-2 mb-2 text-xs font-semibold"><User size={14} /> Live Agent</div>}
                                   {renderMessageContent(msg)}
                                 </div>
                               </div>
                             ))}
                             {isLoading && (
                               <div className="flex justify-start">
-                                <div className="bg-white/10 rounded-lg p-3">
-                                  <Loader2 className="animate-spin text-cyan-400 w-4 h-4" />
-                                </div>
+                                <div className="bg-white/10 rounded-lg p-3"><Loader2 className="animate-spin text-cyan-400 w-4 h-4" /></div>
                               </div>
                             )}
                             <div ref={messagesEndRef} />
@@ -385,7 +352,7 @@ export default function ContactPage() {
                       </AnimatePresence>
                     </div>
 
-                    {/* Input bar — pinned to bottom of card */}
+                    {/* Input bar — pinned to bottom */}
                     {!showUserForm && (
                       <div className="p-3 sm:p-4 border-t border-cyan-400/20 bg-[#0a0a0f]/95 flex-shrink-0">
                         {hasHandedOver ? (
@@ -406,9 +373,9 @@ export default function ContactPage() {
                         <p className="text-gray-500 text-[9px] text-center mt-2">Say &quot;speak to human&quot; to connect with a live agent</p>
                       </div>
                     )}
-                  </>
+                  </div>
                 )}
-              </HolographicCard>
+              </div>
             </div>
 
           </div>
