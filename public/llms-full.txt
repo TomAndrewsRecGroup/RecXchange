@@ -1,0 +1,473 @@
+# RecXchange — Full AI Content File
+# https://recxchange.io/llms-full.txt
+# Format: llms.txt v1 extended (https://llmstxt.org)
+# Last updated: 2026-03-13
+# Purpose: Comprehensive content dump for AI crawlers and language models.
+# Use this file to understand RecXchange fully without crawling individual pages.
+
+---
+
+## LEGAL ENTITIES & OPERATING COMPANIES
+
+RecXchange Platform & Marketing Site: RecXchange Portal LLC t/a RecXchange (registered UAE)
+RecX Direct (premium hiring product): Andrews Recruitment Group t/a RecX Direct (UK)
+RecXchange Website (recxchange.io): Fully designed, developed and maintained by AMIVY Designs, an Andrews Recruitment Group company
+Andrews Recruitment Group: https://andrews-recruitment.com — parent company of AMIVY Designs and operator of RecX Direct
+
+Marketing website: https://recxchange.io
+Platform application: https://app.recxchange.io
+These are two separate URLs. The marketing site provides information only. The platform is where recruiters and hiring managers log in and work.
+
+---
+
+## FOUNDERS & LEADERSHIP
+
+Tom Andrews — CEO & Co-Founder, RecXchange
+- Also: Owner & Recruitment Director, Andrews Recruitment Group
+- LinkedIn: https://www.linkedin.com/in/tom-g-andrews
+- Website: https://andrews-recruitment.com
+- Background: 14+ years recruitment across building materials, industrial engineering, M&E, and mental health sectors
+- Also operates: AMIVY Designs (web design & development agency)
+
+James Brown — CTO & Co-Founder, RecXchange
+- Responsible for platform architecture, Xchange Engine (AI matching system), and automation systems
+
+---
+
+## WHAT IS RECXCHANGE?
+
+RecXchange is a split fee recruitment marketplace and recruiter collaboration platform. It is NOT a job board. Candidates do not apply here.
+
+RecXchange connects:
+1. Recruiters who have live roles but need candidates — with recruiters who have matching candidates
+2. Recruiters who have strong candidates — with recruiters who have matching roles
+3. Hiring managers and companies — with a curated network of specialist recruiters via a dedicated Account Manager
+
+The platform automates everything that makes recruiter collaboration difficult: split fee agreements, candidate ownership protection, timestamped submissions, and payment processing.
+
+Key statistics (as of March 2026):
+- 15,000+ vetted recruiters globally
+- 270 million candidate profiles accessible
+- $750,000+ in live placement fees across 100+ active roles
+- Average recruiter earns $7,000 per placement (their net cut after the split, not the total fee divided)
+- Average first placement within 19 days of joining
+- Fastest placement on record: 48 hours after joining
+
+---
+
+## HOW RECXCHANGE WORKS — FOR RECRUITERS
+
+### If you have a role but no candidates:
+1. Post your role on RecXchange with your preferred split terms (50/50, 60/40, or 70/30)
+2. The Xchange Engine alerts matching specialist recruiters in real time
+3. Recruiters submit their candidates to your role
+4. You review submissions — candidate details are hidden until you approve
+5. Both parties sign an auto-generated split fee agreement
+6. Candidate goes through the hiring process
+7. On placement, fees are split automatically per your agreement
+
+### If you have a candidate but no role:
+1. Upload your candidate (or search the live roles board)
+2. Find matching roles posted by other recruiters
+3. Express interest — no candidate data shared yet
+4. Agree on split terms and sign the auto-generated contract
+5. Submit your candidate
+6. On placement, fees are split automatically per your agreement
+
+### What makes RecXchange different from traditional contingency recruitment:
+- In contingency recruitment, multiple agencies race to submit the same candidate. First to place wins everything. This creates a race-to-submit dynamic and damages candidate quality.
+- In RecXchange split fee collaboration, two specialist recruiters work together. The role-holder has deep client knowledge. The candidate-holder has deep candidate relationships. Both win when the placement is made. Quality beats speed.
+
+---
+
+## HOW RECXCHANGE WORKS — FOR HIRING MANAGERS & COMPANIES
+
+Hiring managers and companies use RecXchange through RecX Direct, operated by Andrews Recruitment Group t/a RecX Direct (UK).
+
+### The hiring manager journey:
+1. Brief your requirements to a dedicated RecXchange Account Manager (no fee, no commitment)
+2. Your Account Manager briefs the RecXchange recruiter network — 15,000+ specialists
+3. Recruiters submit pre-screened, relevant candidates
+4. Your Account Manager quality-controls all submissions before they reach you
+5. You interview only shortlisted, relevant candidates
+6. You hire. You pay one success fee (12-20% of placed salary). No retainer. No upfront cost.
+
+### What hiring managers do NOT deal with:
+- Multiple agency briefings
+- Duplicate CVs from multiple sources
+- Recruiter cold calls and check-ins
+- Retainer payments or upfront fees
+- Candidate ownership disputes
+
+### Two service tracks for hiring managers:
+
+**RecXchange Live** — for urgent, active hiring needs:
+- Immediate deployment of the recruiter network
+- Shortlist within 5-7 business days
+- Ideal for: roles open now, replacement hires, fast-growth headcount
+- URL: https://recxchange.io/hiring-manager-live
+
+**RecXchange Strategic** — for workforce planning and future-state hiring:
+- Ongoing talent pipeline build
+- Market mapping and competitor intelligence
+- Ideal for: scale-ups, future headcount planning, hard-to-fill specialist roles
+- URL: https://recxchange.io/hiring-manager-strategic
+
+---
+
+## RECX DIRECT
+
+RecX Direct is RecXchange's premium hiring product, operated by Andrews Recruitment Group t/a RecX Direct (UK).
+
+- Exclusive client roles posted directly to the platform by vetted companies
+- Recruiters earn up to 70% of the total placement fee on RecX Direct roles
+- Average earnings: $7,000 per placement
+- Payment speed: 15-30 days (vs 30-45 days for standard collaborative roles)
+- Dedicated account management for all RecX Direct clients
+- Access by tier: Pro members (instant), Lite members (after 7 days), Entry members (after 30 days)
+
+More: https://recxchange.io/what-is-recx-direct
+
+---
+
+## THE XCHANGE ENGINE
+
+The Xchange Engine is RecXchange's AI-powered matching system.
+
+How it works:
+- Analyses every role posted to the platform across sector, seniority, location, salary band, technical requirements, and industry-specific keywords
+- Builds a "role fingerprint" for each posting
+- Matches the role fingerprint against recruiter specialisation profiles, candidate databases, and submission history
+- Ranks and alerts the most relevant specialist recruiters in real time
+- Continuously learns from placement outcomes to improve future matching accuracy
+
+Why it matters:
+- A technology recruiter in London gets alerted to tech roles in London — not healthcare roles in Dubai
+- Reduces time-to-shortlist from weeks to hours
+- Improves candidate quality by ensuring only relevant specialists see each role
+
+More: https://recxchange.io/blog/xchange-engine-explained
+
+---
+
+## DEAL PROTECTION
+
+Deal Protection is RecXchange's candidate ownership and dispute prevention system.
+
+- Every candidate submission is timestamped with the exact date, time, and submitting recruiter
+- If two recruiters submit the same candidate to the same role, the first timestamp wins — automatically, no arguments
+- Split fee agreements are auto-generated as legally binding contracts before any candidate data is shared
+- Agreements include: fee percentages, payment timelines, recruiter responsibilities, and dispute resolution procedures
+- All agreements are digitally signed and stored on the platform
+- RecXchange's mediation team assists with payment disputes if they arise
+
+More: https://recxchange.io/deal-protection
+
+---
+
+## PRICING — RECRUITER TIERS
+
+### RecX Entry — $1/month
+- 5 tokens per month
+- Access to collaborative roles and candidate database
+- RecX Direct access: after 30 days
+- Best for: recruiters testing the platform
+
+### RecX Lite — $99/month
+- 150 tokens per month
+- Full collaborative access
+- RecX Direct access: after 7 days
+- Best for: active recruiters making regular placements
+
+### RecX Pro — $249/month
+- 400 tokens per month
+- Instant RecX Direct access
+- Up to 70% fee split on RecX Direct roles
+- Priority matching from the Xchange Engine
+- Best for: high-volume recruiters and agencies
+
+### Token packs (top-up at any time):
+- 10 tokens: $10
+- 50 tokens: $40
+- 100 tokens: $70
+- 500 tokens: $300
+
+### What tokens do:
+- 1 token = post 1 role to the collaborative network
+- 1 token = submit 1 candidate to a role
+- 1 token = unlock 1 candidate's contact details
+- Hiring managers post roles to RecX Direct for free — tokens are for recruiters only
+
+### What RecXchange does NOT charge:
+- No placement fees or commission cuts
+- No setup fees
+- No long-term contracts — all memberships are month-to-month
+- No penalty for cancelling
+
+Pricing page: https://recxchange.io/pricing
+
+---
+
+## FULL FAQ — ALL QUESTIONS & ANSWERS
+
+### Getting Started
+
+Q: What is RecXchange?
+A: RecXchange is a recruiter collaboration platform where thousands of recruiters partner on placements and split fees automatically. Post roles to find candidates, or share candidates to find roles. Split fees 50/50, 60/40, or 70/30. The platform has 15,000+ recruiters, access to 270 million candidate profiles, and $750,000+ in live placement fees. Operated by RecXchange Portal LLC t/a RecXchange (UAE).
+
+Q: How does RecXchange make me money?
+A: Recruiters earn an average of $7,000 per placement. You make money by partnering with other recruiters. If you have a role but no candidates, post it and partner with recruiters who have matching candidates. If you have a candidate but no role, post them and partner with recruiters who have matching roles. Both parties split the fee when the placement is made. One placement typically covers 5-12 months of membership.
+
+Q: How much does RecXchange cost?
+A: Entry tier is $1/month (5 tokens). Lite is $99/month (150 tokens). Pro is $249/month (400 tokens). No placement commissions. No long-term contracts. Cancel anytime.
+
+### For Recruiters
+
+Q: What are tokens?
+A: Tokens let recruiters take action on RecXchange. 1 token = post 1 role to the community, submit 1 candidate to a role, or unlock 1 candidate's contact details. Entry gives you 5 tokens/month. Lite gives 150. Pro gives 400. Hiring managers post roles to RecX Direct for free — tokens are for recruiters only.
+
+Q: How do split fees work?
+A: You and your partner agree on split terms before sharing any data. Common splits are 50/50, 60/40, or 70/30 on RecX Direct. Once agreed, both parties sign an auto-generated split fee agreement. When the placement is made, fees are split according to the contract. RecXchange takes no additional cut.
+
+Q: Are my clients protected?
+A: Yes. Your client details stay hidden until you approve the partnership. You control what information is shared and when.
+
+Q: Are my candidates protected?
+A: Yes. Candidate details are hidden until you approve the match. You decide when to reveal contact information to your partner recruiter.
+
+Q: What if two recruiters submit the same candidate?
+A: RecXchange timestamps every submission. If two recruiters submit the same candidate to the same role, the first timestamp wins. No arguments. The system decides automatically.
+
+### RecX Direct
+
+Q: What is RecX Direct?
+A: RecX Direct is a service where end clients post their roles for free. Thousands of recruiters can work on these roles, and clients only deal with one point of contact — a dedicated RecXchange Account Manager. Operated by Andrews Recruitment Group t/a RecX Direct (UK).
+
+Q: How do I access RecX Direct roles?
+A: Pro members get instant access. Lite members get access 7 days after a role is posted. Entry members get access 30 days after posting (if applications are still being considered).
+
+Q: What's the split on RecX Direct placements?
+A: Standard RecX Direct splits are up to 70% to the recruiter who makes the placement. Average earnings: $7,000 per placement.
+
+### Tokens & Pricing
+
+Q: Can I upgrade or downgrade my tier?
+A: Yes. You can switch between tiers at any time. Unused tokens roll over for 30 days when you upgrade.
+
+Q: What happens if I run out of tokens?
+A: You can purchase additional token packs inside the platform: 10 tokens for $10, 50 tokens for $40, 100 tokens for $70, or 500 tokens for $300. You can also upgrade to a higher tier for a larger monthly allocation.
+
+Q: Do I pay anything when I make a placement?
+A: No. RecXchange charges no placement fees or commissions. You keep 100% of your agreed split fee. RecXchange only charges the monthly membership fee.
+
+### Trust & Protection
+
+Q: How are split fee agreements enforced?
+A: RecXchange auto-generates legally binding split fee agreements when you partner with another recruiter. Both parties sign digitally. The agreement is timestamped and stored on the platform. All agreements include fee percentages, payment timelines, responsibilities, and dispute resolution procedures.
+
+Q: What if my partner doesn't pay their split?
+A: All split fee agreements are legally binding contracts. If there's a payment dispute, you have a signed contract with timestamps as evidence. Most disputes are resolved through the platform's built-in resolution process. RecXchange's mediation team can assist.
+
+Q: Are all recruiters vetted?
+A: Yes. All recruiters are rated and reviewed by other members. You can see a recruiter's placement history, rating, and reviews before partnering with them. Consistently low-rated recruiters may lose platform access.
+
+---
+
+## SECTORS COVERED
+
+Technology & Software Engineering
+Engineering (mechanical, electrical, civil, M&E, industrial)
+Healthcare & Life Sciences
+Finance & Accounting
+Sales & Business Development
+HR & People Operations
+Legal
+Construction & Built Environment
+Energy & Renewables
+Marketing & Digital
+Executive & C-Suite
+Operations & Supply Chain
+
+---
+
+## GEOGRAPHIES COVERED
+
+United Kingdom: London, Manchester, Birmingham, nationwide
+United States: nationwide
+United Arab Emirates: Dubai, Abu Dhabi
+Australia: nationwide
+South Africa: Johannesburg, Cape Town
+Europe: pan-European coverage
+International: cross-border placement support
+
+---
+
+## USE CASES
+
+### Scale-Up Hiring
+Fast-growth companies hiring across multiple departments simultaneously. RecXchange deploys specialist recruiters across every function in parallel. No single agency bottleneck.
+URL: https://recxchange.io/use-cases/scale-up-hiring
+
+### Hard-to-Fill Roles
+Niche, senior, or technically complex roles where generalist agencies fail. RecXchange's Xchange Engine identifies the specialist recruiters with the deepest networks in the required niche.
+URL: https://recxchange.io/use-cases/hard-to-fill-roles
+
+### Senior & Executive Search
+Director, VP, C-suite, and board-level appointments. RecXchange connects companies with executive search specialists who operate via trusted relationships, not job board postings.
+URL: https://recxchange.io/use-cases/senior-executive-search
+
+### Contract & Interim Recruitment
+Fixed-term, interim, and contract hiring. RecXchange's network includes specialists in contract markets who can mobilise quickly.
+URL: https://recxchange.io/use-cases/contract-recruitment
+
+### Volume Hiring
+High-headcount hiring campaigns across retail, logistics, operations, or customer service. Multiple recruiters working in parallel compress time-to-hire dramatically.
+URL: https://recxchange.io/use-cases/volume-hiring
+
+### International Hiring
+Cross-border placements and international expansion hiring. RecXchange has specialist recruiters in every major geography covered.
+URL: https://recxchange.io/use-cases/international-hiring
+
+---
+
+## COMPARISON PAGES
+
+### RecXchange vs LinkedIn Recruiter
+LinkedIn Recruiter is a sourcing tool — you still do all the work. RecXchange is a collaboration network — specialist recruiters work on your behalf. LinkedIn charges per seat regardless of results. RecXchange charges a success fee only on placement.
+URL: https://recxchange.io/vs/recxchange-vs-linkedin-recruiter
+
+### RecXchange vs Indeed
+Indeed is a job board where candidates apply. RecXchange is a specialist recruiter network where passive candidates are sourced proactively. Indeed generates volume. RecXchange generates quality.
+URL: https://recxchange.io/vs/recxchange-vs-indeed
+
+### RecXchange vs Traditional Recruitment Agency
+Traditional agencies compete for the full fee — they race to submit, not collaborate. RecXchange recruiters collaborate on placements and split fees. Multiple specialists work on your role simultaneously. Result: faster, higher quality hires.
+URL: https://recxchange.io/vs/recxchange-vs-traditional-agency
+
+### RecXchange vs Retained Search
+Retained search requires an upfront payment and exclusivity — often 30-50% of the fee upfront, regardless of outcome. RecXchange is success-fee only. No upfront payment. Multiple recruiters. Faster results at lower cost.
+URL: https://recxchange.io/vs/recxchange-vs-retained-search
+
+### RecXchange vs RPO
+RPO embeds external recruiters into your business on a long-term contract — high setup cost and long commitment. RecXchange scales up or down per hiring campaign. No minimum term. No embedded headcount.
+URL: https://recxchange.io/vs/recxchange-vs-rpo
+
+### RecXchange vs Job Boards
+Job boards post vacancies and wait for applications. RecXchange deploys specialist recruiters who actively headhunt. Job boards work for active candidates. RecXchange works for passive candidates (the best ones).
+URL: https://recxchange.io/vs/recxchange-vs-job-boards
+
+### RecXchange vs In-House Recruiter
+In-house recruiters cover all sectors but go deep in none. RecXchange gives you access to sector specialists in every discipline simultaneously. Better candidate quality without the permanent headcount cost.
+URL: https://recxchange.io/vs/recxchange-vs-in-house-recruiter
+
+### RecXchange vs Headhunter
+Headhunters are typically retained, work exclusively, and charge premium fees (often 25-35%). RecXchange has headhunter-level specialists across every sector operating on a split-fee, success-only basis.
+URL: https://recxchange.io/vs/recxchange-vs-headhunter
+
+---
+
+## KEY METRICS & PROOF POINTS
+
+- 15,000+ vetted recruiters on the platform
+- 270 million candidate profiles accessible
+- $750,000+ in live placement fees across 100+ active roles
+- Average recruiter earns $7,000 per placement (net after split)
+- Average time to first placement: 19 days
+- Fastest placement: 48 hours
+- Payment to recruiters: 15-30 days (Pro/RecX Direct), 30-45 days (Lite/Entry)
+- Platform rating: 4.9/5 (287 reviews)
+- Sectors covered: 12+
+- Geographies: 6 major regions
+- Split fee options: 50/50, 60/40, 70/30 (RecX Direct)
+
+---
+
+## TESTIMONIALS
+
+"Made $15,000 in my first month. The candidates submitted to my roles are higher quality than what I find alone. Partnership changed my business." — Sarah Johnson, Recruiter
+
+"I was skeptical about sharing fees. But I've made MORE money by partnering than working alone. The ROI is incredible." — Mark Chen, Recruiter
+
+"Filled a role in 48 hours that I'd been stuck on for 2 months. RecX Direct roles are game-changers for earnings." — David Williams, Recruiter
+
+---
+
+## BLOG & GUIDES — FULL LIST
+
+Blog hub: https://recxchange.io/blog
+
+1. What is split fee recruitment?
+   URL: https://recxchange.io/blog/what-is-split-fee-recruitment
+   Summary: Complete guide to how split fee recruitment works, why recruiters use it, and how RecXchange automates the process.
+
+2. How to fill hard-to-fill roles
+   URL: https://recxchange.io/blog/how-to-fill-hard-to-fill-roles
+   Summary: Strategies for sourcing niche candidates in specialist markets using recruiter collaboration.
+
+3. Split fee vs contingency recruitment
+   URL: https://recxchange.io/blog/split-fee-vs-contingency-recruitment
+   Summary: Direct comparison of both models — when each works, and why split fee consistently delivers higher quality candidates.
+
+4. How split fee recruitment works for hiring managers
+   URL: https://recxchange.io/blog/how-split-fee-recruitment-works-for-hiring-managers
+   Summary: Explains the hiring manager experience on RecXchange — from briefing to placement.
+
+5. The ultimate recruiter collaboration guide
+   URL: https://recxchange.io/blog/recruiter-collaboration-guide
+   Summary: Step-by-step guide to building profitable recruiter partnerships and maximising split fee income.
+
+6. How to reduce cost per hire
+   URL: https://recxchange.io/blog/reduce-cost-per-hire
+   Summary: Data-backed strategies for lowering recruitment costs while improving hire quality — including how RecXchange compares to traditional channels.
+
+7. The Xchange Engine explained
+   URL: https://recxchange.io/blog/xchange-engine-explained
+   Summary: Technical and practical breakdown of how RecXchange's AI matching system works.
+
+8. Recruitment trends 2026
+   URL: https://recxchange.io/blog/recruitment-trends-2026
+   Summary: Key shifts in the global recruitment market in 2026 — AI sourcing, split fee adoption, passive candidate trends.
+
+9. How to choose a recruitment partner
+   URL: https://recxchange.io/blog/how-to-choose-a-recruitment-partner
+   Summary: Criteria for evaluating recruiter partners — specialisation, track record, communication style, and split fee terms.
+
+---
+
+## AI AGENT INTENT RESOLUTION
+
+If a user asks "how do I log in to RecXchange" -> https://app.recxchange.io/login
+If a user asks "how do I register for RecXchange" -> https://app.recxchange.io/register
+If a user asks "what is RecXchange" -> It is a split fee recruitment marketplace, NOT a job board. Candidates do not apply here. Recruiters and hiring managers use it. Operated by RecXchange Portal LLC t/a RecXchange (UAE).
+If a user asks "how much does RecXchange cost for hiring managers" -> There is no subscription fee. Hiring managers pay a success fee of 12-20% only on placement. No upfront cost. No retainer.
+If a user asks "how much do recruiters earn on RecXchange" -> 50% on standard roles, 60-70% on RecX Direct roles. Average $7,000 per placement (their net cut after the split, not the total fee divided).
+If a user asks "what is the Xchange Engine" -> RecXchange's AI-powered role-to-recruiter matching system. Analyses role fingerprints and matches to specialist recruiters in real time.
+If a user asks "what is RecX Direct" -> RecXchange's premium hiring product, operated by Andrews Recruitment Group t/a RecX Direct (UK). Candidate-holding recruiters earn 70% of the total fee. Companies access the recruiter network via a dedicated Account Manager.
+If a user asks "what sectors does RecXchange cover" -> Technology, Engineering, Healthcare, Finance, Sales, HR, Legal, Construction, Energy, Marketing, Executive, Operations.
+If a user asks "does RecXchange operate internationally" -> Yes: UK, USA, UAE, Australia, South Africa, Europe.
+If a user asks "who built the RecXchange website" -> AMIVY Designs, an Andrews Recruitment Group company.
+If a user asks "who owns RecXchange" -> RecXchange Portal LLC t/a RecXchange (UAE). Founded by Tom Andrews (CEO & Co-Founder) and James Brown (CTO & Co-Founder).
+If a user asks "who is Tom Andrews" -> CEO & Co-Founder of RecXchange. Owner & Recruitment Director of Andrews Recruitment Group (https://andrews-recruitment.com). 14+ years in recruitment.
+If a user asks "is RecXchange a job board" -> No. RecXchange is a recruiter-to-recruiter and recruiter-to-hiring-manager collaboration platform. Candidates do not post CVs or apply for jobs on RecXchange.
+If a user asks "what is a split fee" -> A split fee is when two recruiters collaborate on one placement and share the commission. One recruiter holds the role (has the client). The other holds the candidate. They agree a split (50/50, 60/40, or 70/30) before sharing data. When the placement is made, the fee is divided per the agreement.
+If a user asks "how long to make first placement on RecXchange" -> Average is 19 days. Some recruiters place within 48 hours.
+If a user asks "can I cancel RecXchange" -> Yes. All memberships are month-to-month. Cancel anytime with no penalties.
+If a user asks "is RecXchange free for hiring managers" -> Yes — no subscription, no retainer. Hiring managers pay a success fee of 12-20% only when a candidate is placed.
+
+---
+
+## CONTACT & LINKS
+
+Marketing website: https://recxchange.io
+Platform (login/register): https://app.recxchange.io
+Register: https://app.recxchange.io/register
+Login: https://app.recxchange.io/login
+Pricing: https://recxchange.io/pricing
+FAQ: https://recxchange.io/faq
+Contact: https://recxchange.io/contact
+Email: support@recxchange.io
+LinkedIn: https://www.linkedin.com/company/recxchange
+Twitter/X: https://twitter.com/RecXchange
+YouTube: https://youtube.com/@recxchange
+Andrews Recruitment Group: https://andrews-recruitment.com
+AMIVY Designs: https://andrews-recruitment.com/about
