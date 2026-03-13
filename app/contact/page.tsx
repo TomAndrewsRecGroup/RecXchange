@@ -6,6 +6,7 @@ import HolographicCard from '@/components/design-system/HolographicCard';
 import StatusBadge from '@/components/design-system/StatusBadge';
 import NeonDivider from '@/components/design-system/NeonDivider';
 import GlowButton from '@/components/design-system/GlowButton';
+import { pickAssistantName, type AssistantName } from '@/lib/groq/config';
 
 type Persona = 'recruiter' | 'hiring-manager';
 type Stage = 'persona' | 'capture' | 'chat';
@@ -24,11 +25,14 @@ export default function ContactPage() {
   const [email, setEmail] = useState('');
   const [companyName, setCompanyName] = useState('');
   const [captureError, setCaptureError] = useState('');
+  const [isRegistering, setIsRegistering] = useState(false);
   const [contactId, setContactId] = useState<string | null>(null);
   const [conversationId, setConversationId] = useState<string | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [isSending, setIsSending] = useState(false);
+  // Pick one assistant name per page load and keep it stable
+  const [assistantName] = useState<AssistantName>(() => pickAssistantName());
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const sseRef = useRef<EventSource | null>(null);
@@ -67,7 +71,7 @@ export default function ContactPage() {
     setStage('capture');
   };
 
-  const handleCaptureSubmit = (e: React.FormEvent) => {
+  const handleCaptureSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!firstName.trim()) return setCaptureError('Please enter your first name.');
@@ -75,9 +79,33 @@ export default function ContactPage() {
     if (!email.trim() || !emailRegex.test(email)) return setCaptureError('Please enter a valid email.');
     if (persona === 'hiring-manager' && !companyName.trim()) return setCaptureError('Please enter your company name.');
     setCaptureError('');
+
+    // Register the contact in GHL immediately on form submit
+    setIsRegistering(true);
+    try {
+      const res = await fetch('/api/groq/register-chat-user', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: `${firstName.trim()} ${lastName.trim()}`,
+          email: email.trim(),
+          persona,
+          companyName: persona === 'hiring-manager' ? companyName.trim() : undefined,
+          pageContext: 'Contact Page',
+        }),
+      });
+      const data = await res.json();
+      if (data.contactId) setContactId(data.contactId);
+    } catch (err) {
+      // Non-blocking: log but don't block the user from chatting
+      console.error('[ContactPage] Failed to register chat user:', err);
+    } finally {
+      setIsRegistering(false);
+    }
+
     const greeting = persona === 'hiring-manager'
-      ? `Hi ${firstName}! Welcome to RecXchange. Our team will be with you shortly. What can we help with today?`
-      : `Hi ${firstName}! Welcome to RecXchange. Great to have a recruiter on board. What are you looking for today?`;
+      ? `Hi ${firstName}! I'm ${assistantName} from RecXchange. Our team will be with you shortly. What can we help with today?`
+      : `Hi ${firstName}! I'm ${assistantName} from RecXchange. Great to have a recruiter on board. What are you looking for today?`;
     setMessages([{ id: 'welcome', from: 'team', body: greeting, timestamp: new Date() }]);
     setStage('chat');
   };
@@ -211,8 +239,13 @@ export default function ContactPage() {
                     <MessageCircle className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-bold text-white">Live Chat</h3>
-                    <p className="text-xs text-gray-400">Our team is standing by</p>
+                    <h3 className="text-lg font-bold text-white">
+                      {stage === 'chat' ? `${assistantName} — RecXchange` : 'Live Chat'}
+                    </h3>
+                    <p className="text-xs text-gray-400 flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                      {stage === 'chat' ? 'Team Member' : 'Our team is standing by'}
+                    </p>
                   </div>
                 </div>
 
@@ -256,7 +289,14 @@ export default function ContactPage() {
                         <input value={companyName} onChange={e => setCompanyName(e.target.value)} type="text" className="w-full px-3 py-2.5 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-purple-400/50" />
                       </div>
                     )}
-                    <GlowButton type="submit" variant="primary" className="w-full">Start Chat</GlowButton>
+                    <GlowButton
+                      type="submit"
+                      variant="primary"
+                      className="w-full flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                      disabled={isRegistering}
+                    >
+                      {isRegistering ? <><Loader2 className="w-4 h-4 animate-spin" /> Starting...</> : 'Start Chat'}
+                    </GlowButton>
                   </form>
                 )}
 
