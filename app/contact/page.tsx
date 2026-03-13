@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useRef, useEffect } from 'react';
-import { Mail, Send, User, Building2, Phone, Loader2, MessageCircle } from 'lucide-react';
+import { Mail, Send, User, Building2, Phone, Loader2, MessageCircle, MessageSquare } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import FuturisticBackground from '@/components/design-system/FuturisticBackground';
 import HolographicCard from '@/components/design-system/HolographicCard';
 import StatusBadge from '@/components/design-system/StatusBadge';
@@ -8,7 +9,7 @@ import NeonDivider from '@/components/design-system/NeonDivider';
 import GlowButton from '@/components/design-system/GlowButton';
 
 type Persona = 'recruiter' | 'hiring-manager';
-type Stage = 'persona' | 'capture' | 'chat';
+type Stage = 'preview' | 'persona' | 'capture' | 'chat';
 type Message = {
   id: string;
   from: 'visitor' | 'team';
@@ -16,8 +17,17 @@ type Message = {
   timestamp: Date;
 };
 
+// Static blurred preview messages shown behind the gate
+const previewMessages: Message[] = [
+  { id: 'p1', from: 'team',    body: 'Hi there! Welcome to RecXchange. How can we help you today?',         timestamp: new Date() },
+  { id: 'p2', from: 'visitor', body: 'I\'d like to find out more about posting a role...',                  timestamp: new Date() },
+  { id: 'p3', from: 'team',    body: 'Great! Are you a Recruiter or a Hiring Manager?',                     timestamp: new Date() },
+  { id: 'p4', from: 'visitor', body: 'I\'m a Hiring Manager looking to fill a few positions.',              timestamp: new Date() },
+  { id: 'p5', from: 'team',    body: 'Perfect. Let me pull up the right details for you right away...',     timestamp: new Date() },
+];
+
 export default function ContactPage() {
-  const [stage, setStage] = useState<Stage>('persona');
+  const [stage, setStage] = useState<Stage>('preview');
   const [persona, setPersona] = useState<Persona | null>(null);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -183,7 +193,7 @@ export default function ContactPage() {
                   </li>
                   <li className="flex items-start gap-2 sm:gap-3">
                     <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-purple-400 mt-1.5 sm:mt-2 flex-shrink-0" />
-                    <span className="text-[13px] sm:text-sm text-gray-300 flex-1"><strong className="text-white">Platform Support:</strong> Technical integrations, API access, and dedicated account management</span>
+                    <span className="text-[13px] sm:text-sm text-gray-300 flex-1"><strong className="text-white">Platform Support:</strong> In-app ticketing system, Live Chat, Administration Users available and technical support available.</span>
                   </li>
                 </ul>
               </HolographicCard>
@@ -211,76 +221,150 @@ export default function ContactPage() {
                     <MessageCircle className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-bold text-white">Live Chat</h3>
-                    <p className="text-xs text-gray-400">Our team is standing by</p>
+                    <h3 className="text-lg font-bold text-white">Live Chat Support</h3>
+                    <p className="text-xs text-gray-400">AI-powered · Details captured · Connected to your team</p>
+                  </div>
+                  {/* Live indicator */}
+                  <div className="ml-auto flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                    <span className="text-[10px] text-emerald-400 font-bold uppercase tracking-widest">Live</span>
                   </div>
                 </div>
 
-                {stage === 'persona' && (
-                  <div>
-                    <h2 className="text-xl font-bold text-white mb-4 text-center">Welcome! How can we help?</h2>
-                    <div className="space-y-3">
-                      <button onClick={() => handlePersonaSelect('recruiter')} className="w-full px-5 py-4 rounded-xl bg-cyan-500/10 border border-cyan-400/20 text-cyan-400 hover:bg-cyan-500/20 transition-all text-left">
-                        <div className="font-bold text-base">I'm a Recruiter</div>
-                        <p className="text-xs text-gray-400 mt-1">Access roles, collaborate, and earn split fees</p>
-                      </button>
-                      <button onClick={() => handlePersonaSelect('hiring-manager')} className="w-full px-5 py-4 rounded-xl bg-purple-500/10 border border-purple-400/20 text-purple-400 hover:bg-purple-500/20 transition-all text-left">
-                        <div className="font-bold text-base">I'm a Hiring Manager</div>
-                        <p className="text-xs text-gray-400 mt-1">Broadcast roles to 15,000+ recruiters</p>
-                      </button>
-                    </div>
-                  </div>
-                )}
+                <AnimatePresence mode="wait">
 
-                {stage === 'capture' && (
-                  <form onSubmit={handleCaptureSubmit} className="space-y-4">
-                    <h2 className="text-xl font-bold text-white mb-4">Let's get started</h2>
-                    {captureError && <p className="text-red-400 text-sm">{captureError}</p>}
-                    <div className="grid grid-cols-2 gap-3">
-                      <div>
-                        <label className="text-xs text-gray-400 block mb-1.5">First Name</label>
-                        <input value={firstName} onChange={e => setFirstName(e.target.value)} type="text" className="w-full px-3 py-2.5 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-purple-400/50" />
-                      </div>
-                      <div>
-                        <label className="text-xs text-gray-400 block mb-1.5">Last Name</label>
-                        <input value={lastName} onChange={e => setLastName(e.target.value)} type="text" className="w-full px-3 py-2.5 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-purple-400/50" />
-                      </div>
-                    </div>
-                    <div>
-                      <label className="text-xs text-gray-400 block mb-1.5">Email</label>
-                      <input value={email} onChange={e => setEmail(e.target.value)} type="email" className="w-full px-3 py-2.5 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-purple-400/50" />
-                    </div>
-                    {persona === 'hiring-manager' && (
-                      <div>
-                        <label className="text-xs text-gray-400 block mb-1.5">Company Name</label>
-                        <input value={companyName} onChange={e => setCompanyName(e.target.value)} type="text" className="w-full px-3 py-2.5 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-purple-400/50" />
-                      </div>
-                    )}
-                    <GlowButton type="submit" variant="primary" className="w-full">Start Chat</GlowButton>
-                  </form>
-                )}
-
-                {stage === 'chat' && (
-                  <>
-                    <div className="h-[350px] overflow-y-auto mb-4 space-y-3 scrollbar-thin scrollbar-thumb-purple-400/20 scrollbar-track-transparent">
-                      {messages.map((msg) => (
-                        <div key={msg.id} className={`flex ${msg.from === 'visitor' ? 'justify-end' : 'justify-start'}`}>
-                          <div className={`max-w-[85%] px-4 py-2.5 rounded-2xl ${msg.from === 'visitor' ? 'bg-purple-500/20 text-white' : 'bg-white/5 text-gray-200'}`}>
-                            <p className="text-sm leading-relaxed">{msg.body}</p>
-                            <p className="text-[10px] text-gray-500 mt-1">{formatTime(msg.timestamp)}</p>
+                  {/* STAGE: preview — blurred chat + Start Chat gate */}
+                  {stage === 'preview' && (
+                    <motion.div
+                      key="preview"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="relative"
+                    >
+                      {/* Blurred preview messages */}
+                      <div className="h-[280px] overflow-hidden space-y-3 select-none blur-[3px] pointer-events-none">
+                        {previewMessages.map((msg) => (
+                          <div key={msg.id} className={`flex ${msg.from === 'visitor' ? 'justify-end' : 'justify-start'}`}>
+                            <div className={`max-w-[85%] px-4 py-2.5 rounded-2xl ${
+                              msg.from === 'visitor' ? 'bg-purple-500/20 text-white' : 'bg-white/5 text-gray-200'
+                            }`}>
+                              <p className="text-sm leading-relaxed">{msg.body}</p>
+                            </div>
                           </div>
+                        ))}
+                      </div>
+
+                      {/* Overlay gradient + CTA */}
+                      <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-t from-[#0a0a0f] via-[#0a0a0f]/80 to-transparent rounded-xl">
+                        <div className="text-center px-6">
+                          <div className="w-14 h-14 rounded-2xl bg-purple-500/20 border border-purple-400/30 flex items-center justify-center mx-auto mb-4">
+                            <MessageSquare className="w-7 h-7 text-purple-400" />
+                          </div>
+                          <h4 className="text-white font-bold text-lg mb-1">Chat with our AI Support</h4>
+                          <p className="text-gray-400 text-xs mb-5 max-w-[240px] mx-auto">
+                            Get instant answers. Your details are captured and sent to our team automatically.
+                          </p>
+                          <motion.button
+                            onClick={() => setStage('persona')}
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.97 }}
+                            className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white font-extrabold text-sm shadow-[0_0_25px_rgba(0,255,255,0.3)] transition-all"
+                          >
+                            <MessageSquare size={15} />
+                            Start Chat
+                          </motion.button>
                         </div>
-                      ))}
-                      <div ref={messagesEndRef} />
-                    </div>
-                    <div className="flex gap-2 items-center">
-                      <input ref={inputRef} value={inputValue} onChange={e => setInputValue(e.target.value)} onKeyDown={handleKeyDown} placeholder="Type your message..." disabled={isSending} className="flex-1 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-purple-400/50 disabled:opacity-50" />
-                      <button onClick={handleSend} disabled={isSending || !inputValue.trim()} className="w-10 h-10 rounded-xl bg-purple-500/20 border border-purple-400/20 text-purple-400 hover:bg-purple-500/30 transition-all flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed">
-                        {isSending ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5" />}
-                      </button>
-                    </div>
-                  </>
-                )}
+                      </div>
+                    </motion.div>
+                  )}
+
+                  {/* STAGE: persona */}
+                  {stage === 'persona' && (
+                    <motion.div
+                      key="persona"
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                    >
+                      <h2 className="text-xl font-bold text-white mb-4 text-center">Welcome! How can we help?</h2>
+                      <div className="space-y-3">
+                        <button onClick={() => handlePersonaSelect('recruiter')} className="w-full px-5 py-4 rounded-xl bg-cyan-500/10 border border-cyan-400/20 text-cyan-400 hover:bg-cyan-500/20 transition-all text-left">
+                          <div className="font-bold text-base">I&apos;m a Recruiter</div>
+                          <p className="text-xs text-gray-400 mt-1">Access roles, collaborate, and earn split fees</p>
+                        </button>
+                        <button onClick={() => handlePersonaSelect('hiring-manager')} className="w-full px-5 py-4 rounded-xl bg-purple-500/10 border border-purple-400/20 text-purple-400 hover:bg-purple-500/20 transition-all text-left">
+                          <div className="font-bold text-base">I&apos;m a Hiring Manager</div>
+                          <p className="text-xs text-gray-400 mt-1">Broadcast roles to 15,000+ recruiters</p>
+                        </button>
+                      </div>
+                    </motion.div>
+                  )}
+
+                  {/* STAGE: capture */}
+                  {stage === 'capture' && (
+                    <motion.form
+                      key="capture"
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      onSubmit={handleCaptureSubmit}
+                      className="space-y-4"
+                    >
+                      <h2 className="text-xl font-bold text-white mb-4">Let&apos;s get started with a few quick details</h2>
+                      {captureError && <p className="text-red-400 text-sm">{captureError}</p>}
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="text-xs text-gray-400 block mb-1.5">First Name</label>
+                          <input value={firstName} onChange={e => setFirstName(e.target.value)} type="text" className="w-full px-3 py-2.5 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-purple-400/50" />
+                        </div>
+                        <div>
+                          <label className="text-xs text-gray-400 block mb-1.5">Last Name</label>
+                          <input value={lastName} onChange={e => setLastName(e.target.value)} type="text" className="w-full px-3 py-2.5 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-purple-400/50" />
+                        </div>
+                      </div>
+                      <div>
+                        <label className="text-xs text-gray-400 block mb-1.5">Email</label>
+                        <input value={email} onChange={e => setEmail(e.target.value)} type="email" className="w-full px-3 py-2.5 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-purple-400/50" />
+                      </div>
+                      {persona === 'hiring-manager' && (
+                        <div>
+                          <label className="text-xs text-gray-400 block mb-1.5">Company Name</label>
+                          <input value={companyName} onChange={e => setCompanyName(e.target.value)} type="text" className="w-full px-3 py-2.5 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-purple-400/50" />
+                        </div>
+                      )}
+                      <GlowButton type="submit" variant="primary" className="w-full">Start Chat</GlowButton>
+                    </motion.form>
+                  )}
+
+                  {/* STAGE: chat */}
+                  {stage === 'chat' && (
+                    <motion.div
+                      key="chat"
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                    >
+                      <div className="h-[350px] overflow-y-auto mb-4 space-y-3 scrollbar-thin scrollbar-thumb-purple-400/20 scrollbar-track-transparent">
+                        {messages.map((msg) => (
+                          <div key={msg.id} className={`flex ${msg.from === 'visitor' ? 'justify-end' : 'justify-start'}`}>
+                            <div className={`max-w-[85%] px-4 py-2.5 rounded-2xl ${msg.from === 'visitor' ? 'bg-purple-500/20 text-white' : 'bg-white/5 text-gray-200'}`}>
+                              <p className="text-sm leading-relaxed">{msg.body}</p>
+                              <p className="text-[10px] text-gray-500 mt-1">{formatTime(msg.timestamp)}</p>
+                            </div>
+                          </div>
+                        ))}
+                        <div ref={messagesEndRef} />
+                      </div>
+                      <div className="flex gap-2 items-center">
+                        <input ref={inputRef} value={inputValue} onChange={e => setInputValue(e.target.value)} onKeyDown={handleKeyDown} placeholder="Type your message..." disabled={isSending} className="flex-1 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-purple-400/50 disabled:opacity-50" />
+                        <button onClick={handleSend} disabled={isSending || !inputValue.trim()} className="w-10 h-10 rounded-xl bg-purple-500/20 border border-purple-400/20 text-purple-400 hover:bg-purple-500/30 transition-all flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed">
+                          {isSending ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5" />}
+                        </button>
+                      </div>
+                    </motion.div>
+                  )}
+
+                </AnimatePresence>
               </HolographicCard>
             </div>
           </div>
