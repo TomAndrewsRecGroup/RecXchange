@@ -7,6 +7,7 @@ import { MetadataRoute } from 'next';
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://recxchange.io';
   const seoDate = new Date('2026-03-13');
+  const legalDate = new Date('2026-01-01');
 
   return [
     // ─── Homepage ───────────────────────────────────────────────
@@ -95,5 +96,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/blog/xchange-engine-explained`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.83 },
     { url: `${baseUrl}/blog/recruitment-trends-2026`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.85 },
     { url: `${baseUrl}/blog/how-to-choose-a-recruitment-partner`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.84 },
+
+    // ─── Legal & policy pages ────────────────────────────────────
+    { url: `${baseUrl}/privacy`, lastModified: legalDate, changeFrequency: 'yearly', priority: 0.30 },
+    { url: `${baseUrl}/terms`, lastModified: legalDate, changeFrequency: 'yearly', priority: 0.30 },
+    { url: `${baseUrl}/cookie-policy`, lastModified: legalDate, changeFrequency: 'yearly', priority: 0.25 },
+    { url: `${baseUrl}/gdpr`, lastModified: legalDate, changeFrequency: 'yearly', priority: 0.25 },
   ];
 }
