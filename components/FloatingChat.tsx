@@ -47,6 +47,7 @@ export default function FloatingChat() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isRegistering, setIsRegistering] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [hasHandedOver, setHasHandedOver] = useState(false);
   const [showUserForm, setShowUserForm] = useState(true);
@@ -67,9 +68,34 @@ export default function FloatingChat() {
     return () => { document.body.style.overflow = ''; };
   }, [isOpen]);
 
-  const handleStartChat = () => {
+  const handleStartChat = async () => {
     if (!userName || !userEmail || !userPersona) { alert('Please fill in all required fields'); return; }
     if (userPersona === 'hiring-manager' && !companyName) { alert('Please enter your company name'); return; }
+
+    setIsRegistering(true);
+    try {
+      // Register the contact in GHL immediately on form submit
+      const pageContext = getPageContext(pathname);
+      const res = await fetch('/api/groq/register-chat-user', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: userName,
+          email: userEmail,
+          persona: userPersona,
+          companyName: userPersona === 'hiring-manager' ? companyName : undefined,
+          pageContext,
+        }),
+      });
+      const data = await res.json();
+      if (data.contactId) setContactId(data.contactId);
+    } catch (err) {
+      // Non-blocking: log the error but still let the user into the chat
+      console.error('[FloatingChat] Failed to register chat user:', err);
+    } finally {
+      setIsRegistering(false);
+    }
+
     setShowUserForm(false);
     setMessages([{ role: 'assistant', content: `Hi ${userName.split(' ')[0]}! I'm ${assistantName} from RecXchange. How can I help you today?` }]);
   };
@@ -104,11 +130,16 @@ export default function FloatingChat() {
     try {
       const pageContext = getPageContext(pathname);
       const userIntent = messages.length === 1 ? detectUserIntent(userMessage) : undefined;
+      // If we already have a contactId from registration, pass it through to skip re-creation
       const payload: Record<string, unknown> = { message: userMessage, history: messages, pageContext, userIntent, assistantName };
-      if (!contactId) {
+      if (contactId) {
+        payload.contactId = contactId;
+        payload.conversationId = conversationId;
+      } else {
+        // Fallback: pass credentials so the route can create the contact if registration somehow failed
         payload.name = userName; payload.email = userEmail; payload.persona = userPersona;
         if (userPersona === 'hiring-manager') payload.companyName = companyName;
-      } else { payload.contactId = contactId; payload.conversationId = conversationId; }
+      }
       const response = await fetch('/api/groq/ai-chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
       if (!response.ok) throw new Error('Failed to get response');
       const data = await response.json();
@@ -171,7 +202,13 @@ export default function FloatingChat() {
                       <div><label className="text-gray-300 text-xs block mb-1">Company Name *</label>
                         <input type="text" value={companyName} onChange={(e) => setCompanyName(e.target.value)} placeholder="Acme Corp" className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2.5 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 touch-manipulation" /></div>
                     )}
-                    <button onClick={handleStartChat} className="w-full py-3 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-lg text-white font-bold text-sm hover:shadow-lg transition-all touch-manipulation active:scale-98">Start Chat</button>
+                    <button
+                      onClick={handleStartChat}
+                      disabled={isRegistering}
+                      className="w-full py-3 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-lg text-white font-bold text-sm hover:shadow-lg transition-all touch-manipulation active:scale-98 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    >
+                      {isRegistering ? <><Loader2 className="w-4 h-4 animate-spin" /> Starting...</> : 'Start Chat'}
+                    </button>
                     <p className="text-gray-500 text-[10px] text-center">By continuing, you agree to our data collection for support purposes.</p>
                   </div>
                 ) : (
