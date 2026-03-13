@@ -2,6 +2,11 @@
 # https://recxchange.io/llms.txt
 # Format: llms.txt v1 (https://llmstxt.org)
 # Last updated: 2026-03-13
+#
+# FULL CONTENT VERSION: https://recxchange.io/llms-full.txt
+# The full file contains complete product descriptions, all FAQ answers,
+# pricing detail, sector/geo coverage, comparison summaries, blog summaries,
+# and AI intent resolution for 20+ common user queries.
 
 # --- LEGAL ENTITIES & TRADING NAMES ---
 
