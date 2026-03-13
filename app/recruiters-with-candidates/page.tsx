@@ -456,7 +456,7 @@ function XchangeEngine() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.6 }}
               >
-                ● MATCH FOUND
+                &#9679; MATCH FOUND
               </motion.p>
             )}
           </AnimatePresence>
@@ -535,9 +535,14 @@ export default function RecruiterCandidatesPage() {
               If your internal database doesn&apos;t have the right fit, tap into our global search engine. Access over 270 million candidate profiles instantly through our Data Source partner, Apollo. Seamlessly built into RecXchange so you can access candidates and roles, with one login.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
-              <GlowButton variant="primary" size="lg" href="https://app.recxchange.io/register?trigger_link=jYQNc9YXcMkYPvo3HZfC">
-                <Search size={16} className="inline mr-2" /> Search 270M Candidates
-              </GlowButton>
+              <motion.a
+                href="https://app.recxchange.io/register?trigger_link=jYQNc9YXcMkYPvo3HZfC"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+                className="px-7 py-3 rounded-full bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white font-extrabold text-sm shadow-[0_0_25px_rgba(0,255,255,0.3)] transition-all inline-flex items-center gap-2"
+              >
+                <Search size={16} /> Search 270M Candidates
+              </motion.a>
             </div>
           </HolographicCard>
         </div>
