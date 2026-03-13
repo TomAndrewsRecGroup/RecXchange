@@ -14,7 +14,7 @@ const whyCards = [
     color: 'cyan' as const,
     iconClass: 'text-cyan-400',
     title: 'More recruiters than any single agency — instantly',
-    body: 'The moment your role is live, it broadcasts to 15,000+ specialist recruiters across 80+ countries. No single recruitment company on earth can deploy that many experts on one brief, simultaneously.',
+    body: 'The moment your role is posted, it broadcasts to 15,000+ specialist recruiters across 80+ countries. No single recruitment company on earth can deploy that many experts on one brief, simultaneously.',
   },
   {
     icon: Clock,
@@ -70,7 +70,7 @@ export default function HiringManagerLive() {
 
           {/* Header */}
           <motion.header initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-6 sm:mb-8 md:mb-12 mt-6">
-            <StatusBadge label="LIVE BROADCAST SIMULATION" color="cyan" />
+            <StatusBadge label="ROLE SIMULATION" color="cyan" />
             <h1 className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2 mt-6"
               style={{ textShadow: '0 0 60px rgba(0,240,255,0.3)' }}>
               One role. Massive Velocity.<br/>
@@ -78,11 +78,11 @@ export default function HiringManagerLive() {
             </h1>
             <NeonDivider width="w-40" color="mixed" />
             <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed px-2 mt-6">
-              When you post a role, you aren&apos;t waiting for a single agency. You are activating a global hive of 15,000+ specialists. Watch how fast your talent pool expands when 300+ experts source simultaneously.
+              This simulation shows what happens from the moment you post a role through to day 40. You are not waiting for a single agency — you are activating a global hive of 15,000+ specialists. Watch how fast your talent pool expands when 300+ experts source simultaneously.
             </p>
           </motion.header>
 
-          {/* Live simulation */}
+          {/* Simulation */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 items-center mb-10 sm:mb-12 md:mb-16">
             
             {/* Left: Stats */}
@@ -90,7 +90,7 @@ export default function HiringManagerLive() {
               <HolographicCard color="fuchsia" variant="content">
                 <h3 className="text-base sm:text-lg md:text-xl font-bold mb-3 sm:mb-4 text-white">The Network Effect</h3>
                 <p className="text-gray-300 text-[13px] sm:text-sm leading-relaxed mb-5 sm:mb-6">
-                  Your role for a <strong>Senior Software Engineer</strong> is currently being broadcast across the Xchange. The acceleration you see is the result of 15,000+ recruiters scanning their private, vetted databases for your specific requirements.
+                  Your role for a <strong>Senior Software Engineer</strong> is being broadcast across the Xchange. The acceleration you see is the result of 15,000+ recruiters scanning their private, vetted databases for your specific requirements.
                 </p>
                 <div className="grid grid-cols-2 gap-4">
                   <HolographicCard color="cyan" variant="stat">
@@ -107,12 +107,12 @@ export default function HiringManagerLive() {
               <HolographicCard color="cyan" variant="feature" showStatusIndicator={true}>
                 <div className="flex items-center gap-3">
                   <Zap className="text-yellow-400 flex-shrink-0" size={20} />
-                  <p className="text-[11px] sm:text-xs text-gray-300"><strong>Real-time Matching:</strong> Engine is currently re-ranking 270M+ profiles.</p>
+                  <p className="text-[11px] sm:text-xs text-gray-300"><strong>Simulation:</strong> Showing post-to-placement activity across a 40-day window. Engine scanning 270M+ profiles.</p>
                 </div>
               </HolographicCard>
             </div>
 
-            {/* Right: Live Job Card */}
+            {/* Right: Job Card */}
             <div className="relative">
               <motion.div 
                 initial={{ opacity: 0, scale: 0.95 }}
@@ -124,7 +124,7 @@ export default function HiringManagerLive() {
                     <div className="w-12 h-12 bg-purple-500/10 rounded-2xl border border-purple-400/20 flex items-center justify-center">
                       <Briefcase className="text-purple-400" size={24} />
                     </div>
-                    <StatusBadge label="LIVE BROADCAST" color="emerald" size="sm" />
+                    <StatusBadge label="BROADCAST ACTIVE" color="emerald" size="sm" />
                   </div>
 
                   <h2 className="text-xl sm:text-2xl font-bold mb-2 text-white">Senior Software Engineer</h2>
@@ -192,7 +192,7 @@ export default function HiringManagerLive() {
                 More recruiters on your role than any other option. Anywhere.
               </h2>
               <p className="text-gray-400 text-sm sm:text-base max-w-2xl mx-auto">
-                A traditional agency sends one recruiter to your brief. We send hundreds — simultaneously, each tapping their own private network, competing to bring you the best.
+                A traditional agency sends one recruiter to your brief and they work your role alone. We send one Recruiter and then we send hundreds — simultaneously, each tapping their own private network, competing to bring you the best.
               </p>
             </div>
 

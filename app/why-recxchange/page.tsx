@@ -52,7 +52,7 @@ export default function WhyRecXchangePage() {
                         {[
                           { text: "Access to 270M candidates", desc: "Never run out of talent. Search the database when your pipeline is empty." },
                           { text: "Partner with 15,000+ recruiters", desc: "Find candidates for your roles or roles for your candidates." },
-                          { text: "Earn up to 70% on RecX Direct", desc: "Higher splits than traditional agencies ($4,900 on $7k placement)." },
+                          { text: "Earn up to 70% on RecX Direct", desc: "Higher splits than traditional agencies." },
                           { text: "$1-$249/month flat fee", desc: "No commission splits. Keep 100% of your earnings." },
                           { text: "Legal protection", desc: "Auto-generated contracts. Timestamped submissions. Both parties protected." }
                         ].map((item, i) => (
@@ -84,7 +84,6 @@ export default function WhyRecXchangePage() {
               </motion.div>
 
               <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-                {/* FIX #10: changed color from "emerald" to "fuchsia" (neutral/contrast) and overrides to red */}
                 <HolographicCard color="fuchsia" variant="content" className="border-red-400/20">
                   <StatusBadge label="TRADITIONAL AGENCY" color="fuchsia" size="sm" />
                   <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-3 sm:mb-4 md:mb-5 mt-4">Solo Recruitment</h3>
@@ -164,10 +163,8 @@ export default function WhyRecXchangePage() {
 
           <NeonDivider width="w-full" color="mixed" />
 
-          {/* FIX #20: FAQ Section */}
           <FAQSection faqs={recruiterGeneralFAQs} />
 
-          {/* FIX #19: LastUpdated */}
           <div className="mt-8 sm:mt-10 md:mt-12">
             <LastUpdated date="2026-03-11" />
           </div>

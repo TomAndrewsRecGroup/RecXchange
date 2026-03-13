@@ -1,12 +1,11 @@
 "use client";
 import React from "react";
-import { UserCheck, MessageSquare, Users, ShieldCheck, Trophy, Handshake } from "lucide-react";
+import { UserCheck, MessageSquare, Users, ShieldCheck, Trophy, Handshake, Calendar } from "lucide-react";
 import { motion } from 'framer-motion';
 import FuturisticBackground from '@/components/design-system/FuturisticBackground';
 import HolographicCard from '@/components/design-system/HolographicCard';
 import StatusBadge from '@/components/design-system/StatusBadge';
 import NeonDivider from '@/components/design-system/NeonDivider';
-import GlowButton from '@/components/design-system/GlowButton';
 
 const supportSteps = [
   {
@@ -28,7 +27,7 @@ const supportSteps = [
     color: "purple" as const,
     iconClass: "text-purple-400",
     title: "Elite Candidate Filtering",
-    description: "The Xchange Engine performs semantic matching, and your Account Manager manually vets the results to ensure only the top 1% of candidates reach your desk."
+    description: "RecXchange performs semantic matching across 270M+ profiles, and your Account Manager manually vets the results to ensure only the top 1% of candidates reach your desk."
   },
   {
     Icon: Handshake,
@@ -56,7 +55,7 @@ export default function AccountManagement() {
             </h1>
             <NeonDivider width="w-40" color="mixed" />
             <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed px-2 mt-6">
-              Hiring at speed shouldn't mean sacrificing quality. Every client is assigned a specialist Account Manager to navigate the Xchange Engine and manage the global recruiter community for you.
+              Hiring at speed shouldn&apos;t mean sacrificing quality. Every client is assigned a specialist Account Manager to navigate RecXchange and the Recruiters, and manage the global recruiter community for you.
             </p>
           </motion.header>
 
@@ -93,7 +92,7 @@ export default function AccountManagement() {
                 </div>
                 <div className="text-center">
                   <div className="text-3xl sm:text-4xl font-bold text-cyan-400 mb-2">24/7</div>
-                  <div className="text-[10px] sm:text-xs uppercase tracking-widest text-gray-500 font-bold">Engine Monitoring</div>
+                  <div className="text-[10px] sm:text-xs uppercase tracking-widest text-gray-500 font-bold">Network Monitoring</div>
                 </div>
               </div>
             </HolographicCard>
@@ -109,12 +108,18 @@ export default function AccountManagement() {
               </div>
               <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-white">Ready to brief your Account Manager?</h3>
               <p className="text-gray-400 text-[13px] sm:text-sm md:text-base mb-6 sm:mb-8 px-2 max-w-3xl mx-auto">
-                Experience the efficiency of the Xchange Engine backed by the expertise of a dedicated recruitment partner.
+                Experience the efficiency of RecXchange backed by the expertise of a dedicated recruitment partner.
               </p>
               <div className="flex justify-center">
-                <GlowButton variant="primary" size="md" href="{{trigger_link.vJPDrwl8k6nFBhkZeZJH}}">
+                <motion.a
+                  href="{{trigger_link.vJPDrwl8k6nFBhkZeZJH}}"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white font-extrabold text-sm shadow-[0_0_25px_rgba(0,255,255,0.3)] transition-all"
+                >
+                  <Calendar size={16} />
                   Schedule Your Briefing
-                </GlowButton>
+                </motion.a>
               </div>
             </HolographicCard>
           </section>

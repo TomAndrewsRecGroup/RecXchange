@@ -169,9 +169,14 @@ export default function PostRolesPage() {
                       </div>
                     </HolographicCard>
 
-                    <GlowButton variant="primary" size="lg" href="{{trigger_link.jYQNc9YXcMkYPvo3HZfC}}" className="w-full">
+                    <motion.a
+                      href="{{trigger_link.jYQNc9YXcMkYPvo3HZfC}}"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="w-full block px-7 py-3 rounded-full bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white font-extrabold text-sm shadow-[0_0_25px_rgba(0,255,255,0.3)] transition-all text-center"
+                    >
                       Post Role to Xchange
-                    </GlowButton>
+                    </motion.a>
                   </div>
                 </HolographicCard>
               </motion.div>

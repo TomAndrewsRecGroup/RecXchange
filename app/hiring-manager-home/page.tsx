@@ -104,7 +104,7 @@ export default function HiringManagerHome() {
             <div className="mt-5 sm:mt-6 flex flex-wrap justify-center gap-2 sm:gap-3 px-2">
               <span className="text-[9px] sm:text-[10px] px-2.5 py-1 rounded-full bg-cyan-400/5 border border-cyan-400/20 text-cyan-400 font-bold uppercase tracking-widest">15,000+ Recruiters</span>
               <span className="text-[9px] sm:text-[10px] px-2.5 py-1 rounded-full bg-fuchsia-400/5 border border-fuchsia-400/20 text-fuchsia-400 font-bold uppercase tracking-widest">270M candidates</span>
-              <span className="text-[9px] sm:text-[10px] px-2.5 py-1 rounded-full bg-purple-400/5 border border-purple-400/20 text-purple-400 font-bold uppercase tracking-widest">Engineering • Healthcare • Tech</span>
+              <span className="text-[9px] sm:text-[10px] px-2.5 py-1 rounded-full bg-purple-400/5 border border-purple-400/20 text-purple-400 font-bold uppercase tracking-widest">All Recruiters • All Sectors • All Specialists</span>
             </div>
           </motion.header>
 
