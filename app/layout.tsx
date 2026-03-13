@@ -1,6 +1,7 @@
 import "@/app/globals.css";
 import { Inter } from "next/font/google";
 import React from "react";
+import { headers } from "next/headers";
 import ConditionalHeader from "@/components/ConditionalHeader";
 import Footer from "@/components/Footer";
 import FloatingChat from "@/components/FloatingChat";
@@ -11,6 +12,7 @@ import SkipToContent from "@/components/SkipToContent";
 import { Analytics } from "@vercel/analytics/next";
 import { WebVitals } from "@/app/components/WebVitals";
 import SpeakableSchema from "@/app/components/SpeakableSchema";
+import HomepageSEOContent from "@/app/components/HomepageSEOContent";
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 
@@ -98,11 +100,14 @@ interface RootLayoutProps {
   children: React.ReactNode;
 }
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default async function RootLayout({ children }: RootLayoutProps) {
+  // Detect homepage server-side to conditionally render SEO content block.
+  // headers() is a Next.js server-only API — safe in layout (server component).
+  const headersList = await headers();
+  const pathname = headersList.get('x-pathname') ?? headersList.get('x-invoke-path') ?? '';
+  const isHomepage = pathname === '' || pathname === '/';
 
   // ─── AI Agent identity block ────────────────────────────────────────────────
-  // Clarifies to AI crawlers that recxchange.io is the MARKETING site;
-  // the actual platform lives at app.recxchange.io.
   const aiAgentIdentity = {
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -137,7 +142,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
   };
 
   // ─── Global FAQ schema ───────────────────────────────────────────────────────
-  // Injected on every page. Covers the most common AI-answered questions.
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -218,8 +222,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
   };
 
   // ─── Main schema.org @graph ──────────────────────────────────────────────────
-  // Full entity graph: Organisation, Persons, SoftwareApplication, Service,
-  // Reviews, WebSite. All nodes cross-referenced via @id.
   const schemaOrgData = {
     "@context": "https://schema.org",
     "@graph": [
@@ -561,12 +563,12 @@ export default function RootLayout({ children }: RootLayoutProps) {
             `,
           }}
         />
-        
+
         <ErrorBoundary>
           <ClientProviders>
             <SkipToContent />
             <WebVitals />
-            
+
             <div className="fixed inset-0 pointer-events-none z-0">
               <div className="absolute inset-0 opacity-[0.02] mix-blend-overlay bg-[url('https://res.cloudinary.com/dzv9rqg49/image/upload/v1695123456/noise_z7p5vj.png')]" />
               <div className="absolute top-[-10%] left-[-10%] w-[70%] h-[70%] bg-cyan-500/10 blur-[120px] rounded-full" />
@@ -574,6 +576,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
             </div>
 
             <ConditionalHeader />
+
+            {/* SSR content block for homepage — invisible to users, readable by crawlers.
+                Rendered server-side only when pathname is /.
+                See app/components/HomepageSEOContent.tsx for full explanation. */}
+            {isHomepage && <HomepageSEOContent />}
 
             <div className="relative z-10 flex flex-col min-h-screen w-full">
               <main id="main-content" className="flex-grow w-full">
