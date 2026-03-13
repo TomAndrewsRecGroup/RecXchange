@@ -61,6 +61,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly',
       priority: 0.75,
     },
+    {
+      url: `${baseUrl}/account-management`,
+      lastModified: new Date('2026-03-08'),
+      changeFrequency: 'monthly',
+      priority: 0.70,
+    },
 
     // High-value content pages
     {
@@ -110,6 +116,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.75,
     },
 
+    // Affiliate & growth
+    {
+      url: `${baseUrl}/affiliate`,
+      lastModified: new Date('2026-03-09'),
+      changeFrequency: 'monthly',
+      priority: 0.60,
+    },
+
+    // Contact
+    {
+      url: `${baseUrl}/contact`,
+      lastModified: new Date('2026-03-08'),
+      changeFrequency: 'monthly',
+      priority: 0.55,
+    },
+
     // Supporting pages
     {
       url: `${baseUrl}/research`,
@@ -117,18 +139,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 0.60,
     },
-    {
-      url: `${baseUrl}/account-management`,
-      lastModified: new Date('2026-03-08'),
-      changeFrequency: 'monthly',
-      priority: 0.60,
-    },
-    {
-      url: `${baseUrl}/contact`,
-      lastModified: new Date('2026-03-08'),
-      changeFrequency: 'monthly',
-      priority: 0.50,
-    },
+
+    // Legal — noindex on their layouts; excluded from sitemap intentionally
+    // /privacy, /terms, /cookie-policy, /gdpr are noindex and excluded
     {
       url: `${baseUrl}/legal`,
       lastModified: new Date('2026-01-01'),
