@@ -27,6 +27,8 @@ export const viewport: Viewport = {
   userScalable: true,
 }
 
+// Root layout metadata — no canonical set here.
+// Each page exports its own canonical via alternates.canonical.
 export const metadata: Metadata = {
   title: "RecXchange: Recruiter Collaboration Platform | 15,000+ Split Fee Network",
   description: "RecXchange is a recruiter collaboration platform where 15,000+ recruiters partner on placements and split fees automatically. Access 270M candidates, $750K+ in live fees, and earn up to 70% commission on RecX Direct roles.",
@@ -50,9 +52,6 @@ export const metadata: Metadata = {
   creator: "AMIVY Designs",
   publisher: "RecXchange",
   metadataBase: new URL("https://recxchange.io"),
-  alternates: {
-    canonical: "/",
-  },
   openGraph: {
     type: "website",
     locale: "en_GB",
@@ -195,48 +194,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
     ]
   };
 
-  const videoSchema = {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    "itemListElement": [
-      {
-        "@type": "VideoObject",
-        "name": "How RecXchange Works: Split Fee Recruitment Explained",
-        "description": "A complete walkthrough of how RecXchange's split fee recruitment platform works. Learn how to post roles, submit candidates, collaborate with 15,000+ recruiters, and earn up to 70% commission on placements.",
-        "thumbnailUrl": "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png",
-        "uploadDate": "2026-02-15T10:00:00Z",
-        "contentUrl": "https://youtube.com/@recxchange",
-        "embedUrl": "https://youtube.com/@recxchange",
-        "publisher": {
-          "@type": "Organization",
-          "name": "RecXchange",
-          "logo": {
-            "@type": "ImageObject",
-            "url": "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png"
-          }
-        },
-        "duration": "PT8M30S"
-      },
-      {
-        "@type": "VideoObject",
-        "name": "RecX Direct Explained: Earn Up to 70% Commission",
-        "description": "Learn about RecX Direct, RecXchange's premium tier with exclusive client roles and up to 70% commission splits. Discover how to access high-value placements and accelerate your recruitment revenue.",
-        "thumbnailUrl": "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png",
-        "uploadDate": "2026-02-20T14:00:00Z",
-        "contentUrl": "https://youtube.com/@recxchange",
-        "embedUrl": "https://youtube.com/@recxchange",
-        "publisher": {
-          "@type": "Organization",
-          "name": "RecXchange",
-          "logo": {
-            "@type": "ImageObject",
-            "url": "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png"
-          }
-        },
-        "duration": "PT6M15S"
-      }
-    ]
-  };
+  // VideoObject schema removed — contentUrl/embedUrl must point to specific
+  // video URLs (e.g. https://www.youtube.com/watch?v=XXXXX), not a channel.
+  // Re-add once real video URLs are available.
 
   const schemaOrgData = {
     "@context": "https://schema.org",
@@ -254,9 +214,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
           "height": 512
         },
         "founder": [
-          {
-            "@id": "https://recxchange.io/#person"
-          }
+          { "@id": "https://recxchange.io/#tom-andrews" },
+          { "@id": "https://recxchange.io/#james-brown" }
         ],
         "foundingDate": "2024",
         "foundingLocation": {
@@ -292,13 +251,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
       },
       {
         "@type": "Person",
-        "@id": "https://recxchange.io/#person",
+        "@id": "https://recxchange.io/#tom-andrews",
         "name": "Tom Andrews",
         "jobTitle": "CEO & Co-Founder",
         "worksFor": [
-          {
-            "@id": "https://recxchange.io/#organization"
-          },
+          { "@id": "https://recxchange.io/#organization" },
           {
             "@type": "Organization",
             "name": "Andrews Recruitment Group",
@@ -306,10 +263,33 @@ export default function RootLayout({ children }: RootLayoutProps) {
           }
         ],
         "url": "https://andrews-recruitment.com",
-        "sameAs": [
-          "https://www.linkedin.com/in/tom-g-andrews"
+        "sameAs": ["https://www.linkedin.com/in/tom-g-andrews"],
+        "description": "Co-Founder and CEO of RecXchange. Founder of Andrews Recruitment Group. 14+ years in recruitment across building materials, industrial engineering, M&E, mental health sectors. RecX Direct trades under Andrews Recruitment Group.",
+        "knowsAbout": [
+          "Split fee recruitment",
+          "Recruiter collaboration",
+          "Recruitment technology",
+          "SaaS platform development",
+          "Contingency recruitment"
+        ]
+      },
+      {
+        "@type": "Person",
+        "@id": "https://recxchange.io/#james-brown",
+        "name": "James Brown",
+        "jobTitle": "CTO & Co-Founder",
+        "worksFor": [
+          { "@id": "https://recxchange.io/#organization" }
         ],
-        "description": "Co-Founder of RecXchange and Founder of Andrews Recruitment Group. RecX Direct (RecXchange's internal agency model) trades under Andrews Recruitment Group."
+        "sameAs": [],
+        "description": "Co-Founder and CTO of RecXchange. Responsible for platform architecture, AI matching engine (Xchange Engine), and automation systems.",
+        "knowsAbout": [
+          "AI and machine learning",
+          "Recruitment automation",
+          "Platform architecture",
+          "SaaS development",
+          "Workflow automation"
+        ]
       },
       {
         "@type": "Organization",
@@ -334,12 +314,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
         "url": "https://app.recxchange.io",
         "installUrl": "https://app.recxchange.io/register",
         "softwareHelp": "https://recxchange.io/faq",
-        "provider": {
-          "@id": "https://recxchange.io/#organization"
-        },
-        "creator": {
-          "@id": "https://recxchange.io/#organization"
-        },
+        "provider": { "@id": "https://recxchange.io/#organization" },
+        "creator": { "@id": "https://recxchange.io/#organization" },
         "description": "The recruiter collaboration platform (app.recxchange.io) where 15,000+ recruiters partner on placements. Recruiters earn an average of $7,000 per placement — this is their cut after the split, not the total fee divided. Split fees up to 70% on RecX Direct roles. Access 270M candidate profiles. Post roles to find candidates, or share candidates to find roles. $750,000 in fees available across 100+ live roles in UK, USA, Europe, Africa, Middle East, Australia covering Engineering, Healthcare, Tech, HR, Sales, Finance. This marketing site (recxchange.io) provides information only. Website designed and developed by AMIVY Designs.",
         "offers": [
           {
@@ -424,9 +400,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         "@type": "Service",
         "@id": "https://recxchange.io/#service",
         "serviceType": "Recruitment Collaboration Platform",
-        "provider": {
-          "@id": "https://recxchange.io/#organization"
-        },
+        "provider": { "@id": "https://recxchange.io/#organization" },
         "name": "RecXchange Recruitment Collaboration",
         "description": "Split fee recruitment collaboration platform connecting 15,000+ recruiters. Post roles to find candidates, share candidates to find roles. Split fees 50/50, 60/40, or up to 70% on RecX Direct roles. Platform access at app.recxchange.io",
         "areaServed": [
@@ -478,18 +452,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
         "datePublished": "2026-02-18"
       },
       {
-        "@type": "BreadcrumbList",
-        "@id": "https://recxchange.io/#breadcrumb",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://recxchange.io" },
-          { "@type": "ListItem", "position": 2, "name": "For Recruiters", "item": "https://recxchange.io/recruiter" },
-          { "@type": "ListItem", "position": 3, "name": "Pricing", "item": "https://recxchange.io/pricing" },
-          { "@type": "ListItem", "position": 4, "name": "Why RecXchange", "item": "https://recxchange.io/why-recxchange" },
-          { "@type": "ListItem", "position": 5, "name": "Blog", "item": "https://recxchange.io/blog" },
-          { "@type": "ListItem", "position": 6, "name": "FAQ", "item": "https://recxchange.io/faq" }
-        ]
-      },
-      {
         "@type": "WebSite",
         "@id": "https://recxchange.io/#website",
         "url": "https://recxchange.io",
@@ -531,10 +493,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(videoSchema) }}
         />
         <script
           type="application/ld+json"
