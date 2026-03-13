@@ -59,13 +59,14 @@ const tiers = [
     tokens: "400 tokens/month",
     recxDirectAccess: "Instant access",
     features: [
-      "Huge CV storage allowance",
+      "Up to 10,000 CVs in circulation",
       "400 tokens per month",
       "Instant access to RecX Direct roles",
-      "All AI & search features",
-      "Priority matching",
-      "Dedicated account manager",
+      "Full access to 270M candidate profiles",
       "Priority support",
+      "Dedicated account manager",
+      "3 month 1-2-1 training course on RecXchange",
+      "HR Consultation Service included",
     ],
     color: "fuchsia" as const,
     bulletColor: "bg-fuchsia-400",
@@ -281,7 +282,7 @@ export default function PricingPage() {
                   </li>
                   <li className="flex gap-3">
                     <span className="flex-shrink-0 w-6 h-6 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-300 font-bold text-xs">4</span>
-                    <span>Your dedicated Account Manager handles all Recruiter and Client communication</span>
+                    <span>The client Account Manager handles all Recruiter and Client Communication</span>
                   </li>
                   <li className="flex gap-3">
                     <span className="flex-shrink-0 w-6 h-6 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-300 font-bold text-xs">5</span>
