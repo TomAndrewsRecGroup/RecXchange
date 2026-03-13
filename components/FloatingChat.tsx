@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, X, Send, Loader2, User, ExternalLink } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
+import { pickAssistantName, type AssistantName } from '@/lib/groq/config';
 
 interface SmartLinkData {
   action: 'send-3-roles' | 'book-meeting' | 'recx-direct-info' | 'how-it-works' | 'how-it-works-no-meeting';
@@ -55,6 +56,8 @@ export default function FloatingChat() {
   const [companyName, setCompanyName] = useState('');
   const [contactId, setContactId] = useState<string | null>(null);
   const [conversationId, setConversationId] = useState<string | null>(null);
+  // Pick one assistant name per chat session and keep it stable
+  const [assistantName] = useState<AssistantName>(() => pickAssistantName());
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => { setIsVisible(pathname !== '/'); }, [pathname]);
@@ -68,7 +71,7 @@ export default function FloatingChat() {
     if (!userName || !userEmail || !userPersona) { alert('Please fill in all required fields'); return; }
     if (userPersona === 'hiring-manager' && !companyName) { alert('Please enter your company name'); return; }
     setShowUserForm(false);
-    setMessages([{ role: 'assistant', content: `Hi ${userName.split(' ')[0]}! I'm RecXchange Support, your AI assistant. How can I help you today?` }]);
+    setMessages([{ role: 'assistant', content: `Hi ${userName.split(' ')[0]}! I'm ${assistantName} from RecXchange. How can I help you today?` }]);
   };
 
   const handleSmartLinkClick = (url: string) => { setIsOpen(false); router.push(url); };
@@ -101,7 +104,7 @@ export default function FloatingChat() {
     try {
       const pageContext = getPageContext(pathname);
       const userIntent = messages.length === 1 ? detectUserIntent(userMessage) : undefined;
-      const payload: Record<string, unknown> = { message: userMessage, history: messages, pageContext, userIntent };
+      const payload: Record<string, unknown> = { message: userMessage, history: messages, pageContext, userIntent, assistantName };
       if (!contactId) {
         payload.name = userName; payload.email = userEmail; payload.persona = userPersona;
         if (userPersona === 'hiring-manager') payload.companyName = companyName;
@@ -115,7 +118,7 @@ export default function FloatingChat() {
       else setMessages(prev => [...prev, { role: 'assistant', content: data.message, smartLinks: data.smartLinks }]);
     } catch (error) {
       console.error('Chat error:', error);
-      setMessages(prev => [...prev, { role: 'assistant', content: 'Sorry, I encountered an error. Please try again or contact support at support@recxchange.io' }]);
+      setMessages(prev => [...prev, { role: 'assistant', content: `Sorry, I encountered an error. Please try again or contact support at support@recxchange.io` }]);
     } finally { setIsLoading(false); }
   };
 
@@ -133,10 +136,10 @@ export default function FloatingChat() {
               <div className="p-3.5 sm:p-4 border-b border-cyan-400/20 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 flex-shrink-0">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h3 className="text-white font-bold text-sm">RecXchange Support</h3>
+                    <h3 className="text-white font-bold text-sm">{assistantName} — RecXchange</h3>
                     <p className="text-gray-400 text-xs flex items-center gap-1">
                       <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                      AI Assistant {hasHandedOver && '→ Live Agent'}
+                      Team Member {hasHandedOver && '→ Live Agent'}
                     </p>
                   </div>
                   <button onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-white transition-colors p-1.5 rounded-lg hover:bg-white/10 touch-manipulation">

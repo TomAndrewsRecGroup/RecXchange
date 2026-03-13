@@ -3,7 +3,7 @@ import { visitorContactIds } from '../webhook/route';
 import Groq from 'groq-sdk';
 
 // Import secure configuration and utilities
-import { GROQ_CONFIG, buildContextPrompt } from '@/lib/groq/config';
+import { GROQ_CONFIG, buildContextPrompt, type AssistantName } from '@/lib/groq/config';
 import { validateChatInputs } from '@/lib/groq/validation';
 import { performSecurityCheck, sanitizeAIResponse, logSecurityEvent } from '@/lib/groq/security';
 import type { 
@@ -243,13 +243,11 @@ function parseSmartLinks(
         break;
       
       case 'how-it-works':
-        // User already booked meeting
         url = `/?action=how-it-works&name=${encodeURIComponent(userName)}&email=${encodeURIComponent(userEmail)}&company=${encodeURIComponent(userCompany)}&bookedMeeting=true`;
         prefillData = { name: userName, email: userEmail, company: userCompany, bookedMeeting: true };
         break;
       
       case 'how-it-works-no-meeting':
-        // User didn't book meeting
         url = `/?action=how-it-works&name=${encodeURIComponent(userName)}&email=${encodeURIComponent(userEmail)}&company=${encodeURIComponent(userCompany)}&bookedMeeting=false`;
         prefillData = { name: userName, email: userEmail, company: userCompany, bookedMeeting: false };
         break;
@@ -261,7 +259,6 @@ function parseSmartLinks(
     
     smartLinks.push({ action, prefillData, url });
     
-    // Replace button markup with clickable link for frontend
     cleanResponse = cleanResponse.replace(
       match[0], 
       `[smartlink:${smartLinks.length - 1}]${buttonText}[/smartlink]`
@@ -276,15 +273,17 @@ async function callGroqAI(
   message: string,
   persona: 'recruiter' | 'hiring-manager',
   pageContext: string,
-  conversationHistory: ConversationMessage[] = []
+  conversationHistory: ConversationMessage[] = [],
+  assistantName?: AssistantName
 ): Promise<string> {
   console.log('[Groq AI Chat] Calling Groq API');
   console.log('[Groq AI Chat] Model:', GROQ_CONFIG.model);
   console.log('[Groq AI Chat] User persona:', persona);
   console.log('[Groq AI Chat] Page context:', pageContext);
+  console.log('[Groq AI Chat] Assistant name:', assistantName);
   
-  // Build context-aware system message using secure config
-  const contextPrompt = buildContextPrompt(persona, pageContext, conversationHistory.length);
+  // Build context-aware system message using secure config, injecting assistant name
+  const contextPrompt = buildContextPrompt(persona, pageContext, conversationHistory.length, assistantName);
   
   // Build messages array with limited history
   const messages: ConversationMessage[] = [
@@ -331,6 +330,7 @@ export async function POST(req: NextRequest) {
       conversationId: existingConvId,
       contactId: existingContactId,
       pageContext,
+      assistantName,
     } = body;
 
     const isFirstMessage = !existingContactId;
@@ -400,13 +400,14 @@ export async function POST(req: NextRequest) {
     // Get conversation history for context
     const history = await getConversationHistory(conversationId);
 
-    // Call Groq AI
+    // Call Groq AI — pass through the session assistant name
     console.log('[Groq AI Chat] → Calling Groq AI');
     const aiResponse = await callGroqAI(
       validatedData.message,
       validatedData.persona!,
       validatedData.pageContext,
-      history
+      history,
+      assistantName as AssistantName | undefined
     );
 
     // Sanitize AI response to prevent data leakage
