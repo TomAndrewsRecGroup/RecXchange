@@ -74,7 +74,7 @@ export default function CollaborationPage() {
 
               <div className="text-center p-6 rounded-xl bg-gradient-to-br from-fuchsia-500/10 to-cyan-500/10 border border-fuchsia-400/20">
                 <p className="text-white font-bold text-base sm:text-lg md:text-xl leading-relaxed">
-                  &quot;Collaboration over competition isn&apos;t just our name; it&apos;s our conviction.&quot;
+                  &quot;Collaboration over competition isn&apos;t just a catchphrase; it&apos;s our belief and the core reason why RecXchange is here.&quot;
                 </p>
                 <p className="text-gray-400 text-xs sm:text-sm mt-2">Tom Andrews, CEO &amp; Co-Founder, RecXchange</p>
               </div>
@@ -268,10 +268,10 @@ export default function CollaborationPage() {
               <p className="text-gray-300 text-[13px] sm:text-sm md:text-base mb-5 sm:mb-6 md:mb-8 max-w-2xl mx-auto leading-relaxed px-2">
                 Join thousands of recruiters already earning more, delivering more, and building something bigger together on RecXchange.
               </p>
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-                <GlowButton variant="primary" size="lg" href="/recruiter">Join as Recruiter</GlowButton>
-                <GlowButton variant="secondary" size="lg" href="/split-fees">Learn About Split Fees</GlowButton>
-                <GlowButton variant="secondary" size="lg" href="/why-recxchange">Why RecXchange?</GlowButton>
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
+                <GlowButton variant="primary" size="md" href="/recruiter">Join as Recruiter</GlowButton>
+                <GlowButton variant="secondary" size="md" href="/split-fees">Learn About Split Fees</GlowButton>
+                <GlowButton variant="secondary" size="md" href="/why-recxchange">Why RecXchange?</GlowButton>
               </div>
             </HolographicCard>
           </motion.section>
