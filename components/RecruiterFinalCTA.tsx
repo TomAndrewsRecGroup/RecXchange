@@ -24,7 +24,7 @@ export default function RecruiterFinalCTA() {
         </h2>
 
         <p className="text-gray-400 max-w-3xl mx-auto mb-8 text-lg leading-relaxed relative z-10">
-          Join 2,000+ verified recruiters sharing roles, candidates, and split fees under one protected framework. Secure your seat in the Xchange Engine.
+          Join 15,000+ verified recruiters sharing roles, candidates, and split fees under one protected framework. Secure your seat in The Recruiters Xchange.
         </p>
 
         {/* Reduced button padding: px-10 py-5 → px-7 py-3 */}
