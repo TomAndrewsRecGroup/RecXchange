@@ -34,16 +34,16 @@ export default function ManagerFinalCTA() {
 
           {/* Dual CTAs */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 relative z-10">
-            {/* Primary — GHL Calendar */}
+            {/* Primary — Global Button style */}
             <motion.a
               href="https://link.gohighlevel.com/widget/booking/xp9zWAV1rz40w5WdPSTi"
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.98 }}
-              className="inline-flex items-center gap-3 px-10 py-5 rounded-full bg-gradient-to-r from-fuchsia-500 to-cyan-500 text-white font-bold text-base shadow-[0_0_25px_rgba(255,0,255,0.25)]"
+              className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white font-extrabold text-sm shadow-[0_0_25px_rgba(0,255,255,0.3)] transition-all"
             >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM9 14H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8 4H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2z"/>
               </svg>
               Schedule 30-Min Strategy Call
@@ -54,9 +54,9 @@ export default function ManagerFinalCTA() {
               onClick={() => setModalOpen(true)}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.98 }}
-              className="inline-flex items-center gap-3 px-10 py-5 rounded-full border border-cyan-400/40 bg-cyan-500/10 text-cyan-300 font-bold text-base hover:bg-cyan-500/20 hover:border-cyan-400/70 transition-all shadow-[0_0_20px_rgba(0,240,255,0.1)]"
+              className="inline-flex items-center gap-3 px-7 py-3 rounded-full border border-cyan-400/40 bg-cyan-500/10 text-cyan-300 font-bold text-sm hover:bg-cyan-500/20 hover:border-cyan-400/70 transition-all shadow-[0_0_20px_rgba(0,240,255,0.1)]"
             >
-              <Zap size={20} className="text-cyan-400" />
+              <Zap size={16} className="text-cyan-400" />
               Instant Support
             </motion.button>
           </div>
