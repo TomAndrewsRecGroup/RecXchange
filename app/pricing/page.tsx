@@ -22,11 +22,10 @@ const tiers = [
     tokens: "5 tokens/month",
     recxDirectAccess: "30-day delay",
     features: [
-      "Up to 30 CVs stored",
+      "Up to 20 CVs in circulation",
       "5 tokens per month",
-      "30-day delay on RecX Direct roles",
-      "Basic search & match",
-      "Standard support",
+      "Daily access to 270M candidate profiles",
+      "In-app Support & Live Chat",
     ],
     color: "cyan" as const,
     bulletColor: "bg-cyan-400",
@@ -40,12 +39,12 @@ const tiers = [
     tokens: "150 tokens/month",
     recxDirectAccess: "7-day delay",
     features: [
-      "Up to 300 CVs stored",
+      "Up to 400 CVs in circulation",
       "150 tokens per month",
-      "7-day delay on RecX Direct roles",
-      "AI-powered candidate search",
+      "Advanced access to 270M candidate profiles",
       "Advanced matching algorithms",
-      "Email & in-app support",
+      "In-app Support & Live Chat",
+      "Priority Online Training",
     ],
     color: "purple" as const,
     bulletColor: "bg-purple-400",
@@ -99,7 +98,7 @@ export default function PricingPage() {
             </h1>
             <NeonDivider width="w-40" color="mixed" />
             <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed px-2 mt-6">
-              No placement fees. No hidden charges. Just monthly membership and 100% of your split fee.
+              No hidden charges. Just monthly membership and 100% of your split fee.
             </p>
           </motion.header>
 
@@ -323,7 +322,7 @@ export default function PricingPage() {
               </HolographicCard>
             </div>
 
-            {/* Learn More CTA — triggers RecX Direct email explainer modal */}
+            {/* Learn More CTA */}
             <div className="mt-6 sm:mt-8 text-center">
               <RecXDirectForm />
             </div>
@@ -360,7 +359,7 @@ export default function PricingPage() {
           </motion.section>
 
           <div className="mt-8 sm:mt-10 md:mt-12">
-            <LastUpdated date="2026-03-11" />
+            <LastUpdated date="2026-03-13" />
           </div>
         </div>
       </div>
