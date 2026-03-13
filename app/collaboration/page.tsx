@@ -32,8 +32,59 @@ export default function CollaborationPage() {
             </p>
           </motion.header>
 
+          {/* Everyone Wins */}
+          <motion.section initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-8 sm:mb-12 md:mb-16">
+            <HolographicCard color="fuchsia" variant="content" glowIntensity="high">
+              <div className="text-center mb-6 sm:mb-8">
+                <StatusBadge label="THE BELIEF" color="fuchsia" size="sm" />
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-3 mt-4">Everyone Wins.</h2>
+                <p className="text-gray-300 text-[13px] sm:text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
+                  The concept is proven. The belief is real. Collaboration within recruitment not only <em>can</em> exist; we believe it beats competition <strong className="text-white">every single day of the week.</strong>
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5 md:gap-6 mb-8">
+                {[
+                  {
+                    emoji: '&#128176;',
+                    who: 'Recruiters Win',
+                    color: 'cyan',
+                    desc: 'Earn on roles you would have otherwise lost, and access live roles you never had before. Collaboration creates income where there was none.'
+                  },
+                  {
+                    emoji: '&#127970;',
+                    who: 'Clients Win',
+                    color: 'fuchsia',
+                    desc: 'Get the candidate who truly meets the spec. No compromise, no lowering the bar, no settling for second best. Just the right person, every time.'
+                  },
+                  {
+                    emoji: '&#127919;',
+                    who: 'Candidates Win',
+                    color: 'purple',
+                    desc: 'Get the role they have actually wanted. Not a near-miss pushed by a recruiter under pressure. The right fit, placed with purpose, every time.'
+                  }
+                ].map((item, i) => (
+                  <HolographicCard key={i} color={item.color as any} variant="feature" className="flex flex-col">
+                    <div className="text-3xl mb-3" dangerouslySetInnerHTML={{ __html: item.emoji }} />
+                    <h3 className="font-bold text-base mb-2 bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">{item.who}</h3>
+                    <p className="text-gray-400 text-xs sm:text-sm leading-relaxed flex-1">{item.desc}</p>
+                  </HolographicCard>
+                ))}
+              </div>
+
+              <div className="text-center p-6 rounded-xl bg-gradient-to-br from-fuchsia-500/10 to-cyan-500/10 border border-fuchsia-400/20">
+                <p className="text-white font-bold text-base sm:text-lg md:text-xl leading-relaxed">
+                  &quot;Collaboration over competition isn&apos;t just our name; it&apos;s our conviction.&quot;
+                </p>
+                <p className="text-gray-400 text-xs sm:text-sm mt-2">Tom Andrews, CEO &amp; Co-Founder, RecXchange</p>
+              </div>
+            </HolographicCard>
+          </motion.section>
+
+          <NeonDivider width="w-full" color="mixed" />
+
           {/* The Origin Story */}
-          <section className="mb-8 sm:mb-12 md:mb-16">
+          <section className="my-8 sm:my-12 md:my-16">
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
               <HolographicCard color="purple" variant="content">
                 <StatusBadge label="THE ORIGIN STORY" color="purple" size="sm" />
@@ -207,57 +258,6 @@ export default function CollaborationPage() {
           </section>
 
           <NeonDivider width="w-full" color="mixed" />
-
-          {/* Everyone Wins */}
-          <motion.section initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="my-8 sm:my-12 md:my-16">
-            <HolographicCard color="fuchsia" variant="content" glowIntensity="high">
-              <div className="text-center mb-6 sm:mb-8">
-                <StatusBadge label="THE BELIEF" color="fuchsia" size="sm" />
-                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-3 mt-4">Everyone Wins.</h2>
-                <p className="text-gray-300 text-[13px] sm:text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
-                  The concept is proven. The belief is real. Collaboration within recruitment not only <em>can</em> exist; we believe it beats competition <strong className="text-white">every single day of the week.</strong>
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5 md:gap-6 mb-8 items-stretch">
-                {[
-                  {
-                    emoji: '&#128176;',
-                    who: 'Recruiters Win',
-                    color: 'cyan',
-                    desc: 'Earn on roles you would have otherwise lost, and access live roles you never had before. Collaboration creates income where there was none.'
-                  },
-                  {
-                    emoji: '&#127970;',
-                    who: 'Clients Win',
-                    color: 'fuchsia',
-                    desc: "Get the candidate who truly meets the spec. No compromise, no lowering the bar, no 'it's a tough market'. Just results."
-                  },
-                  {
-                    emoji: '&#127919;',
-                    who: 'Candidates Win',
-                    color: 'purple',
-                    desc: "Get the role they've actually wanted. Not a near-miss pushed by a recruiter under pressure. The right fit, every time."
-                  }
-                ].map((item, i) => (
-                  <div key={i} className="flex">
-                    <HolographicCard color={item.color as any} variant="feature" className="flex-1 flex flex-col">
-                      <div className="text-3xl mb-3" dangerouslySetInnerHTML={{ __html: item.emoji }} />
-                      <h3 className="font-bold text-base mb-2 bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">{item.who}</h3>
-                      <p className="text-gray-400 text-xs sm:text-sm leading-relaxed flex-1">{item.desc}</p>
-                    </HolographicCard>
-                  </div>
-                ))}
-              </div>
-
-              <div className="text-center p-6 rounded-xl bg-gradient-to-br from-fuchsia-500/10 to-cyan-500/10 border border-fuchsia-400/20">
-                <p className="text-white font-bold text-base sm:text-lg md:text-xl leading-relaxed">
-                  &quot;Collaboration over competition isn&apos;t just our name; it&apos;s our conviction.&quot;
-                </p>
-                <p className="text-gray-400 text-xs sm:text-sm mt-2">Tom Andrews, CEO &amp; Co-Founder, RecXchange</p>
-              </div>
-            </HolographicCard>
-          </motion.section>
 
           {/* CTA */}
           <motion.section initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="my-8 sm:my-12 md:my-16">
