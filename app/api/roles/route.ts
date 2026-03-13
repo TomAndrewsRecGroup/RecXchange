@@ -25,32 +25,421 @@ interface APIResponse {
   roles: Role[];
 }
 
-// Currency conversion rates to USD (approximate, update regularly)
 const CURRENCY_RATES: Record<string, number> = {
-  'USD': 1,
-  'GBP': 1.27,
-  'EUR': 1.09,
-  'CAD': 0.72,
-  'AUD': 0.66,
-  'SGD': 0.75,
-  'AED': 0.27,
-  'INR': 0.012,
-  'ZAR': 0.055,
+  'USD': 1, 'GBP': 1.27, 'EUR': 1.09, 'CAD': 0.72,
+  'AUD': 0.66, 'SGD': 0.75, 'AED': 0.27, 'INR': 0.012, 'ZAR': 0.055,
 };
 
 function convertToUSD(amount: number, currency: string): number {
-  const rate = CURRENCY_RATES[currency] || 1;
-  return amount * rate;
+  return amount * (CURRENCY_RATES[currency] || 1);
 }
 
-// Fallback demo data in case API is not available
-const DEMO_ROLES: Role[] = [
+// ─── BATCH 1: Roles 1–42 ────────────────────────────────────────────────────
+const ROLES_BATCH_1: Role[] = [
+  // --- Your provided roles ---
   {
-    id: 'demo-1',
+    id: 'r-001',
     source: 'recx_direct',
+    title: 'Maintenance Manager',
+    descriptionSnippet: 'Experienced Maintenance Manager required for a busy industrial facility in Ponca City, OK. You will oversee preventive and reactive maintenance programmes, lead a team of technicians, and ensure plant reliability and compliance with H&S standards.',
+    company: 'RecX Direct Client',
+    location: 'Ponca City, OK, USA',
+    workModel: 'onsite',
+    industry: 'Engineering & Manufacturing',
+    seniorityLevel: 'mid',
+    salaryMin: 70000,
+    salaryMax: 90000,
+    salaryCurrency: 'USD',
+    roleType: 'permanent',
+    postedAt: '2026-03-01T09:00:00.000Z',
+    splitAmount: 9500,
+    splitCurrency: 'USD'
+  },
+  {
+    id: 'r-002',
+    source: 'recx_direct',
+    title: 'Financial Controller',
+    descriptionSnippet: 'A growing business in Gouverneur, NY is seeking a Financial Controller to lead all financial reporting, budgeting, and cash flow management. CPA preferred with experience in manufacturing or professional services environments.',
+    company: 'RecX Direct Client',
+    location: 'Gouverneur, NY, USA',
+    workModel: 'hybrid',
+    industry: 'Finance & Accounting',
+    seniorityLevel: 'senior',
+    salaryMin: 90000,
+    salaryMax: 120000,
+    salaryCurrency: 'USD',
+    roleType: 'permanent',
+    postedAt: '2026-03-02T09:00:00.000Z',
+    splitAmount: 8500,
+    splitCurrency: 'USD'
+  },
+  {
+    id: 'r-003',
+    source: 'xchange',
+    title: 'Controls Engineer',
+    descriptionSnippet: 'Controls Engineer required for a fast-paced automation project in Orlando, FL. You will design, programme and commission PLC/SCADA systems, and work closely with mechanical and electrical teams on complex industrial automation builds.',
+    company: 'Xchange Partner',
+    location: 'Orlando, FL, USA',
+    workModel: 'onsite',
+    industry: 'Engineering & Manufacturing',
+    seniorityLevel: 'mid',
+    salaryMin: 80000,
+    salaryMax: 110000,
+    salaryCurrency: 'USD',
+    roleType: 'permanent',
+    postedAt: '2026-03-02T10:00:00.000Z',
+    splitAmount: 8500,
+    splitCurrency: 'USD'
+  },
+  {
+    id: 'r-004',
+    source: 'recx_direct',
+    title: 'ADHD Nurse / Specialist Prescriber',
+    descriptionSnippet: 'A well-established mental health service in the UK is seeking an experienced ADHD Nurse with prescribing qualifications. You will conduct ADHD assessments, manage caseloads, and prescribe medication under agreed clinical frameworks.',
+    company: 'RecX Direct Client',
+    location: 'United Kingdom',
+    workModel: 'hybrid',
+    industry: 'Mental Health & Wellbeing',
+    seniorityLevel: 'senior',
+    salaryMin: 45000,
+    salaryMax: 60000,
+    salaryCurrency: 'GBP',
+    roleType: 'permanent',
+    postedAt: '2026-03-03T09:00:00.000Z',
+    splitAmount: 4000,
+    splitCurrency: 'USD'
+  },
+  {
+    id: 'r-005',
+    source: 'recx_direct',
+    title: 'Sales Consultant',
+    descriptionSnippet: 'A dynamic sales team in Nottingham, UK is looking for a motivated Sales Consultant to manage an existing account base and drive new business. Strong track record in B2B consultative sales required.',
+    company: 'RecX Direct Client',
+    location: 'Nottingham, UK',
+    workModel: 'hybrid',
+    industry: 'Sales',
+    seniorityLevel: 'mid',
+    salaryMin: 25000,
+    salaryMax: 35000,
+    salaryCurrency: 'GBP',
+    roleType: 'permanent',
+    postedAt: '2026-03-03T10:00:00.000Z',
+    splitAmount: 2500,
+    splitCurrency: 'USD'
+  },
+  {
+    id: 'r-006',
+    source: 'recx_direct',
+    title: 'Associate Mechanical Engineer – Science, Research & Mission Critical',
+    descriptionSnippet: 'A leading MEP consultancy in London is seeking an Associate Mechanical Engineer specialising in science, research and mission-critical facilities. You will lead mechanical design on high-profile laboratory and data centre projects.',
+    company: 'RecX Direct Client',
+    location: 'London, UK',
+    workModel: 'hybrid',
+    industry: 'Engineering & Manufacturing',
+    seniorityLevel: 'senior',
+    salaryMin: 65000,
+    salaryMax: 85000,
+    salaryCurrency: 'GBP',
+    roleType: 'permanent',
+    postedAt: '2026-03-04T09:00:00.000Z',
+    splitAmount: 7000,
+    splitCurrency: 'USD'
+  },
+  {
+    id: 'r-007',
+    source: 'recx_direct',
+    title: 'Business Development Manager',
+    descriptionSnippet: 'A high-growth B2B company is hiring an experienced Business Development Manager to cover Florida, Georgia, or Texas. You will drive new logo acquisition, manage complex sales cycles, and build long-term client partnerships.',
+    company: 'RecX Direct Client',
+    location: 'Florida / Georgia / Texas, USA',
+    workModel: 'remote',
+    industry: 'Sales',
+    seniorityLevel: 'senior',
+    salaryMin: 100000,
+    salaryMax: 140000,
+    salaryCurrency: 'USD',
+    roleType: 'permanent',
+    postedAt: '2026-03-04T10:00:00.000Z',
+    splitAmount: 15000,
+    splitCurrency: 'USD'
+  },
+  {
+    id: 'r-008',
+    source: 'recx_direct',
+    title: 'Homecare Nurse – Oncology',
+    descriptionSnippet: 'An oncology homecare provider in South Wales is recruiting an experienced Nurse to deliver chemotherapy and supportive care to patients in their own homes. NMC registration and oncology experience essential.',
+    company: 'RecX Direct Client',
+    location: 'South Wales, UK',
+    workModel: 'onsite',
+    industry: 'Healthcare & Nursing',
+    seniorityLevel: 'mid',
+    salaryMin: 34000,
+    salaryMax: 42000,
+    salaryCurrency: 'GBP',
+    roleType: 'permanent',
+    postedAt: '2026-03-04T11:00:00.000Z',
+    splitAmount: 2500,
+    splitCurrency: 'USD'
+  },
+  {
+    id: 'r-009',
+    source: 'recx_direct',
+    title: 'Clinic Nurse – Oncology',
+    descriptionSnippet: 'A busy oncology clinic in Stoke-on-Trent is looking for an experienced Clinic Nurse to administer systemic anti-cancer therapies (SACT) and provide holistic care to cancer patients attending for treatment.',
+    company: 'RecX Direct Client',
+    location: 'Stoke-on-Trent, UK',
+    workModel: 'onsite',
+    industry: 'Healthcare & Nursing',
+    seniorityLevel: 'mid',
+    salaryMin: 34000,
+    salaryMax: 42000,
+    salaryCurrency: 'GBP',
+    roleType: 'permanent',
+    postedAt: '2026-03-05T09:00:00.000Z',
+    splitAmount: 2500,
+    splitCurrency: 'USD'
+  },
+  {
+    id: 'r-010',
+    source: 'recx_direct',
+    title: 'Senior Electrical Engineer',
+    descriptionSnippet: 'A major engineering consultancy in Edinburgh is seeking a Senior Electrical Engineer to deliver high-quality electrical designs across commercial, residential and infrastructure projects. Chartered or working towards chartership preferred.',
+    company: 'RecX Direct Client',
+    location: 'Edinburgh, UK',
+    workModel: 'hybrid',
+    industry: 'Engineering & Manufacturing',
+    seniorityLevel: 'senior',
+    salaryMin: 55000,
+    salaryMax: 70000,
+    salaryCurrency: 'GBP',
+    roleType: 'permanent',
+    postedAt: '2026-03-05T10:00:00.000Z',
+    splitAmount: 5000,
+    splitCurrency: 'USD'
+  },
+  {
+    id: 'r-011',
+    source: 'recx_direct',
+    title: 'Senior Electrical Engineer',
+    descriptionSnippet: 'A leading building services consultancy in Glasgow requires a Senior Electrical Engineer with strong M&E background across commercial and industrial sectors. Experience with BIM and AutoCAD is advantageous.',
+    company: 'RecX Direct Client',
+    location: 'Glasgow, UK',
+    workModel: 'hybrid',
+    industry: 'Engineering & Manufacturing',
+    seniorityLevel: 'senior',
+    salaryMin: 55000,
+    salaryMax: 70000,
+    salaryCurrency: 'GBP',
+    roleType: 'permanent',
+    postedAt: '2026-03-05T11:00:00.000Z',
+    splitAmount: 5000,
+    splitCurrency: 'USD'
+  },
+  {
+    id: 'r-012',
+    source: 'xchange',
+    title: 'Software Engineering Expert',
+    descriptionSnippet: 'A US-based technology company is seeking a highly experienced Software Engineering Expert to drive technical strategy, mentor engineering teams, and architect scalable solutions. Full-stack expertise with cloud-native systems required.',
+    company: 'Xchange Partner',
+    location: 'USA (Remote)',
+    workModel: 'remote',
+    industry: 'Technology',
+    seniorityLevel: 'senior',
+    salaryMin: 150000,
+    salaryMax: 200000,
+    salaryCurrency: 'USD',
+    roleType: 'permanent',
+    postedAt: '2026-03-05T12:00:00.000Z',
+    splitAmount: 5000,
+    splitCurrency: 'USD'
+  },
+  {
+    id: 'r-013',
+    source: 'xchange',
+    title: 'Technical Support & Customer Success Professional',
+    descriptionSnippet: 'A growing SaaS business operating in Nigeria is looking for a technically-minded Customer Success professional to onboard clients, troubleshoot product issues and drive retention. Strong communication and technical aptitude required.',
+    company: 'Xchange Partner',
+    location: 'Nigeria (Remote)',
+    workModel: 'remote',
+    industry: 'Technology',
+    seniorityLevel: 'mid',
+    salaryMin: 20000,
+    salaryMax: 35000,
+    salaryCurrency: 'USD',
+    roleType: 'permanent',
+    postedAt: '2026-03-06T09:00:00.000Z',
+    splitAmount: 3500,
+    splitCurrency: 'GBP'
+  },
+  {
+    id: 'r-014',
+    source: 'xchange',
+    title: 'Technical Content Writer',
+    descriptionSnippet: 'A technology company in California is hiring a Technical Content Writer to produce developer documentation, API guides, blog posts and product tutorials. Strong technical writing background and ability to simplify complex concepts essential.',
+    company: 'Xchange Partner',
+    location: 'California, USA',
+    workModel: 'remote',
+    industry: 'Technology',
+    seniorityLevel: 'mid',
+    salaryMin: 80000,
+    salaryMax: 110000,
+    salaryCurrency: 'USD',
+    roleType: 'permanent',
+    postedAt: '2026-03-06T10:00:00.000Z',
+    splitAmount: 5000,
+    splitCurrency: 'USD'
+  },
+  {
+    id: 'r-015',
+    source: 'xchange',
+    title: 'Retail Operations Manager',
+    descriptionSnippet: 'A US-based retail group is seeking a Retail Operations Manager to oversee multi-site operations, drive performance standards, and manage a team of store managers. Strong multi-site retail leadership background required.',
+    company: 'Xchange Partner',
+    location: 'USA',
+    workModel: 'onsite',
+    industry: 'Retail & Consumer',
+    seniorityLevel: 'senior',
+    salaryMin: 80000,
+    salaryMax: 100000,
+    salaryCurrency: 'USD',
+    roleType: 'permanent',
+    postedAt: '2026-03-06T11:00:00.000Z',
+    splitAmount: 3000,
+    splitCurrency: 'USD'
+  },
+  {
+    id: 'r-016',
+    source: 'xchange',
+    title: 'Clinical Data Expert – Clinical Trial Matching Project',
+    descriptionSnippet: 'A US-based healthcare technology company is recruiting a Clinical Data Expert to support a clinical trial matching project. You will work with complex patient datasets, eligibility criteria, and clinical data pipelines. US-based candidates only.',
+    company: 'Xchange Partner',
+    location: 'USA (Remote)',
+    workModel: 'remote',
+    industry: 'Healthcare & Nursing',
+    seniorityLevel: 'senior',
+    salaryMin: 90000,
+    salaryMax: 130000,
+    salaryCurrency: 'USD',
+    roleType: 'permanent',
+    postedAt: '2026-03-06T12:00:00.000Z',
+    splitAmount: 3000,
+    splitCurrency: 'USD'
+  },
+  {
+    id: 'r-017',
+    source: 'xchange',
+    title: 'Credit Controller – Nordic Speaking',
+    descriptionSnippet: 'A financial services business in London is recruiting a Nordic-speaking Credit Controller to manage accounts across Scandinavian markets. Strong credit control experience and fluency in Swedish, Norwegian or Danish required.',
+    company: 'Xchange Partner',
+    location: 'London, UK',
+    workModel: 'hybrid',
+    industry: 'Finance & Accounting',
+    seniorityLevel: 'mid',
+    salaryMin: 30000,
+    salaryMax: 40000,
+    salaryCurrency: 'GBP',
+    roleType: 'permanent',
+    postedAt: '2026-03-07T09:00:00.000Z',
+    splitAmount: 1200,
+    splitCurrency: 'GBP'
+  },
+  {
+    id: 'r-018',
+    source: 'xchange',
+    title: 'Health & Safety Manager',
+    descriptionSnippet: 'A large industrial organisation in Melbourne, Australia is seeking an experienced Health & Safety Manager to develop and implement H&S management systems, lead incident investigations, and drive a safety-first culture across multiple sites.',
+    company: 'Xchange Partner',
+    location: 'Melbourne, Australia',
+    workModel: 'onsite',
+    industry: 'Construction & Facilities',
+    seniorityLevel: 'senior',
+    salaryMin: 180000,
+    salaryMax: 220000,
+    salaryCurrency: 'AUD',
+    roleType: 'permanent',
+    postedAt: '2026-03-07T10:00:00.000Z',
+    splitAmount: 16500,
+    splitCurrency: 'AUD'
+  },
+  {
+    id: 'r-019',
+    source: 'xchange',
+    title: 'Mechanical Fitter / Welder',
+    descriptionSnippet: 'A UK engineering business is seeking a skilled Mechanical Fitter / Welder with experience in fabrication and installation. You will work across a range of industrial projects requiring precision fitting, welding and assembly skills.',
+    company: 'Xchange Partner',
+    location: 'United Kingdom',
+    workModel: 'onsite',
+    industry: 'Engineering & Manufacturing',
+    seniorityLevel: 'mid',
+    salaryMin: 45000,
+    salaryMax: 60000,
+    salaryCurrency: 'GBP',
+    roleType: 'permanent',
+    postedAt: '2026-03-07T11:00:00.000Z',
+    splitAmount: 4320,
+    splitCurrency: 'GBP'
+  },
+  {
+    id: 'r-020',
+    source: 'xchange',
+    title: 'SHEQ Advisor',
+    descriptionSnippet: 'A UK-based contractor is hiring a SHEQ Advisor to support safety, health, environment and quality compliance across active project sites. NEBOSH qualified with experience in construction or industrial environments required.',
+    company: 'Xchange Partner',
+    location: 'United Kingdom',
+    workModel: 'hybrid',
+    industry: 'Construction & Facilities',
+    seniorityLevel: 'mid',
+    salaryMin: 35000,
+    salaryMax: 40000,
+    salaryCurrency: 'GBP',
+    roleType: 'permanent',
+    postedAt: '2026-03-07T12:00:00.000Z',
+    splitAmount: 3600,
+    splitCurrency: 'GBP'
+  },
+  // --- Additional roles: mix of RecX Direct & Xchange, all industries ---
+  {
+    id: 'r-021',
+    source: 'recx_direct',
+    title: 'Psychiatric Nurse Practitioner',
+    descriptionSnippet: 'A private mental health clinic in London is seeking a Psychiatric Nurse Practitioner to assess, diagnose and treat adults with complex mental health needs. NMP qualification and relevant clinical experience required.',
+    company: 'RecX Direct Client',
+    location: 'London, UK',
+    workModel: 'hybrid',
+    industry: 'Mental Health & Wellbeing',
+    seniorityLevel: 'senior',
+    salaryMin: 55000,
+    salaryMax: 75000,
+    salaryCurrency: 'GBP',
+    roleType: 'permanent',
+    postedAt: '2026-03-01T08:00:00.000Z',
+    splitAmount: 6500,
+    splitCurrency: 'USD'
+  },
+  {
+    id: 'r-022',
+    source: 'recx_direct',
+    title: 'Site Manager – Commercial Construction',
+    descriptionSnippet: 'A main contractor in the North West of England is seeking an experienced Site Manager to oversee a commercial construction project from groundworks to handover. SMSTS, First Aid, and CSCS gold card required.',
+    company: 'RecX Direct Client',
+    location: 'Manchester, UK',
+    workModel: 'onsite',
+    industry: 'Construction & Facilities',
+    seniorityLevel: 'senior',
+    salaryMin: 55000,
+    salaryMax: 70000,
+    salaryCurrency: 'GBP',
+    roleType: 'permanent',
+    postedAt: '2026-03-02T08:00:00.000Z',
+    splitAmount: 7000,
+    splitCurrency: 'USD'
+  },
+  {
+    id: 'r-023',
+    source: 'xchange',
     title: 'Principal AI Engineer',
     descriptionSnippet: 'Leading AI/ML team building next-generation recommendation systems. Python, TensorFlow, distributed systems experience required. Strong background in deep learning and NLP.',
-    company: 'TechCorp',
+    company: 'Xchange Partner',
     location: 'London, UK',
     workModel: 'hybrid',
     industry: 'Technology',
@@ -64,12 +453,48 @@ const DEMO_ROLES: Role[] = [
     splitCurrency: 'GBP'
   },
   {
-    id: 'demo-2',
+    id: 'r-024',
+    source: 'recx_direct',
+    title: 'Talent Acquisition Partner',
+    descriptionSnippet: 'A fast-scaling technology company in New York is hiring an experienced Talent Acquisition Partner to own end-to-end recruitment for technical roles. Strong stakeholder management and direct sourcing skills required.',
+    company: 'RecX Direct Client',
+    location: 'New York, USA',
+    workModel: 'hybrid',
+    industry: 'Human Resources',
+    seniorityLevel: 'mid',
+    salaryMin: 90000,
+    salaryMax: 120000,
+    salaryCurrency: 'USD',
+    roleType: 'permanent',
+    postedAt: '2026-03-01T11:00:00.000Z',
+    splitAmount: 9500,
+    splitCurrency: 'USD'
+  },
+  {
+    id: 'r-025',
+    source: 'recx_direct',
+    title: 'Structural Engineer',
+    descriptionSnippet: 'A multi-disciplinary engineering consultancy in Birmingham is seeking a Structural Engineer to work on a diverse portfolio of residential, commercial and infrastructure projects. IStructE membership preferred.',
+    company: 'RecX Direct Client',
+    location: 'Birmingham, UK',
+    workModel: 'hybrid',
+    industry: 'Engineering & Manufacturing',
+    seniorityLevel: 'mid',
+    salaryMin: 40000,
+    salaryMax: 58000,
+    salaryCurrency: 'GBP',
+    roleType: 'permanent',
+    postedAt: '2026-03-08T09:00:00.000Z',
+    splitAmount: 5500,
+    splitCurrency: 'USD'
+  },
+  {
+    id: 'r-026',
     source: 'xchange',
     title: 'Head of Talent Acquisition',
-    descriptionSnippet: 'Strategic TA leader to build and scale talent function for high-growth fintech. Experience building teams from 100-500+. Strong employer branding and analytics focus.',
-    company: 'FinTech Innovations',
-    location: 'New York, US',
+    descriptionSnippet: 'Strategic TA leader to build and scale talent function for high-growth fintech. Experience building teams from 100–500+. Strong employer branding and analytics focus.',
+    company: 'Xchange Partner',
+    location: 'New York, USA',
     workModel: 'hybrid',
     industry: 'Human Resources',
     seniorityLevel: 'executive',
@@ -82,14 +507,50 @@ const DEMO_ROLES: Role[] = [
     splitCurrency: 'USD'
   },
   {
-    id: 'demo-3',
+    id: 'r-027',
     source: 'recx_direct',
+    title: 'Regional Sales Manager – Industrial',
+    descriptionSnippet: 'A leading supplier of industrial equipment is seeking a Regional Sales Manager to grow revenue across the Midlands and North of England. Field-based with a strong track record in B2B industrial or technical sales.',
+    company: 'RecX Direct Client',
+    location: 'Midlands / North England, UK',
+    workModel: 'remote',
+    industry: 'Sales',
+    seniorityLevel: 'senior',
+    salaryMin: 50000,
+    salaryMax: 70000,
+    salaryCurrency: 'GBP',
+    roleType: 'permanent',
+    postedAt: '2026-03-08T10:00:00.000Z',
+    splitAmount: 7500,
+    splitCurrency: 'USD'
+  },
+  {
+    id: 'r-028',
+    source: 'recx_direct',
+    title: 'Community Mental Health Nurse',
+    descriptionSnippet: 'A community mental health team in the East Midlands is seeking an experienced CMHN to manage a caseload of adults with serious mental illness. RMN qualified with strong knowledge of CPA and risk assessment.',
+    company: 'RecX Direct Client',
+    location: 'East Midlands, UK',
+    workModel: 'hybrid',
+    industry: 'Mental Health & Wellbeing',
+    seniorityLevel: 'mid',
+    salaryMin: 35000,
+    salaryMax: 48000,
+    salaryCurrency: 'GBP',
+    roleType: 'permanent',
+    postedAt: '2026-03-08T11:00:00.000Z',
+    splitAmount: 4500,
+    splitCurrency: 'USD'
+  },
+  {
+    id: 'r-029',
+    source: 'xchange',
     title: 'Quantitative Researcher',
-    descriptionSnippet: 'Systematic trading firm seeking quant researcher for alpha generation. Strong C++/Python, statistical modeling, and financial markets knowledge. PhD preferred.',
-    company: 'Quantum Capital',
+    descriptionSnippet: 'Systematic trading firm seeking quant researcher for alpha generation. Strong C++/Python, statistical modelling, and financial markets knowledge. PhD preferred.',
+    company: 'Xchange Partner',
     location: 'Singapore',
     workModel: 'onsite',
-    industry: 'Finance',
+    industry: 'Finance & Accounting',
     seniorityLevel: 'senior',
     salaryMin: 180000,
     salaryMax: 250000,
@@ -100,30 +561,30 @@ const DEMO_ROLES: Role[] = [
     splitCurrency: 'USD'
   },
   {
-    id: 'demo-4',
-    source: 'xchange',
-    title: 'Senior DevOps Engineer',
-    descriptionSnippet: 'Cloud-native DevOps expert to lead infrastructure automation. AWS/GCP, Kubernetes, Terraform, CI/CD pipelines. Building highly scalable systems.',
-    company: 'CloudScale',
-    location: 'Remote',
-    workModel: 'remote',
-    industry: 'Technology',
+    id: 'r-030',
+    source: 'recx_direct',
+    title: 'Electrical Project Manager',
+    descriptionSnippet: 'A national M&E contractor is seeking an Electrical Project Manager to deliver high-value commercial and industrial projects across the UK. You will oversee design, procurement, installation and commissioning with full P&L accountability.',
+    company: 'RecX Direct Client',
+    location: 'United Kingdom',
+    workModel: 'hybrid',
+    industry: 'Engineering & Manufacturing',
     seniorityLevel: 'senior',
-    salaryMin: 90000,
-    salaryMax: 130000,
+    salaryMin: 60000,
+    salaryMax: 80000,
     salaryCurrency: 'GBP',
     roleType: 'permanent',
-    postedAt: '2026-02-19T11:00:00.000Z',
-    splitAmount: 11000,
-    splitCurrency: 'GBP'
+    postedAt: '2026-03-09T09:00:00.000Z',
+    splitAmount: 8000,
+    splitCurrency: 'USD'
   },
   {
-    id: 'demo-5',
-    source: 'recx_direct',
-    title: 'Marketing Director',
-    descriptionSnippet: 'Growth marketing leader for B2B SaaS scale-up. Full-funnel expertise, team building, performance marketing, and brand strategy. 7+ years experience.',
-    company: 'SaaS Ventures',
-    location: 'Berlin, DE',
+    id: 'r-031',
+    source: 'xchange',
+    title: 'Marketing Director – B2B SaaS',
+    descriptionSnippet: 'Growth marketing leader for B2B SaaS scale-up. Full-funnel expertise, team building, performance marketing, and brand strategy. 7+ years experience required.',
+    company: 'Xchange Partner',
+    location: 'Berlin, Germany',
     workModel: 'hybrid',
     industry: 'Marketing',
     seniorityLevel: 'senior',
@@ -136,12 +597,48 @@ const DEMO_ROLES: Role[] = [
     splitCurrency: 'EUR'
   },
   {
-    id: 'demo-6',
+    id: 'r-032',
+    source: 'recx_direct',
+    title: 'Building Services Engineer – M&E',
+    descriptionSnippet: 'A building services consultancy in London seeks a Building Services Engineer with strong M&E design experience across commercial fit-out and new build projects. AutoCAD and Revit MEP proficiency required.',
+    company: 'RecX Direct Client',
+    location: 'London, UK',
+    workModel: 'hybrid',
+    industry: 'Engineering & Manufacturing',
+    seniorityLevel: 'mid',
+    salaryMin: 45000,
+    salaryMax: 60000,
+    salaryCurrency: 'GBP',
+    roleType: 'permanent',
+    postedAt: '2026-03-09T10:00:00.000Z',
+    splitAmount: 6000,
+    splitCurrency: 'USD'
+  },
+  {
+    id: 'r-033',
+    source: 'recx_direct',
+    title: 'Registered General Nurse – ICU',
+    descriptionSnippet: 'A leading private hospital in Dubai is seeking an experienced ICU Nurse with at least 2 years of critical care experience. DHA or MOH licence preferred. Tax-free salary and accommodation allowance on offer.',
+    company: 'RecX Direct Client',
+    location: 'Dubai, UAE',
+    workModel: 'onsite',
+    industry: 'Healthcare & Nursing',
+    seniorityLevel: 'mid',
+    salaryMin: 60000,
+    salaryMax: 80000,
+    salaryCurrency: 'USD',
+    roleType: 'permanent',
+    postedAt: '2026-03-09T11:00:00.000Z',
+    splitAmount: 7000,
+    splitCurrency: 'USD'
+  },
+  {
+    id: 'r-034',
     source: 'xchange',
     title: 'Cloud Solutions Architect',
     descriptionSnippet: 'Enterprise cloud architect for digital transformation projects. Azure specialist, architecture patterns, security, and client-facing experience required.',
-    company: 'Digital Transformation Co',
-    location: 'Austin, US',
+    company: 'Xchange Partner',
+    location: 'Austin, TX, USA',
     workModel: 'hybrid',
     industry: 'Technology',
     seniorityLevel: 'senior',
@@ -154,14 +651,86 @@ const DEMO_ROLES: Role[] = [
     splitCurrency: 'USD'
   },
   {
-    id: 'demo-7',
+    id: 'r-035',
     source: 'recx_direct',
-    title: 'Product Manager - B2B',
-    descriptionSnippet: 'Technical PM to own enterprise product roadmap. Strong API/platform experience, agile methodology, and stakeholder management. Computer science background preferred.',
-    company: 'Platform Solutions',
+    title: 'HR Business Partner',
+    descriptionSnippet: 'A UK-wide professional services firm is seeking an experienced HR Business Partner to support senior stakeholders on all people matters, including ER, talent management, org design and change programmes.',
+    company: 'RecX Direct Client',
     location: 'London, UK',
     workModel: 'hybrid',
-    industry: 'Product',
+    industry: 'Human Resources',
+    seniorityLevel: 'senior',
+    salaryMin: 55000,
+    salaryMax: 75000,
+    salaryCurrency: 'GBP',
+    roleType: 'permanent',
+    postedAt: '2026-03-10T09:00:00.000Z',
+    splitAmount: 8000,
+    splitCurrency: 'USD'
+  },
+  {
+    id: 'r-036',
+    source: 'xchange',
+    title: 'Senior DevOps Engineer',
+    descriptionSnippet: 'Cloud-native DevOps expert to lead infrastructure automation. AWS/GCP, Kubernetes, Terraform, CI/CD pipelines. Building highly scalable systems.',
+    company: 'Xchange Partner',
+    location: 'Remote (Global)',
+    workModel: 'remote',
+    industry: 'Technology',
+    seniorityLevel: 'senior',
+    salaryMin: 90000,
+    salaryMax: 130000,
+    salaryCurrency: 'GBP',
+    roleType: 'permanent',
+    postedAt: '2026-02-19T11:00:00.000Z',
+    splitAmount: 11000,
+    splitCurrency: 'GBP'
+  },
+  {
+    id: 'r-037',
+    source: 'recx_direct',
+    title: 'Operations Director – Logistics',
+    descriptionSnippet: 'A national logistics business is seeking an Operations Director to oversee network-wide operations, drive efficiency, manage a large multi-site team, and ensure on-time delivery performance at scale.',
+    company: 'RecX Direct Client',
+    location: 'Midlands, UK',
+    workModel: 'onsite',
+    industry: 'Operations & Logistics',
+    seniorityLevel: 'executive',
+    salaryMin: 90000,
+    salaryMax: 120000,
+    salaryCurrency: 'GBP',
+    roleType: 'permanent',
+    postedAt: '2026-03-10T10:00:00.000Z',
+    splitAmount: 12000,
+    splitCurrency: 'USD'
+  },
+  {
+    id: 'r-038',
+    source: 'recx_direct',
+    title: 'Account Manager – Pharma',
+    descriptionSnippet: 'A pharmaceutical company in the South East is seeking an experienced Account Manager to manage and grow a portfolio of NHS and private accounts. Life sciences background and strong understanding of NHS commissioning required.',
+    company: 'RecX Direct Client',
+    location: 'South East, UK',
+    workModel: 'remote',
+    industry: 'Sales',
+    seniorityLevel: 'mid',
+    salaryMin: 45000,
+    salaryMax: 60000,
+    salaryCurrency: 'GBP',
+    roleType: 'permanent',
+    postedAt: '2026-03-10T11:00:00.000Z',
+    splitAmount: 6000,
+    splitCurrency: 'USD'
+  },
+  {
+    id: 'r-039',
+    source: 'xchange',
+    title: 'Product Manager – B2B Platform',
+    descriptionSnippet: 'Technical PM to own enterprise product roadmap. Strong API/platform experience, agile methodology, and stakeholder management. Computer science background preferred.',
+    company: 'Xchange Partner',
+    location: 'London, UK',
+    workModel: 'hybrid',
+    industry: 'Technology',
     seniorityLevel: 'mid',
     salaryMin: 75000,
     salaryMax: 105000,
@@ -172,47 +741,47 @@ const DEMO_ROLES: Role[] = [
     splitCurrency: 'GBP'
   },
   {
-    id: 'demo-8',
-    source: 'xchange',
-    title: 'Senior Frontend Developer',
-    descriptionSnippet: 'React specialist for consumer-facing product. Modern stack (Next.js, TypeScript, Tailwind), design systems, performance optimization. Strong UX sensibility.',
-    company: 'ConsumerTech',
-    location: 'Amsterdam, NL',
-    workModel: 'remote',
-    industry: 'Technology',
-    seniorityLevel: 'senior',
-    salaryMin: 70000,
-    salaryMax: 95000,
-    salaryCurrency: 'EUR',
-    roleType: 'permanent',
-    postedAt: '2026-02-16T12:00:00.000Z',
-    splitAmount: 8500,
-    splitCurrency: 'EUR'
-  },
-  {
-    id: 'demo-9',
+    id: 'r-040',
     source: 'recx_direct',
-    title: 'Data Scientist',
-    descriptionSnippet: 'ML-focused data scientist for personalization engine. Python, scikit-learn, SQL, A/B testing. Experience with recommendation systems and feature engineering.',
-    company: 'E-commerce Plus',
-    location: 'Toronto, CA',
-    workModel: 'hybrid',
-    industry: 'Technology',
+    title: 'Commissioning Engineer – HVAC',
+    descriptionSnippet: 'A specialist commissioning company in the UK is seeking a Commissioning Engineer with solid HVAC experience to commission complex mechanical systems on commercial and life sciences projects.',
+    company: 'RecX Direct Client',
+    location: 'United Kingdom',
+    workModel: 'onsite',
+    industry: 'Engineering & Manufacturing',
     seniorityLevel: 'mid',
-    salaryMin: 100000,
-    salaryMax: 140000,
-    salaryCurrency: 'CAD',
+    salaryMin: 40000,
+    salaryMax: 55000,
+    salaryCurrency: 'GBP',
     roleType: 'permanent',
-    postedAt: '2026-02-24T10:00:00.000Z',
-    splitAmount: 13000,
-    splitCurrency: 'CAD'
+    postedAt: '2026-03-11T09:00:00.000Z',
+    splitAmount: 5000,
+    splitCurrency: 'USD'
   },
   {
-    id: 'demo-10',
+    id: 'r-041',
+    source: 'recx_direct',
+    title: 'Psychotherapist – Private Practice',
+    descriptionSnippet: 'A growing private therapy network across multiple UK cities is seeking qualified Psychotherapists to deliver CBT and integrative therapy to a mixed adult caseload. BACP or UKCP accreditation required.',
+    company: 'RecX Direct Client',
+    location: 'Multiple UK Locations',
+    workModel: 'hybrid',
+    industry: 'Mental Health & Wellbeing',
+    seniorityLevel: 'mid',
+    salaryMin: 38000,
+    salaryMax: 52000,
+    salaryCurrency: 'GBP',
+    roleType: 'permanent',
+    postedAt: '2026-03-11T10:00:00.000Z',
+    splitAmount: 5000,
+    splitCurrency: 'USD'
+  },
+  {
+    id: 'r-042',
     source: 'xchange',
-    title: 'Legal Counsel - Commercial',
+    title: 'Legal Counsel – Commercial',
     descriptionSnippet: 'Commercial lawyer for high-growth tech company. Contract negotiation, SaaS agreements, M&A support. Common law qualification required, in-house experience preferred.',
-    company: 'Legal Innovations',
+    company: 'Xchange Partner',
     location: 'Dubai, UAE',
     workModel: 'onsite',
     industry: 'Legal',
@@ -224,58 +793,52 @@ const DEMO_ROLES: Role[] = [
     postedAt: '2026-02-15T07:00:00.000Z',
     splitAmount: 20000,
     splitCurrency: 'USD'
-  }
+  },
+];
+
+// Placeholder for batches 2 & 3 — will be merged in subsequent commits
+const ROLES_BATCH_2: Role[] = [];
+const ROLES_BATCH_3: Role[] = [];
+
+export const ALL_DEMO_ROLES: Role[] = [
+  ...ROLES_BATCH_1,
+  ...ROLES_BATCH_2,
+  ...ROLES_BATCH_3,
 ];
 
 export async function GET() {
   try {
-    // Try to fetch from RecXchange backend API
     const response = await fetch('https://app.recxchange.io/api/public/roles', {
-      headers: {
-        'x-api-key': 'apaintballgunthatshootssausages'
-      },
-      cache: 'no-store' // Don't cache during development
+      headers: { 'x-api-key': 'apaintballgunthatshootssausages' },
+      cache: 'no-store'
     });
 
     if (!response.ok) {
-      console.warn('Backend API not available, using demo data');
-      // Return demo data if API fails
       return NextResponse.json({
-        total: DEMO_ROLES.length,
+        total: ALL_DEMO_ROLES.length,
         lastUpdated: new Date().toISOString(),
-        roles: DEMO_ROLES,
+        roles: ALL_DEMO_ROLES,
         demo: true
       });
     }
 
     const data: APIResponse = await response.json();
 
-    // Validate data structure
     if (!data.roles || !Array.isArray(data.roles)) {
-      console.warn('Invalid data structure from API, using demo data');
       return NextResponse.json({
-        total: DEMO_ROLES.length,
+        total: ALL_DEMO_ROLES.length,
         lastUpdated: new Date().toISOString(),
-        roles: DEMO_ROLES,
+        roles: ALL_DEMO_ROLES,
         demo: true
       });
     }
 
-    // Filter roles based on requirements:
-    // 1. All RecX Direct roles
-    // 2. Only Xchange roles with >= $1,000 USD equivalent split
     const filteredRoles = data.roles.filter(role => {
-      if (role.source === 'recx_direct') {
-        return true; // Show all RecX Direct roles
-      }
-      
-      // For Xchange roles, check split amount
+      if (role.source === 'recx_direct') return true;
       if (role.source === 'xchange' && role.splitAmount && role.splitCurrency) {
-        const splitUSD = convertToUSD(role.splitAmount, role.splitCurrency);
-        return splitUSD >= 1000; // Only show if >= $1,000 USD equivalent
+        return convertToUSD(role.splitAmount, role.splitCurrency) >= 1000;
       }
-      
-      return false; // Filter out if no split info
+      return false;
     });
 
     return NextResponse.json({
@@ -286,11 +849,10 @@ export async function GET() {
     });
   } catch (error) {
     console.error('Error fetching roles:', error);
-    // Return demo data as fallback
     return NextResponse.json({
-      total: DEMO_ROLES.length,
+      total: ALL_DEMO_ROLES.length,
       lastUpdated: new Date().toISOString(),
-      roles: DEMO_ROLES,
+      roles: ALL_DEMO_ROLES,
       demo: true
     });
   }

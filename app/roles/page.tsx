@@ -2,7 +2,6 @@
 
 import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Link from 'next/link';
 import { Search, ChevronLeft } from 'lucide-react';
 import FuturisticBackground from '@/components/design-system/FuturisticBackground';
 import HolographicCard from '@/components/design-system/HolographicCard';
@@ -60,7 +59,6 @@ export default function RolesMarketplace() {
     fetchRoles();
   }, []);
 
-  // Lock body scroll when modal is open
   useEffect(() => {
     if (showModal) {
       document.body.style.overflow = 'hidden';
@@ -77,7 +75,7 @@ export default function RolesMarketplace() {
 
   const filteredRoles = useMemo(() => {
     return roles.filter(role => {
-      const matchesType = filterType === 'All' || 
+      const matchesType = filterType === 'All' ||
         (filterType === 'RecX Direct' && role.source === 'recx_direct') ||
         (filterType === 'Xchange' && role.source === 'xchange');
       const query = searchQuery.toLowerCase();
@@ -94,45 +92,41 @@ export default function RolesMarketplace() {
   const totalPages = Math.ceil(filteredRoles.length / itemsPerPage);
   const paginatedRoles = filteredRoles.slice((page - 1) * itemsPerPage, page * itemsPerPage);
 
-  const stats = useMemo(() => {
-    return {
-      total: roles.length,
-      direct: roles.filter(r => r.source === 'recx_direct').length,
-      xchange: roles.filter(r => r.source === 'xchange').length
-    };
-  }, [roles]);
+  const stats = useMemo(() => ({
+    total: roles.length,
+    direct: roles.filter(r => r.source === 'recx_direct').length,
+    xchange: roles.filter(r => r.source === 'xchange').length
+  }), [roles]);
 
   const totalFeePool = useMemo(() => {
-    const CURRENCY_RATES: Record<string, number> = {
+    const RATES: Record<string, number> = {
       'USD': 1, 'GBP': 1.27, 'EUR': 1.09, 'CAD': 0.72, 'AUD': 0.66,
       'SGD': 0.75, 'AED': 0.27, 'INR': 0.012, 'ZAR': 0.055
     };
     return roles.reduce((sum, role) => {
       if (role.splitAmount && role.splitCurrency) {
-        const rate = CURRENCY_RATES[role.splitCurrency] || 1;
-        return sum + (role.splitAmount * rate);
+        return sum + (role.splitAmount * (RATES[role.splitCurrency] || 1));
       }
       return sum;
     }, 0);
   }, [roles]);
 
   const formatSalary = (min: number, max: number, currency: string) => {
-    const currencySymbols: Record<string, string> = {
+    const symbols: Record<string, string> = {
       'USD': '$', 'GBP': '£', 'EUR': '€', 'CAD': 'C$', 'AUD': 'A$',
       'SGD': 'S$', 'AED': 'AED', 'INR': '₹', 'ZAR': 'R'
     };
-    const symbol = currencySymbols[currency] || currency;
-    const formatNum = (num: number) => num >= 1000 ? `${Math.round(num / 1000)}k` : num.toString();
-    return `${symbol}${formatNum(min)}-${formatNum(max)}`;
+    const sym = symbols[currency] || currency;
+    const fmt = (n: number) => n >= 1000 ? `${Math.round(n / 1000)}k` : n.toString();
+    return `${sym}${fmt(min)}–${fmt(max)}`;
   };
 
   const formatSplit = (amount: number, currency: string) => {
-    const currencySymbols: Record<string, string> = {
+    const symbols: Record<string, string> = {
       'USD': '$', 'GBP': '£', 'EUR': '€', 'CAD': 'C$', 'AUD': 'A$',
       'SGD': 'S$', 'AED': 'AED', 'INR': '₹', 'ZAR': 'R'
     };
-    const symbol = currencySymbols[currency] || currency;
-    return `${symbol}${amount.toLocaleString()}`;
+    return `${symbols[currency] || currency}${amount.toLocaleString()}`;
   };
 
   const closeModal = () => { setShowModal(false); setSelectedRole(null); };
@@ -157,6 +151,7 @@ export default function RolesMarketplace() {
 
       <div className="relative z-10 pt-16 sm:pt-20 md:pt-28 pb-12 sm:pb-16 md:pb-20 px-4 sm:px-6">
         <div className="max-w-[1200px] mx-auto">
+
           {/* Header */}
           <motion.header initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-8 sm:mb-12 md:mb-16 mt-6">
             <StatusBadge label="LIVE ROLES · LIVE REVENUE" color="purple" />
@@ -177,16 +172,21 @@ export default function RolesMarketplace() {
             </div>
           </motion.header>
 
-          {/* CTA */}
+          {/* CTA — matches RecruiterFinalCTA "Join RecXchange Now" style */}
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} className="mb-8 sm:mb-12">
             <HolographicCard color="purple" variant="content" glowIntensity="high">
               <div className="text-center">
                 <p className="text-xs sm:text-sm md:text-base text-gray-300 mb-4 font-medium px-2">
                   Ready to access these roles? <span className="text-purple-400 font-bold">Join RecXchange</span> and start submitting candidates today.
                 </p>
-                <GlowButton variant="primary" size="lg" href="https://app.recxchange.io/register?trigger_link=jYQNc9YXcMkYPvo3HZfC">
+                <motion.a
+                  href="https://app.recxchange.io/register?trigger_link=jYQNc9YXcMkYPvo3HZfC"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="inline-block px-7 py-3 rounded-full bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white font-extrabold text-sm shadow-[0_0_25px_rgba(0,255,255,0.3)] transition-all"
+                >
                   Get Started Now
-                </GlowButton>
+                </motion.a>
               </div>
             </HolographicCard>
           </motion.div>
@@ -200,7 +200,6 @@ export default function RolesMarketplace() {
                 <span className="text-cyan-400 font-bold">{stats.direct}</span> RecX Direct · <span className="text-fuchsia-400 font-bold">{stats.xchange}</span> Xchange
               </p>
             </HolographicCard>
-
             <HolographicCard color="fuchsia" variant="stat">
               <p className="text-[9px] sm:text-[10px] text-gray-500 font-black uppercase tracking-widest mb-2">Total Fee Pool</p>
               <p className="text-4xl sm:text-5xl font-bold gradient-text mb-2">${Math.round(totalFeePool).toLocaleString()}</p>
@@ -216,14 +215,13 @@ export default function RolesMarketplace() {
                   <Search size={18} className="text-gray-500 mr-3 flex-shrink-0" />
                   <input
                     type="text"
-                    placeholder="Filter by title, company..."
+                    placeholder="Filter by title, industry, location..."
                     className="bg-transparent border-none text-sm text-white outline-none w-full placeholder:text-gray-600"
                     onChange={(e) => { setSearchQuery(e.target.value); setPage(1); }}
                   />
                 </div>
               </HolographicCard>
             </div>
-
             <div className="flex flex-wrap gap-3">
               {[
                 { label: 'All Roles', count: stats.total, val: 'All' },
@@ -257,14 +255,13 @@ export default function RolesMarketplace() {
                     <HolographicCard color={role.source === 'recx_direct' ? 'cyan' : 'fuchsia'} variant="feature" className="h-full flex flex-col justify-between">
                       <div>
                         <div className="flex justify-between items-center mb-4 gap-2">
-                          <StatusBadge 
-                            label={role.source === 'recx_direct' ? 'RECX DIRECT' : 'XCHANGE'} 
+                          <StatusBadge
+                            label={role.source === 'recx_direct' ? 'RECX DIRECT' : 'XCHANGE'}
                             color={role.source === 'recx_direct' ? 'cyan' : 'fuchsia'}
                             size="sm"
                           />
                           <span className="text-[9px] sm:text-[10px] text-gray-500 font-bold uppercase tracking-widest truncate">{role.location}</span>
                         </div>
-
                         <h3 className="text-lg sm:text-xl font-bold mb-2 text-white leading-tight">{role.title}</h3>
                         <div className="flex flex-wrap gap-1.5 items-center text-[9px] sm:text-[10px] text-gray-500 font-bold mb-2">
                           <span className="truncate">{role.company}</span>
@@ -273,7 +270,6 @@ export default function RolesMarketplace() {
                         </div>
                         <p className="text-[10px] text-gray-600 capitalize">{role.workModel} · {role.seniorityLevel} · {role.roleType}</p>
                       </div>
-
                       <div className="mt-6 pt-6 border-t border-white/10 flex justify-between items-end gap-3">
                         <div>
                           <span className="text-[8px] text-gray-600 uppercase font-black tracking-widest block mb-1">Fee Share</span>
@@ -306,7 +302,7 @@ export default function RolesMarketplace() {
               >
                 ← Previous
               </button>
-              <div className="flex gap-2">
+              <div className="flex gap-2 flex-wrap justify-center">
                 {[...Array(totalPages)].map((_, i) => (
                   <button
                     key={i}
@@ -349,11 +345,8 @@ export default function RolesMarketplace() {
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
               className="relative max-w-3xl w-full my-auto"
-              style={{ WebkitOverflowScrolling: 'touch' }}
             >
               <HolographicCard color="purple" variant="content" className="relative">
-
-                {/* Back button — left aligned, above title */}
                 <button
                   onClick={closeModal}
                   className="flex items-center gap-1.5 text-gray-400 hover:text-white transition-colors text-xs font-bold uppercase tracking-widest mb-5 group"
@@ -361,17 +354,15 @@ export default function RolesMarketplace() {
                   <ChevronLeft size={16} className="group-hover:-translate-x-0.5 transition-transform" />
                   Back
                 </button>
-
                 <div className="mb-6">
                   <div className="flex flex-wrap items-center gap-3 mb-4">
-                    <StatusBadge 
-                      label={selectedRole.source === 'recx_direct' ? 'RECX DIRECT' : 'XCHANGE'} 
+                    <StatusBadge
+                      label={selectedRole.source === 'recx_direct' ? 'RECX DIRECT' : 'XCHANGE'}
                       color={selectedRole.source === 'recx_direct' ? 'cyan' : 'fuchsia'}
                       size="sm"
                     />
                     <span className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">{selectedRole.location}</span>
                   </div>
-
                   <h2 className="text-2xl sm:text-3xl font-bold gradient-text mb-3">{selectedRole.title}</h2>
                   <div className="flex flex-wrap gap-2 items-center text-xs text-gray-500 font-bold mb-4">
                     <span>{selectedRole.company}</span>
@@ -380,7 +371,6 @@ export default function RolesMarketplace() {
                     <span className="w-1 h-1 rounded-full bg-white/10" />
                     <span className="capitalize">{selectedRole.workModel}</span>
                   </div>
-
                   <div className="grid grid-cols-2 gap-4 mb-6">
                     <HolographicCard color="cyan" variant="stat">
                       <p className="text-[9px] text-gray-600 uppercase font-black tracking-widest mb-1">Salary Range</p>
@@ -393,23 +383,20 @@ export default function RolesMarketplace() {
                       </p>
                     </HolographicCard>
                   </div>
-
                   <div className="bg-black/40 p-6 rounded-2xl border border-white/5 mb-6">
                     <h3 className="text-sm font-bold text-white mb-3">Role Overview</h3>
                     <p className="text-sm text-gray-400 leading-relaxed">{selectedRole.descriptionSnippet}</p>
                   </div>
-
                   <div className="space-y-2 text-xs text-gray-500 mb-6">
                     <div className="flex items-center gap-2"><span className="w-1 h-1 bg-purple-400 rounded-full" /><strong>Seniority:</strong> {selectedRole.seniorityLevel}</div>
                     <div className="flex items-center gap-2"><span className="w-1 h-1 bg-purple-400 rounded-full" /><strong>Type:</strong> {selectedRole.roleType}</div>
                     <div className="flex items-center gap-2"><span className="w-1 h-1 bg-purple-400 rounded-full" /><strong>Posted:</strong> {new Date(selectedRole.postedAt).toLocaleDateString()}</div>
                   </div>
                 </div>
-
                 <div className="space-y-3">
-                  <GlowButton 
-                    variant="primary" 
-                    size="lg" 
+                  <GlowButton
+                    variant="primary"
+                    size="lg"
                     href="https://app.recxchange.io?trigger_link=Hc9mpfL0JxjX06kwNpd1"
                     className="w-full"
                     onClick={closeModal}
