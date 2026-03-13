@@ -32,14 +32,14 @@ export default function DealProtection() {
 
           {/* Header */}
           <motion.header initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-6 sm:mb-8 md:mb-12 mt-6">
-            <StatusBadge label="PROTOCOL — TRUST INFRASTRUCTURE" color="cyan" />
+            <StatusBadge label="PROTOCOL: TRUST INFRASTRUCTURE" color="cyan" />
             <h1 className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2 mt-6"
               style={{ textShadow: '0 0 60px rgba(0,240,255,0.3)' }}>
               Every submission has a timestamp, a trail, and an agreement.
             </h1>
             <NeonDivider width="w-40" color="mixed" />
             <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed px-2 mt-6">
-              We log who shared what, when they shared it, and under which terms—so your split-fee placements feel secure, not fragile.
+              We log who shared what, when they shared it, and under which terms - so your split-fee placements feel secure, not fragile.
             </p>
           </motion.header>
 
@@ -84,7 +84,7 @@ export default function DealProtection() {
               </div>
               <h2 className="text-base sm:text-xl font-bold mb-2 sm:mb-4 tracking-tight text-white">Agreement-First</h2>
               <p className="text-gray-400 text-[13px] sm:text-sm leading-relaxed mb-5 sm:mb-8 font-medium">
-                Commercial terms are locked via a standardized framework before any data is exchanged. No "handshake" deals—only hard data protected by our master SFA.
+                Commercial terms are locked via a standardized framework before any data is exchanged. No handshake deals - only hard data protected by our master SFA.
               </p>
               <ul className="space-y-2.5 sm:space-y-4">
                 {["Clear fees & splits", "Standardized language", "One source of truth"].map((item, i) => (
@@ -105,7 +105,7 @@ export default function DealProtection() {
                 If two recruiters submit the same candidate, the system automatically recognizes the primary author based on the verified RecX timestamp.
               </p>
               <GlowButton variant="ghost" size="sm" href="/roles">
-                Browse Protected Roles →
+                Browse Protected Roles &rarr;
               </GlowButton>
             </HolographicCard>
           </div>

@@ -3,52 +3,53 @@ import { MetadataRoute } from 'next'
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
-      // Main rule for all search engines
+      // Default: all crawlers
       {
         userAgent: '*',
         allow: '/',
         disallow: [
-          '/api/',              // Block API routes from indexing
-          '/admin/',            // Block admin pages
-          '/_next/',            // Block Next.js internal files
-          '/static/',           // Block static build files (if any)
+          '/api/',
+          '/admin/',
+          '/_next/',
+          '/static/',
         ],
       },
-      // Traditional Search Engines
+
+      // Traditional search engines
       {
         userAgent: 'Googlebot',
         allow: '/',
-        disallow: [
-          '/api/',
-          '/admin/',
-        ],
-        crawlDelay: 0,        // No delay for Google (fast indexing)
+        disallow: ['/api/', '/admin/'],
+        crawlDelay: 0,
       },
       {
         userAgent: 'Bingbot',
         allow: '/',
-        disallow: [
-          '/api/',
-          '/admin/',
-        ],
+        disallow: ['/api/', '/admin/'],
         crawlDelay: 0,
       },
-      // AI Search Engines & Crawlers (CRITICAL for AIO/GEO)
+
+      // AI search & LLM crawlers — explicitly allowed for AIO/GEO
       {
-        userAgent: 'GPTBot',           // OpenAI ChatGPT crawler
+        userAgent: 'GPTBot',           // OpenAI training
         allow: '/',
         disallow: ['/api/', '/admin/'],
       },
       {
-        userAgent: 'ChatGPT-User',     // ChatGPT browsing
+        userAgent: 'OAI-SearchBot',    // OpenAI SearchGPT / ChatGPT search
+        allow: '/',
+        disallow: ['/api/', '/admin/'],
+      },
+      {
+        userAgent: 'ChatGPT-User',     // ChatGPT browsing mode
         allow: '/',
       },
       {
-        userAgent: 'Claude-Web',       // Anthropic Claude
+        userAgent: 'Claude-Web',       // Anthropic Claude browsing
         allow: '/',
       },
       {
-        userAgent: 'anthropic-ai',
+        userAgent: 'anthropic-ai',     // Anthropic training
         allow: '/',
       },
       {
@@ -56,11 +57,24 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
       },
       {
-        userAgent: 'Google-Extended',  // Google Bard/Gemini
+        userAgent: 'Google-Extended',  // Gemini / Google AI
         allow: '/',
       },
       {
-        userAgent: 'CCBot',            // Common Crawl (used by many AI systems)
+        userAgent: 'Applebot',         // Apple search
+        allow: '/',
+      },
+      {
+        userAgent: 'Applebot-Extended', // Apple Intelligence
+        allow: '/',
+      },
+      {
+        userAgent: 'Amazonbot',        // Amazon Alexa AI
+        allow: '/',
+        disallow: ['/api/', '/admin/'],
+      },
+      {
+        userAgent: 'CCBot',            // Common Crawl (used by many LLMs)
         allow: '/',
       },
       {
@@ -71,18 +85,34 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: 'FacebookBot',      // Meta AI
         allow: '/',
       },
-      // Block bad bots and scrapers (optional)
+      {
+        userAgent: 'YouBot',           // You.com AI search
+        allow: '/',
+      },
+
+      // SEO audit tools — allowed so your own SEO monitoring works correctly.
+      // Blocking these only hurts your ability to track your own rankings.
+      {
+        userAgent: 'AhrefsBot',
+        allow: '/',
+        disallow: ['/api/', '/admin/'],
+      },
+      {
+        userAgent: 'SemrushBot',
+        allow: '/',
+        disallow: ['/api/', '/admin/'],
+      },
+
+      // Low-value crawlers — still blocked
       {
         userAgent: [
-          'AhrefsBot',        // SEO tool bot
-          'SemrushBot',       // SEO tool bot
-          'MJ12bot',          // Majestic bot
-          'DotBot',           // Moz bot
+          'MJ12bot',
+          'DotBot',
         ],
         disallow: '/',
       },
     ],
     sitemap: 'https://recxchange.io/sitemap.xml',
-    host: 'https://recxchange.io',  // Canonical domain
+    host: 'https://recxchange.io',
   }
 }

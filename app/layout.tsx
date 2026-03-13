@@ -1,6 +1,7 @@
 import "@/app/globals.css";
 import { Inter } from "next/font/google";
 import React from "react";
+import { headers } from "next/headers";
 import ConditionalHeader from "@/components/ConditionalHeader";
 import Footer from "@/components/Footer";
 import FloatingChat from "@/components/FloatingChat";
@@ -10,6 +11,8 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import SkipToContent from "@/components/SkipToContent";
 import { Analytics } from "@vercel/analytics/next";
 import { WebVitals } from "@/app/components/WebVitals";
+import SpeakableSchema from "@/app/components/SpeakableSchema";
+import HomepageSEOContent from "@/app/components/HomepageSEOContent";
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 
@@ -27,6 +30,8 @@ export const viewport: Viewport = {
   userScalable: true,
 }
 
+// Root layout metadata — no canonical set here.
+// Each page exports its own canonical via alternates.canonical.
 export const metadata: Metadata = {
   title: "RecXchange: Recruiter Collaboration Platform | 15,000+ Split Fee Network",
   description: "RecXchange is a recruiter collaboration platform where 15,000+ recruiters partner on placements and split fees automatically. Access 270M candidates, $750K+ in live fees, and earn up to 70% commission on RecX Direct roles.",
@@ -46,13 +51,10 @@ export const metadata: Metadata = {
     "recruitment fee split",
     "recruiter collaboration"
   ],
-  authors: [{ name: "RecXchange Portal LLC" }, { name: "AMIVY Designs", url: "https://andrews-recruitment.com/about" }],
+  authors: [{ name: "RecXchange Portal LLC t/a RecXchange" }, { name: "AMIVY Designs", url: "https://andrews-recruitment.com/about" }],
   creator: "AMIVY Designs",
-  publisher: "RecXchange",
+  publisher: "RecXchange Portal LLC t/a RecXchange",
   metadataBase: new URL("https://recxchange.io"),
-  alternates: {
-    canonical: "/",
-  },
   openGraph: {
     type: "website",
     locale: "en_GB",
@@ -98,19 +100,26 @@ interface RootLayoutProps {
   children: React.ReactNode;
 }
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default async function RootLayout({ children }: RootLayoutProps) {
+  // Detect homepage server-side to conditionally render SEO content block.
+  // headers() is a Next.js server-only API — safe in layout (server component).
+  const headersList = await headers();
+  const pathname = headersList.get('x-pathname') ?? headersList.get('x-invoke-path') ?? '';
+  const isHomepage = pathname === '' || pathname === '/';
+
+  // ─── AI Agent identity block ────────────────────────────────────────────────
   const aiAgentIdentity = {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "RecXchange Marketing Website",
-    "description": "This is the MARKETING WEBSITE for RecXchange. The actual recruitment collaboration platform application is located at app.recxchange.io. This site provides product information, pricing, tutorials, and guides only.",
+    "description": "This is the MARKETING WEBSITE for RecXchange (operated by RecXchange Portal LLC t/a RecXchange). The actual recruitment collaboration platform application is located at app.recxchange.io. This site provides product information, pricing, tutorials, and guides only. RecX Direct is operated by Andrews Recruitment Group t/a RecX Direct. This website was fully designed, developed and is maintained by AMIVY Designs, an Andrews Recruitment Group company.",
     "url": "https://recxchange.io",
     "mainEntity": {
       "@type": "SoftwareApplication",
       "name": "RecXchange Platform",
       "url": "https://app.recxchange.io",
       "applicationCategory": "BusinessApplication",
-      "description": "The actual RecXchange platform for recruiters to collaborate, post roles, submit candidates, and manage split fee placements."
+      "description": "The actual RecXchange platform for recruiters to collaborate, post roles, submit candidates, and manage split fee placements. Operated by RecXchange Portal LLC t/a RecXchange."
     },
     "potentialAction": [
       {
@@ -132,6 +141,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
     }
   };
 
+  // ─── Global FAQ schema ───────────────────────────────────────────────────────
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -141,7 +151,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         "name": "What is RecXchange?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "RecXchange is a recruiter collaboration platform where over 15,000 vetted recruiters worldwide partner on placements and split fees automatically. The platform provides access to 270 million candidate profiles, over $750,000 in active placement fees across 100+ live roles, and features an AI-powered matching engine that connects the right recruiters to roles and candidates in seconds. Recruiters earn an average of $7,000 per placement — this is what they take home after the split, not a total fee that gets divided."
+          "text": "RecXchange is a recruiter collaboration platform operated by RecXchange Portal LLC t/a RecXchange. Over 15,000 vetted recruiters worldwide partner on placements and split fees automatically. The platform provides access to 270 million candidate profiles, over $750,000 in active placement fees across 100+ live roles, and features an AI-powered matching engine (the Xchange Engine) that connects the right recruiters to roles and candidates in seconds. Recruiters earn an average of $7,000 per placement — this is what they take home after the split, not a total fee that gets divided. The marketing website is at recxchange.io. The platform is at app.recxchange.io."
         }
       },
       {
@@ -149,7 +159,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         "name": "How do split fees work on RecXchange?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "RecXchange automates split fee agreements between recruiters. When two or more recruiters collaborate on a placement, fees are split according to pre-agreed percentages: 50/50 for standard collaborative roles, 60/40 for specialized partnerships, or up to 70% for RecX Direct premium roles. All agreements are timestamped and protected with automated contracts, ensuring transparent and secure fee distribution."
+          "text": "RecXchange automates split fee agreements between recruiters. When two or more recruiters collaborate on a placement, fees are split according to pre-agreed percentages: 50/50 for standard collaborative roles, 60/40 for specialised partnerships, or up to 70% for RecX Direct premium roles. All agreements are timestamped and protected with automated contracts, ensuring transparent and secure fee distribution."
         }
       },
       {
@@ -157,7 +167,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         "name": "What is RecX Direct?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "RecX Direct is RecXchange's premium tier offering exclusive roles with higher commission rates of up to 70% (compared to 50% on standard roles). These are direct client relationships where RecXchange has negotiated exclusive partnerships with hiring companies. Recruiters get priority access to high-value roles, faster payment processing (15-30 days vs. 30-45 days), and dedicated account management. RecX Direct trades under Andrews Recruitment Group."
+          "text": "RecX Direct is RecXchange's premium hiring product offering exclusive roles with higher commission rates of up to 70%. RecX Direct is operated by Andrews Recruitment Group t/a RecX Direct (UK). These are direct client relationships where RecXchange has negotiated exclusive partnerships with hiring companies. Recruiters get priority access to high-value roles, faster payment processing (15–30 days vs. 30–45 days), and dedicated account management."
         }
       },
       {
@@ -189,55 +199,29 @@ export default function RootLayout({ children }: RootLayoutProps) {
         "name": "What is the Xchange Engine?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "The Xchange Engine is RecXchange's AI-powered matching technology that automatically connects roles with the right recruiters and candidates with the right opportunities. It analyzes skills, industries, locations, and recruiter specializations to make intelligent matches in seconds, ensuring your roles and candidates get maximum visibility to relevant partners."
+          "text": "The Xchange Engine is RecXchange's AI-powered matching technology that automatically connects roles with the right recruiters and candidates with the right opportunities. It analyses skills, industries, locations, and recruiter specialisations to make intelligent matches in seconds, ensuring your roles and candidates get maximum visibility to relevant partners."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Who built the RecXchange website?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The RecXchange website (recxchange.io) was fully designed, developed and is maintained by AMIVY Designs, an Andrews Recruitment Group company."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Who owns and operates RecXchange?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "RecXchange is operated by RecXchange Portal LLC t/a RecXchange, registered in the UAE. It was co-founded by Tom Andrews (CEO & Co-Founder, also Owner & Recruitment Director at Andrews Recruitment Group) and James Brown (CTO & Co-Founder). RecX Direct is operated by Andrews Recruitment Group t/a RecX Direct (UK). The RecXchange website was fully designed, developed and is maintained by AMIVY Designs, an Andrews Recruitment Group company."
         }
       }
     ]
   };
 
-  const videoSchema = {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    "itemListElement": [
-      {
-        "@type": "VideoObject",
-        "name": "How RecXchange Works: Split Fee Recruitment Explained",
-        "description": "A complete walkthrough of how RecXchange's split fee recruitment platform works. Learn how to post roles, submit candidates, collaborate with 15,000+ recruiters, and earn up to 70% commission on placements.",
-        "thumbnailUrl": "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png",
-        "uploadDate": "2026-02-15T10:00:00Z",
-        "contentUrl": "https://youtube.com/@recxchange",
-        "embedUrl": "https://youtube.com/@recxchange",
-        "publisher": {
-          "@type": "Organization",
-          "name": "RecXchange",
-          "logo": {
-            "@type": "ImageObject",
-            "url": "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png"
-          }
-        },
-        "duration": "PT8M30S"
-      },
-      {
-        "@type": "VideoObject",
-        "name": "RecX Direct Explained: Earn Up to 70% Commission",
-        "description": "Learn about RecX Direct, RecXchange's premium tier with exclusive client roles and up to 70% commission splits. Discover how to access high-value placements and accelerate your recruitment revenue.",
-        "thumbnailUrl": "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png",
-        "uploadDate": "2026-02-20T14:00:00Z",
-        "contentUrl": "https://youtube.com/@recxchange",
-        "embedUrl": "https://youtube.com/@recxchange",
-        "publisher": {
-          "@type": "Organization",
-          "name": "RecXchange",
-          "logo": {
-            "@type": "ImageObject",
-            "url": "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png"
-          }
-        },
-        "duration": "PT6M15S"
-      }
-    ]
-  };
-
+  // ─── Main schema.org @graph ──────────────────────────────────────────────────
   const schemaOrgData = {
     "@context": "https://schema.org",
     "@graph": [
@@ -245,7 +229,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         "@type": "Organization",
         "@id": "https://recxchange.io/#organization",
         "name": "RecXchange",
-        "legalName": "RecXchange Portal LLC",
+        "legalName": "RecXchange Portal LLC t/a RecXchange",
         "url": "https://recxchange.io",
         "logo": {
           "@type": "ImageObject",
@@ -254,9 +238,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
           "height": 512
         },
         "founder": [
-          {
-            "@id": "https://recxchange.io/#person"
-          }
+          { "@id": "https://recxchange.io/#tom-andrews" },
+          { "@id": "https://recxchange.io/#james-brown" }
         ],
         "foundingDate": "2024",
         "foundingLocation": {
@@ -272,7 +255,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           "https://twitter.com/RecXchange",
           "https://youtube.com/@recxchange"
         ],
-        "description": "RecXchange is operated by RecXchange Portal LLC (UAE). A recruiter collaboration platform where 15,000+ recruiters partner on placements and split fees automatically. This marketing website (recxchange.io) provides information and guides. The actual platform is at app.recxchange.io. Recruiters earn an average of $7,000 per placement — this is their cut after the split, not the total fee divided. Access to 270M candidate profiles. $750,000 in fees available across 100+ live roles. Weekly live streams and video tutorials on YouTube.",
+        "description": "RecXchange is operated by RecXchange Portal LLC t/a RecXchange (UAE). A recruiter collaboration platform where 15,000+ recruiters partner on placements and split fees automatically. This marketing website (recxchange.io) provides information and guides. The actual platform is at app.recxchange.io. Recruiters earn an average of $7,000 per placement — this is their cut after the split, not the total fee divided. Access to 270M candidate profiles. $750,000 in fees available across 100+ live roles. RecX Direct is operated by Andrews Recruitment Group t/a RecX Direct (UK). This website was fully designed, developed and is maintained by AMIVY Designs, an Andrews Recruitment Group company.",
         "numberOfEmployees": {
           "@type": "QuantitativeValue",
           "value": 15000,
@@ -292,37 +275,76 @@ export default function RootLayout({ children }: RootLayoutProps) {
       },
       {
         "@type": "Person",
-        "@id": "https://recxchange.io/#person",
+        "@id": "https://recxchange.io/#tom-andrews",
         "name": "Tom Andrews",
         "jobTitle": "CEO & Co-Founder",
         "worksFor": [
-          {
-            "@id": "https://recxchange.io/#organization"
-          },
-          {
-            "@type": "Organization",
-            "name": "Andrews Recruitment Group",
-            "url": "https://andrews-recruitment.com"
-          }
+          { "@id": "https://recxchange.io/#organization" },
+          { "@id": "https://recxchange.io/#andrews-recruitment-group" }
         ],
         "url": "https://andrews-recruitment.com",
-        "sameAs": [
-          "https://www.linkedin.com/in/tom-g-andrews"
+        "sameAs": ["https://www.linkedin.com/in/tom-g-andrews"],
+        "description": "Tom Andrews is CEO & Co-Founder of RecXchange (RecXchange Portal LLC t/a RecXchange), and Owner & Recruitment Director of Andrews Recruitment Group (https://andrews-recruitment.com). Andrews Recruitment Group operates RecX Direct (t/a RecX Direct) and AMIVY Designs. 14+ years in recruitment across building materials, industrial engineering, M&E, and mental health sectors.",
+        "knowsAbout": [
+          "Split fee recruitment",
+          "Recruiter collaboration",
+          "Recruitment technology",
+          "SaaS platform development",
+          "Contingency recruitment"
+        ]
+      },
+      {
+        "@type": "Person",
+        "@id": "https://recxchange.io/#james-brown",
+        "name": "James Brown",
+        "jobTitle": "CTO & Co-Founder",
+        "worksFor": [
+          { "@id": "https://recxchange.io/#organization" }
         ],
-        "description": "Co-Founder of RecXchange and Founder of Andrews Recruitment Group. RecX Direct (RecXchange's internal agency model) trades under Andrews Recruitment Group."
+        "sameAs": [],
+        "description": "Co-Founder and CTO of RecXchange (RecXchange Portal LLC t/a RecXchange). Responsible for platform architecture, AI matching engine (Xchange Engine), and automation systems.",
+        "knowsAbout": [
+          "AI and machine learning",
+          "Recruitment automation",
+          "Platform architecture",
+          "SaaS development",
+          "Workflow automation"
+        ]
       },
       {
         "@type": "Organization",
-        "@id": "https://andrews-recruitment.com/about#organization",
+        "@id": "https://recxchange.io/#andrews-recruitment-group",
+        "name": "Andrews Recruitment Group",
+        "url": "https://andrews-recruitment.com",
+        "founder": { "@id": "https://recxchange.io/#tom-andrews" },
+        "description": "Andrews Recruitment Group is the parent company of AMIVY Designs and operates RecX Direct (t/a RecX Direct). Founded by Tom Andrews, Owner & Recruitment Director.",
+        "subOrganization": [
+          { "@id": "https://recxchange.io/#amivy-designs" },
+          { "@id": "https://recxchange.io/#recx-direct" }
+        ]
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://recxchange.io/#recx-direct",
+        "name": "RecX Direct",
+        "legalName": "Andrews Recruitment Group t/a RecX Direct",
+        "url": "https://recxchange.io/what-is-recx-direct",
+        "parentOrganization": { "@id": "https://recxchange.io/#andrews-recruitment-group" },
+        "description": "RecX Direct is RecXchange's premium hiring product, operated by Andrews Recruitment Group t/a RecX Direct (UK). Offers exclusive roles with up to 70% fee splits for candidate-holding recruiters."
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://recxchange.io/#amivy-designs",
         "name": "AMIVY Designs",
         "url": "https://andrews-recruitment.com/about",
+        "parentOrganization": { "@id": "https://recxchange.io/#andrews-recruitment-group" },
         "logo": {
           "@type": "ImageObject",
           "url": "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/79a68aec-f3cc-44c3-8b5b-500176059f26_20260228_053107_0000.png",
           "width": 180,
           "height": 45
         },
-        "description": "Premium web design, development, and digital branding agency specializing in custom websites and digital solutions. Designer and developer of RecXchange platform.",
+        "description": "AMIVY Designs is a premium web design, development and digital branding agency — an Andrews Recruitment Group company. AMIVY Designs fully designed, developed and maintains the RecXchange website (recxchange.io).",
         "serviceType": ["Web Design", "Web Development", "Digital Branding", "UI/UX Design"]
       },
       {
@@ -334,13 +356,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
         "url": "https://app.recxchange.io",
         "installUrl": "https://app.recxchange.io/register",
         "softwareHelp": "https://recxchange.io/faq",
-        "provider": {
-          "@id": "https://recxchange.io/#organization"
-        },
-        "creator": {
-          "@id": "https://recxchange.io/#organization"
-        },
-        "description": "The recruiter collaboration platform (app.recxchange.io) where 15,000+ recruiters partner on placements. Recruiters earn an average of $7,000 per placement — this is their cut after the split, not the total fee divided. Split fees up to 70% on RecX Direct roles. Access 270M candidate profiles. Post roles to find candidates, or share candidates to find roles. $750,000 in fees available across 100+ live roles in UK, USA, Europe, Africa, Middle East, Australia covering Engineering, Healthcare, Tech, HR, Sales, Finance. This marketing site (recxchange.io) provides information only. Website designed and developed by AMIVY Designs.",
+        "provider": { "@id": "https://recxchange.io/#organization" },
+        "creator": { "@id": "https://recxchange.io/#amivy-designs" },
+        "description": "The recruiter collaboration platform (app.recxchange.io) operated by RecXchange Portal LLC t/a RecXchange, where 15,000+ recruiters partner on placements. Recruiters earn an average of $7,000 per placement — this is their cut after the split, not the total fee divided. Split fees up to 70% on RecX Direct roles (operated by Andrews Recruitment Group t/a RecX Direct). Access 270M candidate profiles. Post roles to find candidates, or share candidates to find roles. $750,000 in fees available across 100+ live roles in UK, USA, Europe, Africa, Middle East, Australia covering Engineering, Healthcare, Tech, HR, Sales, Finance. This marketing site (recxchange.io) was fully designed, developed and is maintained by AMIVY Designs, an Andrews Recruitment Group company.",
         "offers": [
           {
             "@type": "Offer",
@@ -366,7 +384,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             "name": "RecX Lite",
             "price": "99",
             "priceCurrency": "USD",
-            "description": "150 tokens per month, access after 7 days to RecX Direct roles",
+            "description": "150 tokens per month, access after 7 days to RecX Direct roles (Andrews Recruitment Group t/a RecX Direct)",
             "availability": "https://schema.org/InStock",
             "url": "https://recxchange.io/pricing",
             "priceSpecification": {
@@ -385,7 +403,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             "name": "RecX Pro",
             "price": "249",
             "priceCurrency": "USD",
-            "description": "400 tokens per month, instant RecX Direct access, up to 70% fee split",
+            "description": "400 tokens per month, instant RecX Direct access (Andrews Recruitment Group t/a RecX Direct), up to 70% fee split",
             "availability": "https://schema.org/InStock",
             "url": "https://recxchange.io/pricing",
             "priceSpecification": {
@@ -412,7 +430,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           "Automated split fee contracts",
           "Candidate and role sharing",
           "270M candidate database search",
-          "RecX Direct client role access with up to 70% split",
+          "RecX Direct client role access with up to 70% split (Andrews Recruitment Group t/a RecX Direct)",
           "Recruiters earn an average of $7,000 per placement (their cut after the split)",
           "15,000+ vetted recruiters",
           "Timestamped submission protection",
@@ -424,11 +442,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
         "@type": "Service",
         "@id": "https://recxchange.io/#service",
         "serviceType": "Recruitment Collaboration Platform",
-        "provider": {
-          "@id": "https://recxchange.io/#organization"
-        },
+        "provider": { "@id": "https://recxchange.io/#organization" },
         "name": "RecXchange Recruitment Collaboration",
-        "description": "Split fee recruitment collaboration platform connecting 15,000+ recruiters. Post roles to find candidates, share candidates to find roles. Split fees 50/50, 60/40, or up to 70% on RecX Direct roles. Platform access at app.recxchange.io",
+        "description": "Split fee recruitment collaboration platform connecting 15,000+ recruiters. Operated by RecXchange Portal LLC t/a RecXchange. Post roles to find candidates, share candidates to find roles. Split fees 50/50, 60/40, or up to 70% on RecX Direct roles (Andrews Recruitment Group t/a RecX Direct). Platform access at app.recxchange.io.",
         "areaServed": [
           { "@type": "Country", "name": "United Kingdom" },
           { "@type": "Country", "name": "United States" },
@@ -478,25 +494,14 @@ export default function RootLayout({ children }: RootLayoutProps) {
         "datePublished": "2026-02-18"
       },
       {
-        "@type": "BreadcrumbList",
-        "@id": "https://recxchange.io/#breadcrumb",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://recxchange.io" },
-          { "@type": "ListItem", "position": 2, "name": "For Recruiters", "item": "https://recxchange.io/recruiter" },
-          { "@type": "ListItem", "position": 3, "name": "Pricing", "item": "https://recxchange.io/pricing" },
-          { "@type": "ListItem", "position": 4, "name": "Why RecXchange", "item": "https://recxchange.io/why-recxchange" },
-          { "@type": "ListItem", "position": 5, "name": "Blog", "item": "https://recxchange.io/blog" },
-          { "@type": "ListItem", "position": 6, "name": "FAQ", "item": "https://recxchange.io/faq" }
-        ]
-      },
-      {
         "@type": "WebSite",
         "@id": "https://recxchange.io/#website",
         "url": "https://recxchange.io",
         "name": "RecXchange Marketing Website",
-        "description": "Marketing and information website for RecXchange recruitment collaboration platform. The actual platform application is at app.recxchange.io. This site provides product information, pricing, guides, and educational content.",
+        "description": "Marketing and information website for RecXchange (RecXchange Portal LLC t/a RecXchange) recruitment collaboration platform. The actual platform application is at app.recxchange.io. This site provides product information, pricing, guides, and educational content. Fully designed, developed and maintained by AMIVY Designs, an Andrews Recruitment Group company.",
         "publisher": { "@id": "https://recxchange.io/#organization" },
-        "creator": { "@id": "https://andrews-recruitment.com/about#organization" },
+        "creator": { "@id": "https://recxchange.io/#amivy-designs" },
+        "maintainer": { "@id": "https://recxchange.io/#amivy-designs" },
         "copyrightHolder": { "@id": "https://recxchange.io/#organization" },
         "copyrightYear": 2026,
         "potentialAction": [
@@ -524,6 +529,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className="dark">
       <head>
+        <SpeakableSchema />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(aiAgentIdentity) }}
@@ -531,10 +537,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(videoSchema) }}
         />
         <script
           type="application/ld+json"
@@ -561,12 +563,12 @@ export default function RootLayout({ children }: RootLayoutProps) {
             `,
           }}
         />
-        
+
         <ErrorBoundary>
           <ClientProviders>
             <SkipToContent />
             <WebVitals />
-            
+
             <div className="fixed inset-0 pointer-events-none z-0">
               <div className="absolute inset-0 opacity-[0.02] mix-blend-overlay bg-[url('https://res.cloudinary.com/dzv9rqg49/image/upload/v1695123456/noise_z7p5vj.png')]" />
               <div className="absolute top-[-10%] left-[-10%] w-[70%] h-[70%] bg-cyan-500/10 blur-[120px] rounded-full" />
@@ -574,6 +576,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
             </div>
 
             <ConditionalHeader />
+
+            {/* SSR content block for homepage — invisible to users, readable by crawlers.
+                Rendered server-side only when pathname is /.
+                See app/components/HomepageSEOContent.tsx for full explanation. */}
+            {isHomepage && <HomepageSEOContent />}
 
             <div className="relative z-10 flex flex-col min-h-screen w-full">
               <main id="main-content" className="flex-grow w-full">
