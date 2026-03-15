@@ -232,12 +232,11 @@ export default function HomePage() {
               aria-label="Live platform statistics"
               style={{ perspective: '1000px' }}
             >
+              {/* Live Roles Count — microdata removed; JSON-LD in layout.tsx is the sole structured data source */}
               <motion.article
                 whileHover={{ scale: 1.05, rotateY: 5, z: 50 }}
                 className="group relative isolate"
                 style={{ transformStyle: 'preserve-3d' }}
-                itemScope
-                itemType="https://schema.org/Dataset"
               >
                 <div className="absolute -inset-1 bg-gradient-to-br from-cyan-500/20 via-cyan-600/15 to-cyan-500/20 rounded-2xl blur-lg opacity-30 group-hover:opacity-50 transition duration-300 pointer-events-none" aria-hidden="true" />
                 
@@ -255,7 +254,7 @@ export default function HomePage() {
                     </div>
                   </div>
                   
-                  <h3 className="sr-only" itemProp="name">Live Roles Count</h3>
+                  <h3 className="sr-only">Live Roles Count</h3>
                   <div className="text-[8px] sm:text-[10px] uppercase tracking-[0.15em] sm:tracking-[0.2em] font-bold text-cyan-400/80 mb-1 sm:mb-2" aria-hidden="true">ROLES</div>
                   <data 
                     value={liveStats.roleCount} 
@@ -264,7 +263,6 @@ export default function HomePage() {
                       fontVariantNumeric: 'tabular-nums',
                       textShadow: '0 0 15px rgba(0,240,255,0.3)'
                     }}
-                    itemProp="distribution"
                   >
                     {formatNumber(liveStats.roleCount)}
                   </data>
@@ -274,12 +272,11 @@ export default function HomePage() {
                 </Link>
               </motion.article>
 
+              {/* Total Fees Available — microdata removed */}
               <motion.article
                 whileHover={{ scale: 1.05, rotateY: 5, z: 50 }}
                 className="group relative isolate"
                 style={{ transformStyle: 'preserve-3d' }}
-                itemScope
-                itemType="https://schema.org/MonetaryAmount"
               >
                 <div className="absolute -inset-1 bg-gradient-to-br from-fuchsia-500/20 via-pink-600/15 to-fuchsia-500/20 rounded-2xl blur-lg opacity-30 group-hover:opacity-50 transition duration-300 pointer-events-none" aria-hidden="true" />
                 
@@ -306,9 +303,7 @@ export default function HomePage() {
                       fontVariantNumeric: 'tabular-nums',
                       textShadow: '0 0 15px rgba(255,0,255,0.3)'
                     }}
-                    itemProp="value"
                   >
-                    <span itemProp="currency" content="USD" className="sr-only">USD</span>
                     {formatCurrency(liveStats.totalFees)}
                   </data>
                   <div className="text-[8px] sm:text-xs font-semibold text-fuchsia-400/80" aria-hidden="true">AVAILABLE</div>
@@ -317,12 +312,11 @@ export default function HomePage() {
                 </Link>
               </motion.article>
 
+              {/* Average Fee Per Deal — microdata removed */}
               <motion.article
                 whileHover={{ scale: 1.05, rotateY: 5, z: 50 }}
                 className="group relative isolate"
                 style={{ transformStyle: 'preserve-3d' }}
-                itemScope
-                itemType="https://schema.org/MonetaryAmount"
               >
                 <div className="absolute -inset-1 bg-gradient-to-br from-purple-500/20 via-purple-600/15 to-cyan-500/20 rounded-2xl blur-lg opacity-30 group-hover:opacity-50 transition duration-300 pointer-events-none" aria-hidden="true" />
                 
@@ -349,9 +343,7 @@ export default function HomePage() {
                       fontVariantNumeric: 'tabular-nums',
                       textShadow: '0 0 15px rgba(168,85,247,0.3)'
                     }}
-                    itemProp="value"
                   >
-                    <span itemProp="currency" content="USD" className="sr-only">USD</span>
                     {formatCurrency(liveStats.averageFee)}
                   </data>
                   <div className="text-[8px] sm:text-xs font-semibold text-purple-400/80" aria-hidden="true">PER DEAL</div>
@@ -369,7 +361,7 @@ export default function HomePage() {
                 className="text-[9px] sm:text-[10px] text-gray-500 mb-8 flex items-center justify-center gap-1.5"
               >
                 <span className="inline-block w-1 h-1 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true" />
-                <time dateTime={liveStats.lastUpdated} itemProp="dateModified">
+                <time dateTime={liveStats.lastUpdated}>
                   Data refreshed at {formatTimestamp(liveStats.lastUpdated)}
                 </time>
               </motion.div>
@@ -470,7 +462,6 @@ export default function HomePage() {
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400 to-transparent" />
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-fuchsia-400 to-transparent blur-sm" />
               </div>
-              {/* FIX #23: stronger subheading copy */}
               <p className="text-gray-300 text-base md:text-lg max-w-3xl mx-auto mb-12 leading-relaxed font-light">
                 Two types of people use RecXchange. Which one are you?
               </p>
