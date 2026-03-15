@@ -47,6 +47,22 @@ const faqs: FAQItem[] = [
 
 const categories = Array.from(new Set(faqs.map(faq => faq.category)));
 
+// FAQPage schema lives ONLY here (not in root layout) to prevent the
+// "Duplicate field FAQPage" Google Search Console error. This page has the
+// richest, most complete FAQ content so it is the canonical FAQPage source.
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(faq => ({
+    "@type": "Question",
+    "name": faq.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.detailedAnswer || faq.answer
+    }
+  }))
+};
+
 export default function FAQPage() {
   const [expandedItems, setExpandedItems] = React.useState<number[]>([]);
 
@@ -56,19 +72,6 @@ export default function FAQPage() {
         ? prev.filter(i => i !== index)
         : [...prev, index]
     );
-  };
-
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": faqs.map(faq => ({
-      "@type": "Question",
-      "name": faq.question,
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": faq.detailedAnswer || faq.answer
-      }
-    }))
   };
 
   return (

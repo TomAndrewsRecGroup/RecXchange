@@ -42,6 +42,50 @@ export const metadata: Metadata = {
   }
 };
 
+// Rolling priceValidUntil — 1 year from the last schema update date.
+// Update this date whenever pricing changes.
+const PRICE_VALID_UNTIL = "2027-03-15";
+
+// Shared merchant policy objects (non-critical but resolves GSC warnings).
+// RecXchange is a SaaS subscription — no physical shipping; returns are
+// handled via account cancellation within the billing period.
+const digitalShippingDetails = {
+  "@type": "OfferShippingDetails",
+  "shippingRate": {
+    "@type": "MonetaryAmount",
+    "value": "0",
+    "currency": "USD"
+  },
+  "shippingDestination": {
+    "@type": "DefinedRegion",
+    "name": "Worldwide"
+  },
+  "deliveryTime": {
+    "@type": "ShippingDeliveryTime",
+    "handlingTime": {
+      "@type": "QuantitativeValue",
+      "minValue": 0,
+      "maxValue": 0,
+      "unitCode": "DAY"
+    },
+    "transitTime": {
+      "@type": "QuantitativeValue",
+      "minValue": 0,
+      "maxValue": 0,
+      "unitCode": "DAY"
+    }
+  }
+};
+
+const merchantReturnPolicy = {
+  "@type": "MerchantReturnPolicy",
+  "applicableCountry": "US",
+  "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted",
+  "merchantReturnLink": "https://recxchange.io/terms",
+  "returnPolicySeasonalOverride": null,
+  "description": "Digital SaaS subscription. Cancel anytime to stop future billing. No refunds on consumed tokens or past billing periods. See Terms of Service for full details."
+};
+
 export default function PricingLayout({
   children,
 }: {
@@ -53,6 +97,13 @@ export default function PricingLayout({
     "@id": "https://recxchange.io/pricing#product",
     "name": "RecXchange Recruiter Platform",
     "description": "Recruiter collaboration platform with split fee automation, AI-powered candidate matching, and access to 270M candidate profiles. Three membership tiers from $1/month.",
+    // image is required for Merchant Listings rich results (critical field)
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png",
+      "width": 512,
+      "height": 512
+    },
     "brand": {
       "@type": "Brand",
       "name": "RecXchange"
@@ -61,15 +112,21 @@ export default function PricingLayout({
       "@id": "https://recxchange.io/#organization"
     },
     "url": "https://recxchange.io/pricing",
+    // aggregateRating deliberately omitted here — single source of truth is
+    // on #softwareapplication in the root layout. Having it in both causes the
+    // "Review has multiple aggregate ratings" GSC error on /pricing.
     "offers": [
       {
         "@type": "Offer",
         "name": "RecX Entry",
         "price": "1.00",
         "priceCurrency": "USD",
+        "priceValidUntil": PRICE_VALID_UNTIL,
         "availability": "https://schema.org/InStock",
         "url": "https://recxchange.io/pricing",
         "description": "5 tokens per month. Access to collaborative roles and 270M candidate database. Basic platform access.",
+        "shippingDetails": digitalShippingDetails,
+        "hasMerchantReturnPolicy": merchantReturnPolicy,
         "priceSpecification": {
           "@type": "UnitPriceSpecification",
           "price": "1.00",
@@ -86,9 +143,12 @@ export default function PricingLayout({
         "name": "RecX Lite",
         "price": "99.00",
         "priceCurrency": "USD",
+        "priceValidUntil": PRICE_VALID_UNTIL,
         "availability": "https://schema.org/InStock",
         "url": "https://recxchange.io/pricing",
         "description": "150 tokens per month. RecX Direct access after 7 days. 50% split fee collaboration.",
+        "shippingDetails": digitalShippingDetails,
+        "hasMerchantReturnPolicy": merchantReturnPolicy,
         "priceSpecification": {
           "@type": "UnitPriceSpecification",
           "price": "99.00",
@@ -105,9 +165,12 @@ export default function PricingLayout({
         "name": "RecX Pro",
         "price": "249.00",
         "priceCurrency": "USD",
+        "priceValidUntil": PRICE_VALID_UNTIL,
         "availability": "https://schema.org/InStock",
         "url": "https://recxchange.io/pricing",
         "description": "400 tokens per month. Instant RecX Direct access. Up to 70% fee split on premium roles. Pro tokens accumulate and never reset.",
+        "shippingDetails": digitalShippingDetails,
+        "hasMerchantReturnPolicy": merchantReturnPolicy,
         "priceSpecification": {
           "@type": "UnitPriceSpecification",
           "price": "249.00",
@@ -124,45 +187,50 @@ export default function PricingLayout({
         "name": "Token Pack — 10 tokens",
         "price": "10.00",
         "priceCurrency": "USD",
+        "priceValidUntil": PRICE_VALID_UNTIL,
         "availability": "https://schema.org/InStock",
         "url": "https://recxchange.io/pricing",
-        "description": "10 additional platform tokens. Use to post roles, submit candidates, or unlock contact details."
+        "description": "10 additional platform tokens. Use to post roles, submit candidates, or unlock contact details.",
+        "shippingDetails": digitalShippingDetails,
+        "hasMerchantReturnPolicy": merchantReturnPolicy
       },
       {
         "@type": "Offer",
         "name": "Token Pack — 50 tokens",
         "price": "40.00",
         "priceCurrency": "USD",
+        "priceValidUntil": PRICE_VALID_UNTIL,
         "availability": "https://schema.org/InStock",
         "url": "https://recxchange.io/pricing",
-        "description": "50 additional platform tokens."
+        "description": "50 additional platform tokens.",
+        "shippingDetails": digitalShippingDetails,
+        "hasMerchantReturnPolicy": merchantReturnPolicy
       },
       {
         "@type": "Offer",
         "name": "Token Pack — 100 tokens",
         "price": "70.00",
         "priceCurrency": "USD",
+        "priceValidUntil": PRICE_VALID_UNTIL,
         "availability": "https://schema.org/InStock",
         "url": "https://recxchange.io/pricing",
-        "description": "100 additional platform tokens."
+        "description": "100 additional platform tokens.",
+        "shippingDetails": digitalShippingDetails,
+        "hasMerchantReturnPolicy": merchantReturnPolicy
       },
       {
         "@type": "Offer",
         "name": "Token Pack — 500 tokens",
         "price": "300.00",
         "priceCurrency": "USD",
+        "priceValidUntil": PRICE_VALID_UNTIL,
         "availability": "https://schema.org/InStock",
         "url": "https://recxchange.io/pricing",
-        "description": "500 additional platform tokens. Best value bulk pack."
+        "description": "500 additional platform tokens. Best value bulk pack.",
+        "shippingDetails": digitalShippingDetails,
+        "hasMerchantReturnPolicy": merchantReturnPolicy
       }
-    ],
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.9",
-      "ratingCount": "287",
-      "bestRating": "5",
-      "worstRating": "1"
-    }
+    ]
   };
 
   const webPageSchema = {
@@ -174,7 +242,7 @@ export default function PricingLayout({
     "description": "RecXchange pricing from $1/month. Entry, Lite, and Pro tiers for recruiters. Token packs available. No platform fees on placements.",
     "isPartOf": { "@id": "https://recxchange.io/#website" },
     "about": { "@id": "https://recxchange.io/#softwareapplication" },
-    "dateModified": "2026-03-08",
+    "dateModified": "2026-03-15",
     "breadcrumb": { "@id": "https://recxchange.io/pricing#breadcrumb" },
     "inLanguage": "en-GB"
   };

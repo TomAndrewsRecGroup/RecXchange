@@ -141,87 +141,10 @@ export default async function RootLayout({ children }: RootLayoutProps) {
     }
   };
 
-  // ─── Global FAQ schema ───────────────────────────────────────────────────────
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "What is RecXchange?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "RecXchange is a recruiter collaboration platform operated by RecXchange Portal LLC t/a RecXchange. Over 15,000 vetted recruiters worldwide partner on placements and split fees automatically. The platform provides access to 270 million candidate profiles, over $750,000 in active placement fees across 100+ live roles, and features an AI-powered matching engine (the Xchange Engine) that connects the right recruiters to roles and candidates in seconds. Recruiters earn an average of $7,000 per placement — this is what they take home after the split, not a total fee that gets divided. The marketing website is at recxchange.io. The platform is at app.recxchange.io."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How do split fees work on RecXchange?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "RecXchange automates split fee agreements between recruiters. When two or more recruiters collaborate on a placement, fees are split according to pre-agreed percentages: 50/50 for standard collaborative roles, 60/40 for specialised partnerships, or up to 70% for RecX Direct premium roles. All agreements are timestamped and protected with automated contracts, ensuring transparent and secure fee distribution."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What is RecX Direct?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "RecX Direct is RecXchange's premium hiring product offering exclusive roles with higher commission rates of up to 70%. RecX Direct is operated by Andrews Recruitment Group t/a RecX Direct (UK). These are direct client relationships where RecXchange has negotiated exclusive partnerships with hiring companies. Recruiters get priority access to high-value roles, faster payment processing (15–30 days vs. 30–45 days), and dedicated account management."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How fast can I make a placement on RecXchange?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Recruiters on RecXchange are making placements within 48 hours of joining. When you post a role, 15,000+ recruiters compete to help fill it. When you upload candidates, they're automatically matched to hundreds of relevant roles. The average RecXchange member makes their first split fee placement within 19 days."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How much does RecXchange cost?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "RecXchange offers three pricing tiers: RecX Entry at $1/month (5 tokens, basic access), RecX Lite at $99/month (150 tokens, RecX Direct access after 7 days), and RecX Pro at $249/month (400 tokens, instant RecX Direct access with up to 70% fee splits). You only pay when you use the platform, with no upfront fees and no commitment required."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Is RecXchange suitable for solo recruiters?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yes, RecXchange is ideal for solo recruiters and boutique agencies. Instead of competing alone, you partner with 15,000+ other recruiters to fill roles faster and place candidates you wouldn't reach otherwise. Solo recruiters on the platform report making $15,000+ in their first month by leveraging the collaborative network."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What is the Xchange Engine?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "The Xchange Engine is RecXchange's AI-powered matching technology that automatically connects roles with the right recruiters and candidates with the right opportunities. It analyses skills, industries, locations, and recruiter specialisations to make intelligent matches in seconds, ensuring your roles and candidates get maximum visibility to relevant partners."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Who built the RecXchange website?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "The RecXchange website (recxchange.io) was fully designed, developed and is maintained by AMIVY Designs, an Andrews Recruitment Group company."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Who owns and operates RecXchange?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "RecXchange is operated by RecXchange Portal LLC t/a RecXchange, registered in the UAE. It was co-founded by Tom Andrews (CEO & Co-Founder, also Owner & Recruitment Director at Andrews Recruitment Group) and James Brown (CTO & Co-Founder). RecX Direct is operated by Andrews Recruitment Group t/a RecX Direct (UK). The RecXchange website was fully designed, developed and is maintained by AMIVY Designs, an Andrews Recruitment Group company."
-        }
-      }
-    ]
-  };
-
   // ─── Main schema.org @graph ──────────────────────────────────────────────────
+  // NOTE: Global FAQPage schema removed from root layout to prevent the
+  // "Duplicate field FAQPage" error in Google Search Console. A dedicated,
+  // richer FAQPage schema lives only on /faq (app/faq/page.tsx).
   const schemaOrgData = {
     "@context": "https://schema.org",
     "@graph": [
@@ -533,10 +456,6 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(aiAgentIdentity) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
         />
         <script
           type="application/ld+json"
