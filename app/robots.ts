@@ -112,7 +112,12 @@ export default function robots(): MetadataRoute.Robots {
         disallow: '/',
       },
     ],
-    sitemap: 'https://recxchange.io/sitemap.xml',
+    // Both www and non-www sitemaps listed so GSC can be verified on either property.
+    // Canonical URLs inside the sitemap remain https://recxchange.io (non-www).
+    sitemap: [
+      'https://recxchange.io/sitemap.xml',
+      'https://www.recxchange.io/sitemap.xml',
+    ],
     host: 'https://recxchange.io',
   }
 }
