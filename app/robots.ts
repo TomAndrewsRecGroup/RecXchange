@@ -118,6 +118,5 @@ export default function robots(): MetadataRoute.Robots {
       'https://recxchange.io/sitemap.xml',
       'https://www.recxchange.io/sitemap.xml',
     ],
-    host: 'https://recxchange.io',
   }
 }
