@@ -4,33 +4,28 @@
  * IndexNow is a free protocol supported by Bing, Yandex, and other engines.
  * Submitting a URL here tells participating engines to re-crawl it immediately.
  *
- * Set INDEXNOW_API_KEY in your Vercel environment variables.
- * The key file must be hosted at: https://recxchange.io/{key}.txt
+ * INDEXNOW_API_KEY must be set in Vercel environment variables.
+ * Key file is hosted at: https://recxchange.io/61f9b4c3ee0d496f8806c16cdbc89959.txt
  */
 
 const BASE_URL = 'https://recxchange.io';
 const INDEXNOW_ENDPOINT = 'https://api.indexnow.org/indexnow';
+const KEY = '61f9b4c3ee0d496f8806c16cdbc89959';
+const KEY_LOCATION = `${BASE_URL}/${KEY}.txt`;
 
 export async function submitUrlsToIndexNow(urls: string[]): Promise<{
   success: boolean;
   status?: number;
   error?: string;
 }> {
-  const key = process.env.INDEXNOW_API_KEY;
-
-  if (!key) {
-    console.error('[IndexNow] INDEXNOW_API_KEY env variable is not set.');
-    return { success: false, error: 'Missing INDEXNOW_API_KEY' };
-  }
-
   if (!urls.length) {
     return { success: false, error: 'No URLs provided' };
   }
 
   const body = {
     host: 'recxchange.io',
-    key,
-    keyLocation: `${BASE_URL}/${key}.txt`,
+    key: KEY,
+    keyLocation: KEY_LOCATION,
     urlList: urls,
   };
 
@@ -65,14 +60,12 @@ export async function submitUrlToIndexNow(url: string) {
 
 /**
  * Submit all sitemap URLs at once (useful for initial setup or full resubmit).
- * Import the URL list from sitemap.ts to keep a single source of truth.
  */
 export async function submitAllSitemapUrls(): Promise<{
   success: boolean;
   status?: number;
   error?: string;
 }> {
-  // All canonical URLs from app/sitemap.ts
   const baseUrl = 'https://recxchange.io';
   const allUrls = [
     baseUrl,
@@ -144,7 +137,6 @@ export async function submitAllSitemapUrls(): Promise<{
     `${baseUrl}/blog/how-to-choose-a-recruitment-partner`,
   ];
 
-  // IndexNow accepts max 10,000 URLs per request, batch to be safe
   const BATCH_SIZE = 100;
   for (let i = 0; i < allUrls.length; i += BATCH_SIZE) {
     const batch = allUrls.slice(i, i + BATCH_SIZE);
