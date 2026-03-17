@@ -772,7 +772,7 @@ const ALLOWED_EMAILS: string[] = [
 'lguo@gladebrookcapital.com',
 'david@siddhicapital.co',
 'gzardes@emagen.com',
-'sean.o'sullivan@sosv.com',
+'sean.o\'sullivan@sosv.com',
 'deepa@delphiventures.com',
 'lwang@wiharper.com',
 'jos@capricorn.be',
