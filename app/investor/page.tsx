@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import FuturisticBackground from '@/components/design-system/FuturisticBackground';
 import HolographicCard from '@/components/design-system/HolographicCard';
@@ -203,19 +203,108 @@ function AccentText({ children }: { children: React.ReactNode }) {
 function YieldPill({
   label,
   highlight = false,
+  tooltip,
 }: {
   label: string;
   highlight?: boolean;
+  tooltip?: string;
 }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLSpanElement>(null);
+
+  // Close on outside click (mobile)
+  const handleOutside = useCallback((e: MouseEvent | TouchEvent) => {
+    if (ref.current && !ref.current.contains(e.target as Node)) {
+      setOpen(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (open) {
+      document.addEventListener('mousedown', handleOutside);
+      document.addEventListener('touchstart', handleOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleOutside);
+      document.removeEventListener('touchstart', handleOutside);
+    };
+  }, [open, handleOutside]);
+
   return (
     <span
-      className={`px-3 py-1.5 rounded-lg text-sm font-semibold border ${
+      ref={ref}
+      className={`relative inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-semibold border ${
         highlight
           ? 'bg-cyan-500/20 border-cyan-400/60 text-cyan-300'
           : 'bg-white/5 border-white/15 text-gray-400'
       }`}
     >
       {label}
+
+      {tooltip && (
+        <span className="group/tip relative inline-flex items-center">
+          {/* ? button */}
+          <button
+            type="button"
+            aria-label={`Info: ${label}`}
+            onClick={() => setOpen((v) => !v)}
+            className={`flex items-center justify-center w-4 h-4 rounded-full text-[9px] font-black leading-none border transition-colors cursor-pointer select-none
+              ${
+                highlight
+                  ? 'border-cyan-400/50 text-cyan-400 hover:bg-cyan-400/20'
+                  : 'border-white/20 text-gray-500 hover:border-white/40 hover:text-gray-300'
+              }`}
+          >
+            ?
+          </button>
+
+          {/* Desktop hover tooltip */}
+          <span
+            className="pointer-events-none hidden sm:block absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-52 px-3 py-2 rounded-lg text-xs text-gray-200 leading-relaxed
+              opacity-0 group-hover/tip:opacity-100 transition-opacity duration-200 z-50"
+            style={{
+              background: 'rgba(10,10,20,0.96)',
+              border: '1px solid rgba(0,240,255,0.25)',
+              boxShadow: '0 8px 24px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,240,255,0.08)',
+            }}
+            role="tooltip"
+          >
+            {tooltip}
+            {/* Arrow */}
+            <span
+              className="absolute top-full left-1/2 -translate-x-1/2 -mt-px"
+              style={{
+                borderLeft: '5px solid transparent',
+                borderRight: '5px solid transparent',
+                borderTop: '5px solid rgba(0,240,255,0.25)',
+              }}
+            />
+          </span>
+
+          {/* Mobile tap tooltip */}
+          {open && (
+            <span
+              className="sm:hidden absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-52 px-3 py-2 rounded-lg text-xs text-gray-200 leading-relaxed z-50"
+              style={{
+                background: 'rgba(10,10,20,0.98)',
+                border: '1px solid rgba(0,240,255,0.3)',
+                boxShadow: '0 8px 24px rgba(0,0,0,0.7), 0 0 0 1px rgba(0,240,255,0.1)',
+              }}
+              role="tooltip"
+            >
+              {tooltip}
+              <span
+                className="absolute top-full left-1/2 -translate-x-1/2 -mt-px"
+                style={{
+                  borderLeft: '5px solid transparent',
+                  borderRight: '5px solid transparent',
+                  borderTop: '5px solid rgba(0,240,255,0.3)',
+                }}
+              />
+            </span>
+          )}
+        </span>
+      )}
     </span>
   );
 }
@@ -340,15 +429,15 @@ export default function InvestorOnePager() {
 
             {/* Yield flow */}
             <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-2 mb-4">
-              <YieldPill label="20 outreach" />
+              <YieldPill label="20 outreach" tooltip="Candidates approached by the recruiter, or who applied directly for the role." />
               <YieldArrow />
-              <YieldPill label="10 screened" />
+              <YieldPill label="10 screened" tooltip="Candidates who passed initial screening calls — qualified against the role's key criteria." />
               <YieldArrow />
-              <YieldPill label="5 submitted" />
+              <YieldPill label="5 submitted" tooltip="Shortlisted CVs formally submitted to the hiring client for review." />
               <YieldArrow />
-              <YieldPill label="1 hired" />
+              <YieldPill label="1 hired" tooltip="The single candidate who receives and accepts the job offer." />
               <YieldArrow />
-              <YieldPill label="9 wasted" highlight />
+              <YieldPill label="9 wasted" highlight tooltip="The remaining 9 screened, qualified candidates — still warm, still valuable — but siloed inside one agency's system with nowhere to go." />
             </motion.div>
 
             <motion.div variants={fadeUp} className="mb-10">
@@ -407,15 +496,15 @@ export default function InvestorOnePager() {
 
             {/* Solution yield flow */}
             <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-2 mb-4">
-              <YieldPill label="9 warm candidates" />
+              <YieldPill label="9 warm candidates" tooltip="The 9 qualified candidates from the problem flow — already screened and ready, just without a matching role at their original agency." />
               <YieldArrow />
-              <YieldPill label="Xchange Engine" highlight />
+              <YieldPill label="Xchange Engine" highlight tooltip="RecXchange's AI matching layer — anonymously maps candidates to live roles across the network without exposing CVs or client names until terms are agreed." />
               <YieldArrow />
-              <YieldPill label="AI match to 9 roles" />
+              <YieldPill label="AI match to 9 roles" tooltip="Each warm candidate is matched to a live role held by a different recruiter in the network — creating 9 new potential placements from candidates that would otherwise go cold." />
               <YieldArrow />
-              <YieldPill label="Split fee agreed" />
+              <YieldPill label="Split fee agreed" tooltip="A legally binding Split Fee Agreement is signed by both recruiters before any candidate data or client details are shared — protecting both parties." />
               <YieldArrow />
-              <YieldPill label="9 placements" highlight />
+              <YieldPill label="9 placements" highlight tooltip="Every qualified candidate finds a placement. The original recruiter earns a split fee on each — turning 9 wasted outcomes into 9 revenue events." />
             </motion.div>
 
             <motion.div variants={fadeUp} className="mb-10">
