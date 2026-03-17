@@ -5,6 +5,7 @@ import { headers } from "next/headers";
 import ConditionalHeader from "@/components/ConditionalHeader";
 import Footer from "@/components/Footer";
 import FloatingChat from "@/components/FloatingChat";
+import QuickActionMenu from "@/components/QuickActionMenu";
 import CookieBanner from "@/components/CookieBanner";
 import ClientProviders from "@/components/ClientProviders";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
@@ -509,6 +510,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
             </div>
 
             <FloatingChat />
+            <QuickActionMenu />
             <CookieBanner />
             <Analytics />
           </ClientProviders>
