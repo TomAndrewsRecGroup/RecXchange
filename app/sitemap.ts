@@ -39,7 +39,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/roles`, lastModified: seoDate, changeFrequency: 'daily', priority: 0.85 },
     { url: `${baseUrl}/affiliate`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.60 },
     { url: `${baseUrl}/contact`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.55 },
-    { url: `${baseUrl}/research`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.60 },
+    // /research is noindex — intentionally excluded from sitemap
 
     // ─── Phase B: Pillar pages ───────────────────────────────────
     { url: `${baseUrl}/split-fee-recruitment`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.90 },
@@ -48,33 +48,36 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/recruitment-marketplace`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.88 },
     { url: `${baseUrl}/passive-candidate-sourcing`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.85 },
 
-    // ─── Phase B: Sector pages ───────────────────────────────────
-    { url: `${baseUrl}/sectors/technology-recruitment`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.82 },
-    { url: `${baseUrl}/sectors/engineering-recruitment`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.82 },
-    { url: `${baseUrl}/sectors/healthcare-recruitment`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.82 },
-    { url: `${baseUrl}/sectors/finance-recruitment`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.82 },
-    { url: `${baseUrl}/sectors/sales-recruitment`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.80 },
+    // ─── Phase B: Sector pages (slugs match /app/sectors/* dirs) ──────────
+    { url: `${baseUrl}/sectors`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.80 },
+    { url: `${baseUrl}/sectors/technology`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.82 },
+    { url: `${baseUrl}/sectors/engineering`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.82 },
+    { url: `${baseUrl}/sectors/healthcare`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.82 },
+    { url: `${baseUrl}/sectors/finance`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.82 },
+    { url: `${baseUrl}/sectors/sales`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.80 },
     { url: `${baseUrl}/sectors/hr-recruitment`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.80 },
-    { url: `${baseUrl}/sectors/legal-recruitment`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.78 },
-    { url: `${baseUrl}/sectors/construction-recruitment`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.78 },
+    { url: `${baseUrl}/sectors/legal`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.78 },
+    { url: `${baseUrl}/sectors/construction`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.78 },
 
-    // ─── Phase C: Location pages ─────────────────────────────────
-    { url: `${baseUrl}/locations/recruitment-london`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.82 },
-    { url: `${baseUrl}/locations/recruitment-manchester`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.78 },
-    { url: `${baseUrl}/locations/recruitment-birmingham`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.78 },
-    { url: `${baseUrl}/locations/recruitment-usa`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.80 },
-    { url: `${baseUrl}/locations/recruitment-uae`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.78 },
-    { url: `${baseUrl}/locations/recruitment-australia`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.78 },
+    // ─── Phase C: Location pages (slugs match /app/locations/* dirs) ───────
+    { url: `${baseUrl}/locations`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.78 },
+    { url: `${baseUrl}/locations/united-kingdom`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.82 },
+    { url: `${baseUrl}/locations/united-states`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.80 },
+    { url: `${baseUrl}/locations/united-arab-emirates`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.78 },
+    { url: `${baseUrl}/locations/australia`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.78 },
+    { url: `${baseUrl}/locations/europe`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.78 },
+    { url: `${baseUrl}/locations/south-africa`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.76 },
 
-    // ─── Phase D: Vs comparison pages ───────────────────────────
-    { url: `${baseUrl}/vs/recxchange-vs-linkedin-recruiter`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.82 },
-    { url: `${baseUrl}/vs/recxchange-vs-indeed`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.82 },
-    { url: `${baseUrl}/vs/recxchange-vs-traditional-agency`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.85 },
-    { url: `${baseUrl}/vs/recxchange-vs-retained-search`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.83 },
-    { url: `${baseUrl}/vs/recxchange-vs-rpo`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.80 },
-    { url: `${baseUrl}/vs/recxchange-vs-job-boards`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.80 },
-    { url: `${baseUrl}/vs/recxchange-vs-in-house-recruiter`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.80 },
-    { url: `${baseUrl}/vs/recxchange-vs-headhunter`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.80 },
+    // ─── Phase D: Vs comparison pages (slugs match /app/vs/* dirs) ──────────
+    { url: `${baseUrl}/vs`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.82 },
+    { url: `${baseUrl}/vs/linkedin-recruiter`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.82 },
+    { url: `${baseUrl}/vs/recruitment-agency`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.85 },
+    { url: `${baseUrl}/vs/retained-search`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.83 },
+    { url: `${baseUrl}/vs/rpo`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.80 },
+    { url: `${baseUrl}/vs/job-boards`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.80 },
+    { url: `${baseUrl}/vs/internal-recruiter`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.80 },
+    { url: `${baseUrl}/vs/staffing-agencies`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.80 },
+    { url: `${baseUrl}/vs/contingency-recruitment`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.80 },
 
     // ─── Phase E: Use case pages ─────────────────────────────────
     { url: `${baseUrl}/use-cases`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.80 },

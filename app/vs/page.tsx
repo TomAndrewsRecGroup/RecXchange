@@ -16,14 +16,14 @@ export const metadata: Metadata = {
 };
 
 const comparisons = [
-  { href: "/vs/recxchange-vs-traditional-agency", title: "RecXchange vs Traditional Agency", desc: "Why specialist recruiter networks outperform single-agency contingency for hard-to-fill roles." },
-  { href: "/vs/recxchange-vs-retained-search", title: "RecXchange vs Retained Search", desc: "Senior hiring without retainers, exclusivity, or 30%+ fees." },
-  { href: "/vs/recxchange-vs-linkedin-recruiter", title: "RecXchange vs LinkedIn Recruiter", desc: "Passive candidate access through specialist networks vs. cold InMail outreach." },
-  { href: "/vs/recxchange-vs-indeed", title: "RecXchange vs Indeed", desc: "Targeted specialist sourcing vs. high-volume unfiltered job board applications." },
-  { href: "/vs/recxchange-vs-job-boards", title: "RecXchange vs Job Boards", desc: "Why job boards don't work for specialist roles — and what does." },
-  { href: "/vs/recxchange-vs-rpo", title: "RecXchange vs RPO", desc: "Flexible specialist access without the RPO commitment, cost, or transition risk." },
-  { href: "/vs/recxchange-vs-in-house-recruiter", title: "RecXchange vs In-House Recruiter", desc: "Specialist depth on demand without the fixed headcount cost." },
-  { href: "/vs/recxchange-vs-headhunter", title: "RecXchange vs Headhunter", desc: "Executive and senior search without retainers or inflated fee percentages." },
+  { href: "/vs/recruitment-agency", title: "RecXchange vs Traditional Agency", desc: "Why specialist recruiter networks outperform single-agency contingency for hard-to-fill roles." },
+  { href: "/vs/retained-search", title: "RecXchange vs Retained Search", desc: "Senior hiring without retainers, exclusivity, or 30%+ fees." },
+  { href: "/vs/linkedin-recruiter", title: "RecXchange vs LinkedIn Recruiter", desc: "Passive candidate access through specialist networks vs. cold InMail outreach." },
+  { href: "/vs/contingency-recruitment", title: "RecXchange vs Contingency Recruitment", desc: "Structured split fee collaboration vs. uncoordinated multi-agency contingency." },
+  { href: "/vs/job-boards", title: "RecXchange vs Job Boards", desc: "Why job boards don't work for specialist roles — and what does." },
+  { href: "/vs/rpo", title: "RecXchange vs RPO", desc: "Flexible specialist access without the RPO commitment, cost, or transition risk." },
+  { href: "/vs/internal-recruiter", title: "RecXchange vs In-House Recruiter", desc: "Specialist depth on demand without the fixed headcount cost." },
+  { href: "/vs/staffing-agencies", title: "RecXchange vs Staffing Agencies", desc: "Specialist-first marketplace vs. bulk database shortlists. Better candidates, lower fees." },
 ];
 
 export default function VsHubPage() {

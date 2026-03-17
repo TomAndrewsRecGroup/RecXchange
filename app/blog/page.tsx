@@ -1,19 +1,6 @@
-import type { Metadata } from 'next';
+// Metadata is exported from blog/layout.tsx — do not duplicate here.
 import React from 'react';
 import Link from 'next/link';
-
-export const metadata: Metadata = {
-  title: "Recruitment Blog & Guides | Split Fee, Hiring Strategy & Industry Insights | RecXchange",
-  description: "Guides, strategies and industry insights for hiring managers and specialist recruiters. Split fee recruitment explained, how to fill hard-to-fill roles, cost per hire reduction, recruiter collaboration, and recruitment trends 2026.",
-  alternates: { canonical: "https://recxchange.io/blog" },
-  openGraph: {
-    title: "Recruitment Blog & Guides | RecXchange",
-    description: "Guides and insights for hiring managers and recruiters. Split fee, hard-to-fill roles, cost per hire, recruiter collaboration.",
-    url: "https://recxchange.io/blog",
-    type: "website",
-    images: [{ url: "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png", width: 1200, height: 630, alt: "RecXchange Blog" }]
-  },
-};
 
 const articles = [
   {
