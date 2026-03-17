@@ -76,12 +76,12 @@ const steps = [
   {
     num: 4,
     title: 'Agree Terms',
-    body: 'A Split Fee Agreement is signed before any data is shared — stating the split, the fee, and the payment date.',
+    body: 'A Split Fee Agreement is signed before any data is shared. It states the split, the fee, and the payment date.',
   },
   {
     num: 5,
     title: 'Place & Compound',
-    body: 'Placements are made, outcomes recorded, and reputation builds. Warm candidates no longer go cold — they compound across the network.',
+    body: 'Placements are made, outcomes recorded, and reputation builds. Warm candidates no longer go cold. They compound across the network.',
   },
 ];
 
@@ -92,7 +92,7 @@ const traction = [
       '15,000+ recruiters onboarded',
       'Across 178 countries',
       '~12% daily active users',
-      'Organic growth — no paid acquisition at scale',
+      'Organic growth, no paid acquisition at scale',
     ],
     color: 'cyan' as const,
   },
@@ -110,25 +110,25 @@ const traction = [
 
 const marketCards = [
   { num: '$600B+', label: 'Global recruitment market (Staffing Industry Analysts)' },
-  { num: '2–3M+', label: 'Independent & freelance recruiters globally' },
+  { num: '2-3M+', label: 'Independent & freelance recruiters globally' },
   { num: '$50B+', label: 'Addressable split-fee & collaborative hiring infrastructure' },
-  { num: '~8–10%', label: 'Of global recruitment fees in collaborative/split-fee activity' },
+  { num: '~8-10%', label: 'Of global recruitment fees in collaborative/split-fee activity' },
 ];
 
 const askItems = [
   {
     amount: '£400k',
-    purpose: 'Global Core — platform engineering, trust architecture, mobile apps, compliance & GTM',
+    purpose: 'Global Core: platform engineering, trust architecture, mobile apps, compliance and GTM',
     color: 'cyan' as const,
   },
   {
     amount: '£400k',
-    purpose: 'RecX Direct city hubs — US & Europe — enterprise role acquisition, no recruiter payroll',
+    purpose: 'RecX Direct city hubs (US and Europe): enterprise role acquisition, no recruiter payroll',
     color: 'purple' as const,
   },
   {
     amount: '£200k',
-    purpose: 'Marketing — recruiter density, enterprise demand generation, brand and distribution',
+    purpose: 'Marketing: recruiter density, enterprise demand generation, brand and distribution',
     color: 'fuchsia' as const,
   },
 ];
@@ -423,7 +423,7 @@ export default function InvestorOnePager() {
                 <AccentText>It's yield constrained.</AccentText>
               </SectionHeading>
               <p className="text-gray-400 mb-8 max-w-2xl">
-                A recruiter puts ten screened candidates forward for a role. One gets hired. Nine go cold — still valuable, still warm, but trapped inside one agency's system.
+                A recruiter puts ten screened candidates forward for a role. One gets hired. Nine go cold, still valuable and still warm, but trapped inside one agency's system.
               </p>
             </motion.div>
 
@@ -431,13 +431,13 @@ export default function InvestorOnePager() {
             <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-2 mb-4">
               <YieldPill label="20 outreach" tooltip="Candidates approached by the recruiter, or who applied directly for the role." />
               <YieldArrow />
-              <YieldPill label="10 screened" tooltip="Candidates who passed initial screening calls — qualified against the role's key criteria." />
+              <YieldPill label="10 screened" tooltip="Candidates who passed initial screening calls, qualified against the role's key criteria." />
               <YieldArrow />
               <YieldPill label="5 submitted" tooltip="Shortlisted CVs formally submitted to the hiring client for review." />
               <YieldArrow />
               <YieldPill label="1 hired" tooltip="The single candidate who receives and accepts the job offer." />
               <YieldArrow />
-              <YieldPill label="9 wasted" highlight tooltip="The remaining 9 screened, qualified candidates — still warm, still valuable — but siloed inside one agency's system with nowhere to go." />
+              <YieldPill label="9 wasted" highlight tooltip="The remaining 9 screened, qualified candidates. Still warm, still valuable, but siloed inside one agency's system with nowhere to go." />
             </motion.div>
 
             <motion.div variants={fadeUp} className="mb-10">
@@ -490,21 +490,21 @@ export default function InvestorOnePager() {
                 <AccentText>Now live.</AccentText>
               </SectionHeading>
               <p className="text-gray-400 mb-8 max-w-2xl">
-                RecXchange is the neutral operating system that lets recruiters safely share roles and warm candidates, agree structured split-fee terms, and place together — with identity verified, ownership recorded, and payment terms agreed before any data is shared.
+                RecXchange is the neutral operating system that lets recruiters safely share roles and warm candidates, agree structured split-fee terms, and place together, with identity verified, ownership recorded, and payment terms agreed before any data is shared.
               </p>
             </motion.div>
 
             {/* Solution yield flow */}
             <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-2 mb-4">
-              <YieldPill label="9 warm candidates" tooltip="The 9 qualified candidates from the problem flow — already screened and ready, just without a matching role at their original agency." />
+              <YieldPill label="9 warm candidates" tooltip="The 9 qualified candidates from the problem flow. Already screened and ready, just without a matching role at their original agency." />
               <YieldArrow />
-              <YieldPill label="Xchange Engine" highlight tooltip="RecXchange's AI matching layer — anonymously maps candidates to live roles across the network without exposing CVs or client names until terms are agreed." />
+              <YieldPill label="Xchange Engine" highlight tooltip="RecXchange's AI matching layer. Anonymously maps candidates to live roles across the network without exposing CVs or client names until terms are agreed." />
               <YieldArrow />
-              <YieldPill label="AI match to 9 roles" tooltip="Each warm candidate is matched to a live role held by a different recruiter in the network — creating 9 new potential placements from candidates that would otherwise go cold." />
+              <YieldPill label="AI match to 9 roles" tooltip="Each warm candidate is matched to a live role held by a different recruiter in the network, creating 9 new potential placements from candidates that would otherwise go cold." />
               <YieldArrow />
-              <YieldPill label="Split fee agreed" tooltip="A legally binding Split Fee Agreement is signed by both recruiters before any candidate data or client details are shared — protecting both parties." />
+              <YieldPill label="Split fee agreed" tooltip="A legally binding Split Fee Agreement is signed by both recruiters before any candidate data or client details are shared, protecting both parties." />
               <YieldArrow />
-              <YieldPill label="9 placements" highlight tooltip="Every qualified candidate finds a placement. The original recruiter earns a split fee on each — turning 9 wasted outcomes into 9 revenue events." />
+              <YieldPill label="9 placements" highlight tooltip="Every qualified candidate finds a placement. The original recruiter earns a split fee on each, turning 9 wasted outcomes into 9 revenue events." />
             </motion.div>
 
             <motion.div variants={fadeUp} className="mb-10">
@@ -555,7 +555,7 @@ export default function InvestorOnePager() {
                 <br />First 6 weeks.
               </SectionHeading>
               <p className="text-gray-400 mb-8 max-w-2xl">
-                RecXchange went live in November 2024. Recruitment cycles typically complete in ~90 days — the platform is still inside its first full placement cycle.
+                RecXchange went live in November 2024. Recruitment cycles typically complete in ~90 days, so the platform is still inside its first full placement cycle.
               </p>
             </motion.div>
 
@@ -614,7 +614,7 @@ export default function InvestorOnePager() {
                 <AccentText>not headcount.</AccentText>
               </SectionHeading>
               <p className="text-gray-400 mb-8 max-w-2xl">
-                RecXchange earns a share of every successful placement. RecX Direct aggregates enterprise hiring mandates and fulfils them through the independent recruiter network — with no recruited payroll.
+                RecXchange earns a share of every successful placement. RecX Direct aggregates enterprise hiring mandates and fulfils them through the independent recruiter network, with no recruited payroll.
               </p>
             </motion.div>
 
@@ -623,7 +623,7 @@ export default function InvestorOnePager() {
               <table className="w-full border-collapse text-sm">
                 <thead>
                   <tr>
-                    {['One City Hub — Inputs', 'Annual Financials', 'Structure'].map((h) => (
+                    {['One City Hub: Inputs', 'Annual Financials', 'Structure'].map((h) => (
                       <th
                         key={h}
                         className="text-left text-[11px] font-bold uppercase tracking-widest text-cyan-400 px-4 py-3 border-b border-white/[0.08]"
@@ -648,7 +648,7 @@ export default function InvestorOnePager() {
                     },
                     {
                       input: '~$2k coordination fee per role',
-                      finance: { big: '—', sub: '' },
+                      finance: { big: 'N/A', sub: '' },
                       structure: 'Delivery risk distributed across the network',
                     },
                   ].map((row, i) => (
@@ -658,7 +658,7 @@ export default function InvestorOnePager() {
                     >
                       <td className="px-4 py-3 text-gray-400">{row.input}</td>
                       <td className="px-4 py-3">
-                        {row.finance.big !== '—' ? (
+                        {row.finance.big !== 'N/A' ? (
                           <>
                             <span
                               className="text-xl font-black"
@@ -674,7 +674,7 @@ export default function InvestorOnePager() {
                             <span className="text-[11px] text-gray-500">{row.finance.sub}</span>
                           </>
                         ) : (
-                          <span className="text-gray-600">—</span>
+                          <span className="text-gray-600">N/A</span>
                         )}
                       </td>
                       <td className="px-4 py-3 text-gray-400">{row.structure}</td>
@@ -867,7 +867,7 @@ export default function InvestorOnePager() {
       {/* ── FOOTER DISCLAIMER ───────────────────────────────────────────────── */}
       <footer className="relative z-10 py-6 px-4 text-center border-t border-white/[0.06]">
         <p className="text-[11px] text-gray-600 max-w-2xl mx-auto">
-          © 2025 RecXchange Ltd. · All traction figures reflect live platform data as of December 2024 – January 2025.
+          © 2025 RecXchange Ltd. · All traction figures reflect live platform data as of December 2024 to January 2025.
           Forward projections are estimates and not guarantees of future performance.
           This document is for information purposes only and does not constitute a financial promotion.
         </p>
