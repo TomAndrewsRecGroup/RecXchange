@@ -6,6 +6,7 @@ import Groq from 'groq-sdk';
 import { GROQ_CONFIG, buildContextPrompt, type AssistantName } from '@/lib/groq/config';
 import { validateChatInputs } from '@/lib/groq/validation';
 import { performSecurityCheck, sanitizeAIResponse, logSecurityEvent } from '@/lib/groq/security';
+import { sendTelegramHandover } from '@/lib/groq/telegram';
 import type { 
   ConversationMessage, 
   SmartLinkData, 
@@ -468,7 +469,18 @@ export async function POST(req: NextRequest) {
     // Detect handover before parsing smart links
     const handover = detectHandover(validatedData.message, sanitizedResponse);
     if (handover) {
-      console.log('[Groq AI Chat] Handover triggered');
+      console.log('[Groq AI Chat] Handover triggered — notifying via Telegram');
+      // Fire-and-forget: Telegram delivery must not block the Groq response
+      sendTelegramHandover({
+        name: validatedData.name,
+        email: validatedData.email,
+        persona: resolvedPersona,
+        companyName: validatedData.companyName,
+        pageContext: validatedData.pageContext,
+        userMessage: validatedData.message,
+        aiResponse: sanitizedResponse,
+        history,
+      }).catch(err => console.error('[Groq AI Chat] Telegram handover notification failed:', err));
     }
 
     // Parse smart links from response

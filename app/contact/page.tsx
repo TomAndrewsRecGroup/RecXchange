@@ -378,7 +378,7 @@ export default function ContactPage() {
                     {!showUserForm && (
                       <div className="p-3 sm:p-4 border-t border-cyan-400/20 bg-[#0a0a0f]/95 flex-shrink-0">
                         {hasHandedOver ? (
-                          <div className="text-center py-2 text-gray-400 text-xs">A team member will respond in your GHL inbox</div>
+                          <div className="text-center py-2 text-gray-400 text-xs">Our team has been notified and will be in touch shortly</div>
                         ) : (
                           <div className="flex gap-2">
                             <input type="text" value={inputValue} onChange={e => setInputValue(e.target.value)}
