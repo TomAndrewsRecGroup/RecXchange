@@ -10,13 +10,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ExternalLink, User } from 'lucide-react';
 import { pickAssistantName, type AssistantName } from '@/lib/groq/config';
+// Re-use the canonical SmartLinkData from the API types so there is only one definition
+import type { SmartLinkData } from '@/lib/groq/types';
+
+// Re-export so consumers can import from one place
+export type { SmartLinkData };
 
 // ─── Shared types ─────────────────────────────────────────────────────────────
-
-export interface SmartLinkData {
-  action: 'send-3-roles' | 'book-meeting' | 'recx-direct-info' | 'how-it-works' | 'how-it-works-no-meeting';
-  url: string;
-}
 
 export interface ChatMessage {
   role: 'user' | 'assistant';
@@ -292,7 +292,6 @@ export function useChatLogic(pathname: string): UseChatLogicReturn {
       // Normal Groq AI path
       const payload: Record<string, unknown> = {
         message:      userMessage,
-        history:      messages,
         pageContext,
         assistantName,
         name:         userName,

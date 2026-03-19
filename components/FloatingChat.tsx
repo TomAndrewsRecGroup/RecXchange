@@ -9,7 +9,9 @@ import {
   renderChatMessageContent,
   messageBubbleClass,
   HandoverBadge,
+  type ChatMessage,
 } from '@/hooks/useChatLogic';
+import type { AssistantName } from '@/lib/groq/config';
 
 export default function FloatingChat() {
   const pathname = usePathname();
@@ -39,7 +41,6 @@ export default function FloatingChat() {
       <AnimatePresence>
         {/* The floating panel is controlled by the toggle button below */}
         <FloatingPanel
-          pathname={pathname}
           messages={messages}
           inputValue={inputValue}
           setInputValue={setInputValue}
@@ -69,8 +70,7 @@ export default function FloatingChat() {
 // ─── Inner panel — separated so AnimatePresence works cleanly ─────────────────
 
 interface PanelProps {
-  pathname: string;
-  messages: ReturnType<typeof useChatLogic>['messages'];
+  messages: ChatMessage[];
   inputValue: string;
   setInputValue: (v: string) => void;
   isLoading: boolean;
@@ -85,7 +85,7 @@ interface PanelProps {
   setUserPersona: (v: 'recruiter' | 'hiring-manager' | '') => void;
   companyName: string;
   setCompanyName: (v: string) => void;
-  assistantName: string;
+  assistantName: AssistantName;
   messagesEndRef: React.RefObject<HTMLDivElement | null>;
   handleStartChat: () => Promise<void>;
   handleSendMessage: () => Promise<void>;

@@ -499,9 +499,7 @@ export async function POST(req: NextRequest) {
     // ── Post-handover message: skip Groq, log to GHL, forward to Telegram thread ─
     if (isHandover && conversationId) {
       console.log('[Groq AI Chat] Post-handover message — forwarding to Telegram thread');
-      if (conversationId) {
-        await logMessageToGHL(conversationId, validatedData.message, 'inbound');
-      }
+      await logMessageToGHL(conversationId, validatedData.message, 'inbound');
       if (telegramHandoverMessageId && typeof telegramHandoverMessageId === 'number') {
         await forwardUserMessageToTelegram(
           conversationId,
