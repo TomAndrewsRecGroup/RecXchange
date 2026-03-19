@@ -100,7 +100,14 @@ export default function FloatingChat() {
     setMessages([{ role: 'assistant', content: `Hi ${userName.split(' ')[0]}! I'm ${assistantName} from RecXchange. How can I help you today?` }]);
   };
 
-  const handleSmartLinkClick = (url: string) => { setIsOpen(false); router.push(url); };
+  const handleSmartLinkClick = (url: string) => {
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+      window.open(url, '_blank', 'noopener,noreferrer');
+    } else {
+      setIsOpen(false);
+      router.push(url);
+    }
+  };
 
   const renderMessageContent = (msg: Message) => {
     const parts: React.ReactNode[] = [];
@@ -130,15 +137,22 @@ export default function FloatingChat() {
     try {
       const pageContext = getPageContext(pathname);
       const userIntent = messages.length === 1 ? detectUserIntent(userMessage) : undefined;
-      // If we already have a contactId from registration, pass it through to skip re-creation
-      const payload: Record<string, unknown> = { message: userMessage, history: messages, pageContext, userIntent, assistantName };
+      // Always include credentials so smart link prefill data (name/email in URLs) is never empty.
+      // contactId/conversationId are passed when available to skip re-creation in the API.
+      const payload: Record<string, unknown> = {
+        message: userMessage,
+        history: messages,
+        pageContext,
+        userIntent,
+        assistantName,
+        name: userName,
+        email: userEmail,
+        persona: userPersona,
+      };
+      if (userPersona === 'hiring-manager') payload.companyName = companyName;
       if (contactId) {
         payload.contactId = contactId;
         payload.conversationId = conversationId;
-      } else {
-        // Fallback: pass credentials so the route can create the contact if registration somehow failed
-        payload.name = userName; payload.email = userEmail; payload.persona = userPersona;
-        if (userPersona === 'hiring-manager') payload.companyName = companyName;
       }
       const response = await fetch('/api/groq/ai-chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
       if (!response.ok) throw new Error('Failed to get response');

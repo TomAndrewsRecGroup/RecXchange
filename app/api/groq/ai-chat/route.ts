@@ -274,7 +274,7 @@ function parseSmartLinks(
         break;
       
       case 'book-meeting':
-        url = '/book-meeting';
+        url = 'https://link.gohighlevel.com/widget/booking/xp9zWAV1rz40w5WdPSTi';
         break;
     }
     

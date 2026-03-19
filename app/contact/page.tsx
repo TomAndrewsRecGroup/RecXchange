@@ -80,7 +80,13 @@ export default function ContactPage() {
     setMessages([{ role: 'assistant', content: greeting }]);
   };
 
-  const handleSmartLinkClick = (url: string) => { router.push(url); };
+  const handleSmartLinkClick = (url: string) => {
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+      window.open(url, '_blank', 'noopener,noreferrer');
+    } else {
+      router.push(url);
+    }
+  };
 
   const renderMessageContent = (msg: Message) => {
     const parts: React.ReactNode[] = [];
@@ -112,12 +118,21 @@ export default function ContactPage() {
     setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
     setIsLoading(true);
     try {
-      const payload: Record<string, unknown> = { message: userMessage, history: messages, pageContext: 'Contact Page', assistantName };
-      if (!contactId) {
-        payload.name = userName; payload.email = userEmail; payload.persona = userPersona;
-        if (userPersona === 'hiring-manager') payload.companyName = companyName;
-      } else {
-        payload.contactId = contactId; payload.conversationId = conversationId;
+      // Always include credentials so smart link prefill data (name/email in URLs) is never empty.
+      // contactId/conversationId are passed when available to skip re-creation in the API.
+      const payload: Record<string, unknown> = {
+        message: userMessage,
+        history: messages,
+        pageContext: 'Contact Page',
+        assistantName,
+        name: userName,
+        email: userEmail,
+        persona: userPersona,
+      };
+      if (userPersona === 'hiring-manager') payload.companyName = companyName;
+      if (contactId) {
+        payload.contactId = contactId;
+        payload.conversationId = conversationId;
       }
       const response = await fetch('/api/groq/ai-chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
       if (!response.ok) throw new Error('Failed to get response');
