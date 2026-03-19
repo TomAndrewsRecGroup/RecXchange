@@ -57,6 +57,7 @@ export default function FloatingChat() {
   const [companyName, setCompanyName] = useState('');
   const [contactId, setContactId] = useState<string | null>(null);
   const [conversationId, setConversationId] = useState<string | null>(null);
+  const [handoverTelegramMsgId, setHandoverTelegramMsgId] = useState<number | null>(null);
   // Pick one assistant name per chat session and keep it stable
   const [assistantName] = useState<AssistantName>(() => pickAssistantName());
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -68,13 +69,44 @@ export default function FloatingChat() {
     return () => { document.body.style.overflow = ''; };
   }, [isOpen]);
 
+  // ── SSE: connect to team reply stream after handover ──────────────────────
+  useEffect(() => {
+    if (!hasHandedOver || !conversationId) return;
+
+    console.log('[FloatingChat] Connecting to SSE stream for conversation:', conversationId);
+    const eventSource = new EventSource(`/api/groq/stream?conversationId=${conversationId}`);
+
+    eventSource.onmessage = (event) => {
+      try {
+        const data = JSON.parse(event.data);
+        if (data.type === 'message' && data.body) {
+          setMessages(prev => [...prev, {
+            role: 'assistant',
+            content: data.body,
+            isHandover: true,
+          }]);
+        }
+      } catch {
+        // malformed SSE frame — ignore
+      }
+    };
+
+    eventSource.onerror = () => {
+      console.warn('[FloatingChat] SSE connection error — will retry automatically');
+    };
+
+    return () => {
+      eventSource.close();
+      console.log('[FloatingChat] SSE connection closed');
+    };
+  }, [hasHandedOver, conversationId]);
+
   const handleStartChat = async () => {
     if (!userName || !userEmail || !userPersona) { alert('Please fill in all required fields'); return; }
     if (userPersona === 'hiring-manager' && !companyName) { alert('Please enter your company name'); return; }
 
     setIsRegistering(true);
     try {
-      // Register the contact in GHL immediately on form submit
       const pageContext = getPageContext(pathname);
       const res = await fetch('/api/groq/register-chat-user', {
         method: 'POST',
@@ -90,7 +122,6 @@ export default function FloatingChat() {
       const data = await res.json();
       if (data.contactId) setContactId(data.contactId);
     } catch (err) {
-      // Non-blocking: log the error but still let the user into the chat
       console.error('[FloatingChat] Failed to register chat user:', err);
     } finally {
       setIsRegistering(false);
@@ -131,14 +162,42 @@ export default function FloatingChat() {
   };
 
   const handleSendMessage = async () => {
-    if (!inputValue.trim() || isLoading || hasHandedOver) return;
-    const userMessage = inputValue.trim(); setInputValue('');
-    setMessages(prev => [...prev, { role: 'user', content: userMessage }]); setIsLoading(true);
+    if (!inputValue.trim() || isLoading) return;
+    const userMessage = inputValue.trim();
+    setInputValue('');
+    setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
+    setIsLoading(true);
+
     try {
       const pageContext = getPageContext(pathname);
+
+      // ── Post-handover: forward to Telegram thread, skip AI ────────────────
+      if (hasHandedOver) {
+        const payload: Record<string, unknown> = {
+          message: userMessage,
+          pageContext,
+          name: userName,
+          email: userEmail,
+          persona: userPersona,
+          assistantName,
+          isHandover: true,
+          contactId,
+          conversationId,
+        };
+        if (handoverTelegramMsgId) payload.telegramHandoverMessageId = handoverTelegramMsgId;
+        if (userPersona === 'hiring-manager') payload.companyName = companyName;
+
+        await fetch('/api/groq/ai-chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        // No AI response shown — team replies arrive via SSE
+        return;
+      }
+
+      // ── Normal AI message ─────────────────────────────────────────────────
       const userIntent = messages.length === 1 ? detectUserIntent(userMessage) : undefined;
-      // Always include credentials so smart link prefill data (name/email in URLs) is never empty.
-      // contactId/conversationId are passed when available to skip re-creation in the API.
       const payload: Record<string, unknown> = {
         message: userMessage,
         history: messages,
@@ -154,17 +213,31 @@ export default function FloatingChat() {
         payload.contactId = contactId;
         payload.conversationId = conversationId;
       }
-      const response = await fetch('/api/groq/ai-chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+
+      const response = await fetch('/api/groq/ai-chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
       if (!response.ok) throw new Error('Failed to get response');
       const data = await response.json();
+
       if (data.contactId) setContactId(data.contactId);
       if (data.conversationId) setConversationId(data.conversationId);
-      if (data.handover) { setHasHandedOver(true); setMessages(prev => [...prev, { role: 'assistant', content: data.message, isHandover: true, smartLinks: data.smartLinks }]); }
-      else setMessages(prev => [...prev, { role: 'assistant', content: data.message, smartLinks: data.smartLinks }]);
+
+      if (data.handover) {
+        setHasHandedOver(true);
+        if (data.telegramHandoverMessageId) setHandoverTelegramMsgId(data.telegramHandoverMessageId);
+        setMessages(prev => [...prev, { role: 'assistant', content: data.message, isHandover: true, smartLinks: data.smartLinks }]);
+      } else {
+        setMessages(prev => [...prev, { role: 'assistant', content: data.message, smartLinks: data.smartLinks }]);
+      }
     } catch (error) {
       console.error('Chat error:', error);
       setMessages(prev => [...prev, { role: 'assistant', content: `Sorry, I encountered an error. Please try again or contact support at support@recxchange.io` }]);
-    } finally { setIsLoading(false); }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   if (!isVisible) return null;
@@ -184,7 +257,7 @@ export default function FloatingChat() {
                     <h3 className="text-white font-bold text-sm">{assistantName} — RecXchange</h3>
                     <p className="text-gray-400 text-xs flex items-center gap-1">
                       <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                      Team Member {hasHandedOver && '→ Live Agent'}
+                      {hasHandedOver ? 'Live Agent' : 'Team Member'}
                     </p>
                   </div>
                   <button onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-white transition-colors p-1.5 rounded-lg hover:bg-white/10 touch-manipulation">
@@ -242,17 +315,26 @@ export default function FloatingChat() {
               </div>
               {!showUserForm && (
                 <div className="p-3 sm:p-4 border-t border-cyan-400/20 flex-shrink-0 bg-[#0a0a0f]/95">
-                  {hasHandedOver ? <div className="text-center py-2 text-gray-400 text-xs">Our team has been notified and will be in touch shortly</div> : (
-                    <div className="flex gap-2">
-                      <input type="text" value={inputValue} onChange={(e) => setInputValue(e.target.value)} onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                        placeholder="Type your message..." className="flex-1 bg-white/10 border border-white/20 rounded-lg px-3 py-2.5 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 touch-manipulation" disabled={isLoading} />
-                      <button onClick={handleSendMessage} disabled={!inputValue.trim() || isLoading}
-                        className="px-4 py-2.5 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-lg text-white font-medium hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all touch-manipulation active:scale-95 flex-shrink-0">
-                        <Send className="w-4 h-4" />
-                      </button>
-                    </div>
-                  )}
-                  <p className="text-gray-500 text-[9px] text-center mt-2">Say "speak to human" to connect with a live agent</p>
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      value={inputValue}
+                      onChange={(e) => setInputValue(e.target.value)}
+                      onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                      placeholder={hasHandedOver ? 'Ask the team a question...' : 'Type your message...'}
+                      className="flex-1 bg-white/10 border border-white/20 rounded-lg px-3 py-2.5 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 touch-manipulation"
+                      disabled={isLoading}
+                    />
+                    <button
+                      onClick={handleSendMessage}
+                      disabled={!inputValue.trim() || isLoading}
+                      className="px-4 py-2.5 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-lg text-white font-medium hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all touch-manipulation active:scale-95 flex-shrink-0">
+                      <Send className="w-4 h-4" />
+                    </button>
+                  </div>
+                  <p className="text-gray-500 text-[9px] text-center mt-2">
+                    {hasHandedOver ? 'You are connected to a live agent' : 'Say "speak to human" to connect with a live agent'}
+                  </p>
                 </div>
               )}
             </motion.div>

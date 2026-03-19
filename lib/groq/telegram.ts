@@ -1,19 +1,29 @@
 /**
  * Telegram Bot notifications for Groq AI chat handovers.
  *
- * When the AI detects a handover intent (user requests a human, or the AI
- * signals escalation via [handover] tag) this module fires a structured
- * message to the configured Telegram chat so a human team member can
- * follow up directly with the lead.
+ * Outbound: sends structured handover notifications to the Telegram chat.
+ * Inbound: the telegram-webhook route receives replies from the team and
+ *          routes them to the SSE stream so they appear in the website chat.
  *
  * Environment variables required:
  *   TELEGRAM_BOT_TOKEN — bot token from @BotFather
  *   TELEGRAM_CHAT_ID   — chat/channel ID the bot posts into
+ *
+ * To enable two-way Telegram replies, register the webhook once:
+ *   curl "https://api.telegram.org/bot<TOKEN>/setWebhook?url=https://recxchange.io/api/groq/telegram-webhook"
  */
 
 import type { ConversationMessage } from './types';
 
 const TELEGRAM_API = 'https://api.telegram.org';
+
+/**
+ * Maps Telegram message_id → GHL conversationId.
+ * Used by the telegram-webhook route to route team replies to the correct SSE stream.
+ * All messages we send (handover + follow-ups) are stored here so the team can
+ * reply to any message in the thread and it routes to the right conversation.
+ */
+export const telegramMessageToConversation = new Map<number, string>();
 
 export interface HandoverContext {
   name?: string;
@@ -27,21 +37,22 @@ export interface HandoverContext {
   aiResponse: string;
   /** Recent conversation history from GHL — may be empty on first message */
   history?: ConversationMessage[];
+  /** GHL conversationId — stored against the Telegram message_id for reply routing */
+  conversationId?: string;
 }
 
 /**
  * Sends a handover notification to the configured Telegram chat.
- *
- * Always non-fatal — logs errors but never throws, so the Groq response
- * is returned to the user regardless of Telegram availability.
+ * Returns the Telegram message_id so follow-up messages can be threaded against it.
+ * Always non-fatal — logs errors but never throws.
  */
-export async function sendTelegramHandover(ctx: HandoverContext): Promise<void> {
+export async function sendTelegramHandover(ctx: HandoverContext): Promise<number | null> {
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
 
   if (!token || !chatId) {
     console.error('[Telegram] TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID not configured — skipping handover notification');
-    return;
+    return null;
   }
 
   const personaLabel = ctx.persona === 'hiring-manager' ? 'Hiring Manager' : 'Recruiter';
@@ -90,6 +101,8 @@ export async function sendTelegramHandover(ctx: HandoverContext): Promise<void> 
     parts.push(historySnippet);
   }
 
+  parts.push('', '↩️ <i>Reply to this message to respond directly in the website chat.</i>');
+
   const text = parts.join('\n');
 
   try {
@@ -106,11 +119,70 @@ export async function sendTelegramHandover(ctx: HandoverContext): Promise<void> 
     if (!res.ok) {
       const err = await res.json().catch(() => null);
       console.error('[Telegram] Failed to send handover notification:', res.status, err);
+      return null;
+    }
+
+    const result = await res.json();
+    const messageId: number | undefined = result?.result?.message_id;
+
+    if (messageId && ctx.conversationId) {
+      telegramMessageToConversation.set(messageId, ctx.conversationId);
+      console.log('[Telegram] ✓ Handover sent. Stored mapping: Telegram msgId', messageId, '→ conversationId', ctx.conversationId);
     } else {
       console.log('[Telegram] ✓ Handover notification sent to chat', chatId);
     }
+
+    return messageId ?? null;
   } catch (err) {
     console.error('[Telegram] Error sending handover notification:', err);
+    return null;
+  }
+}
+
+/**
+ * Forwards a post-handover user message to Telegram as a reply to the original
+ * handover notification so the team sees it in the same thread.
+ * Also stores the new message_id → conversationId mapping so team replies
+ * to follow-up messages are also routed correctly.
+ */
+export async function forwardUserMessageToTelegram(
+  conversationId: string,
+  userName: string,
+  userMessage: string,
+  replyToMessageId: number,
+): Promise<void> {
+  const token = process.env.TELEGRAM_BOT_TOKEN;
+  const chatId = process.env.TELEGRAM_CHAT_ID;
+
+  if (!token || !chatId) return;
+
+  const text = `💬 <b>${escapeHtml(userName)}:</b>\n${escapeHtml(userMessage.substring(0, 1000))}`;
+
+  try {
+    const res = await fetch(`${TELEGRAM_API}/bot${token}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text,
+        parse_mode: 'HTML',
+        reply_to_message_id: replyToMessageId,
+      }),
+    });
+
+    if (res.ok) {
+      const result = await res.json();
+      const msgId: number | undefined = result?.result?.message_id;
+      if (msgId) {
+        // Map this reply too so team can reply to any message in the thread
+        telegramMessageToConversation.set(msgId, conversationId);
+      }
+      console.log('[Telegram] ✓ Forwarded user message to thread');
+    } else {
+      console.warn('[Telegram] Failed to forward user message:', res.status);
+    }
+  } catch (err) {
+    console.error('[Telegram] Error forwarding user message:', err);
   }
 }
 

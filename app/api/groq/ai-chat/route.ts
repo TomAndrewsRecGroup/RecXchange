@@ -6,7 +6,7 @@ import Groq from 'groq-sdk';
 import { GROQ_CONFIG, buildContextPrompt, type AssistantName } from '@/lib/groq/config';
 import { validateChatInputs } from '@/lib/groq/validation';
 import { performSecurityCheck, sanitizeAIResponse, logSecurityEvent } from '@/lib/groq/security';
-import { sendTelegramHandover } from '@/lib/groq/telegram';
+import { sendTelegramHandover, forwardUserMessageToTelegram } from '@/lib/groq/telegram';
 import type { 
   ConversationMessage, 
   SmartLinkData, 
@@ -231,22 +231,66 @@ async function getConversationHistory(
 // ─── Handover Detection ──────────────────────────────────────────────────────
 /**
  * Detects whether a conversation should be handed over to a live agent.
- * Checks both the user's message (explicit request) and the AI response
- * (model-signalled escalation via [handover] tag or escalation language).
+ *
+ * Escalation is only triggered in these specific scenarios:
+ * 1. Recruiter explicitly wants to upgrade to Lite or Entry tier.
+ * 2. Hiring Manager explicitly prefers speaking to someone over booking a meeting.
+ * 3. AI model signals escalation via [handover] tag (safety net).
  */
-const HANDOVER_TRIGGERS = [
-  'speak to human', 'speak to a human', 'speak to a person', 'talk to human',
-  'talk to a person', 'talk to someone', 'live agent', 'real person', 'human agent',
-  'i need a person', 'connect me to', 'escalate', 'i want to speak to',
-  'can i speak to', 'get me a human', 'actual person',
-];
+function detectHandover(
+  userMessage: string,
+  aiResponse: string,
+  persona: 'recruiter' | 'hiring-manager',
+): boolean {
+  const lower = userMessage.toLowerCase();
 
-function detectHandover(userMessage: string, aiResponse: string): boolean {
-  const lowerMsg = userMessage.toLowerCase();
-  const lowerResp = aiResponse.toLowerCase();
-  const userRequestsHandover = HANDOVER_TRIGGERS.some(t => lowerMsg.includes(t));
-  const aiSignalsHandover = lowerResp.includes('[handover]') || lowerResp.includes('connecting you to');
-  return userRequestsHandover || aiSignalsHandover;
+  // AI model explicitly signalled escalation
+  if (aiResponse.toLowerCase().includes('[handover]')) return true;
+
+  // Recruiter: explicit upgrade intent for Lite tier
+  const wantsLite =
+    lower.includes('upgrade to lite') ||
+    lower.includes('sign up for lite') ||
+    lower.includes('join lite') ||
+    lower.includes('get lite') ||
+    lower.includes('lite plan') ||
+    lower.includes('lite membership') ||
+    lower.includes('buy lite') ||
+    (lower.includes('lite') && (lower.includes('upgrade') || lower.includes('sign up') || lower.includes('join') || lower.includes('ready') || lower.includes('start')));
+
+  // Recruiter: explicit upgrade intent for Entry tier
+  const wantsEntry =
+    lower.includes('upgrade to entry') ||
+    lower.includes('sign up for entry') ||
+    lower.includes('join entry') ||
+    lower.includes('get entry') ||
+    lower.includes('entry plan') ||
+    lower.includes('entry membership') ||
+    lower.includes('buy entry') ||
+    (lower.includes('entry') && (lower.includes('upgrade') || lower.includes('sign up') || lower.includes('join') || lower.includes('ready') || lower.includes('start')));
+
+  if (wantsLite || wantsEntry) return true;
+
+  // Hiring Manager: explicitly prefers speaking to someone over booking a meeting
+  if (persona === 'hiring-manager') {
+    const prefersHuman =
+      lower.includes('rather speak') ||
+      lower.includes('prefer to speak') ||
+      lower.includes('speak to someone') ||
+      lower.includes('speak to a human') ||
+      lower.includes('speak to human') ||
+      lower.includes('talk to someone') ||
+      lower.includes('talk to a human') ||
+      lower.includes('talk to human') ||
+      lower.includes('rather than booking') ||
+      lower.includes('rather than a meeting') ||
+      lower.includes('instead of booking') ||
+      lower.includes('rather not book') ||
+      lower.includes('prefer not to book');
+    if (prefersHuman) return true;
+  }
+
+  return false;
 }
 
 // ─── Parse Smart Links from AI Response ────────────────────────────────────
@@ -371,6 +415,8 @@ export async function POST(req: NextRequest) {
       contactId: existingContactId,
       pageContext,
       assistantName,
+      isHandover,
+      telegramHandoverMessageId,
     } = body;
 
     const isFirstMessage = !existingContactId;
@@ -446,12 +492,36 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Get conversation history — already handles failures internally (returns [])
-    const history = conversationId ? await getConversationHistory(conversationId) : [];
-
     // Resolve persona — validation passes it through when provided; fall back to
     // 'recruiter' so callGroqAI always has a valid value for prompt building.
     const resolvedPersona: 'recruiter' | 'hiring-manager' = validatedData.persona ?? 'recruiter';
+
+    // ── Post-handover message: skip Groq, log to GHL, forward to Telegram thread ─
+    if (isHandover && conversationId) {
+      console.log('[Groq AI Chat] Post-handover message — forwarding to Telegram thread');
+      if (conversationId) {
+        await logMessageToGHL(conversationId, validatedData.message, 'inbound');
+      }
+      if (telegramHandoverMessageId && typeof telegramHandoverMessageId === 'number') {
+        await forwardUserMessageToTelegram(
+          conversationId,
+          validatedData.name || 'Visitor',
+          validatedData.message,
+          telegramHandoverMessageId,
+        );
+      }
+      const elapsed = Date.now() - startTime;
+      console.log(`[Groq AI Chat] ✓ Post-handover message forwarded in ${elapsed}ms`);
+      return NextResponse.json({
+        success: true,
+        contactId: contactId ?? '',
+        conversationId: conversationId ?? '',
+        message: '',
+      } as ChatSuccessResponse);
+    }
+
+    // Get conversation history — already handles failures internally (returns [])
+    const history = conversationId ? await getConversationHistory(conversationId) : [];
 
     // Call Groq AI — pass through the session assistant name
     console.log('[Groq AI Chat] → Calling Groq AI');
@@ -467,20 +537,26 @@ export async function POST(req: NextRequest) {
     const sanitizedResponse = sanitizeAIResponse(aiResponse);
 
     // Detect handover before parsing smart links
-    const handover = detectHandover(validatedData.message, sanitizedResponse);
+    const handover = detectHandover(validatedData.message, sanitizedResponse, resolvedPersona);
+    let telegramMsgId: number | null = null;
     if (handover) {
       console.log('[Groq AI Chat] Handover triggered — notifying via Telegram');
-      // Fire-and-forget: Telegram delivery must not block the Groq response
-      sendTelegramHandover({
-        name: validatedData.name,
-        email: validatedData.email,
-        persona: resolvedPersona,
-        companyName: validatedData.companyName,
-        pageContext: validatedData.pageContext,
-        userMessage: validatedData.message,
-        aiResponse: sanitizedResponse,
-        history,
-      }).catch(err => console.error('[Groq AI Chat] Telegram handover notification failed:', err));
+      // Await so we capture the message_id for reply threading
+      try {
+        telegramMsgId = await sendTelegramHandover({
+          name: validatedData.name,
+          email: validatedData.email,
+          persona: resolvedPersona,
+          companyName: validatedData.companyName,
+          pageContext: validatedData.pageContext,
+          userMessage: validatedData.message,
+          aiResponse: sanitizedResponse,
+          history,
+          conversationId: conversationId ?? undefined,
+        });
+      } catch (err) {
+        console.error('[Groq AI Chat] Telegram handover notification failed:', err);
+      }
     }
 
     // Parse smart links from response
@@ -513,6 +589,7 @@ export async function POST(req: NextRequest) {
       message: cleanResponse,
       smartLinks: smartLinks.length > 0 ? smartLinks : undefined,
       handover: handover || undefined,
+      telegramHandoverMessageId: telegramMsgId ?? undefined,
     } as ChatSuccessResponse);
     
   } catch (err) {
