@@ -57,6 +57,8 @@ export interface ChatSuccessResponse {
   conversationId: string;
   message: string;
   smartLinks?: SmartLinkData[];
+  /** Set to true when the conversation is being escalated to a live agent */
+  handover?: boolean;
 }
 
 /**

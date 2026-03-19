@@ -209,6 +209,27 @@ async function getConversationHistory(
   }
 }
 
+// ─── Handover Detection ──────────────────────────────────────────────────────
+/**
+ * Detects whether a conversation should be handed over to a live agent.
+ * Checks both the user's message (explicit request) and the AI response
+ * (model-signalled escalation via [handover] tag or escalation language).
+ */
+const HANDOVER_TRIGGERS = [
+  'speak to human', 'speak to a human', 'speak to a person', 'talk to human',
+  'talk to a person', 'talk to someone', 'live agent', 'real person', 'human agent',
+  'i need a person', 'connect me to', 'escalate', 'i want to speak to',
+  'can i speak to', 'get me a human', 'actual person',
+];
+
+function detectHandover(userMessage: string, aiResponse: string): boolean {
+  const lowerMsg = userMessage.toLowerCase();
+  const lowerResp = aiResponse.toLowerCase();
+  const userRequestsHandover = HANDOVER_TRIGGERS.some(t => lowerMsg.includes(t));
+  const aiSignalsHandover = lowerResp.includes('[handover]') || lowerResp.includes('connecting you to');
+  return userRequestsHandover || aiSignalsHandover;
+}
+
 // ─── Parse Smart Links from AI Response ────────────────────────────────────
 function parseSmartLinks(
   response: string, 
@@ -282,8 +303,8 @@ async function callGroqAI(
   console.log('[Groq AI Chat] Page context:', pageContext);
   console.log('[Groq AI Chat] Assistant name:', assistantName);
   
-  // Build context-aware system message using secure config, injecting assistant name
-  const contextPrompt = buildContextPrompt(persona, pageContext, conversationHistory.length, assistantName);
+  // Build context-aware system message with grounded knowledge injected
+  const contextPrompt = buildContextPrompt(persona, pageContext, conversationHistory.length, assistantName, message);
   
   // Build messages array with limited history
   const messages: ConversationMessage[] = [
@@ -413,6 +434,12 @@ export async function POST(req: NextRequest) {
     // Sanitize AI response to prevent data leakage
     const sanitizedResponse = sanitizeAIResponse(aiResponse);
 
+    // Detect handover before parsing smart links
+    const handover = detectHandover(validatedData.message, sanitizedResponse);
+    if (handover) {
+      console.log('[Groq AI Chat] Handover triggered');
+    }
+
     // Parse smart links from response
     const { cleanResponse, smartLinks } = parseSmartLinks(
       sanitizedResponse,
@@ -420,7 +447,7 @@ export async function POST(req: NextRequest) {
       validatedData.email || '',
       validatedData.companyName || ''
     );
-    
+
     console.log('[Groq AI Chat] Found', smartLinks.length, 'smart links');
 
     // Log both messages to GHL for CRM tracking
@@ -438,6 +465,7 @@ export async function POST(req: NextRequest) {
       conversationId,
       message: cleanResponse,
       smartLinks: smartLinks.length > 0 ? smartLinks : undefined,
+      handover: handover || undefined,
     } as ChatSuccessResponse);
     
   } catch (err) {
