@@ -21,6 +21,17 @@ export function pickAssistantName(): AssistantName {
   return ASSISTANT_NAMES[Math.floor(Math.random() * ASSISTANT_NAMES.length)];
 }
 
+// ─── KNOWLEDGE BASE (SOURCE OF TRUTH - PASTE FULL PAGES) ────────────────────────
+export const KNOWLEDGE_BASE = {
+  faq: `https://www.recxchange.io/faq`,
+  pricing: `https://www.recxchange.io/pricing`,
+  why: `https://www.recxchange.io/why-recxchange`,
+  recruiter: `https://www.recxchange.io/recruiter`,
+  hiringManager: `https://www.recxchange.io/hiring-manager-home`,
+  splitFees: `https://www.recxchange.io/split-fees`,
+  collaboration: `https://www.recxchange.io/collaboration`,
+} as const;
+
 // ─── System prompt ───────────────────────────────────────────────────────────
 export const SYSTEM_PROMPT = [
   'You are {ASSISTANT_NAME}, a helpful team member at RecXchange.',
@@ -160,22 +171,21 @@ export const RESTRICTED_TOPICS = [
   'revenue',
 ] as const;
 
-// ─── Pricing info ────────────────────────────────────────────────────────────
+// ─── Pricing info (UPDATED - aligned with knowledge-first approach) ─────────────
 export const PRICING_INFO = {
   recruiter: {
+    Entry: {
+      note: 'Refer to pricing page for full details.',
+    },
     lite: {
-      price: 'Free',
-      split: '50% split on RecX Direct roles',
-      features: ['Access to live roles', 'Standard support', 'Basic collaboration tools'],
+      note: 'Refer to pricing page for full details.',
     },
     pro: {
-      price: '\u00a399/month',
-      split: '70% split on RecX Direct roles',
-      features: ['Priority role access', 'Premium support', 'Advanced analytics', 'Higher split fees'],
+      note: 'Refer to pricing page for full details.',
     },
   },
   hiringManager: {
-    note: 'Pricing is customized based on hiring needs. Encourage booking a discovery call.',
+    note: 'Pricing is tailored. Encourage booking a discovery call.',
   },
 } as const;
 
