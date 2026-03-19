@@ -135,9 +135,15 @@ export default function ContactPage() {
         payload.conversationId = conversationId;
       }
       const response = await fetch('/api/groq/ai-chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-      if (!response.ok) throw new Error('Failed to get response');
+      if (!response.ok) {
+        const errorBody = await response.json().catch(() => null);
+        const reason = errorBody?.message || errorBody?.error || `HTTP ${response.status}`;
+        console.error('[ContactPage] API error:', response.status, errorBody);
+        throw new Error(reason);
+      }
       const data = await response.json();
-      if (data.contactId)     setContactId(data.contactId);
+      // Only persist non-empty IDs returned by the API
+      if (data.contactId)      setContactId(data.contactId);
       if (data.conversationId) setConversationId(data.conversationId);
       if (data.handover) {
         setHasHandedOver(true);
@@ -145,8 +151,9 @@ export default function ContactPage() {
       } else {
         setMessages(prev => [...prev, { role: 'assistant', content: data.message, smartLinks: data.smartLinks }]);
       }
-    } catch {
-      setMessages(prev => [...prev, { role: 'assistant', content: 'Sorry, I encountered an error. Please try again or contact support at support@recxchange.io' }]);
+    } catch (err) {
+      console.error('[ContactPage] handleSendMessage error:', err);
+      setMessages(prev => [...prev, { role: 'assistant', content: 'Sorry, I ran into an issue. Please try again or email support@recxchange.io' }]);
     } finally {
       setIsLoading(false);
     }

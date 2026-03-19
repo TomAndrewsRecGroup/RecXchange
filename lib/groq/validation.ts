@@ -307,17 +307,36 @@ export function validateChatInputs(
     };
   }
   
-  // For subsequent messages, only message is required
+  // For subsequent messages, only message is required.
+  // Validate and pass through any credentials the client sends so that:
+  //   a) callGroqAI always has a persona for context-aware prompting
+  //   b) parseSmartLinks always has name/email for prefill URLs
   const pageContextValidation = validatePageContext(inputs.pageContext);
   if (!pageContextValidation.valid) {
     return { valid: false, error: pageContextValidation.error };
   }
-  
-  return {
-    valid: true,
-    data: {
-      message: messageValidation.sanitized!,
-      pageContext: pageContextValidation.sanitized!,
-    },
+
+  const result: ValidatedChatInputs = {
+    message: messageValidation.sanitized!,
+    pageContext: pageContextValidation.sanitized!,
   };
+
+  if (inputs.name) {
+    const v = validateName(inputs.name);
+    if (v.valid) result.name = v.sanitized;
+  }
+  if (inputs.email) {
+    const v = validateEmail(inputs.email);
+    if (v.valid) result.email = v.sanitized;
+  }
+  if (inputs.persona) {
+    const v = validatePersona(inputs.persona);
+    if (v.valid) result.persona = v.sanitized as UserPersona;
+  }
+  if (inputs.companyName) {
+    const v = validateCompanyName(inputs.companyName);
+    if (v.valid) result.companyName = v.sanitized;
+  }
+
+  return { valid: true, data: result };
 }

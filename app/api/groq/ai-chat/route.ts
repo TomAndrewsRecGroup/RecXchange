@@ -29,107 +29,125 @@ const ghlHeaders = {
 const groq = new Groq({ apiKey: GROQ_API_KEY });
 
 // ─── Upsert Contact ─────────────────────────────────────────────────────────
+/**
+ * Creates or retrieves a GHL contact.
+ * Returns null if GHL is unavailable — the caller must handle this gracefully
+ * so the Groq call can still proceed even when CRM is down.
+ */
 async function upsertContact(
   name: string,
   email: string,
   persona: 'recruiter' | 'hiring-manager',
   companyName?: string,
   pageContext?: string
-): Promise<string> {
+): Promise<string | null> {
   const firstName = name.split(' ')[0] || name;
   const lastName = name.split(' ').slice(1).join(' ') || '';
 
   console.log('[Groq AI Chat] Upserting contact:', { email, firstName, lastName });
 
-  const searchUrl = `${GHL_BASE}/contacts/search/duplicate?locationId=${LOCATION_ID}&email=${encodeURIComponent(email)}`;
-  const search = await fetch(searchUrl, { headers: ghlHeaders });
-  const searchData = await search.json();
-  
-  if (searchData?.contact?.id) {
-    const contactId = searchData.contact.id;
-    console.log('[Groq AI Chat] Found existing contact:', contactId);
+  try {
+    const searchUrl = `${GHL_BASE}/contacts/search/duplicate?locationId=${LOCATION_ID}&email=${encodeURIComponent(email)}`;
+    const search = await fetch(searchUrl, { headers: ghlHeaders });
+    const searchData = await search.json();
+
+    if (searchData?.contact?.id) {
+      const contactId = searchData.contact.id;
+      console.log('[Groq AI Chat] Found existing contact:', contactId);
+      visitorContactIds.add(contactId);
+      return contactId;
+    }
+
+    const tags = [
+      'ai-chat',
+      persona === 'hiring-manager' ? 'hiring-manager' : 'recruiter',
+      'recxchange-website',
+    ];
+
+    if (pageContext) {
+      tags.push(`page-${pageContext.toLowerCase().replace(/\s+/g, '-')}`);
+    }
+
+    const contactPayload: GHLContactPayload = {
+      locationId: LOCATION_ID,
+      firstName,
+      lastName,
+      email,
+      source: 'RecXchange AI Chat',
+      tags,
+    };
+
+    if (persona === 'hiring-manager' && companyName) {
+      contactPayload.companyName = companyName;
+    }
+
+    const create = await fetch(`${GHL_BASE}/contacts/`, {
+      method: 'POST',
+      headers: ghlHeaders,
+      body: JSON.stringify(contactPayload),
+    });
+
+    const createData = await create.json();
+
+    if (!createData?.contact?.id) {
+      console.warn('[Groq AI Chat] GHL contact creation returned unexpected response:', JSON.stringify(createData));
+      return null;
+    }
+
+    const contactId = createData.contact.id;
     visitorContactIds.add(contactId);
+
+    console.log('[Groq AI Chat] New contact created:', contactId);
     return contactId;
+  } catch (err) {
+    console.error('[Groq AI Chat] GHL upsertContact failed (non-fatal):', err);
+    return null;
   }
-
-  const tags = [
-    'ai-chat',
-    persona === 'hiring-manager' ? 'hiring-manager' : 'recruiter',
-    'recxchange-website',
-  ];
-
-  if (pageContext) {
-    tags.push(`page-${pageContext.toLowerCase().replace(/\s+/g, '-')}`);
-  }
-
-  const contactPayload: GHLContactPayload = {
-    locationId: LOCATION_ID,
-    firstName,
-    lastName,
-    email,
-    source: 'RecXchange AI Chat',
-    tags,
-  };
-
-  if (persona === 'hiring-manager' && companyName) {
-    contactPayload.companyName = companyName;
-  }
-
-  const create = await fetch(`${GHL_BASE}/contacts/`, {
-    method: 'POST',
-    headers: ghlHeaders,
-    body: JSON.stringify(contactPayload),
-  });
-  
-  const createData = await create.json();
-  
-  if (!createData?.contact?.id) {
-    throw new Error(`Failed to create contact: ${JSON.stringify(createData)}`);
-  }
-  
-  const contactId = createData.contact.id;
-  visitorContactIds.add(contactId);
-  
-  console.log('[Groq AI Chat] New contact created:', contactId);
-  return contactId;
 }
 
 // ─── Get or Create Conversation ─────────────────────────────────────────────
+/**
+ * Finds or creates a GHL conversation for a contact.
+ * Returns null if GHL is unavailable — callers skip CRM logging but
+ * still call Groq so the user always gets a response.
+ */
 async function getOrCreateConversation(
   contactId: string
-): Promise<string> {
+): Promise<string | null> {
   console.log('[Groq AI Chat] Getting/creating conversation for contact:', contactId);
-  
-  const search = await fetch(
-    `${GHL_BASE}/conversations/search?locationId=${LOCATION_ID}&contactId=${contactId}`,
-    { headers: ghlHeaders }
-  );
-  const searchData = await search.json();
-  
-  if (searchData?.conversations?.length > 0) {
-    const existingConvId = searchData.conversations[0].id;
-    console.log('[Groq AI Chat] Found existing conversation:', existingConvId);
-    return existingConvId;
-  }
 
-  const create = await fetch(`${GHL_BASE}/conversations/`, {
-    method: 'POST',
-    headers: ghlHeaders,
-    body: JSON.stringify({ 
-      locationId: LOCATION_ID, 
-      contactId,
-    }),
-  });
-  const createData = await create.json();
-  
-  if (!createData?.conversation?.id) {
-    throw new Error(`Failed to create conversation: ${JSON.stringify(createData)}`);
+  try {
+    const search = await fetch(
+      `${GHL_BASE}/conversations/search?locationId=${LOCATION_ID}&contactId=${contactId}`,
+      { headers: ghlHeaders }
+    );
+    const searchData = await search.json();
+
+    if (searchData?.conversations?.length > 0) {
+      const existingConvId = searchData.conversations[0].id;
+      console.log('[Groq AI Chat] Found existing conversation:', existingConvId);
+      return existingConvId;
+    }
+
+    const create = await fetch(`${GHL_BASE}/conversations/`, {
+      method: 'POST',
+      headers: ghlHeaders,
+      body: JSON.stringify({ locationId: LOCATION_ID, contactId }),
+    });
+    const createData = await create.json();
+
+    if (!createData?.conversation?.id) {
+      console.warn('[Groq AI Chat] GHL conversation creation returned unexpected response:', JSON.stringify(createData));
+      return null;
+    }
+
+    const newConvId = createData.conversation.id;
+    console.log('[Groq AI Chat] Created new conversation:', newConvId);
+    return newConvId;
+  } catch (err) {
+    console.error('[Groq AI Chat] GHL getOrCreateConversation failed (non-fatal):', err);
+    return null;
   }
-  
-  const newConvId = createData.conversation.id;
-  console.log('[Groq AI Chat] Created new conversation:', newConvId);
-  
-  return newConvId;
 }
 
 // ─── Log Message to GHL ─────────────────────────────────────────────────────
@@ -376,10 +394,10 @@ export async function POST(req: NextRequest) {
     console.log('[Groq AI Chat] Persona:', validatedData.persona);
     console.log('[Groq AI Chat] Message preview:', validatedData.message.substring(0, 50));
 
-    let contactId = existingContactId;
-    let conversationId = existingConvId;
+    let contactId: string | null = existingContactId ?? null;
+    let conversationId: string | null = existingConvId ?? null;
 
-    // Create/get contact
+    // Create/get contact — non-fatal if GHL is unavailable
     if (!contactId) {
       if (!validatedData.name || !validatedData.email || !validatedData.persona) {
         return NextResponse.json(
@@ -394,18 +412,24 @@ export async function POST(req: NextRequest) {
         validatedData.companyName,
         validatedData.pageContext
       );
+      // contactId may be null if GHL is down — Groq can still respond
+      if (!contactId) {
+        console.warn('[Groq AI Chat] Proceeding without GHL contactId (GHL unavailable)');
+      }
     } else {
       visitorContactIds.add(contactId);
     }
 
     // Perform security checks (rate limiting, injection detection)
-    const securityCheck = performSecurityCheck(validatedData.message, contactId);
+    // Use a session key if GHL couldn't provide a real contactId
+    const securityKey = contactId ?? `anon-${validatedData.email ?? 'unknown'}`;
+    const securityCheck = performSecurityCheck(validatedData.message, securityKey);
     if (!securityCheck.passed) {
       console.warn('[Groq AI Chat] Security check failed:', securityCheck.reason);
-      logSecurityEvent('suspicious_activity', contactId, { reason: securityCheck.reason });
-      
+      if (contactId) logSecurityEvent('suspicious_activity', contactId, { reason: securityCheck.reason });
+
       return NextResponse.json(
-        { 
+        {
           error: 'Request blocked',
           message: securityCheck.reason || 'Your request could not be processed.',
         } as ChatErrorResponse,
@@ -413,19 +437,26 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Create/get conversation
-    if (!conversationId) {
+    // Create/get conversation — non-fatal if GHL is unavailable
+    if (!conversationId && contactId) {
       conversationId = await getOrCreateConversation(contactId);
+      if (!conversationId) {
+        console.warn('[Groq AI Chat] Proceeding without GHL conversationId (GHL unavailable)');
+      }
     }
 
-    // Get conversation history for context
-    const history = await getConversationHistory(conversationId);
+    // Get conversation history — already handles failures internally (returns [])
+    const history = conversationId ? await getConversationHistory(conversationId) : [];
+
+    // Resolve persona — validation passes it through when provided; fall back to
+    // 'recruiter' so callGroqAI always has a valid value for prompt building.
+    const resolvedPersona: 'recruiter' | 'hiring-manager' = validatedData.persona ?? 'recruiter';
 
     // Call Groq AI — pass through the session assistant name
     console.log('[Groq AI Chat] → Calling Groq AI');
     const aiResponse = await callGroqAI(
       validatedData.message,
-      validatedData.persona!,
+      resolvedPersona,
       validatedData.pageContext,
       history,
       assistantName as AssistantName | undefined
@@ -450,19 +481,23 @@ export async function POST(req: NextRequest) {
 
     console.log('[Groq AI Chat] Found', smartLinks.length, 'smart links');
 
-    // Log both messages to GHL for CRM tracking
-    await Promise.all([
-      logMessageToGHL(conversationId, validatedData.message, 'inbound'),
-      logMessageToGHL(conversationId, sanitizedResponse, 'outbound'),
-    ]);
+    // Log to GHL only when we have a real conversation ID
+    if (conversationId) {
+      await Promise.all([
+        logMessageToGHL(conversationId, validatedData.message, 'inbound'),
+        logMessageToGHL(conversationId, sanitizedResponse, 'outbound'),
+      ]);
+    } else {
+      console.warn('[Groq AI Chat] Skipping GHL message logging (no conversationId)');
+    }
 
     const elapsed = Date.now() - startTime;
     console.log(`[Groq AI Chat] ✓ Completed in ${elapsed}ms`);
 
     return NextResponse.json({
       success: true,
-      contactId,
-      conversationId,
+      contactId: contactId ?? '',
+      conversationId: conversationId ?? '',
       message: cleanResponse,
       smartLinks: smartLinks.length > 0 ? smartLinks : undefined,
       handover: handover || undefined,
