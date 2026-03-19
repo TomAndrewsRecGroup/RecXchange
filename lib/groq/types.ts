@@ -57,6 +57,23 @@ export interface ChatSuccessResponse {
   conversationId: string;
   message: string;
   smartLinks?: SmartLinkData[];
+  /** Set to true when the conversation is being escalated to a live agent */
+  handover?: boolean;
+  /** Telegram message ID of the handover notification — used to thread follow-up messages */
+  telegramHandoverMessageId?: number;
+}
+
+/**
+ * Chat API request body (extended)
+ */
+export interface ChatRequestBodyExtended extends ChatRequestBody {
+  /** True when sending a post-handover follow-up (skips Groq, routes to Telegram) */
+  isHandover?: boolean;
+  /** Telegram message ID of the original handover notification for threading */
+  telegramHandoverMessageId?: number;
+  assistantName?: string;
+  userIntent?: string;
+  history?: ConversationMessage[];
 }
 
 /**

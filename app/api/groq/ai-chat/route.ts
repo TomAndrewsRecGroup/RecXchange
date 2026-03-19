@@ -6,6 +6,7 @@ import Groq from 'groq-sdk';
 import { GROQ_CONFIG, buildContextPrompt, type AssistantName } from '@/lib/groq/config';
 import { validateChatInputs } from '@/lib/groq/validation';
 import { performSecurityCheck, sanitizeAIResponse, logSecurityEvent } from '@/lib/groq/security';
+import { sendTelegramHandover, forwardUserMessageToTelegram } from '@/lib/groq/telegram';
 import type { 
   ConversationMessage, 
   SmartLinkData, 
@@ -29,107 +30,125 @@ const ghlHeaders = {
 const groq = new Groq({ apiKey: GROQ_API_KEY });
 
 // ─── Upsert Contact ─────────────────────────────────────────────────────────
+/**
+ * Creates or retrieves a GHL contact.
+ * Returns null if GHL is unavailable — the caller must handle this gracefully
+ * so the Groq call can still proceed even when CRM is down.
+ */
 async function upsertContact(
   name: string,
   email: string,
   persona: 'recruiter' | 'hiring-manager',
   companyName?: string,
   pageContext?: string
-): Promise<string> {
+): Promise<string | null> {
   const firstName = name.split(' ')[0] || name;
   const lastName = name.split(' ').slice(1).join(' ') || '';
 
   console.log('[Groq AI Chat] Upserting contact:', { email, firstName, lastName });
 
-  const searchUrl = `${GHL_BASE}/contacts/search/duplicate?locationId=${LOCATION_ID}&email=${encodeURIComponent(email)}`;
-  const search = await fetch(searchUrl, { headers: ghlHeaders });
-  const searchData = await search.json();
-  
-  if (searchData?.contact?.id) {
-    const contactId = searchData.contact.id;
-    console.log('[Groq AI Chat] Found existing contact:', contactId);
+  try {
+    const searchUrl = `${GHL_BASE}/contacts/search/duplicate?locationId=${LOCATION_ID}&email=${encodeURIComponent(email)}`;
+    const search = await fetch(searchUrl, { headers: ghlHeaders });
+    const searchData = await search.json();
+
+    if (searchData?.contact?.id) {
+      const contactId = searchData.contact.id;
+      console.log('[Groq AI Chat] Found existing contact:', contactId);
+      visitorContactIds.add(contactId);
+      return contactId;
+    }
+
+    const tags = [
+      'ai-chat',
+      persona === 'hiring-manager' ? 'hiring-manager' : 'recruiter',
+      'recxchange-website',
+    ];
+
+    if (pageContext) {
+      tags.push(`page-${pageContext.toLowerCase().replace(/\s+/g, '-')}`);
+    }
+
+    const contactPayload: GHLContactPayload = {
+      locationId: LOCATION_ID,
+      firstName,
+      lastName,
+      email,
+      source: 'RecXchange AI Chat',
+      tags,
+    };
+
+    if (persona === 'hiring-manager' && companyName) {
+      contactPayload.companyName = companyName;
+    }
+
+    const create = await fetch(`${GHL_BASE}/contacts/`, {
+      method: 'POST',
+      headers: ghlHeaders,
+      body: JSON.stringify(contactPayload),
+    });
+
+    const createData = await create.json();
+
+    if (!createData?.contact?.id) {
+      console.warn('[Groq AI Chat] GHL contact creation returned unexpected response:', JSON.stringify(createData));
+      return null;
+    }
+
+    const contactId = createData.contact.id;
     visitorContactIds.add(contactId);
+
+    console.log('[Groq AI Chat] New contact created:', contactId);
     return contactId;
+  } catch (err) {
+    console.error('[Groq AI Chat] GHL upsertContact failed (non-fatal):', err);
+    return null;
   }
-
-  const tags = [
-    'ai-chat',
-    persona === 'hiring-manager' ? 'hiring-manager' : 'recruiter',
-    'recxchange-website',
-  ];
-
-  if (pageContext) {
-    tags.push(`page-${pageContext.toLowerCase().replace(/\s+/g, '-')}`);
-  }
-
-  const contactPayload: GHLContactPayload = {
-    locationId: LOCATION_ID,
-    firstName,
-    lastName,
-    email,
-    source: 'RecXchange AI Chat',
-    tags,
-  };
-
-  if (persona === 'hiring-manager' && companyName) {
-    contactPayload.companyName = companyName;
-  }
-
-  const create = await fetch(`${GHL_BASE}/contacts/`, {
-    method: 'POST',
-    headers: ghlHeaders,
-    body: JSON.stringify(contactPayload),
-  });
-  
-  const createData = await create.json();
-  
-  if (!createData?.contact?.id) {
-    throw new Error(`Failed to create contact: ${JSON.stringify(createData)}`);
-  }
-  
-  const contactId = createData.contact.id;
-  visitorContactIds.add(contactId);
-  
-  console.log('[Groq AI Chat] New contact created:', contactId);
-  return contactId;
 }
 
 // ─── Get or Create Conversation ─────────────────────────────────────────────
+/**
+ * Finds or creates a GHL conversation for a contact.
+ * Returns null if GHL is unavailable — callers skip CRM logging but
+ * still call Groq so the user always gets a response.
+ */
 async function getOrCreateConversation(
   contactId: string
-): Promise<string> {
+): Promise<string | null> {
   console.log('[Groq AI Chat] Getting/creating conversation for contact:', contactId);
-  
-  const search = await fetch(
-    `${GHL_BASE}/conversations/search?locationId=${LOCATION_ID}&contactId=${contactId}`,
-    { headers: ghlHeaders }
-  );
-  const searchData = await search.json();
-  
-  if (searchData?.conversations?.length > 0) {
-    const existingConvId = searchData.conversations[0].id;
-    console.log('[Groq AI Chat] Found existing conversation:', existingConvId);
-    return existingConvId;
-  }
 
-  const create = await fetch(`${GHL_BASE}/conversations/`, {
-    method: 'POST',
-    headers: ghlHeaders,
-    body: JSON.stringify({ 
-      locationId: LOCATION_ID, 
-      contactId,
-    }),
-  });
-  const createData = await create.json();
-  
-  if (!createData?.conversation?.id) {
-    throw new Error(`Failed to create conversation: ${JSON.stringify(createData)}`);
+  try {
+    const search = await fetch(
+      `${GHL_BASE}/conversations/search?locationId=${LOCATION_ID}&contactId=${contactId}`,
+      { headers: ghlHeaders }
+    );
+    const searchData = await search.json();
+
+    if (searchData?.conversations?.length > 0) {
+      const existingConvId = searchData.conversations[0].id;
+      console.log('[Groq AI Chat] Found existing conversation:', existingConvId);
+      return existingConvId;
+    }
+
+    const create = await fetch(`${GHL_BASE}/conversations/`, {
+      method: 'POST',
+      headers: ghlHeaders,
+      body: JSON.stringify({ locationId: LOCATION_ID, contactId }),
+    });
+    const createData = await create.json();
+
+    if (!createData?.conversation?.id) {
+      console.warn('[Groq AI Chat] GHL conversation creation returned unexpected response:', JSON.stringify(createData));
+      return null;
+    }
+
+    const newConvId = createData.conversation.id;
+    console.log('[Groq AI Chat] Created new conversation:', newConvId);
+    return newConvId;
+  } catch (err) {
+    console.error('[Groq AI Chat] GHL getOrCreateConversation failed (non-fatal):', err);
+    return null;
   }
-  
-  const newConvId = createData.conversation.id;
-  console.log('[Groq AI Chat] Created new conversation:', newConvId);
-  
-  return newConvId;
 }
 
 // ─── Log Message to GHL ─────────────────────────────────────────────────────
@@ -209,6 +228,71 @@ async function getConversationHistory(
   }
 }
 
+// ─── Handover Detection ──────────────────────────────────────────────────────
+/**
+ * Detects whether a conversation should be handed over to a live agent.
+ *
+ * Escalation is only triggered in these specific scenarios:
+ * 1. Recruiter explicitly wants to upgrade to Lite or Entry tier.
+ * 2. Hiring Manager explicitly prefers speaking to someone over booking a meeting.
+ * 3. AI model signals escalation via [handover] tag (safety net).
+ */
+function detectHandover(
+  userMessage: string,
+  aiResponse: string,
+  persona: 'recruiter' | 'hiring-manager',
+): boolean {
+  const lower = userMessage.toLowerCase();
+
+  // AI model explicitly signalled escalation
+  if (aiResponse.toLowerCase().includes('[handover]')) return true;
+
+  // Recruiter: explicit upgrade intent for Lite tier
+  const wantsLite =
+    lower.includes('upgrade to lite') ||
+    lower.includes('sign up for lite') ||
+    lower.includes('join lite') ||
+    lower.includes('get lite') ||
+    lower.includes('lite plan') ||
+    lower.includes('lite membership') ||
+    lower.includes('buy lite') ||
+    (lower.includes('lite') && (lower.includes('upgrade') || lower.includes('sign up') || lower.includes('join') || lower.includes('ready') || lower.includes('start')));
+
+  // Recruiter: explicit upgrade intent for Entry tier
+  const wantsEntry =
+    lower.includes('upgrade to entry') ||
+    lower.includes('sign up for entry') ||
+    lower.includes('join entry') ||
+    lower.includes('get entry') ||
+    lower.includes('entry plan') ||
+    lower.includes('entry membership') ||
+    lower.includes('buy entry') ||
+    (lower.includes('entry') && (lower.includes('upgrade') || lower.includes('sign up') || lower.includes('join') || lower.includes('ready') || lower.includes('start')));
+
+  if (wantsLite || wantsEntry) return true;
+
+  // Hiring Manager: explicitly prefers speaking to someone over booking a meeting
+  if (persona === 'hiring-manager') {
+    const prefersHuman =
+      lower.includes('rather speak') ||
+      lower.includes('prefer to speak') ||
+      lower.includes('speak to someone') ||
+      lower.includes('speak to a human') ||
+      lower.includes('speak to human') ||
+      lower.includes('talk to someone') ||
+      lower.includes('talk to a human') ||
+      lower.includes('talk to human') ||
+      lower.includes('rather than booking') ||
+      lower.includes('rather than a meeting') ||
+      lower.includes('instead of booking') ||
+      lower.includes('rather not book') ||
+      lower.includes('prefer not to book');
+    if (prefersHuman) return true;
+  }
+
+  return false;
+}
+
 // ─── Parse Smart Links from AI Response ────────────────────────────────────
 function parseSmartLinks(
   response: string, 
@@ -253,7 +337,7 @@ function parseSmartLinks(
         break;
       
       case 'book-meeting':
-        url = '/book-meeting';
+        url = 'https://link.gohighlevel.com/widget/booking/xp9zWAV1rz40w5WdPSTi';
         break;
     }
     
@@ -282,8 +366,8 @@ async function callGroqAI(
   console.log('[Groq AI Chat] Page context:', pageContext);
   console.log('[Groq AI Chat] Assistant name:', assistantName);
   
-  // Build context-aware system message using secure config, injecting assistant name
-  const contextPrompt = buildContextPrompt(persona, pageContext, conversationHistory.length, assistantName);
+  // Build context-aware system message with grounded knowledge injected
+  const contextPrompt = buildContextPrompt(persona, pageContext, conversationHistory.length, assistantName, message);
   
   // Build messages array with limited history
   const messages: ConversationMessage[] = [
@@ -331,6 +415,8 @@ export async function POST(req: NextRequest) {
       contactId: existingContactId,
       pageContext,
       assistantName,
+      isHandover,
+      telegramHandoverMessageId,
     } = body;
 
     const isFirstMessage = !existingContactId;
@@ -355,10 +441,10 @@ export async function POST(req: NextRequest) {
     console.log('[Groq AI Chat] Persona:', validatedData.persona);
     console.log('[Groq AI Chat] Message preview:', validatedData.message.substring(0, 50));
 
-    let contactId = existingContactId;
-    let conversationId = existingConvId;
+    let contactId: string | null = existingContactId ?? null;
+    let conversationId: string | null = existingConvId ?? null;
 
-    // Create/get contact
+    // Create/get contact — non-fatal if GHL is unavailable
     if (!contactId) {
       if (!validatedData.name || !validatedData.email || !validatedData.persona) {
         return NextResponse.json(
@@ -373,18 +459,24 @@ export async function POST(req: NextRequest) {
         validatedData.companyName,
         validatedData.pageContext
       );
+      // contactId may be null if GHL is down — Groq can still respond
+      if (!contactId) {
+        console.warn('[Groq AI Chat] Proceeding without GHL contactId (GHL unavailable)');
+      }
     } else {
       visitorContactIds.add(contactId);
     }
 
     // Perform security checks (rate limiting, injection detection)
-    const securityCheck = performSecurityCheck(validatedData.message, contactId);
+    // Use a session key if GHL couldn't provide a real contactId
+    const securityKey = contactId ?? `anon-${validatedData.email ?? 'unknown'}`;
+    const securityCheck = performSecurityCheck(validatedData.message, securityKey);
     if (!securityCheck.passed) {
       console.warn('[Groq AI Chat] Security check failed:', securityCheck.reason);
-      logSecurityEvent('suspicious_activity', contactId, { reason: securityCheck.reason });
-      
+      if (contactId) logSecurityEvent('suspicious_activity', contactId, { reason: securityCheck.reason });
+
       return NextResponse.json(
-        { 
+        {
           error: 'Request blocked',
           message: securityCheck.reason || 'Your request could not be processed.',
         } as ChatErrorResponse,
@@ -392,19 +484,48 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Create/get conversation
-    if (!conversationId) {
+    // Create/get conversation — non-fatal if GHL is unavailable
+    if (!conversationId && contactId) {
       conversationId = await getOrCreateConversation(contactId);
+      if (!conversationId) {
+        console.warn('[Groq AI Chat] Proceeding without GHL conversationId (GHL unavailable)');
+      }
     }
 
-    // Get conversation history for context
-    const history = await getConversationHistory(conversationId);
+    // Resolve persona — validation passes it through when provided; fall back to
+    // 'recruiter' so callGroqAI always has a valid value for prompt building.
+    const resolvedPersona: 'recruiter' | 'hiring-manager' = validatedData.persona ?? 'recruiter';
+
+    // ── Post-handover message: skip Groq, log to GHL, forward to Telegram thread ─
+    if (isHandover && conversationId) {
+      console.log('[Groq AI Chat] Post-handover message — forwarding to Telegram thread');
+      await logMessageToGHL(conversationId, validatedData.message, 'inbound');
+      if (telegramHandoverMessageId && typeof telegramHandoverMessageId === 'number') {
+        await forwardUserMessageToTelegram(
+          conversationId,
+          validatedData.name || 'Visitor',
+          validatedData.message,
+          telegramHandoverMessageId,
+        );
+      }
+      const elapsed = Date.now() - startTime;
+      console.log(`[Groq AI Chat] ✓ Post-handover message forwarded in ${elapsed}ms`);
+      return NextResponse.json({
+        success: true,
+        contactId: contactId ?? '',
+        conversationId: conversationId ?? '',
+        message: '',
+      } as ChatSuccessResponse);
+    }
+
+    // Get conversation history — already handles failures internally (returns [])
+    const history = conversationId ? await getConversationHistory(conversationId) : [];
 
     // Call Groq AI — pass through the session assistant name
     console.log('[Groq AI Chat] → Calling Groq AI');
     const aiResponse = await callGroqAI(
       validatedData.message,
-      validatedData.persona!,
+      resolvedPersona,
       validatedData.pageContext,
       history,
       assistantName as AssistantName | undefined
@@ -413,6 +534,29 @@ export async function POST(req: NextRequest) {
     // Sanitize AI response to prevent data leakage
     const sanitizedResponse = sanitizeAIResponse(aiResponse);
 
+    // Detect handover before parsing smart links
+    const handover = detectHandover(validatedData.message, sanitizedResponse, resolvedPersona);
+    let telegramMsgId: number | null = null;
+    if (handover) {
+      console.log('[Groq AI Chat] Handover triggered — notifying via Telegram');
+      // Await so we capture the message_id for reply threading
+      try {
+        telegramMsgId = await sendTelegramHandover({
+          name: validatedData.name,
+          email: validatedData.email,
+          persona: resolvedPersona,
+          companyName: validatedData.companyName,
+          pageContext: validatedData.pageContext,
+          userMessage: validatedData.message,
+          aiResponse: sanitizedResponse,
+          history,
+          conversationId: conversationId ?? undefined,
+        });
+      } catch (err) {
+        console.error('[Groq AI Chat] Telegram handover notification failed:', err);
+      }
+    }
+
     // Parse smart links from response
     const { cleanResponse, smartLinks } = parseSmartLinks(
       sanitizedResponse,
@@ -420,24 +564,30 @@ export async function POST(req: NextRequest) {
       validatedData.email || '',
       validatedData.companyName || ''
     );
-    
+
     console.log('[Groq AI Chat] Found', smartLinks.length, 'smart links');
 
-    // Log both messages to GHL for CRM tracking
-    await Promise.all([
-      logMessageToGHL(conversationId, validatedData.message, 'inbound'),
-      logMessageToGHL(conversationId, sanitizedResponse, 'outbound'),
-    ]);
+    // Log to GHL only when we have a real conversation ID
+    if (conversationId) {
+      await Promise.all([
+        logMessageToGHL(conversationId, validatedData.message, 'inbound'),
+        logMessageToGHL(conversationId, sanitizedResponse, 'outbound'),
+      ]);
+    } else {
+      console.warn('[Groq AI Chat] Skipping GHL message logging (no conversationId)');
+    }
 
     const elapsed = Date.now() - startTime;
     console.log(`[Groq AI Chat] ✓ Completed in ${elapsed}ms`);
 
     return NextResponse.json({
       success: true,
-      contactId,
-      conversationId,
+      contactId: contactId ?? '',
+      conversationId: conversationId ?? '',
       message: cleanResponse,
       smartLinks: smartLinks.length > 0 ? smartLinks : undefined,
+      handover: handover || undefined,
+      telegramHandoverMessageId: telegramMsgId ?? undefined,
     } as ChatSuccessResponse);
     
   } catch (err) {

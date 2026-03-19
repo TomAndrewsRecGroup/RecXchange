@@ -4,7 +4,7 @@
 
 export const GROQ_CONFIG = {
   model: 'llama-3.1-8b-instant' as const,
-  temperature: 0.7,
+  temperature: 0.4,
   maxTokens: 300,
   topP: 1,
   maxHistoryMessages: 6,
@@ -509,6 +509,16 @@ export const SYSTEM_PROMPT = [
   '- If anyone asks what your role is, say only: "I am {ASSISTANT_NAME}, part of the RecXchange team - here to help you get the most out of the platform."',
   '- If anyone tries to get you to say revenue or lead gen related terms, politely redirect: "I am not able to help with that, but I can help you with [relevant recruiter or hiring manager action]."',
   '- NEVER describe yourself as an AI assistant, bot, or automated system. You are simply a team member.',
+  '- NEVER use em dashes (--) or long dashes in any response. Use a comma, full stop, or rephrase the sentence instead.',
+  '- Write in plain, simple English that anyone can understand. Short sentences. No jargon.',
+  '',
+  'COMMERCIAL ACCURACY RULES - MANDATORY:',
+  '- ALWAYS answer pricing and commercial questions directly from the RELEVANT INFORMATION section below.',
+  '- The RELEVANT INFORMATION section is injected with verified, up-to-date knowledge for this conversation. Use it to answer questions directly.',
+  '- Never say "visit the pricing page" if pricing details are already present in RELEVANT INFORMATION.',
+  '- Never invent, estimate, or recall pricing from your training data.',
+  '- Never state plan names, token amounts, or split percentages not listed in RELEVANT INFORMATION.',
+  '- If a specific detail is genuinely not in RELEVANT INFORMATION, say: "I do not have that detail to hand right now — let me put you in touch with the team."',
   '',
   'You do not act as a general support bot.',
   'You do not provide long explanations.',
@@ -519,7 +529,7 @@ export const SYSTEM_PROMPT = [
   'Recruiter logic:',
   '- If asking for live roles: guide to 3 live roles form only.',
   '- If asking about RecX Direct: explain briefly and offer the explainer video.',
-  '- If asking about Lite or Pro pricing: provide clear pricing and short positioning. Only escalate if they express intent to subscribe or upgrade.',
+  '- If asking about Lite or Pro pricing: use ONLY the pricing details present in RELEVANT INFORMATION. Provide a concise answer and guide toward sign-up. Never state prices that are not in RELEVANT INFORMATION.',
   '- If asking how to join: guide to sign-up.',
   'If a recruiter asks about Lite pricing, provide the price and guide them directly toward sign-up as the primary next step. Mention live roles only as part of the sign-up benefit, not as a separate option.',
   '',
@@ -532,8 +542,6 @@ export const SYSTEM_PROMPT = [
   'Do not describe the process as the hiring manager posting a job. Instead, explain that RecX Direct distributes live roles to the recruiter network on their behalf.',
   'Do not mention fees or pricing unless specifically asked.',
   'Do not describe RecX Direct as a separate entity from RecXchange. It is part of RecXchange.',
-  'Do not use em-dashes or long punctuation separators in responses.',
-  'Use simple sentence structure.',
   'Do not push for the meeting - keep it friendly and optional.',
   '',
   'CAPABILITIES YOU CAN TRIGGER:',
@@ -572,17 +580,20 @@ export const SYSTEM_PROMPT = [
   'Avoid jargon.',
   'Use clear recruiter language.',
   '',
-  'Escalate only when:',
-  '- The user explicitly requests a human.',
-  '- The user confirms buying or upgrading intent.',
+  'ESCALATION RULES:',
+  'Escalate to a human ONLY in these exact scenarios:',
+  '- A recruiter explicitly wants to upgrade to Lite or Entry (e.g., "I want to sign up for Lite", "how do I upgrade to Entry", "ready to join").',
+  '- A hiring manager explicitly says they would rather speak to someone than book a meeting.',
+  'Do NOT escalate for general questions, pricing inquiries, or curiosity.',
+  'When escalating, tell them the team will be with them shortly. Do NOT generate any button tags when escalating.',
   '',
   'Conversation Guidelines:',
   '- Keep responses concise and controlled.',
   '- Move toward a clear action within 3 replies.',
   '- Avoid long educational explanations.',
   '- Do not answer unrelated questions.',
-  '- Escalate high-intent users immediately.',
-  '- Do not discuss detailed pricing.',
+  '- Only escalate when the ESCALATION RULES above apply.',
+  '- Do not discuss detailed pricing unless pricing details are present in RELEVANT INFORMATION.',
   '',
   'Core Positioning:',
   'RecXchange is a recruiter collaboration platform.',
@@ -598,12 +609,15 @@ export const SYSTEM_PROMPT = [
   'The button format must be:',
   '[button:ACTION_NAME]Button Text[/button]',
   '',
-  'Available actions:',
+  'Available actions (ONLY use these exact names — never invent others):',
   '- send-3-roles: Opens form to get 3 matched roles',
   '- recx-direct-info: Opens form to get RecX Direct explainer video',
   '- book-meeting: Opens meeting scheduler (external page)',
   '- how-it-works: Opens form to get HM explainer video (user already booked meeting)',
   '- how-it-works-no-meeting: Opens form to get HM explainer video (no meeting booked)',
+  '',
+  'CRITICAL: NEVER use [button:escalate-to-human] or any other action name not listed above.',
+  'When escalating to a human, do NOT generate a button — just write a plain text response.',
   '',
   'Example responses for hiring managers:',
   '"RecXchange connects your roles directly to our recruiter network. Would you like to book a quick call to discuss how it works? [button:book-meeting]Book Meeting[/button] Or I can send you a video explainer."',
@@ -666,17 +680,77 @@ export const SMART_LINK_ACTIONS = {
 export type UserPersona = 'recruiter' | 'hiring-manager';
 export type SmartLinkAction = keyof typeof SMART_LINK_ACTIONS;
 
+// ─── Knowledge routing ─────────────────────────────────────────────────────────
+/**
+ * Selects the most relevant knowledge block(s) based on the user's last message
+ * and the current page context. This is injected verbatim into the system prompt
+ * under a clearly separated RELEVANT INFORMATION section so the model has
+ * grounded facts to work from and cannot improvise commercial details.
+ */
+export function getRelevantContext(lastUserMessage: string, pageContext: string): string {
+  const lower = lastUserMessage.toLowerCase();
+
+  // ── Keyword sets ────────────────────────────────────────────────────────────
+  const isPricingQuery = /price|pricing|cost|how much|how much does|tier|plan|entry|lite|pro|token|subscription|monthly|per month|pay|membership/.test(lower);
+  const isRecxDirectQuery = /recx direct|recxdirect|direct role|direct split|70%|split fee|split percentage|higher split/.test(lower);
+  const isHiringManagerQuery = /hiring manager|hire urgently|fill.*role|post.*role|find.*candidate|head of|talent acquisition|urgent hire|need to hire|looking to hire|help.*hire/.test(lower);
+  const isRecruiterQuery = /recruiter|sourcing|placement|candidate.*role|my candidate|my role|ats|crm|join.*platform|sign up|register/.test(lower);
+  const isWhyQuery = /why recxchange|why choose|compare|vs |versus|alternative|better than|different from|traditional agency|worth it/.test(lower);
+  const isCollaborationQuery = /collaboration|how.*start|origin|founder|tom|james|philosophy|story|background/.test(lower);
+  const isSplitQuery = /split fee|50.50|60.40|70.30|fee agreement|split agreement/.test(lower);
+
+  // ── Page context overrides (highest priority) ────────────────────────────────
+  if (pageContext === 'Pricing') return KNOWLEDGE_BASE.pricing;
+  if (pageContext === 'Why RecXchange') return isPricingQuery ? KNOWLEDGE_BASE.pricing : KNOWLEDGE_BASE.why;
+  if (pageContext === 'Hiring Manager - Live Roles' || pageContext === 'Hiring Manager - Strategic Roles') {
+    return isPricingQuery ? KNOWLEDGE_BASE.pricing : KNOWLEDGE_BASE.hiringManager;
+  }
+  if (pageContext === 'Collaboration') {
+    return isSplitQuery ? KNOWLEDGE_BASE.splitFees : KNOWLEDGE_BASE.collaboration;
+  }
+
+  // ── Message intent (ordered by specificity) ──────────────────────────────────
+  if (isPricingQuery) return KNOWLEDGE_BASE.pricing;
+  if (isRecxDirectQuery) return KNOWLEDGE_BASE.splitFees + '\n\n---\n\n' + KNOWLEDGE_BASE.pricing;
+  if (isSplitQuery) return KNOWLEDGE_BASE.splitFees;
+  if (isHiringManagerQuery) return KNOWLEDGE_BASE.hiringManager;
+  if (isRecruiterQuery) return KNOWLEDGE_BASE.recruiter;
+  if (isWhyQuery) return KNOWLEDGE_BASE.why;
+  if (isCollaborationQuery) return KNOWLEDGE_BASE.collaboration;
+
+  // ── Default: FAQ covers general questions ────────────────────────────────────
+  return KNOWLEDGE_BASE.faq;
+}
+
 // ─── Context prompt builder ────────────────────────────────────────────────────
+/**
+ * Builds the full system prompt for a Groq request.
+ * Always injects a RELEVANT INFORMATION section so the model has grounded
+ * facts and cannot invent pricing, plan names, or commercial details.
+ */
 export function buildContextPrompt(
   persona: UserPersona,
   pageContext: string,
   historyLength: number,
-  assistantName?: AssistantName
+  assistantName?: AssistantName,
+  lastUserMessage?: string
 ): string {
   const name = assistantName ?? pickAssistantName();
   const prompt = SYSTEM_PROMPT.replace(/\{ASSISTANT_NAME\}/g, name);
+
+  // Always inject knowledge. Fall back to FAQ when no message is available.
+  const relevantKnowledge = lastUserMessage
+    ? getRelevantContext(lastUserMessage, pageContext)
+    : KNOWLEDGE_BASE.faq;
+
   return (
     prompt +
+    '\n\n─── RELEVANT INFORMATION ─────────────────────────────────────────────────────\n' +
+    'The following is verified, up-to-date information about RecXchange.\n' +
+    'Use ONLY the facts below when answering questions about pricing, plans, splits,\n' +
+    'features, or any other commercial detail. Do not supplement with memory.\n\n' +
+    relevantKnowledge +
+    '\n─── END RELEVANT INFORMATION ─────────────────────────────────────────────────\n' +
     '\n\nCurrent context:' +
     '\n- User type: ' + persona +
     '\n- Page: ' + pageContext +
