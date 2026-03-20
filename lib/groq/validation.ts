@@ -33,10 +33,13 @@ const SUSPICIOUS_PATTERNS = [
 ] as const;
 
 /**
- * SQL injection patterns to detect
+ * SQL injection patterns to detect.
+ * Note: single quotes and double-dashes are intentionally excluded because
+ * they appear in normal English contractions (I'm, I'd, don't) and would
+ * block legitimate chat messages.
  */
 const SQL_INJECTION_PATTERNS = [
-  /('|(\-\-)|(;)|(\|\|)|(\*))/gi,
+  /(;|\|\|)/gi,
   /(\b(SELECT|INSERT|UPDATE|DELETE|DROP|CREATE|ALTER|EXEC|EXECUTE)\b)/gi,
 ] as const;
 
