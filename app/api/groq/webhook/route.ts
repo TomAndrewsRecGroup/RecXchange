@@ -11,18 +11,12 @@ const ghlHeaders = {
 };
 
 // ─────────────────────────────────────────────────────────────────────
-// Shared in-memory stores
+// Shared in-memory store
 // ─────────────────────────────────────────────────────────────────────
-export interface PendingReply {
-  body: string;
-  timestamp: number;
-}
 
-// Team replies waiting to be delivered to website visitors
-export const pendingReplies: Map<string, PendingReply[]> = new Map();
-
-// Contact IDs that belong to website visitors (not team members)
-// Used to filter out echo messages from "Customer Replied" trigger
+// Contact IDs that belong to website visitors (not team members).
+// Used to filter out echo messages from GHL's "Customer Replied" trigger.
+// Note: team replies are now routed via GHL outbound messages polled by the SSE stream.
 export const visitorContactIds = new Set<string>();
 
 // ─── Resolve conversationId from contactId ─────────────────────────────────────────────────────────
@@ -73,12 +67,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ received: true });
     }
 
-    console.log('[Groq Webhook] Queueing team reply for conversation:', conversationId);
-
-    // Queue the team reply for the SSE stream
-    const existing = pendingReplies.get(conversationId) || [];
-    existing.push({ body, timestamp: Date.now() });
-    pendingReplies.set(conversationId, existing);
+    // GHL team reply received. The SSE stream polls GHL directly for new outbound
+    // messages, so no further action is needed here — the visitor will receive
+    // this reply on the next SSE poll cycle (every 2 seconds).
+    console.log('[Groq Webhook] Team reply acknowledged for conversation:', conversationId);
 
     return NextResponse.json({ received: true });
   } catch (err) {
