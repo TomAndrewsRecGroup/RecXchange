@@ -256,7 +256,7 @@ function detectHandover(
     lower.includes('lite plan') ||
     lower.includes('lite membership') ||
     lower.includes('buy lite') ||
-    (lower.includes('lite') && (lower.includes('upgrade') || lower.includes('sign up') || lower.includes('join') || lower.includes('ready') || lower.includes('start')));
+    (lower.includes('lite') && (lower.includes('upgrade') || lower.includes('sign up') || lower.includes('join') || lower.includes('ready') || lower.includes('start') || lower.includes('purchase') || lower.includes('subscribe')));
 
   // Recruiter: explicit upgrade intent for Entry tier
   const wantsEntry =
@@ -267,28 +267,45 @@ function detectHandover(
     lower.includes('entry plan') ||
     lower.includes('entry membership') ||
     lower.includes('buy entry') ||
-    (lower.includes('entry') && (lower.includes('upgrade') || lower.includes('sign up') || lower.includes('join') || lower.includes('ready') || lower.includes('start')));
+    (lower.includes('entry') && (lower.includes('upgrade') || lower.includes('sign up') || lower.includes('join') || lower.includes('ready') || lower.includes('start') || lower.includes('purchase') || lower.includes('subscribe')));
 
   if (wantsLite || wantsEntry) return true;
 
-  // Hiring Manager: explicitly prefers speaking to someone over booking a meeting
-  if (persona === 'hiring-manager') {
-    const prefersHuman =
-      lower.includes('rather speak') ||
-      lower.includes('prefer to speak') ||
-      lower.includes('speak to someone') ||
-      lower.includes('speak to a human') ||
-      lower.includes('speak to human') ||
-      lower.includes('talk to someone') ||
-      lower.includes('talk to a human') ||
-      lower.includes('talk to human') ||
-      lower.includes('rather than booking') ||
-      lower.includes('rather than a meeting') ||
-      lower.includes('instead of booking') ||
-      lower.includes('rather not book') ||
-      lower.includes('prefer not to book');
-    if (prefersHuman) return true;
-  }
+  // Both personas: any explicit request to speak with a person
+  const wantsHuman =
+    lower.includes('speak to someone') ||
+    lower.includes('speak with someone') ||
+    lower.includes('speak to a human') ||
+    lower.includes('speak to human') ||
+    lower.includes('speak to a person') ||
+    lower.includes('speak with the team') ||
+    lower.includes('speak to the team') ||
+    lower.includes('talk to someone') ||
+    lower.includes('talk with someone') ||
+    lower.includes('talk to a human') ||
+    lower.includes('talk to human') ||
+    lower.includes('talk to a person') ||
+    lower.includes('talk to the team') ||
+    lower.includes('chat to someone') ||
+    lower.includes('chat with someone') ||
+    lower.includes('rather speak') ||
+    lower.includes('prefer to speak') ||
+    lower.includes('rather talk') ||
+    lower.includes('prefer to talk') ||
+    lower.includes('rather than booking') ||
+    lower.includes('rather than a meeting') ||
+    lower.includes('instead of booking') ||
+    lower.includes('rather not book') ||
+    lower.includes('prefer not to book') ||
+    lower.includes('contact the team') ||
+    lower.includes('get in touch with') ||
+    lower.includes('connect me with');
+
+  // Recruiter: wanting to speak to someone = wanting to sign up (sales handover)
+  if (persona === 'recruiter' && wantsHuman) return true;
+
+  // Hiring Manager: wanting to speak to someone = confirmed preference over meeting
+  if (persona === 'hiring-manager' && wantsHuman) return true;
 
   return false;
 }
@@ -536,6 +553,7 @@ export async function POST(req: NextRequest) {
 
     // Detect handover before parsing smart links
     const handover = detectHandover(validatedData.message, sanitizedResponse, resolvedPersona);
+    console.log('[Groq AI Chat] Handover check:', handover ? 'TRIGGERED' : 'not triggered', '| persona:', resolvedPersona, '| message:', validatedData.message.substring(0, 80));
     let telegramMsgId: number | null = null;
     if (handover) {
       console.log('[Groq AI Chat] Handover triggered — notifying via Telegram');
