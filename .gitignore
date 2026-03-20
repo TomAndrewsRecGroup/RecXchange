@@ -20,4 +20,5 @@ yarn-error.log*
 
 # OS files
 .DS_Store
-Thumbs.dbtsconfig.tsbuildinfo
+Thumbs.db
+tsconfig.tsbuildinfo
