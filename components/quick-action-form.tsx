@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface QuickActionFormProps {
@@ -8,6 +8,7 @@ interface QuickActionFormProps {
   placeholder?: string;
   buttonText?: string;
   className?: string;
+  prefill?: { firstName?: string; lastName?: string; email?: string };
 }
 
 const ACTION_CONFIG = {
@@ -29,7 +30,8 @@ export default function QuickActionForm({
   actionType, 
   placeholder, 
   buttonText,
-  className = '' 
+  className = '',
+  prefill,
 }: QuickActionFormProps) {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -38,6 +40,16 @@ export default function QuickActionForm({
   const [errorMessage, setErrorMessage] = useState('');
 
   const config = ACTION_CONFIG[actionType];
+
+  useEffect(() => {
+    if (!prefill) return;
+    // Only prefill when idle so we don't stomp user edits mid-submit.
+    if (status !== 'idle') return;
+    if (typeof prefill.firstName === 'string') setFirstName(prefill.firstName);
+    if (typeof prefill.lastName === 'string') setLastName(prefill.lastName);
+    if (typeof prefill.email === 'string') setEmail(prefill.email);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [prefill?.firstName, prefill?.lastName, prefill?.email]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

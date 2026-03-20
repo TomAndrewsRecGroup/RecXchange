@@ -1,19 +1,21 @@
-"use client";
+"use client"; 
 
-import React, { useState } from 'react';
-import { Mail, Send, Loader2, MessageCircle, MessageSquare, X } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { usePathname } from 'next/navigation';
+import React, { useMemo, useState } from 'react'; 
+import { Mail, Send, Loader2, MessageCircle, MessageSquare, X } from 'lucide-react'; 
+import { motion, AnimatePresence } from 'framer-motion'; 
+import { usePathname } from 'next/navigation'; 
 import FuturisticBackground from '@/components/design-system/FuturisticBackground';
 import HolographicCard from '@/components/design-system/HolographicCard';
 import StatusBadge from '@/components/design-system/StatusBadge';
 import NeonDivider from '@/components/design-system/NeonDivider';
-import {
-  useChatLogic,
-  renderChatMessageContent,
-  messageBubbleClass,
-} from '@/hooks/useChatLogic';
-import { UserForm, OfflineBlocker } from '@/components/FloatingChat';
+import { 
+  useChatLogic, 
+  renderChatMessageContent, 
+  messageBubbleClass, 
+  type ChatCtaKind,
+} from '@/hooks/useChatLogic'; 
+import { UserForm, OfflineBlocker } from '@/components/FloatingChat'; 
+import ChatCtaModal from '@/components/ChatCtaModal';
 
 // ─── Static preview messages shown behind the blur gate ──────────────────────
 const previewMessages = [
@@ -27,9 +29,10 @@ const previewMessages = [
 // Single source-of-truth height for the chat panel across all 3 states
 const CHAT_HEIGHT = 'h-[560px]';
 
-export default function ContactPage() {
-  const pathname = usePathname();
-  const [chatOpen, setChatOpen] = useState(false);
+export default function ContactPage() { 
+  const pathname = usePathname(); 
+  const [chatOpen, setChatOpen] = useState(false); 
+  const [activeCta, setActiveCta] = useState<ChatCtaKind | null>(null);
 
   // ── All chat logic lives in the shared hook ────────────────────────────────
   const {
@@ -37,7 +40,19 @@ export default function ContactPage() {
     showUserForm, userName, setUserName, userEmail, setUserEmail,
     userPersona, setUserPersona, companyName, setCompanyName,
     messagesEndRef, handleStartChat, handleSendMessage,
-  } = useChatLogic(pathname);
+  } = useChatLogic(pathname); 
+
+  const prefill = useMemo(() => {
+    const parts = (userName || '').trim().split(/\s+/).filter(Boolean);
+    const firstName = parts[0] || 'Website';
+    const lastName = parts.slice(1).join(' ') || 'Visitor';
+    return {
+      firstName,
+      lastName,
+      email: userEmail || '',
+      companyName: companyName || '',
+    };
+  }, [userName, userEmail, companyName]);
 
   return (
     <main className="relative bg-[#0a0a0f] min-h-screen overflow-hidden">
@@ -207,7 +222,7 @@ export default function ContactPage() {
                             {messages.map((msg, idx) => (
                               <div key={idx} className={`flex mb-3 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                                 <div className={`max-w-[85%] rounded-lg p-3 text-sm leading-relaxed ${messageBubbleClass(msg)}`}>
-                                  {renderChatMessageContent(msg)}
+                                  {renderChatMessageContent(msg, { onCtaClick: (cta) => setActiveCta(cta.kind) })} 
                                 </div>
                               </div>
                             ))}
@@ -258,7 +273,14 @@ export default function ContactPage() {
 
           </div>
         </div>
-      </div>
-    </main>
-  );
-}
+      </div> 
+
+      <ChatCtaModal
+        open={Boolean(activeCta)}
+        kind={activeCta}
+        onClose={() => setActiveCta(null)}
+        prefill={prefill}
+      />
+    </main> 
+  ); 
+} 

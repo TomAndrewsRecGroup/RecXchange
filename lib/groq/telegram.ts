@@ -29,6 +29,81 @@ export function extractConversationIdFromText(text: string): string | null {
   return match ? match[1] : null;
 }
 
+export interface TelegramVisitorContext {
+  name?: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  persona?: 'recruiter' | 'hiring-manager';
+  companyName?: string;
+  pageContext?: string;
+  conversationId?: string;
+}
+
+function stripTelegramHtml(input: string): string {
+  // Telegram webhook "text" is usually already plain, but if we ever parse our own
+  // outbound HTML string, strip tags to make regex matching stable.
+  return input.replace(/<[^>]*>/g, '');
+}
+
+function extractLabeledLineValue(text: string, label: string): string | undefined {
+  // Matches lines like:
+  //   "👤 Name: John Doe"
+  //   "Email: jane@acme.com"
+  // and tolerates an emoji/icon prefix.
+  const re = new RegExp(`^\\s*[^\\w\\n]*\\s*${label}\\s*:\\s*(.+?)\\s*$`, 'im');
+  const match = text.match(re);
+  const value = match?.[1]?.trim();
+  if (!value || /^not provided$/i.test(value)) return undefined;
+  return value;
+}
+
+/**
+ * Extracts visitor/contact metadata embedded in the Telegram handover message text.
+ * Intended for use by command shortcuts (e.g., /commands) where the team replies
+ * to the original handover notification.
+ */
+export function extractVisitorFromText(text: string): TelegramVisitorContext | null {
+  if (!text?.trim()) return null;
+
+  const normalized = stripTelegramHtml(text).replace(/\r\n/g, '\n');
+
+  const name = extractLabeledLineValue(normalized, 'Name');
+  const email = extractLabeledLineValue(normalized, 'Email');
+  const type = extractLabeledLineValue(normalized, 'Type');
+  const companyName = extractLabeledLineValue(normalized, 'Company');
+  const pageContext = extractLabeledLineValue(normalized, 'Page');
+
+  let firstName: string | undefined;
+  let lastName: string | undefined;
+  if (name) {
+    const parts = name.split(/\s+/).filter(Boolean);
+    if (parts.length > 0) {
+      firstName = parts[0];
+      lastName = parts.slice(1).join(' ') || undefined;
+    }
+  }
+
+  let persona: TelegramVisitorContext['persona'];
+  if (type) {
+    if (/hiring\s*manager/i.test(type)) persona = 'hiring-manager';
+    else if (/recruiter/i.test(type)) persona = 'recruiter';
+  }
+
+  const conversationId = extractConversationIdFromText(normalized) ?? undefined;
+
+  return {
+    name,
+    firstName,
+    lastName,
+    email,
+    persona,
+    companyName,
+    pageContext,
+    conversationId,
+  };
+}
+
 export interface HandoverContext {
   name?: string;
   email?: string;

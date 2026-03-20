@@ -1,14 +1,16 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface HiringManagerQuickActionProps {
   className?: string;
+  prefill?: { firstName?: string; lastName?: string; email?: string; companyName?: string };
 }
 
 export default function HiringManagerQuickAction({ 
-  className = '' 
+  className = '',
+  prefill,
 }: HiringManagerQuickActionProps) {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -16,6 +18,16 @@ export default function HiringManagerQuickAction({
   const [companyName, setCompanyName] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
+
+  useEffect(() => {
+    if (!prefill) return;
+    if (status !== 'idle') return;
+    if (typeof prefill.firstName === 'string') setFirstName(prefill.firstName);
+    if (typeof prefill.lastName === 'string') setLastName(prefill.lastName);
+    if (typeof prefill.email === 'string') setEmail(prefill.email);
+    if (typeof prefill.companyName === 'string') setCompanyName(prefill.companyName);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [prefill?.firstName, prefill?.lastName, prefill?.email, prefill?.companyName]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

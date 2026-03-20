@@ -4,13 +4,15 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, X, Send, Loader2, Clock } from 'lucide-react';
 import { usePathname } from 'next/navigation';
-import {
-  useChatLogic,
-  isLiveHours,
-  renderChatMessageContent,
-  messageBubbleClass,
-  type ChatMessage,
-} from '@/hooks/useChatLogic';
+import { 
+  useChatLogic, 
+  isLiveHours, 
+  renderChatMessageContent, 
+  messageBubbleClass, 
+  type ChatMessage, 
+  type ChatCtaKind,
+} from '@/hooks/useChatLogic'; 
+import ChatCtaModal from '@/components/ChatCtaModal';
 
 export default function FloatingChat() {
   const pathname = usePathname();
@@ -81,13 +83,26 @@ function FloatingPanel({
   showUserForm, userName, setUserName, userEmail, setUserEmail,
   userPersona, setUserPersona, companyName, setCompanyName,
   messagesEndRef, handleStartChat, handleSendMessage,
-}: PanelProps) {
-  const [isOpen, setIsOpen] = React.useState(false);
+}: PanelProps) { 
+  const [isOpen, setIsOpen] = React.useState(false); 
+  const [activeCta, setActiveCta] = React.useState<ChatCtaKind | null>(null);
 
-  React.useEffect(() => {
-    document.body.style.overflow = isOpen ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
-  }, [isOpen]);
+  const prefill = React.useMemo(() => {
+    const parts = (userName || '').trim().split(/\s+/).filter(Boolean);
+    const firstName = parts[0] || 'Website';
+    const lastName = parts.slice(1).join(' ') || 'Visitor';
+    return {
+      firstName,
+      lastName,
+      email: userEmail || '',
+      companyName: companyName || '',
+    };
+  }, [userName, userEmail, companyName]);
+ 
+  React.useEffect(() => { 
+    document.body.style.overflow = isOpen ? 'hidden' : ''; 
+    return () => { document.body.style.overflow = ''; }; 
+  }, [isOpen]); 
 
   return (
     <>
@@ -141,13 +156,13 @@ function FloatingPanel({
                   <OfflineBlocker />
                 ) : (
                   <>
-                    {messages.map((msg, idx) => (
-                      <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                        <div className={`max-w-[85%] rounded-lg p-3 text-sm leading-relaxed ${messageBubbleClass(msg)}`}>
-                          {renderChatMessageContent(msg)}
-                        </div>
-                      </div>
-                    ))}
+                    {messages.map((msg, idx) => ( 
+                      <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}> 
+                        <div className={`max-w-[85%] rounded-lg p-3 text-sm leading-relaxed ${messageBubbleClass(msg)}`}> 
+                          {renderChatMessageContent(msg, { onCtaClick: (cta) => setActiveCta(cta.kind) })} 
+                        </div> 
+                      </div> 
+                    ))} 
                     {isLoading && (
                       <div className="flex justify-start">
                         <div className="bg-white/10 rounded-lg p-3">
@@ -161,8 +176,8 @@ function FloatingPanel({
               </div>
 
               {/* Input bar */}
-              {!showUserForm && (
-                <div className="p-3 sm:p-4 border-t border-cyan-400/20 flex-shrink-0 bg-[#0a0a0f]/95">
+              {!showUserForm && ( 
+                <div className="p-3 sm:p-4 border-t border-cyan-400/20 flex-shrink-0 bg-[#0a0a0f]/95"> 
                   <div className="flex gap-2">
                     <input
                       type="text"
@@ -184,10 +199,17 @@ function FloatingPanel({
                   <p className="text-gray-500 text-[9px] text-center mt-2">
                     You are chatting with the RecXchange team
                   </p>
-                </div>
-              )}
-            </motion.div>
-          </>
+                </div> 
+              )} 
+
+              <ChatCtaModal
+                open={Boolean(activeCta)}
+                kind={activeCta}
+                onClose={() => setActiveCta(null)}
+                prefill={prefill}
+              />
+            </motion.div> 
+          </> 
         )}
       </AnimatePresence>
 
