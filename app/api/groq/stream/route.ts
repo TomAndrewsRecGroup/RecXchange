@@ -1,8 +1,52 @@
 import { NextRequest } from 'next/server';
-import { pendingReplies } from '../webhook/route';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
+
+const GHL_BASE = 'https://services.leadconnectorhq.com';
+
+/**
+ * Polls GHL for outbound messages on a conversation that were added after `since`.
+ * After handover, the only new outbound messages are team replies (Groq has stopped).
+ * Returns messages sorted oldest-first so they are delivered in order.
+ */
+async function fetchOutboundMessagesSince(
+  conversationId: string,
+  since: number,
+): Promise<Array<{ body: string; timestamp: number }>> {
+  const API_KEY = process.env.GHL_API_KEY;
+  if (!API_KEY) return [];
+
+  try {
+    const res = await fetch(
+      `${GHL_BASE}/conversations/${conversationId}/messages?limit=20`,
+      {
+        headers: {
+          'Authorization': `Bearer ${API_KEY}`,
+          'Content-Type': 'application/json',
+          'Version': '2021-07-28',
+        },
+      },
+    );
+    if (!res.ok) return [];
+
+    const data = await res.json();
+    const messages: any[] = data.messages?.messages ?? [];
+
+    return messages
+      .filter((msg: any) => {
+        const ts = new Date(msg.dateAdded ?? 0).getTime();
+        return msg.direction === 'outbound' && ts > since && msg.body?.trim();
+      })
+      .map((msg: any) => ({
+        body: msg.body.trim(),
+        timestamp: new Date(msg.dateAdded ?? 0).getTime(),
+      }))
+      .sort((a, b) => a.timestamp - b.timestamp);
+  } catch {
+    return [];
+  }
+}
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
@@ -12,8 +56,8 @@ export async function GET(req: NextRequest) {
     return new Response('conversationId is required', { status: 400 });
   }
 
-  // Capture timestamp at connection time — only deliver replies after this point
-  const connectedAt = Date.now();
+  // Only deliver replies that arrive after this connection was opened
+  let lastDeliveredAt = Date.now();
 
   const stream = new ReadableStream({
     start(controller) {
@@ -23,27 +67,19 @@ export async function GET(req: NextRequest) {
       // Confirm connection to client
       controller.enqueue(enc({ type: 'connected' }));
 
-      const interval = setInterval(() => {
-        // Heartbeat — keeps connection alive through Vercel's 30s limit
+      const interval = setInterval(async () => {
+        // Heartbeat — keeps connection alive through Vercel's timeout
         controller.enqueue(enc({ type: 'heartbeat' }));
 
-        const replies = pendingReplies.get(conversationId);
-        if (!replies || replies.length === 0) return;
+        // Poll GHL for new outbound (team) messages since the last delivery.
+        // This is serverless-safe — no shared in-memory state needed.
+        const newMessages = await fetchOutboundMessagesSince(conversationId, lastDeliveredAt);
 
-        // Only send replies that arrived AFTER this SSE connection was opened
-        const newReplies = replies.filter(r => r.timestamp > connectedAt);
-        if (newReplies.length === 0) return;
-
-        newReplies.forEach(reply => {
-          controller.enqueue(enc({ type: 'message', body: reply.body }));
-        });
-
-        // Prune delivered replies from store
-        const remaining = replies.filter(r => r.timestamp <= connectedAt);
-        if (remaining.length === 0) {
-          pendingReplies.delete(conversationId);
-        } else {
-          pendingReplies.set(conversationId, remaining);
+        for (const msg of newMessages) {
+          controller.enqueue(enc({ type: 'message', body: msg.body }));
+          if (msg.timestamp > lastDeliveredAt) {
+            lastDeliveredAt = msg.timestamp;
+          }
         }
       }, 2000);
 

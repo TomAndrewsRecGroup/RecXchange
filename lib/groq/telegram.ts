@@ -18,12 +18,16 @@ import type { ConversationMessage } from './types';
 const TELEGRAM_API = 'https://api.telegram.org';
 
 /**
- * Maps Telegram message_id → GHL conversationId.
- * Used by the telegram-webhook route to route team replies to the correct SSE stream.
- * All messages we send (handover + follow-ups) are stored here so the team can
- * reply to any message in the thread and it routes to the right conversation.
+ * Extracts the GHL conversationId embedded in a Telegram message body.
+ * Every message we send includes a line: ref:CONVERSATION_ID
+ * The telegram-webhook calls this instead of relying on an in-memory Map
+ * so it works correctly on serverless (Vercel) where each request may run
+ * in a different function instance.
  */
-export const telegramMessageToConversation = new Map<number, string>();
+export function extractConversationIdFromText(text: string): string | null {
+  const match = text.match(/ref:([A-Za-z0-9_-]+)/);
+  return match ? match[1] : null;
+}
 
 export interface HandoverContext {
   name?: string;
@@ -76,6 +80,9 @@ export async function sendTelegramHandover(ctx: HandoverContext): Promise<number
 
   const parts: string[] = [
     '🔔 <b>Chat Handover — RecXchange</b>',
+    // Embed conversationId early so the telegram-webhook can extract it
+    // regardless of how long the message is. Format: ref:CONVERSATION_ID
+    ctx.conversationId ? `🔗 ref:${ctx.conversationId}` : '',
     '',
     `👤 <b>Name:</b> ${escapeHtml(ctx.name || 'Not provided')}`,
     `📧 <b>Email:</b> ${escapeHtml(ctx.email || 'Not provided')}`,
@@ -125,12 +132,7 @@ export async function sendTelegramHandover(ctx: HandoverContext): Promise<number
     const result = await res.json();
     const messageId: number | undefined = result?.result?.message_id;
 
-    if (messageId && ctx.conversationId) {
-      telegramMessageToConversation.set(messageId, ctx.conversationId);
-      console.log('[Telegram] ✓ Handover sent. Stored mapping: Telegram msgId', messageId, '→ conversationId', ctx.conversationId);
-    } else {
-      console.log('[Telegram] ✓ Handover notification sent to chat', chatId);
-    }
+    console.log('[Telegram] ✓ Handover sent. Telegram msgId:', messageId, '| conversationId:', ctx.conversationId ?? 'none');
 
     return messageId ?? null;
   } catch (err) {
@@ -156,7 +158,7 @@ export async function forwardUserMessageToTelegram(
 
   if (!token || !chatId) return;
 
-  const text = `💬 <b>${escapeHtml(userName)}:</b>\n${escapeHtml(userMessage.substring(0, 1000))}`;
+  const text = `💬 <b>${escapeHtml(userName)}:</b>\n${escapeHtml(userMessage.substring(0, 900))}\n🔗 ref:${conversationId}`;
 
   try {
     const res = await fetch(`${TELEGRAM_API}/bot${token}/sendMessage`, {
@@ -171,12 +173,6 @@ export async function forwardUserMessageToTelegram(
     });
 
     if (res.ok) {
-      const result = await res.json();
-      const msgId: number | undefined = result?.result?.message_id;
-      if (msgId) {
-        // Map this reply too so team can reply to any message in the thread
-        telegramMessageToConversation.set(msgId, conversationId);
-      }
       console.log('[Telegram] ✓ Forwarded user message to thread');
     } else {
       console.warn('[Telegram] Failed to forward user message:', res.status);
