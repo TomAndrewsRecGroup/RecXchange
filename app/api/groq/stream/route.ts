@@ -3,47 +3,41 @@ import { NextRequest } from 'next/server';
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
-const GHL_BASE = 'https://services.leadconnectorhq.com';
-
 /**
- * Polls GHL for outbound messages on a conversation that were added after `since`.
- * After handover, the only new outbound messages are team replies (Groq has stopped).
- * Returns messages sorted oldest-first so they are delivered in order.
+ * Polls the Supabase `chat_replies` table for messages sent to a conversation
+ * after the SSE connection was opened.
+ *
+ * The telegram-webhook inserts a row here whenever the team replies in Telegram.
+ * This is serverless-safe — Supabase is shared external state, unlike in-memory Maps.
  */
-async function fetchOutboundMessagesSince(
+async function fetchRepliesSince(
   conversationId: string,
-  since: number,
-): Promise<Array<{ body: string; timestamp: number }>> {
-  const API_KEY = process.env.GHL_API_KEY;
-  if (!API_KEY) return [];
+  since: string, // ISO timestamp
+): Promise<Array<{ body: string; created_at: string }>> {
+  const url = process.env.SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !key) {
+    console.warn('[Stream SSE] SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY not set');
+    return [];
+  }
 
   try {
     const res = await fetch(
-      `${GHL_BASE}/conversations/${conversationId}/messages?limit=20`,
+      `${url}/rest/v1/chat_replies?conversation_id=eq.${encodeURIComponent(conversationId)}&created_at=gt.${encodeURIComponent(since)}&order=created_at.asc&select=body,created_at`,
       {
         headers: {
-          'Authorization': `Bearer ${API_KEY}`,
-          'Content-Type': 'application/json',
-          'Version': '2021-07-28',
+          'apikey': key,
+          'Authorization': `Bearer ${key}`,
         },
       },
     );
-    if (!res.ok) return [];
-
-    const data = await res.json();
-    const messages: any[] = data.messages?.messages ?? [];
-
-    return messages
-      .filter((msg: any) => {
-        const ts = new Date(msg.dateAdded ?? 0).getTime();
-        return msg.direction === 'outbound' && ts > since && msg.body?.trim();
-      })
-      .map((msg: any) => ({
-        body: msg.body.trim(),
-        timestamp: new Date(msg.dateAdded ?? 0).getTime(),
-      }))
-      .sort((a, b) => a.timestamp - b.timestamp);
-  } catch {
+    if (!res.ok) {
+      console.warn('[Stream SSE] Supabase query failed:', res.status, await res.text());
+      return [];
+    }
+    return await res.json();
+  } catch (err) {
+    console.error('[Stream SSE] Error fetching replies:', err);
     return [];
   }
 }
@@ -56,32 +50,30 @@ export async function GET(req: NextRequest) {
     return new Response('conversationId is required', { status: 400 });
   }
 
-  // Only deliver replies that arrive after this connection was opened
-  let lastDeliveredAt = Date.now();
+  // Only deliver replies inserted after this connection opened
+  let lastDeliveredAt = new Date().toISOString();
 
   const stream = new ReadableStream({
     start(controller) {
       const enc = (data: object) =>
         new TextEncoder().encode(`data: ${JSON.stringify(data)}\n\n`);
 
-      // Confirm connection to client
       controller.enqueue(enc({ type: 'connected' }));
 
       const interval = setInterval(async () => {
-        // Heartbeat — keeps connection alive through Vercel's timeout
+        // Heartbeat — keeps the connection alive
         controller.enqueue(enc({ type: 'heartbeat' }));
 
-        // Poll GHL for new outbound (team) messages since the last delivery.
-        // This is serverless-safe — no shared in-memory state needed.
-        const newMessages = await fetchOutboundMessagesSince(conversationId, lastDeliveredAt);
+        const replies = await fetchRepliesSince(conversationId, lastDeliveredAt);
 
-        for (const msg of newMessages) {
-          controller.enqueue(enc({ type: 'message', body: msg.body }));
-          if (msg.timestamp > lastDeliveredAt) {
-            lastDeliveredAt = msg.timestamp;
+        for (const reply of replies) {
+          controller.enqueue(enc({ type: 'message', body: reply.body }));
+          // Advance the cursor so we don't re-deliver the same row
+          if (reply.created_at > lastDeliveredAt) {
+            lastDeliveredAt = reply.created_at;
           }
         }
-      }, 2000);
+      }, 1000);
 
       req.signal.addEventListener('abort', () => {
         clearInterval(interval);
