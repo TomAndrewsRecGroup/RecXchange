@@ -13,7 +13,7 @@ import {
   renderChatMessageContent,
   messageBubbleClass,
 } from '@/hooks/useChatLogic';
-import { UserForm } from '@/components/FloatingChat';
+import { UserForm, OfflineBlocker } from '@/components/FloatingChat';
 
 // ─── Static preview messages shown behind the blur gate ──────────────────────
 const previewMessages = [
@@ -33,7 +33,7 @@ export default function ContactPage() {
 
   // ── All chat logic lives in the shared hook ────────────────────────────────
   const {
-    messages, inputValue, setInputValue, isLoading, isRegistering,
+    messages, inputValue, setInputValue, isLoading, isRegistering, isOffline,
     showUserForm, userName, setUserName, userEmail, setUserEmail,
     userPersona, setUserPersona, companyName, setCompanyName,
     messagesEndRef, handleStartChat, handleSendMessage,
@@ -198,6 +198,10 @@ export default function ContactPage() {
                               handleStartChat={handleStartChat}
                             />
                           </motion.div>
+                        ) : isOffline ? (
+                          <motion.div key="offline" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                            <OfflineBlocker />
+                          </motion.div>
                         ) : (
                           <motion.div key="messages" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                             {messages.map((msg, idx) => (
@@ -220,8 +224,8 @@ export default function ContactPage() {
                       </AnimatePresence>
                     </div>
 
-                    {/* Input bar — always active */}
-                    {!showUserForm && (
+                    {/* Input bar — hidden when form is showing or chat is offline */}
+                    {!showUserForm && !isOffline && (
                       <div className="p-3 sm:p-4 border-t border-cyan-400/20 bg-[#0a0a0f]/95 flex-shrink-0">
                         <div className="flex gap-2">
                           <input

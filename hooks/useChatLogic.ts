@@ -18,6 +18,14 @@ export interface ChatMessage {
   content: string;
 }
 
+// ─── Live hours check ─────────────────────────────────────────────────────────
+
+/** Returns true if the current UTC time is within live support hours (7am–9pm GMT). */
+export function isLiveHours(): boolean {
+  const utcHour = new Date().getUTCHours();
+  return utcHour >= 7 && utcHour < 21;
+}
+
 // ─── Page context helper ──────────────────────────────────────────────────────
 
 export function getPageContext(pathname: string): string {
@@ -58,6 +66,7 @@ export interface UseChatLogicReturn {
   setInputValue:     (v: string) => void;
   isLoading:         boolean;
   isRegistering:     boolean;
+  isOffline:         boolean;
   showUserForm:      boolean;
   userName:          string;
   setUserName:       (v: string) => void;
@@ -83,6 +92,7 @@ export function useChatLogic(pathname: string): UseChatLogicReturn {
   const [inputValue,     setInputValue]     = useState('');
   const [isLoading,      setIsLoading]      = useState(false);
   const [isRegistering,  setIsRegistering]  = useState(false);
+  const [isOffline,      setIsOffline]      = useState(false);
   const [showUserForm,   setShowUserForm]   = useState(true);
   const [userName,       setUserName]       = useState('');
   const [userEmail,      setUserEmail]      = useState('');
@@ -133,6 +143,7 @@ export function useChatLogic(pathname: string): UseChatLogicReturn {
       return;
     }
 
+    const live = isLiveHours();
     setIsRegistering(true);
     try {
       const res  = await fetch('/api/groq/register-chat-user', {
@@ -144,6 +155,7 @@ export function useChatLogic(pathname: string): UseChatLogicReturn {
           persona:     userPersona,
           companyName: userPersona === 'hiring-manager' ? companyName : undefined,
           pageContext,
+          isLive:      live,
         }),
       });
       const data = await res.json();
@@ -157,6 +169,13 @@ export function useChatLogic(pathname: string): UseChatLogicReturn {
     }
 
     setShowUserForm(false);
+
+    if (!live) {
+      // Outside live hours — contact captured, show offline blocker
+      setIsOffline(true);
+      return;
+    }
+
     setMessages([{
       role:    'assistant',
       content: 'A team member will be with you shortly. Please go ahead and share a brief message about your query.',
@@ -200,7 +219,7 @@ export function useChatLogic(pathname: string): UseChatLogicReturn {
   };
 
   return {
-    messages, inputValue, setInputValue, isLoading, isRegistering,
+    messages, inputValue, setInputValue, isLoading, isRegistering, isOffline,
     showUserForm, userName, setUserName, userEmail, setUserEmail,
     userPersona, setUserPersona, companyName, setCompanyName,
     contactId, conversationId, messagesEndRef,
