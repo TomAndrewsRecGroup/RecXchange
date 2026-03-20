@@ -22,7 +22,7 @@ const ghlHeaders = {
  */
 export async function POST(req: NextRequest) {
   try {
-    const { name, email, persona, companyName, pageContext } = await req.json();
+    const { name, email, persona, companyName, pageContext, isLive } = await req.json();
 
     if (!name || !email || !persona) {
       return NextResponse.json({ error: 'name, email and persona are required' }, { status: 400 });
@@ -74,6 +74,12 @@ export async function POST(req: NextRequest) {
       contactId = createData.contact.id;
       visitorContactIds.add(contactId!);
       console.log('[Register Chat User] New contact created:', contactId);
+    }
+
+    // Outside live hours: contact captured, nothing else needed
+    if (!isLive) {
+      console.log('[Register Chat User] Outside live hours — contact captured, skipping conversation and Telegram');
+      return NextResponse.json({ success: true, contactId, conversationId: null, telegramMsgId: null });
     }
 
     // ── Find or create GHL conversation ──────────────────────────────────────

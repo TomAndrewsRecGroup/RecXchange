@@ -2,10 +2,11 @@
 
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X, Send, Loader2 } from 'lucide-react';
+import { MessageCircle, X, Send, Loader2, Clock } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import {
   useChatLogic,
+  isLiveHours,
   renderChatMessageContent,
   messageBubbleClass,
   type ChatMessage,
@@ -15,7 +16,7 @@ export default function FloatingChat() {
   const pathname = usePathname();
 
   const {
-    messages, inputValue, setInputValue, isLoading, isRegistering,
+    messages, inputValue, setInputValue, isLoading, isRegistering, isOffline,
     showUserForm, userName, setUserName, userEmail, setUserEmail,
     userPersona, setUserPersona, companyName, setCompanyName,
     messagesEndRef, handleStartChat, handleSendMessage,
@@ -33,6 +34,7 @@ export default function FloatingChat() {
           setInputValue={setInputValue}
           isLoading={isLoading}
           isRegistering={isRegistering}
+          isOffline={isOffline}
           showUserForm={showUserForm}
           userName={userName}
           setUserName={setUserName}
@@ -59,6 +61,7 @@ interface PanelProps {
   setInputValue:     (v: string) => void;
   isLoading:         boolean;
   isRegistering:     boolean;
+  isOffline:         boolean;
   showUserForm:      boolean;
   userName:          string;
   setUserName:       (v: string) => void;
@@ -74,7 +77,7 @@ interface PanelProps {
 }
 
 function FloatingPanel({
-  messages, inputValue, setInputValue, isLoading, isRegistering,
+  messages, inputValue, setInputValue, isLoading, isRegistering, isOffline,
   showUserForm, userName, setUserName, userEmail, setUserEmail,
   userPersona, setUserPersona, companyName, setCompanyName,
   messagesEndRef, handleStartChat, handleSendMessage,
@@ -124,7 +127,7 @@ function FloatingPanel({
               </div>
 
               {/* Body */}
-              <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 overscroll-contain">
+              <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 overscroll-contain relative">
                 {showUserForm ? (
                   <UserForm
                     userName={userName} setUserName={setUserName}
@@ -134,6 +137,8 @@ function FloatingPanel({
                     isRegistering={isRegistering}
                     handleStartChat={handleStartChat}
                   />
+                ) : isOffline ? (
+                  <OfflineBlocker />
                 ) : (
                   <>
                     {messages.map((msg, idx) => (
@@ -203,6 +208,27 @@ function FloatingPanel({
   );
 }
 
+// ─── Offline blocker ──────────────────────────────────────────────────────────
+
+export function OfflineBlocker() {
+  return (
+    <div className="flex flex-col items-center justify-center h-full py-8 px-4 text-center">
+      <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center mb-4">
+        <Clock className="w-6 h-6 text-gray-400" />
+      </div>
+      <p className="text-white font-semibold text-sm mb-2">Live Chat is currently offline</p>
+      <p className="text-gray-400 text-xs leading-relaxed max-w-[240px]">
+        Our live support hours are <span className="text-cyan-400 font-medium">7am – 9pm GMT</span> daily.
+        Please email us at{' '}
+        <a href="mailto:support@recxchange.io" className="text-cyan-400 hover:underline">
+          support@recxchange.io
+        </a>{' '}
+        with your query and we will get back to you shortly.
+      </p>
+    </div>
+  );
+}
+
 // ─── Shared gate form ─────────────────────────────────────────────────────────
 
 interface UserFormProps {
@@ -267,7 +293,11 @@ export function UserForm({
           ? <><Loader2 className="w-4 h-4 animate-spin" /> Connecting...</>
           : 'Start Chat'}
       </button>
-      <p className="text-gray-500 text-[10px] text-center">By continuing, you agree to our data collection for support purposes.</p>
+      <p className="text-gray-500 text-[10px] text-center">
+        Live support available <span className="text-cyan-400/80">7am – 9pm GMT</span> daily. Outside hours, please email{' '}
+        <a href="mailto:support@recxchange.io" className="text-cyan-400/80 hover:underline">support@recxchange.io</a>
+      </p>
+      <p className="text-gray-500 text-[10px] text-center mt-1">By continuing, you agree to our data collection for support purposes.</p>
     </div>
   );
 }
