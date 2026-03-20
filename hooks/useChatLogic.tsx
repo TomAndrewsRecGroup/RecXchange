@@ -13,9 +13,43 @@ import React, { useState, useEffect, useRef } from 'react';
 
 // ─── Shared types ─────────────────────────────────────────────────────────────
 
-export interface ChatMessage {
-  role: 'user' | 'assistant';
-  content: string;
+export interface ChatMessage { 
+  role: 'user' | 'assistant'; 
+  content: string; 
+  cta?: ChatCta;
+} 
+
+export type ChatCtaKind = 'send3roles' | 'learnaboutrecxdirect' | 'howitworks';
+
+export interface ChatCta {
+  kind: ChatCtaKind;
+  label: string;
+}
+
+const RECX_CTA_PREFIX = '__RECX_CTA__:';
+
+function parseCtaFromBody(body: string): ChatCta | null {
+  if (!body || typeof body !== 'string') return null;
+  if (!body.startsWith(RECX_CTA_PREFIX)) return null;
+
+  const json = body.slice(RECX_CTA_PREFIX.length).trim();
+  try {
+    const parsed = JSON.parse(json) as Partial<{ kind: ChatCtaKind; label: string }>;
+    const kind = parsed.kind;
+    if (!kind) return null;
+
+    const label =
+      parsed.label ||
+      (kind === 'send3roles'
+        ? 'Get 3 matching roles'
+        : kind === 'learnaboutrecxdirect'
+        ? 'Learn about RecX Direct'
+        : 'How RecXchange works');
+
+    return { kind, label };
+  } catch {
+    return null;
+  }
 }
 
 // ─── Live hours check ─────────────────────────────────────────────────────────
@@ -48,9 +82,24 @@ export function getPageContext(pathname: string): string {
 
 // ─── Message renderer ─────────────────────────────────────────────────────────
 
-export function renderChatMessageContent(msg: ChatMessage): React.ReactNode {
+export function renderChatMessageContent(
+  msg: ChatMessage,
+  opts?: { onCtaClick?: (cta: ChatCta) => void },
+): React.ReactNode {
+  if (msg.cta) {
+    return (
+      <button
+        type="button"
+        onClick={() => opts?.onCtaClick?.(msg.cta!)}
+        className="inline-flex items-center justify-center w-full px-4 py-2.5 rounded-lg bg-gradient-to-r from-cyan-500 to-purple-500 text-white font-bold text-sm hover:shadow-lg transition-all active:scale-[0.99]"
+      >
+        {msg.cta.label}
+      </button>
+    );
+  }
+
   return msg.content;
-}
+} 
 
 export function messageBubbleClass(msg: ChatMessage): string {
   return msg.role === 'user'
@@ -118,7 +167,13 @@ export function useChatLogic(pathname: string): UseChatLogicReturn {
       try {
         const data = JSON.parse(event.data);
         if (data.type === 'message' && data.body) {
-          setMessages(prev => [...prev, { role: 'assistant', content: data.body }]);
+          const body = String(data.body);
+          const cta = parseCtaFromBody(body);
+          if (cta) {
+            setMessages(prev => [...prev, { role: 'assistant', content: '', cta }]);
+          } else {
+            setMessages(prev => [...prev, { role: 'assistant', content: body }]);
+          }
         }
       } catch {
         // Malformed SSE frame — ignore
