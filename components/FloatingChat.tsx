@@ -3,50 +3,36 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, X, Send, Loader2 } from 'lucide-react';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import {
   useChatLogic,
   renderChatMessageContent,
   messageBubbleClass,
-  HandoverBadge,
   type ChatMessage,
 } from '@/hooks/useChatLogic';
-import type { AssistantName } from '@/lib/groq/config';
 
 export default function FloatingChat() {
   const pathname = usePathname();
-  const router   = useRouter();
 
   const {
     messages, inputValue, setInputValue, isLoading, isRegistering,
-    hasHandedOver, showUserForm, userName, setUserName, userEmail, setUserEmail,
+    showUserForm, userName, setUserName, userEmail, setUserEmail,
     userPersona, setUserPersona, companyName, setCompanyName,
-    assistantName, messagesEndRef,
-    handleStartChat, handleSendMessage,
+    messagesEndRef, handleStartChat, handleSendMessage,
   } = useChatLogic(pathname);
 
   // Hide on the homepage
   if (pathname === '/') return null;
 
-  const handleSmartLinkClick = (url: string) => {
-    if (url.startsWith('http://') || url.startsWith('https://')) {
-      window.open(url, '_blank', 'noopener,noreferrer');
-    } else {
-      router.push(url);
-    }
-  };
-
   return (
     <div data-chat-widget className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[150]">
       <AnimatePresence>
-        {/* The floating panel is controlled by the toggle button below */}
         <FloatingPanel
           messages={messages}
           inputValue={inputValue}
           setInputValue={setInputValue}
           isLoading={isLoading}
           isRegistering={isRegistering}
-          hasHandedOver={hasHandedOver}
           showUserForm={showUserForm}
           userName={userName}
           setUserName={setUserName}
@@ -56,51 +42,45 @@ export default function FloatingChat() {
           setUserPersona={setUserPersona}
           companyName={companyName}
           setCompanyName={setCompanyName}
-          assistantName={assistantName}
           messagesEndRef={messagesEndRef}
           handleStartChat={handleStartChat}
           handleSendMessage={handleSendMessage}
-          handleSmartLinkClick={handleSmartLinkClick}
         />
       </AnimatePresence>
     </div>
   );
 }
 
-// ─── Inner panel — separated so AnimatePresence works cleanly ─────────────────
+// ─── Inner panel ──────────────────────────────────────────────────────────────
 
 interface PanelProps {
-  messages: ChatMessage[];
-  inputValue: string;
-  setInputValue: (v: string) => void;
-  isLoading: boolean;
-  isRegistering: boolean;
-  hasHandedOver: boolean;
-  showUserForm: boolean;
-  userName: string;
-  setUserName: (v: string) => void;
-  userEmail: string;
-  setUserEmail: (v: string) => void;
-  userPersona: 'recruiter' | 'hiring-manager' | '';
-  setUserPersona: (v: 'recruiter' | 'hiring-manager' | '') => void;
-  companyName: string;
-  setCompanyName: (v: string) => void;
-  assistantName: AssistantName;
-  messagesEndRef: React.RefObject<HTMLDivElement | null>;
-  handleStartChat: () => Promise<void>;
+  messages:          ChatMessage[];
+  inputValue:        string;
+  setInputValue:     (v: string) => void;
+  isLoading:         boolean;
+  isRegistering:     boolean;
+  showUserForm:      boolean;
+  userName:          string;
+  setUserName:       (v: string) => void;
+  userEmail:         string;
+  setUserEmail:      (v: string) => void;
+  userPersona:       'recruiter' | 'hiring-manager' | '';
+  setUserPersona:    (v: 'recruiter' | 'hiring-manager' | '') => void;
+  companyName:       string;
+  setCompanyName:    (v: string) => void;
+  messagesEndRef:    React.RefObject<HTMLDivElement | null>;
+  handleStartChat:   () => Promise<void>;
   handleSendMessage: () => Promise<void>;
-  handleSmartLinkClick: (url: string) => void;
 }
 
 function FloatingPanel({
   messages, inputValue, setInputValue, isLoading, isRegistering,
-  hasHandedOver, showUserForm, userName, setUserName, userEmail, setUserEmail,
+  showUserForm, userName, setUserName, userEmail, setUserEmail,
   userPersona, setUserPersona, companyName, setCompanyName,
-  assistantName, messagesEndRef, handleStartChat, handleSendMessage, handleSmartLinkClick,
+  messagesEndRef, handleStartChat, handleSendMessage,
 }: PanelProps) {
   const [isOpen, setIsOpen] = React.useState(false);
 
-  // Lock body scroll when panel is open on mobile
   React.useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
@@ -128,10 +108,10 @@ function FloatingPanel({
               <div className="p-3.5 sm:p-4 border-b border-cyan-400/20 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 flex-shrink-0">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h3 className="text-white font-bold text-sm">{assistantName} — RecXchange</h3>
+                    <h3 className="text-white font-bold text-sm">RecXchange Team</h3>
                     <p className="text-gray-400 text-xs flex items-center gap-1">
                       <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                      {hasHandedOver ? 'Live Agent' : 'Team Member'}
+                      Live Support
                     </p>
                   </div>
                   <button
@@ -159,8 +139,7 @@ function FloatingPanel({
                     {messages.map((msg, idx) => (
                       <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                         <div className={`max-w-[85%] rounded-lg p-3 text-sm leading-relaxed ${messageBubbleClass(msg)}`}>
-                          {msg.isHandover && <HandoverBadge />}
-                          {renderChatMessageContent(msg, handleSmartLinkClick)}
+                          {renderChatMessageContent(msg)}
                         </div>
                       </div>
                     ))}
@@ -185,7 +164,7 @@ function FloatingPanel({
                       value={inputValue}
                       onChange={e => setInputValue(e.target.value)}
                       onKeyPress={e => e.key === 'Enter' && handleSendMessage()}
-                      placeholder={hasHandedOver ? 'Ask the team a question...' : 'Type your message...'}
+                      placeholder="Type your message..."
                       className="flex-1 bg-white/10 border border-white/20 rounded-lg px-3 py-2.5 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 touch-manipulation"
                       disabled={isLoading}
                     />
@@ -198,9 +177,7 @@ function FloatingPanel({
                     </button>
                   </div>
                   <p className="text-gray-500 text-[9px] text-center mt-2">
-                    {hasHandedOver
-                      ? 'You are connected to a live agent'
-                      : 'Mention upgrading to Lite or Entry to connect with the team'}
+                    You are chatting with the RecXchange team
                   </p>
                 </div>
               )}
@@ -226,13 +203,14 @@ function FloatingPanel({
   );
 }
 
-// ─── Shared form used in both FloatingPanel and contact/page ──────────────────
+// ─── Shared gate form ─────────────────────────────────────────────────────────
 
 interface UserFormProps {
-  userName: string; setUserName: (v: string) => void;
-  userEmail: string; setUserEmail: (v: string) => void;
-  userPersona: 'recruiter' | 'hiring-manager' | ''; setUserPersona: (v: 'recruiter' | 'hiring-manager' | '') => void;
-  companyName: string; setCompanyName: (v: string) => void;
+  userName: string;       setUserName:    (v: string) => void;
+  userEmail: string;      setUserEmail:   (v: string) => void;
+  userPersona: 'recruiter' | 'hiring-manager' | '';
+  setUserPersona: (v: 'recruiter' | 'hiring-manager' | '') => void;
+  companyName: string;    setCompanyName: (v: string) => void;
   isRegistering: boolean;
   handleStartChat: () => Promise<void>;
 }
@@ -286,7 +264,7 @@ export function UserForm({
         className="w-full py-3 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-lg text-white font-bold text-sm hover:shadow-lg transition-all touch-manipulation active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
       >
         {isRegistering
-          ? <><Loader2 className="w-4 h-4 animate-spin" /> Starting...</>
+          ? <><Loader2 className="w-4 h-4 animate-spin" /> Connecting...</>
           : 'Start Chat'}
       </button>
       <p className="text-gray-500 text-[10px] text-center">By continuing, you agree to our data collection for support purposes.</p>
