@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Mail, Send, Loader2, MessageCircle, MessageSquare, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import FuturisticBackground from '@/components/design-system/FuturisticBackground';
 import HolographicCard from '@/components/design-system/HolographicCard';
 import StatusBadge from '@/components/design-system/StatusBadge';
@@ -12,7 +12,6 @@ import {
   useChatLogic,
   renderChatMessageContent,
   messageBubbleClass,
-  HandoverBadge,
 } from '@/hooks/useChatLogic';
 import { UserForm } from '@/components/FloatingChat';
 
@@ -30,25 +29,15 @@ const CHAT_HEIGHT = 'h-[560px]';
 
 export default function ContactPage() {
   const pathname = usePathname();
-  const router   = useRouter();
   const [chatOpen, setChatOpen] = useState(false);
 
   // ── All chat logic lives in the shared hook ────────────────────────────────
   const {
     messages, inputValue, setInputValue, isLoading, isRegistering,
-    hasHandedOver, showUserForm, userName, setUserName, userEmail, setUserEmail,
+    showUserForm, userName, setUserName, userEmail, setUserEmail,
     userPersona, setUserPersona, companyName, setCompanyName,
-    assistantName, messagesEndRef,
-    handleStartChat, handleSendMessage,
+    messagesEndRef, handleStartChat, handleSendMessage,
   } = useChatLogic(pathname);
-
-  const handleSmartLinkClick = (url: string) => {
-    if (url.startsWith('http://') || url.startsWith('https://')) {
-      window.open(url, '_blank', 'noopener,noreferrer');
-    } else {
-      router.push(url);
-    }
-  };
 
   return (
     <main className="relative bg-[#0a0a0f] min-h-screen overflow-hidden">
@@ -145,12 +134,10 @@ export default function ContactPage() {
                 <div className="p-3.5 sm:p-4 border-b border-cyan-400/20 bg-gradient-to-r from-cyan-500/10 to-purple-500/10">
                   <div className="flex items-center justify-between">
                     <div>
-                      <h3 className="text-white font-bold text-sm">
-                        {chatOpen && !showUserForm ? `${assistantName} — RecXchange` : 'RecXchange Support'}
-                      </h3>
+                      <h3 className="text-white font-bold text-sm">RecXchange Team</h3>
                       <p className="text-gray-400 text-xs flex items-center gap-1">
                         <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                        {chatOpen && !showUserForm ? (hasHandedOver ? 'Live Agent' : 'Team Member') : 'AI Assistant'}
+                        Live Support
                       </p>
                     </div>
                     {chatOpen && (
@@ -216,8 +203,7 @@ export default function ContactPage() {
                             {messages.map((msg, idx) => (
                               <div key={idx} className={`flex mb-3 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                                 <div className={`max-w-[85%] rounded-lg p-3 text-sm leading-relaxed ${messageBubbleClass(msg)}`}>
-                                  {msg.isHandover && <HandoverBadge />}
-                                  {renderChatMessageContent(msg, handleSmartLinkClick)}
+                                  {renderChatMessageContent(msg)}
                                 </div>
                               </div>
                             ))}
@@ -243,7 +229,7 @@ export default function ContactPage() {
                             value={inputValue}
                             onChange={e => setInputValue(e.target.value)}
                             onKeyPress={e => e.key === 'Enter' && handleSendMessage()}
-                            placeholder={hasHandedOver ? 'Ask the team a question...' : 'Type your message...'}
+                            placeholder="Type your message..."
                             className="flex-1 bg-white/10 border border-white/20 rounded-lg px-3 py-2.5 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-cyan-400/50"
                             disabled={isLoading}
                           />
@@ -256,9 +242,7 @@ export default function ContactPage() {
                           </button>
                         </div>
                         <p className="text-gray-500 text-[9px] text-center mt-2">
-                          {hasHandedOver
-                            ? 'You are connected to a live agent'
-                            : 'Mention upgrading to Lite or Entry to connect with the team'}
+                          You are chatting with the RecXchange team
                         </p>
                       </div>
                     )}
