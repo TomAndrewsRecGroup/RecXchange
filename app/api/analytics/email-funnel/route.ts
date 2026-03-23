@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
-    const EMAIL_TO = process.env.FUNNEL_EMAIL_TO || 'tom@andrewsrecruitmentgroup.com';
+    const EMAIL_TO = process.env.FUNNEL_EMAIL_TO || 'tom@andrews-recruitment.com';
     const EMAIL_FROM = process.env.SENDGRID_FROM_EMAIL || 'analytics@recxchange.com';
     const GHL_API_KEY = process.env.GHL_API_KEY;
     const GHL_LOCATION_ID = process.env.GHL_LOCATION_ID;
