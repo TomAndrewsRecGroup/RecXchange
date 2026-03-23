@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { visitorContactIds } from '../webhook/route';
 import { sendTelegramHandover } from '@/lib/groq/telegram';
+import { checkRateLimit, getClientIP, isValidEmail, sanitizeInput } from '@/lib/security';
 
 const GHL_BASE = 'https://services.leadconnectorhq.com';
 const API_KEY = process.env.GHL_API_KEY!;
@@ -21,11 +22,31 @@ const ghlHeaders = {
  * frontend can open the SSE stream and thread all messages under the same notification.
  */
 export async function POST(req: NextRequest) {
+  // Rate-limit per IP to prevent chat registration spam / GHL contact flooding
+  const ip = getClientIP(req);
+  const ipRl = checkRateLimit(ip, 'form');
+  if (!ipRl.success) {
+    return NextResponse.json(
+      { error: 'Too many requests. Please try again later.' },
+      { status: 429, headers: { 'Retry-After': String(Math.ceil(ipRl.resetIn / 1000)) } }
+    );
+  }
+
   try {
     const { name, email, persona, companyName, pageContext, isLive } = await req.json();
 
     if (!name || !email || !persona) {
       return NextResponse.json({ error: 'name, email and persona are required' }, { status: 400 });
+    }
+
+    // Validate email before hitting GHL
+    if (!isValidEmail(email)) {
+      return NextResponse.json({ error: 'Invalid email address' }, { status: 400 });
+    }
+
+    // Validate persona value to avoid unexpected tag injection
+    if (!['recruiter', 'hiring-manager'].includes(persona)) {
+      return NextResponse.json({ error: 'Invalid persona' }, { status: 400 });
     }
 
     const firstName = name.split(' ')[0] || name;

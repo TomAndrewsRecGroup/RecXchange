@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { requireGHLWebhookSecret } from '@/lib/security';
 
 const GHL_BASE = 'https://services.leadconnectorhq.com';
 const API_KEY = process.env.GHL_API_KEY!;
@@ -40,6 +41,9 @@ async function getConversationIdFromContact(contactId: string): Promise<string |
 }
 
 export async function POST(req: NextRequest) {
+  const authError = requireGHLWebhookSecret(req);
+  if (authError) return authError;
+
   try {
     const payload = await req.json();
     console.log('[GHL Webhook] Received payload:', JSON.stringify(payload));

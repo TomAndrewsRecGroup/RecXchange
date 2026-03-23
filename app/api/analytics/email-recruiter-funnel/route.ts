@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { 
+import {
   recruiterSignupFunnel,
   getWeeklyFunnelMetrics,
   FunnelMetrics
 } from '@/lib/funnel';
 import { getWeeklyGHLConversionData, GHLConversionData } from '@/lib/ghl-client';
+import { requireCronSecret } from '@/lib/security';
 
 /**
  * POST /api/analytics/email-recruiter-funnel
@@ -14,6 +15,9 @@ import { getWeeklyGHLConversionData, GHLConversionData } from '@/lib/ghl-client'
  * Should be called by a cron job every Monday
  */
 export async function POST(request: NextRequest) {
+  const authError = requireCronSecret(request);
+  if (authError) return authError;
+
   try {
     const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
     const EMAIL_TO = process.env.FUNNEL_EMAIL_TO || 'tom@andrewsrecruitmentgroup.com';

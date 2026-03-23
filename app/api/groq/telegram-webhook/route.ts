@@ -17,6 +17,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { extractConversationIdFromText, extractVisitorFromText } from '@/lib/groq/telegram';
+import { requireTelegramSecret } from '@/lib/security';
 
 const TELEGRAM_API = 'https://api.telegram.org';
 const RECX_CTA_PREFIX = '__RECX_CTA__:';
@@ -84,6 +85,9 @@ async function insertReplyToSupabase(conversationId: string, body: string): Prom
 }
 
 export async function POST(req: NextRequest) {
+  const authError = requireTelegramSecret(req);
+  if (authError) return authError;
+
   try {
     const update = await req.json();
     const message = update.message || update.channel_post;

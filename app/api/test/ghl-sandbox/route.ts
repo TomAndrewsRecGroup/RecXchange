@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { requireAdminSecret } from '@/lib/security';
 
 const GHL_BASE_URL = 'https://services.leadconnectorhq.com';
 const GHL_API_KEY = process.env.GHL_API_KEY;
-const GHL_LOCATION_ID = process.env.GHL_LOCATION_ID || 'VxHBI8kbavh407OMkAcu';
+const GHL_LOCATION_ID = process.env.GHL_LOCATION_ID;
 
 interface TestResult {
   endpoint: string;
@@ -15,6 +16,9 @@ interface TestResult {
 }
 
 export async function GET(req: NextRequest) {
+  const authError = requireAdminSecret(req);
+  if (authError) return authError;
+
   const results: TestResult[] = [];
   const startTime = Date.now();
 
