@@ -1,5 +1,33 @@
 import type { NextConfig } from "next";
 
+// Security headers applied to every response (pages + API routes)
+const securityHeaders = [
+  { key: 'X-Content-Type-Options', value: 'nosniff' },
+  { key: 'X-Frame-Options', value: 'DENY' },
+  { key: 'X-XSS-Protection', value: '1; mode=block' },
+  { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+  { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+  {
+    key: 'Strict-Transport-Security',
+    value: 'max-age=31536000; includeSubDomains; preload',
+  },
+  {
+    key: 'Content-Security-Policy',
+    value: [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://www.googletagmanager.com https://assets.calendly.com",
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+      "font-src 'self' https://fonts.gstatic.com",
+      "img-src 'self' data: blob: https: http:",
+      "connect-src 'self' https://api.sendgrid.com https://rest.gohighlevel.com https://services.leadconnectorhq.com https://api.telegram.org https://*.supabase.co wss://*.supabase.co https://www.google-analytics.com",
+      "frame-src https://calendly.com https://www.youtube.com https://player.vimeo.com",
+      "object-src 'none'",
+      "base-uri 'self'",
+      "form-action 'self'",
+    ].join('; '),
+  },
+];
+
 const nextConfig: NextConfig = {
   /* config options here */
   images: {
@@ -36,11 +64,21 @@ const nextConfig: NextConfig = {
     } : false,
   },
   
+  // Apply security headers to all routes
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: securityHeaders,
+      },
+    ];
+  },
+
   // Experimental features for performance
   experimental: {
     // Optimize package imports to reduce bundle size
     optimizePackageImports: ['framer-motion', '@heroicons/react'],
-    
+
     // Enable modern bundling for better performance
     optimizeCss: true,
   },

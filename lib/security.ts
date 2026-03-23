@@ -395,16 +395,136 @@ export function getSecurityHeaders(): Record<string, string> {
     'X-Content-Type-Options': 'nosniff',
     'X-Frame-Options': 'DENY',
     'X-XSS-Protection': '1; mode=block',
-    
+
+    // Content Security Policy — tightened to prevent XSS / data injection
+    'Content-Security-Policy': [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://www.googletagmanager.com https://assets.calendly.com",
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+      "font-src 'self' https://fonts.gstatic.com",
+      "img-src 'self' data: blob: https: http:",
+      "connect-src 'self' https://api.sendgrid.com https://rest.gohighlevel.com https://services.leadconnectorhq.com https://api.telegram.org https://*.supabase.co wss://*.supabase.co https://www.google-analytics.com",
+      "frame-src https://calendly.com https://www.youtube.com https://player.vimeo.com",
+      "object-src 'none'",
+      "base-uri 'self'",
+      "form-action 'self'",
+    ].join('; '),
+
     // HTTPS only
     'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
-    
+
     // Referrer policy
     'Referrer-Policy': 'strict-origin-when-cross-origin',
-    
+
     // Permissions policy
     'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
   };
+}
+
+/**
+ * Verify that a request carries a valid admin secret.
+ * Protects internal/test/cron endpoints from public access.
+ *
+ * Checks the `x-admin-secret` request header against the
+ * ADMIN_SECRET environment variable.
+ *
+ * Returns null when the secret is valid, or a 401/500 NextResponse to return immediately.
+ */
+export function requireAdminSecret(
+  request: { headers: Headers } | Request
+): import('next/server').NextResponse | null {
+  const { NextResponse } = require('next/server');
+  const expected = process.env.ADMIN_SECRET;
+
+  if (!expected) {
+    console.error('[Security] ADMIN_SECRET is not set — endpoint locked down for safety');
+    return NextResponse.json({ error: 'Server misconfiguration' }, { status: 500 });
+  }
+
+  const provided = (request.headers as Headers).get('x-admin-secret');
+  if (!provided || provided !== expected) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  return null; // valid
+}
+
+/**
+ * Verify that a request carries a valid cron secret.
+ * Used for Vercel cron jobs — checks the Authorization header
+ * against the CRON_SECRET environment variable.
+ *
+ * Returns null when the secret is valid, or a 401/500 NextResponse to return immediately.
+ */
+export function requireCronSecret(
+  request: { headers: Headers } | Request
+): import('next/server').NextResponse | null {
+  const { NextResponse } = require('next/server');
+  const expected = process.env.CRON_SECRET;
+
+  if (!expected) {
+    console.error('[Security] CRON_SECRET is not set — cron endpoint locked down for safety');
+    return NextResponse.json({ error: 'Server misconfiguration' }, { status: 500 });
+  }
+
+  const authHeader = (request.headers as Headers).get('authorization');
+  const provided = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : null;
+  if (!provided || provided !== expected) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  return null; // valid
+}
+
+/**
+ * Verify Telegram webhook authenticity using the secret token set during webhook registration.
+ * Telegram sends the token in the X-Telegram-Bot-Api-Secret-Token header when configured.
+ *
+ * Returns null when valid, or a 401/500 NextResponse to return immediately.
+ */
+export function requireTelegramSecret(
+  request: { headers: Headers } | Request
+): import('next/server').NextResponse | null {
+  const { NextResponse } = require('next/server');
+  const expected = process.env.TELEGRAM_WEBHOOK_SECRET;
+
+  if (!expected) {
+    // Secret not configured — warn but allow through so existing deployments
+    // aren't broken on first deploy. Should be set in production.
+    console.warn('[Security] TELEGRAM_WEBHOOK_SECRET not set — Telegram webhook is unauthenticated');
+    return null;
+  }
+
+  const provided = (request.headers as Headers).get('x-telegram-bot-api-secret-token');
+  if (!provided || provided !== expected) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  return null; // valid
+}
+
+/**
+ * Verify GHL webhook authenticity using a shared secret in the X-GHL-Signature header.
+ *
+ * Returns null when valid, or a 401/500 NextResponse to return immediately.
+ */
+export function requireGHLWebhookSecret(
+  request: { headers: Headers } | Request
+): import('next/server').NextResponse | null {
+  const { NextResponse } = require('next/server');
+  const expected = process.env.GHL_WEBHOOK_SECRET;
+
+  if (!expected) {
+    console.warn('[Security] GHL_WEBHOOK_SECRET not set — GHL webhook is unauthenticated');
+    return null;
+  }
+
+  const provided = (request.headers as Headers).get('x-ghl-signature');
+  if (!provided || provided !== expected) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  return null; // valid
 }
 
 /**

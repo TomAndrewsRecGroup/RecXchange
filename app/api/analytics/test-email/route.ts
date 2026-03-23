@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { FunnelMetrics } from '@/lib/funnel';
 import { GHLConversionData } from '@/lib/ghl-client';
+import { requireAdminSecret } from '@/lib/security';
 
 /**
  * GET /api/analytics/test-email
@@ -8,6 +9,9 @@ import { GHLConversionData } from '@/lib/ghl-client';
  * Sends a test funnel email with dummy data
  */
 export async function GET(request: NextRequest) {
+  const authError = requireAdminSecret(request);
+  if (authError) return authError;
+
   try {
     const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
     const EMAIL_TO = process.env.FUNNEL_EMAIL_TO || 'tom@andrewsrecruitmentgroup.com';

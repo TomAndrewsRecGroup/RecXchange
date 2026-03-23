@@ -1,15 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { 
+import {
   hiringManagerBookingFunnel,
   getWeeklyFunnelMetrics,
   FunnelMetrics
 } from '@/lib/funnel';
+import { requireCronSecret, requireAdminSecret } from '@/lib/security';
 
 /**
  * GET /api/analytics/email-hiring-manager-funnel
  * Returns status and configuration info
  */
 export async function GET(request: NextRequest) {
+  const authError = requireAdminSecret(request);
+  if (authError) return authError;
   return NextResponse.json({
     endpoint: 'Hiring Manager Weekly Email',
     method: 'POST',
@@ -30,6 +33,9 @@ export async function GET(request: NextRequest) {
  * Should be called by a cron job every Monday
  */
 export async function POST(request: NextRequest) {
+  const authError = requireCronSecret(request);
+  if (authError) return authError;
+
   try {
     const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
     const EMAIL_TO = process.env.FUNNEL_EMAIL_TO || 'tom@andrewsrecruitmentgroup.com';

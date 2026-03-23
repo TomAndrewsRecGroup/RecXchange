@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { requireAdminSecret } from '@/lib/security';
 
 interface AuditResult {
   component: string;
@@ -8,6 +9,9 @@ interface AuditResult {
 }
 
 export async function GET(req: NextRequest) {
+  const authError = requireAdminSecret(req);
+  if (authError) return authError;
+
   const results: AuditResult[] = [];
 
   console.log('🔍 Starting Weekly Email System Audit...');

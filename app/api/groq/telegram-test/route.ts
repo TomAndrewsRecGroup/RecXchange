@@ -8,9 +8,12 @@
  * Returns a JSON object describing what passed or failed.
  */
 
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
+import { requireAdminSecret } from '@/lib/security';
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const authError = requireAdminSecret(req);
+  if (authError) return authError;
   const token  = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
 
