@@ -43,20 +43,26 @@ export default function RolesMarketplace() {
   const [searchQuery, setSearchQuery] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [selectedRole, setSelectedRole] = useState<Role | null>(null);
+  const [liveStats, setLiveStats] = useState({ roleCount: 0, totalFees: 0, averageFee: 0 });
 
   useEffect(() => {
-    async function fetchRoles() {
+    async function fetchData() {
       try {
-        const response = await fetch('/api/roles');
-        const data: APIResponse = await response.json();
-        setRoles(data.roles);
+        const [rolesRes, statsRes] = await Promise.all([
+          fetch('/api/roles'),
+          fetch('/api/live-stats'),
+        ]);
+        const rolesData: APIResponse = await rolesRes.json();
+        const statsData = await statsRes.json();
+        setRoles(rolesData.roles);
+        setLiveStats(statsData);
       } catch (error) {
         console.error('Error fetching roles:', error);
       } finally {
         setLoading(false);
       }
     }
-    fetchRoles();
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -92,24 +98,11 @@ export default function RolesMarketplace() {
   const totalPages = Math.ceil(filteredRoles.length / itemsPerPage);
   const paginatedRoles = filteredRoles.slice((page - 1) * itemsPerPage, page * itemsPerPage);
 
-  const stats = useMemo(() => ({
+  const roleTypeCounts = useMemo(() => ({
     total: roles.length,
     direct: roles.filter(r => r.source === 'recx_direct').length,
     xchange: roles.filter(r => r.source === 'xchange').length
   }), [roles]);
-
-  const totalFeePool = useMemo(() => {
-    const RATES: Record<string, number> = {
-      'USD': 1, 'GBP': 1.27, 'EUR': 1.09, 'CAD': 0.72, 'AUD': 0.66,
-      'SGD': 0.75, 'AED': 0.27, 'INR': 0.012, 'ZAR': 0.055
-    };
-    return roles.reduce((sum, role) => {
-      if (role.splitAmount && role.splitCurrency) {
-        return sum + (role.splitAmount * (RATES[role.splitCurrency] || 1));
-      }
-      return sum;
-    }, 0);
-  }, [roles]);
 
   const formatSalary = (min: number, max: number, currency: string) => {
     const symbols: Record<string, string> = {
@@ -167,8 +160,8 @@ export default function RolesMarketplace() {
               Browse live roles. Submit candidates. Split fees 50/50, 60/40, or take 70% on RecX Direct placements.
             </p>
             <div className="mt-5 sm:mt-6 flex flex-wrap justify-center gap-2 sm:gap-3 px-2">
-              <span className="text-[9px] sm:text-[10px] px-2.5 py-1 rounded-full bg-cyan-400/5 border border-cyan-400/20 text-cyan-400 font-bold uppercase tracking-widest">${Math.round(totalFeePool / roles.length).toLocaleString()} avg fee</span>
-              <span className="text-[9px] sm:text-[10px] px-2.5 py-1 rounded-full bg-fuchsia-400/5 border border-fuchsia-400/20 text-fuchsia-400 font-bold uppercase tracking-widest">${Math.round(totalFeePool / 1000)}k fees available</span>
+              <span className="text-[9px] sm:text-[10px] px-2.5 py-1 rounded-full bg-cyan-400/5 border border-cyan-400/20 text-cyan-400 font-bold uppercase tracking-widest">${liveStats.averageFee.toLocaleString()} avg fee</span>
+              <span className="text-[9px] sm:text-[10px] px-2.5 py-1 rounded-full bg-fuchsia-400/5 border border-fuchsia-400/20 text-fuchsia-400 font-bold uppercase tracking-widest">${Math.round(liveStats.totalFees / 1000)}k fees available</span>
               <span className="hidden sm:inline-flex text-[9px] sm:text-[10px] px-2.5 py-1 rounded-full bg-purple-400/5 border border-purple-400/20 text-purple-400 font-bold uppercase tracking-widest">UK · USA · Europe · Africa · Middle East</span>
             </div>
           </motion.header>
@@ -196,14 +189,14 @@ export default function RolesMarketplace() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 mb-8 sm:mb-12">
             <HolographicCard color="cyan" variant="stat">
               <p className="text-[9px] sm:text-[10px] text-gray-500 font-black uppercase tracking-widest mb-2">Total Live Roles</p>
-              <p className="text-4xl sm:text-5xl font-bold gradient-text mb-2">{stats.total.toLocaleString()}</p>
+              <p className="text-4xl sm:text-5xl font-bold gradient-text mb-2">{liveStats.roleCount.toLocaleString()}</p>
               <p className="text-[10px] sm:text-xs text-gray-500">
-                <span className="text-cyan-400 font-bold">{stats.direct}</span> RecX Direct · <span className="text-fuchsia-400 font-bold">{stats.xchange}</span> Xchange
+                <span className="text-cyan-400 font-bold">{roleTypeCounts.direct}</span> RecX Direct · <span className="text-fuchsia-400 font-bold">{roleTypeCounts.xchange}</span> Xchange
               </p>
             </HolographicCard>
             <HolographicCard color="fuchsia" variant="stat">
               <p className="text-[9px] sm:text-[10px] text-gray-500 font-black uppercase tracking-widest mb-2">Total Fee Pool</p>
-              <p className="text-4xl sm:text-5xl font-bold gradient-text mb-2">${Math.round(totalFeePool).toLocaleString()}</p>
+              <p className="text-4xl sm:text-5xl font-bold gradient-text mb-2">${liveStats.totalFees.toLocaleString()}</p>
               <p className="text-[10px] sm:text-xs text-gray-500">Available across all live roles</p>
             </HolographicCard>
           </div>
@@ -225,9 +218,9 @@ export default function RolesMarketplace() {
             </div>
             <div className="flex flex-wrap gap-3">
               {[
-                { label: 'All Roles', count: stats.total, val: 'All' },
-                { label: 'RecX Direct', count: stats.direct, val: 'RecX Direct' },
-                { label: 'Xchange', count: stats.xchange, val: 'Xchange' }
+                { label: 'All Roles', count: roleTypeCounts.total, val: 'All' },
+                { label: 'RecX Direct', count: roleTypeCounts.direct, val: 'RecX Direct' },
+                { label: 'Xchange', count: roleTypeCounts.xchange, val: 'Xchange' }
               ].map((btn) => (
                 <button
                   key={btn.val}
