@@ -20,7 +20,7 @@ interface RelatedContentProps {
 const relatedContentMap: Record<string, RelatedLink[]> = {
   '/': [
     { title: 'Pricing', href: '/pricing', description: 'View all pricing plans and features', category: 'Get Started' },
-    { title: 'How It Works', href: '/how-it-works', description: 'Learn how RecXchange works', category: 'Learn More' },
+    { title: 'How It Works', href: '/collaboration', description: 'Learn how RecXchange works', category: 'Learn More' },
     { title: 'FAQ', href: '/faq', description: 'Common questions answered', category: 'Support' },
   ],
   '/recruiter': [
