@@ -157,34 +157,53 @@ export function useChatLogic(pathname: string): UseChatLogicReturn {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // SSE: subscribe to team replies as soon as a conversation exists
+  // SSE: subscribe to team replies as soon as a conversation exists.
+  // We anchor `since` to when the conversation started (not each reconnect)
+  // so replies are never lost if Vercel's serverless function times out mid-session.
   useEffect(() => {
     if (!conversationId) return;
 
-    const eventSource = new EventSource(`/api/groq/stream?conversationId=${conversationId}`);
+    const since = new Date().toISOString();
+    let es: EventSource | null = null;
+    let retryTimeout: ReturnType<typeof setTimeout> | null = null;
+    let closed = false;
 
-    eventSource.onmessage = (event) => {
-      try {
-        const data = JSON.parse(event.data);
-        if (data.type === 'message' && data.body) {
-          const body = String(data.body);
-          const cta = parseCtaFromBody(body);
-          if (cta) {
-            setMessages(prev => [...prev, { role: 'assistant', content: '', cta }]);
-          } else {
-            setMessages(prev => [...prev, { role: 'assistant', content: body }]);
+    function connect() {
+      if (closed) return;
+      es = new EventSource(`/api/groq/stream?conversationId=${conversationId}&since=${encodeURIComponent(since)}`);
+
+      es.onmessage = (event) => {
+        try {
+          const data = JSON.parse(event.data);
+          if (data.type === 'message' && data.body) {
+            const body = String(data.body);
+            const cta = parseCtaFromBody(body);
+            if (cta) {
+              setMessages(prev => [...prev, { role: 'assistant', content: '', cta }]);
+            } else {
+              setMessages(prev => [...prev, { role: 'assistant', content: body }]);
+            }
           }
+        } catch {
+          // Malformed SSE frame — ignore
         }
-      } catch {
-        // Malformed SSE frame — ignore
-      }
-    };
+      };
 
-    eventSource.onerror = () => {
-      console.warn('[Chat] SSE error — will retry');
-    };
+      es.onerror = () => {
+        es?.close();
+        if (!closed) {
+          retryTimeout = setTimeout(connect, 3000);
+        }
+      };
+    }
 
-    return () => eventSource.close();
+    connect();
+
+    return () => {
+      closed = true;
+      if (retryTimeout) clearTimeout(retryTimeout);
+      es?.close();
+    };
   }, [conversationId]);
 
   // ── handleStartChat ────────────────────────────────────────────────────────

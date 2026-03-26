@@ -45,13 +45,17 @@ async function fetchRepliesSince(
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const conversationId = searchParams.get('conversationId');
+  const sinceParam = searchParams.get('since');
 
   if (!conversationId) {
     return new Response('conversationId is required', { status: 400 });
   }
 
-  // Only deliver replies inserted after this connection opened
-  let lastDeliveredAt = new Date().toISOString();
+  // Use the client-supplied `since` timestamp so reconnects after a Vercel
+  // function timeout don't miss replies that arrived during the gap.
+  let lastDeliveredAt = sinceParam && !isNaN(Date.parse(sinceParam))
+    ? sinceParam
+    : new Date().toISOString();
 
   const stream = new ReadableStream({
     start(controller) {
