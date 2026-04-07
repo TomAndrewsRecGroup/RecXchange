@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import React from 'react';
 
 export const metadata: Metadata = {
-  title: "Split Fee Recruitment Europe | Recruiter Marketplace | RecXchange",
-  description: "Split fee recruitment marketplace for European recruiters. Partner with specialist recruiters across Germany, Netherlands, France, Spain, Ireland and beyond. Technology, Engineering, Finance and Healthcare roles across the EU and EEA. RecXchange connects European recruiters globally.",
+  title: "Split Fee Recruitment Europe | RecXchange",
+  description: "Split fee recruitment for European recruiters. Specialists across Germany, Netherlands, France, Spain and Ireland. Tech, Engineering and Finance roles.",
   keywords: [
     "split fee recruitment Europe",
     "European recruiter marketplace",
@@ -55,12 +55,12 @@ export default function EuropeLocationPage() {
           <p className="text-cyan-400 text-sm font-bold uppercase tracking-widest mb-4">Europe</p>
           <h1 className="text-4xl md:text-5xl font-black text-white mb-6">Split Fee Recruitment Europe</h1>
           <p className="text-gray-300 text-lg mb-8 leading-relaxed">
-            RecXchange serves recruiters and hiring managers across Europe — from Dublin and Amsterdam to Berlin, Paris, and Madrid. European recruiters use RecXchange to partner on cross-border placements, access global candidate pools, and split fees automatically without the complexity of multi-jurisdiction contracts or payment arrangements.
+            RecXchange serves recruiters and hiring managers across Europe, from Dublin and Amsterdam to Berlin, Paris, and Madrid. European recruiters use RecXchange to partner on cross-border placements, access global candidate pools, and split fees automatically without the complexity of multi-jurisdiction contracts or payment arrangements.
           </p>
 
           <h2 className="text-2xl font-bold text-white mb-4">Cross-Border Recruitment Across the EU</h2>
           <p className="text-gray-300 mb-6 leading-relaxed">
-            The EU&apos;s freedom of movement creates a naturally borderless talent market — but most recruitment platforms are country-specific. RecXchange is built for cross-border collaboration. A recruiter in Amsterdam with a Dutch-speaking candidate can partner with a role-holder in Frankfurt. A Paris-based recruiter with EMEA sales talent can submit to a London-based role. All terms, agreements and payments are in-platform.
+            The EU&apos;s freedom of movement creates a naturally borderless talent market, but most recruitment platforms are country-specific. RecXchange is built for cross-border collaboration. A recruiter in Amsterdam with a Dutch-speaking candidate can partner with a role-holder in Frankfurt. A Paris-based recruiter with EMEA sales talent can submit to a London-based role. All terms, agreements and payments are in-platform.
           </p>
 
           <h2 className="text-2xl font-bold text-white mb-4">Key European Markets on RecXchange</h2>

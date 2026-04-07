@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import React from 'react';
 
 export const metadata: Metadata = {
-  title: "Recruiter Collaboration Platform | Partner & Split Fees | RecXchange",
-  description: "RecXchange is the recruiter collaboration platform where 15,000+ recruiters partner on placements and split fees automatically. Post a role, find a candidate partner, agree split terms, earn more together.",
+  title: "Recruiter Collaboration Platform | RecXchange",
+  description: "Recruiter collaboration: 15,000+ recruiters partner on placements and split fees automatically. Post a role, find a candidate partner, earn together.",
   keywords: [
     "recruiter collaboration platform",
     "split fee recruitment",
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
       url: "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png",
       width: 1200,
       height: 630,
-      alt: "RecXchange — Recruiter Collaboration Platform"
+      alt: "RecXchange, Recruiter Collaboration Platform"
     }]
   },
   twitter: {

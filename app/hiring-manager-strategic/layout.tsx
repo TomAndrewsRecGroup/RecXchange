@@ -3,7 +3,7 @@ import React from 'react';
 
 export const metadata: Metadata = {
   title: "Build a Talent Pipeline | Strategic Hiring | RecXchange",
-  description: "Not hiring right now but want to be ready? Build a strategic talent pipeline with RecXchange. Market mapping, salary benchmarking, competitor talent analysis, and pre-warmed candidates over 3-6 months.",
+  description: "Build a strategic talent pipeline with RecXchange. Market mapping, salary benchmarking, competitor analysis, and pre-warmed candidates over 3-6 months.",
   keywords: [
     "strategic hiring",
     "talent pipeline",
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
       url: "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png",
       width: 1200,
       height: 630,
-      alt: "RecXchange — Strategic Hiring & Talent Pipeline"
+      alt: "RecXchange, Strategic Hiring & Talent Pipeline"
     }]
   },
   twitter: {

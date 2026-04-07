@@ -21,7 +21,7 @@ export default function EngineeringSectorPage() {
         <div className="max-w-[1200px] mx-auto">
           <motion.header initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-8 md:mb-14 mt-6">
             <StatusBadge label="SECTOR · ENGINEERING" color="cyan" />
-            <h1 className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 tracking-tight leading-[1.1] pb-2 px-2 mt-6" style={{ textShadow: '0 0 60px rgba(0,240,255,0.3)' }}>Engineering Recruitment<br /><span className="text-cyan-400">Split Fee Roles</span></h1>
+            <h1 className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 tracking-tight leading-[1.1] pb-2 px-2 mt-6" style={{ textShadow: '0 0 20px rgba(0,240,255,0.15)' }}>Engineering Recruitment<br /><span className="text-cyan-400">Split Fee Roles</span></h1>
             <NeonDivider width="w-40" color="mixed" />
             <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed px-2 mt-6">Live mechanical, electrical, civil, structural, M&amp;E, and industrial engineering roles available now on RecXchange. Submit candidates. Earn an average of $7,000 per split placement.</p>
           </motion.header>
@@ -40,7 +40,7 @@ export default function EngineeringSectorPage() {
           <HolographicCard color="purple" variant="content" className="mb-8">
             <TrendingUp className="w-6 h-6 text-purple-400 mb-3" />
             <h2 className="text-xl font-bold text-white mb-3">Why Engineering Roles Fill Faster on RecXchange</h2>
-            <p className="text-gray-400 text-sm leading-relaxed mb-3">Engineering is one of the most candidate-short sectors globally. Clients can't wait weeks for a shortlist. RecXchange's Xchange Engine scans 15,000+ recruiter databases simultaneously — surfacing engineering candidates that generalist job boards can't reach. Role-side recruiters get access to niche candidate pools. Candidate-side recruiters get live, verified engineering vacancies nobody else has.</p>
+            <p className="text-gray-400 text-sm leading-relaxed mb-3">Engineering is one of the most candidate-short sectors globally. Clients can't wait weeks for a shortlist. RecXchange's Xchange Engine scans 15,000+ recruiter databases simultaneously, surfacing engineering candidates that generalist job boards can't reach. Role-side recruiters get access to niche candidate pools. Candidate-side recruiters get live, verified engineering vacancies nobody else has.</p>
             <p className="text-gray-400 text-sm leading-relaxed">Average engineering placement fee on RecXchange: <span className="text-white font-bold">$8,500</span>. RecX Direct engineering roles pay candidate-side recruiters <span className="text-fuchsia-400 font-bold">70%</span>.</p>
           </HolographicCard>
           <HolographicCard color="cyan" variant="content" className="text-center">

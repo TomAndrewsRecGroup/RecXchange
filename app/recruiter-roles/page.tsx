@@ -48,7 +48,7 @@ export default function PostRolesPage() {
           <motion.header initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-8 sm:mb-12 md:mb-16 mt-6">
             <StatusBadge label="NEED CANDIDATES?" color="purple" />
             <h1 className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2 mt-6"
-              style={{ textShadow: '0 0 60px rgba(0,240,255,0.3)' }}>
+              style={{ textShadow: '0 0 20px rgba(0,240,255,0.15)' }}>
               See how much you'll still take home
             </h1>
             <NeonDivider width="w-40" color="mixed" />

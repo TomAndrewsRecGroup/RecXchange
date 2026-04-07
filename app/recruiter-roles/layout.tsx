@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import React from 'react';
 
 export const metadata: Metadata = {
-  title: "Browse Live Roles to Fill | Recruiter Marketplace | RecXchange",
-  description: "Browse hundreds of live roles posted by recruiters who need candidate partners. Filter by sector, location, and salary. Submit your candidates, agree a split, earn your share on placement.",
+  title: "Browse Live Roles to Fill | RecXchange",
+  description: "Live roles posted by recruiters who need candidate partners. Filter by sector, location and salary. Submit candidates, agree a split, earn on placement.",
   keywords: [
     "live recruiter roles",
     "roles to fill as recruiter",
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
       url: "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png",
       width: 1200,
       height: 630,
-      alt: "RecXchange — Browse Live Roles to Fill"
+      alt: "RecXchange, Browse Live Roles to Fill"
     }]
   },
   twitter: {

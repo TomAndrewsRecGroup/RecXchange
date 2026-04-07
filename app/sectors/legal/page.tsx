@@ -21,9 +21,9 @@ export default function LegalSectorPage() {
         <div className="max-w-[1200px] mx-auto">
           <motion.header initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-8 md:mb-14 mt-6">
             <StatusBadge label="SECTOR · LEGAL" color="purple" />
-            <h1 className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 tracking-tight leading-[1.1] pb-2 px-2 mt-6" style={{ textShadow: '0 0 60px rgba(168,85,247,0.3)' }}>Legal Recruitment<br /><span className="text-purple-400">Split Fee Roles</span></h1>
+            <h1 className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 tracking-tight leading-[1.1] pb-2 px-2 mt-6" style={{ textShadow: '0 0 20px rgba(168,85,247,0.15)' }}>Legal Recruitment<br /><span className="text-purple-400">Split Fee Roles</span></h1>
             <NeonDivider width="w-40" color="mixed" />
-            <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed px-2 mt-6">Solicitors, in-house counsel, compliance lawyers, paralegals — live legal split fee roles on RecXchange. Legal recruitment is highly relationship-driven and geography-specific, making recruiter collaboration a natural fit.</p>
+            <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed px-2 mt-6">Solicitors, in-house counsel, compliance lawyers, paralegals, live legal split fee roles on RecXchange. Legal recruitment is highly relationship-driven and geography-specific, making recruiter collaboration a natural fit.</p>
           </motion.header>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-12">
             {specialisms.map((s, i) => { const Icon = s.icon; const tc = s.color === 'cyan' ? 'text-cyan-400' : s.color === 'fuchsia' ? 'text-fuchsia-400' : 'text-purple-400'; return (
@@ -40,7 +40,7 @@ export default function LegalSectorPage() {
           <HolographicCard color="purple" variant="content" className="text-center">
             <StatusBadge label="LEGAL ROLES LIVE NOW" color="purple" />
             <h2 className="text-2xl font-bold text-white mt-4 mb-3">Browse Live Legal Roles</h2>
-            <p className="text-gray-400 text-sm mb-6 max-w-lg mx-auto">Private practice, in-house, compliance, paralegals — live split fee legal vacancies ready to fill.</p>
+            <p className="text-gray-400 text-sm mb-6 max-w-lg mx-auto">Private practice, in-house, compliance, paralegals, live split fee legal vacancies ready to fill.</p>
             <a href="/roles" className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-purple-400/10 border border-purple-400/30 text-purple-400 font-bold text-sm hover:bg-purple-400/20 transition-all">View Live Roles <ArrowRight className="w-4 h-4" /></a>
           </HolographicCard>
         </div>

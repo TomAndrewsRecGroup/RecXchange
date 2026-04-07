@@ -141,7 +141,7 @@ export default function CollaborationPage() {
             <motion.header initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-6 sm:mb-8 md:mb-12 mt-6">
               <StatusBadge label="THE RECXCHANGE ENGINE" color="cyan" />
               <h1 className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2 mt-6"
-                style={{ textShadow: '0 0 60px rgba(0,240,255,0.3)' }}>
+                style={{ textShadow: '0 0 20px rgba(0,240,255,0.15)' }}>
                 Split Fees. Zero Friction.
               </h1>
               <NeonDivider width="w-40" color="mixed" />
@@ -149,6 +149,14 @@ export default function CollaborationPage() {
                 RecXchange isn't just a marketplace; it's a high-performance engine designed to protect your deals and automate your matchmaking. Learn about <Link href={internalLinks.pricing} className="text-cyan-400 hover:text-cyan-300 underline">our pricing tiers</Link> or see <Link href={internalLinks.whyRecXchange} className="text-fuchsia-400 hover:text-fuchsia-300 underline">why recruiters choose us</Link>.
               </p>
             </motion.header>
+
+            {/* Definition Block */}
+            <section className="mb-8 sm:mb-12" data-speakable="true">
+              <h2 className="text-xl sm:text-2xl font-bold text-white mb-3">What is split fee recruitment?</h2>
+              <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
+                Split fee recruitment is a collaboration model where two recruiters work together on a single placement and share the resulting fee. One recruiter brings the role, the other brings the candidate, and both agree on a split, typically 50/50 to 70/30, before any private details are exchanged. On RecXchange, 15,000+ recruiters use this model to fill roles faster, with an average placement fee of $7,000 and zero platform cut.
+              </p>
+            </section>
 
             {/* The Split Logic */}
             <section className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 md:gap-8 mb-10 sm:mb-12 md:mb-16">

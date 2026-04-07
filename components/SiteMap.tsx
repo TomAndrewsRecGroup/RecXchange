@@ -75,7 +75,7 @@ export default function SiteMap() {
         >
           <h2 className="text-3xl md:text-4xl font-black text-white mb-4"
             style={{
-              textShadow: '0 0 40px rgba(0,240,255,0.2)'
+              textShadow: '0 0 16px rgba(0,240,255,0.12)'
             }}
           >
             Site Map

@@ -240,7 +240,7 @@ export function OfflineBlocker() {
       </div>
       <p className="text-white font-semibold text-sm mb-2">Live Chat is currently offline</p>
       <p className="text-gray-400 text-xs leading-relaxed max-w-[240px]">
-        Our live support hours are <span className="text-cyan-400 font-medium">7am – 9pm GMT</span> daily.
+        Our live support hours are <span className="text-cyan-400 font-medium">7am to 9pm GMT</span> daily.
         Please email us at{' '}
         <a href="mailto:support@recxchange.io" className="text-cyan-400 hover:underline">
           support@recxchange.io
@@ -316,7 +316,7 @@ export function UserForm({
           : 'Start Chat'}
       </button>
       <p className="text-gray-500 text-[10px] text-center">
-        Live support available <span className="text-cyan-400/80">7am – 9pm GMT</span> daily. Outside hours, please email{' '}
+        Live support available <span className="text-cyan-400/80">7am to 9pm GMT</span> daily. Outside hours, please email{' '}
         <a href="mailto:support@recxchange.io" className="text-cyan-400/80 hover:underline">support@recxchange.io</a>
       </p>
       <p className="text-gray-500 text-[10px] text-center mt-1">By continuing, you agree to our data collection for support purposes.</p>

@@ -22,7 +22,7 @@ export default function CollaborationPage() {
             <StatusBadge label="WHY RECXCHANGE EXISTS" color="fuchsia" />
             <h1
               className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2 mt-6"
-              style={{ textShadow: '0 0 60px rgba(0,240,255,0.3)' }}
+              style={{ textShadow: '0 0 20px rgba(0,240,255,0.15)' }}
             >
               Collaboration Over Competition
             </h1>
@@ -31,6 +31,14 @@ export default function CollaborationPage() {
               How one recruiter&apos;s impossible situation sparked a movement that is changing the way recruiters work, forever.
             </p>
           </motion.header>
+
+          {/* Speakable Definition Block */}
+          <section className="mb-8 sm:mb-12" data-speakable="true">
+            <h2 className="text-xl sm:text-2xl font-bold text-white mb-3">What is recruiter collaboration?</h2>
+            <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
+              Recruiter collaboration is the practice of specialist recruiters partnering on placements through a structured platform, sharing roles and candidates to fill positions neither could fill alone. On RecXchange, 15,000+ recruiters collaborate using legally binding split fee agreements, typically splitting fees 50/50 to 70/30. The platform handles matching, contracts, and fee protection automatically, so recruiters can focus on making placements rather than chasing paperwork.
+            </p>
+          </section>
 
           {/* Everyone Wins */}
           <motion.section initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-8 sm:mb-12 md:mb-16">

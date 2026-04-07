@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import React from 'react';
 
 export const metadata: Metadata = {
-  title: "RecXchange vs LinkedIn Recruiter | Which Is Better for Hiring?",
-  description: "RecXchange vs LinkedIn Recruiter: LinkedIn costs £7,000+/year per seat and requires your team to do all the sourcing. RecXchange gives you 15,000+ specialist recruiters doing the sourcing for you. Pay only on placement. No annual subscription.",
+  title: "RecXchange vs LinkedIn Recruiter | RecXchange",
+  description: "RecXchange vs LinkedIn Recruiter: LinkedIn costs £7,000+/year and you do all the sourcing. RecXchange gives you 15,000+ specialists. Pay only on placement.",
   keywords: [
     "RecXchange vs LinkedIn Recruiter",
     "LinkedIn Recruiter alternative",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [{ url: "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png", width: 1200, height: 630, alt: "RecXchange vs LinkedIn Recruiter" }]
   },
-  twitter: { card: "summary_large_image", title: "RecXchange vs LinkedIn Recruiter", description: "LinkedIn Recruiter costs £7k+/year — and you still do all the work. RecXchange: 15,000+ specialists source for you. Pay on hire only.", images: ["https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png"], creator: "@RecXchange" }
+  twitter: { card: "summary_large_image", title: "RecXchange vs LinkedIn Recruiter", description: "LinkedIn Recruiter costs £7k+/year, and you still do all the work. RecXchange: 15,000+ specialists source for you. Pay on hire only.", images: ["https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png"], creator: "@RecXchange" }
 };
 
 export default function VsLinkedInRecruiterPage() {
@@ -53,27 +53,27 @@ export default function VsLinkedInRecruiterPage() {
           <p className="text-cyan-400 text-sm font-bold uppercase tracking-widest mb-4">Comparison</p>
           <h1 className="text-4xl md:text-5xl font-black text-white mb-6">RecXchange vs LinkedIn Recruiter</h1>
           <p className="text-gray-300 text-lg mb-10 leading-relaxed">
-            LinkedIn Recruiter is the world’s most widely used sourcing tool — but it’s a tool, not a service. You pay £7,000–10,000+ per year per seat, and then your team still has to do all the searching, outreach, screening and coordination. RecXchange puts 15,000+ specialist recruiters to work on your role — and you pay nothing until a candidate is placed.
+            LinkedIn Recruiter is the world’s most widely used sourcing tool, but it’s a tool, not a service. You pay £7,000 to 10,000+ per year per seat, and then your team still has to do all the searching, outreach, screening and coordination. RecXchange puts 15,000+ specialist recruiters to work on your role, and you pay nothing until a candidate is placed.
           </p>
 
           <h2 className="text-2xl font-bold text-white mb-4">Cost: Annual Subscription vs Pay-on-Hire</h2>
           <p className="text-gray-300 mb-6 leading-relaxed">
-            LinkedIn Recruiter costs approximately £7,000–10,000 per year per seat in the UK, with LinkedIn Recruiter Corporate licences running significantly higher for larger teams. This cost is fixed — payable whether you hire anyone or not. RecXchange charges zero subscription fees. A single success fee of 12–20% is payable only when a candidate accepts an offer. If RecXchange doesn’t place someone, you pay nothing.
+            LinkedIn Recruiter costs approximately £7,000 to 10,000 per year per seat in the UK, with LinkedIn Recruiter Corporate licences running significantly higher for larger teams. This cost is fixed, payable whether you hire anyone or not. RecXchange charges zero subscription fees. A single success fee of 12 to 20% is payable only when a candidate accepts an offer. If RecXchange doesn’t place someone, you pay nothing.
           </p>
 
           <h2 className="text-2xl font-bold text-white mb-4">Effort: You Do the Work vs We Do the Work</h2>
           <p className="text-gray-300 mb-6 leading-relaxed">
-            LinkedIn Recruiter gives your team a search interface. You still have to write the search strings, filter 1,000+ profiles, send InMails (and hope they’re read), screen responses, manage conversations, and coordinate interviews. On RecXchange, specialist recruiters do all of this — they source, screen, and submit pre-qualified candidates to your Account Manager, who filters to top 1% quality before anything reaches you.
+            LinkedIn Recruiter gives your team a search interface. You still have to write the search strings, filter 1,000+ profiles, send InMails (and hope they’re read), screen responses, manage conversations, and coordinate interviews. On RecXchange, specialist recruiters do all of this, they source, screen, and submit pre-qualified candidates to your Account Manager, who filters to top 1% quality before anything reaches you.
           </p>
 
           <h2 className="text-2xl font-bold text-white mb-4">InMail Response Rates vs Warm Candidate Pipelines</h2>
           <p className="text-gray-300 mb-6 leading-relaxed">
-            LinkedIn InMail average response rates are 10–25% for well-crafted messages — meaning 75–90% of outreach goes unanswered. RecXchange recruiters approach candidates through established relationships built over years of sector-specific work. A specialist recruiter’s direct call or message to a known candidate gets answered. These warm pipelines consistently outperform cold InMail campaigns for passive, senior, and specialist roles.
+            LinkedIn InMail average response rates are 10 to 25% for well-crafted messages, meaning 75 to 90% of outreach goes unanswered. RecXchange recruiters approach candidates through established relationships built over years of sector-specific work. A specialist recruiter’s direct call or message to a known candidate gets answered. These warm pipelines consistently outperform cold InMail campaigns for passive, senior, and specialist roles.
           </p>
 
           <h2 className="text-2xl font-bold text-white mb-4">When LinkedIn Recruiter Makes Sense</h2>
           <p className="text-gray-300 mb-6 leading-relaxed">
-            LinkedIn Recruiter makes sense for large in-house talent acquisition teams with dedicated resourcers who hire at high volume across many roles simultaneously. For specialist hiring — one or two critical roles at a time, where candidate quality and speed matter — RecXchange consistently delivers better outcomes at lower total cost, with less internal time investment.
+            LinkedIn Recruiter makes sense for large in-house talent acquisition teams with dedicated resourcers who hire at high volume across many roles simultaneously. For specialist hiring, one or two critical roles at a time, where candidate quality and speed matter, RecXchange consistently delivers better outcomes at lower total cost, with less internal time investment.
           </p>
 
           <div className="mt-12 overflow-x-auto">
@@ -87,11 +87,11 @@ export default function VsLinkedInRecruiterPage() {
               </thead>
               <tbody className="text-gray-300">
                 {[
-                  ["Annual cost", "£0 subscription", "£7,000–10,000+/seat/year"],
-                  ["Pay if no hire", "No", "Yes — always"],
+                  ["Annual cost", "£0 subscription", "£7,000 to 10,000+/seat/year"],
+                  ["Pay if no hire", "No", "Yes, always"],
                   ["Who does the work", "15,000+ specialist recruiters", "Your internal team"],
                   ["Candidate sourcing", "Warm relationship pipelines", "Cold InMail outreach"],
-                  ["InMail/response rate", "N/A — warm approach", "10–25% cold response"],
+                  ["InMail/response rate", "N/A, warm approach", "10 to 25% cold response"],
                   ["Account Manager", "Dedicated, included", "None"],
                   ["Best for", "Specialist / senior hires", "High-volume sourcing teams"],
                   ["Setup time", "Hours", "Days (training + onboarding)"],

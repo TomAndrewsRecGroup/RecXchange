@@ -41,6 +41,7 @@ export default function Header() {
                 <Link href="/recruiter" className="block px-4 py-2 text-sm text-gray-400 hover:text-cyan-400 hover:bg-cyan-400/5 rounded">Recruiter Home</Link>
                 <Link href="/recruiter-roles" className="block px-4 py-2 text-sm text-gray-400 hover:text-cyan-400 hover:bg-cyan-400/5 rounded">Recruiters with Roles</Link>
                 <Link href="/recruiters-with-candidates" className="block px-4 py-2 text-sm text-gray-400 hover:text-cyan-400 hover:bg-cyan-400/5 rounded">Recruiters with Candidates</Link>
+                <Link href="/freelance-recruiters" className="block px-4 py-2 text-sm text-gray-400 hover:text-cyan-400 hover:bg-cyan-400/5 rounded">Freelance Recruiters</Link>
                 <Link href="/split-fees" className="block px-4 py-2 text-sm text-fuchsia-400 hover:text-fuchsia-300 hover:bg-fuchsia-400/5 rounded border-t border-white/5 mt-1 font-medium">Split Fees</Link>
               </div>
             </div>
@@ -78,18 +79,26 @@ export default function Header() {
               href="https://app.recxchange.io/register?trigger_link=jYQNc9YXcMkYPvo3HZfC"
               className="px-5 py-2.5 rounded-full bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white text-sm font-bold hover:scale-105 transition-all shadow-[0_0_20px_rgba(0,255,255,0.3)]"
             >
-              Get Started Today
+              Get Started
             </Link>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden z-[110] relative text-white p-2 hover:text-cyan-400 transition-colors tap-target"
-            aria-label="Toggle menu"
-          >
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          {/* Mobile CTA + Menu Button */}
+          <div className="lg:hidden flex items-center gap-2 z-[110] relative">
+            <Link
+              href="https://app.recxchange.io/register?trigger_link=jYQNc9YXcMkYPvo3HZfC"
+              className="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white text-xs font-bold shadow-[0_0_12px_rgba(0,255,255,0.2)] min-h-[36px] flex items-center"
+            >
+              Get Started
+            </Link>
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="text-white p-2 hover:text-cyan-400 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
       </header>
 
@@ -123,7 +132,7 @@ export default function Header() {
                     className="w-full py-3.5 rounded-full bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white text-sm font-bold text-center shadow-[0_0_20px_rgba(0,255,255,0.3)] tap-target"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    Get Started Today
+                    Get Started
                   </Link>
                   <Link 
                     href="https://app.recxchange.io?trigger_link=Hc9mpfL0JxjX06kwNpd1" 
@@ -188,8 +197,15 @@ export default function Header() {
                           >
                             Recruiters with Candidates
                           </Link>
-                          <Link 
-                            href="/split-fees" 
+                          <Link
+                            href="/freelance-recruiters"
+                            className="block text-sm text-gray-400 hover:text-cyan-400 py-2"
+                            onClick={() => setMobileMenuOpen(false)}
+                          >
+                            Freelance Recruiters
+                          </Link>
+                          <Link
+                            href="/split-fees"
                             className="block text-sm text-fuchsia-400 hover:text-fuchsia-300 font-medium py-2"
                             onClick={() => setMobileMenuOpen(false)}
                           >

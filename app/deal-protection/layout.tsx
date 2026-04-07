@@ -5,7 +5,7 @@ import React from 'react';
 
 export const metadata: Metadata = {
   title: "Deal Protection & Split Fee Agreements | RecXchange",
-  description: "Timestamped candidate submissions. Auto-generated split fee contracts. Legal protection for both recruiters. See how RecXchange protects your placements and revenue with immutable submission tracking.",
+  description: "Deal protection on RecXchange: timestamped submissions, auto-generated split fee contracts and legal protection for recruiters on every placement.",
   keywords: [
     "deal protection recruitment",
     "split fee agreements",
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
       url: "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png",
       width: 1200,
       height: 630,
-      alt: "RecXchange Deal Protection — Split Fee Agreements"
+      alt: "RecXchange Deal Protection, Split Fee Agreements"
     }]
   },
   twitter: {

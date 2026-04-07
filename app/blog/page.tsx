@@ -4,6 +4,20 @@ import Link from 'next/link';
 
 const articles = [
   {
+    href: "/blog/how-to-monetise-unused-candidates",
+    tag: "Strategy",
+    title: "How to Monetise Unused Candidates",
+    desc: "Turn dead leads into revenue. How recruiters earn from candidates sitting idle on their desk through split fee placements.",
+    read: "7 min"
+  },
+  {
+    href: "/blog/split-fee-agreement-guide",
+    tag: "Guide",
+    title: "Split Fee Agreements Explained",
+    desc: "What to include in a split fee agreement, why they matter, and how to protect yourself before sharing candidates.",
+    read: "8 min"
+  },
+  {
     href: "/blog/what-is-split-fee-recruitment",
     tag: "Guide",
     title: "What Is Split Fee Recruitment?",
@@ -35,7 +49,7 @@ const articles = [
     href: "/blog/reduce-cost-per-hire",
     tag: "For HR Leaders",
     title: "How to Reduce Cost Per Hire",
-    desc: "The true cost of agencies, job boards, and LinkedIn Recruiter — and how RecXchange delivers better hires at materially lower total cost.",
+    desc: "The true cost of agencies, job boards, and LinkedIn Recruiter, and how RecXchange delivers better hires at materially lower total cost.",
     read: "10 min"
   },
   {
@@ -49,7 +63,7 @@ const articles = [
     href: "/blog/xchange-engine-explained",
     tag: "Technology",
     title: "The Xchange Engine Explained",
-    desc: "A deep dive into RecXchange's AI-powered matching engine: how it classifies roles, scores recruiters, and activates the right network in real time.",
+    desc: "How RecXchange's AI matching engine actually works: classifying roles, scoring recruiters, and activating the right network in real time.",
     read: "8 min"
   },
   {
@@ -63,7 +77,7 @@ const articles = [
     href: "/blog/how-to-choose-a-recruitment-partner",
     tag: "Buyer's Guide",
     title: "How to Choose a Recruitment Partner",
-    desc: "The 8 questions every hiring manager must ask before signing Terms of Business — and the red flags to watch for.",
+    desc: "The 8 questions every hiring manager must ask before signing Terms of Business, and the red flags to watch for.",
     read: "10 min"
   },
 ];

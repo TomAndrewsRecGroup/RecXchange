@@ -20,9 +20,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/recruiters-with-candidates`, lastModified: seoDate, changeFrequency: 'weekly', priority: 0.85 },
     { url: `${baseUrl}/how-recruiter-collaboration-works`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.80 },
     { url: `${baseUrl}/how-to-find-recruitment-partners`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.80 },
+    { url: `${baseUrl}/freelance-recruiters`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.85 },
     { url: `${baseUrl}/what-is-split-fee-recruitment`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.85 },
     { url: `${baseUrl}/what-is-recx-direct`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.80 },
     { url: `${baseUrl}/recruitment-fee-structures`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.75 },
+    { url: `${baseUrl}/earnings-calculator`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.80 },
 
     // ─── Hiring manager journey ──────────────────────────────────
     { url: `${baseUrl}/hiring-manager-home`, lastModified: seoDate, changeFrequency: 'weekly', priority: 0.95 },
@@ -41,7 +43,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/contact`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.55 },
     // /research is noindex — intentionally excluded from sitemap
 
-    // ─── Phase B: Pillar pages ───────────────────────────────────
+    // ─── Pillar pages ──────────────────────────────────────────
     { url: `${baseUrl}/split-fee-recruitment`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.90 },
     { url: `${baseUrl}/recruiter-collaboration-platform`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.90 },
     { url: `${baseUrl}/hire-specialist-recruiters`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.88 },
@@ -78,6 +80,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/vs/internal-recruiter`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.80 },
     { url: `${baseUrl}/vs/staffing-agencies`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.80 },
     { url: `${baseUrl}/vs/contingency-recruitment`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.80 },
+    { url: `${baseUrl}/vs/top-echelon`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.80 },
+    { url: `${baseUrl}/vs/npa-worldwide`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.80 },
+    { url: `${baseUrl}/vs/recruit-alliance`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.80 },
 
     // ─── Phase E: Use case pages ─────────────────────────────────
     { url: `${baseUrl}/use-cases`, lastModified: seoDate, changeFrequency: 'monthly', priority: 0.80 },

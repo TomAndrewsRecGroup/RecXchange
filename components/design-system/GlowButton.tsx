@@ -67,13 +67,9 @@ export default function GlowButton({
         {/* Softened glow layers */}
         {variant === 'primary' && (
           <>
-            <span 
-              className={`absolute -inset-3 bg-gradient-to-r ${variantStyles.glow} rounded-2xl blur-2xl opacity-15 group-hover:opacity-30 animate-pulse-slow pointer-events-none`}
-              aria-hidden="true" 
-            />
-            <span 
-              className={`absolute -inset-1.5 bg-gradient-to-r ${variantStyles.glow} rounded-xl blur-xl opacity-20 group-hover:opacity-35 transition-opacity pointer-events-none`}
-              aria-hidden="true" 
+            <span
+              className={`absolute -inset-2 bg-gradient-to-r ${variantStyles.glow} rounded-2xl blur-lg opacity-10 group-hover:opacity-25 transition-opacity pointer-events-none`}
+              aria-hidden="true"
             />
           </>
         )}
@@ -86,8 +82,8 @@ export default function GlowButton({
         )}
         
         {/* Button shell */}
-        <span 
-          className={`relative flex items-center justify-center gap-2 sm:gap-3 ${sizeClasses} ${variantStyles.bg} rounded-xl font-black ${variantStyles.text} group-hover:scale-105 transition-all duration-300 ${className}`}
+        <span
+          className={`relative flex items-center justify-center gap-2 sm:gap-3 ${sizeClasses} ${variantStyles.bg} rounded-xl font-black ${variantStyles.text} transition-all duration-300 ${className}`}
           style={{
             boxShadow: variantStyles.shadow
           }}

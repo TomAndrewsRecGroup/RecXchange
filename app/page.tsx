@@ -54,15 +54,6 @@ export default function HomePage() {
 
   useEffect(() => {
     setPageLoaded(true);
-    
-    const autoScrollTimer = setTimeout(() => {
-      document.getElementById('path-selection')?.scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start'
-      });
-    }, 3000);
-
-    return () => clearTimeout(autoScrollTimer);
   }, []);
 
   const scrollToCards = () => {
@@ -98,14 +89,14 @@ export default function HomePage() {
   return (
     <>
       <HowToSchema />
-      <main className="relative bg-[#0a0a0f] font-[family-name:var(--font-lexend)] overflow-x-hidden">
+      <main className="relative bg-[#0a0a0f] font-sans overflow-x-hidden">
         <section className="relative h-screen flex flex-col items-center justify-center px-4 pt-20" aria-label="Hero section">
           <div className="absolute inset-0 pointer-events-none z-0" aria-hidden="true">
             <motion.div 
               style={{ 
                 y: y1,
                 background: 'radial-gradient(circle, rgba(0,240,255,0.15) 0%, rgba(0,240,255,0.05) 40%, transparent 70%)',
-                filter: 'blur(60px)'
+                filter: 'blur(40px)'
               }}
               className="absolute top-[-15%] left-[5%] w-[50%] h-[50%] rounded-full animate-float"
             />
@@ -113,13 +104,14 @@ export default function HomePage() {
               style={{ 
                 y: y2,
                 background: 'radial-gradient(circle, rgba(255,0,255,0.15) 0%, rgba(255,0,255,0.05) 40%, transparent 70%)',
-                filter: 'blur(60px)'
+                filter: 'blur(40px)'
               }}
               className="absolute bottom-[-15%] right-[5%] w-[50%] h-[50%] rounded-full animate-float-delayed"
             />
             
-            <div className="absolute inset-0 opacity-10">
-              <div className="absolute w-full h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-scan" />
+            {/* Subtle ambient gradient line */}
+            <div className="absolute inset-0 opacity-[0.04]">
+              <div className="absolute w-full h-[1px] top-[40%] bg-gradient-to-r from-transparent via-cyan-400 to-transparent" />
             </div>
           </div>
 
@@ -146,7 +138,7 @@ export default function HomePage() {
               </div>
               <span className="text-xs font-bold text-cyan-300 tracking-[0.2em] uppercase" style={{
                 textShadow: '0 0 8px rgba(0,240,255,0.3)'
-              }}>SYSTEM ONLINE</span>
+              }}>LIVE NOW</span>
               <div className="absolute inset-0 rounded-full overflow-hidden" aria-hidden="true">
                 <div className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12" />
               </div>
@@ -158,7 +150,7 @@ export default function HomePage() {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black mb-4 text-white tracking-tight flex items-center justify-center"
               style={{
-                textShadow: '0 0 40px rgba(0,240,255,0.2), 0 0 60px rgba(255,0,255,0.15)',
+                textShadow: '0 0 20px rgba(0,240,255,0.15)',
                 letterSpacing: '-0.02em'
               }}
             >
@@ -180,10 +172,9 @@ export default function HomePage() {
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
-                textShadow: '0 0 20px rgba(0,240,255,0.2)'
               }}
             >
-              The Recruiters Xchange
+              Where Recruiters Make More Placements Together
             </motion.h2>
 
             <motion.div
@@ -211,16 +202,16 @@ export default function HomePage() {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="text-sm sm:text-base md:text-lg text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed font-light px-2"
             >
-              A{' '}
+              Stop leaving placements on the table. RecXchange connects you with{' '}
               <Link href="/recruiter" className="text-cyan-400 hover:text-cyan-300 transition-colors underline decoration-cyan-400/30 hover:decoration-cyan-300/50">
-                recruiter collaboration platform
+                thousands of specialist recruiters
               </Link>
-              {' '}where 15,000+ recruiters{' '}
+              {' '}who{' '}
               <Link href="/pricing" className="text-cyan-400 hover:text-cyan-300 transition-colors underline decoration-cyan-400/30 hover:decoration-cyan-300/50">
                 split fees
               </Link>
-              {' '}(50/50 to 70%) on placements. 
-              Post roles to find candidates, or share candidates to find roles.
+              {' '}on roles you'd otherwise miss. You bring the candidate or the role,
+              and someone else brings what you're missing.
             </motion.p>
 
             <motion.div
@@ -242,7 +233,7 @@ export default function HomePage() {
                 
                 <Link href="/recruiter" className="block relative backdrop-blur-xl bg-black/40 p-3 sm:p-5 rounded-2xl border border-cyan-400/40 group-hover:border-cyan-300/60 transition-all duration-300 overflow-hidden"
                   style={{
-                    boxShadow: '0 4px 20px rgba(0,0,0,0.4), inset 0 1px 0 rgba(0,240,255,0.15), 0 0 20px rgba(0,240,255,0.05)'
+                    boxShadow: '0 2px 12px rgba(0,0,0,0.5), inset 0 1px 0 rgba(0,240,255,0.1)'
                   }}
                 >
                   <div className="absolute top-2 left-2" aria-hidden="true">
@@ -282,7 +273,7 @@ export default function HomePage() {
                 
                 <Link href="/pricing" className="block relative backdrop-blur-xl bg-black/40 p-3 sm:p-5 rounded-2xl border border-fuchsia-400/40 group-hover:border-fuchsia-300/60 transition-all duration-300 overflow-hidden"
                   style={{
-                    boxShadow: '0 4px 20px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,0,255,0.15), 0 0 20px rgba(255,0,255,0.05)'
+                    boxShadow: '0 2px 12px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,0,255,0.1)'
                   }}
                 >
                   <div className="absolute top-2 left-2" aria-hidden="true">
@@ -322,7 +313,7 @@ export default function HomePage() {
                 
                 <Link href="/why-recxchange" className="block relative backdrop-blur-xl bg-black/40 p-3 sm:p-5 rounded-2xl border border-purple-400/40 group-hover:border-purple-300/60 transition-all duration-300 overflow-hidden"
                   style={{
-                    boxShadow: '0 4px 20px rgba(0,0,0,0.4), inset 0 1px 0 rgba(168,85,247,0.15), 0 0 20px rgba(168,85,247,0.05)'
+                    boxShadow: '0 2px 12px rgba(0,0,0,0.5), inset 0 1px 0 rgba(168,85,247,0.1)'
                   }}
                 >
                   <div className="absolute top-2 left-2" aria-hidden="true">
@@ -376,19 +367,19 @@ export default function HomePage() {
               aria-label="Key statistics"
             >
               {[
-                { color: 'emerald', text: '15K+ Recruiters', label: '15,000+ recruiters', source: 'Platform member count', href: '/why-recxchange' },
-                { color: 'cyan', text: '270M Candidates', label: '270 million candidates', source: 'Aggregated candidate database', href: '/recruiter' },
-                { color: 'fuchsia', text: 'Up to 70% Split', label: 'Up to 70% commission', source: 'RecX Direct tier', href: '/pricing' }
+                { color: 'emerald', text: 'Trusted by 15K+ Recruiters', label: '15,000+ recruiters on the platform', source: 'Platform member count', href: '/why-recxchange' },
+                { color: 'cyan', text: '270M Searchable Profiles', label: '270 million candidate profiles', source: 'Aggregated candidate database', href: '/recruiter' },
+                { color: 'fuchsia', text: 'Keep Up to 70%', label: 'Keep up to 70% of placement fees', source: 'RecX Direct tier', href: '/pricing' }
               ].map((chip, i) => (
                 <Link key={i} href={chip.href} className="group relative isolate" role="listitem">
                   <div className={`absolute -inset-0.5 bg-gradient-to-r from-${chip.color}-500/20 to-${chip.color}-600/20 rounded-full blur opacity-30 group-hover:opacity-50 transition pointer-events-none`} aria-hidden="true" />
-                  <div className={`relative backdrop-blur-lg bg-black/30 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-${chip.color}-400/30 group-hover:border-${chip.color}-300/50 transition-all`}
+                  <div className={`relative backdrop-blur-lg bg-black/30 px-4 py-2.5 sm:px-5 sm:py-2.5 rounded-full border border-${chip.color}-400/30 group-hover:border-${chip.color}-300/50 transition-all min-h-[44px] flex items-center`}
                     style={{
                       boxShadow: `0 2px 10px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1)`
                     }}
                     title={chip.source}
                   >
-                    <span className={`text-[9px] sm:text-[10px] font-bold text-${chip.color}-300 tracking-[0.12em] sm:tracking-[0.15em] uppercase flex items-center gap-1.5 sm:gap-2`}>
+                    <span className={`text-[10px] sm:text-xs font-bold text-${chip.color}-300 tracking-[0.1em] sm:tracking-[0.12em] uppercase flex items-center gap-1.5 sm:gap-2`}>
                       <span className="animate-pulse" style={{
                         textShadow: `0 0 8px currentColor`
                       }} aria-hidden="true">●</span>
@@ -403,18 +394,23 @@ export default function HomePage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.7 }}
-              className="flex flex-col items-center gap-2"
+              className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4"
             >
+              <Link
+                href="https://app.recxchange.io/register?trigger_link=jYQNc9YXcMkYPvo3HZfC"
+                className="px-8 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 via-purple-500 to-fuchsia-500 text-white text-sm font-bold hover:scale-105 transition-transform min-h-[44px] flex items-center"
+              >
+                Get Started
+              </Link>
               <button
                 onClick={scrollToCards}
-                className="text-xs sm:text-sm text-gray-400 hover:text-cyan-300 transition-colors cursor-pointer flex items-center gap-2 group"
-                aria-label="Scroll to path selection"
+                className="px-6 py-3 rounded-xl border border-white/15 text-gray-300 hover:text-cyan-300 hover:border-cyan-400/40 transition-all text-sm font-medium min-h-[44px] flex items-center gap-2 group cursor-pointer"
               >
-                <span>Start Here</span>
-                <svg 
-                  className="w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-y-1 transition-transform" 
-                  fill="none" 
-                  stroke="currentColor" 
+                <span>Choose your path</span>
+                <svg
+                  className="w-4 h-4 group-hover:translate-y-0.5 transition-transform"
+                  fill="none"
+                  stroke="currentColor"
                   viewBox="0 0 24 24"
                   strokeWidth={2}
                   aria-hidden="true"
@@ -449,21 +445,21 @@ export default function HomePage() {
                   textShadow: '0 0 15px rgba(0,240,255,0.3)'
                 }}
               >
-                THE_RECRUITER_XCHANGE_ENGINE
+                CHOOSE YOUR PATH
               </p>
               <h2 id="path-selection-heading" className="text-4xl sm:text-5xl md:text-6xl font-black mb-6 text-white tracking-tight leading-tight"
                 style={{
                   textShadow: '0 0 30px rgba(0,240,255,0.15)'
                 }}
               >
-                What describes you best?
+                How can we help you today?
               </h2>
               <div className="relative w-36 h-[3px] mx-auto mb-8" aria-hidden="true">
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400 to-transparent" />
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-fuchsia-400 to-transparent blur-sm" />
               </div>
               <p className="text-gray-300 text-base md:text-lg max-w-3xl mx-auto mb-12 leading-relaxed font-light">
-                Two types of people use RecXchange. Which one are you?
+                Whether you're a recruiter looking to fill more roles or a hiring manager searching for top talent, we've built something for you.
               </p>
             </motion.header>
 
@@ -478,27 +474,32 @@ export default function HomePage() {
                 style={{ transformStyle: 'preserve-3d' }}
                 role="listitem"
               >
-                <div className="absolute -inset-1 bg-gradient-to-br from-cyan-500/30 via-cyan-600/20 to-cyan-500/30 rounded-[3rem] blur-xl opacity-40 group-hover:opacity-60 transition duration-500 pointer-events-none" aria-hidden="true" />
+                <div className="absolute -inset-1 bg-gradient-to-br from-cyan-500/30 via-cyan-600/20 to-cyan-500/30 rounded-2xl blur-xl opacity-40 group-hover:opacity-60 transition duration-500 pointer-events-none" aria-hidden="true" />
                 
-                <div className="relative backdrop-blur-2xl bg-black/50 p-6 sm:p-8 rounded-[3rem] min-h-[420px] sm:min-h-[460px] flex flex-col border border-cyan-400/30 group-hover:border-cyan-300/50 transition-all duration-500 overflow-hidden"
+                <div className="relative backdrop-blur-2xl bg-black/50 p-6 sm:p-8 rounded-2xl min-h-[420px] sm:min-h-[460px] flex flex-col border border-cyan-400/30 group-hover:border-cyan-300/50 transition-all duration-500 overflow-hidden"
                   style={{
-                    boxShadow: '0 10px 40px rgba(0,0,0,0.5), inset 0 2px 0 rgba(0,240,255,0.15), 0 0 30px rgba(0,240,255,0.05)'
+                    boxShadow: '0 4px 20px rgba(0,0,0,0.5), inset 0 1px 0 rgba(0,240,255,0.1)'
                   }}
                 >
                   <div className="absolute -top-20 -right-20 w-40 h-40 rounded-full pointer-events-none" aria-hidden="true"
                     style={{
-                      background: 'radial-gradient(circle, rgba(0,240,255,0.15) 0%, transparent 70%)',
+                      background: 'radial-gradient(circle, rgba(0,240,255,0.08) 0%, transparent 70%)',
                       filter: 'blur(40px)'
                     }}
                   />
 
                   <div className="w-full relative z-10">
-                    <div className="inline-flex px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-cyan-400/50 bg-cyan-400/10 mb-5 sm:mb-6"
-                      style={{
-                        boxShadow: '0 0 12px rgba(0,240,255,0.15), inset 0 1px 0 rgba(255,255,255,0.1)'
-                      }}
-                    >
-                      <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.18em] sm:tracking-[0.2em] text-cyan-300">RECRUITER</span>
+                    <div className="flex items-center gap-2 sm:gap-3 mb-5 sm:mb-6 flex-wrap">
+                      <div className="inline-flex px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-cyan-400/50 bg-cyan-400/10"
+                        style={{
+                          boxShadow: '0 0 12px rgba(0,240,255,0.15), inset 0 1px 0 rgba(255,255,255,0.1)'
+                        }}
+                      >
+                        <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.18em] sm:tracking-[0.2em] text-cyan-300">RECRUITER</span>
+                      </div>
+                      <div className="inline-flex px-2.5 py-1 rounded-full bg-emerald-500/15 border border-emerald-400/40">
+                        <span className="text-[8px] sm:text-[9px] font-bold uppercase tracking-wider text-emerald-300">Most chosen</span>
+                      </div>
                     </div>
                     
                     <h3 className="text-2xl sm:text-3xl md:text-4xl font-black mb-4 sm:mb-5 text-white group-hover:text-cyan-300 transition-colors"
@@ -506,18 +507,18 @@ export default function HomePage() {
                         textShadow: '0 0 20px rgba(0,240,255,0.2)'
                       }}
                     >
-                      Recruiter
+                      I'm a Recruiter
                     </h3>
-                    
+
                     <p className="text-xs sm:text-sm md:text-base text-gray-300 mb-5 sm:mb-6 leading-relaxed">
-                      Post roles to find candidates, or share candidates to find roles. Split fees with 15,000+ recruiters.
+                      Got a role with no candidates? Or a great candidate with no role? Partner with recruiters who have what you need and split the fee.
                     </p>
-                    
+
                     <ul className="space-y-2.5 sm:space-y-3.5 text-[11px] sm:text-xs md:text-sm text-gray-400 mb-3 sm:mb-4">
                       {[
-                        'Search 270M candidates',
-                        'Up to 70% Split on RecX Direct',
-                        'Automated fee contracts'
+                        'Tap into 270M candidate profiles',
+                        'Earn up to 70% on direct placements',
+                        'Fee agreements handled automatically'
                       ].map((item, i) => (
                         <li key={i} className="flex items-start gap-2 sm:gap-3">
                           <span className="w-1 sm:w-1.5 h-1 sm:h-1.5 rounded-full bg-cyan-400 mt-1 sm:mt-1.5 flex-shrink-0" aria-hidden="true"
@@ -545,8 +546,8 @@ export default function HomePage() {
                   >
                     <span className="absolute inset-0 bg-gradient-to-r from-cyan-500/0 via-cyan-500/20 to-cyan-500/0 opacity-0 group-hover/btn:opacity-100 transition-opacity" aria-hidden="true" />
                     <span className="relative z-10 text-white flex items-center justify-center gap-2">
-                      <span className="hidden sm:inline">ENTER_RECRUITER_PATH</span>
-                      <span className="sm:hidden">ENTER_PATH</span>
+                      <span className="hidden sm:inline">Show Me How It Works</span>
+                      <span className="sm:hidden">Learn More</span>
                       <span className="text-cyan-400" aria-hidden="true">→</span>
                     </span>
                     <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent" aria-hidden="true" />
@@ -564,16 +565,16 @@ export default function HomePage() {
                 style={{ transformStyle: 'preserve-3d' }}
                 role="listitem"
               >
-                <div className="absolute -inset-1 bg-gradient-to-br from-fuchsia-500/30 via-pink-600/20 to-fuchsia-500/30 rounded-[3rem] blur-xl opacity-40 group-hover:opacity-60 transition duration-500 pointer-events-none" aria-hidden="true" />
+                <div className="absolute -inset-1 bg-gradient-to-br from-fuchsia-500/30 via-pink-600/20 to-fuchsia-500/30 rounded-2xl blur-xl opacity-40 group-hover:opacity-60 transition duration-500 pointer-events-none" aria-hidden="true" />
                 
-                <div className="relative backdrop-blur-2xl bg-black/50 p-6 sm:p-8 rounded-[3rem] min-h-[420px] sm:min-h-[460px] flex flex-col border border-fuchsia-400/30 group-hover:border-fuchsia-300/50 transition-all duration-500 overflow-hidden"
+                <div className="relative backdrop-blur-2xl bg-black/50 p-6 sm:p-8 rounded-2xl min-h-[420px] sm:min-h-[460px] flex flex-col border border-fuchsia-400/30 group-hover:border-fuchsia-300/50 transition-all duration-500 overflow-hidden"
                   style={{
-                    boxShadow: '0 10px 40px rgba(0,0,0,0.5), inset 0 2px 0 rgba(255,0,255,0.15), 0 0 30px rgba(255,0,255,0.05)'
+                    boxShadow: '0 4px 20px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,0,255,0.1)'
                   }}
                 >
                   <div className="absolute -top-20 -right-20 w-40 h-40 rounded-full pointer-events-none" aria-hidden="true"
                     style={{
-                      background: 'radial-gradient(circle, rgba(255,0,255,0.15) 0%, transparent 70%)',
+                      background: 'radial-gradient(circle, rgba(255,0,255,0.08) 0%, transparent 70%)',
                       filter: 'blur(40px)'
                     }}
                   />
@@ -592,18 +593,18 @@ export default function HomePage() {
                         textShadow: '0 0 20px rgba(255,0,255,0.2)'
                       }}
                     >
-                      Hiring Manager
+                      I'm Hiring
                     </h3>
-                    
+
                     <p className="text-xs sm:text-sm md:text-base text-gray-300 mb-5 sm:mb-6 leading-relaxed">
-                      We post your role. Thousands of Recruiters source your role immediately. Dedicated Account Manager and only one fee.
+                      Post your role once. Thousands of specialist recruiters start sourcing immediately. One dedicated account manager, one simple fee.
                     </p>
-                    
+
                     <ul className="space-y-2.5 sm:space-y-3.5 text-[11px] sm:text-xs md:text-sm text-gray-400 mb-3 sm:mb-4">
                       {[
-                        'Work with 15,000+ recruiters instantly',
-                        'One point of contact',
-                        'Test and strategize before going live'
+                        'Thousands of recruiters competing for your role',
+                        'One point of contact handles everything',
+                        'Test the market before committing'
                       ].map((item, i) => (
                         <li key={i} className="flex items-start gap-2 sm:gap-3">
                           <span className="w-1 sm:w-1.5 h-1 sm:h-1.5 rounded-full bg-fuchsia-400 mt-1 sm:mt-1.5 flex-shrink-0" aria-hidden="true"
@@ -631,8 +632,8 @@ export default function HomePage() {
                   >
                     <span className="absolute inset-0 bg-gradient-to-r from-fuchsia-500/0 via-fuchsia-500/20 to-fuchsia-500/0 opacity-0 group-hover/btn:opacity-100 transition-opacity" aria-hidden="true" />
                     <span className="relative z-10 text-white flex items-center justify-center gap-2">
-                      <span className="hidden sm:inline">ENTER_HIRING_PATH</span>
-                      <span className="sm:hidden">ENTER_PATH</span>
+                      <span className="hidden sm:inline">Post Your Role Free</span>
+                      <span className="sm:hidden">Get Started</span>
                       <span className="text-fuchsia-400" aria-hidden="true">→</span>
                     </span>
                     <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-fuchsia-400 to-transparent" aria-hidden="true" />

@@ -19,9 +19,9 @@ export default function FuturisticBackground({
   const y2 = useTransform(scrollY, [0, 300], [0, -30]);
 
   const orbOpacity = {
-    default: { primary: 0.15, secondary: 0.15 },
-    minimal: { primary: 0.08, secondary: 0.08 },
-    intense: { primary: 0.25, secondary: 0.25 }
+    default: { primary: 0.10, secondary: 0.10 },
+    minimal: { primary: 0.05, secondary: 0.05 },
+    intense: { primary: 0.18, secondary: 0.18 }
   }[variant];
 
   return (
@@ -33,7 +33,7 @@ export default function FuturisticBackground({
             style={{ 
               y: y1,
               background: `radial-gradient(circle, rgba(0,240,255,${orbOpacity.primary}) 0%, rgba(0,240,255,${orbOpacity.primary * 0.33}) 40%, transparent 70%)`,
-              filter: 'blur(60px)'
+              filter: 'blur(40px)'
             }}
             className="absolute top-[-15%] left-[5%] w-[50%] h-[50%] rounded-full animate-float"
           />
@@ -41,17 +41,18 @@ export default function FuturisticBackground({
             style={{ 
               y: y2,
               background: `radial-gradient(circle, rgba(255,0,255,${orbOpacity.secondary}) 0%, rgba(255,0,255,${orbOpacity.secondary * 0.33}) 40%, transparent 70%)`,
-              filter: 'blur(60px)'
+              filter: 'blur(40px)'
             }}
             className="absolute bottom-[-15%] right-[5%] w-[50%] h-[50%] rounded-full animate-float-delayed"
           />
         </>
       )}
       
-      {/* Scan line effect */}
+      {/* Subtle ambient line — static, not animated, to reduce visual noise */}
       {showScanLines && (
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute w-full h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-scan" />
+        <div className="absolute inset-0 opacity-[0.04]">
+          <div className="absolute w-full h-[1px] top-[35%] bg-gradient-to-r from-transparent via-cyan-400 to-transparent" />
+          <div className="absolute w-full h-[1px] top-[65%] bg-gradient-to-r from-transparent via-fuchsia-400 to-transparent" />
         </div>
       )}
     </div>

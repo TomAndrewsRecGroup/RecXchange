@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import React from 'react';
 
 export const metadata: Metadata = {
-  title: "Contract Recruitment | Interim & Contractor Hiring | RecXchange",
-  description: "RecXchange for contract and interim recruitment. Access specialist contractors and interim professionals across Technology, Engineering, Finance, HR and Operations. 15,000+ recruiters with active contractor pipelines. Fast turnaround. Single success fee. No markup on day rate.",
+  title: "Contract Recruitment | Interim Hiring | RecXchange",
+  description: "Contract and interim recruitment across Tech, Engineering, Finance and HR. 15,000+ recruiters with active contractor pipelines. Pay on placement.",
   keywords: [
     "contract recruitment platform",
     "interim recruitment UK",
@@ -54,12 +54,12 @@ export default function ContractRecruitmentPage() {
           <p className="text-cyan-400 text-sm font-bold uppercase tracking-widest mb-4">Use Case</p>
           <h1 className="text-4xl md:text-5xl font-black text-white mb-6">Contract &amp; Interim Recruitment</h1>
           <p className="text-gray-300 text-lg mb-10 leading-relaxed">
-            Contract and interim hiring demands speed above all else. A project is delayed, a key person is off sick, a transformation programme needs a specialist who can start immediately. RecXchange gives you access to 15,000+ specialist recruiters with active, available contractor pipelines — delivering pre-screened interim professionals faster than any single agency can.
+            Contract and interim hiring demands speed above all else. A project is delayed, a key person is off sick, a transformation programme needs a specialist who can start immediately. RecXchange gives you access to 15,000+ specialist recruiters with active, available contractor pipelines, delivering pre-screened interim professionals faster than any single agency can.
           </p>
 
           <h2 className="text-2xl font-bold text-white mb-4">Why Contract Recruitment Is Different</h2>
           <p className="text-gray-300 mb-6 leading-relaxed">
-            Permanent recruitment can afford a 4–6 week process. Contract and interim hiring often cannot. Contractors are available now or not at all — the good ones are placed within days of becoming available. Traditional contingency agencies work their own contractor bench first. By the time a generalist agency searches their database and reaches out, the best contractors have already accepted other roles. RecXchange's parallel matching means your requirement hits multiple specialist contractor networks simultaneously.
+            Permanent recruitment can afford a 4 to 6 week process. Contract and interim hiring often cannot. Contractors are available now or not at all, the good ones are placed within days of becoming available. Traditional contingency agencies work their own contractor bench first. By the time a generalist agency searches their database and reaches out, the best contractors have already accepted other roles. RecXchange's parallel matching means your requirement hits multiple specialist contractor networks simultaneously.
           </p>
 
           <h2 className="text-2xl font-bold text-white mb-4">Sectors &amp; Specialist Contractor Types</h2>
@@ -69,7 +69,7 @@ export default function ContractRecruitmentPage() {
 
           <h2 className="text-2xl font-bold text-white mb-4">Speed: From Brief to Contractor Start</h2>
           <p className="text-gray-300 mb-6 leading-relaxed">
-            RecXchange clients hiring contract roles typically receive first contractor profiles within 24–48 hours of posting. The Xchange Engine activates specialist contractor recruiters immediately — recruiters who know exactly which contractors in their network are available now, have the right clearances, and can mobilise quickly. Your dedicated Account Manager manages IR35 status, right-to-work checks, and contract generation in-platform.
+            RecXchange clients hiring contract roles typically receive first contractor profiles within 24 to 48 hours of posting. The Xchange Engine activates specialist contractor recruiters immediately, recruiters who know exactly which contractors in their network are available now, have the right clearances, and can mobilise quickly. Your dedicated Account Manager manages IR35 status, right-to-work checks, and contract generation in-platform.
           </p>
 
           <h2 className="text-2xl font-bold text-white mb-4">IR35 &amp; Compliance</h2>
@@ -79,7 +79,7 @@ export default function ContractRecruitmentPage() {
 
           <div className="mt-12 p-6 rounded-2xl border border-cyan-400/20 bg-cyan-400/5">
             <p className="text-cyan-400 font-bold mb-2">Need a contractor to start Monday?</p>
-            <p className="text-gray-300 text-sm">Post your contract role now. First contractor profiles typically within 24–48 hours. IR35-compliant agreements in-platform. Pay only on placement.</p>
+            <p className="text-gray-300 text-sm">Post your contract role now. First contractor profiles typically within 24 to 48 hours. IR35-compliant agreements in-platform. Pay only on placement.</p>
           </div>
         </div>
       </main>

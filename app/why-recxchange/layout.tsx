@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import React from 'react';
 
 export const metadata: Metadata = {
-  title: "Why Choose RecXchange? | RecXchange vs Traditional Recruitment",
-  description: "See why 15,000+ recruiters choose RecXchange over traditional agencies, job boards, and RPO. Higher earnings per placement, lower cost-per-hire, AI-powered matching, automated split fee protection. From $1/month.",
+  title: "Why Choose RecXchange? | RecXchange",
+  description: "Why 15,000+ recruiters choose RecXchange over agencies, job boards and RPO. Higher earnings, lower cost-per-hire, AI matching, split fee protection.",
   keywords: [
     "why choose RecXchange",
     "RecXchange vs recruitment agencies",
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
       url: "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png",
       width: 1200,
       height: 630,
-      alt: "Why Choose RecXchange — Platform Comparison"
+      alt: "Why Choose RecXchange, Platform Comparison"
     }]
   },
   twitter: {
@@ -71,7 +71,7 @@ export default function WhyRecXchangeLayout({
         "@type": "ListItem",
         "position": 1,
         "name": "Earn more per placement",
-        "description": "Recruiters earn an average of $7,000 per placement — their take-home cut after the split. Working collaboratively generates more placements than working alone."
+        "description": "Recruiters earn an average of $7,000 per placement, their take-home cut after the split. Working collaboratively generates more placements than working alone."
       },
       {
         "@type": "ListItem",
@@ -94,7 +94,7 @@ export default function WhyRecXchangeLayout({
       {
         "@type": "ListItem",
         "position": 5,
-        "name": "RecX Direct — up to 70% commission",
+        "name": "RecX Direct, up to 70% commission",
         "description": "Premium direct client roles with up to 70% fee splits. Exclusive to RecX Lite and Pro members. Higher value, faster payment (15-30 days)."
       },
       {
@@ -106,7 +106,7 @@ export default function WhyRecXchangeLayout({
       {
         "@type": "ListItem",
         "position": 7,
-        "name": "From $1/month — no platform fees on placements",
+        "name": "From $1/month, no platform fees on placements",
         "description": "Entry tier from $1/month. No percentage taken from placement fees. RecXchange earns from subscriptions, not from your commissions."
       }
     ]

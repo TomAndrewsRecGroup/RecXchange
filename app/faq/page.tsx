@@ -23,14 +23,14 @@ const faqs: FAQItem[] = [
   { category: "Getting Started", color: "purple", question: "How much does it cost?", answer: "Entry tier is $1/month (5 tokens). Lite is $99/month (150 tokens). Pro is $249/month (400 tokens). One placement typically pays for 5-12 months of membership." },
   
   // For Recruiters  
-  { category: "For Recruiters", color: "cyan", question: "What are tokens?", answer: "Tokens let recruiters take action on RecXchange. 1 token = post 1 role to the community, submit 1 candidate to a role, or unlock 1 candidate's contact details. Entry gives you 5 tokens/month, Lite gives 150, Pro gives 400. Hiring managers post roles to RecX Direct for free — tokens are for recruiters only." },
+  { category: "For Recruiters", color: "cyan", question: "What are tokens?", answer: "Tokens let recruiters take action on RecXchange. 1 token = post 1 role to the community, submit 1 candidate to a role, or unlock 1 candidate's contact details. Entry gives you 5 tokens/month, Lite gives 150, Pro gives 400. Hiring managers post roles to RecX Direct for free, tokens are for recruiters only." },
   { category: "For Recruiters", color: "fuchsia", question: "How do split fees work?", answer: "You and your partner agree on split terms before sharing any data. Common splits are 50/50, 60/40, or 70/30. Once agreed, both parties sign an auto-generated split fee agreement. When the placement is made, fees are split according to the contract." },
   { category: "For Recruiters", color: "purple", question: "Are my clients protected?", answer: "Yes. Your client details stay hidden until you approve the partnership. You control what information is shared and when." },
   { category: "For Recruiters", color: "emerald", question: "Are my candidates protected?", answer: "Yes. Candidate details are hidden until you approve the match. You decide when to reveal contact information to your partner recruiter." },
   { category: "For Recruiters", color: "cyan", question: "What if two recruiters submit the same candidate?", answer: "RecXchange timestamps every submission. If two recruiters submit the same candidate to the same role, the first timestamp wins. No arguments. The system decides." },
   
   // RecX Direct
-  { category: "RecX Direct", color: "fuchsia", question: "What is RecX Direct?", answer: "RecX Direct is a service where end clients post their roles for free. Thousands of recruiters can work on these roles, and clients only deal with one point of contact — a dedicated RecXchange Account Manager." },
+  { category: "RecX Direct", color: "fuchsia", question: "What is RecX Direct?", answer: "RecX Direct is a service where end clients post their roles for free. Thousands of recruiters can work on these roles, and clients only deal with one point of contact, a dedicated RecXchange Account Manager." },
   { category: "RecX Direct", color: "purple", question: "How do I access RecX Direct roles?", answer: "Pro members get instant access to RecX Direct roles as soon as they're posted. Lite members get access 7 days after posting. Entry members get access 30 days after posting (if applications are still being considered)." },
   { category: "RecX Direct", color: "emerald", question: "What's the split on RecX Direct placements?", answer: "Standard RecX Direct splits are up to 70% to the recruiter who makes the placement. Recruiters earn an average of $7,000 per placement on RecX Direct roles." },
   
@@ -95,7 +95,7 @@ export default function FAQPage() {
             >
               <StatusBadge label="FREQUENTLY ASKED QUESTIONS" color="cyan" />
               <h1 className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black gradient-text mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2 mt-6"
-                style={{ textShadow: '0 0 60px rgba(0,240,255,0.3)' }}>
+                style={{ textShadow: '0 0 20px rgba(0,240,255,0.15)' }}>
                 How RecXchange Works
               </h1>
               <NeonDivider width="w-40" color="mixed" />

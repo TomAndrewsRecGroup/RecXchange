@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx next:*)",
+      "Bash(npx --no-install next build --no-turbopack)",
+      "Bash(node_modules/.bin/next build:*)",
+      "Bash(ls node_modules/.bin/next*)",
+      "Bash(npx tsc:*)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(grep -rn [–—] --include=*.tsx --include=*.ts app/ components/ data/)",
+      "Bash(grep -rn — --include=*.tsx --include=*.ts app/ components/ data/)",
+      "Bash(grep -v \"^[^:]*:[^:]*:\\\\s*//\")",
+      "Bash(grep -rln [–—] --include=*.tsx --include=*.ts app/ components/ data/)",
+      "Bash(grep -v \"^\\\\s*//\")",
+      "Bash(grep -vP \"^\\\\S+:\\\\d+:\\\\s*//\")",
+      "Bash(grep [–—])",
+      "Read(//tmp/**)",
+      "Bash(node -e \":*)",
+      "Bash(grep -rn 'to to ' --include=*.tsx --include=*.ts app/ components/ data/)",
+      "Bash(grep -rn ' ,  ' --include=*.ts --include=*.tsx app/ components/ data/)"
+    ]
+  }
+}

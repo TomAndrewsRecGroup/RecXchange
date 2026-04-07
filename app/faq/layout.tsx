@@ -4,8 +4,8 @@ import type { Metadata } from 'next';
 import React from 'react';
 
 export const metadata: Metadata = {
-  title: "FAQ | RecXchange — How Split Fee Recruitment Works",
-  description: "Common questions about RecXchange: How do split fees work? What are tokens? How is deal protection handled? Pricing, RecX Direct roles, platform features, and getting started.",
+  title: "FAQ | RecXchange, How Split Fee Recruitment Works",
+  description: "RecXchange FAQ: how split fees work, what tokens are, deal protection, pricing, RecX Direct roles, platform features and getting started.",
   keywords: [
     "RecXchange FAQ",
     "split fee recruitment questions",
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     canonical: "https://recxchange.io/faq"
   },
   openGraph: {
-    title: "FAQ | RecXchange — How Split Fee Recruitment Works",
+    title: "FAQ | RecXchange, How Split Fee Recruitment Works",
     description: "How do split fees work? What are tokens? How is deal protection handled? Everything you need to know about RecXchange.",
     url: "https://recxchange.io/faq",
     type: "website",
@@ -28,12 +28,12 @@ export const metadata: Metadata = {
       url: "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png",
       width: 1200,
       height: 630,
-      alt: "RecXchange FAQ — Frequently Asked Questions"
+      alt: "RecXchange FAQ, Frequently Asked Questions"
     }]
   },
   twitter: {
     card: "summary_large_image",
-    title: "FAQ | RecXchange — How Split Fee Recruitment Works",
+    title: "FAQ | RecXchange, How Split Fee Recruitment Works",
     description: "How do split fees work? What are tokens? Everything you need to know about RecXchange.",
     images: ["https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png"],
     creator: "@RecXchange"
@@ -50,7 +50,7 @@ export default function FAQLayout({
     "@type": "WebPage",
     "@id": "https://recxchange.io/faq#webpage",
     "url": "https://recxchange.io/faq",
-    "name": "FAQ | RecXchange — How Split Fee Recruitment Works",
+    "name": "FAQ | RecXchange, How Split Fee Recruitment Works",
     "description": "Common questions about RecXchange: split fees, tokens, deal protection, pricing, RecX Direct, and platform features.",
     "isPartOf": { "@id": "https://recxchange.io/#website" },
     "about": { "@id": "https://recxchange.io/#softwareapplication" },

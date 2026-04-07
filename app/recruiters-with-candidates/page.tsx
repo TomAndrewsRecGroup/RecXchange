@@ -464,7 +464,7 @@ function XchangeEngine() {
 
         {/* Right card */}
         <HolographicCard color="cyan" variant="content">
-          <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-white">Utilize Your Existing <span className="text-cyan-400">Database</span></h2>
+          <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-white">Make the Most of Your <span className="text-cyan-400">Database</span></h2>
           <p className="text-gray-400 mb-4 sm:mb-6 leading-relaxed text-xs sm:text-sm">The Xchange Engine automatically analyses your candidates to extract insights and matches them across multiple dimensions.</p>
           <ul className="space-y-3 sm:space-y-4">
             {["Semantic matching beyond keywords", "Continuous 24/7 scanning", "Instant notifications"].map((item, i) => (
@@ -498,7 +498,7 @@ export default function RecruiterCandidatesPage() {
         <div className="max-w-[1400px] mx-auto">
           <motion.header initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-12 sm:mb-16 md:mb-20 mt-6">
             <StatusBadge label="MONETIZE YOUR TALENT" color="cyan" />
-            <h1 className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2 mt-6" style={{ textShadow: '0 0 60px rgba(0,240,255,0.3)' }}>
+            <h1 className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2 mt-6" style={{ textShadow: '0 0 20px rgba(0,240,255,0.15)' }}>
               Efficient Candidate Matching
             </h1>
             <NeonDivider width="w-40" color="mixed" />
@@ -532,7 +532,7 @@ export default function RecruiterCandidatesPage() {
             <Globe className="mx-auto text-fuchsia-400 mb-6 sm:mb-8 opacity-50" size={48} />
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6 text-white">No Candidates? <span className="gradient-text">No Problem.</span></h2>
             <p className="text-gray-400 max-w-3xl mx-auto mb-8 sm:mb-12 text-sm sm:text-base px-2">
-              If your internal database doesn&apos;t have the right fit, tap into our global search engine. Access over 270 million candidate profiles instantly through our Data Source partner, Apollo. Seamlessly built into RecXchange so you can access candidates and roles, with one login.
+              If your own database doesn&apos;t have the right fit, search our global network instead. Over 270 million candidate profiles are available instantly through our data partner, Apollo. It&apos;s built right into RecXchange, so you can find candidates and roles with one login.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
               <motion.a

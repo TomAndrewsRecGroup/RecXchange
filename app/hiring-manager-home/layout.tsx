@@ -3,7 +3,7 @@ import React from 'react';
 
 export const metadata: Metadata = {
   title: "Hire Faster With RecX Direct | Post a Role Free | RecXchange",
-  description: "Post your role free. 15,000+ specialist recruiters compete to fill it. First candidates within 48 hours. Pay one fee (12-20%) only when you hire. No retainers, no upfront costs. UK, USA, Europe, Middle East, Africa, Australia.",
+  description: "Post your role free. 15,000+ specialist recruiters compete to fill it. First candidates in 48 hours. Pay one fee (12-20%) only when you hire. No retainers.",
   keywords: [
     "hire talent fast",
     "recruitment platform for hiring managers",

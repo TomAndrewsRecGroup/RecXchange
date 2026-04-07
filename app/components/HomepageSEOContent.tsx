@@ -33,7 +33,7 @@ export default function HomepageSEOContent() {
         partner on placements and split fees automatically. Post roles to find candidates,
         or share candidates to find roles. Split fees from 50/50 up to 70% on RecX Direct roles.
         Access 270 million candidate profiles. Over $750,000 in active placement fees across
-        100+ live roles. Recruiters earn an average of $7,000 per placement — their cut after
+        100+ live roles. Recruiters earn an average of $7,000 per placement, their cut after
         the split, not the total fee divided.
       </p>
 
@@ -41,7 +41,7 @@ export default function HomepageSEOContent() {
       <p>
         Join 15,000+ vetted specialist recruiters on RecXchange. Post your live roles to find
         candidates from the network, or upload your candidates to match them against hundreds
-        of live roles instantly. The Xchange Engine — RecXchange's AI-powered matching system —
+        of live roles instantly. The Xchange Engine, RecXchange's AI-powered matching system,
         automatically connects your roles and candidates to the most relevant partners in seconds.
         Earn up to 70% commission on RecX Direct roles (operated by Andrews Recruitment Group
         t/a RecX Direct). Automated split fee contracts. Timestamped deal protection.
@@ -54,7 +54,7 @@ export default function HomepageSEOContent() {
         single dedicated Account Manager. We post your role to the full network immediately.
         Thousands of specialist recruiters compete to source the best candidates for your
         vacancy. You receive one shortlist, coordinate one interview process, and pay one
-        success fee of 12–20% only on placement. No retainer. No upfront cost. No commitment.
+        success fee of 12 to 20% only on placement. No retainer. No upfront cost. No commitment.
         Test your brief in strategic mode before going live.
       </p>
 
@@ -62,7 +62,7 @@ export default function HomepageSEOContent() {
       <p>
         Split fee recruitment is a collaborative model where two specialist recruiters partner
         on a single placement. The role-holding recruiter partners with the candidate-holding
-        recruiter. The placement fee is split between them — typically 50/50, 60/40, or up to
+        recruiter. The placement fee is split between them, typically 50/50, 60/40, or up to
         70/30 on RecX Direct. RecXchange automates the entire process: matching, agreements,
         submissions, and fee distribution. All split fee agreements are timestamped and
         legally binding before any candidate data is shared.
@@ -72,9 +72,9 @@ export default function HomepageSEOContent() {
       <p>
         RecX Direct is RecXchange's premium hiring product operated by Andrews Recruitment
         Group t/a RecX Direct (UK). Candidate-holding recruiters earn up to 70% of the total
-        placement fee on RecX Direct roles — compared to 50% on standard collaborative roles.
+        placement fee on RecX Direct roles, compared to 50% on standard collaborative roles.
         RecX Direct roles are exclusive client partnerships negotiated directly by Andrews
-        Recruitment Group. Payment processing is faster: 15–30 days versus 30–45 days on
+        Recruitment Group. Payment processing is faster: 15 to 30 days versus 30 to 45 days on
         standard roles.
       </p>
 
@@ -94,7 +94,7 @@ export default function HomepageSEOContent() {
         (5 tokens, basic collaborative role and candidate access), RecX Lite at $99 per month
         (150 tokens, RecX Direct access after 7 days), and RecX Pro at $249 per month
         (400 tokens, instant RecX Direct access, up to 70% fee splits). Hiring managers pay
-        no subscription — only a success fee of 12–20% on placement.
+        no subscription, only a success fee of 12 to 20% on placement.
       </p>
 
       <h2>Deal Protection</h2>
@@ -109,7 +109,7 @@ export default function HomepageSEOContent() {
       <p>
         RecXchange is operated by RecXchange Portal LLC t/a RecXchange, registered in the
         UAE. Co-founded in 2024 by Tom Andrews (CEO and Co-Founder, also Owner and
-        Recruitment Director of Andrews Recruitment Group — https://andrews-recruitment.com)
+        Recruitment Director of Andrews Recruitment Group, https://andrews-recruitment.com)
         and James Brown (CTO and Co-Founder). The RecXchange website was fully designed,
         developed and is maintained by AMIVY Designs, an Andrews Recruitment Group company.
         RecX Direct is operated by Andrews Recruitment Group t/a RecX Direct (UK).

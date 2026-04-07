@@ -9,8 +9,8 @@ import NeonDivider from '@/components/design-system/NeonDivider';
 
 export default function RecruitmentFeeStructuresPage() {
   const models = [
-    { icon: Clock, color: "cyan" as const, name: "Contingency", fee: "15–25% of salary", who: "Hiring company pays on placement", best: "Mid-level roles, volume hiring", risk: "Recruiter bears all risk — no placement, no fee", notes: "Most common model. Competitive. No upfront cost to client." },
-    { icon: Award, color: "fuchsia" as const, name: "Retained Search", fee: "30–33% of salary (split into 3 payments)", who: "Hiring company pays in stages", best: "Senior, executive, board-level roles", risk: "Client pays upfront; recruiter is exclusive", notes: "Deep search process. Higher quality. Higher cost." },
+    { icon: Clock, color: "cyan" as const, name: "Contingency", fee: "15 to 25% of salary", who: "Hiring company pays on placement", best: "Mid-level roles, volume hiring", risk: "Recruiter bears all risk, no placement, no fee", notes: "Most common model. Competitive. No upfront cost to client." },
+    { icon: Award, color: "fuchsia" as const, name: "Retained Search", fee: "30 to 33% of salary (split into 3 payments)", who: "Hiring company pays in stages", best: "Senior, executive, board-level roles", risk: "Client pays upfront; recruiter is exclusive", notes: "Deep search process. Higher quality. Higher cost." },
     { icon: TrendingUp, color: "purple" as const, name: "Split Fee", fee: "Shared between two recruiters", who: "Each recruiter invoices for their split share", best: "Hard-to-fill, niche, or fast-turnaround roles", risk: "Both recruiters share risk and reward", notes: "The RecXchange model. 50/50, 60/40, or 70/30. Average $7k per placement." },
     { icon: Zap, color: "cyan" as const, name: "RecX Direct", fee: "Candidate-side recruiter earns 70%", who: "Role verified by RecXchange; client pays", best: "Urgent, high-value direct client roles", risk: "Role-side recruiter earns 30% for verified placement", notes: "Highest candidate-side earning model on the platform." }
   ];
@@ -24,12 +24,12 @@ export default function RecruitmentFeeStructuresPage() {
           <motion.header initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-8 md:mb-14 mt-6">
             <StatusBadge label="FEE GUIDE" color="purple" />
             <h1 className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 tracking-tight leading-[1.1] pb-2 px-2 mt-6"
-              style={{ textShadow: '0 0 60px rgba(168,85,247,0.3)' }}>
+              style={{ textShadow: '0 0 20px rgba(168,85,247,0.15)' }}>
               Recruitment Fee Structures Explained
             </h1>
             <NeonDivider width="w-40" color="mixed" />
             <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed px-2 mt-6">
-              Contingency, retained, split fee, RPO — every recruitment fee model compared. Whether you're a recruiter choosing how to work, or a hiring manager trying to understand costs, this is your complete reference.
+              Contingency, retained, split fee, RPO, every recruitment fee model compared. Whether you're a recruiter choosing how to work, or a hiring manager trying to understand costs, this is your complete reference.
             </p>
           </motion.header>
 

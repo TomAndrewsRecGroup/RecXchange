@@ -34,8 +34,8 @@ export const viewport: Viewport = {
 // Root layout metadata — no canonical set here.
 // Each page exports its own canonical via alternates.canonical.
 export const metadata: Metadata = {
-  title: "RecXchange: Recruiter Collaboration Platform | 15,000+ Split Fee Network",
-  description: "RecXchange is a recruiter collaboration platform where 15,000+ recruiters partner on placements and split fees automatically. Access 270M candidates, $750K+ in live fees, and earn up to 70% commission on RecX Direct roles.",
+  title: "RecXchange | Recruiter Collaboration Platform",
+  description: "RecXchange: 15,000+ recruiters partner on placements and split fees automatically. 270M candidates, $750K+ in live fees. Earn up to 70% on RecX Direct.",
   keywords: [
     "recruiter network",
     "split fee recruitment",
@@ -179,7 +179,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
           "https://twitter.com/RecXchange",
           "https://youtube.com/@recxchange"
         ],
-        "description": "RecXchange is operated by RecXchange Portal LLC t/a RecXchange (UAE). A recruiter collaboration platform where 15,000+ recruiters partner on placements and split fees automatically. This marketing website (recxchange.io) provides information and guides. The actual platform is at app.recxchange.io. Recruiters earn an average of $7,000 per placement — this is their cut after the split, not the total fee divided. Access to 270M candidate profiles. $750,000 in fees available across 100+ live roles. RecX Direct is operated by Andrews Recruitment Group t/a RecX Direct (UK). This website was fully designed, developed and is maintained by AMIVY Designs, an Andrews Recruitment Group company.",
+        "description": "RecXchange is operated by RecXchange Portal LLC t/a RecXchange (UAE). A recruiter collaboration platform where 15,000+ recruiters partner on placements and split fees automatically. This marketing website (recxchange.io) provides information and guides. The actual platform is at app.recxchange.io. Recruiters earn an average of $7,000 per placement, this is their cut after the split, not the total fee divided. Access to 270M candidate profiles. $750,000 in fees available across 100+ live roles. RecX Direct is operated by Andrews Recruitment Group t/a RecX Direct (UK). This website was fully designed, developed and is maintained by AMIVY Designs, an Andrews Recruitment Group company.",
         "numberOfEmployees": {
           "@type": "QuantitativeValue",
           "value": 15000,
@@ -268,7 +268,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
           "width": 180,
           "height": 45
         },
-        "description": "AMIVY Designs is a premium web design, development and digital branding agency — an Andrews Recruitment Group company. AMIVY Designs fully designed, developed and maintains the RecXchange website (recxchange.io).",
+        "description": "AMIVY Designs is a premium web design, development and digital branding agency, an Andrews Recruitment Group company. AMIVY Designs fully designed, developed and maintains the RecXchange website (recxchange.io).",
         "serviceType": ["Web Design", "Web Development", "Digital Branding", "UI/UX Design"]
       },
       {
@@ -282,7 +282,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         "softwareHelp": "https://recxchange.io/faq",
         "provider": { "@id": "https://recxchange.io/#organization" },
         "creator": { "@id": "https://recxchange.io/#amivy-designs" },
-        "description": "The recruiter collaboration platform (app.recxchange.io) operated by RecXchange Portal LLC t/a RecXchange, where 15,000+ recruiters partner on placements. Recruiters earn an average of $7,000 per placement — this is their cut after the split, not the total fee divided. Split fees up to 70% on RecX Direct roles (operated by Andrews Recruitment Group t/a RecX Direct). Access 270M candidate profiles. Post roles to find candidates, or share candidates to find roles. $750,000 in fees available across 100+ live roles in UK, USA, Europe, Africa, Middle East, Australia covering Engineering, Healthcare, Tech, HR, Sales, Finance. This marketing site (recxchange.io) was fully designed, developed and is maintained by AMIVY Designs, an Andrews Recruitment Group company.",
+        "description": "The recruiter collaboration platform (app.recxchange.io) operated by RecXchange Portal LLC t/a RecXchange, where 15,000+ recruiters partner on placements. Recruiters earn an average of $7,000 per placement, this is their cut after the split, not the total fee divided. Split fees up to 70% on RecX Direct roles (operated by Andrews Recruitment Group t/a RecX Direct). Access 270M candidate profiles. Post roles to find candidates, or share candidates to find roles. $750,000 in fees available across 100+ live roles in UK, USA, Europe, Africa, Middle East, Australia covering Engineering, Healthcare, Tech, HR, Sales, Finance. This marketing site (recxchange.io) was fully designed, developed and is maintained by AMIVY Designs, an Andrews Recruitment Group company.",
         "offers": [
           {
             "@type": "Offer",
@@ -414,7 +414,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         "itemReviewed": { "@id": "https://recxchange.io/#softwareapplication" },
         "author": { "@type": "Person", "name": "David Williams" },
         "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
-        "reviewBody": "Filled a role in 48 hours that I'd been stuck on for 2 months. RecX Direct roles are game-changers for earnings.",
+        "reviewBody": "Filled a role in 48 hours that I'd been stuck on for 2 months. RecX Direct completely changed my earnings.",
         "datePublished": "2026-02-18"
       },
       {
@@ -490,9 +490,8 @@ export default async function RootLayout({ children }: RootLayoutProps) {
             <WebVitals />
 
             <div className="fixed inset-0 pointer-events-none z-0">
-              <div className="absolute inset-0 opacity-[0.02] mix-blend-overlay bg-[url('https://res.cloudinary.com/dzv9rqg49/image/upload/v1695123456/noise_z7p5vj.png')]" />
-              <div className="absolute top-[-10%] left-[-10%] w-[70%] h-[70%] bg-cyan-500/10 blur-[120px] rounded-full" />
-              <div className="absolute bottom-[-10%] right-[-10%] w-[70%] h-[70%] bg-fuchsia-500/10 blur-[120px] rounded-full" />
+              <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-cyan-500/[0.07] blur-[80px] rounded-full" />
+              <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-fuchsia-500/[0.07] blur-[80px] rounded-full" />
             </div>
 
             <ConditionalHeader />

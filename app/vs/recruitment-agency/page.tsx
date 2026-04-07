@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import React from 'react';
 
 export const metadata: Metadata = {
-  title: "RecXchange vs Traditional Recruitment Agency | Which Is Better?",
-  description: "RecXchange vs traditional recruitment agencies: no retainers, no exclusivity, no inflated fees. Pay a single success fee only when a candidate is placed. 15,000+ specialist recruiters. Average 3x faster time-to-hire. See the full comparison.",
+  title: "RecXchange vs Recruitment Agency | RecXchange",
+  description: "RecXchange vs recruitment agencies: no retainers, no exclusivity, no inflated fees. One success fee on placement. 15,000+ specialist recruiters. 3x faster.",
   keywords: [
     "RecXchange vs recruitment agency",
     "recruitment agency alternative",
@@ -52,12 +52,12 @@ export default function VsRecruitmentAgencyPage() {
       {
         "@type": "Question",
         "name": "Is RecXchange cheaper than a recruitment agency?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Yes. Traditional recruitment agencies typically charge 15–25% of first-year salary, often with retainer fees upfront. RecXchange charges a single success fee of 12–20% payable only when a candidate accepts an offer. There are no retainers, no exclusivity fees, and no upfront costs." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. Traditional recruitment agencies typically charge 15 to 25% of first-year salary, often with retainer fees upfront. RecXchange charges a single success fee of 12 to 20% payable only when a candidate accepts an offer. There are no retainers, no exclusivity fees, and no upfront costs." }
       },
       {
         "@type": "Question",
         "name": "How is RecXchange different from a traditional recruiter?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Traditional recruiters work alone — one recruiter, one candidate pool. RecXchange is a marketplace of 15,000+ specialist recruiters whose combined candidate networks are matched to your role by the Xchange Engine. You get access to far more relevant candidates faster, with a dedicated Account Manager managing the process end-to-end." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Traditional recruiters work alone, one recruiter, one candidate pool. RecXchange is a marketplace of 15,000+ specialist recruiters whose combined candidate networks are matched to your role by the Xchange Engine. You get access to far more relevant candidates faster, with a dedicated Account Manager managing the process end-to-end." }
       },
       {
         "@type": "Question",
@@ -76,22 +76,22 @@ export default function VsRecruitmentAgencyPage() {
           <p className="text-cyan-400 text-sm font-bold uppercase tracking-widest mb-4">Comparison</p>
           <h1 className="text-4xl md:text-5xl font-black text-white mb-6">RecXchange vs Traditional Recruitment Agency</h1>
           <p className="text-gray-300 text-lg mb-10 leading-relaxed">
-            Traditional recruitment agencies have dominated hiring for decades — but the model hasn’t changed. One recruiter, one database, one opinion on who’s a good fit. RecXchange replaces that with a live marketplace of 15,000+ specialist recruiters whose collective networks are matched to your role automatically.
+            Traditional recruitment agencies have dominated hiring for decades, but the model hasn’t changed. One recruiter, one database, one opinion on who’s a good fit. RecXchange replaces that with a live marketplace of 15,000+ specialist recruiters whose collective networks are matched to your role automatically.
           </p>
 
           <h2 className="text-2xl font-bold text-white mb-4">Cost: Retainers vs Success Fees</h2>
           <p className="text-gray-300 mb-6 leading-relaxed">
-            Traditional agencies charge 15–25% of first-year salary — often demanding a retainer of 30–50% upfront before any work begins. RecXchange charges a single success fee of 12–20%, payable only when a candidate accepts an offer. No retainers. No upfront costs. No payment until you hire.
+            Traditional agencies charge 15 to 25% of first-year salary, often demanding a retainer of 30 to 50% upfront before any work begins. RecXchange charges a single success fee of 12 to 20%, payable only when a candidate accepts an offer. No retainers. No upfront costs. No payment until you hire.
           </p>
 
           <h2 className="text-2xl font-bold text-white mb-4">Candidate Access: One Database vs 15,000+ Networks</h2>
           <p className="text-gray-300 mb-6 leading-relaxed">
-            A single recruitment agency gives you access to one recruiter’s database — typically 5,000–20,000 candidates, built over years in a single specialism. RecXchange’s Xchange Engine simultaneously matches your role to thousands of specialist recruiters, each with their own deep candidate networks. The result: more relevant candidates, faster, from more diverse sourcing channels.
+            A single recruitment agency gives you access to one recruiter’s database, typically 5,000 to 20,000 candidates, built over years in a single specialism. RecXchange’s Xchange Engine simultaneously matches your role to thousands of specialist recruiters, each with their own deep candidate networks. The result: more relevant candidates, faster, from more diverse sourcing channels.
           </p>
 
           <h2 className="text-2xl font-bold text-white mb-4">Speed: Traditional Process vs Xchange Engine</h2>
           <p className="text-gray-300 mb-6 leading-relaxed">
-            Traditional agencies average 4–6 weeks from brief to shortlist. RecXchange clients typically receive first candidate submissions within 48–72 hours of posting a role, as the Xchange Engine matches and alerts relevant recruiters in real time. A dedicated Account Manager manages all recruiter interactions so you receive only pre-vetted, top 1% quality candidates.
+            Traditional agencies average 4 to 6 weeks from brief to shortlist. RecXchange clients typically receive first candidate submissions within 48 to 72 hours of posting a role, as the Xchange Engine matches and alerts relevant recruiters in real time. A dedicated Account Manager manages all recruiter interactions so you receive only pre-vetted, top 1% quality candidates.
           </p>
 
           <h2 className="text-2xl font-bold text-white mb-4">Transparency: Black Box vs Full Visibility</h2>
@@ -101,7 +101,7 @@ export default function VsRecruitmentAgencyPage() {
 
           <h2 className="text-2xl font-bold text-white mb-4">Exclusivity: Lock-In vs Flexibility</h2>
           <p className="text-gray-300 mb-6 leading-relaxed">
-            Many traditional agencies insist on exclusivity — meaning you can’t use other suppliers while they work your role. RecXchange is entirely non-exclusive. Use it alongside your PSL, your internal team, or any other supplier. You pay only when RecXchange places a candidate.
+            Many traditional agencies insist on exclusivity, meaning you can’t use other suppliers while they work your role. RecXchange is entirely non-exclusive. Use it alongside your PSL, your internal team, or any other supplier. You pay only when RecXchange places a candidate.
           </p>
 
           <div className="mt-12 overflow-x-auto">
@@ -115,10 +115,10 @@ export default function VsRecruitmentAgencyPage() {
               </thead>
               <tbody className="text-gray-300">
                 {[
-                  ["Fee structure", "12–20% success only", "15–25% + retainer"],
-                  ["Upfront cost", "None", "30–50% retainer common"],
+                  ["Fee structure", "12 to 20% success only", "15 to 25% + retainer"],
+                  ["Upfront cost", "None", "30 to 50% retainer common"],
                   ["Candidate reach", "15,000+ recruiter networks", "One recruiter's database"],
-                  ["Time to first CV", "48–72 hours", "1–3 weeks"],
+                  ["Time to first CV", "48 to 72 hours", "1 to 3 weeks"],
                   ["Exclusivity required", "No", "Often yes"],
                   ["Account Manager", "Dedicated, included", "Varies"],
                   ["Candidate quality filter", "Top 1% only", "Varies by recruiter"],

@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import React from 'react';
 
 export const metadata: Metadata = {
-  title: "Split Fee Recruitment USA | Recruiter Marketplace | RecXchange",
-  description: "The USA's fastest-growing split fee recruitment marketplace. Partner with 15,000+ specialist recruiters across Technology, Healthcare, Finance, Engineering and Sales. Average $7,000 per split placement. RecX Direct roles available nationwide.",
+  title: "Split Fee Recruitment USA | RecXchange",
+  description: "USA split fee recruitment marketplace. 15,000+ specialists across Technology, Healthcare, Finance, Engineering and Sales. Avg $7,000 per placement.",
   keywords: [
     "split fee recruitment USA",
     "US recruiter marketplace",
@@ -55,12 +55,12 @@ export default function USALocationPage() {
           <p className="text-cyan-400 text-sm font-bold uppercase tracking-widest mb-4">United States</p>
           <h1 className="text-4xl md:text-5xl font-black text-white mb-6">Split Fee Recruitment USA</h1>
           <p className="text-gray-300 text-lg mb-8 leading-relaxed">
-            RecXchange is the fastest-growing split fee recruitment marketplace in the USA — connecting specialist recruiters who want to collaborate on placements, share candidates, and earn more together. With 15,000+ registered recruiters and live roles across every major US market, RecXchange is where American recruiters come to scale their billings without scaling their headcount.
+            RecXchange is the fastest-growing split fee recruitment marketplace in the USA, connecting specialist recruiters who want to collaborate on placements, share candidates, and earn more together. With 15,000+ registered recruiters and live roles across every major US market, RecXchange is where American recruiters come to scale their billings without scaling their headcount.
           </p>
 
           <h2 className="text-2xl font-bold text-white mb-4">Split Fee Recruitment in the US Market</h2>
           <p className="text-gray-300 mb-6 leading-relaxed">
-            Split fee placements have long been common in the US staffing industry — but the process has historically relied on informal relationships and handshake deals. RecXchange formalises this through its Xchange Engine: an AI-powered matching system that connects role-holders and candidate-holders automatically, generates binding split fee agreements instantly, and processes payouts via escrow. No disputes. No chasing. Just placements.
+            Split fee placements have long been common in the US staffing industry, but the process has historically relied on informal relationships and handshake deals. RecXchange formalises this through its Xchange Engine: an AI-powered matching system that connects role-holders and candidate-holders automatically, generates binding split fee agreements instantly, and processes payouts via escrow. No disputes. No chasing. Just placements.
           </p>
 
           <h2 className="text-2xl font-bold text-white mb-4">US Sectors &amp; Markets</h2>
@@ -70,7 +70,7 @@ export default function USALocationPage() {
 
           <h2 className="text-2xl font-bold text-white mb-4">What US Recruiters Earn</h2>
           <p className="text-gray-300 mb-6 leading-relaxed">
-            US recruiters on RecXchange earn an average of $7,000 per split placement. On RecX Direct roles — where hiring managers post directly and bypass the traditional agency model — the candidate-side recruiter takes 70% of a 12–20% success fee. With $750,000+ in live US fees available at any time, the earnings opportunity on RecXchange is substantial for active recruiters.
+            US recruiters on RecXchange earn an average of $7,000 per split placement. On RecX Direct roles, where hiring managers post directly and bypass the traditional agency model, the candidate-side recruiter takes 70% of a 12 to 20% success fee. With $750,000+ in live US fees available at any time, the earnings opportunity on RecXchange is substantial for active recruiters.
           </p>
 
           <h2 className="text-2xl font-bold text-white mb-4">How RecXchange Differs From US Staffing Networks</h2>

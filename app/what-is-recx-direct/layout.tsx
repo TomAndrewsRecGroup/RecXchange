@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import React from 'react';
 
 export const metadata: Metadata = {
-  title: "What Is RecX Direct? | The 70% Recruiter Placement Model | RecXchange",
-  description: "RecX Direct is RecXchange's premium direct-hire model where verified roles pay candidate-side recruiters 70% of the placement fee. No traditional agency. No inflated fees. Hiring managers get top 1% candidates. Recruiters earn more per placement.",
+  title: "What Is RecX Direct? | 70% Commission | RecXchange",
+  description: "RecX Direct: verified roles pay candidate-side recruiters 70% of the fee. No agency middleman. Top 1% candidates. Recruiters earn more per placement.",
   keywords: [
     "RecX Direct",
     "what is RecX Direct",

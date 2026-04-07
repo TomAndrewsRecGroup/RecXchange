@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import React from 'react';
 export const metadata: Metadata = {
   title: "Legal Recruitment | Split Fee Roles | RecXchange",
-  description: "Live legal recruitment split fee roles on RecXchange. Solicitors, barristers, paralegals, in-house counsel, compliance lawyers, and legal executives. UK, USA, UAE, Europe, Australia.",
+  description: "Live legal split fee roles. Solicitors, barristers, paralegals, in-house counsel, compliance lawyers and legal executives. UK, USA, UAE, Europe.",
   keywords: ["legal recruitment","solicitor recruiter","legal recruiter split fee","in-house counsel recruitment","compliance lawyer jobs","paralegal recruiter","legal executive recruitment","law firm recruiter marketplace"],
   alternates: { canonical: "https://recxchange.io/sectors/legal" },
   openGraph: { title: "Legal Recruitment | Split Fee Roles | RecXchange", description: "Live legal split fee roles. Solicitors, in-house counsel, compliance. UK, USA, UAE.", url: "https://recxchange.io/sectors/legal", type: "website", images: [{ url: "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png", width: 1200, height: 630, alt: "Legal Recruitment on RecXchange" }] },

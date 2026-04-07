@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import React from 'react';
 
 export const metadata: Metadata = {
-  title: "For Recruiters | Split Fee Collaboration Platform | RecXchange",
-  description: "Join 15,000+ recruiters partnering on placements. Post roles to find candidates or share candidates to find roles. Split fees 50/50 to 70/30. AI-powered matching across 270M candidates. From $1/month.",
+  title: "For Recruiters | Split Fee Platform | RecXchange",
+  description: "Join 15,000+ recruiters on placements. Post roles or share candidates. Split fees 50/50 to 70/30. AI matching across 270M candidates. From $1/month.",
   keywords: [
     "recruiter collaboration",
     "split fee recruitment",

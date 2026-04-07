@@ -52,7 +52,7 @@ export async function GET(request: Request) {
       const mockPosts: SocialPost[] = [
         {
           id: '1',
-          content: `🚀 RecXchange hits 15,000+ recruiters worldwide!\n\nThat's 15,000 partners ready to help you fill roles and place candidates.\n\n✨ What's possible with this network:\n• Access to 270M candidate profiles\n• $750k in live placement fees\n• Recruiters earn an average of $7,000 per placement — that's your cut, not a total split\n• Split fees up to 70% on RecX Direct\n\n💰 Zero platform fees. You keep 100% of your split.\n\nReady to partner? Link in bio 👆`,
+          content: `🚀 RecXchange hits 15,000+ recruiters worldwide!\n\nThat's 15,000 partners ready to help you fill roles and place candidates.\n\n✨ What's possible with this network:\n• Access to 270M candidate profiles\n• $750k in live placement fees\n• Recruiters earn an average of $7,000 per placement -that's your cut, not a total split\n• Split fees up to 70% on RecX Direct\n\n💰 Zero platform fees. You keep 100% of your split.\n\nReady to partner? Link in bio 👆`,
           publishedAt: '2026-02-25T10:00:00Z',
           platform: 'LinkedIn',
           category: 'Platform Updates',
@@ -68,7 +68,7 @@ export async function GET(request: Request) {
         },
         {
           id: '3',
-          content: `💡 Split fee comparison on a $14,000 total placement fee:\n\n50/50 split: You earn $7,000\n60/40 split: You earn $8,400\n70% RecX Direct: You earn $9,800\n\nThat $7,000 average? That's what you take home — not the total fee before it's split.\n\nPro members get instant access to RecX Direct roles.\nLite members wait 7 days.\nEntry members wait 30 days.\n\nSpeed = earnings in recruitment 🏃‍♂️💨`,
+          content: `💡 Split fee comparison on a $14,000 total placement fee:\n\n50/50 split: You earn $7,000\n60/40 split: You earn $8,400\n70% RecX Direct: You earn $9,800\n\nThat $7,000 average? That's what you take home -not the total fee before it's split.\n\nPro members get instant access to RecX Direct roles.\nLite members wait 7 days.\nEntry members wait 30 days.\n\nSpeed = earnings in recruitment 🏃‍♂️💨`,
           publishedAt: '2026-02-23T11:00:00Z',
           platform: 'LinkedIn',
           category: 'Recruitment Tips',
@@ -92,7 +92,7 @@ export async function GET(request: Request) {
         },
         {
           id: '6',
-          content: `⚡ Quick wins with RecXchange:\n\nDay 1: Post your hardest-to-fill role\nDay 2: Receive 3-5 candidate submissions\nDay 3: Screen and shortlist top 2\nWeek 2: Client interviews\nWeek 3: Offer made\nWeek 4: Candidate starts, fee splits 50/50\n\nAverage time from post to placement: 21 days.\n\nThat's 3x faster than solo recruiting 🚀\n\nEntry tier from $1/month — no free trial needed when the ROI is this clear.`,
+          content: `⚡ Quick wins with RecXchange:\n\nDay 1: Post your hardest-to-fill role\nDay 2: Receive 3-5 candidate submissions\nDay 3: Screen and shortlist top 2\nWeek 2: Client interviews\nWeek 3: Offer made\nWeek 4: Candidate starts, fee splits 50/50\n\nAverage time from post to placement: 21 days.\n\nThat's 3x faster than solo recruiting 🚀\n\nEntry tier from $1/month -no free trial needed when the ROI is this clear.`,
           publishedAt: '2026-02-20T13:20:00Z',
           platform: 'LinkedIn',
           category: 'Platform Updates',
@@ -108,7 +108,7 @@ export async function GET(request: Request) {
         },
         {
           id: '8',
-          content: `💰 RecXchange pricing breakdown:\n\nEntry: $1/month (5 tokens) — Test the waters\nLite: $99/month (150 tokens) — Serious recruiters\nPro: $249/month (400 tokens) — Instant RecX Direct access\n\n1 token = Post 1 role OR Submit 1 candidate OR Unlock 1 contact\n\nZero platform fees. Zero hidden costs. Zero surprises.\n\nRecruiters earn an average of $7,000 per placement — that's your cut after the split, not a total fee being divided. One placement covers months of membership 📊`,
+          content: `💰 RecXchange pricing breakdown:\n\nEntry: $1/month (5 tokens) -Test the waters\nLite: $99/month (150 tokens) -Serious recruiters\nPro: $249/month (400 tokens) -Instant RecX Direct access\n\n1 token = Post 1 role OR Submit 1 candidate OR Unlock 1 contact\n\nZero platform fees. Zero hidden costs. Zero surprises.\n\nRecruiters earn an average of $7,000 per placement -that's your cut after the split, not a total fee being divided. One placement covers months of membership 📊`,
           publishedAt: '2026-02-18T15:00:00Z',
           platform: 'LinkedIn',
           category: 'Platform Updates',

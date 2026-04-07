@@ -18,7 +18,7 @@ export default function ResearchPage() {
           <motion.header initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-10 sm:mb-12 md:mb-16 mt-6">
             <StatusBadge label="PLATFORM STATISTICS & RESEARCH DATA" color="purple" />
             <h1 className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2 mt-6"
-              style={{ textShadow: '0 0 60px rgba(0,240,255,0.3)' }}>
+              style={{ textShadow: '0 0 20px rgba(0,240,255,0.15)' }}>
               RecXchange By The Numbers
             </h1>
             <NeonDivider width="w-40" color="mixed" />
@@ -41,7 +41,7 @@ export default function ResearchPage() {
               <div className="text-center">
                 <div className="text-3xl sm:text-4xl md:text-5xl font-bold gradient-text mb-2 sm:mb-3">$7,000</div>
                 <div className="text-[10px] sm:text-xs uppercase tracking-[0.15em] sm:tracking-widest text-gray-400 font-bold">Average Recruiter Earnings</div>
-                <p className="text-[9px] sm:text-xs text-gray-500 mt-2 sm:mt-3">Per placement — what you take home</p>
+                <p className="text-[9px] sm:text-xs text-gray-500 mt-2 sm:mt-3">Per placement, what you take home</p>
               </div>
             </HolographicCard>
             

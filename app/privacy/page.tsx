@@ -345,7 +345,7 @@ export default function PrivacyPolicyPage() {
                       <li className="flex items-start gap-2">
                         <span className="text-fuchsia-400 mt-1">•</span>
                         <div>
-                          <strong className="text-white">Contract:</strong> We process data that is necessary to perform our contract with you — i.e., to provide the RecXchange services you signed up for.
+                          <strong className="text-white">Contract:</strong> We process data that is necessary to perform our contract with you, i.e., to provide the RecXchange services you signed up for.
                         </div>
                       </li>
                       <li className="flex items-start gap-2">

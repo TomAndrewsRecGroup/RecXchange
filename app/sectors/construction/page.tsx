@@ -21,9 +21,9 @@ export default function ConstructionSectorPage() {
         <div className="max-w-[1200px] mx-auto">
           <motion.header initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-8 md:mb-14 mt-6">
             <StatusBadge label="SECTOR · CONSTRUCTION" color="cyan" />
-            <h1 className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 tracking-tight leading-[1.1] pb-2 px-2 mt-6" style={{ textShadow: '0 0 60px rgba(0,240,255,0.3)' }}>Construction Recruitment<br /><span className="text-cyan-400">Split Fee Roles</span></h1>
+            <h1 className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 tracking-tight leading-[1.1] pb-2 px-2 mt-6" style={{ textShadow: '0 0 20px rgba(0,240,255,0.15)' }}>Construction Recruitment<br /><span className="text-cyan-400">Split Fee Roles</span></h1>
             <NeonDivider width="w-40" color="mixed" />
-            <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed px-2 mt-6">Project managers, QSs, site managers, estimators, and trades — live construction split fee roles on RecXchange. The built environment sector faces a chronic skills shortage globally, making collaboration between specialist recruiters essential.</p>
+            <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed px-2 mt-6">Project managers, QSs, site managers, estimators, and trades, live construction split fee roles on RecXchange. The built environment sector faces a chronic skills shortage globally, making collaboration between specialist recruiters essential.</p>
           </motion.header>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-12">
             {specialisms.map((s, i) => { const Icon = s.icon; const tc = s.color === 'cyan' ? 'text-cyan-400' : s.color === 'fuchsia' ? 'text-fuchsia-400' : 'text-purple-400'; return (
@@ -40,7 +40,7 @@ export default function ConstructionSectorPage() {
           <HolographicCard color="cyan" variant="content" className="text-center">
             <StatusBadge label="CONSTRUCTION ROLES LIVE NOW" color="cyan" />
             <h2 className="text-2xl font-bold text-white mt-4 mb-3">Browse Live Construction Roles</h2>
-            <p className="text-gray-400 text-sm mb-6 max-w-lg mx-auto">PMs, QSs, site managers, estimators, and trades — live split fee vacancies ready to fill.</p>
+            <p className="text-gray-400 text-sm mb-6 max-w-lg mx-auto">PMs, QSs, site managers, estimators, and trades, live split fee vacancies ready to fill.</p>
             <a href="/roles" className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-cyan-400/10 border border-cyan-400/30 text-cyan-400 font-bold text-sm hover:bg-cyan-400/20 transition-all">View Live Roles <ArrowRight className="w-4 h-4" /></a>
           </HolographicCard>
         </div>

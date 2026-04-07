@@ -3,7 +3,7 @@ import React from 'react';
 
 export const metadata: Metadata = {
   title: "Hard-to-Fill Roles | Specialist Recruitment | RecXchange",
-  description: "RecXchange specialises in hard-to-fill roles that job boards and generalist agencies can't crack. 15,000+ niche specialist recruiters with deep passive candidate networks. Engineering, Healthcare, Technology, Finance, Legal and Executive roles. The Xchange Engine finds the recruiter who has your candidate.",
+  description: "Hard-to-fill roles that job boards can't crack. 15,000+ specialist recruiters with passive candidate networks. Engineering, Healthcare, Tech and Finance.",
   keywords: [
     "hard to fill roles recruitment",
     "specialist recruitment hard roles",
@@ -54,17 +54,17 @@ export default function HardToFillRolesPage() {
           <p className="text-cyan-400 text-sm font-bold uppercase tracking-widest mb-4">Use Case</p>
           <h1 className="text-4xl md:text-5xl font-black text-white mb-6">Hard-to-Fill Roles</h1>
           <p className="text-gray-300 text-lg mb-10 leading-relaxed">
-            Some roles sit open for months. Job boards generate noise, generalist agencies come back empty-handed, and the business case for the hire gets harder to justify with every passing week. RecXchange was built precisely for these situations: the Xchange Engine identifies which of 15,000+ specialist recruiters has the passive candidate pipeline your role needs — and connects you in minutes.
+            Some roles sit open for months. Job boards generate noise, generalist agencies come back empty-handed, and the business case for the hire gets harder to justify with every passing week. RecXchange was built precisely for these situations: the Xchange Engine identifies which of 15,000+ specialist recruiters has the passive candidate pipeline your role needs, and connects you in minutes.
           </p>
 
           <h2 className="text-2xl font-bold text-white mb-4">Why Hard Roles Stay Unfilled</h2>
           <p className="text-gray-300 mb-6 leading-relaxed">
-            Hard-to-fill roles share a common trait: the right candidate isn't actively looking. They're not on job boards, they don't respond to InMails, and they haven't registered with a generalist agency. They're known to specialist recruiters who have spent years in their niche — recruiters who have placed them before, stayed in contact, and know exactly what it would take to move them. The challenge is finding which recruiter that is. The Xchange Engine does exactly that.
+            Hard-to-fill roles share a common trait: the right candidate isn't actively looking. They're not on job boards, they don't respond to InMails, and they haven't registered with a generalist agency. They're known to specialist recruiters who have spent years in their niche, recruiters who have placed them before, stayed in contact, and know exactly what it would take to move them. The challenge is finding which recruiter that is. The Xchange Engine does exactly that.
           </p>
 
           <h2 className="text-2xl font-bold text-white mb-4">How the Xchange Engine Solves Niche Hiring</h2>
           <p className="text-gray-300 mb-6 leading-relaxed">
-            When you post a hard-to-fill role on RecXchange, the Xchange Engine analyses the role's sector, location, seniority, and technical requirements — then matches it to the specific subset of RecXchange's 15,000+ recruiters whose placed candidate history most closely aligns. These aren't cold approaches to generic recruiters. They're warm activations of specialists who already have relationships with the exact candidate profile you need.
+            When you post a hard-to-fill role on RecXchange, the Xchange Engine analyses the role's sector, location, seniority, and technical requirements, then matches it to the specific subset of RecXchange's 15,000+ recruiters whose placed candidate history most closely aligns. These aren't cold approaches to generic recruiters. They're warm activations of specialists who already have relationships with the exact candidate profile you need.
           </p>
 
           <h2 className="text-2xl font-bold text-white mb-4">Common Hard-to-Fill Role Types on RecXchange</h2>
@@ -74,12 +74,12 @@ export default function HardToFillRolesPage() {
 
           <h2 className="text-2xl font-bold text-white mb-4">The Role of Passive Candidates</h2>
           <p className="text-gray-300 mb-6 leading-relaxed">
-            For hard-to-fill roles, passive candidates — those not actively job-seeking — represent the majority of viable talent. Research consistently shows that the best performers in any specialism are typically employed, engaged, and not browsing job boards. Reaching them requires a warm introduction from a trusted recruiter. RecXchange's specialist network has these relationships at scale. Your role gets in front of passive talent that no job board or generalist agency can access.
+            For hard-to-fill roles, passive candidates, those not actively job-seeking, represent the majority of viable talent. Research consistently shows that the best performers in any specialism are typically employed, engaged, and not browsing job boards. Reaching them requires a warm introduction from a trusted recruiter. RecXchange's specialist network has these relationships at scale. Your role gets in front of passive talent that no job board or generalist agency can access.
           </p>
 
           <div className="mt-12 p-6 rounded-2xl border border-cyan-400/20 bg-cyan-400/5">
             <p className="text-cyan-400 font-bold mb-2">The role that's been open for months? Post it on RecXchange.</p>
-            <p className="text-gray-300 text-sm">The Xchange Engine finds the specialist recruiter who has your candidate. First submissions typically within 48–72 hours. Pay only on placement.</p>
+            <p className="text-gray-300 text-sm">The Xchange Engine finds the specialist recruiter who has your candidate. First submissions typically within 48 to 72 hours. Pay only on placement.</p>
           </div>
         </div>
       </main>

@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: "Specialist Recruitment by Sector | RecXchange",
-  description: "RecXchange specialist recruiter networks across Technology, Engineering, Healthcare, Finance, Sales, HR, Legal, and Construction. Sector-specific passive candidate pipelines. Dedicated specialist Account Managers. Pay only on placement.",
+  description: "Specialist recruiter networks across Technology, Engineering, Healthcare, Finance, Sales, HR, Legal and Construction. Pay only on placement.",
   alternates: { canonical: "https://recxchange.io/sectors" },
   openGraph: {
     title: "Specialist Recruitment by Sector | RecXchange",
