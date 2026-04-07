@@ -20,12 +20,14 @@ export const internalLinks = {
   blog: '/blog',
   
   // Recruiter journey
+  freelanceRecruiters: '/freelance-recruiters',
   recruiterRoles: '/recruiter-roles',
   recruiterCandidates: '/recruiters-with-candidates',
   collaboration: '/split-fees',
   whyRecXchange: '/why-recxchange',
   dealProtection: '/deal-protection',
   roles: '/roles',
+  earningsCalculator: '/earnings-calculator',
   
   // Hiring manager journey
   hiringManagerLive: '/hiring-manager-live',

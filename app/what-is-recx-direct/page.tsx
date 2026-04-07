@@ -17,14 +17,22 @@ export default function WhatIsRecXDirectPage() {
           <motion.header initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-8 md:mb-14 mt-6">
             <StatusBadge label="RECX DIRECT" color="fuchsia" />
             <h1 className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 tracking-tight leading-[1.1] pb-2 px-2 mt-6"
-              style={{ textShadow: '0 0 60px rgba(236,72,153,0.4)' }}>
+              style={{ textShadow: '0 0 20px rgba(236,72,153,0.15)' }}>
               What Is RecX Direct?
             </h1>
             <NeonDivider width="w-40" color="mixed" />
             <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed px-2 mt-6">
-              RecX Direct is RecXchange's highest-earning placement model — verified roles that pay candidate-side recruiters <span className="text-fuchsia-400 font-bold">70% of the fee</span>. No middleman. No agency markup. Just the most efficient hire possible.
+              RecX Direct is RecXchange's highest-earning placement model. Verified roles that pay candidate-side recruiters <span className="text-fuchsia-400 font-bold">70% of the fee</span>. No middleman. No agency markup. Just the most efficient hire possible.
             </p>
           </motion.header>
+
+          {/* Speakable Definition Block */}
+          <section className="mb-8 sm:mb-12" data-speakable="true">
+            <h2 className="text-xl sm:text-2xl font-bold text-white mb-3">What is RecX Direct?</h2>
+            <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
+              RecX Direct is a hiring model on RecXchange where companies post roles directly onto the platform, bypassing traditional recruitment agencies. Each role is verified by the RecXchange team before going live. Any recruiter on the network with a matching candidate can submit them, earning up to 70% of the placement fee. With 15,000+ specialist recruiters searching across 270M candidate profiles, RecX Direct gives hiring managers faster access to talent at a lower cost than a traditional agency retainer.
+            </p>
+          </section>
 
           {/* Hero Definition */}
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="mb-10 md:mb-16">
@@ -32,7 +40,7 @@ export default function WhatIsRecXDirectPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
                 <div>
                   <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">The Model</h2>
-                  <p className="text-gray-300 text-sm leading-relaxed mb-4">A hiring manager posts a role directly on RecXchange — no traditional recruitment agency involved. RecXchange verifies the role, the company, and the hiring intent. The role is then listed as <strong className="text-fuchsia-400">RecX Direct</strong> in the live roles feed.</p>
+                  <p className="text-gray-300 text-sm leading-relaxed mb-4">A hiring manager posts a role directly on RecXchange with no traditional recruitment agency involved. RecXchange verifies the role, the company, and the hiring intent. The role is then listed as <strong className="text-fuchsia-400">RecX Direct</strong> in the live roles feed.</p>
                   <p className="text-gray-400 text-sm leading-relaxed">Any registered recruiter with a matching candidate can submit them. If placed, the candidate-side recruiter earns <strong className="text-white">70% of the total placement fee</strong>. RecXchange earns the remaining 30% to cover the platform and verification service.</p>
                 </div>
                 <div className="space-y-4">
@@ -59,7 +67,7 @@ export default function WhatIsRecXDirectPage() {
                 <h3 className="text-lg font-bold text-gray-400 mb-4">Traditional Recruitment Agency</h3>
                 <ul className="space-y-3">
                   {[
-                    "Agency takes 15–25% of salary",
+                    "Agency takes 15 to 25% of salary",
                     "Agency keeps 100% of the fee",
                     "Limited recruiter network",
                     "No transparency on candidate quality",
@@ -99,12 +107,12 @@ export default function WhatIsRecXDirectPage() {
             <HolographicCard color="cyan" variant="content">
               <Zap className="w-6 h-6 text-cyan-400 mb-3" />
               <h2 className="text-xl font-bold text-white mb-3">For Recruiters</h2>
-              <p className="text-gray-400 text-sm leading-relaxed">RecX Direct roles are the highest-earning opportunities on the platform. If you have a strong candidate and a RecX Direct role appears, you earn 70% of the fee. The role is already verified — no ghosting, no tyre-kickers, no time wasters.</p>
+              <p className="text-gray-400 text-sm leading-relaxed">RecX Direct roles are the highest-earning opportunities on the platform. If you have a strong candidate and a RecX Direct role appears, you earn 70% of the fee. The role is already verified. No ghosting, no tyre-kickers, no time wasters.</p>
             </HolographicCard>
             <HolographicCard color="fuchsia" variant="content">
               <Shield className="w-6 h-6 text-fuchsia-400 mb-3" />
               <h2 className="text-xl font-bold text-white mb-3">For Hiring Managers</h2>
-              <p className="text-gray-400 text-sm leading-relaxed">RecX Direct gives you direct access to 15,000+ specialist recruiters without paying a full agency retainer. Your role is verified and promoted to the right recruiter audience. You only pay on a successful placement — and typically at a lower total cost than a traditional agency.</p>
+              <p className="text-gray-400 text-sm leading-relaxed">RecX Direct gives you direct access to 15,000+ specialist recruiters without paying a full agency retainer. Your role is verified and promoted to the right recruiter audience. You only pay on a successful placement, and typically at a lower total cost than a traditional agency.</p>
             </HolographicCard>
           </div>
 

@@ -69,7 +69,7 @@ export const pricingFAQs = [
   },
   {
     question: "What are tokens and how do they work?",
-    answer: "Tokens are platform credits used by recruiters for three actions: posting a role to the Xchange (1 token), submitting a candidate to a role (1 token), or unlocking a candidate's contact details (1 token). Hiring managers and clients post roles to RecX Direct for free — tokens are for recruiters only. Your monthly allocation: Entry (5), Lite (150), Pro (400)."
+    answer: "Tokens are platform credits used by recruiters for three actions: posting a role to the Xchange (1 token), submitting a candidate to a role (1 token), or unlocking a candidate's contact details (1 token). Hiring managers and clients post roles to RecX Direct for free. Tokens are for recruiters only. Your monthly allocation: Entry (5), Lite (150), Pro (400)."
   },
   {
     question: "What happens if I run out of tokens?",
@@ -81,7 +81,7 @@ export const pricingFAQs = [
   },
   {
     question: "Do token packs expire?",
-    answer: "Pro tier tokens accumulate and never reset — they carry over month to month. For Entry and Lite, unused monthly tokens do not roll over, but any purchased token packs are retained."
+    answer: "Pro tier tokens accumulate and never reset and carry over month to month. For Entry and Lite, unused monthly tokens do not roll over, but any purchased token packs are retained."
   }
 ];
 

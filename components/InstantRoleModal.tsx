@@ -172,14 +172,14 @@ export default function InstantRoleModal({ onClose }: { onClose: () => void }) {
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
                 <p className="text-gray-400 text-sm leading-relaxed mb-2">
-                  Share your role details and we&apos;ll have specialist recruiters sourcing candidates within the hour — no delay, no waiting.
+                  Share your role details and we&apos;ll have specialist recruiters sourcing candidates within the hour, no delay, no waiting.
                 </p>
 
                 <Field label="Full Name" id="name" value={form.name} onChange={set} required placeholder="Jane Smith" />
                 <Field label="Email" id="email" type="email" value={form.email} onChange={set} required placeholder="jane@company.com" />
                 <Field label="Phone" id="phone" type="tel" value={form.phone} onChange={set} placeholder="+44 7700 000000" />
                 <Field label="Business Name" id="businessName" value={form.businessName} onChange={set} placeholder="Acme Corp" />
-                <Field label="Live Role" id="liveRole" value={form.liveRole} onChange={set} required placeholder="e.g. Senior Software Engineer – London – £90k" />
+                <Field label="Live Role" id="liveRole" value={form.liveRole} onChange={set} required placeholder="e.g. Senior Software Engineer, London, £90k" />
                 <Field label="Additional Notes" id="notes" value={form.notes} onChange={set} textarea placeholder="Any requirements, urgency, or context..." />
 
                 {errorMsg && (

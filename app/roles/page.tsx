@@ -111,7 +111,7 @@ export default function RolesMarketplace() {
     };
     const sym = symbols[currency] || currency;
     const fmt = (n: number) => n >= 1000 ? `${Math.round(n / 1000)}k` : n.toString();
-    return `${sym}${fmt(min)}–${fmt(max)}`;
+    return `${sym}${fmt(min)}-${fmt(max)}`;
   };
 
   const formatSplit = (amount: number, currency: string) => {
@@ -151,7 +151,7 @@ export default function RolesMarketplace() {
             <StatusBadge label="LIVE ROLES · LIVE REVENUE" color="purple" />
             <h1
               className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2 mt-6"
-              style={{ textShadow: '0 0 60px rgba(0,240,255,0.3)' }}
+              style={{ textShadow: '0 0 20px rgba(0,240,255,0.15)' }}
             >
               One placement pays for 12 months
             </h1>

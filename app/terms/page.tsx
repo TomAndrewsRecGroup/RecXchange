@@ -298,7 +298,7 @@ export default function TermsConditionsPage() {
                     <div>
                       <h3 className="text-base sm:text-lg font-bold text-fuchsia-400 mb-2">Escrow Service (Optional; In Development)</h3>
                       <p className="text-gray-400 text-sm leading-relaxed">
-                        RecXchange's escrow feature, once available, will allow Members to secure their split fee payments through the platform. Under this service, the agreed fee can be held securely by a neutral third party until the placement is successfully completed and confirmed by both parties. This provides peace of mind — the introducing recruiter knows their fee share is secured up front, and the job-owning recruiter knows funds will only be released when the placement is real.
+                        RecXchange's escrow feature, once available, will allow Members to secure their split fee payments through the platform. Under this service, the agreed fee can be held securely by a neutral third party until the placement is successfully completed and confirmed by both parties. This provides peace of mind, the introducing recruiter knows their fee share is secured up front, and the job-owning recruiter knows funds will only be released when the placement is real.
                       </p>
                     </div>
 

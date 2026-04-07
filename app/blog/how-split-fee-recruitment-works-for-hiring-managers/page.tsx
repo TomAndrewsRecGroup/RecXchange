@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import React from 'react';
 
 export const metadata: Metadata = {
-  title: "How Split Fee Recruitment Works for Hiring Managers | RecXchange",
-  description: "A plain-English guide to split fee recruitment for hiring managers. What it means, how it affects your fees, why you get better candidates, and how RecXchange manages the entire process on your behalf. No jargon. No complexity. Just better hires.",
+  title: "Split Fee Recruitment for Hiring Managers | RecXchange",
+  description: "Split fee recruitment for hiring managers: what it means, how it affects your fees, why you get better candidates. RecXchange manages the process for you.",
   keywords: [
     "split fee recruitment for hiring managers",
     "how split fee recruitment works",
@@ -33,7 +33,7 @@ export default function SplitFeeForHiringManagersPage() {
     "url": "https://recxchange.io/blog/how-split-fee-recruitment-works-for-hiring-managers",
     "headline": "How Split Fee Recruitment Works for Hiring Managers",
     "description": "A plain-English guide for hiring managers on how split fee recruitment works, what it costs, and why it produces better candidates.",
-    "author": { "@type": "Organization", "name": "RecXchange", "url": "https://recxchange.io" },
+    "author": { "@type": "Person", "name": "Tom Andrews", "jobTitle": "CEO and Co-Founder", "url": "https://recxchange.io", "worksFor": { "@type": "Organization", "name": "RecXchange" } },
     "publisher": { "@type": "Organization", "name": "RecXchange", "logo": { "@type": "ImageObject", "url": "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png" } },
     "datePublished": "2025-04-01",
     "dateModified": "2026-03-01",
@@ -56,7 +56,7 @@ export default function SplitFeeForHiringManagersPage() {
       {
         "@type": "Question",
         "name": "Do I pay more if two recruiters are involved in a split fee placement?",
-        "acceptedAnswer": { "@type": "Answer", "text": "No. As a hiring manager on RecXchange, you always pay a single agreed fee — typically 12–20% of the candidate's salary. How that fee is distributed between the role-holding recruiter and the candidate-holding recruiter is handled entirely by RecXchange. You are never asked to pay two separate fees or a higher rate because two recruiters were involved." }
+        "acceptedAnswer": { "@type": "Answer", "text": "No. As a hiring manager on RecXchange, you always pay a single agreed fee, typically 12 to 20% of the candidate's salary. How that fee is distributed between the role-holding recruiter and the candidate-holding recruiter is handled entirely by RecXchange. You are never asked to pay two separate fees or a higher rate because two recruiters were involved." }
       },
       {
         "@type": "Question",
@@ -82,17 +82,17 @@ export default function SplitFeeForHiringManagersPage() {
           <p className="text-gray-400 text-sm mb-10">Last updated: March 2026 &nbsp;·&nbsp; 7 min read</p>
 
           <p className="text-gray-300 text-lg mb-8 leading-relaxed">
-            If you&apos;ve heard the term &ldquo;split fee recruitment&rdquo; and wondered what it actually means for you as a hiring manager — this guide explains it plainly. The short version: it means better candidates, a more managed process, and no change to what you pay. Here&apos;s how it works.
+            If you&apos;ve heard the term &ldquo;split fee recruitment&rdquo; and wondered what it actually means for you as a hiring manager, this guide explains it plainly. The short version: it means better candidates, a more managed process, and no change to what you pay. Here&apos;s how it works.
           </p>
 
           <h2 className="text-2xl font-bold text-white mb-4">What Split Fee Means in Practice</h2>
           <p className="text-gray-300 mb-6 leading-relaxed">
-            When you post a role on RecXchange, a dedicated Account Manager manages the process on your behalf. Behind the scenes, the Xchange Engine matches your vacancy to specialist recruiters across RecXchange&apos;s 15,000+ network. Some of those recruiters will have exactly the right candidate in their pipeline — even if they don&apos;t normally work with your company directly. When one of those recruiters submits a candidate who is placed, the fee you pay is shared between the recruiter who managed your role (the role-holder) and the recruiter who provided the candidate (the candidate-holder). You pay one fee. They split it between themselves. RecXchange handles the distribution automatically.
+            When you post a role on RecXchange, a dedicated Account Manager manages the process on your behalf. Behind the scenes, the Xchange Engine matches your vacancy to specialist recruiters across RecXchange&apos;s 15,000+ network. Some of those recruiters will have exactly the right candidate in their pipeline, even if they don&apos;t normally work with your company directly. When one of those recruiters submits a candidate who is placed, the fee you pay is shared between the recruiter who managed your role (the role-holder) and the recruiter who provided the candidate (the candidate-holder). You pay one fee. They split it between themselves. RecXchange handles the distribution automatically.
           </p>
 
           <h2 className="text-2xl font-bold text-white mb-4">You Always Pay One Fee</h2>
           <p className="text-gray-300 mb-6 leading-relaxed">
-            This is the question every hiring manager asks first: do I pay more because two recruiters are involved? The answer is no. Your fee is agreed upfront with RecXchange — a single success fee of 12–20% of the placed candidate&apos;s salary, payable only when they accept an offer. How that fee is distributed between recruiters is entirely RecXchange&apos;s internal arrangement. You are never invoiced by two separate parties or charged a premium for the collaboration.
+            This is the question every hiring manager asks first: do I pay more because two recruiters are involved? The answer is no. Your fee is agreed upfront with RecXchange, a single success fee of 12 to 20% of the placed candidate&apos;s salary, payable only when they accept an offer. How that fee is distributed between recruiters is entirely RecXchange&apos;s internal arrangement. You are never invoiced by two separate parties or charged a premium for the collaboration.
           </p>
 
           <h2 className="text-2xl font-bold text-white mb-4">Why This Gives You Better Candidates</h2>
@@ -114,6 +114,15 @@ export default function SplitFeeForHiringManagersPage() {
           <p className="text-gray-300 mb-6 leading-relaxed">
             RecXchange placements include a 12-week rebate guarantee as standard. If a placed candidate leaves within this period, RecXchange will re-work the search at no additional charge or provide a pro-rated refund, depending on circumstances. This guarantee applies to all placements regardless of whether one or two recruiters were involved in the split. You are always protected.
           </p>
+
+          <div className="mt-10 mb-8 p-5 rounded-2xl border border-white/10 bg-white/[0.02] flex flex-col sm:flex-row gap-4 items-start">
+            <div className="w-12 h-12 rounded-full bg-cyan-500/10 border border-cyan-400/20 flex items-center justify-center text-cyan-400 font-bold text-lg flex-shrink-0">TA</div>
+            <div>
+              <p className="text-white font-bold text-sm mb-1">Tom Andrews</p>
+              <p className="text-gray-400 text-xs mb-2">CEO and Co-Founder, RecXchange</p>
+              <p className="text-gray-500 text-xs leading-relaxed">Tom has spent over 14 years in specialist recruitment across building materials, industrial engineering, M&amp;E, and mental health sectors. He co-founded RecXchange to give independent and specialist recruiters a better way to collaborate, split fees, and make more placements without the politics of traditional agency networks.</p>
+            </div>
+          </div>
 
           <div className="mt-12 p-6 rounded-2xl border border-cyan-400/20 bg-cyan-400/5">
             <p className="text-cyan-400 font-bold mb-2">Post your role on RecXchange.</p>

@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import React from 'react';
 
 export const metadata: Metadata = {
-  title: "RecXchange vs Staffing Agencies | A Modern Recruitment Alternative",
-  description: "RecXchange vs staffing agencies: traditional staffing agencies rely on bulk databases, generic outreach, and margin-driven shortlists. RecXchange is a specialist-first marketplace where 15,000+ niche recruiters collaborate on placements. Better candidates, lower fees, full transparency.",
+  title: "RecXchange vs Staffing Agencies | RecXchange",
+  description: "RecXchange vs staffing agencies: skip bulk databases and generic shortlists. 15,000+ specialists collaborate on placements. Better candidates, lower fees.",
   keywords: [
     "RecXchange vs staffing agencies",
     "staffing agency alternative",
@@ -53,22 +53,22 @@ export default function VsStaffingAgenciesPage() {
           <p className="text-cyan-400 text-sm font-bold uppercase tracking-widest mb-4">Comparison</p>
           <h1 className="text-4xl md:text-5xl font-black text-white mb-6">RecXchange vs Staffing Agencies</h1>
           <p className="text-gray-300 text-lg mb-10 leading-relaxed">
-            The traditional staffing agency model was built for a world before specialist networks, before AI-powered matching, and before recruiter collaboration was possible at scale. RecXchange is built for the world as it is now — a marketplace of 15,000+ niche specialists who collaborate on placements, share candidates, and deliver top 1% quality through a fully managed, technology-driven process.
+            The traditional staffing agency model was built for a world before specialist networks, before AI-powered matching, and before recruiter collaboration was possible at scale. RecXchange is built for the world as it is now: a marketplace of 15,000+ niche specialists who collaborate on placements, share candidates, and deliver top 1% quality through a fully managed, technology-driven process.
           </p>
 
           <h2 className="text-2xl font-bold text-white mb-4">How Staffing Agencies Actually Work</h2>
           <p className="text-gray-300 mb-6 leading-relaxed">
-            Most staffing agencies operate on a database-first model: a recruiter searches their ATS for anyone with relevant keywords, fires off a batch of speculative calls and emails, and submits whoever responds fastest. Margin pressure incentivises speed and volume over fit. Shortlists often reflect who is available and already registered — not who is the best candidate for the role.
+            Most staffing agencies operate on a database-first model: a recruiter searches their ATS for anyone with relevant keywords, fires off a batch of speculative calls and emails, and submits whoever responds fastest. Margin pressure incentivises speed and volume over fit. Shortlists often reflect who is available and already registered, not who is the best candidate for the role.
           </p>
 
           <h2 className="text-2xl font-bold text-white mb-4">The RecXchange Difference: Specialist Networks, Not Databases</h2>
           <p className="text-gray-300 mb-6 leading-relaxed">
-            RecXchange's 15,000+ recruiters are sector specialists — each with deep, relationship-based candidate networks built over years in a single discipline. When your role is posted, the Xchange Engine matches it to recruiters whose actual placed candidates match your requirement profile. These recruiters bring pre-qualified, warm candidates they know personally — not database searches of people who may not even be looking.
+            RecXchange's 15,000+ recruiters are sector specialists, each with deep, relationship-based candidate networks built over years in a single discipline. When your role is posted, the Xchange Engine matches it to recruiters whose actual placed candidates match your requirement profile. These recruiters bring pre-qualified, warm candidates they know personally, not database searches of people who may not even be looking.
           </p>
 
           <h2 className="text-2xl font-bold text-white mb-4">Fees and Transparency</h2>
           <p className="text-gray-300 mb-6 leading-relaxed">
-            Staffing agency fees vary enormously — from 10% for volume generalist roles to 25%+ for specialist or senior positions — and are rarely transparent until a Terms of Business is signed. RecXchange publishes its fee structure clearly: 12–20% success fee, payable only on placement. No hidden clauses, no rebate periods shorter than 12 weeks, no ambiguity over ownership of candidates.
+            Staffing agency fees vary enormously, from 10% for volume generalist roles to 25%+ for specialist or senior positions, and are rarely transparent until a Terms of Business is signed. RecXchange publishes its fee structure clearly: 12 to 20% success fee, payable only on placement. No hidden clauses, no rebate periods shorter than 12 weeks, no ambiguity over ownership of candidates.
           </p>
 
           <h2 className="text-2xl font-bold text-white mb-4">Managing Multiple Agencies vs One Platform</h2>
@@ -88,10 +88,10 @@ export default function VsStaffingAgenciesPage() {
               <tbody className="text-gray-300">
                 {[
                   ["Candidate source", "Warm specialist networks", "ATS keyword search"],
-                  ["Fee transparency", "Published — 12–20%", "Variable, opaque until ToB"],
+                  ["Fee transparency", "Published, 12 to 20%", "Variable, opaque until ToB"],
                   ["Candidate quality", "Top 1%, pre-screened", "Speed over quality"],
                   ["Recruiter contacts", "One Account Manager", "Multiple agency contacts"],
-                  ["Platform visibility", "Full dashboard", "None — email/phone only"],
+                  ["Platform visibility", "Full dashboard", "None, email/phone only"],
                   ["Deal Protection", "Built in", "None"],
                   ["Pay if no hire", "No", "No (contingency)"],
                   ["Specialist depth", "15,000+ sector experts", "Generalist databases"],

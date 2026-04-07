@@ -78,7 +78,7 @@ export default function SendRolesForm({
       setMarketingConsent(false);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOpen]); // intentionally omit prefill* — we only want the open-edge trigger
+  }, [isOpen]); // intentionally omit prefill*, we only want the open-edge trigger
 
   const handleIndustryToggle = (industry: string) => {
     if (selectedIndustries.includes(industry)) {

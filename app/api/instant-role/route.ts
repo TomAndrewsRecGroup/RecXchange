@@ -108,10 +108,10 @@ export async function POST(request: NextRequest) {
       const tableRows = [
         ['Name', fullName],
         ['Email', sanitizedEmail],
-        ['Phone', sanitizedPhone || '—'],
-        ['Business Name', companyName || '—'],
+        ['Phone', sanitizedPhone || '-'],
+        ['Business Name', companyName || '-'],
         ['Live Role', sanitizedRole],
-        ['Notes', sanitizedNotes || '—'],
+        ['Notes', sanitizedNotes || '-'],
         ['Submitted', new Date().toUTCString()],
       ]
         .map(
@@ -187,7 +187,7 @@ export async function POST(request: NextRequest) {
           body: JSON.stringify({
             personalizations: [{
               to: [{ email: 'support@recxchange.io', name: 'RecXchange Support' }],
-              subject: `⚡ Instant Role Request — ${fullName} @ ${companyName || 'Unknown Business'}`,
+              subject: `⚡ Instant Role Request - ${fullName} @ ${companyName || 'Unknown Business'}`,
             }],
             from: { email: FROM_EMAIL, name: 'RecXchange' },
             content: [{ type: 'text/html', value: emailHtml }],

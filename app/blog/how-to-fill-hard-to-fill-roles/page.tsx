@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import React from 'react';
 
 export const metadata: Metadata = {
-  title: "How to Fill Hard-to-Fill Roles: 7 Proven Strategies | RecXchange",
-  description: "7 proven strategies for filling hard-to-fill roles that job boards and generalist agencies can't crack. Passive candidate sourcing, specialist recruiter networks, split fee collaboration, and the role of AI matching. Practical guidance for hiring managers and talent leaders.",
+  title: "How to Fill Hard-to-Fill Roles | RecXchange",
+  description: "7 strategies for hard-to-fill roles that job boards can't crack. Passive sourcing, specialist recruiter networks, split fee collaboration and AI matching.",
   keywords: [
     "how to fill hard to fill roles",
     "hard to fill vacancy strategies",
@@ -33,7 +33,7 @@ export default function HowToFillHardRolesPage() {
     "url": "https://recxchange.io/blog/how-to-fill-hard-to-fill-roles",
     "headline": "How to Fill Hard-to-Fill Roles: 7 Proven Strategies",
     "description": "7 proven strategies for filling specialist, niche and senior roles that job boards and generalist agencies struggle with.",
-    "author": { "@type": "Organization", "name": "RecXchange", "url": "https://recxchange.io" },
+    "author": { "@type": "Person", "name": "Tom Andrews", "jobTitle": "CEO and Co-Founder", "url": "https://recxchange.io", "worksFor": { "@type": "Organization", "name": "RecXchange" } },
     "publisher": { "@type": "Organization", "name": "RecXchange", "logo": { "@type": "ImageObject", "url": "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png" } },
     "datePublished": "2025-02-01",
     "dateModified": "2026-03-01",
@@ -49,6 +49,28 @@ export default function HowToFillHardRolesPage() {
     }
   };
 
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Why are some roles so hard to fill?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Most hard-to-fill roles remain open because the best candidates are passive, meaning they are employed, performing well, and not actively searching job boards. Generalist agencies and job board postings only reach active job seekers, which represents a small fraction of the available talent pool. Other common factors include below-market compensation, overly restrictive job specifications, and slow internal hiring processes that lose candidates to competing offers." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do split fee networks help fill difficult vacancies?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Split fee collaboration turns a single recruiter relationship into a network of specialists all working toward the same placement. Rather than relying on one agency's database, a split fee arrangement incentivises hundreds of specialist recruiters to bring their best passive candidates to your role. On RecXchange, the Xchange Engine matches your vacancy to recruiters with directly relevant candidate pipelines, with first submissions typically arriving within 48 to 72 hours." }
+      },
+      {
+        "@type": "Question",
+        "name": "Should I consider international candidates for hard-to-fill UK roles?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. For many specialist roles in the UK, the strongest available candidates are based overseas in markets like South Africa, Ireland, Australia, and India. International sourcing requires recruiters with in-market networks and cross-border placement experience. Platforms like RecXchange connect UK hiring managers with overseas specialist recruiters who can access these talent pools and manage right-to-work verification end-to-end." }
+      }
+    ]
+  };
+
   const strategies = [
     {
       number: "01",
@@ -58,12 +80,12 @@ export default function HowToFillHardRolesPage() {
     {
       number: "02",
       title: "Access Passive Candidates Through Specialist Recruiters",
-      body: "The best candidates for hard-to-fill roles are passive — employed and not actively seeking. They respond to direct approaches from specialist recruiters they know and trust, not cold InMails or job adverts. The strategy is to find the specialist recruiter who has already built a relationship with your ideal candidate. Platforms like RecXchange let you activate multiple specialist recruiter networks simultaneously, dramatically increasing your chances of reaching the right passive candidate."
+      body: "The best candidates for hard-to-fill roles are passive, employed and not actively seeking. They respond to direct approaches from specialist recruiters they know and trust, not cold InMails or job adverts. The strategy is to find the specialist recruiter who has already built a relationship with your ideal candidate. Platforms like RecXchange let you activate multiple specialist recruiter networks simultaneously, dramatically increasing your chances of reaching the right passive candidate."
     },
     {
       number: "03",
       title: "Rewrite the Brief to Attract Rather Than Filter",
-      body: "Many hard-to-fill roles stay hard to fill because the job specification is written as a filter, not an attraction. A list of 15 requirements tells great candidates what they might not have. Rewrite your brief around what you're offering: the opportunity, the challenge, the team, the growth. Lead with the role's appeal, and save the requirements list for the briefing document you share with recruiters — not the public-facing job description."
+      body: "Many hard-to-fill roles stay hard to fill because the job specification is written as a filter, not an attraction. A list of 15 requirements tells great candidates what they might not have. Rewrite your brief around what you're offering: the opportunity, the challenge, the team, the growth. Lead with the role's appeal, and save the requirements list for the briefing document you share with recruiters, not the public-facing job description."
     },
     {
       number: "04",
@@ -73,23 +95,24 @@ export default function HowToFillHardRolesPage() {
     {
       number: "05",
       title: "Review Your Compensation Package Honestly",
-      body: "Many roles are hard to fill because the salary is below market rate, not because the candidate doesn't exist. A specialist recruiter with deep market knowledge will tell you this quickly — but hiring managers sometimes don't want to hear it. If two or three trusted specialists are telling you the same thing about your salary range, treat it as market intelligence. Adjust the package or adjust the brief to reflect what that salary realistically buys."
+      body: "Many roles are hard to fill because the salary is below market rate, not because the candidate doesn't exist. A specialist recruiter with deep market knowledge will tell you this quickly, but hiring managers sometimes don't want to hear it. If two or three trusted specialists are telling you the same thing about your salary range, treat it as market intelligence. Adjust the package or adjust the brief to reflect what that salary realistically buys."
     },
     {
       number: "06",
       title: "Consider International Candidate Sourcing",
-      body: "For many specialist roles in the UK, the best available candidates are overseas — in South Africa, Ireland, Australia, India, or the Philippines. International sourcing requires recruiters with in-market networks and cross-border placement experience. Platforms like RecXchange connect UK hiring managers with overseas specialist recruiters who can access these talent pools, handle right-to-work verification, and manage the candidate relocation process end-to-end."
+      body: "For many specialist roles in the UK, the best available candidates are overseas, in South Africa, Ireland, Australia, India, or the Philippines. International sourcing requires recruiters with in-market networks and cross-border placement experience. Platforms like RecXchange connect UK hiring managers with overseas specialist recruiters who can access these talent pools, handle right-to-work verification, and manage the candidate relocation process end-to-end."
     },
     {
       number: "07",
       title: "Move Fast When You Find the Right Candidate",
-      body: "Hard-to-fill roles stay open longer — but the best candidates in any specialism rarely stay available for long. When a genuinely qualified passive candidate is presented, the biggest risk is a slow internal process allowing them to accept another offer. Agree your interview and decision timelines before the search begins. The organisations that fill hard roles fastest are those who are ready to move decisively when the right person arrives."
+      body: "Hard-to-fill roles stay open longer, but the best candidates in any specialism rarely stay available for long. When a genuinely qualified passive candidate is presented, the biggest risk is a slow internal process allowing them to accept another offer. Agree your interview and decision timelines before the search begins. The organisations that fill hard roles fastest are those who are ready to move decisively when the right person arrives."
     }
   ];
 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <main className="relative bg-[#0a0a0f] min-h-screen">
         <div className="max-w-3xl mx-auto px-6 py-24">
           <p className="text-cyan-400 text-sm font-bold uppercase tracking-widest mb-4">Strategy</p>
@@ -97,7 +120,7 @@ export default function HowToFillHardRolesPage() {
           <p className="text-gray-400 text-sm mb-10">Last updated: March 2026 &nbsp;·&nbsp; 10 min read</p>
 
           <p className="text-gray-300 text-lg mb-12 leading-relaxed">
-            Every organisation has at least one role that seems impossible to fill. It sits open for months. Agency after agency comes back empty-handed or sends irrelevant CVs. The business case for the hire gets harder to justify with every passing week. Here are seven strategies that actually work — drawn from how RecXchange's specialist recruiter network approaches the most challenging vacancies.
+            Every organisation has at least one role that seems impossible to fill. It sits open for months. Agency after agency comes back empty-handed or sends irrelevant CVs. The business case for the hire gets harder to justify with every passing week. Here are seven strategies that actually work, drawn from how RecXchange's specialist recruiter network approaches the most challenging vacancies.
           </p>
 
           <div className="space-y-10">
@@ -112,9 +135,18 @@ export default function HowToFillHardRolesPage() {
             ))}
           </div>
 
+          <div className="mt-10 mb-8 p-5 rounded-2xl border border-white/10 bg-white/[0.02] flex flex-col sm:flex-row gap-4 items-start">
+            <div className="w-12 h-12 rounded-full bg-cyan-500/10 border border-cyan-400/20 flex items-center justify-center text-cyan-400 font-bold text-lg flex-shrink-0">TA</div>
+            <div>
+              <p className="text-white font-bold text-sm mb-1">Tom Andrews</p>
+              <p className="text-gray-400 text-xs mb-2">CEO and Co-Founder, RecXchange</p>
+              <p className="text-gray-500 text-xs leading-relaxed">Tom has spent over 14 years in specialist recruitment across building materials, industrial engineering, M&amp;E, and mental health sectors. He co-founded RecXchange to give independent and specialist recruiters a better way to collaborate, split fees, and make more placements without the politics of traditional agency networks.</p>
+            </div>
+          </div>
+
           <div className="mt-16 p-6 rounded-2xl border border-cyan-400/20 bg-cyan-400/5">
             <p className="text-cyan-400 font-bold mb-2">Still struggling with a hard role?</p>
-            <p className="text-gray-300 text-sm">Post it on RecXchange. The Xchange Engine matches your vacancy to specialist recruiters with directly relevant passive candidate pipelines. First submissions typically within 48–72 hours. Pay only on placement.</p>
+            <p className="text-gray-300 text-sm">Post it on RecXchange. The Xchange Engine matches your vacancy to specialist recruiters with directly relevant passive candidate pipelines. First submissions typically within 48 to 72 hours. Pay only on placement.</p>
           </div>
         </div>
       </main>

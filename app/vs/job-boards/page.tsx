@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import React from 'react';
 
 export const metadata: Metadata = {
-  title: "RecXchange vs Job Boards | Indeed, LinkedIn Jobs, Reed Comparison",
-  description: "RecXchange vs job boards like Indeed, LinkedIn Jobs, Reed and Totaljobs. Job boards deliver CV volume — RecXchange delivers vetted candidates from 15,000+ specialist recruiters. No CV sifting. No wasted time. Pay only on placement.",
+  title: "RecXchange vs Job Boards | RecXchange",
+  description: "RecXchange vs job boards: Indeed, LinkedIn Jobs, Reed deliver CV volume. RecXchange delivers vetted candidates from 15,000+ specialists. Pay on placement.",
   keywords: [
     "RecXchange vs job boards",
     "job board alternative",
@@ -58,22 +58,22 @@ export default function VsJobBoardsPage() {
 
           <h2 className="text-2xl font-bold text-white mb-4">The Core Difference: Volume vs Quality</h2>
           <p className="text-gray-300 mb-6 leading-relaxed">
-            A typical job board posting for a mid-level role generates 80–300 applications. Of those, studies show fewer than 10% are genuinely qualified. That means your hiring team spends days sifting irrelevant CVs before finding viable candidates. RecXchange works the opposite way: only specialist recruiters with a matched candidate can submit — and every submission is reviewed by your dedicated Account Manager before it reaches you.
+            A typical job board posting for a mid-level role generates 80 to 300 applications. Of those, studies show fewer than 10% are genuinely qualified. That means your hiring team spends days sifting irrelevant CVs before finding viable candidates. RecXchange works the opposite way: only specialist recruiters with a matched candidate can submit, and every submission is reviewed by your dedicated Account Manager before it reaches you.
           </p>
 
           <h2 className="text-2xl font-bold text-white mb-4">Cost Model: Subscription vs Success Fee</h2>
           <p className="text-gray-300 mb-6 leading-relaxed">
-            Job boards charge upfront — you pay whether you hire or not. Indeed, LinkedIn Jobs and Reed all operate on pay-per-click or subscription models that can cost £500–£3,000+ per posting with no guarantee of a hire. RecXchange charges nothing until a candidate is placed. A single success fee of 12–20% is payable only on a confirmed offer acceptance.
+            Job boards charge upfront, you pay whether you hire or not. Indeed, LinkedIn Jobs and Reed all operate on pay-per-click or subscription models that can cost £500-£3,000+ per posting with no guarantee of a hire. RecXchange charges nothing until a candidate is placed. A single success fee of 12 to 20% is payable only on a confirmed offer acceptance.
           </p>
 
           <h2 className="text-2xl font-bold text-white mb-4">Hard-to-Fill Roles: Where Job Boards Fail</h2>
           <p className="text-gray-300 mb-6 leading-relaxed">
-            For specialist, senior or niche roles — the ones that matter most — job boards consistently underperform. Passive candidates (the best ones) don’t apply to job boards. They respond to specialist recruiters with deep sector networks who approach them directly. RecXchange’s 15,000+ specialist recruiters have built exactly these networks over years — and they bring those candidates to your role.
+            For specialist, senior or niche roles, the ones that matter most, job boards consistently underperform. Passive candidates (the best ones) don’t apply to job boards. They respond to specialist recruiters with deep sector networks who approach them directly. RecXchange’s 15,000+ specialist recruiters have built exactly these networks over years, and they bring those candidates to your role.
           </p>
 
           <h2 className="text-2xl font-bold text-white mb-4">Time Investment: Self-Service vs Managed</h2>
           <p className="text-gray-300 mb-6 leading-relaxed">
-            Job boards require you to write the advert, manage applications, screen CVs, chase candidates, and coordinate interviews — all while doing your actual job. RecXchange is fully managed: post your role once, and your dedicated Account Manager handles all recruiter communications, candidate screening, and submission quality control. You only engage when a genuinely qualified candidate is ready to present.
+            Job boards require you to write the advert, manage applications, screen CVs, chase candidates, and coordinate interviews, all while doing your actual job. RecXchange is fully managed: post your role once, and your dedicated Account Manager handles all recruiter communications, candidate screening, and submission quality control. You only engage when a genuinely qualified candidate is ready to present.
           </p>
 
           <div className="mt-12 overflow-x-auto">
@@ -91,8 +91,8 @@ export default function VsJobBoardsPage() {
                   ["Pay if no hire", "No", "Yes"],
                   ["Candidate quality", "Top 1%, pre-screened", "Unfiltered, variable"],
                   ["Volume of applications", "Low, highly relevant", "High, mostly irrelevant"],
-                  ["CV sifting required", "No", "Yes — hours of work"],
-                  ["Passive candidate access", "Yes — via specialist recruiters", "No"],
+                  ["CV sifting required", "No", "Yes, hours of work"],
+                  ["Passive candidate access", "Yes, via specialist recruiters", "No"],
                   ["Hard-to-fill roles", "Strong", "Poor"],
                   ["Account Manager", "Dedicated, included", "None"],
                 ].map(([factor, rx, jb]) => (

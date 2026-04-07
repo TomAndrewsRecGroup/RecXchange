@@ -92,19 +92,19 @@ export default function HiringManagerHome() {
 
           {/* Header */}
           <motion.header initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-6 sm:mb-8 md:mb-12 mt-6">
-            <StatusBadge label="RECX DIRECT" color="fuchsia" />
+            <StatusBadge label="FOR HIRING MANAGERS" color="fuchsia" />
             <h1 className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2 mt-6"
-              style={{ textShadow: '0 0 60px rgba(0,240,255,0.3)' }}>
-              Post your role for free.
+              style={{ textShadow: '0 0 20px rgba(0,240,255,0.15)' }}>
+              Hire faster, without the agency headache.
             </h1>
             <NeonDivider width="w-40" color="mixed" />
             <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed px-2 mt-6">
-              15,000+ recruiters compete to fill it. You pay one fee when hired.
+              Post your role once. Thousands of specialist recruiters compete to find you the best candidates. You only pay when someone gets hired.
             </p>
             <div className="mt-5 sm:mt-6 flex flex-wrap justify-center gap-2 sm:gap-3 px-2">
-              <span className="text-[9px] sm:text-[10px] px-2.5 py-1 rounded-full bg-cyan-400/5 border border-cyan-400/20 text-cyan-400 font-bold uppercase tracking-widest">15,000+ Recruiters</span>
-              <span className="text-[9px] sm:text-[10px] px-2.5 py-1 rounded-full bg-fuchsia-400/5 border border-fuchsia-400/20 text-fuchsia-400 font-bold uppercase tracking-widest">270M candidates</span>
-              <span className="text-[9px] sm:text-[10px] px-2.5 py-1 rounded-full bg-purple-400/5 border border-purple-400/20 text-purple-400 font-bold uppercase tracking-widest">All Recruiters • All Sectors • All Specialists</span>
+              <span className="text-[9px] sm:text-[10px] px-2.5 py-1 rounded-full bg-cyan-400/5 border border-cyan-400/20 text-cyan-400 font-bold uppercase tracking-widest">Trusted by 15,000+ Recruiters</span>
+              <span className="text-[9px] sm:text-[10px] px-2.5 py-1 rounded-full bg-fuchsia-400/5 border border-fuchsia-400/20 text-fuchsia-400 font-bold uppercase tracking-widest">270M Candidate Profiles</span>
+              <span className="text-[9px] sm:text-[10px] px-2.5 py-1 rounded-full bg-purple-400/5 border border-purple-400/20 text-purple-400 font-bold uppercase tracking-widest">Every Sector Covered</span>
             </div>
           </motion.header>
 
@@ -118,9 +118,9 @@ export default function HiringManagerHome() {
           {/* Diagnostic Card */}
           <section id="choose-path" className="mb-10 sm:mb-12 md:mb-16">
             <HolographicCard color="fuchsia" variant="content">
-              <StatusBadge label="SELECT YOUR PRIORITY" color="fuchsia" size="sm" />
+              <StatusBadge label="YOUR TIMELINE" color="fuchsia" size="sm" />
               <h2 className="text-lg sm:text-2xl md:text-3xl font-bold text-white mb-8 md:mb-12 tracking-tight leading-snug mt-4">
-                Choose the path that matches your current timeline:
+                How soon do you need someone in the seat?
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 md:gap-8">
                 <Link href="/hiring-manager-live" className="group block">
@@ -128,19 +128,19 @@ export default function HiringManagerHome() {
                     <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-cyan-500/10 border border-cyan-400/20 flex items-center justify-center mb-4 sm:mb-6 text-cyan-400">
                       <Zap className="w-5 h-5 sm:w-6 sm:h-6" />
                     </div>
-                    <h3 className="text-base sm:text-xl font-bold text-white mb-3 sm:mb-4 group-hover:text-cyan-400 transition-colors">Fill Role Now</h3>
+                    <h3 className="text-base sm:text-xl font-bold text-white mb-3 sm:mb-4 group-hover:text-cyan-400 transition-colors">I need to hire now</h3>
                     <p className="text-gray-400 text-sm sm:text-[15px] leading-relaxed mb-5 sm:mb-8">
-                      You need someone hired this month. Post your role. Get candidates in 48 hours.
+                      You have an open role and need it filled fast. Post it once, recruiters start sourcing candidates within hours, not weeks.
                     </p>
                     <ul className="space-y-2.5 sm:space-y-4 mb-6 sm:mb-10">
-                      {["Post once, 15,000+ recruiters see it", "Fee set up from the start", "First candidates submitted in 48 hours"].map((item, i) => (
+                      {["One post reaches thousands of specialist recruiters", "Your fee is agreed before any work begins", "Expect your first shortlist within 48 hours"].map((item, i) => (
                         <li key={i} className="text-gray-400 flex items-start gap-2 sm:gap-3">
                           <span className="w-1 h-1 mt-1.5 bg-cyan-400 rounded-full flex-shrink-0" />
                           <span className="text-[11px] sm:text-xs leading-snug">{item}</span>
                         </li>
                       ))}
                     </ul>
-                    <GlowButton variant="primary" size="md" className="w-full">Post Urgent Role</GlowButton>
+                    <GlowButton variant="primary" size="md" className="w-full">Post My Role</GlowButton>
                   </HolographicCard>
                 </Link>
                 <Link href="/hiring-manager-strategic" className="group block">
@@ -148,19 +148,19 @@ export default function HiringManagerHome() {
                     <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-fuchsia-500/10 border border-fuchsia-400/20 flex items-center justify-center mb-4 sm:mb-6 text-fuchsia-400">
                       <Target className="w-5 h-5 sm:w-6 sm:h-6" />
                     </div>
-                    <h3 className="text-base sm:text-xl font-bold text-white mb-3 sm:mb-4 group-hover:text-fuchsia-400 transition-colors">Build Pipeline</h3>
+                    <h3 className="text-base sm:text-xl font-bold text-white mb-3 sm:mb-4 group-hover:text-fuchsia-400 transition-colors">I'm planning ahead</h3>
                     <p className="text-gray-400 text-sm sm:text-[15px] leading-relaxed mb-5 sm:mb-8">
-                      You're hiring in 3-6 months. Test the market now. See who's available. Build a pipeline before you officially recruit.
+                      Hiring in 3-6 months? Start now. Map the market, benchmark salaries, and build a pipeline of ready-to-move candidates before you officially need them.
                     </p>
                     <ul className="space-y-2.5 sm:space-y-4 mb-6 sm:mb-10">
-                      {["See candidate availability before you post publicly", "Engage candidates before your role goes live", "Build talent pipeline for future hiring"].map((item, i) => (
+                      {["See who's available before you go public", "Warm up candidates before your role goes live", "Have a shortlist ready on day one"].map((item, i) => (
                         <li key={i} className="text-gray-400 flex items-start gap-2 sm:gap-3">
                           <span className="w-1 h-1 mt-1.5 bg-fuchsia-400 rounded-full flex-shrink-0" />
                           <span className="text-[11px] sm:text-xs leading-snug">{item}</span>
                         </li>
                       ))}
                     </ul>
-                    <GlowButton variant="secondary" size="md" className="w-full">Start Market Mapping</GlowButton>
+                    <GlowButton variant="secondary" size="md" className="w-full">Start Planning</GlowButton>
                   </HolographicCard>
                 </Link>
               </div>
@@ -181,23 +181,23 @@ export default function HiringManagerHome() {
           {/* Content Section */}
           <section className="my-10 sm:my-12 md:my-16">
             <div className="text-center mb-10 sm:mb-12">
-              <StatusBadge label="HERE'S WHAT YOU ACTUALLY GET" color="purple" />
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4 mt-6">Both paths unlock the same platform</h2>
+              <StatusBadge label="WHAT'S INCLUDED" color="purple" />
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4 mt-6">The same powerful platform, either way</h2>
               <p className="text-gray-400 text-sm sm:text-base max-w-3xl mx-auto leading-relaxed px-2">
-                Whether you need to fill a role now or build a pipeline for later, you're getting the full RecXchange hiring infrastructure.
+                Whether you're hiring this month or planning for Q3, you get the full RecXchange infrastructure working behind the scenes for you.
               </p>
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-8 mb-10 sm:mb-12">
               <HolographicCard color="cyan" variant="content">
-                <h3 className="text-lg sm:text-2xl font-bold mb-4 sm:mb-6 text-cyan-400">If You Need To Fill Role Now</h3>
+                <h3 className="text-lg sm:text-2xl font-bold mb-4 sm:mb-6 text-cyan-400">When You Need Someone Now</h3>
                 <p className="text-gray-400 text-sm sm:text-[15px] leading-relaxed mb-6 sm:mb-8">
-                  Post your role once. 15,000+ recruiters see it instantly. They compete to bring you the best candidates. You set the fee upfront (12-20% standard). Pay only when you hire.
+                  Post your role once and thousands of specialist recruiters start competing to bring you the best candidates. You set the fee upfront (12-20% is standard). Pay only when you hire.
                 </p>
                 <div className="space-y-4 sm:space-y-6">
                   {[
-                    { title: "Network Effect", desc: "300+ recruiters sourcing simultaneously from 270M profiles." },
-                    { title: "First Candidates in 48hrs", desc: "AI matching delivers vetted shortlists within 2 days of posting." },
-                    { title: "One Fee When Hired", desc: "No retainers, no multi-agency fees. One placement = one payment." }
+                    { title: "The Power of Numbers", desc: "Hundreds of specialist recruiters sourcing for you at once, across 270M profiles." },
+                    { title: "Candidates in 48 Hours", desc: "Our matching technology delivers vetted shortlists within 2 days of your role going live." },
+                    { title: "One Hire, One Fee", desc: "No retainers, no multi-agency chaos. You only pay once, when someone starts." }
                   ].map((item, i) => (
                     <div key={i} className="flex gap-3 sm:gap-4 items-start">
                       <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-400/20 flex items-center justify-center text-cyan-400"><Zap size={16} /></div>
@@ -210,15 +210,15 @@ export default function HiringManagerHome() {
                 </div>
               </HolographicCard>
               <HolographicCard color="fuchsia" variant="content">
-                <h3 className="text-lg sm:text-2xl font-bold mb-4 sm:mb-6 text-fuchsia-400">If You Want To Build Pipeline</h3>
+                <h3 className="text-lg sm:text-2xl font-bold mb-4 sm:mb-6 text-fuchsia-400">When You're Planning Ahead</h3>
                 <p className="text-gray-400 text-sm sm:text-[15px] leading-relaxed mb-6 sm:mb-8">
-                  Pre-warm the market 3-6 months before you hire. We map competitor talent, benchmark salaries, and build your ready-to-activate pipeline before budgets are approved.
+                  Get ahead of your hiring timeline. We'll map competitor talent, benchmark salaries, and build a ready-to-activate pipeline, so when you're ready to hire, the candidates are already waiting.
                 </p>
                 <div className="space-y-4 sm:space-y-6">
                   {[
-                    { title: "90-Day Strategic Roadmap", desc: "Market intelligence, network warming, and vetted shortlists ready on day 1." },
-                    { title: "Competitor Mapping", desc: "Org-chart visualization of rival teams and passive candidate outreach." },
-                    { title: "Launch-Ready Pipelines", desc: "Nurtured talent primed to move the moment your role goes live." }
+                    { title: "Your 90-Day Hiring Roadmap", desc: "Market intelligence, warm introductions, and vetted shortlists ready for when you need them." },
+                    { title: "Know What Competitors Are Doing", desc: "See how rival teams are structured and reach passive candidates before anyone else." },
+                    { title: "Launch-Ready Talent", desc: "When your role goes live, you'll already have interested, qualified candidates lined up." }
                   ].map((item, i) => (
                     <div key={i} className="flex gap-3 sm:gap-4 items-start">
                       <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-fuchsia-500/10 border border-fuchsia-400/20 flex items-center justify-center text-fuchsia-400"><Target size={16} /></div>
@@ -232,15 +232,15 @@ export default function HiringManagerHome() {
               </HolographicCard>
             </div>
             <HolographicCard color="purple" variant="content" glowIntensity="high" className="mb-10 sm:mb-12">
-              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4 text-center gradient-text">What You Get No Matter What</h3>
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4 text-center gradient-text">Included with every engagement</h3>
               <p className="text-gray-400 text-center text-sm sm:text-base max-w-3xl mx-auto mb-8 sm:mb-10 leading-relaxed">
-                Both paths include full access to RecX Direct infrastructure. One platform, one fee structure, total control.
+                One platform, one fee structure, and total transparency, no matter which path you choose.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
                 {[
-                  { icon: Users, title: "15,000+ Recruiters", desc: "Pre-vetted specialists competing to fill your role faster and better." },
-                  { icon: Clock, title: "48-Hour Turnaround", desc: "First vetted candidates submitted within 2 days of posting your role." },
-                  { icon: Shield, title: "Zero Risk Model", desc: "Pay only when you hire. No retainers, no upfront fees, no multi-agency chaos." }
+                  { icon: Users, title: "Thousands of Specialists", desc: "Pre-vetted recruiters across every sector, competing to find your ideal hire." },
+                  { icon: Clock, title: "First Candidates in 48hrs", desc: "Your role goes live, and vetted shortlists start arriving within two days." },
+                  { icon: Shield, title: "Zero Risk, Zero Upfront", desc: "No retainers. No upfront fees. You only pay when you make a hire you're happy with." }
                 ].map((item, i) => (
                   <div key={i} className="text-center">
                     <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-purple-500/10 border border-purple-400/20 flex items-center justify-center text-purple-400 mx-auto mb-3 sm:mb-4">
@@ -265,13 +265,13 @@ export default function HiringManagerHome() {
               ))}
             </div>
             <HolographicCard color="purple" variant="content" glowIntensity="high" className="text-center">
-              <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6 gradient-text">Ready to fill your role?</h3>
+              <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6 gradient-text">Let's get your role filled.</h3>
               <p className="text-gray-400 text-sm sm:text-base max-w-3xl mx-auto mb-8 sm:mb-10 leading-relaxed">
-                Post for free. 15,000+ recruiters compete. First candidates in 48 hours. Pay one fee only when you hire.
+                It's free to post. Thousands of recruiters start sourcing immediately. You'll see your first candidates in 48 hours, and only pay when you hire.
               </p>
               <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 justify-center">
-                <GlowButton variant="primary" size="lg" href="https://link.gohighlevel.com/widget/booking/xp9zWAV1rz40w5WdPSTi">Post Role Now</GlowButton>
-                <GlowButton variant="secondary" size="lg" onClick={() => scrollToCenter('choose-path')}>Know Your Timeline?</GlowButton>
+                <GlowButton variant="primary" size="lg" href="https://link.gohighlevel.com/widget/booking/xp9zWAV1rz40w5WdPSTi">Post My Role Free</GlowButton>
+                <GlowButton variant="secondary" size="lg" onClick={() => scrollToCenter('choose-path')}>Not Sure Yet? Compare Options</GlowButton>
               </div>
             </HolographicCard>
           </section>

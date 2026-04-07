@@ -3,7 +3,7 @@ import React from 'react';
 
 export const metadata: Metadata = {
   title: "Fill a Role Now | Urgent Hire | RecX Direct | RecXchange",
-  description: "Need candidates fast? Post your live role free. 15,000+ specialist recruiters compete to fill it. First pre-screened candidates within 48 hours. One success fee of 12-20% paid only when you hire.",
+  description: "Post your live role free. 15,000+ specialist recruiters compete to fill it. Pre-screened candidates in 48 hours. 12-20% fee, paid only when you hire.",
   keywords: [
     "fill role now",
     "urgent recruitment",
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
       url: "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png",
       width: 1200,
       height: 630,
-      alt: "RecXchange — Fill a Role Now With RecX Direct"
+      alt: "RecXchange, Fill a Role Now With RecX Direct"
     }]
   },
   twitter: {
@@ -48,7 +48,7 @@ export default function HiringManagerLiveLayout({
     "@context": "https://schema.org",
     "@type": "Service",
     "@id": "https://recxchange.io/hiring-manager-live#service",
-    "name": "RecX Direct — Fill a Role Now",
+    "name": "RecX Direct, Fill a Role Now",
     "serviceType": "Urgent Contingency Recruitment",
     "description": "For hiring managers who need to fill a role immediately. Post your live role for free on RecX Direct. 15,000+ specialist recruiters are matched to your role by the Xchange Engine and begin sourcing immediately. First pre-screened candidates arrive within 48 hours. You review, select who to interview, hire, and pay one success fee of 12-20% only when your chosen candidate starts. No retainers, no exclusivity, no upfront costs.",
     "provider": { "@id": "https://recxchange.io/#organization" },

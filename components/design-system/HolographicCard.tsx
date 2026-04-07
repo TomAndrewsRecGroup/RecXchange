@@ -59,9 +59,9 @@ const colorConfig = {
 };
 
 const glowStrength = {
-  low: { opacity: 'opacity-20 group-hover:opacity-35', blur: 'blur' },
-  medium: { opacity: 'opacity-30 group-hover:opacity-50', blur: 'blur-lg' },
-  high: { opacity: 'opacity-40 group-hover:opacity-60', blur: 'blur-xl' }
+  low: { opacity: 'opacity-10 group-hover:opacity-20', blur: 'blur-sm' },
+  medium: { opacity: 'opacity-15 group-hover:opacity-30', blur: 'blur' },
+  high: { opacity: 'opacity-25 group-hover:opacity-40', blur: 'blur-lg' }
 };
 
 export default function HolographicCard({
@@ -95,7 +95,7 @@ export default function HolographicCard({
       <div 
         className={`relative backdrop-blur-xl bg-black/40 ${padding} rounded-2xl border ${colors.border} transition-all duration-300 overflow-hidden ${className}`}
         style={{
-          boxShadow: `0 4px 20px rgba(0,0,0,0.4), inset 0 1px 0 ${colors.inset}, 0 0 20px ${colors.ambientGlow}`
+          boxShadow: `0 2px 12px rgba(0,0,0,0.5), inset 0 1px 0 ${colors.inset}`
         }}
       >
         {/* Status indicator */}

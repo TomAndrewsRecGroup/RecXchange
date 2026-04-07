@@ -66,7 +66,7 @@ export default function ContactPage() {
             <StatusBadge label="GET IN TOUCH" color="purple" />
             <h1
               className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2 mt-6"
-              style={{ textShadow: '0 0 60px rgba(0,240,255,0.3)' }}
+              style={{ textShadow: '0 0 20px rgba(0,240,255,0.15)' }}
             >
               <span className="text-cyan-400">Connect</span> with the <br />
               <span className="text-fuchsia-400">Engineers</span> of <span className="text-emerald-400">Talent</span>.

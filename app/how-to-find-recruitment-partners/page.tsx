@@ -12,7 +12,7 @@ export default function HowToFindRecruitmentPartnersPage() {
     { rank: "01", icon: Cpu, color: "cyan" as const, title: "Use a Recruiter Marketplace (Fastest)", body: "RecXchange is purpose-built for this. Join, post your roles or candidates, and the Xchange Engine automatically matches you with compatible partner recruiters from a pool of 15,000+. No cold outreach. No LinkedIn DMs. Just instant, AI-powered matching based on sector, geography, and candidate profile." },
     { rank: "02", icon: Users, color: "fuchsia" as const, title: "LinkedIn Recruiter Groups", body: "LinkedIn hosts hundreds of recruiter collaboration groups where members post candidates seeking roles or flag vacancies they can't fill. Search for \"split fee recruiters\", \"recruiter collaboration\", or your sector + \"recruitment network\". Response rates are variable and there's no formal contract layer." },
     { rank: "03", icon: Globe, color: "purple" as const, title: "Sector Associations & Conferences", body: "REC (UK), ASA (US), and RCSA (APAC) all host events where recruiters network. Face-to-face partnerships built here often turn into long-term collaboration. The trust level is higher but the volume of opportunities is lower than a digital marketplace." },
-    { rank: "04", icon: MessageSquare, color: "cyan" as const, title: "Direct Outreach to Complementary Recruiters", body: "If you specialise in Engineering candidates but a Healthcare recruiter regularly posts Engineering roles, reach out directly. Find recruiters who are adjacent to your niche — you solve each other's gaps. Frame it as a partnership, not a transaction." },
+    { rank: "04", icon: MessageSquare, color: "cyan" as const, title: "Direct Outreach to Complementary Recruiters", body: "If you specialise in Engineering candidates but a Healthcare recruiter regularly posts Engineering roles, reach out directly. Find recruiters who are adjacent to your niche because you solve each other's gaps. Frame it as a partnership, not a transaction." },
     { rank: "05", icon: Award, color: "fuchsia" as const, title: "Recruiter Referral Networks", body: "Some agencies run formal referral or alliance programs where independent recruiters share roles and candidates. These are typically invite-only and require a track record. RecXchange's affiliate program also rewards recruiters who bring new partners to the platform with RecX Tokens." },
     { rank: "06", icon: CheckCircle, color: "purple" as const, title: "Your Existing Network First", body: "Check your own contacts. Former colleagues, clients who became recruiters, or competitors you respect. Known quantities reduce risk. A formal split agreement via RecXchange makes it easy to collaborate even with people you already know." }
   ];
@@ -26,7 +26,7 @@ export default function HowToFindRecruitmentPartnersPage() {
           <motion.header initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-8 md:mb-14 mt-6">
             <StatusBadge label="RECRUITER GUIDE" color="cyan" />
             <h1 className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 tracking-tight leading-[1.1] pb-2 px-2 mt-6"
-              style={{ textShadow: '0 0 60px rgba(0,240,255,0.3)' }}>
+              style={{ textShadow: '0 0 20px rgba(0,240,255,0.15)' }}>
               How to Find Recruitment Partners
             </h1>
             <NeonDivider width="w-40" color="mixed" />
@@ -86,7 +86,7 @@ export default function HowToFindRecruitmentPartnersPage() {
           <HolographicCard color="cyan" variant="content" className="text-center">
             <StatusBadge label="15,000+ PARTNERS WAITING" color="cyan" />
             <h2 className="text-2xl md:text-3xl font-bold text-white mt-4 mb-3">Find Your Recruitment Partners on RecXchange</h2>
-            <p className="text-gray-400 text-sm md:text-base mb-6 max-w-xl mx-auto">Skip the cold outreach. The Xchange Engine matches you with the right partner recruiter automatically — based on sector, location, and live opportunities.
+            <p className="text-gray-400 text-sm md:text-base mb-6 max-w-xl mx-auto">Skip the cold outreach. The Xchange Engine matches you with the right partner recruiter automatically, based on sector, location, and live opportunities.
             </p>
             <a href="/recruiter" className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-cyan-400/10 border border-cyan-400/30 text-cyan-400 font-bold text-sm hover:bg-cyan-400/20 transition-all">
               Join RecXchange <ArrowRight className="w-4 h-4" />

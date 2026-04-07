@@ -3,7 +3,7 @@ import React from 'react';
 
 export const metadata: Metadata = {
   title: "How Split Fee Recruitment Works | RecXchange",
-  description: "Split fee recruitment explained: two recruiters collaborate on one placement and share the fee. RecXchange automates split agreements at 50/50, 60/40, or up to 70/30 on RecX Direct roles. Timestamped protection, auto-generated contracts, transparent earnings.",
+  description: "Split fee recruitment: two recruiters collaborate on one placement, share the fee. Automated agreements at 50/50, 60/40 or 70/30. Deal protection included.",
   keywords: [
     "split fee recruitment",
     "how split fees work",
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
       url: "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png",
       width: 1200,
       height: 630,
-      alt: "How Split Fee Recruitment Works — RecXchange"
+      alt: "How Split Fee Recruitment Works, RecXchange"
     }]
   },
   twitter: {
@@ -82,7 +82,7 @@ export default function SplitFeesLayout({
         "@type": "HowToStep",
         "position": 4,
         "name": "Submit the candidate",
-        "text": "Recruiter B submits the candidate to Recruiter A's role. The submission is timestamped and locked — protecting both parties with an auto-generated split fee agreement.",
+        "text": "Recruiter B submits the candidate to Recruiter A's role. The submission is timestamped and locked, protecting both parties with an auto-generated split fee agreement.",
         "url": "https://recxchange.io/split-fees#step-4"
       },
       {

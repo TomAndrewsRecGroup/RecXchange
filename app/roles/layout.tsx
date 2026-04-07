@@ -4,7 +4,7 @@ import React from 'react';
 
 export const metadata: Metadata = {
   title: "Live Split Fee Roles | Recruiter Job Board | RecXchange",
-  description: "Browse 1,000s of live split fee roles posted by 15,000+ recruiters. Submit candidates across Engineering, Healthcare, Tech, Sales, Finance & more. UK, USA, Europe, MEA, Australia. Average recruiter earns $7,000 per split placement. $750,000 in total fees available now.",
+  description: "Browse live split fee roles from 15,000+ recruiters. Engineering, Healthcare, Tech, Sales, Finance. UK, USA, Europe, Australia. Avg $7,000 per placement.",
   keywords: [
     "live split fee roles",
     "recruiter job board",

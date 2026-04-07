@@ -3,7 +3,7 @@ import React from 'react';
 
 export const metadata: Metadata = {
   title: "How Recruiter Collaboration Works | RecXchange Guide",
-  description: "Recruiter collaboration is when two specialist recruiters partner on a placement — one brings the role, one brings the candidate. Learn the step-by-step process, what contracts you need, and how RecXchange makes collaboration safe, fast, and automated.",
+  description: "Recruiter collaboration: one brings the role, one brings the candidate. The step-by-step process and how RecXchange makes it safe and automated.",
   keywords: [
     "recruiter collaboration",
     "how recruiter collaboration works",
@@ -17,10 +17,10 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://recxchange.io/how-recruiter-collaboration-works" },
   openGraph: {
     title: "How Recruiter Collaboration Works | RecXchange",
-    description: "The complete step-by-step guide to recruiter collaboration — how to partner, agree splits, protect your deals, and make more placements.",
+    description: "The complete step-by-step guide to recruiter collaboration, how to partner, agree splits, protect your deals, and make more placements.",
     url: "https://recxchange.io/how-recruiter-collaboration-works",
     type: "article",
-    images: [{ url: "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png", width: 1200, height: 630, alt: "How Recruiter Collaboration Works — RecXchange" }]
+    images: [{ url: "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png", width: 1200, height: 630, alt: "How Recruiter Collaboration Works, RecXchange" }]
   },
   twitter: { card: "summary_large_image", title: "How Recruiter Collaboration Works | RecXchange", description: "Step-by-step guide to recruiter partnerships, split fees, and safe collaboration.", images: ["https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png"] }
 };

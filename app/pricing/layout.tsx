@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import React from 'react';
 
 export const metadata: Metadata = {
-  title: "RecXchange Pricing | From $1/Month | Split Fee Recruiter Plans",
-  description: "RecXchange pricing from $1/month. Entry (5 tokens), Lite $99/month (150 tokens), Pro $249/month (400 tokens, instant RecX Direct, up to 70% commission). No platform fees on placements. Cancel anytime.",
+  title: "RecXchange Pricing | From $1/Month | RecXchange",
+  description: "RecXchange pricing from $1/month. Entry (5 tokens), Lite $99 (150 tokens), Pro $249 (400 tokens, RecX Direct, 70%). No platform fees. Cancel anytime.",
   keywords: [
     "recruiter pricing",
     "recruitment platform cost",
@@ -184,7 +184,7 @@ export default function PricingLayout({
       },
       {
         "@type": "Offer",
-        "name": "Token Pack — 10 tokens",
+        "name": "Token Pack, 10 tokens",
         "price": "10.00",
         "priceCurrency": "USD",
         "priceValidUntil": PRICE_VALID_UNTIL,
@@ -196,7 +196,7 @@ export default function PricingLayout({
       },
       {
         "@type": "Offer",
-        "name": "Token Pack — 50 tokens",
+        "name": "Token Pack, 50 tokens",
         "price": "40.00",
         "priceCurrency": "USD",
         "priceValidUntil": PRICE_VALID_UNTIL,
@@ -208,7 +208,7 @@ export default function PricingLayout({
       },
       {
         "@type": "Offer",
-        "name": "Token Pack — 100 tokens",
+        "name": "Token Pack, 100 tokens",
         "price": "70.00",
         "priceCurrency": "USD",
         "priceValidUntil": PRICE_VALID_UNTIL,
@@ -220,7 +220,7 @@ export default function PricingLayout({
       },
       {
         "@type": "Offer",
-        "name": "Token Pack — 500 tokens",
+        "name": "Token Pack, 500 tokens",
         "price": "300.00",
         "priceCurrency": "USD",
         "priceValidUntil": PRICE_VALID_UNTIL,

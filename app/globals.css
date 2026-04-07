@@ -36,14 +36,10 @@
 
 @keyframes glow-pulse {
   0%, 100% {
-    box-shadow: 0 0 20px rgba(0, 240, 255, 0.3),
-                0 0 40px rgba(0, 240, 255, 0.2),
-                0 0 60px rgba(0, 240, 255, 0.1);
+    box-shadow: 0 0 12px rgba(0, 240, 255, 0.2);
   }
   50% {
-    box-shadow: 0 0 30px rgba(0, 240, 255, 0.5),
-                0 0 60px rgba(0, 240, 255, 0.3),
-                0 0 90px rgba(0, 240, 255, 0.2);
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.35);
   }
 }
 
@@ -88,6 +84,22 @@
 /* Smooth Scrolling */
 html {
   scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Sharper image rendering for icons and UI elements */
+img {
+  image-rendering: -webkit-optimize-contrast;
+}
+
+/* Force GPU compositing on animated elements for sharper rendering */
+.animate-float,
+.animate-float-delayed {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 /* Custom Scrollbar - Blended to background */
@@ -132,13 +144,13 @@ html {
   outline-offset: 2px;
 }
 
-/* Backdrop Filter Support */
+/* Backdrop Filter Support — reduced from 24/40px to prevent muddy stacking */
 @supports (backdrop-filter: blur(10px)) {
   .backdrop-blur-xl {
-    backdrop-filter: blur(24px);
+    backdrop-filter: blur(16px);
   }
   .backdrop-blur-2xl {
-    backdrop-filter: blur(40px);
+    backdrop-filter: blur(24px);
   }
 }
 
@@ -155,12 +167,13 @@ html {
   transform-style: preserve-3d;
 }
 
-/* Gradient Text Utility */
+/* Gradient Text Utility — no text-shadow to prevent rendering artifacts with background-clip */
 .gradient-text {
   background: linear-gradient(90deg, #00f0ff 0%, #a855f7 50%, #ff00ff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  text-shadow: none !important;
 }
 
 /* Holographic Border Effect */
@@ -184,23 +197,17 @@ html {
   opacity: 0.5;
 }
 
-/* Neon Glow Effect */
+/* Neon Glow Effect — single layer for crispness */
 .neon-glow-cyan {
-  box-shadow: 0 0 20px rgba(0, 240, 255, 0.3),
-              0 0 40px rgba(0, 240, 255, 0.2),
-              0 0 60px rgba(0, 240, 255, 0.1);
+  box-shadow: 0 0 16px rgba(0, 240, 255, 0.25);
 }
 
 .neon-glow-fuchsia {
-  box-shadow: 0 0 20px rgba(255, 0, 255, 0.3),
-              0 0 40px rgba(255, 0, 255, 0.2),
-              0 0 60px rgba(255, 0, 255, 0.1);
+  box-shadow: 0 0 16px rgba(255, 0, 255, 0.25);
 }
 
 .neon-glow-purple {
-  box-shadow: 0 0 20px rgba(168, 85, 247, 0.3),
-              0 0 40px rgba(168, 85, 247, 0.2),
-              0 0 60px rgba(168, 85, 247, 0.1);
+  box-shadow: 0 0 16px rgba(168, 85, 247, 0.25);
 }
 
 /* Glass Morphism */
@@ -214,16 +221,16 @@ html {
 .energy-orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(60px);
+  filter: blur(40px);
   pointer-events: none;
 }
 
 .energy-orb-cyan {
-  background: radial-gradient(circle, rgba(0, 240, 255, 0.15) 0%, rgba(0, 240, 255, 0.05) 40%, transparent 70%);
+  background: radial-gradient(circle, rgba(0, 240, 255, 0.08) 0%, rgba(0, 240, 255, 0.03) 40%, transparent 70%);
 }
 
 .energy-orb-fuchsia {
-  background: radial-gradient(circle, rgba(255, 0, 255, 0.15) 0%, rgba(255, 0, 255, 0.05) 40%, transparent 70%);
+  background: radial-gradient(circle, rgba(255, 0, 255, 0.08) 0%, rgba(255, 0, 255, 0.03) 40%, transparent 70%);
 }
 
 /* Loading States */

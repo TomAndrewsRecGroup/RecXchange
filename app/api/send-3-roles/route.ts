@@ -107,7 +107,7 @@ function generateEmailHTML(firstName: string, roles: Role[]): string {
     <!-- Opening Hook (Harmozi Style) -->
     <div style="padding: 30px; background: rgba(139, 92, 246, 0.03); border-bottom: 1px solid rgba(139, 92, 246, 0.1);">
       <p style="margin: 0 0 15px 0; font-size: 16px; line-height: 1.6; color: #d1d5db;">Here's what most recruiters don't realize...</p>
-      <p style="margin: 0 0 15px 0; font-size: 16px; line-height: 1.6; color: #d1d5db;">While they're cold-calling hiring managers and chasing leads, <strong style="color: #ffffff;">these 3 roles below are sitting there waiting to be filled</strong>—with the client relationship already built for you.</p>
+      <p style="margin: 0 0 15px 0; font-size: 16px; line-height: 1.6; color: #d1d5db;">While they're cold-calling hiring managers and chasing leads, <strong style="color: #ffffff;">these 3 roles below are sitting there waiting to be filled</strong>, with the client relationship already built for you.</p>
       <p style="margin: 0; font-size: 16px; line-height: 1.6; color: #d1d5db;"><strong style="color: #00ffff;">Average fee on these three roles: ${formatCurrency(avgFee, roles[0].splitCurrency || 'GBP')}</strong></p>
     </div>
 

@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import React from 'react';
 
 export const metadata: Metadata = {
-  title: "How to Find Recruitment Partners | Recruiter Collaboration Guide | RecXchange",
-  description: "Looking for recruiter collaboration partners? Learn the 6 best ways to find recruitment partners in 2026 — including recruiter marketplaces, LinkedIn networks, sector groups, and the RecXchange Xchange Engine that matches you automatically.",
+  title: "How to Find Recruitment Partners | RecXchange",
+  description: "Find recruitment partners: 6 proven ways to connect with collaborators in 2026. Recruiter marketplaces, LinkedIn, sector groups, and AI-powered matching.",
   keywords: [
     "how to find recruitment partners",
     "recruiter collaboration partners",
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     description: "6 proven ways to find recruitment partners for split fee placements in 2026. From LinkedIn to automated AI matching.",
     url: "https://recxchange.io/how-to-find-recruitment-partners",
     type: "article",
-    images: [{ url: "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png", width: 1200, height: 630, alt: "How to Find Recruitment Partners — RecXchange" }]
+    images: [{ url: "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png", width: 1200, height: 630, alt: "How to Find Recruitment Partners, RecXchange" }]
   },
   twitter: { card: "summary_large_image", title: "How to Find Recruitment Partners | RecXchange", description: "6 proven ways to find recruitment collaboration partners in 2026.", images: ["https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png"] }
 };

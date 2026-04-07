@@ -3,8 +3,8 @@ import type { Metadata } from 'next';
 import React from 'react';
 
 export const metadata: Metadata = {
-  title: "Dedicated Recruitment Account Manager | White Glove Service | RecXchange",
-  description: "Every RecXchange client gets a dedicated Account Manager who owns 100% of the hiring process end-to-end. We manage 15,000+ recruiters, guarantee top 1% candidate quality, and monitor the Xchange Engine 24/7. Managed RPO without the RPO price tag.",
+  title: "Dedicated Recruitment Account Manager | RecXchange",
+  description: "Your dedicated Account Manager owns the hiring process end-to-end. 15,000+ recruiters managed for you. Top 1% candidate quality. RPO without the price tag.",
   keywords: [
     "dedicated recruitment account manager",
     "managed recruitment service",
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
       url: "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png",
       width: 1200,
       height: 630,
-      alt: "RecXchange — Dedicated Recruitment Account Manager"
+      alt: "RecXchange, Dedicated Recruitment Account Manager"
     }]
   },
   twitter: {

@@ -18,7 +18,7 @@ const tiers = [
     name: "Entry",
     price: "1",
     period: "/month",
-    description: "For recruiters trying the platform",
+    description: "Perfect for testing the waters",
     tokens: "5 tokens/month",
     recxDirectAccess: "30-day delay",
     features: [
@@ -35,7 +35,7 @@ const tiers = [
     name: "Lite",
     price: "99",
     period: "/month",
-    description: "For growing independent recruiters",
+    description: "The sweet spot for most recruiters",
     tokens: "150 tokens/month",
     recxDirectAccess: "7-day delay",
     features: [
@@ -55,7 +55,7 @@ const tiers = [
     name: "Pro",
     price: "249",
     period: "/month",
-    description: "For power recruiters & boutique firms",
+    description: "For serious billers and growing teams",
     tokens: "400 tokens/month",
     recxDirectAccess: "Instant access",
     features: [
@@ -93,13 +93,13 @@ export default function PricingPage() {
             animate={{ opacity: 1, y: 0 }}
             className="text-center mb-6 sm:mb-8 md:mb-12 mt-6"
           >
-            <StatusBadge label="PRICING" color="purple" />
+            <StatusBadge label="SIMPLE PRICING" color="purple" />
             <h1 className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2 mt-6">
-              Pay Monthly, <span className="text-white">Split Fees Forever</span>
+              One small monthly fee. <span className="text-white">Keep every penny you earn.</span>
             </h1>
             <NeonDivider width="w-40" color="mixed" />
             <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed px-2 mt-6">
-              No hidden charges. Just monthly membership and 100% of your split fee.
+              No hidden charges. No commission taken from your placements. Just a flat membership and 100% of your split fee goes to you.
             </p>
           </motion.header>
 
@@ -185,10 +185,10 @@ export default function PricingPage() {
           >
             <div className="text-center mb-6 sm:mb-8">
               <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2.5 sm:mb-3 md:mb-4">
-                What Are Tokens?
+                How do tokens work?
               </h2>
               <p className="text-gray-300 text-sm sm:text-base max-w-3xl mx-auto">
-                Tokens are your proof of intent. They unlock contact details and let you submit candidates to live roles.
+                Tokens are your currency on the platform. Use them to post roles, submit candidates, or unlock contact details. Simple.
               </p>
             </div>
 
@@ -198,7 +198,7 @@ export default function PricingPage() {
                   Post a Role
                 </h3>
                 <p className="text-gray-300 text-xs sm:text-sm mb-4 sm:mb-5 md:mb-6">
-                  Use 1 token to post a role to the Xchange network and let 15,000+ recruiters bring you candidates.
+                  Spend 1 token to broadcast your role to the entire network. Thousands of recruiters will see it and start sourcing.
                 </p>
                 <div className="text-cyan-300 text-xs sm:text-sm font-bold">1 Token = 1 Role Posted</div>
               </HolographicCard>
@@ -208,7 +208,7 @@ export default function PricingPage() {
                   Submit a Candidate
                 </h3>
                 <p className="text-gray-300 text-xs sm:text-sm mb-4 sm:mb-5 md:mb-6">
-                  Use 1 token to submit your candidate to a live role. If they get hired, you earn your split of the fee.
+                  Spend 1 token to put your candidate forward for a live role. If they land the job, you earn your share of the placement fee.
                 </p>
                 <div className="text-fuchsia-300 text-xs sm:text-sm font-bold">1 Token = 1 Candidate Submitted</div>
               </HolographicCard>
@@ -218,7 +218,7 @@ export default function PricingPage() {
                   Unlock Contact Details
                 </h3>
                 <p className="text-gray-300 text-xs sm:text-sm mb-4 sm:mb-5 md:mb-6">
-                  Use 1 token to reveal a candidate&apos;s full contact details from the 270M profile database.
+                  Found someone interesting in our 270M profile database? Spend 1 token to see their full contact details.
                 </p>
                 <div className="text-purple-300 text-xs sm:text-sm font-bold">1 Token = 1 Contact Unlocked</div>
               </HolographicCard>
@@ -227,8 +227,8 @@ export default function PricingPage() {
             {/* Token Packs */}
             <div className="mt-8 sm:mt-10">
               <div className="text-center mb-5 sm:mb-6">
-                <h3 className="text-lg sm:text-xl font-bold text-white mb-2">Need More Tokens?</h3>
-                <p className="text-gray-400 text-xs sm:text-sm">Top up anytime inside the platform. No subscription change needed.</p>
+                <h3 className="text-lg sm:text-xl font-bold text-white mb-2">Running low? Top up anytime.</h3>
+                <p className="text-gray-400 text-xs sm:text-sm">Buy extra tokens inside the platform whenever you need them. No plan change required.</p>
               </div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
                 {tokenPacks.map((pack) => (
@@ -255,10 +255,10 @@ export default function PricingPage() {
             <div className="text-center mb-6 sm:mb-8">
               <StatusBadge label="RecX DIRECT" color="emerald" />
               <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2.5 sm:mb-3 md:mb-4 mt-4">
-                Earn 70% on RecX Direct Placements
+                Work directly with hiring managers. Keep up to 70%.
               </h2>
               <p className="text-gray-300 text-sm sm:text-base max-w-3xl mx-auto">
-                End clients post roles. Recruiters compete to fill them. Winners earn up to 70% of the placement fee.
+                Companies post roles directly to RecXchange. Fill them, and you keep the lion's share of the placement fee, up to 70%.
               </p>
             </div>
 
@@ -343,10 +343,10 @@ export default function PricingPage() {
           >
             <HolographicCard color="fuchsia" variant="content" glowIntensity="high" className="text-center">
               <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2.5 sm:mb-3 md:mb-4">
-                Ready to Start Splitting Fees?
+                Start making placements you'd otherwise miss.
               </h2>
               <p className="text-gray-300 text-xs sm:text-sm md:text-base mb-5 sm:mb-6 md:mb-8 px-2">
-                Join 15,000+ recruiters already on the platform. From $1/month.
+                Thousands of recruiters are already collaborating and earning more. Memberships start at just $1/month. Not sure which tier? <Link href="/earnings-calculator" className="text-cyan-400 hover:text-cyan-300 underline">Try our earnings calculator</Link>.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                 <GlowButton variant="primary" size="lg" href="https://app.recxchange.io/register?trigger_link=jYQNc9YXcMkYPvo3HZfC">

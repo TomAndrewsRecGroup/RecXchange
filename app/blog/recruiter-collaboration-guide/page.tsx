@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import React from 'react';
 
 export const metadata: Metadata = {
-  title: "The Recruiter's Guide to Collaboration: How to Double Your Billings | RecXchange",
-  description: "How specialist recruiters can double their billings through structured collaboration. Split fee networks, candidate sharing, deal protection, and how RecXchange's Xchange Engine matches you to live roles from global hiring managers. The complete guide to recruiter collaboration.",
+  title: "Recruiter Collaboration Guide | RecXchange",
+  description: "How recruiters can double their billings through structured collaboration. Split fee networks, candidate sharing, deal protection and AI matching.",
   keywords: [
     "recruiter collaboration guide",
     "how to increase recruiter billings",
@@ -33,7 +33,7 @@ export default function RecruiterCollaborationGuidePage() {
     "url": "https://recxchange.io/blog/recruiter-collaboration-guide",
     "headline": "The Recruiter's Guide to Collaboration: How to Double Your Billings",
     "description": "A complete guide for specialist recruiters on using split fee collaboration to increase billings via RecXchange.",
-    "author": { "@type": "Organization", "name": "RecXchange", "url": "https://recxchange.io" },
+    "author": { "@type": "Person", "name": "Tom Andrews", "jobTitle": "CEO and Co-Founder", "url": "https://recxchange.io", "worksFor": { "@type": "Organization", "name": "RecXchange" } },
     "publisher": { "@type": "Organization", "name": "RecXchange", "logo": { "@type": "ImageObject", "url": "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png" } },
     "datePublished": "2025-05-01",
     "dateModified": "2026-03-01",
@@ -49,9 +49,32 @@ export default function RecruiterCollaborationGuidePage() {
     }
   };
 
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How does recruiter collaboration increase billings?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Recruiter collaboration lets you monetise candidates who would otherwise earn nothing. If you hold a strong candidate but have no matching live role, a split fee arrangement on RecXchange connects that candidate to confirmed vacancies from other recruiters. A typical example: a 50/50 split on an 18% fee for a £95,000 role earns both recruiters £8,550 each, revenue the candidate-holder would never have seen working alone." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is RecX Direct and how does it benefit candidate-holding recruiters?",
+        "acceptedAnswer": { "@type": "Answer", "text": "RecX Direct is RecXchange's product where roles are posted directly by hiring managers rather than through intermediary recruiters. It offers candidate-holding recruiters a 70% share of the total placement fee, the highest split available on any recruitment collaboration platform. On a £95,000 role at 18%, the candidate-holder earns £11,970 at the 70% RecX Direct rate." }
+      },
+      {
+        "@type": "Question",
+        "name": "How does deal protection work on RecXchange?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Before any candidate data changes hands on RecXchange, a split fee agreement is auto-generated and accepted by both parties. Every submission is timestamped and recorded, establishing legally binding candidate ownership from the moment you submit. There is no scenario in which your placement can be taken without your agreed fee share being paid. This eliminates the trust barrier that has historically prevented recruiters from collaborating." }
+      }
+    ]
+  };
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <main className="relative bg-[#0a0a0f] min-h-screen">
         <div className="max-w-3xl mx-auto px-6 py-24">
           <p className="text-cyan-400 text-sm font-bold uppercase tracking-widest mb-4">For Recruiters</p>
@@ -64,7 +87,7 @@ export default function RecruiterCollaborationGuidePage() {
 
           <h2 className="text-2xl font-bold text-white mb-4">The Case for Collaboration</h2>
           <p className="text-gray-300 mb-6 leading-relaxed">
-            Consider the economics. A specialist recruiter has a candidate — a strong Principal Engineer who is passively open to the right opportunity. They spend weeks sending speculative emails and cold-calling hiring managers with no live role. That candidate earns nothing. Meanwhile, a recruiter on RecXchange has a confirmed role from a tech scale-up paying £95,000. The split fee is 18% — £17,100. At a 50/50 split, both recruiters earn £8,550. The candidate-holder earned £8,550 they would never have seen working alone. This is the basic commercial logic of split fee collaboration, replicated across thousands of placements every year on RecXchange.
+            Consider the economics. A specialist recruiter has a candidate, a strong Principal Engineer who is passively open to the right opportunity. They spend weeks sending speculative emails and cold-calling hiring managers with no live role. That candidate earns nothing. Meanwhile, a recruiter on RecXchange has a confirmed role from a tech scale-up paying £95,000. The split fee is 18%, £17,100. At a 50/50 split, both recruiters earn £8,550. The candidate-holder earned £8,550 they would never have seen working alone. This is the basic commercial logic of split fee collaboration, replicated across thousands of placements every year on RecXchange.
           </p>
 
           <h2 className="text-2xl font-bold text-white mb-4">How to Get Started with Split Fee on RecXchange</h2>
@@ -74,7 +97,7 @@ export default function RecruiterCollaborationGuidePage() {
 
           <h2 className="text-2xl font-bold text-white mb-4">Acting as a Role-Holder</h2>
           <p className="text-gray-300 mb-6 leading-relaxed">
-            As a role-holder on RecXchange, you post roles from hiring managers in your network. The Xchange Engine matches your role to candidate-holding recruiters with relevant sector expertise. You receive pre-screened candidate submissions, manage the hiring manager relationship, and coordinate the placement process. When a placement is made, you earn your agreed share of the fee automatically — without having to source a single additional candidate yourself.
+            As a role-holder on RecXchange, you post roles from hiring managers in your network. The Xchange Engine matches your role to candidate-holding recruiters with relevant sector expertise. You receive pre-screened candidate submissions, manage the hiring manager relationship, and coordinate the placement process. When a placement is made, you earn your agreed share of the fee automatically, without having to source a single additional candidate yourself.
           </p>
 
           <h2 className="text-2xl font-bold text-white mb-4">Acting as a Candidate-Holder</h2>
@@ -84,18 +107,27 @@ export default function RecruiterCollaborationGuidePage() {
 
           <h2 className="text-2xl font-bold text-white mb-4">Deal Protection: Your Safety Net</h2>
           <p className="text-gray-300 mb-6 leading-relaxed">
-            The historical barrier to recruiter collaboration has been trust — specifically, the fear of sharing a candidate without a binding agreement in place. RecXchange eliminates this risk entirely. Before any candidate data changes hands, a split fee agreement is auto-generated and accepted by both parties. The submission is timestamped and recorded. Your candidate ownership is legally protected from the moment you submit. There is no scenario in which your placement can be taken without your agreed fee share being paid.
+            The historical barrier to recruiter collaboration has been trust, specifically, the fear of sharing a candidate without a binding agreement in place. RecXchange eliminates this risk entirely. Before any candidate data changes hands, a split fee agreement is auto-generated and accepted by both parties. The submission is timestamped and recorded. Your candidate ownership is legally protected from the moment you submit. There is no scenario in which your placement can be taken without your agreed fee share being paid.
           </p>
 
           <h2 className="text-2xl font-bold text-white mb-4">RecX Direct: The 70% Model</h2>
           <p className="text-gray-300 mb-6 leading-relaxed">
-            RecXchange&apos;s RecX Direct product offers candidate-holding recruiters a 70% share of the total placement fee — the highest split available on any recruitment collaboration platform. RecX Direct roles are posted directly by hiring managers (rather than through intermediary recruiters), meaning the full hiring manager fee flows through the platform. A £95,000 role at 18% generates £17,100 — of which the candidate-holder earns £11,970 at the 70% RecX Direct rate.
+            RecXchange&apos;s RecX Direct product offers candidate-holding recruiters a 70% share of the total placement fee, the highest split available on any recruitment collaboration platform. RecX Direct roles are posted directly by hiring managers (rather than through intermediary recruiters), meaning the full hiring manager fee flows through the platform. A £95,000 role at 18% generates £17,100, of which the candidate-holder earns £11,970 at the 70% RecX Direct rate.
           </p>
 
           <h2 className="text-2xl font-bold text-white mb-4">Building a Collaboration Strategy</h2>
           <p className="text-gray-300 mb-6 leading-relaxed">
-            The most successful RecXchange recruiters treat collaboration as a strategic income stream, not an occasional windfall. They maintain an active candidate pipeline, submit to new roles promptly (the best candidates are placed quickly), build a reputation for quality submissions that makes role-holders prioritise their candidates, and use RecXchange&apos;s dashboard to track their active submissions, pending placements, and earnings in real time. Treating RecXchange as a structured business channel — not a passive one — is what separates high billers from average ones.
+            The most successful RecXchange recruiters treat collaboration as a strategic income stream, not an occasional windfall. They maintain an active candidate pipeline, submit to new roles promptly (the best candidates are placed quickly), build a reputation for quality submissions that makes role-holders prioritise their candidates, and use RecXchange&apos;s dashboard to track their active submissions, pending placements, and earnings in real time. Treating RecXchange as a structured business channel, not a passive one, is what separates high billers from average ones.
           </p>
+
+          <div className="mt-10 mb-8 p-5 rounded-2xl border border-white/10 bg-white/[0.02] flex flex-col sm:flex-row gap-4 items-start">
+            <div className="w-12 h-12 rounded-full bg-cyan-500/10 border border-cyan-400/20 flex items-center justify-center text-cyan-400 font-bold text-lg flex-shrink-0">TA</div>
+            <div>
+              <p className="text-white font-bold text-sm mb-1">Tom Andrews</p>
+              <p className="text-gray-400 text-xs mb-2">CEO and Co-Founder, RecXchange</p>
+              <p className="text-gray-500 text-xs leading-relaxed">Tom has spent over 14 years in specialist recruitment across building materials, industrial engineering, M&amp;E, and mental health sectors. He co-founded RecXchange to give independent and specialist recruiters a better way to collaborate, split fees, and make more placements without the politics of traditional agency networks.</p>
+            </div>
+          </div>
 
           <div className="mt-12 p-6 rounded-2xl border border-cyan-400/20 bg-cyan-400/5">
             <p className="text-cyan-400 font-bold mb-2">Ready to start collaborating?</p>

@@ -18,21 +18,21 @@ const features = [
   {
     icon: TrendingUp,
     title: 'Scalable Talent Acquisition',
-    desc: 'Activate 15,000+ specialist recruiters instantly when you need to scale fast. One brief. Hundreds of experts sourcing simultaneously — without the overhead of managing multiple agencies.',
+    desc: 'Activate 15,000+ specialist recruiters instantly when you need to scale fast. One brief. Hundreds of experts sourcing simultaneously, without the overhead of managing multiple agencies.',
     color: 'fuchsia' as const,
     iconClass: 'text-fuchsia-400',
   },
   {
     icon: Users,
     title: 'Dedicated Account Management',
-    desc: 'Your Senior Account Manager coordinates the entire network on your behalf — briefing recruiters, filtering quality, and delivering only the strongest submissions. You stay focused on strategy.',
+    desc: 'Your Senior Account Manager coordinates the entire network on your behalf, briefing recruiters, filtering quality, and delivering only the strongest submissions. You stay focused on strategy.',
     color: 'purple' as const,
     iconClass: 'text-purple-400',
   },
   {
     icon: Zap,
     title: 'AI-Powered Candidate Matching',
-    desc: 'The RecXchange Recruiters filter 270M+ profiles to surface only the top 1% of candidates — matched by skills, location, experience, and role fit. Your shortlist is built before you even ask for it.',
+    desc: 'The RecXchange Recruiters filter 270M+ profiles to surface only the top 1% of candidates, matched by skills, location, experience, and role fit. Your shortlist is built before you even ask for it.',
     color: 'emerald' as const,
     iconClass: 'text-emerald-400',
   },
@@ -54,7 +54,7 @@ export default function HiringManagerStrategic() {
             <StatusBadge label="STRATEGIC HIRING" color="purple" />
             <h1
               className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2 mt-6"
-              style={{ textShadow: '0 0 60px rgba(0,240,255,0.3)' }}
+              style={{ textShadow: '0 0 20px rgba(0,240,255,0.15)' }}
             >
               Scale Your Team at the Speed of Strategy
             </h1>

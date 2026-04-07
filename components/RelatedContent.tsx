@@ -79,7 +79,7 @@ export default function RelatedContent({ currentPage, limit = 3 }: RelatedConten
             id="related-content-heading"
             className="text-2xl md:text-3xl font-black text-white mb-3"
             style={{
-              textShadow: '0 0 40px rgba(0,240,255,0.2)'
+              textShadow: '0 0 16px rgba(0,240,255,0.12)'
             }}
           >
             Continue Exploring

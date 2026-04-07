@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import React from 'react';
 export const metadata: Metadata = {
   title: "Construction Recruitment | Split Fee Roles | RecXchange",
-  description: "Live construction recruitment split fee roles on RecXchange. Project managers, site managers, quantity surveyors, estimators, contracts managers, and directors. UK, UAE, Australia, South Africa.",
+  description: "Live construction split fee roles. Project managers, site managers, QSs, estimators, contracts managers and directors. UK, UAE, Australia, South Africa.",
   keywords: ["construction recruitment","construction recruiter split fee","project manager recruitment","quantity surveyor recruiter","site manager jobs","estimator recruitment","contracts manager recruiter","construction recruiter marketplace"],
   alternates: { canonical: "https://recxchange.io/sectors/construction" },
   openGraph: { title: "Construction Recruitment | Split Fee Roles | RecXchange", description: "Live construction split fee roles. PMs, QSs, site managers, estimators. UK, UAE, Australia.", url: "https://recxchange.io/sectors/construction", type: "website", images: [{ url: "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png", width: 1200, height: 630, alt: "Construction Recruitment on RecXchange" }] },

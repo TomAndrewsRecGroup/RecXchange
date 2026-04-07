@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import React from 'react';
 export const metadata: Metadata = {
   title: "Engineering Recruitment | Split Fee Roles | RecXchange",
-  description: "Browse live engineering split fee roles on RecXchange. Mechanical, electrical, civil, structural, M&E, and industrial engineering vacancies across the UK, USA, Europe, Middle East, and Australia. Submit candidates. Split fees 50/50, 60/40 or earn 70% on RecX Direct.",
+  description: "Live engineering split fee roles on RecXchange. Mechanical, electrical, civil, structural, M&E and industrial vacancies. UK, USA, Europe, Middle East.",
   keywords: ["engineering recruitment","engineering split fee roles","mechanical engineering recruiter","electrical engineering jobs","civil engineering recruitment","M&E recruiter","engineering recruiter marketplace","industrial engineering split fee"],
   alternates: { canonical: "https://recxchange.io/sectors/engineering" },
   openGraph: { title: "Engineering Recruitment | Split Fee Roles | RecXchange", description: "Live engineering split fee roles. Mechanical, electrical, civil, M&E. UK, USA, Europe, Middle East, Australia.", url: "https://recxchange.io/sectors/engineering", type: "website", images: [{ url: "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png", width: 1200, height: 630, alt: "Engineering Recruitment on RecXchange" }] },

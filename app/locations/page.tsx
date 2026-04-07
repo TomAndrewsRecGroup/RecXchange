@@ -3,8 +3,8 @@ import React from 'react';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: "Recruitment by Location | UK, USA, UAE, Australia | RecXchange",
-  description: "RecXchange specialist recruiter networks across London, Manchester, Birmingham and nationwide UK, plus USA, UAE, Australia, and international. Specialist local and cross-border hiring. Pay only on placement.",
+  title: "Recruitment by Location | RecXchange",
+  description: "Specialist recruiter networks across London, Manchester, Birmingham, UK-wide, USA, UAE, Australia and international. Cross-border hiring. Pay on placement.",
   alternates: { canonical: "https://recxchange.io/locations" },
   openGraph: {
     title: "Recruitment by Location | RecXchange",

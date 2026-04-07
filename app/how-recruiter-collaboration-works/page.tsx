@@ -11,7 +11,7 @@ export default function HowRecruiterCollaborationWorksPage() {
   const steps = [
     { n: "01", icon: Network, color: "cyan" as const, title: "Post Your Role or Candidate", body: "If you have a live role you can't fill, post it on RecXchange. If you have an outstanding candidate without a home, post their profile. Either way, you're visible to 15,000+ specialist recruiters immediately." },
     { n: "02", icon: Cpu, color: "fuchsia" as const, title: "Xchange Engine Matches You", body: "Our AI matching engine runs 24/7, scanning every role and candidate profile for compatibility. It considers sector, seniority, location, salary band, and skill set. When a strong match is found, both recruiters are notified instantly." },
-    { n: "03", icon: Handshake, color: "purple" as const, title: "Agree Your Split", body: "You choose your split percentage together — 50/50, 60/40, or 70/30. This is agreed before any private information changes hands. No data. No names. No risk. Just the terms." },
+    { n: "03", icon: Handshake, color: "purple" as const, title: "Agree Your Split", body: "You choose your split percentage together (50/50, 60/40, or 70/30). This is agreed before any private information changes hands. No data. No names. No risk. Just the terms." },
     { n: "04", icon: FileCheck, color: "cyan" as const, title: "Auto-Contract Generated", body: "RecXchange instantly generates a legally binding split fee agreement containing both recruiter names, company details, the candidate, the role, the agreed split, and a permanent timestamp. Both parties sign digitally." },
     { n: "05", icon: Star, color: "fuchsia" as const, title: "Private Details Released", body: "Only after the contract is signed do private details unlock. The candidate's full CV and contact information. The client's company name and hiring manager details. Your deal is protected every step of the way." },
     { n: "06", icon: Globe, color: "purple" as const, title: "Placement Made, Fees Split", body: "The candidate interviews, accepts the offer, and starts. Both recruiters invoice for their agreed share. RecXchange takes no cut of your placement fee. The entire split is yours." }
@@ -26,12 +26,12 @@ export default function HowRecruiterCollaborationWorksPage() {
           <motion.header initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-8 md:mb-14 mt-6">
             <StatusBadge label="HOW IT WORKS" color="fuchsia" />
             <h1 className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 tracking-tight leading-[1.1] pb-2 px-2 mt-6"
-              style={{ textShadow: '0 0 60px rgba(236,72,153,0.3)' }}>
+              style={{ textShadow: '0 0 20px rgba(236,72,153,0.15)' }}>
               How Recruiter Collaboration Works
             </h1>
             <NeonDivider width="w-40" color="mixed" />
             <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed px-2 mt-6">
-              Recruiter collaboration is the practice of two specialist recruiters partnering on a single placement and splitting the fee. Here's exactly how it works on RecXchange — from first match to paid invoice.
+              Recruiter collaboration is the practice of two specialist recruiters partnering on a single placement and splitting the fee. Here's exactly how it works on RecXchange, from first match to paid invoice.
             </p>
           </motion.header>
 

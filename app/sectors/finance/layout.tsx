@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import React from 'react';
 export const metadata: Metadata = {
   title: "Finance Recruitment | Split Fee Roles | RecXchange",
-  description: "Live finance and accounting split fee roles on RecXchange. CFOs, FDs, management accountants, financial controllers, risk, treasury, audit, and fintech roles across UK, USA, Europe, Middle East.",
+  description: "Live finance and accounting split fee roles. CFOs, FDs, management accountants, controllers, risk, treasury, audit and fintech. UK, USA, Europe.",
   keywords: ["finance recruitment","accounting recruiter split fee","CFO recruitment","financial controller recruiter","management accountant jobs","fintech recruiter","risk recruitment","finance recruiter marketplace"],
   alternates: { canonical: "https://recxchange.io/sectors/finance" },
   openGraph: { title: "Finance Recruitment | Split Fee Roles | RecXchange", description: "Live finance split fee roles. CFOs, FDs, controllers, fintech. UK, USA, Europe, Middle East.", url: "https://recxchange.io/sectors/finance", type: "website", images: [{ url: "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png", width: 1200, height: 630, alt: "Finance Recruitment on RecXchange" }] },

@@ -3,8 +3,8 @@ import React from 'react';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: "RecXchange vs Competitors | Recruitment Platform Comparisons | RecXchange",
-  description: "How RecXchange compares to LinkedIn Recruiter, Indeed, traditional agencies, retained search, RPO, job boards, in-house recruiters, and headhunters. Honest, detailed comparisons for hiring managers evaluating recruitment solutions.",
+  title: "RecXchange vs Competitors | RecXchange",
+  description: "How RecXchange compares to LinkedIn Recruiter, Indeed, agencies, retained search, RPO, job boards and in-house recruiters. Honest comparisons.",
   alternates: { canonical: "https://recxchange.io/vs" },
   openGraph: {
     title: "RecXchange vs Competitors | RecXchange",
@@ -20,10 +20,13 @@ const comparisons = [
   { href: "/vs/retained-search", title: "RecXchange vs Retained Search", desc: "Senior hiring without retainers, exclusivity, or 30%+ fees." },
   { href: "/vs/linkedin-recruiter", title: "RecXchange vs LinkedIn Recruiter", desc: "Passive candidate access through specialist networks vs. cold InMail outreach." },
   { href: "/vs/contingency-recruitment", title: "RecXchange vs Contingency Recruitment", desc: "Structured split fee collaboration vs. uncoordinated multi-agency contingency." },
-  { href: "/vs/job-boards", title: "RecXchange vs Job Boards", desc: "Why job boards don't work for specialist roles — and what does." },
+  { href: "/vs/job-boards", title: "RecXchange vs Job Boards", desc: "Why job boards don't work for specialist roles, and what does." },
   { href: "/vs/rpo", title: "RecXchange vs RPO", desc: "Flexible specialist access without the RPO commitment, cost, or transition risk." },
   { href: "/vs/internal-recruiter", title: "RecXchange vs In-House Recruiter", desc: "Specialist depth on demand without the fixed headcount cost." },
   { href: "/vs/staffing-agencies", title: "RecXchange vs Staffing Agencies", desc: "Specialist-first marketplace vs. bulk database shortlists. Better candidates, lower fees." },
+  { href: "/vs/top-echelon", title: "RecXchange vs Top Echelon", desc: "Zero brokerage fees, 15,000+ recruiters and AI matching vs. Top Echelon's traditional split fee network." },
+  { href: "/vs/npa-worldwide", title: "RecXchange vs NPA Worldwide", desc: "AI-powered matching and instant activation vs. NPA's relationship-driven annual membership model." },
+  { href: "/vs/recruit-alliance", title: "RecXchange vs RecruitAlliance", desc: "Larger network, smarter matching and 270M candidate database vs. RecruitAlliance's manual directory." },
 ];
 
 export default function VsHubPage() {

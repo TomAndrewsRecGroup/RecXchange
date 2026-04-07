@@ -3,7 +3,7 @@ import React from 'react';
 
 export const metadata: Metadata = {
   title: "Recruitment Fee Structures Explained | RecXchange Guide",
-  description: "A complete guide to recruitment fee structures: contingency, retained, split fee, RPO, and RecX Direct. Understand what each model costs, who pays, and which is right for your hiring situation in 2026.",
+  description: "Recruitment fee structures: contingency, retained, split fee, RPO and RecX Direct. What each model costs, who pays, and which suits your hiring needs.",
   keywords: [
     "recruitment fee structures",
     "how are recruitment fees calculated",
@@ -19,10 +19,10 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://recxchange.io/recruitment-fee-structures" },
   openGraph: {
     title: "Recruitment Fee Structures Explained | RecXchange",
-    description: "Contingency, retained, split fee, RPO — all recruitment fee models compared. What each costs, who pays, and when to use them.",
+    description: "Contingency, retained, split fee, RPO, all recruitment fee models compared. What each costs, who pays, and when to use them.",
     url: "https://recxchange.io/recruitment-fee-structures",
     type: "article",
-    images: [{ url: "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png", width: 1200, height: 630, alt: "Recruitment Fee Structures — RecXchange" }]
+    images: [{ url: "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png", width: 1200, height: 630, alt: "Recruitment Fee Structures, RecXchange" }]
   },
   twitter: { card: "summary_large_image", title: "Recruitment Fee Structures Explained | RecXchange", description: "All recruitment fee models compared: contingency, retained, split fee, RPO.", images: ["https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png"] }
 };

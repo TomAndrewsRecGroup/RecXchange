@@ -17,14 +17,22 @@ export default function WhatIsSplitFeeRecruitmentPage() {
           <motion.header initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-8 md:mb-14 mt-6">
             <StatusBadge label="RECRUITMENT GUIDE" color="cyan" />
             <h1 className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 tracking-tight leading-[1.1] pb-2 px-2 mt-6"
-              style={{ textShadow: '0 0 60px rgba(0,240,255,0.3)' }}>
+              style={{ textShadow: '0 0 20px rgba(0,240,255,0.15)' }}>
               What Is Split Fee Recruitment?
             </h1>
             <NeonDivider width="w-40" color="mixed" />
             <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed px-2 mt-6">
-              Two recruiters. One placement. Shared fee. Split fee recruitment is the fastest-growing model in the industry — and RecXchange is where 15,000+ recruiters do it safely.
+              Two recruiters. One placement. Shared fee. Split fee recruitment is the fastest-growing model in the industry, and RecXchange is where 15,000+ recruiters do it safely.
             </p>
           </motion.header>
+
+          {/* Speakable Definition Block */}
+          <section className="mb-8 sm:mb-12" data-speakable="true">
+            <h2 className="text-xl sm:text-2xl font-bold text-white mb-3">What is split fee recruitment?</h2>
+            <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
+              Split fee recruitment is a placement model where two specialist recruiters collaborate on a single vacancy and divide the fee when the candidate is hired. One recruiter owns the client relationship and the role. The other has a matching candidate. They agree a split, commonly 50/50, 60/40, or 70/30, before sharing any private information. On RecXchange, over 15,000 recruiters use split fees to make placements they could not complete alone, with an average fee of $7,000 per deal.
+            </p>
+          </section>
 
           {/* Definition */}
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="mb-10 md:mb-16">
@@ -48,7 +56,7 @@ export default function WhatIsSplitFeeRecruitmentPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
               {[
                 { step: "01", color: "cyan", icon: Users, title: "Two Recruiters Connect", body: "A role-side recruiter posts a live vacancy on RecXchange. The Xchange Engine scans 15,000+ recruiter candidate databases and flags matching profiles. Both recruiters agree to collaborate." },
-                { step: "02", color: "fuchsia", icon: FileText, title: "Split Agreement Locked", body: "Before any private data is shared, both parties agree a split percentage — 50/50, 60/40, or 70/30. RecXchange auto-generates a legally binding contract with a permanent timestamp." },
+                { step: "02", color: "fuchsia", icon: FileText, title: "Split Agreement Locked", body: "Before any private data is shared, both parties agree a split percentage (50/50, 60/40, or 70/30). RecXchange auto-generates a legally binding contract with a permanent timestamp." },
                 { step: "03", color: "purple", icon: DollarSign, title: "Candidate Placed, Fee Split", body: "The candidate is submitted, interviews, and accepts the offer. Both recruiters invoice for their agreed share. RecXchange takes zero platform cut. You keep 100% of your split." }
               ].map((item) => {
                 const Icon = item.icon;
@@ -82,7 +90,7 @@ export default function WhatIsSplitFeeRecruitmentPage() {
                   </thead>
                   <tbody className="space-y-2">
                     {[
-                      { model: "50/50 Standard", role: "50%", cand: "50%", use: "Equal partnership — both bring equal value", color: "text-cyan-400" },
+                      { model: "50/50 Standard", role: "50%", cand: "50%", use: "Equal partnership, both bring equal value", color: "text-cyan-400" },
                       { model: "60/40", role: "60%", cand: "40%", use: "Role-side has stronger client relationship", color: "text-fuchsia-400" },
                       { model: "70/30 RecX Direct", role: "30%", cand: "70%", use: "Candidate-side earns more on verified Direct roles", color: "text-purple-400" }
                     ].map((row) => (

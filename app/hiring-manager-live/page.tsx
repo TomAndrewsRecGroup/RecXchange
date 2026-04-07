@@ -13,7 +13,7 @@ const whyCards = [
     icon: Globe,
     color: 'cyan' as const,
     iconClass: 'text-cyan-400',
-    title: 'More recruiters than any single agency — instantly',
+    title: 'More recruiters than any single agency, instantly',
     body: 'The moment your role is posted, it broadcasts to 15,000+ specialist recruiters across 80+ countries. No single recruitment company on earth can deploy that many experts on one brief, simultaneously.',
   },
   {
@@ -21,21 +21,21 @@ const whyCards = [
     color: 'fuchsia' as const,
     iconClass: 'text-fuchsia-400',
     title: 'First candidates in hours, not weeks',
-    body: 'Recruiters in the network are actively sourcing right now. Most clients receive their first shortlisted candidates within 24–48 hours of posting. No onboarding lag. No negotiating terms. Just talent.',
+    body: 'Recruiters in the network are actively sourcing right now. Most clients receive their first shortlisted candidates within 24 to 48 hours of posting. No onboarding lag. No negotiating terms. Just talent.',
   },
   {
     icon: Users,
     color: 'purple' as const,
     iconClass: 'text-purple-400',
     title: 'Your Account Manager runs point',
-    body: "You don't manage 15,000 recruiters — we do. Your dedicated Account Manager briefs the network, filters quality, and brings you only the strongest submissions. One conversation. Thousands of specialists working.",
+    body: "You don't manage 15,000 recruiters. We do. Your dedicated Account Manager briefs the network, filters quality, and brings you only the strongest submissions. One conversation. Thousands of specialists working.",
   },
   {
     icon: TrendingUp,
     color: 'emerald' as const,
     iconClass: 'text-emerald-400',
     title: 'Competitive sourcing drives better candidates',
-    body: "When hundreds of recruiters are competing on the same role, the quality of candidates rises fast. Each recruiter surfaces their best from their own private network — giving you access to talent you'd never find through one agency.",
+    body: "When hundreds of recruiters are competing on the same role, the quality of candidates rises fast. Each recruiter surfaces their best from their own private network, giving you access to talent you'd never find through one agency alone.",
   },
 ];
 
@@ -72,13 +72,13 @@ export default function HiringManagerLive() {
           <motion.header initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-6 sm:mb-8 md:mb-12 mt-6">
             <StatusBadge label="ROLE SIMULATION" color="cyan" />
             <h1 className="text-[32px] sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-3 sm:mb-4 md:mb-6 tracking-tight leading-[1.1] pb-2 px-2 mt-6"
-              style={{ textShadow: '0 0 60px rgba(0,240,255,0.3)' }}>
+              style={{ textShadow: '0 0 20px rgba(0,240,255,0.15)' }}>
               One role. Massive Velocity.<br/>
               Watch the engine work.
             </h1>
             <NeonDivider width="w-40" color="mixed" />
             <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed px-2 mt-6">
-              This simulation shows what happens from the moment you post a role through to day 40. You are not waiting for a single agency — you are activating a global hive of 15,000+ specialists. Watch how fast your talent pool expands when 300+ experts source simultaneously.
+              This simulation shows what happens from the moment you post a role through to day 40. You are not waiting for a single agency. You are activating a global network of 15,000+ specialists. Watch how fast your talent pool expands when 300+ experts source simultaneously.
             </p>
           </motion.header>
 
@@ -192,7 +192,7 @@ export default function HiringManagerLive() {
                 More recruiters on your role than any other option. Anywhere.
               </h2>
               <p className="text-gray-400 text-sm sm:text-base max-w-2xl mx-auto">
-                A traditional agency sends one recruiter to your brief and they work your role alone. We send one Recruiter and then we send hundreds — simultaneously, each tapping their own private network, competing to bring you the best.
+                A traditional agency sends one recruiter to your brief and they work your role alone. We send one Recruiter and then we send hundreds, simultaneously, each tapping their own private network, competing to bring you the best.
               </p>
             </div>
 
@@ -237,7 +237,7 @@ export default function HiringManagerLive() {
                       <div className="text-[10px] sm:text-xs text-gray-500 uppercase tracking-widest font-bold">Candidate Profiles</div>
                     </div>
                     <div>
-                      <div className="text-3xl sm:text-4xl font-black text-fuchsia-400 mb-1">24–48h</div>
+                      <div className="text-3xl sm:text-4xl font-black text-fuchsia-400 mb-1">24-48h</div>
                       <div className="text-[10px] sm:text-xs text-gray-500 uppercase tracking-widest font-bold">First Candidates</div>
                     </div>
                     <div>

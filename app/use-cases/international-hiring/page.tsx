@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import React from 'react';
 
 export const metadata: Metadata = {
-  title: "International Hiring | Global Recruitment Platform | RecXchange",
-  description: "RecXchange for international hiring: recruit across the UK, USA, UAE, Australia, Europe and beyond from a single platform. 15,000+ global specialist recruiters. Cross-border candidate sourcing, GDPR-compliant workflows, and split fee agreements governed in-platform. Hire globally without managing global agencies.",
+  title: "International Hiring | Global Recruitment | RecXchange",
+  description: "International hiring from one platform. 15,000+ specialist recruiters across the UK, USA, UAE, Australia and Europe. GDPR-compliant. Pay only on placement.",
   keywords: [
     "international recruitment platform",
     "global hiring solution",
@@ -53,7 +53,7 @@ export default function InternationalHiringPage() {
       {
         "@type": "Question",
         "name": "Can RecXchange help me hire candidates from overseas?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Yes. RecXchange's global recruiter network spans the UK, USA, UAE, Australia, Europe, South Africa and beyond. When you post a role, the Xchange Engine can match it to recruiters in the candidate's source market — for example, a UK role can be matched to South African or Irish recruiters with strong cross-border placement track records. All data sharing is GDPR-compliant and governed in-platform." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. RecXchange's global recruiter network spans the UK, USA, UAE, Australia, Europe, South Africa and beyond. When you post a role, the Xchange Engine can match it to recruiters in the candidate's source market, for example, a UK role can be matched to South African or Irish recruiters with strong cross-border placement track records. All data sharing is GDPR-compliant and governed in-platform." }
       },
       {
         "@type": "Question",
@@ -72,17 +72,17 @@ export default function InternationalHiringPage() {
           <p className="text-cyan-400 text-sm font-bold uppercase tracking-widest mb-4">Use Case</p>
           <h1 className="text-4xl md:text-5xl font-black text-white mb-6">International Hiring</h1>
           <p className="text-gray-300 text-lg mb-10 leading-relaxed">
-            International hiring is complex: different employment laws, different candidate markets, different agency relationships to manage in each geography. RecXchange simplifies global recruitment into a single platform — 15,000+ specialist recruiters across the UK, USA, UAE, Australia, Europe and South Africa, all governed by a consistent, GDPR-compliant framework, with all cross-border split fee agreements generated and enforced in-platform.
+            International hiring is complex: different employment laws, different candidate markets, different agency relationships to manage in each geography. RecXchange simplifies global recruitment into a single platform, 15,000+ specialist recruiters across the UK, USA, UAE, Australia, Europe and South Africa, all governed by a consistent, GDPR-compliant framework, with all cross-border split fee agreements generated and enforced in-platform.
           </p>
 
           <h2 className="text-2xl font-bold text-white mb-4">Cross-Border Talent Sourcing</h2>
           <p className="text-gray-300 mb-6 leading-relaxed">
-            Many of the world’s best candidates for UK, US, and UAE roles are based overseas — in South Africa, Ireland, Australia, India, and the Philippines. Reaching them requires specialist recruiters with in-market networks and cross-border placement experience. RecXchange's Xchange Engine can match a UK role to overseas recruiters with strong track records placing candidates into your target market, opening talent pools that domestic agencies simply cannot access.
+            Many of the world’s best candidates for UK, US, and UAE roles are based overseas, in South Africa, Ireland, Australia, India, and the Philippines. Reaching them requires specialist recruiters with in-market networks and cross-border placement experience. RecXchange's Xchange Engine can match a UK role to overseas recruiters with strong track records placing candidates into your target market, opening talent pools that domestic agencies simply cannot access.
           </p>
 
           <h2 className="text-2xl font-bold text-white mb-4">Hiring Across Multiple Countries Simultaneously</h2>
           <p className="text-gray-300 mb-6 leading-relaxed">
-            For organisations expanding into new markets — a US business opening a UK office, a UAE firm building a European team, or a global organisation hiring simultaneously across three continents — RecXchange provides a single hiring platform that activates local specialist recruiters in each geography. No need to identify, vet, and sign Terms of Business with a different agency in every country.
+            For organisations expanding into new markets, a US business opening a UK office, a UAE firm building a European team, or a global organisation hiring simultaneously across three continents, RecXchange provides a single hiring platform that activates local specialist recruiters in each geography. No need to identify, vet, and sign Terms of Business with a different agency in every country.
           </p>
 
           <h2 className="text-2xl font-bold text-white mb-4">GDPR &amp; International Data Compliance</h2>

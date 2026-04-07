@@ -4,7 +4,7 @@ import React from 'react';
 
 export const metadata: Metadata = {
   title: "Recruitment Blog | Insights, Tips & News | RecXchange",
-  description: "Split fee recruitment tips, industry insights, RecXchange platform updates, and success stories from 15,000+ recruiters. Written for recruiters and hiring managers.",
+  description: "Split fee recruitment tips, industry insights, platform updates and success stories from 15,000+ recruiters. For recruiters and hiring managers.",
   keywords: [
     "recruitment blog",
     "split fee recruitment tips",
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
       url: "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png",
       width: 1200,
       height: 630,
-      alt: "RecXchange Blog — Recruitment Insights & News"
+      alt: "RecXchange Blog, Recruitment Insights & News"
     }]
   },
   twitter: {

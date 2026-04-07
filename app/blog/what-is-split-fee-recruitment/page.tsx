@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import React from 'react';
 
 export const metadata: Metadata = {
-  title: "What Is Split Fee Recruitment? The Complete Guide | RecXchange",
-  description: "Split fee recruitment explained: how it works, who benefits, what the fee split percentages are, and how platforms like RecXchange make collaboration between recruiters and hiring managers seamless. The definitive guide to split placements.",
+  title: "What Is Split Fee Recruitment? | RecXchange",
+  description: "Split fee recruitment explained: how it works, who benefits, what the fee split percentages are, and how RecXchange makes recruiter collaboration seamless.",
   keywords: [
     "what is split fee recruitment",
     "split fee recruitment explained",
@@ -33,7 +33,7 @@ export default function WhatIsSplitFeeRecruitmentPage() {
     "url": "https://recxchange.io/blog/what-is-split-fee-recruitment",
     "headline": "What Is Split Fee Recruitment? The Complete Guide",
     "description": "Split fee recruitment explained: how it works, fee split percentages, and how RecXchange makes recruiter collaboration seamless.",
-    "author": { "@type": "Organization", "name": "RecXchange", "url": "https://recxchange.io" },
+    "author": { "@type": "Person", "name": "Tom Andrews", "jobTitle": "CEO and Co-Founder", "url": "https://recxchange.io", "worksFor": { "@type": "Organization", "name": "RecXchange" } },
     "publisher": { "@type": "Organization", "name": "RecXchange", "logo": { "@type": "ImageObject", "url": "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png" } },
     "datePublished": "2025-01-01",
     "dateModified": "2026-03-01",
@@ -56,7 +56,7 @@ export default function WhatIsSplitFeeRecruitmentPage() {
       {
         "@type": "Question",
         "name": "What is split fee recruitment?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Split fee recruitment is a model where two recruiters collaborate on a single placement and share the placement fee. One recruiter holds the job role (the role-holder) and another holds the candidate (the candidate-holder). When the candidate is placed, the fee is split between them — typically 50/50, though platforms like RecXchange offer 60/40 and 70/30 splits depending on the arrangement." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Split fee recruitment is a model where two recruiters collaborate on a single placement and share the placement fee. One recruiter holds the job role (the role-holder) and another holds the candidate (the candidate-holder). When the candidate is placed, the fee is split between them, typically 50/50, though platforms like RecXchange offer 60/40 and 70/30 splits depending on the arrangement." }
       },
       {
         "@type": "Question",
@@ -82,7 +82,7 @@ export default function WhatIsSplitFeeRecruitmentPage() {
           <p className="text-gray-400 text-sm mb-10">Last updated: March 2026 &nbsp;·&nbsp; 8 min read</p>
 
           <p className="text-gray-300 text-lg mb-8 leading-relaxed">
-            Split fee recruitment is one of the most powerful but least understood models in the recruitment industry. It allows two recruiters to collaborate on a single placement — one with the job, one with the candidate — and share the resulting fee. Done well, it fills roles faster, earns more for recruiters, and gives hiring managers access to a far wider candidate pool than any single agency can provide.
+            Split fee recruitment is one of the most powerful but least understood models in the recruitment industry. It allows two recruiters to collaborate on a single placement, one with the job, one with the candidate, and share the resulting fee. Done well, it fills roles faster, earns more for recruiters, and gives hiring managers access to a far wider candidate pool than any single agency can provide.
           </p>
 
           <h2 className="text-2xl font-bold text-white mb-4">The Basic Concept</h2>
@@ -92,12 +92,12 @@ export default function WhatIsSplitFeeRecruitmentPage() {
 
           <h2 className="text-2xl font-bold text-white mb-4">How the Fee Split Works</h2>
           <p className="text-gray-300 mb-6 leading-relaxed">
-            The total placement fee is agreed between the hiring manager and the role-holding recruiter — typically 12–20% of the candidate's first-year salary. This fee is then divided between the role-holder and candidate-holder according to their agreed split percentage. Common split arrangements are:
+            The total placement fee is agreed between the hiring manager and the role-holding recruiter, typically 12 to 20% of the candidate's first-year salary. This fee is then divided between the role-holder and candidate-holder according to their agreed split percentage. Common split arrangements are:
           </p>
           <ul className="text-gray-300 mb-6 space-y-2 list-none">
-            <li className="flex items-start gap-3"><span className="text-cyan-400 mt-1">→</span><span><strong className="text-white">50/50</strong> — the most common standard split, equal share for both parties</span></li>
-            <li className="flex items-start gap-3"><span className="text-cyan-400 mt-1">→</span><span><strong className="text-white">60/40</strong> — role-holder takes 60%, candidate-holder takes 40%</span></li>
-            <li className="flex items-start gap-3"><span className="text-cyan-400 mt-1">→</span><span><strong className="text-white">70/30 (RecX Direct)</strong> — candidate-holder takes 70% of the total fee on RecXchange's RecX Direct product</span></li>
+            <li className="flex items-start gap-3"><span className="text-cyan-400 mt-1">→</span><span><strong className="text-white">50/50</strong>, the most common standard split, equal share for both parties</span></li>
+            <li className="flex items-start gap-3"><span className="text-cyan-400 mt-1">→</span><span><strong className="text-white">60/40</strong>, role-holder takes 60%, candidate-holder takes 40%</span></li>
+            <li className="flex items-start gap-3"><span className="text-cyan-400 mt-1">→</span><span><strong className="text-white">70/30 (RecX Direct)</strong>, candidate-holder takes 70% of the total fee on RecXchange's RecX Direct product</span></li>
           </ul>
 
           <h2 className="text-2xl font-bold text-white mb-4">Why Recruiters Use Split Fee Models</h2>
@@ -107,18 +107,27 @@ export default function WhatIsSplitFeeRecruitmentPage() {
 
           <h2 className="text-2xl font-bold text-white mb-4">Deal Protection: The Critical Component</h2>
           <p className="text-gray-300 mb-6 leading-relaxed">
-            The biggest risk in split fee recruitment — historically — has been the absence of legal protection. A recruiter shares a candidate in good faith, the placement is made, and the role-holder claims the full fee. Without a binding split fee agreement in place before the candidate's details are shared, the candidate-holder has limited recourse. This is why platforms like RecXchange build deal protection into every interaction: split agreements are auto-generated and timestamped before any candidate data changes hands.
+            The biggest risk in split fee recruitment, historically, has been the absence of legal protection. A recruiter shares a candidate in good faith, the placement is made, and the role-holder claims the full fee. Without a binding split fee agreement in place before the candidate's details are shared, the candidate-holder has limited recourse. This is why platforms like RecXchange build deal protection into every interaction: split agreements are auto-generated and timestamped before any candidate data changes hands.
           </p>
 
           <h2 className="text-2xl font-bold text-white mb-4">Split Fee Recruitment vs Traditional Contingency</h2>
           <p className="text-gray-300 mb-6 leading-relaxed">
-            Traditional contingency recruitment involves multiple agencies working independently on the same role in a race to submit first. Split fee recruitment is the opposite: it's structured collaboration where two recruiters work together toward a shared outcome. The incentive shifts from speed to fit — both parties want the right candidate placed, because both earn more when the placement is successful and the candidate stays.
+            Traditional contingency recruitment involves multiple agencies working independently on the same role in a race to submit first. Split fee recruitment is the opposite: it's structured collaboration where two recruiters work together toward a shared outcome. The incentive shifts from speed to fit, both parties want the right candidate placed, because both earn more when the placement is successful and the candidate stays.
           </p>
 
           <h2 className="text-2xl font-bold text-white mb-4">How RecXchange Facilitates Split Fee Recruitment</h2>
           <p className="text-gray-300 mb-6 leading-relaxed">
-            RecXchange is the UK's dedicated split fee recruitment marketplace. The Xchange Engine matches roles to the most relevant candidate-holding recruiters in real time. Split fee agreements are auto-generated before any candidate data is shared. Payments are processed in-platform on placement confirmation. Hiring managers get access to 15,000+ specialist recruiter networks through a single relationship, paying a single success fee — part of which is distributed to the placing recruiters by RecXchange automatically.
+            RecXchange is the UK's dedicated split fee recruitment marketplace. The Xchange Engine matches roles to the most relevant candidate-holding recruiters in real time. Split fee agreements are auto-generated before any candidate data is shared. Payments are processed in-platform on placement confirmation. Hiring managers get access to 15,000+ specialist recruiter networks through a single relationship, paying a single success fee, part of which is distributed to the placing recruiters by RecXchange automatically.
           </p>
+
+          <div className="mt-10 mb-8 p-5 rounded-2xl border border-white/10 bg-white/[0.02] flex flex-col sm:flex-row gap-4 items-start">
+            <div className="w-12 h-12 rounded-full bg-cyan-500/10 border border-cyan-400/20 flex items-center justify-center text-cyan-400 font-bold text-lg flex-shrink-0">TA</div>
+            <div>
+              <p className="text-white font-bold text-sm mb-1">Tom Andrews</p>
+              <p className="text-gray-400 text-xs mb-2">CEO and Co-Founder, RecXchange</p>
+              <p className="text-gray-500 text-xs leading-relaxed">Tom has spent over 14 years in specialist recruitment across building materials, industrial engineering, M&amp;E, and mental health sectors. He co-founded RecXchange to give independent and specialist recruiters a better way to collaborate, split fees, and make more placements without the politics of traditional agency networks.</p>
+            </div>
+          </div>
 
           <div className="mt-12 p-6 rounded-2xl border border-cyan-400/20 bg-cyan-400/5">
             <p className="text-cyan-400 font-bold mb-2">Ready to start split fee recruiting?</p>

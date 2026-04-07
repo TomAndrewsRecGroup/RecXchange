@@ -4,7 +4,7 @@ import React from 'react';
 
 export const metadata: Metadata = {
   title: "Contact RecXchange | Talk to the Team | Support & Sales",
-  description: "Get in touch with RecXchange. Questions about split fee recruitment, pricing, platform setup, or partnerships? Our team responds within one business day. Email: support@recxchange.io",
+  description: "Contact RecXchange. Questions about split fee recruitment, pricing, platform setup or partnerships? Our team responds within one business day.",
   keywords: [
     "contact RecXchange",
     "RecXchange support",

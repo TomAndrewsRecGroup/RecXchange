@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useParams } from 'next/navigation';
 
 interface BlogPost {
@@ -188,10 +189,13 @@ export default function BlogPostPage() {
               animate={{ opacity: 1, scale: 1 }}
               className="mb-12 rounded-2xl overflow-hidden"
             >
-              <img
+              <Image
                 src={post.imageUrl}
                 alt={post.title}
+                width={1200}
+                height={400}
                 className="w-full h-[400px] object-cover"
+                priority
               />
             </motion.div>
           )}

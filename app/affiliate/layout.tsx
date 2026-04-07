@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import React from 'react';
 
 export const metadata: Metadata = {
-  title: "Affiliate Program | Earn RecX Tokens for Referrals | RecXchange",
-  description: "Refer recruiters to RecXchange and earn RecX Tokens redeemable for platform credits, candidate contact data, and eLearning content. Clear terms, transparent rewards, no cash gimmicks.",
+  title: "Affiliate Programme | Earn RecX Tokens | RecXchange",
+  description: "Refer recruiters to RecXchange and earn RecX Tokens for platform credits, candidate contact data and eLearning content. Clear terms, transparent rewards.",
   keywords: [
     "RecXchange affiliate program",
     "recruiter referral program",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
       url: "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png",
       width: 1200,
       height: 630,
-      alt: "RecXchange Affiliate Program — Earn RecX Tokens"
+      alt: "RecXchange Affiliate Program, Earn RecX Tokens"
     }]
   },
   twitter: {

@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import React from 'react';
 
 export const metadata: Metadata = {
-  title: "Find Recruiters With Candidates | Partner & Place | RecXchange",
-  description: "Browse recruiters who have pre-sourced candidates ready to place. Have a live role but no candidates? Partner with a recruiter who does, agree a split, submit and earn together.",
+  title: "Recruiters With Candidates | RecXchange",
+  description: "Browse recruiters with pre-sourced candidates ready to place. Have a role but no candidates? Partner with one who does, agree a split, earn together.",
   keywords: [
     "recruiters with candidates",
     "find recruiter with candidates",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
       url: "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png",
       width: 1200,
       height: 630,
-      alt: "RecXchange — Find Recruiters With Candidates"
+      alt: "RecXchange, Find Recruiters With Candidates"
     }]
   },
   twitter: {

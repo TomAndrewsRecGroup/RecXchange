@@ -3,8 +3,8 @@ import React from 'react';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: "Recruitment Use Cases | How Hiring Managers Use RecXchange | RecXchange",
-  description: "How hiring managers and talent leaders use RecXchange across every recruitment scenario: scale-up hiring, hard-to-fill roles, senior executive search, contract recruitment, volume hiring, and international hiring.",
+  title: "Recruitment Use Cases | RecXchange",
+  description: "How hiring managers use RecXchange: scale-up hiring, hard-to-fill roles, executive search, contract recruitment, volume hiring and international hiring.",
   alternates: { canonical: "https://recxchange.io/use-cases" },
   openGraph: {
     title: "Recruitment Use Cases | RecXchange",
@@ -19,9 +19,9 @@ const useCases = [
   { href: "/use-cases/scale-up-hiring", title: "Scale-Up Hiring", desc: "Series A/B companies hiring fast without blowing cash runway on retained search fees." },
   { href: "/use-cases/hard-to-fill-roles", title: "Hard-to-Fill Roles", desc: "Specialist, niche, and passive-only roles that job boards and generalist agencies can't crack." },
   { href: "/use-cases/senior-executive-search", title: "Senior & Executive Search", desc: "C-suite and VP-level search without retainers, exclusivity requirements, or 30%+ fees." },
-  { href: "/use-cases/contract-recruitment", title: "Contract & Interim Recruitment", desc: "Specialist contractors and interim professionals. IR35-compliant. First profiles in 24–48 hours." },
+  { href: "/use-cases/contract-recruitment", title: "Contract & Interim Recruitment", desc: "Specialist contractors and interim professionals. IR35-compliant. First profiles in 24 to 48 hours." },
   { href: "/use-cases/volume-hiring", title: "Volume Hiring", desc: "10 to 50 roles simultaneously. Parallel specialist networks. Single Account Manager. Full dashboard." },
-  { href: "/use-cases/international-hiring", title: "International Hiring", desc: "UK, USA, UAE, Australia, Europe, South Africa — from one platform. GDPR-compliant. Right-to-work verified." },
+  { href: "/use-cases/international-hiring", title: "International Hiring", desc: "UK, USA, UAE, Australia, Europe, South Africa, from one platform. GDPR-compliant. Right-to-work verified." },
 ];
 
 export default function UseCasesHubPage() {
