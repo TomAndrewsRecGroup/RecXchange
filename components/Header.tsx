@@ -79,7 +79,7 @@ export default function Header() {
               href="https://app.recxchange.io/register?trigger_link=jYQNc9YXcMkYPvo3HZfC"
               className="px-5 py-2.5 rounded-full bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white text-sm font-bold hover:scale-105 transition-all shadow-[0_0_20px_rgba(0,255,255,0.3)]"
             >
-              Join Free
+              Get Started
             </Link>
           </div>
 
@@ -89,7 +89,7 @@ export default function Header() {
               href="https://app.recxchange.io/register?trigger_link=jYQNc9YXcMkYPvo3HZfC"
               className="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white text-xs font-bold shadow-[0_0_12px_rgba(0,255,255,0.2)] min-h-[36px] flex items-center"
             >
-              Join Free
+              Get Started
             </Link>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -132,7 +132,7 @@ export default function Header() {
                     className="w-full py-3.5 rounded-full bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white text-sm font-bold text-center shadow-[0_0_20px_rgba(0,255,255,0.3)] tap-target"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    Join Free
+                    Get Started
                   </Link>
                   <Link 
                     href="https://app.recxchange.io?trigger_link=Hc9mpfL0JxjX06kwNpd1" 

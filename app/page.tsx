@@ -400,7 +400,7 @@ export default function HomePage() {
                 href="https://app.recxchange.io/register?trigger_link=jYQNc9YXcMkYPvo3HZfC"
                 className="px-8 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 via-purple-500 to-fuchsia-500 text-white text-sm font-bold hover:scale-105 transition-transform min-h-[44px] flex items-center"
               >
-                Get Started Free
+                Get Started
               </Link>
               <button
                 onClick={scrollToCards}

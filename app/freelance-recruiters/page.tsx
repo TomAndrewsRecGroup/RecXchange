@@ -261,7 +261,7 @@ export default function FreelanceRecruitersPage() {
                   size="lg"
                   href="https://app.recxchange.io/register?trigger_link=jYQNc9YXcMkYPvo3HZfC"
                 >
-                  Join Free as a Freelancer
+                  Start From $1/month
                 </GlowButton>
                 <GlowButton
                   variant="secondary"
