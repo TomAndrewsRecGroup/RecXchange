@@ -369,7 +369,7 @@ function emailTemplate(cfg) {
     <!-- LOGO -->
     <tr>
       <td align="center" bgcolor="#060D1C" style="padding:30px 36px 24px;">
-        <img src="https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Main-Logo-25.png" width="190" alt="RecXchange" style="display:block;margin:0 auto;" />
+        <img src="https://assets.cdn.filesafe.space/VxHBI8kbavh407OMkAcu/media/693419dfe0f0920b8ff63b72.png" width="190" alt="RecXchange" style="display:block;margin:0 auto;" />
       </td>
     </tr>
 
@@ -381,7 +381,7 @@ function emailTemplate(cfg) {
           width="620"
           alt="${imageAlt}"
           class="hero-img"
-          style="display:block;width:620px;max-width:100%;height:auto;"
+          style="display:block;width:580px;max-width:100%;height:210px;object-fit:cover;object-position:center top;"
         />
       </td>
     </tr>
@@ -418,12 +418,12 @@ function emailTemplate(cfg) {
         <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
           <tr>
             <td class="stat-td" width="32%" align="center" bgcolor="#0B1829" style="border-radius:12px;padding:18px 10px;border:1px solid #F59E0B;">
-              <p style="margin:0 0 5px;font-size:28px;font-weight:bold;color:#F59E0B;font-family:Arial,Helvetica,sans-serif;line-height:1;">15,000+</p>
+              <p style="margin:0 0 5px;font-size:28px;font-weight:bold;color:#F59E0B;font-family:Arial,Helvetica,sans-serif;line-height:1;">17,000+</p>
               <p style="margin:0;font-size:11px;color:#64748B;font-family:Arial,Helvetica,sans-serif;text-transform:uppercase;letter-spacing:1px;">Recruiters Inside</p>
             </td>
             <td class="spacer-td" width="2%">&nbsp;</td>
             <td class="stat-td" width="32%" align="center" bgcolor="#0B1829" style="border-radius:12px;padding:18px 10px;border:1px solid #2563EB;">
-              <p style="margin:0 0 5px;font-size:28px;font-weight:bold;color:#60A5FA;font-family:Arial,Helvetica,sans-serif;line-height:1;">£750K+</p>
+              <p style="margin:0 0 5px;font-size:28px;font-weight:bold;color:#60A5FA;font-family:Arial,Helvetica,sans-serif;line-height:1;">$850K+</p>
               <p style="margin:0;font-size:11px;color:#64748B;font-family:Arial,Helvetica,sans-serif;text-transform:uppercase;letter-spacing:1px;">Fees Available Now</p>
             </td>
             <td class="spacer-td" width="2%">&nbsp;</td>
@@ -509,7 +509,7 @@ function emailTemplate(cfg) {
       <td style="padding:18px 36px 26px;" align="center">
         <p style="margin:0 0 8px;font-size:11px;color:#334155;font-family:Arial,Helvetica,sans-serif;line-height:1.65;text-align:center;">
           You are receiving this email because you interacted with RecXchange online.<br />
-          RecXchange Portal LLC t/a RecXchange, registered in the UAE.
+          Andrews Recruitment Group Limited t/a RecXchange, a UK registered company.
         </p>
         <p style="margin:0;font-size:11px;font-family:Arial,Helvetica,sans-serif;text-align:center;">
           <a href="{{unsubscribe_url}}" style="color:#334155;text-decoration:underline;">
@@ -542,7 +542,7 @@ const emails = [
     preheader: '100+ jobs open right now. Work them. Earn from them. Start for $1.',
     imageId: '1521737604893-d14cc237f11d',
     imageAlt: 'Recruiters collaborating in an office',
-    pill: 'JOIN 15,000 RECRUITERS | $1/MONTH',
+    pill: 'JOIN 17,000 RECRUITERS | $1/MONTH',
     h1: 'More jobs to work. More money to earn.',
     sub: 'RecXchange connects recruiters around the world.<br /><strong style="color:#ffffff;">Work each other\'s jobs. Share the fee.</strong>',
     bodyParas: [
@@ -574,7 +574,7 @@ const emails = [
     bodyParas: [
       'RecXchange is a platform for recruiters. It lets you work on jobs posted by other recruiters, and share candidates with them too.',
       'When a placement happens, the fee is split. You keep the biggest share. The platform handles the rest.',
-      'Over 15,000 recruiters are already inside. They work together. They earn together.',
+      'Over 17,000 recruiters are already inside. They work together. They earn together.',
     ],
     panelHtml: checklistPanel('Three things RecXchange gives you:', [
       'Browse 100+ live jobs posted by other recruiters',
@@ -733,7 +733,7 @@ const emails = [
     bodyParas: [
       'We often hear: I work in a niche sector. Will there be anything for me?',
       'The answer is yes. RecXchange has live roles across technology, finance, healthcare, engineering, sales, legal and more.',
-      'And because 15,000 recruiters from over 50 countries are inside, new jobs are posted every day.',
+      'And because 17,000 recruiters from over 50 countries are inside, new jobs are posted every day.',
     ],
     panelHtml: checklistPanel('Sectors with live jobs right now:', [
       'Technology and Software',
@@ -796,8 +796,8 @@ const emails = [
     panelHtml: statsPanel(
       [
         { number: '100+', label: 'Jobs Posted and Open' },
-        { number: '£750K+', label: 'In Fees Available' },
-        { number: '15,000', label: 'Recruiters Looking for Partners' },
+        { number: '$850K+', label: 'In Fees Available' },
+        { number: '17,000', label: 'Recruiters Looking for Partners' },
       ],
       'Numbers updated weekly. Join to see the full picture.'
     ),
@@ -835,16 +835,16 @@ const emails = [
   // 12 — Social Proof
   {
     num: 12,
-    title: 'RecXchange: What 15,000 recruiters already know.',
+    title: 'RecXchange: What 17,000 recruiters already know.',
     preheader: 'They joined. They started earning. Here is what they found.',
     imageId: '1531482615714-37ea4a4f0f7c',
     imageAlt: 'Recruiters in a positive team discussion',
-    pill: '15,000 RECRUITERS INSIDE',
-    h1: 'What 15,000 recruiters already know that you do not.',
+    pill: '17,000 RECRUITERS INSIDE',
+    h1: 'What 17,000 recruiters already know that you do not.',
     sub: 'They joined. They started earning. Here is what they found.',
     bodyParas: [
       'When RecXchange launched, it had one goal: let recruiters earn more by working together.',
-      '15,000 recruiters later, the platform is growing every week. Here is what they say makes the difference.',
+      '17,000 recruiters later, the platform is growing every week. Here is what they say makes the difference.',
     ],
     panelHtml: quotePanel([
       { text: 'I made my first placement within three weeks. The process was straightforward and the fee was paid on time.', attribution: 'Recruiter, UK' },
@@ -854,7 +854,7 @@ const emails = [
     showPricing: true,
     ctaText: 'Join Them',
     ctaUrl: 'https://app.recxchange.io',
-    ctaSubtext: '15,000 recruiters and growing. Start for $1.',
+    ctaSubtext: '17,000 recruiters and growing. Start for $1.',
   },
 
   // 13 — Tuesday Session
@@ -953,7 +953,7 @@ const emails = [
     panelHtml: rolesPanel([
       { role: 'Senior Software Engineer', sector: 'Technology', fee: '£8,000 to £12,000' },
       { role: 'Finance Manager', sector: 'Financial Services', fee: '£6,000 to £9,000' },
-      { role: 'Head of Sales', sector: 'SaaS', fee: '£10,000 to £15,000' },
+      { role: 'Head of Sales', sector: 'SaaS', fee: '£10,000 to £17,000' },
       { role: 'Operations Director', sector: 'Healthcare', fee: '£7,000 to £11,000' },
     ]),
     showPricing: true,
@@ -1060,7 +1060,7 @@ const emails = [
       '100+ live jobs from recruiters who need your help',
       '270 million candidate profiles to search',
       'Up to 70% fee share on every placement you help make',
-      'A network of 15,000 recruiters to partner with',
+      'A network of 17,000 recruiters to partner with',
     ]),
     showPricing: true,
     ctaText: 'Look Inside RecXchange',
