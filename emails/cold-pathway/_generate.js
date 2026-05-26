@@ -369,7 +369,7 @@ function emailTemplate(cfg) {
     <!-- LOGO -->
     <tr>
       <td align="center" bgcolor="#060D1C" style="padding:30px 36px 24px;">
-        <img src="https://assets.cdn.filesafe.space/VxHBI8kbavh407OMkAcu/media/693419dfe0f0920b8ff63b72.png" width="190" alt="RecXchange" style="display:block;margin:0 auto;" />
+        <img src="https://assets.cdn.filesafe.space/VxHBI8kbavh407OMkAcu/media/693419dfe0f0920b8ff63b72.png" width="240" alt="RecXchange" style="display:block;margin:0 auto;" />
       </td>
     </tr>
 
@@ -381,7 +381,7 @@ function emailTemplate(cfg) {
           width="620"
           alt="${imageAlt}"
           class="hero-img"
-          style="display:block;width:580px;max-width:100%;height:210px;object-fit:cover;object-position:center top;"
+          style="display:block;width:580px;max-width:100%;height:210px;object-fit:cover;object-position:center center;"
         />
       </td>
     </tr>
