@@ -1,12 +1,13 @@
 /**
- * RecXchange Cold Email Generator
- * Generates cold-email-01.html through cold-email-20.html
- * Run: node emails/cold-pathway/_generate.js
+ * RecXchange Warm Email Generator
+ * Generates warm-email-02.html through warm-email-15.html
+ * (Email 01 is the shared cold pathway opener that everyone receives first)
+ * Run: node emails/warm-pathway/_generate.js
  */
 
 'use strict';
 
-const fs = require('fs');
+const fs   = require('fs');
 const path = require('path');
 
 const OUT_DIR = __dirname;
@@ -23,9 +24,9 @@ function stepsPanel(title, steps) {
 
   let rows = '';
   steps.forEach((step, i) => {
-    const bg  = circleColors[i] || '#F59E0B';
-    const tc  = textColors[i]   || '#000000';
-    const num = i + 1;
+    const bg    = circleColors[i] || '#F59E0B';
+    const tc    = textColors[i]   || '#000000';
+    const num   = i + 1;
     const isLast = i === steps.length - 1;
 
     rows += `
@@ -530,19 +531,18 @@ function emailTemplate(cfg) {
 }
 
 // ---------------------------------------------------------------------------
-// Warm pathway email configs (02–15)
+// Email configs (warm pathway, W02 through W15)
 // ---------------------------------------------------------------------------
-
 
 const emails = [
 
   // W02 — Real Result, Real Numbers
   {
     num: 2,
-    title: 'RecXchange: A recruiter earned $6,300 last week.',
-    preheader: 'You know what RecXchange does. Here is what it looks like in real money.',
+    title: 'RecXchange: A recruiter placed last week. Here is exactly what they earned.',
+    preheader: 'Real placement. Real fee. Real numbers. See what happened.',
     imageId: '1579621970563-994dde03b523',
-    imageAlt: 'Professional celebrating a successful placement result',
+    imageAlt: 'Recruiter celebrating a successful placement',
     pill: 'REAL RESULTS | LAST WEEK',
     h1: 'A recruiter placed last week. Here is exactly what they earned.',
     sub: 'You know what RecXchange does. This is what it looks like in real money.',
@@ -555,7 +555,7 @@ const emails = [
       [
         { number: '$9,000', label: 'Total Placement Fee' },
         { number: '$6,300', label: 'Earned by the Recruiter at 70%' },
-        { number: '$0.20', label: 'Cost of One Credit Used' },
+        { number: '$0.20',  label: 'Cost of One Credit Used' },
       ],
       'Based on a real platform placement. Individual results will vary.'
     ),
@@ -568,10 +568,10 @@ const emails = [
   // W03 — The ROI Is Impossible to Ignore
   {
     num: 3,
-    title: 'RecXchange: You spend $1. You can earn $6,300.',
+    title: 'RecXchange: You spend $1. You can earn $6,300. That is the maths.',
     preheader: 'No other platform in recruitment comes close to this return.',
     imageId: '1611974789855-9c2a0a7236a3',
-    imageAlt: 'Strong financial returns shown clearly',
+    imageAlt: 'Financial data showing strong returns',
     pill: 'THE ROI',
     h1: 'You spend $1. You can earn $6,300. That is the maths.',
     sub: 'No other platform in recruitment comes close to this return.',
@@ -582,8 +582,8 @@ const emails = [
     ],
     panelHtml: statsPanel(
       [
-        { number: '$0.20', label: 'Cost Per Submission' },
-        { number: '$6,300', label: 'Average Earn at 70%' },
+        { number: '$0.20',    label: 'Cost Per Submission' },
+        { number: '$6,300',   label: 'Average Earn at 70%' },
         { number: '630,000%', label: 'ROI on One Credit' },
       ],
       'ROI calculated on one $0.20 credit vs a $6,300 earn. Your results will vary.'
@@ -594,10 +594,10 @@ const emails = [
     ctaSubtext: 'app.recxchange.io',
   },
 
-  // W04 — Collaboration Story
+  // W04 — Collaboration Story: Three Recruiters, One Job
   {
     num: 4,
-    title: 'RecXchange: One job. Three recruiters. Everyone earned.',
+    title: 'RecXchange: One job. Three recruiters involved. Everyone came out ahead.',
     preheader: 'This is how RecXchange collaboration works in practice.',
     imageId: '1529156069898-49953e39b3ac',
     imageAlt: 'Three professionals collaborating and celebrating a win',
@@ -610,8 +610,8 @@ const emails = [
       'The recruiter who submitted the winning candidate earned $8,400. The recruiter who posted the job earned $3,600. The client got their hire. Everyone won.',
     ],
     panelHtml: stepsPanel('How it played out:', [
-      { title: 'Day 1', desc: 'Finance role posted on RecXchange with a $12,000 fee. Open to all recruiters on the platform.' },
-      { title: 'Day 4', desc: 'Two candidate submissions received from recruiters in the network.' },
+      { title: 'Day 1',  desc: 'Finance role posted on RecXchange with a $12,000 fee. Open to all recruiters on the platform.' },
+      { title: 'Day 4',  desc: 'Two candidate submissions received from recruiters in the network.' },
       { title: 'Day 11', desc: 'Offer made and accepted. Fee split automatically. $8,400 to the submitter. $3,600 to the poster.' },
     ]),
     showPricing: true,
@@ -623,7 +623,7 @@ const emails = [
   // W05 — Speed Story: Interview in 48 Hours
   {
     num: 5,
-    title: 'RecXchange: The interview was booked in 48 hours.',
+    title: 'RecXchange: The interview was booked 48 hours after submission.',
     preheader: 'When the right candidate meets the right role, things move fast.',
     imageId: '1568992687947-868a62a9f521',
     imageAlt: 'Professional moving fast and getting results',
@@ -651,17 +651,17 @@ const emails = [
   // W06 — Billing Without Clients
   {
     num: 6,
-    title: 'RecXchange: Billing $50,000 without a single new client.',
-    preheader: 'They are not working harder. They are using other people\'s client relationships.',
+    title: 'RecXchange: Recruiters are billing $50,000 and more without a single new client.',
+    preheader: "They are not working harder. They are using other people's client relationships.",
     imageId: '1573496799652-5b48d63d4bef',
     imageAlt: 'Confident professional achieving results independently',
     pill: 'NO CLIENTS NEEDED',
     h1: 'Recruiters are billing $50,000 and more without a single new client.',
-    sub: 'They are not working harder. They are using other people\'s client relationships.',
+    sub: "They are not working harder. They are using other people's client relationships.",
     bodyParas: [
       'The traditional model says: find a client, win the brief, fill the job, get paid. That works. But it is slow and expensive.',
       'RecXchange removes the client development step entirely. The clients are already there. The jobs are already posted. You bring the candidates.',
-      'Recruiters who use this model are billing $50,000, $100,000 and more per year through the platform. No cold calls. No business development spend. No waiting months for a relationship to pay off.',
+      'Recruiters who use this model are billing $50,000, $100,000 and more per year through the platform. No cold calls. No BD spend. No waiting months for a relationship to pay off.',
     ],
     panelHtml: checklistPanel('What changes when you join:', [
       'No client development needed. The jobs are already there.',
@@ -676,13 +676,13 @@ const emails = [
     ctaSubtext: '100+ open roles. Start for $1.',
   },
 
-  // W07 — Your Network Has Value
+  // W07 — Your Network Is Worth More Than You Think
   {
     num: 7,
-    title: 'RecXchange: That candidate could be worth $6,000 today.',
-    preheader: 'Most recruiters have great people sitting unused. RecXchange fixes that.',
+    title: 'RecXchange: That candidate you spoke to last month could be worth $6,000 to you today.',
+    preheader: 'Most recruiters have great people sitting unused in their network. RecXchange fixes that.',
     imageId: '1472099645785-5658abf4ff4e',
-    imageAlt: 'Confident professional realising the value of their connections',
+    imageAlt: 'Confident professional realising the value of their network',
     pill: 'YOUR NETWORK HAS VALUE',
     h1: 'That candidate you spoke to last month could be worth $6,000 to you today.',
     sub: 'Most recruiters have great people sitting unused in their network. RecXchange fixes that.',
@@ -692,9 +692,9 @@ const emails = [
       'Your network is not just useful for your own roles. On RecXchange, it is an asset on every single job posted by 17,000 other recruiters.',
     ],
     panelHtml: statsPanel([
-      { number: '100+', label: 'Live Jobs Your Candidates Could Fit' },
+      { number: '100+',   label: 'Live Jobs Your Candidates Could Fit' },
       { number: '$7,000', label: 'Average Fee Per Placement' },
-      { number: '70%', label: 'Maximum Share You Keep' },
+      { number: '70%',    label: 'Maximum Share You Keep' },
     ]),
     showPricing: true,
     ctaText: 'Match Your Candidates to Live Jobs',
@@ -702,13 +702,13 @@ const emails = [
     ctaSubtext: 'Join for $1. Search the board from day one.',
   },
 
-  // W08 — Success Story: Monday to Placement
+  // W08 — A Success Story in Three Parts
   {
     num: 8,
-    title: 'RecXchange: She joined Monday. Placed 16 days later.',
+    title: 'RecXchange: She joined on a Monday. She made a placement 16 days later.',
     preheader: 'From a candidate she already knew. On a role she found that morning.',
     imageId: '1519389950473-47ba0277781c',
-    imageAlt: 'Recruiter achieving a great result from their home setup',
+    imageAlt: 'Recruiter achieving a successful outcome from their home office',
     pill: 'SUCCESS STORY',
     h1: 'She joined on a Monday. She made a placement 16 days later.',
     sub: 'From a candidate she already knew. On a role she found that morning.',
@@ -719,8 +719,8 @@ const emails = [
       'Monday to placement: 16 days. Using a candidate she already had in her network.',
     ],
     panelHtml: stepsPanel('Her story:', [
-      { title: 'Monday', desc: 'Joined RecXchange. Found a matching role on the jobs board within the hour.' },
-      { title: 'Wednesday', desc: 'Called a candidate from her existing network. Submitted him for the role.' },
+      { title: 'Monday',        desc: 'Joined RecXchange. Found a matching role on the jobs board within the hour.' },
+      { title: 'Wednesday',     desc: 'Called a candidate from her existing network. Submitted him for the role.' },
       { title: '16 days later', desc: 'Placement confirmed. Offer accepted. $7,200 earned.' },
     ]),
     showPricing: true,
@@ -729,11 +729,11 @@ const emails = [
     ctaSubtext: '100+ open roles. Start for $1.',
   },
 
-  // W09 — Live Platform Numbers
+  // W09 — The Platform Numbers Right Now
   {
     num: 9,
-    title: 'RecXchange: $850,000 in fees. All available to you.',
-    preheader: 'These are not projections. These are the real numbers from inside the platform.',
+    title: 'RecXchange: $850,000 in fees. 17,000 recruiters. 100+ live jobs. All available to you.',
+    preheader: 'These are not projections. These are the real numbers from inside the platform right now.',
     imageId: '1551288049-b1f366c92d8f',
     imageAlt: 'Live data dashboard showing strong platform activity',
     pill: 'LIVE PLATFORM DATA',
@@ -745,9 +745,9 @@ const emails = [
       'You have been watching from the outside. This is what is on the inside.',
     ],
     panelHtml: statsPanel([
-      { number: '$850K+', label: 'Total Fees Available on the Platform' },
+      { number: '$850K+',  label: 'Total Fees Available on the Platform' },
       { number: '17,000+', label: 'Active Recruiters Inside' },
-      { number: '270M', label: 'Candidate Profiles to Search' },
+      { number: '270M',    label: 'Candidate Profiles to Search' },
     ]),
     showPricing: true,
     ctaText: 'Access the Platform for $1',
@@ -758,10 +758,10 @@ const emails = [
   // W10 — The $1 Is Not the Point
   {
     num: 10,
-    title: 'RecXchange: Forget the $1. Think about what is behind it.',
+    title: 'RecXchange: Forget the $1. Think about what is on the other side of it.',
     preheader: 'The entry price is small. The opportunity behind it is not.',
     imageId: '1598257688879-56dd1d6c3bb3',
-    imageAlt: 'Professional making a confident and considered decision',
+    imageAlt: 'Professional making a confident decision',
     pill: 'THE REAL VALUE',
     h1: 'Forget the $1. Think about what is on the other side of it.',
     sub: 'The entry price is small. The opportunity behind it is not.',
@@ -783,10 +783,10 @@ const emails = [
     ctaSubtext: 'app.recxchange.io. No contract. No catch.',
   },
 
-  // W11 — Answer the Real Objections
+  // W11 — Answering the Real Objections
   {
     num: 11,
-    title: 'RecXchange: What is actually stopping you?',
+    title: 'RecXchange: You have seen what RecXchange offers. What is stopping you?',
     preheader: 'We hear the same reasons. Here is the honest answer to each one.',
     imageId: '1543269664-56d93a37a6c9',
     imageAlt: 'Professional working through a decision with confidence',
@@ -810,10 +810,10 @@ const emails = [
   // W12 — From Doubt to Placement
   {
     num: 12,
-    title: 'RecXchange: He was not sure. Then he earned $5,400.',
+    title: 'RecXchange: He was not sure it would work. Then he earned $5,400.',
     preheader: 'Most recruiters feel unsure before they join. Most change their mind fast.',
     imageId: '1504384119817-d8b7a6b13756',
-    imageAlt: 'Recruiter who took the step and got results',
+    imageAlt: 'Recruiter who took the leap and succeeded',
     pill: 'FROM DOUBT TO PLACEMENT',
     h1: 'He was not sure it would work. Then he earned $5,400.',
     sub: 'Most recruiters feel unsure before they join. Most change their mind fast.',
@@ -835,10 +835,10 @@ const emails = [
     ctaSubtext: 'Join for $1. Your first result could be sooner than you think.',
   },
 
-  // W13 — The Maths That Makes It Simple
+  // W13 — The One Number That Makes It Simple
   {
     num: 13,
-    title: 'RecXchange: One placement. 408 years of membership covered.',
+    title: 'RecXchange: One placement pays for over 400 years of membership.',
     preheader: 'We are not exaggerating. Here is the breakdown.',
     imageId: '1505373877841-8d25f7d46678',
     imageAlt: 'Professional reviewing clear and compelling numbers',
@@ -852,9 +852,9 @@ const emails = [
     ],
     panelHtml: statsPanel(
       [
-        { number: '$12', label: 'Cost Per Year on Entry Plan' },
+        { number: '$12',    label: 'Cost Per Year on Entry Plan' },
         { number: '$4,900', label: 'Earned From One Placement at 70%' },
-        { number: '408', label: 'Years of Membership From One Placement' },
+        { number: '408',    label: 'Years of Membership Covered by One Placement' },
       ],
       'Based on a $7,000 average fee at 70%. Your results will vary.'
     ),
@@ -864,26 +864,26 @@ const emails = [
     ctaSubtext: 'app.recxchange.io. Join today.',
   },
 
-  // W14 — See It Live
+  // W14 — See It Live This Tuesday
   {
     num: 14,
-    title: 'RecXchange: See it live this Tuesday.',
-    preheader: 'Real jobs. Real fees. Real submissions. Live on YouTube. Free to join.',
+    title: 'RecXchange: Come and see RecXchange working live. This Tuesday at 10:30am GMT.',
+    preheader: 'Not a webinar. Not a pitch. Just the platform open on screen with real jobs and real fees.',
     imageId: '1524178232363-1fb2b075b655',
-    imageAlt: 'Live professional session with an engaged audience',
+    imageAlt: 'Live professional session with engaged audience',
     pill: 'LIVE THIS TUESDAY',
     h1: 'Come and see RecXchange working live. This Tuesday at 10:30am GMT.',
     sub: 'Not a webinar. Not a pitch. Just the platform open on screen with real jobs and real fees.',
     bodyParas: [
       'Every Tuesday, Tom Andrews goes live on YouTube. He opens RecXchange and shows everything in real time.',
-      'Real jobs on the board. Real fees shown clearly. A live candidate submission walked through step by step. Then open Q and A.',
+      'Real jobs on the board. Real fees shown clearly. A live candidate submission walked through step by step. Then open Q&amp;A.',
       'If you have been on the fence, this session usually settles it. No account needed. Just show up.',
     ],
     panelHtml: checklistPanel('What happens in the session:', [
       'The live jobs board shown on screen with fees',
       'A real candidate submission completed step by step',
       'How the fee split works, demonstrated live',
-      'Open Q and A at the end. Any question welcome.',
+      'Open Q&amp;A at the end. Any question welcome.',
       'Free to attend. No sign-up needed. Just join on YouTube.',
     ]),
     showPricing: false,
@@ -895,8 +895,8 @@ const emails = [
   // W15 — Personal Close From Tom
   {
     num: 15,
-    title: 'RecXchange: A personal message from Tom.',
-    preheader: 'I am going to keep this short. But I wanted to say one thing first.',
+    title: 'RecXchange: A personal message from Tom Andrews.',
+    preheader: 'I am going to keep this short.',
     imageId: '1537511446880-65695f3cb2ac',
     imageAlt: 'Founder making a personal and direct connection',
     pill: 'FROM TOM ANDREWS',
@@ -908,7 +908,7 @@ const emails = [
       'If there is still something stopping you, come and talk to me live on Tuesday. Or just try it for $1 and see for yourself.',
       'I hope the next placement you make is with us.',
     ],
-    panelHtml: checklistPanel('Everything waiting for you inside:', [
+    panelHtml: checklistPanel('Everything waiting for you:', [
       '$850,000+ in live fees on the platform',
       '17,000+ recruiters ready to collaborate',
       '270 million candidate profiles to search',
