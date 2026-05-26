@@ -616,23 +616,23 @@ const emails = [
   // 04 — The Fee Example
   {
     num: 4,
-    title: 'RecXchange: A £7,000 fee. Two recruiters. Both earn.',
+    title: 'RecXchange: A $7,000 fee. Two recruiters. Both earn.',
     preheader: 'Here is what a RecXchange placement looks like in real money.',
     imageId: '1507003211169-0a1dd7228f2d',
     imageAlt: 'Confident professional ready to close a deal',
     pill: 'REAL NUMBERS',
-    h1: 'A £7,000 fee. Two recruiters. Both earn.',
+    h1: 'A $7,000 fee. Two recruiters. Both earn.',
     sub: 'Here is what a RecXchange placement looks like in real money.',
     bodyParas: [
-      'A recruiter posts a job on RecXchange. The fee for placing someone is £7,000.',
+      'A recruiter posts a job on RecXchange. The fee for placing someone is $7,000.',
       'You find the right person. They get the job.',
-      'The fee is split. At 70%, you earn £4,900. The recruiter who posted the job earns £2,100. Both win.',
+      'The fee is split. At 70%, you earn $4,900. The recruiter who posted the job earns $2,100. Both win.',
     ],
     panelHtml: statsPanel(
       [
-        { number: '£7,000', label: 'Total Fee' },
-        { number: '£4,900', label: 'Your Share at 70%' },
-        { number: '£2,100', label: 'The Other Recruiter' },
+        { number: '$7,000', label: 'Total Fee' },
+        { number: '$4,900', label: 'Your Share at 70%' },
+        { number: '$2,100', label: 'The Other Recruiter' },
       ],
       'These numbers are based on a standard placement. Fees vary by role and tier.'
     ),
@@ -768,10 +768,10 @@ const emails = [
     panelHtml: statsPanel(
       [
         { number: '$0.20', label: 'Cost Per Submission' },
-        { number: '£4,900+', label: 'Average Fee at 70%' },
+        { number: '$4,900+', label: 'Average Fee at 70%' },
         { number: '1 in 5', label: 'Submissions to Break Even' },
       ],
-      'Based on a £7,000 average fee. Your results will vary.'
+      'Based on a $7,000 average fee. Your results will vary.'
     ),
     showPricing: true,
     ctaText: 'Get 5 Credits for $1',
@@ -951,10 +951,10 @@ const emails = [
       'Here is a sample of what is typically available. Fees shown are indicative.',
     ],
     panelHtml: rolesPanel([
-      { role: 'Senior Software Engineer', sector: 'Technology', fee: '£8,000 to £12,000' },
-      { role: 'Finance Manager', sector: 'Financial Services', fee: '£6,000 to £9,000' },
-      { role: 'Head of Sales', sector: 'SaaS', fee: '£10,000 to £17,000' },
-      { role: 'Operations Director', sector: 'Healthcare', fee: '£7,000 to £11,000' },
+      { role: 'Senior Software Engineer', sector: 'Technology', fee: '$8,000 to $12,000' },
+      { role: 'Finance Manager', sector: 'Financial Services', fee: '$6,000 to $9,000' },
+      { role: 'Head of Sales', sector: 'SaaS', fee: '$10,000 to $17,000' },
+      { role: 'Operations Director', sector: 'Healthcare', fee: '$7,000 to $11,000' },
     ]),
     showPricing: true,
     ctaText: 'See All Live Roles',
