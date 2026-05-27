@@ -258,7 +258,7 @@ function pricingBox() {
                 <tr><td style="padding-bottom:10px;font-size:13px;color:#22C55E;font-family:Arial,Helvetica,sans-serif;">&#10003;&nbsp; 5 credits every month</td></tr>
                 <tr><td style="padding-bottom:10px;font-size:13px;color:#22C55E;font-family:Arial,Helvetica,sans-serif;">&#10003;&nbsp; 100+ open jobs to work</td></tr>
                 <tr><td style="padding-bottom:10px;font-size:13px;color:#22C55E;font-family:Arial,Helvetica,sans-serif;">&#10003;&nbsp; 270 million candidate profiles</td></tr>
-                <tr><td style="font-size:13px;color:#22C55E;font-family:Arial,Helvetica,sans-serif;">&#10003;&nbsp; Earn up to 70% of every fee</td></tr>
+                <tr><td style="font-size:13px;color:#22C55E;font-family:Arial,Helvetica,sans-serif;">&#10003;&nbsp; The fee shown on a role is what you earn</td></tr>
               </table>
             </td>
           </tr>
@@ -547,17 +547,17 @@ const emails = [
     h1: 'A recruiter placed last week. Here is exactly what they earned.',
     sub: 'You know what RecXchange does. This is what it looks like in real money.',
     bodyParas: [
-      'Last week, a recruiter inside RecXchange submitted a candidate for a technology leadership role. The placement fee was $9,000. They had never met the client. They found the role on the platform, matched it to someone in their network, and submitted.',
-      'The candidate got the job. The recruiter earned $6,300 at 70%.',
+      'Last week, a recruiter inside RecXchange submitted a candidate for a technology leadership role. They had never met the client. They found the role on the platform, matched it to someone in their network, and submitted.',
+      'The candidate got the job. The fee shown on the role was $6,300. That is exactly what the recruiter earned.',
       'Total cost to make that happen: $0.20. One credit. One submission.',
     ],
     panelHtml: statsPanel(
       [
-        { number: '$9,000', label: 'Total Placement Fee' },
-        { number: '$6,300', label: 'Earned by the Recruiter at 70%' },
+        { number: '$6,300', label: 'Fee Shown on the Role' },
+        { number: '$6,300', label: 'Paid to the Recruiter' },
         { number: '$0.20',  label: 'Cost of One Credit Used' },
       ],
-      'Based on a real platform placement. Individual results will vary.'
+      'The fee you see advertised on any role is your fee. Already worked out. Based on a real platform placement.'
     ),
     showPricing: true,
     ctaText: 'See the Roles Available Now',
@@ -577,16 +577,16 @@ const emails = [
     sub: 'No other platform in recruitment comes close to this return.',
     bodyParas: [
       'The Entry plan is $1 a month. That gives you 5 credits. Each credit costs $0.20.',
-      'Use one credit to submit a candidate. If they place at 70% of a $9,000 fee, you earn $6,300.',
+      'Use one credit to submit a candidate. If they place, you earn the fee shown on the role. A typical role shows $6,300. That is your fee. Already worked out.',
       'Even if only one in five submissions leads to a placement, the return is still extraordinary. There is no recruitment platform with a better ROI than this.',
     ],
     panelHtml: statsPanel(
       [
         { number: '$0.20',    label: 'Cost Per Submission' },
-        { number: '$6,300',   label: 'Average Earn at 70%' },
+        { number: '$6,300',   label: 'Typical Fee Shown on a Role' },
         { number: '630,000%', label: 'ROI on One Credit' },
       ],
-      'ROI calculated on one $0.20 credit vs a $6,300 earn. Your results will vary.'
+      'The fee shown on any role is already your fee. No further calculation needed. Your results will vary.'
     ),
     showPricing: true,
     ctaText: 'Get Your First 5 Credits for $1',
@@ -605,14 +605,14 @@ const emails = [
     h1: 'One job. Three recruiters involved. Everyone came out ahead.',
     sub: 'This is how RecXchange collaboration works in practice.',
     bodyParas: [
-      'A recruiter posted a $12,000 finance role on RecXchange. They needed the right candidate fast and opened it to the network.',
-      'Two other recruiters submitted candidates. One candidate got the job. The placement happened in 11 days.',
-      'The recruiter who submitted the winning candidate earned $8,400. The recruiter who posted the job earned $3,600. The client got their hire. Everyone won.',
+      'A finance role was posted on RecXchange with a fee of $8,400 advertised to any recruiter who could fill it.',
+      'Two recruiters submitted candidates. One candidate got the job. The placement happened in 11 days.',
+      'The recruiter who submitted the winning candidate was paid $8,400. The client got their hire. Everyone came out ahead.',
     ],
     panelHtml: stepsPanel('How it played out:', [
-      { title: 'Day 1',  desc: 'Finance role posted on RecXchange with a $12,000 fee. Open to all recruiters on the platform.' },
+      { title: 'Day 1',  desc: 'Finance role posted on RecXchange. Fee of $8,400 advertised to all recruiters on the platform.' },
       { title: 'Day 4',  desc: 'Two candidate submissions received from recruiters in the network.' },
-      { title: 'Day 11', desc: 'Offer made and accepted. Fee split automatically. $8,400 to the submitter. $3,600 to the poster.' },
+      { title: 'Day 11', desc: 'Offer made and accepted. $8,400 paid to the recruiter who made the placement.' },
     ]),
     showPricing: true,
     ctaText: 'See How You Can Join This',
@@ -632,7 +632,7 @@ const emails = [
     sub: 'When the right candidate meets the right role, things move fast.',
     bodyParas: [
       'A recruiter submitted a candidate for a sales leadership role on a Tuesday morning. By Thursday, the client had reviewed the submission and booked an interview.',
-      'The candidate got the job. The placement fee was $8,000. The recruiter who submitted earned $5,600.',
+      'The candidate got the job. The fee shown on the role was $5,600. That is exactly what the recruiter was paid.',
       'From submission to interview: 48 hours. That is the speed RecXchange is built for.',
     ],
     panelHtml: checklistPanel('The timeline:', [
@@ -666,7 +666,7 @@ const emails = [
     panelHtml: checklistPanel('What changes when you join:', [
       'No client development needed. The jobs are already there.',
       'Browse 100+ live roles with fees shown',
-      'Submit candidates and earn up to 70%',
+      'Submit candidates and earn the fee shown on the role',
       'Scale your billings without scaling your business',
       'Keep the majority of every fee you help create',
     ]),
@@ -688,13 +688,13 @@ const emails = [
     sub: 'Most recruiters have great people sitting unused in their network. RecXchange fixes that.',
     bodyParas: [
       'Think about the last three people you had a strong conversation with. People who are good at what they do. People who might be open to the right role.',
-      'Inside RecXchange, there are over 100 jobs those people could be right for. Each one has a fee. You earn up to 70% when your candidate gets placed.',
+      'Inside RecXchange, there are over 100 jobs those people could be right for. Each one shows your fee upfront. If your candidate gets placed, that fee is paid to you.',
       'Your network is not just useful for your own roles. On RecXchange, it is an asset on every single job posted by 17,000 other recruiters.',
     ],
     panelHtml: statsPanel([
       { number: '100+',   label: 'Live Jobs Your Candidates Could Fit' },
-      { number: '$7,000', label: 'Average Fee Per Placement' },
-      { number: '70%',    label: 'Maximum Share You Keep' },
+      { number: '$7,000', label: 'Average Fee Shown on a Role' },
+      { number: '$7,000', label: 'What You Earn When You Place' },
     ]),
     showPricing: true,
     ctaText: 'Match Your Candidates to Live Jobs',
@@ -774,7 +774,7 @@ const emails = [
       '$850,000+ in live fees available to work',
       '17,000+ recruiters to collaborate with',
       '270 million candidate profiles to search',
-      'Up to 70% of every fee you help create',
+      'The fee shown on every role is what you earn',
       'No long contract. Cancel any time.',
     ]),
     showPricing: true,
@@ -847,16 +847,16 @@ const emails = [
     sub: 'We are not exaggerating. Here is the breakdown.',
     bodyParas: [
       'The Entry plan costs $1 a month. That is $12 a year.',
-      'One placement at 70% of a $7,000 fee earns you $4,900. Divide $4,900 by $12 and you get 408 years of membership covered by a single placement.',
+      'One placement on a role showing a $4,900 fee earns you $4,900. Divide $4,900 by $12 and you get 408 years of membership covered by a single placement.',
       'Even if your first placement takes six months to happen, you will have spent $6. You will have earned $4,900. The question is not whether it is worth it. The question is how many placements you want to make.',
     ],
     panelHtml: statsPanel(
       [
         { number: '$12',    label: 'Cost Per Year on Entry Plan' },
-        { number: '$4,900', label: 'Earned From One Placement at 70%' },
+        { number: '$4,900', label: 'Fee Shown on the Role. Paid to You.' },
         { number: '408',    label: 'Years of Membership Covered by One Placement' },
       ],
-      'Based on a $7,000 average fee at 70%. Your results will vary.'
+      'Based on a role showing a $4,900 fee. The fee shown is what you earn. Your results will vary.'
     ),
     showPricing: true,
     ctaText: 'Make It the Best $1 You Spend',
@@ -882,7 +882,7 @@ const emails = [
     panelHtml: checklistPanel('What happens in the session:', [
       'The live jobs board shown on screen with fees',
       'A real candidate submission completed step by step',
-      'How the fee split works, demonstrated live',
+      'How fees are paid to you, shown live on screen',
       'Open Q&amp;A at the end. Any question welcome.',
       'Free to attend. No sign-up needed. Just join on YouTube.',
     ]),
@@ -912,7 +912,7 @@ const emails = [
       '$850,000+ in live fees on the platform',
       '17,000+ recruiters ready to collaborate',
       '270 million candidate profiles to search',
-      'Up to 70% of every fee you help create',
+      'The fee shown on every role is what you earn',
       'Your first month: $1',
     ]),
     showPricing: true,
