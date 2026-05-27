@@ -496,10 +496,13 @@ export default async function RootLayout({ children }: RootLayoutProps) {
             <SkipToContent />
             <WebVitals />
 
-            <div className="fixed inset-0 pointer-events-none z-0">
-              <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-cyan-500/[0.07] blur-[80px] rounded-full" />
-              <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-fuchsia-500/[0.07] blur-[80px] rounded-full" />
-            </div>
+            {/* Legacy ambient orbs — kept on non-homepage routes that still use the cyan/fuchsia palette */}
+            {!isHomepage && (
+              <div className="fixed inset-0 pointer-events-none z-0">
+                <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-cyan-500/[0.07] blur-[80px] rounded-full" />
+                <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-fuchsia-500/[0.07] blur-[80px] rounded-full" />
+              </div>
+            )}
 
             <ConditionalHeader />
 

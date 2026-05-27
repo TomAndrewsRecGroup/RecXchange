@@ -37,46 +37,57 @@ const FRAG = `
     vec2 d = uv - c;
     float dist = length(d);
     float ang  = atan(d.y, d.x);
-    // base radial falloff (soft)
+    // base radial falloff (soft, fatter core)
     float core = smoothstep(r, 0.0, dist);
+    core = pow(core, 0.75);
     // striation lines that twist over time (iris fibers)
     float fibers = 0.5 + 0.5 * sin(ang * 14.0 + t * 0.25 + seed * 11.0 + dist * 6.0);
     fibers = pow(fibers, 3.0) * smoothstep(r * 1.1, r * 0.2, dist);
-    // noisy bloom around it
-    float bloom = fbm(uv * 2.5 + vec2(seed * 3.0, t * 0.05)) * smoothstep(r * 1.6, 0.0, dist);
-    float a = core * 0.85 + fibers * 0.25 + bloom * 0.35;
+    // noisy bloom around it — much wider, picks up the empty space
+    float bloom = fbm(uv * 2.2 + vec2(seed * 3.0, t * 0.05)) * smoothstep(r * 2.2, 0.0, dist);
+    float a = core * 1.15 + fibers * 0.35 + bloom * 0.55;
     return col * a;
   }
 
   void main(){
-    vec2 uv = (gl_FragCoord.xy - 0.5 * u_res) / u_res.y;
-    float t = u_t * 0.18;
+    // Use the longer axis so the irises don't shrink on tall pages
+    float scale = max(u_res.x, u_res.y);
+    vec2 uv = (gl_FragCoord.xy - 0.5 * u_res) / scale;
+    // Atmospheric horizon: motion slowed ~40% to feel like high-altitude air, not a lava lamp
+    float t = u_t * 0.11;
 
-    // Two slow-drifting iris centers
-    vec2 c1 = vec2(-0.55 + 0.10 * sin(t * 0.7), 0.18 + 0.06 * cos(t * 0.55));
-    vec2 c2 = vec2( 0.58 + 0.08 * cos(t * 0.5), -0.22 + 0.07 * sin(t * 0.8));
+    // Two slow-drifting iris centers — dropped the third (plum) entirely
+    vec2 c1 = vec2(-0.70 + 0.10 * sin(t * 0.6),  0.18 + 0.07 * cos(t * 0.45));
+    vec2 c2 = vec2( 0.65 + 0.08 * cos(t * 0.4), -0.20 + 0.06 * sin(t * 0.7));
 
-    // Warm amber + cool jade — both desaturated, low-chroma
-    vec3 amber = vec3(0.95, 0.62, 0.28);
-    vec3 jade  = vec3(0.36, 0.78, 0.62);
+    // Cold dawn blue + pale teal — both low-chroma, atmospheric not saturated
+    vec3 dawn = vec3(0.42, 0.58, 0.78);  // cold sky-blue, muted
+    vec3 teal = vec3(0.46, 0.74, 0.72);  // pale verdigris, almost grey
 
     vec3 col = vec3(0.0);
-    col += iris(uv, c1, 0.55, amber, u_t, 1.0);
-    col += iris(uv, c2, 0.50, jade,  u_t, 2.3);
+    col += iris(uv, c1, 0.85, dawn, u_t, 1.0);
+    col += iris(uv, c2, 0.70, teal, u_t, 2.3);
 
     // Subtle film grain
     float g = (h(gl_FragCoord.xy + u_t) - 0.5) * 0.04;
     col += g;
 
-    // Vignette toward deep ink
-    float vig = smoothstep(1.2, 0.2, length(uv));
-    col *= mix(0.55, 1.0, vig);
+    // Soft vignette toward edges
+    float vig = smoothstep(1.4, 0.2, length(uv));
+    col *= mix(0.80, 1.0, vig);
+
+    // Desaturation pass — pulls the irises toward a single horizon wash
+    float lum = dot(col, vec3(0.299, 0.587, 0.114));
+    col = mix(vec3(lum), col, 0.55);
 
     // Global intensity
     col *= u_intensity;
 
-    // Output (background ink baked in by the page; this layer is additive via CSS)
-    gl_FragColor = vec4(col, 1.0);
+    // Composite OVER cool-ink base — pulled blue/cool, not plum-warm
+    vec3 base = vec3(0.030, 0.040, 0.060); // deep midnight ink, cool floor
+    vec3 final = base + col;
+
+    gl_FragColor = vec4(final, 1.0);
   }
 `;
 

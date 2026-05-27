@@ -74,25 +74,27 @@ export default function HomePage() {
     <>
       <HowToSchema />
 
-      <main className="relative font-sans text-ink-100 bg-[var(--ink-950)] overflow-x-hidden">
+      {/* ── Page-wide iris shader (fixed background, paints once) ── */}
+      <div
+        aria-hidden="true"
+        className="fixed inset-0 -z-10 pointer-events-none"
+        style={{ contain: "strict" }}
+      >
+        <IrisShader intensity={0.85} />
+      </div>
+
+      <main className="relative font-sans text-ink-100 overflow-x-hidden">
         {/* ────────────────────────────────── HERO ───────────────────────── */}
         <section className="relative min-h-[100svh] overflow-hidden">
-          {/* Iris shader — fills the hero, additive over the ink base */}
-          <div className="absolute inset-0 -z-10">
-            <div className="absolute inset-0 bg-[var(--ink-950)]" />
-            <div className="absolute inset-0 opacity-90">
-              <IrisShader intensity={1.0} />
-            </div>
-            {/* Soft top-down ink wash for legibility */}
-            <div
-              aria-hidden="true"
-              className="absolute inset-0"
-              style={{
-                background:
-                  "linear-gradient(180deg, rgba(11,9,16,0.35) 0%, rgba(11,9,16,0.1) 30%, rgba(11,9,16,0.85) 100%)",
-              }}
-            />
-          </div>
+          {/* Light scrim — keeps headline legible without killing the shader */}
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 -z-10"
+            style={{
+              background:
+                "radial-gradient(ellipse 80% 60% at 30% 45%, rgba(11,9,16,0.65) 0%, rgba(11,9,16,0.3) 50%, transparent 100%)",
+            }}
+          />
 
           <div className="relative mx-auto max-w-[1280px] px-6 sm:px-8 pt-28 sm:pt-32 md:pt-40 pb-20 md:pb-28">
             <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-end">
@@ -102,9 +104,9 @@ export default function HomePage() {
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, ease }}
-                  className="text-[11px] sm:text-xs uppercase tracking-[0.32em] text-amber-400 font-medium mb-6 flex items-center gap-3"
+                  className="text-[11px] sm:text-xs uppercase tracking-[0.32em] text-teal-400 font-medium mb-6 flex items-center gap-3"
                 >
-                  <span className="inline-block w-8 h-px bg-amber-400/60" />
+                  <span className="inline-block w-8 h-px bg-teal-400/60" />
                   The Recruiter Exchange · Est. 2024
                 </motion.p>
 
@@ -117,13 +119,13 @@ export default function HomePage() {
                 >
                   Where talent moves
                   <span className="block">
-                    <em className="not-italic text-amber-400 font-normal italic-fraunces">
+                    <em className="not-italic text-sodium-400 font-normal italic-fraunces">
                       between us
                     </em>
                     , and the
                   </span>
                   <span className="block">
-                    fee moves <em className="not-italic text-jade-400 font-normal">with it</em>.
+                    fee moves <em className="not-italic text-dawn-400 font-normal">with it</em>.
                   </span>
                 </motion.h1>
 
@@ -147,7 +149,7 @@ export default function HomePage() {
                 >
                   <Link
                     href={REGISTER_URL}
-                    className="group relative inline-flex items-center gap-2.5 rounded-full bg-amber-500 px-7 py-4 text-[14px] font-semibold text-ink-950 transition-all hover:bg-amber-400 hover:shadow-[0_10px_40px_-10px_rgba(240,160,75,0.6)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-400"
+                    className="group relative inline-flex items-center gap-2.5 rounded-full bg-sodium-500 px-7 py-4 text-[14px] font-semibold text-ink-950 transition-all hover:bg-sodium-400 hover:shadow-[0_10px_40px_-10px_rgba(232,161,85,0.45)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-sodium-400"
                   >
                     Claim your recruiter seat
                     <ArrowUpRight
@@ -159,7 +161,7 @@ export default function HomePage() {
                     href="/recruiter"
                     className="inline-flex items-center gap-2 text-[14px] font-medium text-ink-200 hover:text-ink-100 transition-colors py-3"
                   >
-                    <span className="underline decoration-amber-400/40 underline-offset-[6px] hover:decoration-amber-400">
+                    <span className="underline decoration-teal-400/40 underline-offset-[6px] hover:decoration-teal-400">
                       How the exchange works
                     </span>
                   </Link>
@@ -174,9 +176,9 @@ export default function HomePage() {
                 >
                   <span className="relative flex h-2 w-2">
                     {!reduced && (
-                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-jade-500 opacity-60" />
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-teal-500 opacity-60" />
                     )}
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-jade-500" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-teal-500" />
                   </span>
                   <span className="tabular-nums">
                     {fmtNum(stats.roleCount)} live roles
@@ -199,7 +201,7 @@ export default function HomePage() {
                   <DuotonePhoto
                     src={PHOTOS.collab}
                     alt="Recruiters collaborating on a deal"
-                    tone="amber"
+                    tone="sodium"
                     aspect="4/5"
                     priority
                     sizes="(max-width: 1024px) 90vw, 40vw"
@@ -226,7 +228,7 @@ export default function HomePage() {
         </section>
 
         {/* ────────────────────────────── TRUST STRIP ────────────────────── */}
-        <section className="relative border-y border-ink-700/60 bg-ink-900/60">
+        <section className="relative border-y border-ink-700/60 bg-ink-950/55 backdrop-blur-sm">
           <div className="mx-auto max-w-[1280px] px-6 sm:px-8 py-8">
             <ul className="grid grid-cols-2 md:grid-cols-4 gap-y-6 gap-x-8 text-center md:text-left">
               {[
@@ -253,13 +255,13 @@ export default function HomePage() {
           <div className="mx-auto max-w-[1280px] px-6 sm:px-8">
             {/* Section label */}
             <div className="mb-16 md:mb-24 max-w-3xl">
-              <p className="text-[11px] uppercase tracking-[0.32em] text-amber-400 font-medium mb-5 flex items-center gap-3">
-                <span className="inline-block w-8 h-px bg-amber-400/60" />
+              <p className="text-[11px] uppercase tracking-[0.32em] text-teal-400 font-medium mb-5 flex items-center gap-3">
+                <span className="inline-block w-8 h-px bg-teal-400/60" />
                 The exchange, in motion
               </p>
               <h2 className="font-serif text-[36px] sm:text-5xl md:text-6xl font-light leading-[1.05] tracking-[-0.02em] text-ink-100">
                 Three things happen when fifteen thousand recruiters{" "}
-                <em className="not-italic text-amber-400">work the same room</em>.
+                <em className="not-italic text-teal-400">work the same room</em>.
               </h2>
             </div>
 
@@ -271,7 +273,7 @@ export default function HomePage() {
                 title="Roles you'd otherwise miss"
                 body="Get matched into briefs that other recruiters can't fill alone. Your candidate, their relationship. You split the fee, both make the placement."
                 photo={PHOTOS.team}
-                tone="amber"
+                tone="steel"
                 ease={ease}
                 className="col-span-12 lg:col-span-7"
                 aspect="16/11"
@@ -283,13 +285,13 @@ export default function HomePage() {
                 title="Work from anywhere it pays"
                 body="Run your desk from Brighton, Brooklyn or Bali. The exchange handles the contracts, the timestamps, the fee splits. You handle the people."
                 photo={PHOTOS.remote}
-                tone="jade"
+                tone="steel"
                 ease={ease}
                 className="col-span-12 lg:col-span-5"
                 aspect="4/5"
               />
 
-              {/* Card 3 — wide right */}
+              {/* Card 3 — wide right — the only teal-toned image, tying back to the earnings story */}
               <FeatureBlock
                 index="03"
                 title="Earnings that actually compound"
@@ -297,7 +299,7 @@ export default function HomePage() {
                   stats.averageFee,
                 )} per split placement. Stack a few a month and you're past the comp ceiling of any traditional desk.`}
                 photo={PHOTOS.money}
-                tone="amber"
+                tone="teal"
                 ease={ease}
                 className="col-span-12 lg:col-span-12"
                 aspect="21/9"
@@ -312,12 +314,12 @@ export default function HomePage() {
           <div className="mx-auto max-w-[1280px] px-6 sm:px-8">
             <div className="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
               <div className="lg:col-span-5">
-                <p className="text-[11px] uppercase tracking-[0.32em] text-jade-400 font-medium mb-5 flex items-center gap-3">
-                  <span className="inline-block w-8 h-px bg-jade-400/60" />
+                <p className="text-[11px] uppercase tracking-[0.32em] text-dawn-400 font-medium mb-5 flex items-center gap-3">
+                  <span className="inline-block w-8 h-px bg-dawn-400/60" />
                   What you actually keep
                 </p>
                 <h2 className="font-serif text-[36px] sm:text-5xl md:text-[56px] font-light leading-[1.05] tracking-[-0.02em] text-ink-100">
-                  The split isn't <em className="not-italic text-amber-400">a tax</em>. It's the reason you get the placement at all.
+                  The split isn't <em className="not-italic text-teal-400">a tax</em>. It's the reason you get the placement at all.
                 </h2>
                 <p className="mt-8 text-ink-200 text-[15px] md:text-base leading-relaxed max-w-[55ch]">
                   A standard exchange placement is 50/50. Bring more of the work
@@ -337,13 +339,13 @@ export default function HomePage() {
                     pct="60"
                     label="Weighted split"
                     sub="You've done meaningfully more of the work — the relationship, the brief, the closer. Negotiated transparently in-platform."
-                    accent="jade"
+                    accent="dawn"
                   />
                   <SplitRow
                     pct="70"
                     label="RecX Direct ceiling"
                     sub="Exclusive roles operated by RecX Direct. You bring a placeable candidate and keep the lion's share. No client relationship required."
-                    accent="amber"
+                    accent="sodium"
                     highlight
                   />
                 </div>
@@ -356,7 +358,7 @@ export default function HomePage() {
         <section className="relative py-24 md:py-36 border-t border-ink-700/60">
           <div className="mx-auto max-w-[1280px] px-6 sm:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <p className="text-[11px] uppercase tracking-[0.32em] text-amber-400 font-medium mb-5">
+              <p className="text-[11px] uppercase tracking-[0.32em] text-teal-400 font-medium mb-5">
                 Two ways in
               </p>
               <h2 className="font-serif text-[36px] sm:text-5xl md:text-[56px] font-light leading-[1.05] tracking-[-0.02em]">
@@ -375,7 +377,7 @@ export default function HomePage() {
                 ]}
                 href="/recruiter"
                 cta="Post a role"
-                tone="amber"
+                tone="steel"
                 ease={ease}
               />
               <ForkCard
@@ -388,7 +390,7 @@ export default function HomePage() {
                 ]}
                 href="/recruiter"
                 cta="Browse live roles"
-                tone="jade"
+                tone="steel"
                 ease={ease}
               />
             </div>
@@ -397,7 +399,7 @@ export default function HomePage() {
             <div className="mt-12 text-center">
               <Link
                 href="/hiring-manager-home"
-                className="text-sm text-ink-300 hover:text-ink-100 transition-colors underline decoration-ink-300/40 underline-offset-4 hover:decoration-amber-400"
+                className="text-sm text-ink-300 hover:text-ink-100 transition-colors underline decoration-ink-300/40 underline-offset-4 hover:decoration-teal-400"
               >
                 Not a recruiter? You can post a role here →
               </Link>
@@ -406,11 +408,11 @@ export default function HomePage() {
         </section>
 
         {/* ───────────────────────── LEAD MAGNET / EMAIL ─────────────────── */}
-        <section className="relative py-24 md:py-32 border-t border-ink-700/60 bg-ink-900/40">
+        <section className="relative py-24 md:py-32 border-t border-ink-700/60 bg-ink-950/40 backdrop-blur-sm">
           <div className="mx-auto max-w-[1280px] px-6 sm:px-8">
             <div className="grid lg:grid-cols-12 gap-10 items-center">
               <div className="lg:col-span-7">
-                <p className="text-[11px] uppercase tracking-[0.32em] text-amber-400 font-medium mb-4">
+                <p className="text-[11px] uppercase tracking-[0.32em] text-teal-400 font-medium mb-4">
                   Free download · No credit card
                 </p>
                 <h3 className="font-serif text-[32px] sm:text-4xl md:text-5xl font-light leading-tight tracking-[-0.01em]">
@@ -431,26 +433,21 @@ export default function HomePage() {
 
         {/* ────────────────────────────── FINAL CTA ──────────────────────── */}
         <section className="relative py-32 md:py-44 overflow-hidden">
-          <div className="absolute inset-0 -z-10">
-            <div className="absolute inset-0 bg-[var(--ink-950)]" />
-            <div className="absolute inset-0 opacity-80">
-              <IrisShader intensity={0.85} />
-            </div>
-            <div
-              aria-hidden="true"
-              className="absolute inset-0"
-              style={{
-                background:
-                  "linear-gradient(180deg, rgba(11,9,16,0.7) 0%, rgba(11,9,16,0.3) 50%, rgba(11,9,16,0.9) 100%)",
-              }}
-            />
-          </div>
+          {/* Light scrim only — page-wide shader carries the visual */}
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 -z-10"
+            style={{
+              background:
+                "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(11,9,16,0.55) 0%, rgba(11,9,16,0.2) 60%, transparent 100%)",
+            }}
+          />
 
           <div className="relative mx-auto max-w-4xl px-6 sm:px-8 text-center">
             <h2 className="font-serif text-[44px] sm:text-6xl md:text-7xl font-light leading-[1.02] tracking-[-0.02em]">
-              Stop working <em className="not-italic text-amber-400">alone</em>.
+              Stop working <em className="not-italic text-sodium-400">alone</em>.
               <span className="block mt-3">
-                Start working the <em className="not-italic text-jade-400">exchange</em>.
+                Start working the <em className="not-italic text-teal-400">exchange</em>.
               </span>
             </h2>
             <p className="mt-8 text-ink-200 text-base md:text-lg max-w-xl mx-auto">
@@ -460,14 +457,14 @@ export default function HomePage() {
             <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
               <Link
                 href={REGISTER_URL}
-                className="group inline-flex items-center gap-2.5 rounded-full bg-amber-500 px-8 py-4 text-[14px] font-semibold text-ink-950 hover:bg-amber-400 hover:shadow-[0_10px_40px_-10px_rgba(240,160,75,0.6)] transition-all"
+                className="group inline-flex items-center gap-2.5 rounded-full bg-sodium-500 px-8 py-4 text-[14px] font-semibold text-ink-950 hover:bg-sodium-400 hover:shadow-[0_10px_40px_-10px_rgba(232,161,85,0.45)] transition-all"
               >
                 Claim your recruiter seat
                 <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" strokeWidth={2.5} />
               </Link>
               <Link
                 href="/pricing"
-                className="text-sm text-ink-200 hover:text-ink-100 underline decoration-amber-400/40 underline-offset-[6px] hover:decoration-amber-400 transition"
+                className="text-sm text-ink-200 hover:text-ink-100 underline decoration-teal-400/40 underline-offset-[6px] hover:decoration-teal-400 transition"
               >
                 See the pricing
               </Link>
@@ -498,13 +495,14 @@ function FeatureBlock({
   title: string;
   body: string;
   photo: string;
-  tone: "amber" | "jade";
+  tone: "steel" | "teal" | "sodium";
   className?: string;
   aspect?: string;
   wide?: boolean;
   ease: readonly [number, number, number, number];
 }) {
-  const accent = tone === "amber" ? "text-amber-400" : "text-jade-400";
+  const accent =
+    tone === "sodium" ? "text-sodium-400" : tone === "teal" ? "text-teal-400" : "text-dawn-400";
 
   return (
     <motion.article
@@ -548,16 +546,17 @@ function SplitRow({
   pct,
   label,
   sub,
-  accent = "amber",
+  accent = "teal",
   highlight = false,
 }: {
   pct: string;
   label: string;
   sub: string;
-  accent?: "amber" | "jade";
+  accent?: "teal" | "dawn" | "sodium";
   highlight?: boolean;
 }) {
-  const accentClass = accent === "amber" ? "text-amber-400" : "text-jade-400";
+  const accentClass =
+    accent === "sodium" ? "text-sodium-400" : accent === "dawn" ? "text-dawn-400" : "text-teal-400";
   return (
     <motion.div
       initial={{ opacity: 0, x: 16 }}
@@ -565,7 +564,7 @@ function SplitRow({
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       className={`group relative grid grid-cols-12 gap-4 md:gap-8 items-start py-6 border-t ${
-        highlight ? "border-amber-400/30" : "border-ink-700/60"
+        highlight ? "border-sodium-400/30" : "border-ink-700/60"
       }`}
     >
       <div className="col-span-3 md:col-span-2">
@@ -580,7 +579,7 @@ function SplitRow({
         <h4 className="text-base md:text-lg font-semibold text-ink-100">
           {label}
           {highlight && (
-            <span className="ml-3 inline-block text-[10px] uppercase tracking-[0.2em] text-amber-400 border border-amber-400/40 rounded-full px-2.5 py-1 align-middle">
+            <span className="ml-3 inline-block text-[10px] uppercase tracking-[0.2em] text-sodium-400 border border-sodium-400/40 rounded-full px-2.5 py-1 align-middle">
               Highest
             </span>
           )}
@@ -607,11 +606,12 @@ function ForkCard({
   bullets: string[];
   href: string;
   cta: string;
-  tone: "amber" | "jade";
+  tone: "steel" | "teal" | "sodium";
   ease: readonly [number, number, number, number];
 }) {
-  const accent = tone === "amber" ? "text-amber-400" : "text-jade-400";
-  const bullet = tone === "amber" ? "text-amber-400" : "text-jade-400";
+  const accent =
+    tone === "sodium" ? "text-sodium-400" : tone === "teal" ? "text-teal-400" : "text-dawn-400";
+  const bullet = accent;
 
   return (
     <motion.div
@@ -679,8 +679,8 @@ function LeadMagnetForm() {
 
   if (state === "sent") {
     return (
-      <div className="bg-ink-800/80 border border-jade-500/40 rounded-sm p-7 text-center">
-        <p className="font-serif text-2xl font-light text-jade-400 mb-2">On its way.</p>
+      <div className="bg-ink-800/80 border border-teal-500/40 rounded-sm p-7 text-center">
+        <p className="font-serif text-2xl font-light text-dawn-400 mb-2">On its way.</p>
         <p className="text-ink-200 text-sm">
           Check your inbox in the next few minutes. Anything caught in spam,
           mark it 'not spam' — we'll never use the address for anything else.
@@ -702,12 +702,12 @@ function LeadMagnetForm() {
           placeholder="you@agency.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="flex-1 bg-ink-950 border border-ink-700 rounded-sm px-4 py-3.5 text-ink-100 placeholder-ink-300/60 text-[15px] focus:outline-none focus:border-amber-400 transition-colors"
+          className="flex-1 bg-ink-950 border border-ink-700 rounded-sm px-4 py-3.5 text-ink-100 placeholder-ink-300/60 text-[15px] focus:outline-none focus:border-sodium-400 transition-colors"
         />
         <button
           type="submit"
           disabled={state === "sending"}
-          className="rounded-sm bg-amber-500 px-6 py-3.5 text-[14px] font-semibold text-ink-950 hover:bg-amber-400 transition disabled:opacity-60"
+          className="rounded-sm bg-sodium-500 px-6 py-3.5 text-[14px] font-semibold text-ink-950 hover:bg-sodium-400 transition disabled:opacity-60"
         >
           {state === "sending" ? "Sending…" : "Send it"}
         </button>

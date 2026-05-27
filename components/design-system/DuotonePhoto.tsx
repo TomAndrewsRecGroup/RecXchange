@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 
-type Tone = "amber" | "jade" | "ink";
+type Tone = "steel" | "teal" | "sodium" | "ink";
 
 type Props = {
   src: string;
@@ -18,9 +18,13 @@ type Props = {
 // Highlight color → linear interpolation; shadow always crushes to deep ink.
 // Values are sRGB 0–1.
 const TONES: Record<Tone, { hi: [number, number, number]; lo: [number, number, number] }> = {
-  amber: { hi: [0.99, 0.83, 0.55], lo: [0.07, 0.05, 0.09] },
-  jade:  { hi: [0.66, 0.92, 0.80], lo: [0.06, 0.07, 0.09] },
-  ink:   { hi: [0.90, 0.88, 0.94], lo: [0.05, 0.05, 0.07] },
+  // Cool pearl highlight → deep cool ink shadow. Documentary, not aestheticised.
+  steel:  { hi: [0.92, 0.94, 0.96], lo: [0.03, 0.04, 0.06] },
+  // Atmospheric teal — primary accent tone for ONE money-shot image
+  teal:   { hi: [0.72, 0.88, 0.86], lo: [0.03, 0.05, 0.07] },
+  // Sodium-amber — reserved for the strongest hero image only
+  sodium: { hi: [0.96, 0.78, 0.50], lo: [0.04, 0.04, 0.07] },
+  ink:    { hi: [0.87, 0.89, 0.93], lo: [0.03, 0.04, 0.06] },
 };
 
 let _filterId = 0;
@@ -28,7 +32,7 @@ let _filterId = 0;
 export default function DuotonePhoto({
   src,
   alt,
-  tone = "amber",
+  tone = "steel",
   className = "",
   priority = false,
   sizes = "100vw",
