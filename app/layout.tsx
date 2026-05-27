@@ -1,5 +1,5 @@
 import "@/app/globals.css";
-import { Inter } from "next/font/google";
+import { Inter, Fraunces } from "next/font/google";
 import React from "react";
 import { headers } from "next/headers";
 import ConditionalHeader from "@/components/ConditionalHeader";
@@ -17,11 +17,18 @@ import HomepageSEOContent from "@/app/components/HomepageSEOContent";
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 
-const inter = Inter({ 
-  subsets: ["latin"], 
+const inter = Inter({
+  subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700", "800", "900"],
   variable: '--font-inter',
   display: 'swap',
+});
+
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  axes: ["SOFT", "opsz"],
+  variable: "--font-fraunces",
+  display: "swap",
 });
 
 export const viewport: Viewport = {
@@ -464,7 +471,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         />
       </head>
       <body
-        className={`${inter.variable} font-sans bg-[#050508] min-h-screen antialiased overflow-x-hidden`}
+        className={`${inter.variable} ${fraunces.variable} font-sans bg-[#050508] min-h-screen antialiased overflow-x-hidden`}
       >
         <Script
           id="scroll-to-top"

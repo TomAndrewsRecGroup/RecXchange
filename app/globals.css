@@ -6,6 +6,27 @@
 :root {
   --font-inter: 'Inter', sans-serif;
   --font-lexend: 'Lexend', sans-serif;
+  --font-fraunces: 'Fraunces', 'Times New Roman', serif;
+
+  /* ── Web-Upgrade palette (warm dark, editorial) ──────────────────────
+     Tinted toward the brand hue: amber highlights + jade accent.
+     OKLCH-derived sRGB. Never used as #000 / #fff. */
+  --ink-950: #0b0910;   /* deep ink, page base */
+  --ink-900: #110d18;   /* surface */
+  --ink-800: #1a1422;   /* raised */
+  --ink-700: #251c30;   /* divider on dark */
+  --ink-100: #f5efe6;   /* warm paper highlight */
+  --ink-200: #d8cfc1;   /* secondary text on dark */
+  --ink-300: #ada294;   /* tertiary */
+
+  --amber-500: #f0a04b; /* primary accent */
+  --amber-400: #f5b876;
+  --amber-300: #fbd2a4;
+
+  --jade-500: #4ec39a;  /* secondary accent */
+  --jade-400: #79d5b3;
+
+  --plum-700: #3a1f4a;  /* deep accent for type contrast on light */
 }
 
 /* Global Animations */

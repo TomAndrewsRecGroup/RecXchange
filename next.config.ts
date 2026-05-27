@@ -40,6 +40,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'res.cloudinary.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
     ],
     // Optimize image loading for better LCP
     formats: ['image/avif', 'image/webp'],

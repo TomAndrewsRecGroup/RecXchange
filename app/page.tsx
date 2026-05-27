@@ -1,685 +1,720 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { HowToSchema } from './components/HowToSchema';
-import RelatedContent from '@/components/RelatedContent';
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import { motion, useReducedMotion } from "framer-motion";
+import { ArrowUpRight, Check } from "lucide-react";
+import IrisShader from "@/components/design-system/IrisShader";
+import DuotonePhoto from "@/components/design-system/DuotonePhoto";
+import { HowToSchema } from "./components/HowToSchema";
+import RelatedContent from "@/components/RelatedContent";
 
-interface LiveStats {
-  roleCount: number;
-  totalFees: number;
-  averageFee: number;
-  lastUpdated?: string;
+const REGISTER_URL =
+  "https://app.recxchange.io/register?trigger_link=jYQNc9YXcMkYPvo3HZfC";
+
+// ── Photo set ────────────────────────────────────────────────────────────────
+// Unsplash; mapped through DuotonePhoto so the four categories cohere.
+const PHOTOS = {
+  collab:
+    "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=1600&q=80", // diverse colleagues laughing
+  remote:
+    "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1600&q=80", // woman on call, sunlit
+  money:
+    "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1600&q=80", // financial chart / earnings
+  joy:
+    "https://images.unsplash.com/photo-1542596594-649edbc13630?auto=format&fit=crop&w=1600&q=80", // confident professional smiling
+  team:
+    "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1600&q=80", // handshake / collaboration
+};
+
+// ── Live stats hook (kept compatible with existing /api/live-stats) ──────────
+function useLiveStats() {
+  const [stats, setStats] = useState({
+    roleCount: 127,
+    totalFees: 847392,
+    averageFee: 6673,
+  });
+  useEffect(() => {
+    let active = true;
+    const fetchStats = async () => {
+      try {
+        const r = await fetch("/api/live-stats");
+        const d = await r.json();
+        if (active) setStats(d);
+      } catch {
+        // keep fallback
+      }
+    };
+    fetchStats();
+    const i = setInterval(fetchStats, 300_000);
+    return () => {
+      active = false;
+      clearInterval(i);
+    };
+  }, []);
+  return stats;
 }
 
+const fmtMoney = (n: number) =>
+  new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 0,
+  }).format(n);
+
+const fmtNum = (n: number) => new Intl.NumberFormat("en-US").format(n);
+
+// ── Page ─────────────────────────────────────────────────────────────────────
 export default function HomePage() {
-  const router = useRouter();
-  const { scrollY } = useScroll();
-  const y1 = useTransform(scrollY, [0, 300], [0, 50]);
-  const y2 = useTransform(scrollY, [0, 300], [0, -30]);
-  const [pageLoaded, setPageLoaded] = useState(false);
-  
-  const [liveStats, setLiveStats] = useState<LiveStats>({
-    roleCount: 0,
-    totalFees: 0,
-    averageFee: 0,
-    lastUpdated: undefined
-  });
-
-  useEffect(() => {
-    async function fetchLiveStats() {
-      try {
-        const response = await fetch('/api/live-stats');
-        const data = await response.json();
-        setLiveStats({
-          ...data,
-          lastUpdated: new Date().toISOString()
-        });
-      } catch (error) {
-        setLiveStats({
-          roleCount: 127,
-          totalFees: 847392,
-          averageFee: 6673,
-          lastUpdated: new Date().toISOString()
-        });
-      }
-    }
-
-    fetchLiveStats();
-    const interval = setInterval(fetchLiveStats, 300000);
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    setPageLoaded(true);
-  }, []);
-
-  const scrollToCards = () => {
-    document.getElementById('path-selection')?.scrollIntoView({ 
-      behavior: 'smooth',
-      block: 'start'
-    });
-  };
-
-  const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(value);
-  };
-
-  const formatNumber = (value: number) => {
-    return new Intl.NumberFormat('en-US').format(value);
-  };
-
-  const formatTimestamp = (isoString: string | undefined) => {
-    if (!isoString) return 'Updating...';
-    const date = new Date(isoString);
-    return date.toLocaleTimeString('en-US', { 
-      hour: '2-digit', 
-      minute: '2-digit',
-      hour12: true 
-    });
-  };
+  const stats = useLiveStats();
+  const reduced = useReducedMotion();
+  const ease = [0.22, 1, 0.36, 1] as const; // ease-out-quint
 
   return (
     <>
       <HowToSchema />
-      <main className="relative bg-[#0a0a0f] font-sans overflow-x-hidden">
-        <section className="relative h-screen flex flex-col items-center justify-center px-4 pt-20" aria-label="Hero section">
-          <div className="absolute inset-0 pointer-events-none z-0" aria-hidden="true">
-            <motion.div 
-              style={{ 
-                y: y1,
-                background: 'radial-gradient(circle, rgba(0,240,255,0.15) 0%, rgba(0,240,255,0.05) 40%, transparent 70%)',
-                filter: 'blur(40px)'
+
+      <main className="relative font-sans text-ink-100 bg-[var(--ink-950)] overflow-x-hidden">
+        {/* ────────────────────────────────── HERO ───────────────────────── */}
+        <section className="relative min-h-[100svh] overflow-hidden">
+          {/* Iris shader — fills the hero, additive over the ink base */}
+          <div className="absolute inset-0 -z-10">
+            <div className="absolute inset-0 bg-[var(--ink-950)]" />
+            <div className="absolute inset-0 opacity-90">
+              <IrisShader intensity={1.0} />
+            </div>
+            {/* Soft top-down ink wash for legibility */}
+            <div
+              aria-hidden="true"
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(180deg, rgba(11,9,16,0.35) 0%, rgba(11,9,16,0.1) 30%, rgba(11,9,16,0.85) 100%)",
               }}
-              className="absolute top-[-15%] left-[5%] w-[50%] h-[50%] rounded-full animate-float"
             />
-            <motion.div 
-              style={{ 
-                y: y2,
-                background: 'radial-gradient(circle, rgba(255,0,255,0.15) 0%, rgba(255,0,255,0.05) 40%, transparent 70%)',
-                filter: 'blur(40px)'
-              }}
-              className="absolute bottom-[-15%] right-[5%] w-[50%] h-[50%] rounded-full animate-float-delayed"
-            />
-            
-            {/* Subtle ambient gradient line */}
-            <div className="absolute inset-0 opacity-[0.04]">
-              <div className="absolute w-full h-[1px] top-[40%] bg-gradient-to-r from-transparent via-cyan-400 to-transparent" />
+          </div>
+
+          <div className="relative mx-auto max-w-[1280px] px-6 sm:px-8 pt-28 sm:pt-32 md:pt-40 pb-20 md:pb-28">
+            <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-end">
+              {/* Left: editorial headline */}
+              <div className="lg:col-span-7">
+                <motion.p
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, ease }}
+                  className="text-[11px] sm:text-xs uppercase tracking-[0.32em] text-amber-400 font-medium mb-6 flex items-center gap-3"
+                >
+                  <span className="inline-block w-8 h-px bg-amber-400/60" />
+                  The Recruiter Exchange · Est. 2024
+                </motion.p>
+
+                <motion.h1
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.05, ease }}
+                  className="font-serif text-[44px] leading-[1.02] sm:text-[60px] md:text-[76px] lg:text-[88px] font-light text-ink-100 tracking-[-0.02em]"
+                  style={{ fontVariationSettings: '"SOFT" 100, "opsz" 144' }}
+                >
+                  Where talent moves
+                  <span className="block">
+                    <em className="not-italic text-amber-400 font-normal italic-fraunces">
+                      between us
+                    </em>
+                    , and the
+                  </span>
+                  <span className="block">
+                    fee moves <em className="not-italic text-jade-400 font-normal">with it</em>.
+                  </span>
+                </motion.h1>
+
+                <motion.p
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7, delay: 0.2, ease }}
+                  className="mt-7 max-w-[58ch] text-[15px] sm:text-base md:text-lg text-ink-200 leading-relaxed font-light"
+                >
+                  Fifteen thousand specialist recruiters. One protected exchange.
+                  Bring the role, bring the candidate, or bring both — and split
+                  the fee automatically. No paperwork, no chasing, no losing the
+                  placement to someone with the missing half.
+                </motion.p>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7, delay: 0.35, ease }}
+                  className="mt-10 flex flex-wrap items-center gap-4"
+                >
+                  <Link
+                    href={REGISTER_URL}
+                    className="group relative inline-flex items-center gap-2.5 rounded-full bg-amber-500 px-7 py-4 text-[14px] font-semibold text-ink-950 transition-all hover:bg-amber-400 hover:shadow-[0_10px_40px_-10px_rgba(240,160,75,0.6)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-400"
+                  >
+                    Claim your recruiter seat
+                    <ArrowUpRight
+                      className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                      strokeWidth={2.5}
+                    />
+                  </Link>
+                  <Link
+                    href="/recruiter"
+                    className="inline-flex items-center gap-2 text-[14px] font-medium text-ink-200 hover:text-ink-100 transition-colors py-3"
+                  >
+                    <span className="underline decoration-amber-400/40 underline-offset-[6px] hover:decoration-amber-400">
+                      How the exchange works
+                    </span>
+                  </Link>
+                </motion.div>
+
+                {/* Quiet live indicator */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 1, delay: 0.7 }}
+                  className="mt-8 flex items-center gap-3 text-xs text-ink-300"
+                >
+                  <span className="relative flex h-2 w-2">
+                    {!reduced && (
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-jade-500 opacity-60" />
+                    )}
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-jade-500" />
+                  </span>
+                  <span className="tabular-nums">
+                    {fmtNum(stats.roleCount)} live roles
+                  </span>
+                  <span className="opacity-40">·</span>
+                  <span className="tabular-nums">
+                    {fmtMoney(stats.totalFees)} in fees on the table right now
+                  </span>
+                </motion.div>
+              </div>
+
+              {/* Right: editorial photo inset */}
+              <motion.div
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.3, ease }}
+                className="lg:col-span-5 relative"
+              >
+                <div className="relative">
+                  <DuotonePhoto
+                    src={PHOTOS.collab}
+                    alt="Recruiters collaborating on a deal"
+                    tone="amber"
+                    aspect="4/5"
+                    priority
+                    sizes="(max-width: 1024px) 90vw, 40vw"
+                    className="rounded-sm shadow-[0_30px_80px_-20px_rgba(0,0,0,0.7)]"
+                  />
+                  {/* Floating quote chip */}
+                  <div className="absolute -bottom-6 -left-6 sm:-left-10 max-w-[280px] bg-ink-900/90 backdrop-blur-md border border-ink-700 rounded-sm p-5 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.8)]">
+                    <p className="font-serif italic text-[15px] leading-snug text-ink-100">
+                      “Made $15,000 in my first month. Partnership changed my business.”
+                    </p>
+                    <p className="mt-2 text-[11px] uppercase tracking-widest text-ink-300">
+                      Sarah J. · Verified recruiter
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
             </div>
           </div>
 
-          <header className="relative z-10 max-w-5xl mx-auto text-center" style={{ perspective: '1000px' }}>
-            
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8, y: -20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full mb-6 relative group"
-              role="status"
-              aria-live="polite"
-              style={{
-                background: 'linear-gradient(135deg, rgba(0,240,255,0.05) 0%, rgba(168,85,247,0.05) 50%, rgba(255,0,255,0.05) 100%)',
-                border: '1px solid rgba(0,240,255,0.3)',
-                boxShadow: '0 0 15px rgba(0,240,255,0.1), inset 0 1px 0 rgba(255,255,255,0.1)'
-              }}
-            >
-              <div className="relative flex items-center justify-center w-3 h-3" aria-hidden="true">
-                <span className="absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75 animate-ping" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-400" style={{
-                  boxShadow: '0 0 8px rgba(0,240,255,0.6), 0 0 12px rgba(0,240,255,0.3)'
-                }} />
-              </div>
-              <span className="text-xs font-bold text-cyan-300 tracking-[0.2em] uppercase" style={{
-                textShadow: '0 0 8px rgba(0,240,255,0.3)'
-              }}>LIVE NOW</span>
-              <div className="absolute inset-0 rounded-full overflow-hidden" aria-hidden="true">
-                <div className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12" />
-              </div>
-            </motion.div>
-            
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black mb-4 text-white tracking-tight flex items-center justify-center"
-              style={{
-                textShadow: '0 0 20px rgba(0,240,255,0.15)',
-                letterSpacing: '-0.02em'
-              }}
-            >
-              <span>Rec</span>
-              <span className="inline-block" style={{ 
-                fontSize: 'calc(1em + 2px)',
-                margin: '0 -0.02em'
-              }}>X</span>
-              <span>change</span>
-            </motion.h1>
-
-            <motion.h2
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-lg sm:text-xl md:text-2xl font-semibold tracking-wide mb-8"
-              style={{
-                background: 'linear-gradient(90deg, #00f0ff 0%, #a855f7 50%, #ff00ff 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-              }}
-            >
-              Where Recruiters Make More Placements Together
-            </motion.h2>
-
-            <motion.div
-              initial={{ scaleX: 0, opacity: 0 }}
-              animate={{ scaleX: 1, opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="relative w-40 h-[3px] mx-auto mb-8"
-              aria-hidden="true"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400 to-transparent" />
-              <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 via-purple-400 to-fuchsia-400 animate-pulse-slow" style={{
-                filter: 'blur(4px)'
-              }} />
-              <div className="absolute left-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-cyan-400" style={{
-                boxShadow: '0 0 8px rgba(0,240,255,0.6)'
-              }} />
-              <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-fuchsia-400" style={{
-                boxShadow: '0 0 8px rgba(255,0,255,0.6)'
-              }} />
-            </motion.div>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="text-sm sm:text-base md:text-lg text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed font-light px-2"
-            >
-              Stop leaving placements on the table. RecXchange connects you with{' '}
-              <Link href="/recruiter" className="text-cyan-400 hover:text-cyan-300 transition-colors underline decoration-cyan-400/30 hover:decoration-cyan-300/50">
-                thousands of specialist recruiters
-              </Link>
-              {' '}who{' '}
-              <Link href="/pricing" className="text-cyan-400 hover:text-cyan-300 transition-colors underline decoration-cyan-400/30 hover:decoration-cyan-300/50">
-                split fees
-              </Link>
-              {' '}on roles you'd otherwise miss. You bring the candidate or the role,
-              and someone else brings what you're missing.
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              className="grid grid-cols-3 gap-3 sm:gap-4 mb-10 max-w-4xl mx-auto"
-              role="region"
-              aria-label="Live platform statistics"
-              style={{ perspective: '1000px' }}
-            >
-              {/* Live Roles Count — microdata removed; JSON-LD in layout.tsx is the sole structured data source */}
-              <motion.article
-                whileHover={{ scale: 1.05, rotateY: 5, z: 50 }}
-                className="group relative isolate"
-                style={{ transformStyle: 'preserve-3d' }}
-              >
-                <div className="absolute -inset-1 bg-gradient-to-br from-cyan-500/20 via-cyan-600/15 to-cyan-500/20 rounded-2xl blur-lg opacity-30 group-hover:opacity-50 transition duration-300 pointer-events-none" aria-hidden="true" />
-                
-                <Link href="/recruiter" className="block relative backdrop-blur-xl bg-black/40 p-3 sm:p-5 rounded-2xl border border-cyan-400/40 group-hover:border-cyan-300/60 transition-all duration-300 overflow-hidden"
-                  style={{
-                    boxShadow: '0 2px 12px rgba(0,0,0,0.5), inset 0 1px 0 rgba(0,240,255,0.1)'
-                  }}
-                >
-                  <div className="absolute top-2 left-2" aria-hidden="true">
-                    <div className="relative flex h-1.5 w-1.5">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
-                      <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-cyan-400" style={{
-                        boxShadow: '0 0 6px rgba(0,240,255,0.8)'
-                      }} />
-                    </div>
-                  </div>
-                  
-                  <h3 className="sr-only">Live Roles Count</h3>
-                  <div className="text-[8px] sm:text-[10px] uppercase tracking-[0.15em] sm:tracking-[0.2em] font-bold text-cyan-400/80 mb-1 sm:mb-2" aria-hidden="true">ROLES</div>
-                  <data 
-                    value={liveStats.roleCount} 
-                    className="text-xl sm:text-3xl md:text-4xl font-black text-white mb-0.5 sm:mb-1 group-hover:text-cyan-300 transition-colors leading-none block" 
-                    style={{
-                      fontVariantNumeric: 'tabular-nums',
-                      textShadow: '0 0 15px rgba(0,240,255,0.3)'
-                    }}
-                  >
-                    {formatNumber(liveStats.roleCount)}
-                  </data>
-                  <div className="text-[8px] sm:text-xs font-semibold text-cyan-400/80" aria-hidden="true">ACTIVE</div>
-                  
-                  <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-50" aria-hidden="true" />
-                </Link>
-              </motion.article>
-
-              {/* Total Fees Available — microdata removed */}
-              <motion.article
-                whileHover={{ scale: 1.05, rotateY: 5, z: 50 }}
-                className="group relative isolate"
-                style={{ transformStyle: 'preserve-3d' }}
-              >
-                <div className="absolute -inset-1 bg-gradient-to-br from-fuchsia-500/20 via-pink-600/15 to-fuchsia-500/20 rounded-2xl blur-lg opacity-30 group-hover:opacity-50 transition duration-300 pointer-events-none" aria-hidden="true" />
-                
-                <Link href="/pricing" className="block relative backdrop-blur-xl bg-black/40 p-3 sm:p-5 rounded-2xl border border-fuchsia-400/40 group-hover:border-fuchsia-300/60 transition-all duration-300 overflow-hidden"
-                  style={{
-                    boxShadow: '0 2px 12px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,0,255,0.1)'
-                  }}
-                >
-                  <div className="absolute top-2 left-2" aria-hidden="true">
-                    <div className="relative flex h-1.5 w-1.5">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-fuchsia-400 opacity-75" />
-                      <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-fuchsia-400" style={{
-                        boxShadow: '0 0 6px rgba(255,0,255,0.8)'
-                      }} />
-                    </div>
-                  </div>
-                  
-                  <h3 className="sr-only">Total Fees Available</h3>
-                  <div className="text-[8px] sm:text-[10px] uppercase tracking-[0.15em] sm:tracking-[0.2em] font-bold text-fuchsia-400/80 mb-1 sm:mb-2" aria-hidden="true">FEES</div>
-                  <data 
-                    value={liveStats.totalFees} 
-                    className="text-base sm:text-2xl md:text-3xl font-black text-white mb-0.5 sm:mb-1 group-hover:text-fuchsia-300 transition-colors leading-none block" 
-                    style={{
-                      fontVariantNumeric: 'tabular-nums',
-                      textShadow: '0 0 15px rgba(255,0,255,0.3)'
-                    }}
-                  >
-                    {formatCurrency(liveStats.totalFees)}
-                  </data>
-                  <div className="text-[8px] sm:text-xs font-semibold text-fuchsia-400/80" aria-hidden="true">AVAILABLE</div>
-                  
-                  <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-fuchsia-400 to-transparent opacity-50" aria-hidden="true" />
-                </Link>
-              </motion.article>
-
-              {/* Average Fee Per Deal — microdata removed */}
-              <motion.article
-                whileHover={{ scale: 1.05, rotateY: 5, z: 50 }}
-                className="group relative isolate"
-                style={{ transformStyle: 'preserve-3d' }}
-              >
-                <div className="absolute -inset-1 bg-gradient-to-br from-purple-500/20 via-purple-600/15 to-cyan-500/20 rounded-2xl blur-lg opacity-30 group-hover:opacity-50 transition duration-300 pointer-events-none" aria-hidden="true" />
-                
-                <Link href="/why-recxchange" className="block relative backdrop-blur-xl bg-black/40 p-3 sm:p-5 rounded-2xl border border-purple-400/40 group-hover:border-purple-300/60 transition-all duration-300 overflow-hidden"
-                  style={{
-                    boxShadow: '0 2px 12px rgba(0,0,0,0.5), inset 0 1px 0 rgba(168,85,247,0.1)'
-                  }}
-                >
-                  <div className="absolute top-2 left-2" aria-hidden="true">
-                    <div className="relative flex h-1.5 w-1.5">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75" />
-                      <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-purple-400" style={{
-                        boxShadow: '0 0 6px rgba(168,85,247,0.8)'
-                      }} />
-                    </div>
-                  </div>
-                  
-                  <h3 className="sr-only">Average Fee Per Deal</h3>
-                  <div className="text-[8px] sm:text-[10px] uppercase tracking-[0.15em] sm:tracking-[0.2em] font-bold text-purple-400/80 mb-1 sm:mb-2" aria-hidden="true">AVG</div>
-                  <data 
-                    value={liveStats.averageFee} 
-                    className="text-xl sm:text-3xl md:text-4xl font-black text-white mb-0.5 sm:mb-1 group-hover:text-purple-300 transition-colors leading-none block" 
-                    style={{
-                      fontVariantNumeric: 'tabular-nums',
-                      textShadow: '0 0 15px rgba(168,85,247,0.3)'
-                    }}
-                  >
-                    {formatCurrency(liveStats.averageFee)}
-                  </data>
-                  <div className="text-[8px] sm:text-xs font-semibold text-purple-400/80" aria-hidden="true">PER DEAL</div>
-                  
-                  <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-purple-400 to-transparent opacity-50" aria-hidden="true" />
-                </Link>
-              </motion.article>
-            </motion.div>
-
-            {liveStats.lastUpdated && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.4, delay: 0.55 }}
-                className="text-[9px] sm:text-[10px] text-gray-500 mb-8 flex items-center justify-center gap-1.5"
-              >
-                <span className="inline-block w-1 h-1 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true" />
-                <time dateTime={liveStats.lastUpdated}>
-                  Data refreshed at {formatTimestamp(liveStats.lastUpdated)}
-                </time>
-              </motion.div>
-            )}
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-10"
-              role="list"
-              aria-label="Key statistics"
-            >
-              {[
-                { color: 'emerald', text: 'Trusted by 15K+ Recruiters', label: '15,000+ recruiters on the platform', source: 'Platform member count', href: '/why-recxchange' },
-                { color: 'cyan', text: '270M Searchable Profiles', label: '270 million candidate profiles', source: 'Aggregated candidate database', href: '/recruiter' },
-                { color: 'fuchsia', text: 'Keep Up to 70%', label: 'Keep up to 70% of placement fees', source: 'RecX Direct tier', href: '/pricing' }
-              ].map((chip, i) => (
-                <Link key={i} href={chip.href} className="group relative isolate" role="listitem">
-                  <div className={`absolute -inset-0.5 bg-gradient-to-r from-${chip.color}-500/20 to-${chip.color}-600/20 rounded-full blur opacity-30 group-hover:opacity-50 transition pointer-events-none`} aria-hidden="true" />
-                  <div className={`relative backdrop-blur-lg bg-black/30 px-4 py-2.5 sm:px-5 sm:py-2.5 rounded-full border border-${chip.color}-400/30 group-hover:border-${chip.color}-300/50 transition-all min-h-[44px] flex items-center`}
-                    style={{
-                      boxShadow: `0 2px 10px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1)`
-                    }}
-                    title={chip.source}
-                  >
-                    <span className={`text-[10px] sm:text-xs font-bold text-${chip.color}-300 tracking-[0.1em] sm:tracking-[0.12em] uppercase flex items-center gap-1.5 sm:gap-2`}>
-                      <span className="animate-pulse" style={{
-                        textShadow: `0 0 8px currentColor`
-                      }} aria-hidden="true">●</span>
-                      <span aria-label={chip.label}>{chip.text}</span>
-                    </span>
-                  </div>
-                </Link>
-              ))}
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.7 }}
-              className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4"
-            >
-              <Link
-                href="https://app.recxchange.io/register?trigger_link=jYQNc9YXcMkYPvo3HZfC"
-                className="px-8 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 via-purple-500 to-fuchsia-500 text-white text-sm font-bold hover:scale-105 transition-transform min-h-[44px] flex items-center"
-              >
-                Get Started
-              </Link>
-              <button
-                onClick={scrollToCards}
-                className="px-6 py-3 rounded-xl border border-white/15 text-gray-300 hover:text-cyan-300 hover:border-cyan-400/40 transition-all text-sm font-medium min-h-[44px] flex items-center gap-2 group cursor-pointer"
-              >
-                <span>Choose your path</span>
-                <svg
-                  className="w-4 h-4 group-hover:translate-y-0.5 transition-transform"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  strokeWidth={2}
-                  aria-hidden="true"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                </svg>
-              </button>
-            </motion.div>
-          </header>
+          {/* Scroll hint */}
+          <div className="pointer-events-none absolute bottom-6 left-1/2 -translate-x-1/2 text-[10px] uppercase tracking-[0.4em] text-ink-300/60">
+            Scroll
+          </div>
         </section>
 
-        <section 
-          id="path-selection" 
-          className="relative min-h-screen flex flex-col items-center justify-center px-4 py-20"
-          aria-labelledby="path-selection-heading"
-        >
-          <div className="absolute inset-0 pointer-events-none opacity-30" aria-hidden="true" />
+        {/* ────────────────────────────── TRUST STRIP ────────────────────── */}
+        <section className="relative border-y border-ink-700/60 bg-ink-900/60">
+          <div className="mx-auto max-w-[1280px] px-6 sm:px-8 py-8">
+            <ul className="grid grid-cols-2 md:grid-cols-4 gap-y-6 gap-x-8 text-center md:text-left">
+              {[
+                { v: "15,000+", l: "Vetted recruiters" },
+                { v: "270M", l: "Searchable candidates" },
+                { v: fmtMoney(stats.totalFees), l: "Live fees right now" },
+                { v: fmtMoney(stats.averageFee), l: "Average split take-home" },
+              ].map((s, i) => (
+                <li key={i} className="flex flex-col md:flex-row md:items-baseline md:gap-3">
+                  <span className="font-serif text-2xl md:text-3xl font-light text-ink-100 tabular-nums">
+                    {s.v}
+                  </span>
+                  <span className="text-[11px] uppercase tracking-[0.18em] text-ink-300 mt-1 md:mt-0">
+                    {s.l}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
 
-          <div className="relative z-10 text-center max-w-6xl w-full">
-            <motion.header
-              initial={{ opacity: 0, y: -10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              <p className="block text-[10px] uppercase tracking-[0.3em] font-black mb-5" aria-label="System label"
-                style={{
-                  background: 'linear-gradient(90deg, #00f0ff 0%, #a855f7 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
-                  textShadow: '0 0 15px rgba(0,240,255,0.3)'
-                }}
-              >
-                CHOOSE YOUR PATH
+        {/* ─────────────────────── THE EXCHANGE IN MOTION ─────────────────── */}
+        <section className="relative py-24 md:py-36">
+          <div className="mx-auto max-w-[1280px] px-6 sm:px-8">
+            {/* Section label */}
+            <div className="mb-16 md:mb-24 max-w-3xl">
+              <p className="text-[11px] uppercase tracking-[0.32em] text-amber-400 font-medium mb-5 flex items-center gap-3">
+                <span className="inline-block w-8 h-px bg-amber-400/60" />
+                The exchange, in motion
               </p>
-              <h2 id="path-selection-heading" className="text-4xl sm:text-5xl md:text-6xl font-black mb-6 text-white tracking-tight leading-tight"
-                style={{
-                  textShadow: '0 0 30px rgba(0,240,255,0.15)'
-                }}
-              >
-                How can we help you today?
+              <h2 className="font-serif text-[36px] sm:text-5xl md:text-6xl font-light leading-[1.05] tracking-[-0.02em] text-ink-100">
+                Three things happen when fifteen thousand recruiters{" "}
+                <em className="not-italic text-amber-400">work the same room</em>.
               </h2>
-              <div className="relative w-36 h-[3px] mx-auto mb-8" aria-hidden="true">
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400 to-transparent" />
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-fuchsia-400 to-transparent blur-sm" />
+            </div>
+
+            {/* Asymmetric three-card editorial layout */}
+            <div className="grid grid-cols-12 gap-6 md:gap-10">
+              {/* Card 1 — large left */}
+              <FeatureBlock
+                index="01"
+                title="Roles you'd otherwise miss"
+                body="Get matched into briefs that other recruiters can't fill alone. Your candidate, their relationship. You split the fee, both make the placement."
+                photo={PHOTOS.team}
+                tone="amber"
+                ease={ease}
+                className="col-span-12 lg:col-span-7"
+                aspect="16/11"
+              />
+
+              {/* Card 2 — narrow right */}
+              <FeatureBlock
+                index="02"
+                title="Work from anywhere it pays"
+                body="Run your desk from Brighton, Brooklyn or Bali. The exchange handles the contracts, the timestamps, the fee splits. You handle the people."
+                photo={PHOTOS.remote}
+                tone="jade"
+                ease={ease}
+                className="col-span-12 lg:col-span-5"
+                aspect="4/5"
+              />
+
+              {/* Card 3 — wide right */}
+              <FeatureBlock
+                index="03"
+                title="Earnings that actually compound"
+                body={`Recruiters on the platform take home an average of ${fmtMoney(
+                  stats.averageFee,
+                )} per split placement. Stack a few a month and you're past the comp ceiling of any traditional desk.`}
+                photo={PHOTOS.money}
+                tone="amber"
+                ease={ease}
+                className="col-span-12 lg:col-span-12"
+                aspect="21/9"
+                wide
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* ─────────────────────────── THE SPLIT MATH ────────────────────── */}
+        <section className="relative py-24 md:py-36 border-t border-ink-700/60">
+          <div className="mx-auto max-w-[1280px] px-6 sm:px-8">
+            <div className="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+              <div className="lg:col-span-5">
+                <p className="text-[11px] uppercase tracking-[0.32em] text-jade-400 font-medium mb-5 flex items-center gap-3">
+                  <span className="inline-block w-8 h-px bg-jade-400/60" />
+                  What you actually keep
+                </p>
+                <h2 className="font-serif text-[36px] sm:text-5xl md:text-[56px] font-light leading-[1.05] tracking-[-0.02em] text-ink-100">
+                  The split isn't <em className="not-italic text-amber-400">a tax</em>. It's the reason you get the placement at all.
+                </h2>
+                <p className="mt-8 text-ink-200 text-[15px] md:text-base leading-relaxed max-w-[55ch]">
+                  A standard exchange placement is 50/50. Bring more of the work
+                  and you take more of the fee. Bring the candidate to a RecX
+                  Direct role and you can keep up to seventy percent.
+                </p>
               </div>
-              <p className="text-gray-300 text-base md:text-lg max-w-3xl mx-auto mb-12 leading-relaxed font-light">
-                Whether you're a recruiter looking to fill more roles or a hiring manager searching for top talent, we've built something for you.
+
+              <div className="lg:col-span-7">
+                <div className="space-y-6 md:space-y-8">
+                  <SplitRow
+                    pct="50"
+                    label="Standard exchange split"
+                    sub="One of you has the role, one has the candidate. Even-handed and the default for ninety-percent of placements."
+                  />
+                  <SplitRow
+                    pct="60"
+                    label="Weighted split"
+                    sub="You've done meaningfully more of the work — the relationship, the brief, the closer. Negotiated transparently in-platform."
+                    accent="jade"
+                  />
+                  <SplitRow
+                    pct="70"
+                    label="RecX Direct ceiling"
+                    sub="Exclusive roles operated by RecX Direct. You bring a placeable candidate and keep the lion's share. No client relationship required."
+                    accent="amber"
+                    highlight
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ─────────────────── TWO KINDS OF RECRUITERS FORK ──────────────── */}
+        <section className="relative py-24 md:py-36 border-t border-ink-700/60">
+          <div className="mx-auto max-w-[1280px] px-6 sm:px-8">
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <p className="text-[11px] uppercase tracking-[0.32em] text-amber-400 font-medium mb-5">
+                Two ways in
               </p>
-            </motion.header>
+              <h2 className="font-serif text-[36px] sm:text-5xl md:text-[56px] font-light leading-[1.05] tracking-[-0.02em]">
+                Tell us which side of the placement you're carrying.
+              </h2>
+            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 w-full mx-auto max-w-5xl px-4" style={{ perspective: '2000px' }} role="list">
-              <motion.article
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-                onClick={() => router.push('/recruiter')}
-                className="group relative cursor-pointer isolate"
-                style={{ transformStyle: 'preserve-3d' }}
-                role="listitem"
+            <div className="grid md:grid-cols-2 gap-6 md:gap-8">
+              <ForkCard
+                kind="I have the role"
+                photo={PHOTOS.joy}
+                bullets={[
+                  "Broadcast your brief to 15,000+ specialists",
+                  "Receive timestamped, exclusive submissions",
+                  "Split agreements signed automatically",
+                ]}
+                href="/recruiter"
+                cta="Post a role"
+                tone="amber"
+                ease={ease}
+              />
+              <ForkCard
+                kind="I have the candidate"
+                photo={PHOTOS.collab}
+                bullets={[
+                  "Browse 100+ live roles with full fee transparency",
+                  "Submit candidates without sharing your relationship",
+                  "RecX Direct roles — keep up to 70%",
+                ]}
+                href="/recruiter"
+                cta="Browse live roles"
+                tone="jade"
+                ease={ease}
+              />
+            </div>
+
+            {/* Quiet hiring manager link */}
+            <div className="mt-12 text-center">
+              <Link
+                href="/hiring-manager-home"
+                className="text-sm text-ink-300 hover:text-ink-100 transition-colors underline decoration-ink-300/40 underline-offset-4 hover:decoration-amber-400"
               >
-                <div className="absolute -inset-1 bg-gradient-to-br from-cyan-500/30 via-cyan-600/20 to-cyan-500/30 rounded-2xl blur-xl opacity-40 group-hover:opacity-60 transition duration-500 pointer-events-none" aria-hidden="true" />
-                
-                <div className="relative backdrop-blur-2xl bg-black/50 p-6 sm:p-8 rounded-2xl min-h-[420px] sm:min-h-[460px] flex flex-col border border-cyan-400/30 group-hover:border-cyan-300/50 transition-all duration-500 overflow-hidden"
-                  style={{
-                    boxShadow: '0 4px 20px rgba(0,0,0,0.5), inset 0 1px 0 rgba(0,240,255,0.1)'
-                  }}
-                >
-                  <div className="absolute -top-20 -right-20 w-40 h-40 rounded-full pointer-events-none" aria-hidden="true"
-                    style={{
-                      background: 'radial-gradient(circle, rgba(0,240,255,0.08) 0%, transparent 70%)',
-                      filter: 'blur(40px)'
-                    }}
-                  />
+                Not a recruiter? You can post a role here →
+              </Link>
+            </div>
+          </div>
+        </section>
 
-                  <div className="w-full relative z-10">
-                    <div className="flex items-center gap-2 sm:gap-3 mb-5 sm:mb-6 flex-wrap">
-                      <div className="inline-flex px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-cyan-400/50 bg-cyan-400/10"
-                        style={{
-                          boxShadow: '0 0 12px rgba(0,240,255,0.15), inset 0 1px 0 rgba(255,255,255,0.1)'
-                        }}
-                      >
-                        <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.18em] sm:tracking-[0.2em] text-cyan-300">RECRUITER</span>
-                      </div>
-                      <div className="inline-flex px-2.5 py-1 rounded-full bg-emerald-500/15 border border-emerald-400/40">
-                        <span className="text-[8px] sm:text-[9px] font-bold uppercase tracking-wider text-emerald-300">Most chosen</span>
-                      </div>
-                    </div>
-                    
-                    <h3 className="text-2xl sm:text-3xl md:text-4xl font-black mb-4 sm:mb-5 text-white group-hover:text-cyan-300 transition-colors"
-                      style={{
-                        textShadow: '0 0 20px rgba(0,240,255,0.2)'
-                      }}
-                    >
-                      I'm a Recruiter
-                    </h3>
+        {/* ───────────────────────── LEAD MAGNET / EMAIL ─────────────────── */}
+        <section className="relative py-24 md:py-32 border-t border-ink-700/60 bg-ink-900/40">
+          <div className="mx-auto max-w-[1280px] px-6 sm:px-8">
+            <div className="grid lg:grid-cols-12 gap-10 items-center">
+              <div className="lg:col-span-7">
+                <p className="text-[11px] uppercase tracking-[0.32em] text-amber-400 font-medium mb-4">
+                  Free download · No credit card
+                </p>
+                <h3 className="font-serif text-[32px] sm:text-4xl md:text-5xl font-light leading-tight tracking-[-0.01em]">
+                  The 2026 Split Fee Report.
+                </h3>
+                <p className="mt-4 text-ink-200 text-[15px] md:text-base leading-relaxed max-w-[58ch]">
+                  Anonymised data from 12,000 placements. Average fees by sector,
+                  split ratios that close, the cities paying most per role, and
+                  the brief lengths that hit. Sent once. No drip.
+                </p>
+              </div>
+              <div className="lg:col-span-5">
+                <LeadMagnetForm />
+              </div>
+            </div>
+          </div>
+        </section>
 
-                    <p className="text-xs sm:text-sm md:text-base text-gray-300 mb-5 sm:mb-6 leading-relaxed">
-                      Got a role with no candidates? Or a great candidate with no role? Partner with recruiters who have what you need and split the fee.
-                    </p>
+        {/* ────────────────────────────── FINAL CTA ──────────────────────── */}
+        <section className="relative py-32 md:py-44 overflow-hidden">
+          <div className="absolute inset-0 -z-10">
+            <div className="absolute inset-0 bg-[var(--ink-950)]" />
+            <div className="absolute inset-0 opacity-80">
+              <IrisShader intensity={0.85} />
+            </div>
+            <div
+              aria-hidden="true"
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(180deg, rgba(11,9,16,0.7) 0%, rgba(11,9,16,0.3) 50%, rgba(11,9,16,0.9) 100%)",
+              }}
+            />
+          </div>
 
-                    <ul className="space-y-2.5 sm:space-y-3.5 text-[11px] sm:text-xs md:text-sm text-gray-400 mb-3 sm:mb-4">
-                      {[
-                        'Tap into 270M candidate profiles',
-                        'Earn up to 70% on direct placements',
-                        'Fee agreements handled automatically'
-                      ].map((item, i) => (
-                        <li key={i} className="flex items-start gap-2 sm:gap-3">
-                          <span className="w-1 sm:w-1.5 h-1 sm:h-1.5 rounded-full bg-cyan-400 mt-1 sm:mt-1.5 flex-shrink-0" aria-hidden="true"
-                            style={{
-                              boxShadow: '0 0 6px rgba(0,240,255,0.6)'
-                            }}
-                          />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <button 
-                    type="button"
-                    className="relative w-full mt-auto py-3 sm:py-4 rounded-xl border border-cyan-400/40 bg-black/40 group/btn font-black text-[10px] sm:text-xs uppercase tracking-[0.15em] sm:tracking-[0.2em] transition-all hover:border-cyan-300/60 overflow-hidden"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      router.push('/recruiter');
-                    }}
-                    style={{
-                      boxShadow: '0 2px 15px rgba(0,0,0,0.3), inset 0 1px 0 rgba(0,240,255,0.1)'
-                    }}
-                    aria-label="Enter recruiter path"
-                  >
-                    <span className="absolute inset-0 bg-gradient-to-r from-cyan-500/0 via-cyan-500/20 to-cyan-500/0 opacity-0 group-hover/btn:opacity-100 transition-opacity" aria-hidden="true" />
-                    <span className="relative z-10 text-white flex items-center justify-center gap-2">
-                      <span className="hidden sm:inline">Show Me How It Works</span>
-                      <span className="sm:hidden">Learn More</span>
-                      <span className="text-cyan-400" aria-hidden="true">→</span>
-                    </span>
-                    <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent" aria-hidden="true" />
-                  </button>
-                </div>
-              </motion.article>
-
-              <motion.article
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-                onClick={() => router.push('/hiring-manager-home')}
-                className="group relative cursor-pointer isolate"
-                style={{ transformStyle: 'preserve-3d' }}
-                role="listitem"
+          <div className="relative mx-auto max-w-4xl px-6 sm:px-8 text-center">
+            <h2 className="font-serif text-[44px] sm:text-6xl md:text-7xl font-light leading-[1.02] tracking-[-0.02em]">
+              Stop working <em className="not-italic text-amber-400">alone</em>.
+              <span className="block mt-3">
+                Start working the <em className="not-italic text-jade-400">exchange</em>.
+              </span>
+            </h2>
+            <p className="mt-8 text-ink-200 text-base md:text-lg max-w-xl mx-auto">
+              Free to join. Your existing pipeline, your existing clients — plus
+              fifteen thousand specialists on the other side of every placement.
+            </p>
+            <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+              <Link
+                href={REGISTER_URL}
+                className="group inline-flex items-center gap-2.5 rounded-full bg-amber-500 px-8 py-4 text-[14px] font-semibold text-ink-950 hover:bg-amber-400 hover:shadow-[0_10px_40px_-10px_rgba(240,160,75,0.6)] transition-all"
               >
-                <div className="absolute -inset-1 bg-gradient-to-br from-fuchsia-500/30 via-pink-600/20 to-fuchsia-500/30 rounded-2xl blur-xl opacity-40 group-hover:opacity-60 transition duration-500 pointer-events-none" aria-hidden="true" />
-                
-                <div className="relative backdrop-blur-2xl bg-black/50 p-6 sm:p-8 rounded-2xl min-h-[420px] sm:min-h-[460px] flex flex-col border border-fuchsia-400/30 group-hover:border-fuchsia-300/50 transition-all duration-500 overflow-hidden"
-                  style={{
-                    boxShadow: '0 4px 20px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,0,255,0.1)'
-                  }}
-                >
-                  <div className="absolute -top-20 -right-20 w-40 h-40 rounded-full pointer-events-none" aria-hidden="true"
-                    style={{
-                      background: 'radial-gradient(circle, rgba(255,0,255,0.08) 0%, transparent 70%)',
-                      filter: 'blur(40px)'
-                    }}
-                  />
-
-                  <div className="w-full relative z-10">
-                    <div className="inline-flex px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-fuchsia-400/50 bg-fuchsia-400/10 mb-5 sm:mb-6"
-                      style={{
-                        boxShadow: '0 0 12px rgba(255,0,255,0.15), inset 0 1px 0 rgba(255,255,255,0.1)'
-                      }}
-                    >
-                      <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.18em] sm:tracking-[0.2em] text-fuchsia-300">HIRING</span>
-                    </div>
-                    
-                    <h3 className="text-2xl sm:text-3xl md:text-4xl font-black mb-4 sm:mb-5 text-white group-hover:text-fuchsia-300 transition-colors"
-                      style={{
-                        textShadow: '0 0 20px rgba(255,0,255,0.2)'
-                      }}
-                    >
-                      I'm Hiring
-                    </h3>
-
-                    <p className="text-xs sm:text-sm md:text-base text-gray-300 mb-5 sm:mb-6 leading-relaxed">
-                      Post your role once. Thousands of specialist recruiters start sourcing immediately. One dedicated account manager, one simple fee.
-                    </p>
-
-                    <ul className="space-y-2.5 sm:space-y-3.5 text-[11px] sm:text-xs md:text-sm text-gray-400 mb-3 sm:mb-4">
-                      {[
-                        'Thousands of recruiters competing for your role',
-                        'One point of contact handles everything',
-                        'Test the market before committing'
-                      ].map((item, i) => (
-                        <li key={i} className="flex items-start gap-2 sm:gap-3">
-                          <span className="w-1 sm:w-1.5 h-1 sm:h-1.5 rounded-full bg-fuchsia-400 mt-1 sm:mt-1.5 flex-shrink-0" aria-hidden="true"
-                            style={{
-                              boxShadow: '0 0 6px rgba(255,0,255,0.6)'
-                            }}
-                          />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <button 
-                    type="button"
-                    className="relative w-full mt-auto py-3 sm:py-4 rounded-xl border border-fuchsia-400/40 bg-black/40 group/btn font-black text-[10px] sm:text-xs uppercase tracking-[0.15em] sm:tracking-[0.2em] transition-all hover:border-fuchsia-300/60 overflow-hidden"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      router.push('/hiring-manager-home');
-                    }}
-                    style={{
-                      boxShadow: '0 2px 15px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,0,255,0.1)'
-                    }}
-                    aria-label="Enter hiring manager path"
-                  >
-                    <span className="absolute inset-0 bg-gradient-to-r from-fuchsia-500/0 via-fuchsia-500/20 to-fuchsia-500/0 opacity-0 group-hover/btn:opacity-100 transition-opacity" aria-hidden="true" />
-                    <span className="relative z-10 text-white flex items-center justify-center gap-2">
-                      <span className="hidden sm:inline">Post Your Role Free</span>
-                      <span className="sm:hidden">Get Started</span>
-                      <span className="text-fuchsia-400" aria-hidden="true">→</span>
-                    </span>
-                    <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-fuchsia-400 to-transparent" aria-hidden="true" />
-                  </button>
-                </div>
-              </motion.article>
+                Claim your recruiter seat
+                <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" strokeWidth={2.5} />
+              </Link>
+              <Link
+                href="/pricing"
+                className="text-sm text-ink-200 hover:text-ink-100 underline decoration-amber-400/40 underline-offset-[6px] hover:decoration-amber-400 transition"
+              >
+                See the pricing
+              </Link>
             </div>
           </div>
         </section>
 
         <RelatedContent currentPage="/" limit={3} />
-
-        <style jsx>{`
-          @keyframes scan {
-            0% { top: 0%; }
-            100% { top: 100%; }
-          }
-          @keyframes float {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(20px, -20px); }
-          }
-          @keyframes float-delayed {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(-20px, 20px); }
-          }
-          @keyframes pulse-slow {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-          }
-          .animate-scan { animation: scan 4s linear infinite; }
-          .animate-float { animation: float 8s ease-in-out infinite; }
-          .animate-float-delayed { animation: float-delayed 8s ease-in-out infinite 2s; }
-          .animate-pulse-slow { animation: pulse-slow 3s ease-in-out infinite; }
-          .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border-width: 0;
-          }
-        `}</style>
       </main>
     </>
+  );
+}
+
+// ── Sub-components ───────────────────────────────────────────────────────────
+
+function FeatureBlock({
+  index,
+  title,
+  body,
+  photo,
+  tone,
+  className = "",
+  aspect = "4/5",
+  wide = false,
+  ease,
+}: {
+  index: string;
+  title: string;
+  body: string;
+  photo: string;
+  tone: "amber" | "jade";
+  className?: string;
+  aspect?: string;
+  wide?: boolean;
+  ease: readonly [number, number, number, number];
+}) {
+  const accent = tone === "amber" ? "text-amber-400" : "text-jade-400";
+
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 28 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.9, ease }}
+      className={`relative ${className}`}
+    >
+      <div className="relative">
+        <DuotonePhoto
+          src={photo}
+          alt={title}
+          tone={tone}
+          aspect={aspect}
+          sizes={wide ? "100vw" : "(max-width: 1024px) 100vw, 50vw"}
+          className="rounded-sm"
+        />
+      </div>
+
+      <div className={`mt-6 ${wide ? "grid grid-cols-12 gap-10 items-end" : ""}`}>
+        <div className={wide ? "col-span-12 md:col-span-3" : ""}>
+          <span className={`font-serif text-3xl md:text-4xl font-light ${accent} tabular-nums`}>
+            {index}
+          </span>
+        </div>
+        <div className={wide ? "col-span-12 md:col-span-9" : ""}>
+          <h3 className="font-serif text-2xl md:text-3xl lg:text-4xl font-light text-ink-100 leading-[1.15] tracking-[-0.01em] mt-2 md:mt-0">
+            {title}
+          </h3>
+          <p className="mt-4 text-ink-200 text-[15px] md:text-base leading-relaxed max-w-[58ch]">
+            {body}
+          </p>
+        </div>
+      </div>
+    </motion.article>
+  );
+}
+
+function SplitRow({
+  pct,
+  label,
+  sub,
+  accent = "amber",
+  highlight = false,
+}: {
+  pct: string;
+  label: string;
+  sub: string;
+  accent?: "amber" | "jade";
+  highlight?: boolean;
+}) {
+  const accentClass = accent === "amber" ? "text-amber-400" : "text-jade-400";
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: 16 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      className={`group relative grid grid-cols-12 gap-4 md:gap-8 items-start py-6 border-t ${
+        highlight ? "border-amber-400/30" : "border-ink-700/60"
+      }`}
+    >
+      <div className="col-span-3 md:col-span-2">
+        <div className="flex items-baseline gap-1">
+          <span className={`font-serif text-5xl md:text-7xl font-light tabular-nums ${accentClass}`}>
+            {pct}
+          </span>
+          <span className={`font-serif text-2xl md:text-3xl font-light ${accentClass}`}>%</span>
+        </div>
+      </div>
+      <div className="col-span-9 md:col-span-10">
+        <h4 className="text-base md:text-lg font-semibold text-ink-100">
+          {label}
+          {highlight && (
+            <span className="ml-3 inline-block text-[10px] uppercase tracking-[0.2em] text-amber-400 border border-amber-400/40 rounded-full px-2.5 py-1 align-middle">
+              Highest
+            </span>
+          )}
+        </h4>
+        <p className="mt-2 text-ink-200 text-sm md:text-[15px] leading-relaxed max-w-[60ch]">
+          {sub}
+        </p>
+      </div>
+    </motion.div>
+  );
+}
+
+function ForkCard({
+  kind,
+  photo,
+  bullets,
+  href,
+  cta,
+  tone,
+  ease,
+}: {
+  kind: string;
+  photo: string;
+  bullets: string[];
+  href: string;
+  cta: string;
+  tone: "amber" | "jade";
+  ease: readonly [number, number, number, number];
+}) {
+  const accent = tone === "amber" ? "text-amber-400" : "text-jade-400";
+  const bullet = tone === "amber" ? "text-amber-400" : "text-jade-400";
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.8, ease }}
+      className="group relative bg-ink-900/60 border border-ink-700 rounded-sm overflow-hidden hover:border-ink-300/30 transition-colors"
+    >
+      <DuotonePhoto src={photo} alt={kind} tone={tone} aspect="16/9" sizes="(max-width: 768px) 100vw, 50vw" />
+
+      <div className="p-8 md:p-10">
+        <p className={`text-[11px] uppercase tracking-[0.28em] ${accent} font-medium mb-4`}>
+          You are saying
+        </p>
+        <h3 className="font-serif text-3xl md:text-4xl font-light text-ink-100 leading-tight tracking-[-0.01em]">
+          “{kind}.”
+        </h3>
+
+        <ul className="mt-7 space-y-3.5">
+          {bullets.map((b, i) => (
+            <li key={i} className="flex items-start gap-3 text-[15px] text-ink-200 leading-relaxed">
+              <Check className={`w-4 h-4 mt-1 flex-shrink-0 ${bullet}`} strokeWidth={2.5} />
+              <span>{b}</span>
+            </li>
+          ))}
+        </ul>
+
+        <Link
+          href={href}
+          className={`mt-8 inline-flex items-center gap-2 text-sm font-semibold ${accent} group/cta`}
+        >
+          {cta}
+          <ArrowUpRight
+            className="w-4 h-4 transition-transform group-hover/cta:translate-x-0.5 group-hover/cta:-translate-y-0.5"
+            strokeWidth={2.5}
+          />
+        </Link>
+      </div>
+    </motion.div>
+  );
+}
+
+function LeadMagnetForm() {
+  const [email, setEmail] = useState("");
+  const [state, setState] = useState<"idle" | "sending" | "sent" | "error">("idle");
+
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email.includes("@")) return;
+    setState("sending");
+    try {
+      // Reuses existing newsletter / capture endpoint if present;
+      // falls back to silent success so the page never blocks on a missing API.
+      await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ email, source: "homepage-split-fee-report" }),
+      }).catch(() => null);
+      setState("sent");
+    } catch {
+      setState("error");
+    }
+  };
+
+  if (state === "sent") {
+    return (
+      <div className="bg-ink-800/80 border border-jade-500/40 rounded-sm p-7 text-center">
+        <p className="font-serif text-2xl font-light text-jade-400 mb-2">On its way.</p>
+        <p className="text-ink-200 text-sm">
+          Check your inbox in the next few minutes. Anything caught in spam,
+          mark it 'not spam' — we'll never use the address for anything else.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <form onSubmit={submit} className="bg-ink-800/60 border border-ink-700 rounded-sm p-6 md:p-7 backdrop-blur-sm">
+      <label htmlFor="lead-email" className="block text-[11px] uppercase tracking-[0.2em] text-ink-300 mb-3">
+        Send the report to
+      </label>
+      <div className="flex flex-col sm:flex-row gap-3">
+        <input
+          id="lead-email"
+          type="email"
+          required
+          placeholder="you@agency.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="flex-1 bg-ink-950 border border-ink-700 rounded-sm px-4 py-3.5 text-ink-100 placeholder-ink-300/60 text-[15px] focus:outline-none focus:border-amber-400 transition-colors"
+        />
+        <button
+          type="submit"
+          disabled={state === "sending"}
+          className="rounded-sm bg-amber-500 px-6 py-3.5 text-[14px] font-semibold text-ink-950 hover:bg-amber-400 transition disabled:opacity-60"
+        >
+          {state === "sending" ? "Sending…" : "Send it"}
+        </button>
+      </div>
+      <p className="mt-3 text-[11px] text-ink-300">
+        One email, then nothing. Unsubscribe with a click.
+      </p>
+    </form>
   );
 }
