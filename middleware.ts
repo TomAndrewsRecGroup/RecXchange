@@ -20,6 +20,7 @@ const rateLimitMap = new Map<string, RateLimitEntry>();
 const RATE_LIMITS = {
   // API routes - stricter limits
   '/api/quick-action': { requests: 5, windowMs: 60000 }, // 5 requests per minute
+  '/api/contact': { requests: 5, windowMs: 60000 }, // 5 requests per minute
   '/api/analytics/track': { requests: 30, windowMs: 60000 }, // 30 requests per minute
   '/api/blog': { requests: 20, windowMs: 60000 }, // 20 requests per minute
   '/api/ghl': { requests: 10, windowMs: 60000 }, // 10 requests per minute
