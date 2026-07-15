@@ -27,7 +27,7 @@ export const viewport: Viewport = {
   userScalable: true,
 }
 
-// Root layout metadata — no canonical set here.
+// Root layout metadata - no canonical set here.
 // Each page exports its own canonical via alternates.canonical.
 export const metadata: Metadata = {
   title: "RecXchange | The Split-Fee Recruitment Marketplace",

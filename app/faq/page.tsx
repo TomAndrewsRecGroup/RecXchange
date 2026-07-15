@@ -20,11 +20,11 @@ const groups: { heading: string; items: { q: string; a: string }[] }[] = [
       },
       {
         q: 'Who can join?',
-        a: 'Working recruiters — independent, freelance, or agency-based. Every member is verified before they can transact, which is what keeps the network high quality.',
+        a: 'Working recruiters - independent, freelance, or agency-based. Every member is verified before they can transact, which is what keeps the network high quality.',
       },
       {
         q: 'How much does it cost to join?',
-        a: 'Membership starts at $1/month on the RecX Entry plan. Higher tiers — RecX Lite ($99/month) and RecX Pro ($249/month) — unlock more monthly tokens and RecX Direct access.',
+        a: 'Membership starts at $1/month on the RecX Entry plan. Higher tiers - RecX Lite ($99/month) and RecX Pro ($249/month) - unlock more monthly tokens and RecX Direct access.',
       },
     ],
   },
@@ -37,7 +37,7 @@ const groups: { heading: string; items: { q: string; a: string }[] }[] = [
       },
       {
         q: 'How much do recruiters actually earn?',
-        a: 'The average recruiter cut on RecXchange is $7,000 per placement — that figure is the recruiter’s share after the split, not the total fee divided.',
+        a: 'The average recruiter cut on RecXchange is $7,000 per placement - that figure is the recruiter’s share after the split, not the total fee divided.',
       },
       {
         q: 'What are tokens?',
@@ -67,7 +67,7 @@ const groups: { heading: string; items: { q: string; a: string }[] }[] = [
     items: [
       {
         q: 'Can employers use RecXchange directly?',
-        a: 'Yes. Employers post roles through RecX Direct and get a network of 15,000+ recruiters working the brief through a single point of contact, on contingency terms — payment only on a successful hire.',
+        a: 'Yes. Employers post roles through RecX Direct and get a network of 15,000+ recruiters working the brief through a single point of contact, on contingency terms - payment only on a successful hire.',
       },
       {
         q: 'What does it cost an employer?',

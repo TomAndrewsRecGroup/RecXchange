@@ -22,7 +22,7 @@ const rows = [
   },
   {
     label: 'Candidate ownership',
-    recxchange: 'Timestamped submissions — disputes settled by the record',
+    recxchange: 'Timestamped submissions - disputes settled by the record',
     other: 'Depends on member conduct and network arbitration',
   },
   {
@@ -74,8 +74,8 @@ export default function VsSplitFeeNetworksPage() {
             <p className="text-sm leading-relaxed text-[var(--rx-muted)]">
               The established networks have long-standing member communities,
               and that history counts for something. Where RecXchange pulls
-              ahead is automation — contracts, timestamps, and matching that
-              remove the manual trust-building the legacy model depends on —
+              ahead is automation - contracts, timestamps, and matching that
+              remove the manual trust-building the legacy model depends on -
               plus RecX Direct roles no recruiter-to-recruiter network can
               offer.
             </p>

@@ -13,7 +13,7 @@ import { STATS, SUPPORT_EMAIL } from '@/lib/redesign/site';
 export const metadata: Metadata = {
   title: 'Hire With RecXchange | One Brief, 15,000+ Recruiters',
   description:
-    'Give RecXchange one brief and put 15,000+ specialist recruiters with 270M candidate profiles to work on it. Contingency terms — you pay only on a successful hire.',
+    'Give RecXchange one brief and put 15,000+ specialist recruiters with 270M candidate profiles to work on it. Contingency terms - you pay only on a successful hire.',
   alternates: { canonical: 'https://recxchange.io/for-employers' },
 };
 
@@ -24,7 +24,7 @@ const useCases = [
   },
   {
     title: 'Volume hiring',
-    body: 'Multiple recruiters work the same brief in parallel — coverage a single agency can’t match, without you managing ten agency relationships.',
+    body: 'Multiple recruiters work the same brief in parallel - coverage a single agency can’t match, without you managing ten agency relationships.',
   },
   {
     title: 'Executive search',
@@ -32,7 +32,7 @@ const useCases = [
   },
   {
     title: 'International hiring',
-    body: 'Recruiters across the UK, US, Europe, Middle East, Africa and Australia — local market knowledge without opening a local office.',
+    body: 'Recruiters across the UK, US, Europe, Middle East, Africa and Australia - local market knowledge without opening a local office.',
   },
 ];
 
@@ -43,7 +43,7 @@ const faqs = [
   },
   {
     q: 'How is this different from using a recruitment agency?',
-    a: 'One agency gives you one recruiter’s network. RecXchange gives your brief to 15,000+ recruiters with 270M candidate profiles between them — while you deal with a single point of contact.',
+    a: 'One agency gives you one recruiter’s network. RecXchange gives your brief to 15,000+ recruiters with 270M candidate profiles between them - while you deal with a single point of contact.',
   },
   {
     q: 'How fast can I expect candidates?',
@@ -82,7 +82,7 @@ export default function ForEmployersPage() {
                 </span>
               </>
             }
-            sub={`Post a role once and put a vetted network of specialist recruiters — with ${STATS.candidates} candidate profiles between them — to work. You pay only on a successful hire.`}
+            sub={`Post a role once and put a vetted network of specialist recruiters - with ${STATS.candidates} candidate profiles between them - to work. You pay only on a successful hire.`}
           />
         </Reveal>
         <Reveal delay={160}>

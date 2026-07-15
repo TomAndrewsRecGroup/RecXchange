@@ -5,8 +5,8 @@
  * Protected by INDEXNOW_SUBMIT_SECRET to prevent abuse.
  *
  * Body options:
- *   { "urls": ["https://recxchange.io/some-page"] }  — submit specific URLs
- *   { "all": true }                                   — submit entire sitemap
+ *   { "urls": ["https://recxchange.io/some-page"] }  - submit specific URLs
+ *   { "all": true }                                   - submit entire sitemap
  *
  * Example curl:
  *   curl -X POST https://recxchange.io/api/indexnow \
@@ -19,7 +19,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { submitAllSitemapUrls, submitUrlsToIndexNow } from '@/lib/indexnow';
 
 export async function POST(req: NextRequest) {
-  // Auth check — set INDEXNOW_SUBMIT_SECRET in Vercel env vars
+  // Auth check - set INDEXNOW_SUBMIT_SECRET in Vercel env vars
   const authHeader = req.headers.get('authorization');
   const secret = process.env.INDEXNOW_SUBMIT_SECRET;
 

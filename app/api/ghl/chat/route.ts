@@ -218,7 +218,7 @@ export async function POST(req: NextRequest) {
     let contactId = existingContactId;
     let conversationId = existingConvId;
 
-    // First message — create contact + optionally company
+    // First message - create contact + optionally company
     if (!contactId) {
       if (!name || !email || !persona) {
         console.log('[GHL Chat] Error: Missing required fields for first message');
@@ -235,7 +235,7 @@ export async function POST(req: NextRequest) {
         await upsertCompany(companyName, contactId);
       }
     } else {
-      // Subsequent messages from same visitor — ensure they're registered
+      // Subsequent messages from same visitor - ensure they're registered
       visitorContactIds.add(contactId);
     }
 

@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react';
 
 /**
- * Network background — a living constellation of recruiter "nodes" drifting
+ * Network background - a living constellation of recruiter "nodes" drifting
  * over vivid violet/blue/magenta gradient washes, with connection lines
  * forming and dissolving between nearby nodes (and toward the cursor).
  * Visualises the thing the product actually is: a network making connections.
@@ -113,7 +113,7 @@ export default function NetworkBackground() {
           ctx.stroke();
         }
 
-        // Brighter links to the cursor — the network reaches toward you
+        // Brighter links to the cursor - the network reaches toward you
         const pdx = a.x - pointer.x;
         const pdy = a.y - pointer.y;
         const pd2 = pdx * pdx + pdy * pdy;
@@ -232,7 +232,7 @@ export default function NetworkBackground() {
         }}
       />
       <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
-      {/* Readability veil — keeps copy AA-legible over the network */}
+      {/* Readability veil - keeps copy AA-legible over the network */}
       <div
         className="absolute inset-0"
         style={{

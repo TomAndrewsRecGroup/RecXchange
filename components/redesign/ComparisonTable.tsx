@@ -8,7 +8,7 @@ export interface ComparisonRow {
 
 /**
  * Two-column comparison table used across /compare pages.
- * Server component — no interactivity needed.
+ * Server component - no interactivity needed.
  */
 export default function ComparisonTable({
   otherName,

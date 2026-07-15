@@ -1,4 +1,4 @@
-// Metadata is exported from blog/layout.tsx — do not duplicate here.
+// Metadata is exported from blog/layout.tsx - do not duplicate here.
 import React from 'react';
 import Link from 'next/link';
 

@@ -1,4 +1,4 @@
-// SpeakableSchema — server component, injected in layout <head>.
+// SpeakableSchema - server component, injected in layout <head>.
 // Invisible to users. Read only by Google Assistant, AI crawlers, and TTS engines.
 // Marks the most answer-worthy passages on the site for generative engine citation.
 // https://schema.org/speakable

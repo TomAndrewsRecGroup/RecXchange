@@ -57,7 +57,7 @@ export default function ContactForm() {
         </p>
         <h3 className="text-lg font-bold text-white mb-2">Message sent</h3>
         <p className="text-sm text-[var(--rx-muted)]">
-          Thanks — we&apos;ve got it. We reply to everything, usually within
+          Thanks - we&apos;ve got it. We reply to everything, usually within
           one business day.
         </p>
       </div>
@@ -161,7 +161,7 @@ export default function ContactForm() {
         />
       </div>
 
-      {/* Honeypot — hidden from real users, bots fill it in */}
+      {/* Honeypot - hidden from real users, bots fill it in */}
       <div className="hidden" aria-hidden="true">
         <label htmlFor="contact-website">Website</label>
         <input

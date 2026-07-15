@@ -63,7 +63,7 @@ const plans = [
 const faqs = [
   {
     q: 'What do tokens actually pay for?',
-    a: 'Tokens unlock platform actions — chiefly submitting candidates to roles. They exist to keep submissions intentional and high quality, which is what keeps role owners engaged.',
+    a: 'Tokens unlock platform actions - chiefly submitting candidates to roles. They exist to keep submissions intentional and high quality, which is what keeps role owners engaged.',
   },
   {
     q: 'Is there a placement fee or commission to RecXchange?',

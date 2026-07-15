@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 /**
- * Global employer capture card — rendered above the footer on every page,
+ * Global employer capture card - rendered above the footer on every page,
  * so the hiring-manager funnel is always one scroll away without diluting
  * the recruiter-led page content.
  */

@@ -12,7 +12,7 @@ export async function GET(req: NextRequest) {
     return new Response('conversationId is required', { status: 400 });
   }
 
-  // Capture timestamp at connection time — only deliver replies after this point
+  // Capture timestamp at connection time - only deliver replies after this point
   const connectedAt = Date.now();
 
   const stream = new ReadableStream({
@@ -24,7 +24,7 @@ export async function GET(req: NextRequest) {
       controller.enqueue(enc({ type: 'connected' }));
 
       const interval = setInterval(() => {
-        // Heartbeat — keeps connection alive through Vercel's 30s limit
+        // Heartbeat - keeps connection alive through Vercel's 30s limit
         controller.enqueue(enc({ type: 'heartbeat' }));
 
         const replies = pendingReplies.get(conversationId);

@@ -53,11 +53,11 @@ const testimonials = [
 const faqTeaser = [
   {
     q: 'What is split-fee recruitment?',
-    a: 'Split-fee recruitment is when two recruiters partner on one placement — one brings the role, the other brings the candidate — and share the placement fee. On RecXchange the split terms are agreed upfront and the contract is generated automatically.',
+    a: 'Split-fee recruitment is when two recruiters partner on one placement - one brings the role, the other brings the candidate - and share the placement fee. On RecXchange the split terms are agreed upfront and the contract is generated automatically.',
   },
   {
     q: 'How much does RecXchange cost?',
-    a: 'You can join from $1/month on RecX Entry. Recruiters on the platform earn an average of $7,000 per placement — their share after the split, not the total fee divided.',
+    a: 'You can join from $1/month on RecX Entry. Recruiters on the platform earn an average of $7,000 per placement - their share after the split, not the total fee divided.',
   },
   {
     q: 'How do I know my candidate or role is protected?',
@@ -92,13 +92,13 @@ export default function HomePage() {
             <strong className="text-white">
               {STATS.avgPlacement} per placement
             </strong>{' '}
-            — your cut, after the split.
+            - your cut, after the split.
           </p>
         </Reveal>
         <Reveal delay={240}>
           <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-4">
             <GradientButton href={APP_REGISTER_URL} external size="lg">
-              Join now — start earning
+              Join now - start earning
             </GradientButton>
             <GhostButton href="/roles" size="lg">
               Browse live roles
@@ -155,7 +155,7 @@ export default function HomePage() {
           <Reveal delay={120}>
             <Step number={2} title="Match with a partner">
               The Xchange Engine matches your roles and candidates against{' '}
-              {STATS.recruiters} recruiters and {STATS.candidates} profiles —
+              {STATS.recruiters} recruiters and {STATS.candidates} profiles -
               instantly.
             </Step>
           </Reveal>
@@ -230,7 +230,7 @@ export default function HomePage() {
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-base sm:text-lg text-[var(--rx-muted)]">
               RecX Direct roles come straight from employers, so there&apos;s
-              only one split — and it&apos;s in your favour. Bring the
+              only one split - and it&apos;s in your favour. Bring the
               candidate, take up to {STATS.maxSplit}.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -264,7 +264,7 @@ export default function HomePage() {
             },
             {
               title: 'Vetted network',
-              body: `All ${STATS.recruiters} members are verified recruiters — no candidates, no clients, no tyre-kickers.`,
+              body: `All ${STATS.recruiters} members are verified recruiters - no candidates, no clients, no tyre-kickers.`,
             },
             {
               title: 'Agreed terms upfront',

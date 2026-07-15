@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 /**
- * Interactive earnings calculator — placements/year × average fee × split %.
+ * Interactive earnings calculator - placements/year × average fee × split %.
  * Pure client-side maths; no network calls.
  */
 export default function EarningsCalculator() {
@@ -112,7 +112,7 @@ export default function EarningsCalculator() {
           </p>
           <p className="mt-1 text-sm text-[var(--rx-muted)]">per year</p>
           <p className="mt-4 text-sm text-[var(--rx-muted)] tabular-nums">
-            {fmt(perPlacement)} per placement — your cut, after the split
+            {fmt(perPlacement)} per placement - your cut, after the split
           </p>
         </div>
       </div>

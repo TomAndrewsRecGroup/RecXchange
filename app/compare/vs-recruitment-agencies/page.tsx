@@ -20,18 +20,18 @@ const rows = [
   },
   {
     label: 'Cost model',
-    recxchange: 'Contingency — identical to agency terms',
+    recxchange: 'Contingency - identical to agency terms',
     other: 'Contingency (or retainer for search firms)',
   },
   {
     label: 'Coverage on niche briefs',
-    recxchange: 'The network self-selects — specialists pick up your role',
+    recxchange: 'The network self-selects - specialists pick up your role',
     other: 'Depends whether the agency has that desk',
   },
   {
     label: 'Managing the process',
     recxchange: 'One point of contact, however many recruiters work it',
-    other: 'One contact per agency — multiply per agency engaged',
+    other: 'One contact per agency - multiply per agency engaged',
   },
   {
     label: 'Incentive to prioritise you',
@@ -54,7 +54,7 @@ export default function VsAgenciesPage() {
                 <span className="grad-text">vs recruitment agencies</span>
               </>
             }
-            sub="Same contingency terms you already use — the difference is whether one recruiter works your role, or a marketplace of specialists competes to fill it."
+            sub="Same contingency terms you already use - the difference is whether one recruiter works your role, or a marketplace of specialists competes to fill it."
           />
         </Reveal>
       </section>
@@ -72,7 +72,7 @@ export default function VsAgenciesPage() {
             <p className="text-sm leading-relaxed text-[var(--rx-muted)]">
               A great specialist agency with genuine depth in your niche is
               worth keeping. RecXchange is what you use when no single agency
-              covers the brief — or when you want market-wide coverage without
+              covers the brief - or when you want market-wide coverage without
               managing five agency relationships at once.
             </p>
             <div className="mt-6">

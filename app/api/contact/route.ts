@@ -17,7 +17,7 @@ interface ContactPayload {
   company?: unknown;
   reason?: unknown;
   message?: unknown;
-  website?: unknown; // honeypot — real users never fill this
+  website?: unknown; // honeypot - real users never fill this
 }
 
 function str(value: unknown, max: number): string | null {
@@ -100,7 +100,7 @@ export async function POST(request: NextRequest) {
       to: SUPPORT_EMAIL,
       from: { email: FROM_EMAIL, name: 'RecXchange Website' },
       replyTo: { email, name },
-      subject: `[Contact] ${reasonLabel} — ${name}`,
+      subject: `[Contact] ${reasonLabel} - ${name}`,
       text: lines.join('\n'),
       html: `<div style="font-family:sans-serif;font-size:14px;line-height:1.6">${lines
         .map((l) => escapeHtml(l))

@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 const protections = [
   {
     title: 'Timestamped candidate ownership',
-    body: 'Every submission is recorded to the second. If a dispute ever arises over who introduced a candidate, the record settles it instantly — no arguments, no lost fees.',
+    body: 'Every submission is recorded to the second. If a dispute ever arises over who introduced a candidate, the record settles it instantly - no arguments, no lost fees.',
   },
   {
     title: 'Contracts before contact',
@@ -93,8 +93,8 @@ export default function WhyRecXchangePage() {
               Built by recruiters, not by a software company guessing
             </h2>
             <p className="mt-4 text-[15px] leading-relaxed text-[var(--rx-muted)]">
-              RecXchange was founded by Tom Andrews — 14+ years running desks
-              across engineering, building materials and healthcare — and James
+              RecXchange was founded by Tom Andrews - 14+ years running desks
+              across engineering, building materials and healthcare - and James
               Brown, the CTO behind the Xchange matching engine. Every
               protection in the platform exists because one of us was burned
               without it at some point.
@@ -118,7 +118,7 @@ export default function WhyRecXchangePage() {
             <Link href="/roles" className="grad-text font-semibold hover:underline">
               Go and look
             </Link>{' '}
-            — then decide.
+            - then decide.
           </p>
           <div className="mt-8">
             <GradientButton href={APP_REGISTER_URL} external size="lg">

@@ -6,7 +6,7 @@ import { SectionHeading, GlassCard } from '@/components/redesign/ui';
 export const metadata: Metadata = {
   title: 'Compare RecXchange | vs Job Boards, Agencies & Split-Fee Networks',
   description:
-    'How RecXchange compares with job boards, traditional recruitment agencies, and legacy split-fee networks like NPA Worldwide and Top Echelon — side by side.',
+    'How RecXchange compares with job boards, traditional recruitment agencies, and legacy split-fee networks like NPA Worldwide and Top Echelon - side by side.',
   alternates: { canonical: 'https://recxchange.io/compare' },
 };
 
@@ -14,7 +14,7 @@ const comparisons = [
   {
     href: '/compare/vs-job-boards',
     title: 'vs Job boards',
-    body: 'Job boards give you applicants. RecXchange gives you recruiters who already hold the candidate — and only get paid when someone starts.',
+    body: 'Job boards give you applicants. RecXchange gives you recruiters who already hold the candidate - and only get paid when someone starts.',
   },
   {
     href: '/compare/vs-recruitment-agencies',
@@ -24,7 +24,7 @@ const comparisons = [
   {
     href: '/compare/vs-split-fee-networks',
     title: 'vs Legacy split-fee networks',
-    body: 'NPA Worldwide, Top Echelon, Recruit Alliance — the model works, the tooling is dated. Here’s what automated contracts and live matching change.',
+    body: 'NPA Worldwide, Top Echelon, Recruit Alliance - the model works, the tooling is dated. Here’s what automated contracts and live matching change.',
   },
 ];
 
@@ -41,7 +41,7 @@ export default function ComparePage() {
                 See how RecXchange <span className="grad-text">stacks up</span>
               </>
             }
-            sub="Honest, side-by-side comparisons against the alternatives — because the model sells itself once the columns are next to each other."
+            sub="Honest, side-by-side comparisons against the alternatives - because the model sells itself once the columns are next to each other."
           />
         </Reveal>
       </section>

@@ -28,7 +28,7 @@ const faqs = [
   },
   {
     q: 'What are tokens?',
-    a: 'Tokens are the platform currency used to unlock actions such as submitting candidates to roles. Each plan includes a monthly token allowance — from 5 tokens on RecX Entry to 400 on RecX Pro.',
+    a: 'Tokens are the platform currency used to unlock actions such as submitting candidates to roles. Each plan includes a monthly token allowance - from 5 tokens on RecX Entry to 400 on RecX Pro.',
   },
   {
     q: 'What stops a partner going around me?',
@@ -92,7 +92,7 @@ export default function HowItWorksPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
       />
 
-      {/* Hero — answer-first for AEO */}
+      {/* Hero - answer-first for AEO */}
       <section className="mx-auto max-w-4xl px-4 sm:px-6 pt-20 sm:pt-28 pb-14 text-center">
         <Reveal>
           <SectionHeading
@@ -122,7 +122,7 @@ export default function HowItWorksPage() {
           <Reveal delay={0}>
             <Step number={1} title="Join and get verified">
               Create an account from $1/month. Every member is verified as a
-              working recruiter — that&apos;s what keeps the network worth
+              working recruiter - that&apos;s what keeps the network worth
               joining.
             </Step>
           </Reveal>
@@ -168,7 +168,7 @@ export default function HowItWorksPage() {
               <p className="text-[15px] leading-relaxed text-[var(--rx-muted)]">
                 Roles posted by other recruiters in the network. You bring the
                 candidate, they bring the client relationship, and the fee is
-                shared down the middle — terms fixed before you submit.
+                shared down the middle - terms fixed before you submit.
               </p>
             </GlassCard>
           </Reveal>
@@ -183,7 +183,7 @@ export default function HowItWorksPage() {
               <p className="text-[15px] leading-relaxed text-[var(--rx-muted)]">
                 Exclusive roles sourced directly from employers. With no second
                 recruiter on the client side, the majority of the fee goes to
-                whoever delivers the candidate — you.
+                whoever delivers the candidate - you.
               </p>
             </GlassCard>
           </Reveal>
@@ -200,7 +200,7 @@ export default function HowItWorksPage() {
             <p className="mx-auto mt-4 max-w-2xl text-[15px] leading-relaxed text-[var(--rx-muted)]">
               Timestamped submissions prove candidate ownership. Automated
               agreements lock the split before details are shared. Disputes
-              aren&apos;t argued after the fact — they&apos;re prevented by
+              aren&apos;t argued after the fact - they&apos;re prevented by
               design.
             </p>
             <div className="mt-6">

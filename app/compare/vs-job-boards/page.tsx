@@ -18,13 +18,13 @@ const rows = [
   },
   {
     label: 'Cost model',
-    recxchange: 'Contingency — pay only on a successful hire',
+    recxchange: 'Contingency - pay only on a successful hire',
     other: 'Pay upfront per advert or per month, hire or not',
   },
   {
     label: 'Passive candidates',
     recxchange: 'Reached through recruiter relationships',
-    other: 'Invisible — they aren’t browsing job ads',
+    other: 'Invisible - they aren’t browsing job ads',
   },
   {
     label: 'Screening',
@@ -51,7 +51,7 @@ export default function VsJobBoardsPage() {
                 RecXchange <span className="grad-text">vs job boards</span>
               </>
             }
-            sub="A job board sells you visibility and leaves the work to you. RecXchange sells you nothing upfront — 15,000+ recruiters deliver the candidate, and you pay only when one starts."
+            sub="A job board sells you visibility and leaves the work to you. RecXchange sells you nothing upfront - 15,000+ recruiters deliver the candidate, and you pay only when one starts."
           />
         </Reveal>
       </section>
@@ -68,8 +68,8 @@ export default function VsJobBoardsPage() {
             </h2>
             <p className="text-sm leading-relaxed text-[var(--rx-muted)]">
               Job boards are fine for high-volume roles where active applicants
-              are plentiful. For anything specialist, senior, or urgent — where
-              the right person isn&apos;t reading job ads — a recruiter network
+              are plentiful. For anything specialist, senior, or urgent - where
+              the right person isn&apos;t reading job ads - a recruiter network
               wins on both speed and quality, and costs nothing unless it
               delivers.
             </p>
