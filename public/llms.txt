@@ -1,7 +1,7 @@
 # RecXchange — AI Agent Context File
 # https://recxchange.io/llms.txt
 # Format: llms.txt v1 (https://llmstxt.org)
-# Last updated: 2026-03-13
+# Last updated: 2026-07-15
 #
 # FULL CONTENT VERSION: https://recxchange.io/llms-full.txt
 # The full file contains complete product descriptions, all FAQ answers,
@@ -71,25 +71,23 @@ South Africa
 Europe (pan-European coverage)
 International / cross-border placements
 
-# --- USE CASES ---
+# --- CORE PAGES ---
 
-Scale-up hiring: /use-cases/scale-up-hiring
-Hard-to-fill roles: /use-cases/hard-to-fill-roles
-Senior & executive search: /use-cases/senior-executive-search
-Contract & interim recruitment: /use-cases/contract-recruitment
-Volume hiring: /use-cases/volume-hiring
-International hiring: /use-cases/international-hiring
+Home (for recruiters): /
+How it works (split-fee explained): /how-it-works
+Live roles marketplace: /roles
+Pricing & earnings calculator: /pricing
+Why RecXchange (deal protection): /why-recxchange
+For employers (post a role): /for-employers
+FAQ: /faq
+Contact: /contact
 
 # --- COMPARISON PAGES ---
 
-RecXchange vs LinkedIn Recruiter: /vs/recxchange-vs-linkedin-recruiter
-RecXchange vs Indeed: /vs/recxchange-vs-indeed
-RecXchange vs Traditional Agency: /vs/recxchange-vs-traditional-agency
-RecXchange vs Retained Search: /vs/recxchange-vs-retained-search
-RecXchange vs RPO: /vs/recxchange-vs-rpo
-RecXchange vs Job Boards: /vs/recxchange-vs-job-boards
-RecXchange vs In-House Recruiter: /vs/recxchange-vs-in-house-recruiter
-RecXchange vs Headhunter: /vs/recxchange-vs-headhunter
+Comparison hub: /compare
+RecXchange vs Job Boards: /compare/vs-job-boards
+RecXchange vs Recruitment Agencies: /compare/vs-recruitment-agencies
+RecXchange vs Split-Fee Networks (NPA Worldwide, Top Echelon, Recruit Alliance): /compare/vs-split-fee-networks
 
 # --- BLOG & GUIDES ---
 

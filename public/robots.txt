@@ -1,9 +1,0 @@
-# Allow all crawlers
-User-agent: *
-Allow: /
-
-# Disallow admin/internal pages if any exist
-Disallow: /api/
-
-# Sitemap
-Sitemap: https://recxchange.io/sitemap.xml

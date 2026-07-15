@@ -74,6 +74,78 @@ const nextConfig: NextConfig = {
     ];
   },
 
+  // 301 map for the 2026 IA consolidation (83 → ~20 routes).
+  // Every retired URL forwards its link equity to its successor.
+  async redirects() {
+    const to = (source: string, destination: string) => ({
+      source,
+      destination,
+      permanent: true,
+    });
+
+    return [
+      // Recruiter pages → recruiter-led home
+      to('/recruiter', '/'),
+      to('/freelance-recruiters', '/'),
+      to('/recruiters-with-candidates', '/'),
+      to('/recruiter-roles', '/roles'),
+
+      // Hiring-manager / employer pages → employer pillar
+      to('/hiring-manager-home', '/for-employers'),
+      to('/hiring-manager-live', '/for-employers'),
+      to('/hiring-manager-strategic', '/for-employers'),
+      to('/hire-specialist-recruiters', '/for-employers'),
+      to('/what-is-recx-direct', '/for-employers'),
+      to('/passive-candidate-sourcing', '/for-employers'),
+      to('/how-to-find-recruitment-partners', '/for-employers'),
+      to('/use-cases/:path*', '/for-employers'),
+      to('/use-cases', '/for-employers'),
+
+      // Split-fee / marketplace explainers → canonical explainer
+      to('/collaboration', '/how-it-works'),
+      to('/how-recruiter-collaboration-works', '/how-it-works'),
+      to('/recruiter-collaboration-platform', '/how-it-works'),
+      to('/recruitment-marketplace', '/how-it-works'),
+      to('/split-fees', '/how-it-works'),
+      to('/split-fee-recruitment', '/how-it-works'),
+      to('/what-is-split-fee-recruitment', '/how-it-works'),
+
+      // Pricing-adjacent
+      to('/recruitment-fee-structures', '/pricing'),
+      to('/earnings-calculator', '/pricing'),
+
+      // Trust pages → why-recxchange
+      to('/deal-protection', '/why-recxchange'),
+      to('/research', '/why-recxchange'),
+
+      // Comparisons → /compare cluster
+      to('/vs/npa-worldwide', '/compare/vs-split-fee-networks'),
+      to('/vs/top-echelon', '/compare/vs-split-fee-networks'),
+      to('/vs/recruit-alliance', '/compare/vs-split-fee-networks'),
+      to('/vs/job-boards', '/compare/vs-job-boards'),
+      to('/vs/linkedin-recruiter', '/compare/vs-job-boards'),
+      to('/vs/recruitment-agency', '/compare/vs-recruitment-agencies'),
+      to('/vs/staffing-agencies', '/compare/vs-recruitment-agencies'),
+      to('/vs/contingency-recruitment', '/compare/vs-recruitment-agencies'),
+      to('/vs/retained-search', '/compare/vs-recruitment-agencies'),
+      to('/vs/rpo', '/compare/vs-recruitment-agencies'),
+      to('/vs/internal-recruiter', '/compare/vs-recruitment-agencies'),
+      to('/vs/:path*', '/compare'),
+      to('/vs', '/compare'),
+
+      // Thin geo/sector doorways → live inventory
+      to('/locations/:path*', '/roles'),
+      to('/locations', '/roles'),
+      to('/sectors/:path*', '/roles'),
+      to('/sectors', '/roles'),
+
+      // Non-marketing pages
+      to('/account-management', 'https://app.recxchange.io'),
+      to('/affiliate', '/contact'),
+      to('/investor', '/contact'),
+    ];
+  },
+
   // Experimental features for performance
   experimental: {
     // Optimize package imports to reduce bundle size

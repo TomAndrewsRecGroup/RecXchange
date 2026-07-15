@@ -302,67 +302,32 @@ International: cross-border placement support
 
 ---
 
-## USE CASES
+## USE CASES (covered on the employer pillar page)
 
-### Scale-Up Hiring
-Fast-growth companies hiring across multiple departments simultaneously. RecXchange deploys specialist recruiters across every function in parallel. No single agency bottleneck.
-URL: https://recxchange.io/use-cases/scale-up-hiring
+All employer use cases are consolidated at: https://recxchange.io/for-employers
 
-### Hard-to-Fill Roles
-Niche, senior, or technically complex roles where generalist agencies fail. RecXchange's Xchange Engine identifies the specialist recruiters with the deepest networks in the required niche.
-URL: https://recxchange.io/use-cases/hard-to-fill-roles
-
-### Senior & Executive Search
-Director, VP, C-suite, and board-level appointments. RecXchange connects companies with executive search specialists who operate via trusted relationships, not job board postings.
-URL: https://recxchange.io/use-cases/senior-executive-search
-
-### Contract & Interim Recruitment
-Fixed-term, interim, and contract hiring. RecXchange's network includes specialists in contract markets who can mobilise quickly.
-URL: https://recxchange.io/use-cases/contract-recruitment
-
-### Volume Hiring
-High-headcount hiring campaigns across retail, logistics, operations, or customer service. Multiple recruiters working in parallel compress time-to-hire dramatically.
-URL: https://recxchange.io/use-cases/volume-hiring
-
-### International Hiring
-Cross-border placements and international expansion hiring. RecXchange has specialist recruiters in every major geography covered.
-URL: https://recxchange.io/use-cases/international-hiring
+- Hard-to-fill roles: niche, senior, or technically complex briefs where a specialist in the network already holds the candidate
+- Volume hiring: multiple recruiters working the same brief in parallel
+- Senior & executive search: passive candidates reached through recruiter relationships
+- International hiring: recruiters across UK, US, Europe, Middle East, Africa, Australia
 
 ---
 
 ## COMPARISON PAGES
 
-### RecXchange vs LinkedIn Recruiter
-LinkedIn Recruiter is a sourcing tool — you still do all the work. RecXchange is a collaboration network — specialist recruiters work on your behalf. LinkedIn charges per seat regardless of results. RecXchange charges a success fee only on placement.
-URL: https://recxchange.io/vs/recxchange-vs-linkedin-recruiter
-
-### RecXchange vs Indeed
-Indeed is a job board where candidates apply. RecXchange is a specialist recruiter network where passive candidates are sourced proactively. Indeed generates volume. RecXchange generates quality.
-URL: https://recxchange.io/vs/recxchange-vs-indeed
-
-### RecXchange vs Traditional Recruitment Agency
-Traditional agencies compete for the full fee — they race to submit, not collaborate. RecXchange recruiters collaborate on placements and split fees. Multiple specialists work on your role simultaneously. Result: faster, higher quality hires.
-URL: https://recxchange.io/vs/recxchange-vs-traditional-agency
-
-### RecXchange vs Retained Search
-Retained search requires an upfront payment and exclusivity — often 30-50% of the fee upfront, regardless of outcome. RecXchange is success-fee only. No upfront payment. Multiple recruiters. Faster results at lower cost.
-URL: https://recxchange.io/vs/recxchange-vs-retained-search
-
-### RecXchange vs RPO
-RPO embeds external recruiters into your business on a long-term contract — high setup cost and long commitment. RecXchange scales up or down per hiring campaign. No minimum term. No embedded headcount.
-URL: https://recxchange.io/vs/recxchange-vs-rpo
+Comparison hub: https://recxchange.io/compare
 
 ### RecXchange vs Job Boards
-Job boards post vacancies and wait for applications. RecXchange deploys specialist recruiters who actively headhunt. Job boards work for active candidates. RecXchange works for passive candidates (the best ones).
-URL: https://recxchange.io/vs/recxchange-vs-job-boards
+Job boards post vacancies and wait for applications from active candidates; they charge upfront whether or not you hire. RecXchange deploys specialist recruiters who deliver qualified (often passive) candidates, on contingency — you pay only on a successful hire.
+URL: https://recxchange.io/compare/vs-job-boards
 
-### RecXchange vs In-House Recruiter
-In-house recruiters cover all sectors but go deep in none. RecXchange gives you access to sector specialists in every discipline simultaneously. Better candidate quality without the permanent headcount cost.
-URL: https://recxchange.io/vs/recxchange-vs-in-house-recruiter
+### RecXchange vs Recruitment Agencies
+A single agency gives you one firm's network and consultants. RecXchange puts 15,000+ recruiters with 270M candidate profiles on the brief through one point of contact, on identical contingency terms. Specialists self-select onto roles they can actually fill.
+URL: https://recxchange.io/compare/vs-recruitment-agencies
 
-### RecXchange vs Headhunter
-Headhunters are typically retained, work exclusively, and charge premium fees (often 25-35%). RecXchange has headhunter-level specialists across every sector operating on a split-fee, success-only basis.
-URL: https://recxchange.io/vs/recxchange-vs-headhunter
+### RecXchange vs Legacy Split-Fee Networks (NPA Worldwide, Top Echelon, Recruit Alliance)
+Legacy networks rely on manual contracts, directories, and annual memberships. RecXchange automates the trust layer — split agreements generated before candidate details are exchanged, timestamped submissions, live matching — from $1/month, plus employer-direct RecX Direct roles paying up to 70%.
+URL: https://recxchange.io/compare/vs-split-fee-networks
 
 ---
 
