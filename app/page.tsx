@@ -14,7 +14,7 @@ import { APP_REGISTER_URL, STATS } from '@/lib/redesign/site';
 export const metadata: Metadata = {
   title: 'RecXchange | The Split-Fee Recruitment Marketplace for Recruiters',
   description:
-    'Join 15,000+ recruiters partnering on placements. Share roles or candidates, split fees automatically, and earn an average of $7,000 per placement. Join free.',
+    'Join 15,000+ recruiters partnering on placements. Share roles or candidates, split fees automatically, and earn an average of $7,000 per placement. Plans from $1/month.',
   alternates: { canonical: 'https://recxchange.io/' },
 };
 
@@ -98,14 +98,14 @@ export default function HomePage() {
         <Reveal delay={240}>
           <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-4">
             <GradientButton href={APP_REGISTER_URL} external size="lg">
-              Join free — start earning
+              Join now — start earning
             </GradientButton>
             <GhostButton href="/roles" size="lg">
               Browse live roles
             </GhostButton>
           </div>
           <p className="mt-4 text-xs text-[var(--rx-faint)]">
-            Free to join. No credit card required.
+            From $1/month on RecX Entry. Cancel anytime.
           </p>
         </Reveal>
 
@@ -362,7 +362,7 @@ export default function HomePage() {
           </h2>
           <div className="mt-8">
             <GradientButton href={APP_REGISTER_URL} external size="lg">
-              Create your free account
+              Create your account
             </GradientButton>
           </div>
         </Reveal>

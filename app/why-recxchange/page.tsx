@@ -27,7 +27,7 @@ const protections = [
   },
   {
     title: 'A network that is actually vetted',
-    body: 'Every member is verified as a working recruiter. No candidates posing as recruiters, no employers fishing for free CVs, no noise.',
+    body: 'Every member is verified as a working recruiter. No candidates posing as recruiters, no employers fishing for CVs, no noise.',
   },
   {
     title: 'Transparent live inventory',
@@ -122,7 +122,7 @@ export default function WhyRecXchangePage() {
           </p>
           <div className="mt-8">
             <GradientButton href={APP_REGISTER_URL} external size="lg">
-              Join free
+              Join now
             </GradientButton>
           </div>
         </Reveal>

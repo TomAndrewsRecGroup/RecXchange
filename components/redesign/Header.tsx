@@ -74,7 +74,7 @@ export default function Header() {
             href={APP_REGISTER_URL}
             className="inline-flex items-center rounded-xl px-5 py-2.5 text-sm font-semibold text-white bg-[linear-gradient(100deg,#8b5cf6,#3b82f6_55%,#22d3ee)] shadow-[0_2px_16px_rgba(139,92,246,0.4)] transition-all duration-300 hover:shadow-[0_2px_24px_rgba(59,130,246,0.55)] hover:-translate-y-px motion-reduce:transition-none"
           >
-            Join free
+            Join now
           </a>
         </div>
 
@@ -113,7 +113,7 @@ export default function Header() {
               href={APP_REGISTER_URL}
               className="inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-white bg-[linear-gradient(100deg,#8b5cf6,#3b82f6_55%,#22d3ee)]"
             >
-              Join free
+              Join now
             </a>
             <a
               href={APP_LOGIN_URL}

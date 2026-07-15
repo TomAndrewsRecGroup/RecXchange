@@ -23,8 +23,8 @@ const groups: { heading: string; items: { q: string; a: string }[] }[] = [
         a: 'Working recruiters — independent, freelance, or agency-based. Every member is verified before they can transact, which is what keeps the network high quality.',
       },
       {
-        q: 'Is it really free to join?',
-        a: 'Creating an account is free, and the RecX Entry plan is $1/month. Paid plans exist to unlock more monthly tokens and RecX Direct access.',
+        q: 'How much does it cost to join?',
+        a: 'Membership starts at $1/month on the RecX Entry plan. Higher tiers — RecX Lite ($99/month) and RecX Pro ($249/month) — unlock more monthly tokens and RecX Direct access.',
       },
     ],
   },
@@ -151,7 +151,7 @@ export default function FAQPage() {
           </h2>
           <div className="mt-6">
             <GradientButton href={APP_REGISTER_URL} external>
-              Join free
+              Join now
             </GradientButton>
           </div>
         </Reveal>

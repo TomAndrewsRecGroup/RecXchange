@@ -56,8 +56,8 @@ const howToSchema = {
     {
       '@type': 'HowToStep',
       position: 1,
-      name: 'Create your free account',
-      text: 'Register at app.recxchange.io and complete recruiter verification.',
+      name: 'Create your account',
+      text: 'Register at app.recxchange.io from $1/month and complete recruiter verification.',
     },
     {
       '@type': 'HowToStep',
@@ -121,8 +121,9 @@ export default function HowItWorksPage() {
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
           <Reveal delay={0}>
             <Step number={1} title="Join and get verified">
-              Create a free account. Every member is verified as a working
-              recruiter — that&apos;s what keeps the network worth joining.
+              Create an account from $1/month. Every member is verified as a
+              working recruiter — that&apos;s what keeps the network worth
+              joining.
             </Step>
           </Reveal>
           <Reveal delay={100}>
@@ -249,7 +250,7 @@ export default function HowItWorksPage() {
           </h2>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <GradientButton href={APP_REGISTER_URL} external size="lg">
-              Join free
+              Join now
             </GradientButton>
             <GhostButton href="/roles" size="lg">
               Browse live roles

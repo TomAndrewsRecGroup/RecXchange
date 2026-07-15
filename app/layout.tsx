@@ -4,7 +4,7 @@ import React from "react";
 import Header from "@/components/redesign/Header";
 import Footer from "@/components/redesign/Footer";
 import HiringManagerCard from "@/components/redesign/HiringManagerCard";
-import IrisBackground from "@/components/redesign/IrisBackground";
+import NetworkBackground from "@/components/redesign/NetworkBackground";
 import CookieBanner from "@/components/CookieBanner";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import SkipToContent from "@/components/SkipToContent";
@@ -31,7 +31,7 @@ export const viewport: Viewport = {
 // Each page exports its own canonical via alternates.canonical.
 export const metadata: Metadata = {
   title: "RecXchange | The Split-Fee Recruitment Marketplace",
-  description: "Join 15,000+ recruiters partnering on placements and splitting fees automatically. 270M candidates, $750K+ in live fees, average $7,000 per placement. Join free.",
+  description: "Join 15,000+ recruiters partnering on placements and splitting fees automatically. 270M candidates, $750K+ in live fees, average $7,000 per placement. Plans from $1/month.",
   keywords: [
     "recruiter network",
     "split fee recruitment",
@@ -460,7 +460,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <SkipToContent />
           <WebVitals />
 
-          <IrisBackground />
+          <NetworkBackground />
 
           <Header />
 
