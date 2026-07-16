@@ -1,6 +1,8 @@
 // Metadata is exported from blog/layout.tsx - do not duplicate here.
 import React from 'react';
 import Link from 'next/link';
+import Reveal from '@/components/redesign/Reveal';
+import { SectionHeading } from '@/components/redesign/ui';
 
 const articles = [
   {
@@ -109,24 +111,47 @@ export default function BlogHubPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
-      <main className="relative bg-[#0a0a0f] min-h-screen">
-        <div className="max-w-5xl mx-auto px-6 py-24">
-          <p className="text-cyan-400 text-sm font-bold uppercase tracking-widest mb-4">Blog &amp; Guides</p>
-          <h1 className="text-4xl md:text-5xl font-black text-white mb-4">Recruitment Insights</h1>
-          <p className="text-gray-300 text-lg mb-16 max-w-2xl">Guides, strategies, and industry analysis for hiring managers and specialist recruiters.</p>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {articles.map((article) => (
-              <Link key={article.href} href={article.href} className="group block p-6 rounded-2xl border border-white/10 bg-white/[0.02] hover:border-cyan-400/40 hover:bg-cyan-400/5 transition-all duration-200">
-                <span className="text-cyan-400 text-xs font-bold uppercase tracking-widest mb-3 block">{article.tag}</span>
-                <h2 className="text-white font-bold text-lg mb-3 group-hover:text-cyan-400 transition-colors leading-snug">{article.title}</h2>
-                <p className="text-gray-400 text-sm leading-relaxed mb-4">{article.desc}</p>
-                <span className="text-gray-500 text-xs">{article.read} read</span>
+      <section className="mx-auto max-w-4xl px-4 sm:px-6 pt-20 sm:pt-28 pb-12 text-center">
+        <Reveal>
+          <SectionHeading
+            as="h1"
+            eyebrow="Blog &amp; guides"
+            title={
+              <>
+                Recruitment <span className="grad-text">insights</span>
+              </>
+            }
+            sub="Guides, strategies, and industry analysis for specialist recruiters and the people who hire through them."
+          />
+        </Reveal>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 sm:px-6 pb-24">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {articles.map((article, i) => (
+            <Reveal key={article.href} delay={(i % 3) * 90}>
+              <Link
+                href={article.href}
+                className="group flex h-full flex-col rounded-2xl glass p-6 transition-all duration-300 hover:border-[var(--rx-violet)] hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+              >
+                <span className="mb-3 self-start rounded-full bg-white/[0.07] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.14em] grad-text">
+                  {article.tag}
+                </span>
+                <h2 className="text-base font-bold text-white leading-snug mb-2 group-hover:grad-text">
+                  {article.title}
+                </h2>
+                <p className="flex-grow text-sm leading-relaxed text-[var(--rx-muted)]">
+                  {article.desc}
+                </p>
+                <span className="mt-4 text-xs text-[var(--rx-faint)]">
+                  {article.read} read
+                </span>
               </Link>
-            ))}
-          </div>
+            </Reveal>
+          ))}
         </div>
-      </main>
+      </section>
     </>
   );
 }

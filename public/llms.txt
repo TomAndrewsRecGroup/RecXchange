@@ -81,6 +81,8 @@ Live roles as Markdown (for AI agents): /roles.md
 Pricing & earnings calculator: /pricing
 Why RecXchange (deal protection): /why-recxchange
 For employers (post a role): /for-employers
+Split-fee recruitment glossary (all terms defined): /glossary
+Free split-fee agreement template: /split-fee-agreement-template
 FAQ: /faq
 Contact: /contact
 

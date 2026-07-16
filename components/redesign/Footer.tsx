@@ -25,6 +25,8 @@ const columns = [
     links: [
       { href: '/blog', label: 'Blog' },
       { href: '/faq', label: 'FAQ' },
+      { href: '/glossary', label: 'Glossary' },
+      { href: '/split-fee-agreement-template', label: 'Agreement template' },
       { href: `mailto:${SUPPORT_EMAIL}`, label: SUPPORT_EMAIL },
     ],
   },

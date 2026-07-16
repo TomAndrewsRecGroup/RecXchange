@@ -32,6 +32,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/roles`, lastModified: redesignDate, changeFrequency: 'daily', priority: 0.95 },
     ...roleEntries,
     { url: `${baseUrl}/earn-more-as-a-recruiter`, lastModified: redesignDate, changeFrequency: 'monthly', priority: 0.90 },
+    { url: `${baseUrl}/glossary`, lastModified: redesignDate, changeFrequency: 'monthly', priority: 0.75 },
+    { url: `${baseUrl}/split-fee-agreement-template`, lastModified: redesignDate, changeFrequency: 'monthly', priority: 0.80 },
     { url: `${baseUrl}/pricing`, lastModified: redesignDate, changeFrequency: 'weekly', priority: 0.95 },
     { url: `${baseUrl}/why-recxchange`, lastModified: redesignDate, changeFrequency: 'monthly', priority: 0.85 },
     { url: `${baseUrl}/faq`, lastModified: redesignDate, changeFrequency: 'monthly', priority: 0.80 },
