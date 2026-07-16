@@ -48,7 +48,7 @@ export default function FuturisticBackground({
         </>
       )}
       
-      {/* Subtle ambient line — static, not animated, to reduce visual noise */}
+      {/* Subtle ambient line - static, not animated, to reduce visual noise */}
       {showScanLines && (
         <div className="absolute inset-0 opacity-[0.04]">
           <div className="absolute w-full h-[1px] top-[35%] bg-gradient-to-r from-transparent via-cyan-400 to-transparent" />

@@ -1,170 +1,298 @@
-"use client";
-import React from 'react';
-import { motion } from 'framer-motion';
+import { safeJsonLd } from '@/lib/seo/jsonld';
+import type { Metadata } from 'next';
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
+import { notFound } from 'next/navigation';
+import { MapPin, Briefcase, Clock } from 'lucide-react';
+import Reveal from '@/components/redesign/Reveal';
+import { GradientButton, GhostButton } from '@/components/redesign/ui';
+import {
+  formatSalary,
+  formatSplit,
+  WORK_MODEL_LABEL,
+} from '@/lib/roles/format';
+import { getRoleById } from '@/lib/roles/fetch';
+import { parseRoleLocation } from '@/lib/roles/location';
+import { APP_REGISTER_URL } from '@/lib/redesign/site';
 
-export default function IndividualRoleView() {
-  const params = useParams();
-  
-  // Mock data for the dynamic route
-  const role = {
-    title: "Principal AI Engineer",
-    id: params.id || "RAI-992",
-    type: "RecX Direct",
-    loc: "London, UK (Hybrid)",
-    salary: "£140,000 - £160,000",
-    split: "£14,000",
-    industry: "Artificial Intelligence / Fintech",
-    posted: "2 hours ago",
-    description: "Seeking a lead-level AI Engineer to build out the core inference engine for a Tier-1 Fintech platform. You will work directly with the CTO to scale LLM deployments across global infrastructure.",
-    requirements: [
-      "8+ years in Software Engineering (Python/C++)",
-      "Proven experience deploying LLMs in production environments",
-      "Deep understanding of vector databases and RAG architectures",
-      "Previous experience in high-growth Fintech or HFT is a plus"
-    ]
+export const revalidate = 300;
+
+interface PageProps {
+  params: Promise<{ id: string }>;
+}
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { id } = await params;
+  const role = await getRoleById(id);
+  if (!role) {
+    return { title: 'Role Not Found | RecXchange' };
+  }
+  return {
+    title: `${role.title} - ${role.location} | Live Roles | RecXchange`,
+    description: `${role.descriptionSnippet.slice(0, 150)}... Split fee available to the recruiter who delivers the candidate.`,
+    alternates: { canonical: `https://recxchange.io/roles/${role.id}` },
+  };
+}
+
+export default async function RoleDetailPage({ params }: PageProps) {
+  const { id } = await params;
+  const role = await getRoleById(id);
+  if (!role) notFound();
+
+  const isDirect = role.source === 'recx_direct';
+  const postedDate = new Date(role.postedAt);
+  const validThrough = new Date(
+    postedDate.getTime() + 60 * 24 * 60 * 60 * 1000
+  );
+
+  // Google Jobs requires a structured address; free-text locations get
+  // ignored by the jobs panel. Remote roles additionally require
+  // applicantLocationRequirements.
+  const parsed = parseRoleLocation(role.location);
+  const isRemote = role.workModel === 'remote' || parsed.remoteHint;
+
+  const address: Record<string, string> = { '@type': 'PostalAddress' };
+  if (parsed.addressLocality) address.addressLocality = parsed.addressLocality;
+  if (parsed.addressRegion) address.addressRegion = parsed.addressRegion;
+  if (parsed.addressCountry) address.addressCountry = parsed.addressCountry;
+
+  const jobPostingSchema: Record<string, unknown> = {
+    '@context': 'https://schema.org',
+    '@type': 'JobPosting',
+    '@id': `https://recxchange.io/roles/${role.id}#jobposting`,
+    mainEntityOfPage: `https://recxchange.io/roles/${role.id}`,
+    title: role.title,
+    description: `<p>${role.descriptionSnippet}</p><p>This role is filled through RecXchange, the split-fee recruitment marketplace. Recruiters with a matching candidate partner on the placement and receive the agreed split fee.</p>`,
+    identifier: {
+      '@type': 'PropertyValue',
+      name: 'RecXchange',
+      value: role.id,
+    },
+    datePosted: role.postedAt,
+    validThrough: validThrough.toISOString(),
+    employmentType: role.roleType === 'permanent' ? 'FULL_TIME' : 'CONTRACTOR',
+    hiringOrganization: {
+      '@type': 'Organization',
+      name: isDirect
+        ? 'RecX Direct Client (via RecXchange)'
+        : 'RecXchange Partner Network',
+      sameAs: 'https://recxchange.io',
+      logo: 'https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png',
+    },
+    jobLocation: {
+      '@type': 'Place',
+      address:
+        Object.keys(address).length > 1
+          ? address
+          : { '@type': 'PostalAddress', addressLocality: role.location },
+    },
+    baseSalary: {
+      '@type': 'MonetaryAmount',
+      currency: role.salaryCurrency,
+      value: {
+        '@type': 'QuantitativeValue',
+        minValue: role.salaryMin,
+        maxValue: role.salaryMax,
+        unitText: 'YEAR',
+      },
+    },
+    industry: role.industry,
+    directApply: false,
+  };
+
+  if (isRemote) {
+    jobPostingSchema.jobLocationType = 'TELECOMMUTE';
+    jobPostingSchema.applicantLocationRequirements = parsed.addressCountry
+      ? { '@type': 'Country', name: parsed.addressCountry }
+      : { '@type': 'Country', name: 'Worldwide' };
+  }
+
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://recxchange.io/',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Live Roles',
+        item: 'https://recxchange.io/roles',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: role.title,
+        item: `https://recxchange.io/roles/${role.id}`,
+      },
+    ],
   };
 
   return (
-    <main className="min-h-screen pt-32 pb-20 px-6 mesh-background relative text-white">
-      {/* Background Ambience */}
-      <div className="fixed top-0 right-0 w-[40%] h-[40%] bg-blue-600/5 blur-[120px] rounded-full pointer-events-none -z-10" />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(jobPostingSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }}
+      />
 
-      <div className="max-w-[1200px] mx-auto relative z-10">
-        
-        {/* Navigation & Breadcrumbs */}
-        <motion.div 
-          initial={{ opacity: 0, x: -10 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="mb-10 flex items-center justify-between"
-        >
-          <Link href="/roles" className="group flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-blue-500/10 group-hover:border-blue-500/30 transition-all">
-               <span className="text-gray-400 group-hover:text-blue-400 transition-colors">←</span>
-            </div>
-            <span className="text-[10px] uppercase font-black tracking-[0.2em] text-gray-500 group-hover:text-white transition-colors">
-              Return to Marketplace
-            </span>
-          </Link>
-          
-          <div className="text-[9px] font-black text-gray-600 uppercase tracking-widest">
-            Protocol: {role.type} // {role.id}
-          </div>
-        </motion.div>
+      <div className="mx-auto max-w-4xl px-4 sm:px-6 pt-14 sm:pt-20 pb-24">
+        {/* Breadcrumb */}
+        <Reveal>
+          <nav aria-label="Breadcrumb" className="mb-8">
+            <Link
+              href="/roles"
+              className="text-sm font-semibold text-[var(--rx-muted)] hover:text-white transition-colors"
+            >
+              ← All live roles
+            </Link>
+          </nav>
+        </Reveal>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[1.6fr,1fr] gap-12 items-start">
-          
-          {/* Left Column: Role Intelligence */}
-          <div className="space-y-8">
-            <section className="glass-card p-10 md:p-14 rounded-[3.5rem] border-white/5 bg-gradient-to-br from-white/[0.02] to-transparent">
-              <header className="mb-12">
-                <div className="flex items-center gap-4 mb-6">
-                  <span className={`text-[9px] font-black uppercase px-4 py-1.5 rounded-lg border tracking-[0.2em] ${
-                    role.type === 'RecX Direct' ? 'border-blue-500/30 text-blue-400 bg-blue-500/5' : 'border-purple-500/30 text-purple-400 bg-purple-500/5'
-                  }`}>
-                    {role.type}
-                  </span>
-                  <span className="text-[10px] text-gray-600 font-bold uppercase tracking-widest">{role.posted}</span>
-                </div>
-                <h1 className="text-4xl md:text-5xl font-bold text-white tracking-tight mb-4">{role.title}</h1>
-                <p className="text-xl text-gray-400 font-medium">{role.loc} • <span className="text-blue-500/80">{role.industry}</span></p>
-              </header>
-
-              <div className="space-y-12 pt-12 border-t border-white/5">
-                <div>
-                  <h3 className="text-[10px] font-black uppercase text-gray-500 tracking-[0.3em] mb-6">Mission Brief</h3>
-                  <p className="text-gray-300 text-lg leading-relaxed">{role.description}</p>
-                </div>
-
-                <div>
-                  <h3 className="text-[10px] font-black uppercase text-gray-500 tracking-[0.3em] mb-6">Technical Roles</h3>
-                  <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
-                    {role.requirements.map((req, i) => (
-                      <li key={i} className="flex gap-4 text-sm text-gray-400 group">
-                        <span className="text-blue-500 font-bold group-hover:scale-110 transition-transform">/</span> 
-                        {req}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </section>
-
-            {/* Sub-Context: Collaboration logic */}
-            <div className="px-10 py-8 glass-card rounded-[2.5rem] border-white/5 flex flex-col md:flex-row gap-8 items-center justify-between">
-               <div className="max-w-md">
-                  <p className="text-xs text-gray-400 leading-relaxed">
-                    This role is managed via the **RecX Direct** distribution channel. Candidate ownership is strictly enforced by timestamped submission.
-                  </p>
-               </div>
-               <Link href="/deal-protection" className="text-[10px] font-black text-blue-400 uppercase tracking-widest hover:text-white transition-colors">
-                 SFA Governance Policy →
-               </Link>
-            </div>
-          </div>
-
-          {/* Right Column: Commercial Execution */}
-          <aside className="space-y-8 lg:sticky lg:top-32">
-            
-            {/* Primary Action Card */}
-            <section className="glass-card p-10 rounded-[3rem] border-white/5 bg-black/60 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 blur-[60px] rounded-full pointer-events-none" />
-              
-              <div className="mb-10">
-                <span className="text-[10px] font-black text-gray-500 uppercase tracking-[0.3em] block mb-3">Split Reward</span>
-                <span className="text-5xl font-bold gradient-text tabular-nums tracking-tighter">{role.split}</span>
-                <p className="text-[10px] text-gray-600 mt-3 font-bold uppercase">Estimated per placement</p>
-              </div>
-              
-              <div className="space-y-5 mb-10 pt-8 border-t border-white/5">
-                <div className="flex justify-between items-center">
-                  <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Package</span>
-                  <span className="text-xs text-white font-mono">{role.salary}</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Role ID</span>
-                  <span className="text-xs text-white font-mono">{role.id}</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Visibility</span>
-                  <span className="text-[10px] text-green-500 font-black uppercase">Marketplace Global</span>
-                </div>
-              </div>
-
-              <a 
-                href="{{trigger_link.Hc9mpfL0JxjX06kwNpd1}}" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="button-primary w-full block text-center py-5 shadow-2xl shadow-blue-900/40"
+        {/* Header card */}
+        <Reveal delay={80}>
+          <header
+            className={`rounded-2xl p-7 sm:p-9 ${isDirect ? 'grad-border-hot' : 'glass'}`}
+          >
+            <div className="flex flex-wrap items-center gap-2 mb-4">
+              <span
+                className={`rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] bg-white/[0.07] ${
+                  isDirect ? 'grad-text-hot' : 'grad-text'
+                }`}
               >
-                Engage Role
-              </a>
-              
-              <p className="text-[9px] text-gray-600 text-center mt-6 leading-relaxed font-medium">
-                Standard RecXchange Terms of Business apply. Engage to trigger the automated Split Fee Agreement.
+                {isDirect ? 'RecX Direct' : 'Xchange'}
+              </span>
+              <span className="rounded-full bg-white/[0.07] px-3 py-1 text-[11px] font-semibold text-[var(--rx-muted)]">
+                {role.roleType === 'permanent' ? 'Permanent' : role.roleType}
+              </span>
+              <span className="rounded-full bg-white/[0.07] px-3 py-1 text-[11px] font-semibold text-[var(--rx-muted)] capitalize">
+                {role.seniorityLevel} level
+              </span>
+            </div>
+
+            <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white [text-wrap:balance]">
+              {role.title}
+            </h1>
+
+            <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm text-[var(--rx-muted)]">
+              <span className="inline-flex items-center gap-1.5">
+                <MapPin size={14} aria-hidden="true" />
+                {role.location} ·{' '}
+                {WORK_MODEL_LABEL[role.workModel] ?? role.workModel}
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <Briefcase size={14} aria-hidden="true" />
+                {role.industry}
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <Clock size={14} aria-hidden="true" />
+                Posted {postedDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+              </span>
+            </div>
+          </header>
+        </Reveal>
+
+        {/* Money facts */}
+        <Reveal delay={160}>
+          <div className="mt-5 grid gap-4 sm:grid-cols-2">
+            <div className="glass rounded-2xl p-6">
+              <p className="text-[11px] uppercase tracking-[0.16em] text-[var(--rx-faint)] mb-1">
+                Salary range
               </p>
-            </section>
-
-            
-
-            {/* Deal Protection Micro-Card */}
-            <section className="glass-card p-8 rounded-3xl border-white/5 bg-gradient-to-br from-green-500/5 to-transparent">
-              <div className="flex items-center gap-4 mb-4">
-                <div className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse shadow-[0_0_10px_#22c55e]" />
-                <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-white">Deal Protection Active</h4>
+              <p className="text-2xl font-extrabold text-white tabular-nums">
+                {formatSalary(role.salaryMin, role.salaryMax, role.salaryCurrency)}
+              </p>
+              <p className="mt-1 text-xs text-[var(--rx-muted)]">per year</p>
+            </div>
+            {role.splitAmount && role.splitCurrency ? (
+              <div className="grad-border-hot rounded-2xl p-6">
+                <p className="text-[11px] uppercase tracking-[0.16em] text-[var(--rx-faint)] mb-1">
+                  Your split fee
+                </p>
+                <p className="text-2xl font-extrabold grad-text-hot tabular-nums">
+                  {formatSplit(role.splitAmount, role.splitCurrency)}
+                </p>
+                <p className="mt-1 text-xs text-[var(--rx-muted)]">
+                  paid to the recruiter who delivers the placed candidate
+                </p>
               </div>
-              <p className="text-[11px] text-gray-400 leading-relaxed mb-4">
-                Your submissions are protected by the RX-Protocol. No backdoor hiring, no circumvention.
-              </p>
-              <Link href="/deal-protection" className="text-[9px] font-bold text-blue-400 uppercase tracking-widest hover:underline">
-                View Rules of Engagement
-              </Link>
-            </section>
+            ) : (
+              <div className="glass rounded-2xl p-6">
+                <p className="text-[11px] uppercase tracking-[0.16em] text-[var(--rx-faint)] mb-1">
+                  Split terms
+                </p>
+                <p className="text-lg font-bold text-white">
+                  Agreed on partnership
+                </p>
+              </div>
+            )}
+          </div>
+        </Reveal>
 
-          </aside>
-        </div>
+        {/* Description */}
+        <Reveal delay={220}>
+          <section className="glass rounded-2xl mt-5 p-7 sm:p-9">
+            <h2 className="text-lg font-bold text-white mb-3">About the role</h2>
+            <p className="text-[15px] leading-relaxed text-[var(--rx-muted)]">
+              {role.descriptionSnippet}
+            </p>
+            <p className="mt-4 text-sm text-[var(--rx-faint)]">
+              Full client details, the complete brief, and the split-fee
+              agreement are available on the platform once you express interest
+              in this role.
+            </p>
+          </section>
+        </Reveal>
+
+        {/* How claiming works */}
+        <Reveal delay={280}>
+          <section className="glass rounded-2xl mt-5 p-7 sm:p-9">
+            <h2 className="text-lg font-bold text-white mb-4">
+              How to work this role
+            </h2>
+            <ol className="space-y-3 text-sm text-[var(--rx-muted)] list-none p-0">
+              <li className="flex gap-3">
+                <span className="font-extrabold grad-text tabular-nums">1.</span>
+                Join RecXchange and open this role on the platform.
+              </li>
+              <li className="flex gap-3">
+                <span className="font-extrabold grad-text tabular-nums">2.</span>
+                Accept the split-fee agreement. Terms are locked before any
+                candidate details are exchanged.
+              </li>
+              <li className="flex gap-3">
+                <span className="font-extrabold grad-text tabular-nums">3.</span>
+                Submit your candidate. Every submission is timestamped, so your
+                ownership is protected.
+              </li>
+              <li className="flex gap-3">
+                <span className="font-extrabold grad-text tabular-nums">4.</span>
+                They place, you get paid your agreed share.
+              </li>
+            </ol>
+          </section>
+        </Reveal>
+
+        {/* CTA */}
+        <Reveal delay={340}>
+          <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+            <GradientButton href={APP_REGISTER_URL} external size="lg">
+              Submit a candidate to this role
+            </GradientButton>
+            <GhostButton href="/roles" size="lg">
+              Browse more roles
+            </GhostButton>
+          </div>
+        </Reveal>
       </div>
-    </main>
+    </>
   );
 }

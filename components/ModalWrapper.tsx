@@ -53,14 +53,14 @@ export default function ModalWrapper({
           transition={{ duration: 0.2 }}
           className="fixed inset-0 z-[9999] pointer-events-none"
         >
-          {/* Backdrop — separate element, pointer-events-auto only here.
+          {/* Backdrop - separate element, pointer-events-auto only here.
               Clicking it calls handleClose; it never overlaps the panel. */}
           <div
             className="absolute inset-0 bg-black/90 pointer-events-auto"
             onClick={handleClose}
           />
 
-          {/* Panel container — sits on top of backdrop via z-index, flex-centred */}
+          {/* Panel container - sits on top of backdrop via z-index, flex-centred */}
           <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-6 md:p-8 pointer-events-none">
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}

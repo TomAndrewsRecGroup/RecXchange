@@ -1,24 +1,21 @@
+import { safeJsonLd } from '@/lib/seo/jsonld';
 import "@/app/globals.css";
 import { Inter } from "next/font/google";
 import React from "react";
-import { headers } from "next/headers";
-import ConditionalHeader from "@/components/ConditionalHeader";
-import Footer from "@/components/Footer";
-import FloatingChat from "@/components/FloatingChat";
-import QuickActionMenu from "@/components/QuickActionMenu";
+import Header from "@/components/redesign/Header";
+import Footer from "@/components/redesign/Footer";
+import HiringManagerCard from "@/components/redesign/HiringManagerCard";
+import NetworkBackground from "@/components/redesign/NetworkBackground";
 import CookieBanner from "@/components/CookieBanner";
-import ClientProviders from "@/components/ClientProviders";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import SkipToContent from "@/components/SkipToContent";
 import { Analytics } from "@vercel/analytics/next";
 import { WebVitals } from "@/app/components/WebVitals";
 import SpeakableSchema from "@/app/components/SpeakableSchema";
-import HomepageSEOContent from "@/app/components/HomepageSEOContent";
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
 
-const inter = Inter({ 
-  subsets: ["latin"], 
+const inter = Inter({
+  subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700", "800", "900"],
   variable: '--font-inter',
   display: 'swap',
@@ -31,11 +28,11 @@ export const viewport: Viewport = {
   userScalable: true,
 }
 
-// Root layout metadata — no canonical set here.
+// Root layout metadata - no canonical set here.
 // Each page exports its own canonical via alternates.canonical.
 export const metadata: Metadata = {
-  title: "RecXchange | Recruiter Collaboration Platform",
-  description: "RecXchange: 15,000+ recruiters partner on placements and split fees automatically. 270M candidates, $750K+ in live fees. Earn up to 70% on RecX Direct.",
+  title: "RecXchange | The Split-Fee Recruitment Marketplace",
+  description: "Join 15,000+ recruiters partnering on placements and splitting fees automatically. 270M candidates, $750K+ in live fees, average $7,000 per placement. Plans from $1/month.",
   keywords: [
     "recruiter network",
     "split fee recruitment",
@@ -61,20 +58,20 @@ export const metadata: Metadata = {
     locale: "en_GB",
     url: "https://recxchange.io",
     siteName: "RecXchange",
-    title: "RecXchange: Recruiter Collaboration Platform | 15,000+ Split Fee Network",
+    title: "RecXchange | The Split-Fee Recruitment Marketplace",
     description: "The recruiter network where 15,000+ recruiters partner on placements and split fees automatically. Access 270M candidates and $750K+ in live placement fees.",
     images: [
       {
         url: "https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png",
         width: 1200,
         height: 630,
-        alt: "RecXchange - Recruiter Collaboration Platform",
+        alt: "RecXchange - The Split-Fee Recruitment Marketplace",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "RecXchange: Recruiter Collaboration Platform | 15,000+ Split Fee Network",
+    title: "RecXchange | The Split-Fee Recruitment Marketplace",
     description: "The recruiter network where thousands of recruiters partner on placements and split fees automatically. Platform at app.recxchange.io",
     images: ["https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png"],
     creator: "@RecXchange",
@@ -101,13 +98,7 @@ interface RootLayoutProps {
   children: React.ReactNode;
 }
 
-export default async function RootLayout({ children }: RootLayoutProps) {
-  // Detect homepage server-side to conditionally render SEO content block.
-  // headers() is a Next.js server-only API — safe in layout (server component).
-  const headersList = await headers();
-  const pathname = headersList.get('x-pathname') ?? headersList.get('x-invoke-path') ?? '';
-  const isHomepage = pathname === '' || pathname === '/';
-
+export default function RootLayout({ children }: RootLayoutProps) {
   // ─── AI Agent identity block ────────────────────────────────────────────────
   const aiAgentIdentity = {
     "@context": "https://schema.org",
@@ -185,6 +176,16 @@ export default async function RootLayout({ children }: RootLayoutProps) {
           "value": 15000,
           "description": "Vetted recruiters on platform"
         },
+        "knowsAbout": [
+          "Split-fee recruitment",
+          "Split fee agreements",
+          "Recruiter collaboration",
+          "Recruitment fee sharing",
+          "How recruiters earn more from placements",
+          "Candidate ownership protection",
+          "Contingency recruitment",
+          "Recruitment marketplaces"
+        ],
         "contactPoint": {
           "@type": "ContactPoint",
           "contactType": "Customer Support",
@@ -252,7 +253,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         "@id": "https://recxchange.io/#recx-direct",
         "name": "RecX Direct",
         "legalName": "Andrews Recruitment Group t/a RecX Direct",
-        "url": "https://recxchange.io/what-is-recx-direct",
+        "url": "https://recxchange.io/how-it-works",
         "parentOrganization": { "@id": "https://recxchange.io/#andrews-recruitment-group" },
         "description": "RecX Direct is RecXchange's premium hiring product, operated by Andrews Recruitment Group t/a RecX Direct (UK). Offers exclusive roles with up to 70% fee splits for candidate-holding recruiters."
       },
@@ -456,63 +457,34 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         <SpeakableSchema />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(aiAgentIdentity) }}
+          dangerouslySetInnerHTML={{ __html: safeJsonLd(aiAgentIdentity) }}
         />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrgData) }}
+          dangerouslySetInnerHTML={{ __html: safeJsonLd(schemaOrgData) }}
         />
       </head>
       <body
-        className={`${inter.variable} font-sans bg-[#050508] min-h-screen antialiased overflow-x-hidden`}
+        className={`${inter.variable} font-sans bg-[#060312] min-h-screen antialiased overflow-x-hidden`}
       >
-        <Script
-          id="scroll-to-top"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              if (typeof window !== 'undefined') {
-                if ('scrollRestoration' in history) {
-                  history.scrollRestoration = 'manual';
-                }
-                window.scrollTo(0, 0);
-                window.addEventListener('load', function() {
-                  window.scrollTo(0, 0);
-                });
-              }
-            `,
-          }}
-        />
-
         <ErrorBoundary>
-          <ClientProviders>
-            <SkipToContent />
-            <WebVitals />
+          <SkipToContent />
+          <WebVitals />
 
-            <div className="fixed inset-0 pointer-events-none z-0">
-              <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-cyan-500/[0.07] blur-[80px] rounded-full" />
-              <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-fuchsia-500/[0.07] blur-[80px] rounded-full" />
-            </div>
+          <NetworkBackground />
 
-            <ConditionalHeader />
+          <Header />
 
-            {/* SSR content block for homepage — invisible to users, readable by crawlers.
-                Rendered server-side only when pathname is /.
-                See app/components/HomepageSEOContent.tsx for full explanation. */}
-            {isHomepage && <HomepageSEOContent />}
+          <div className="relative z-10 flex flex-col min-h-screen w-full">
+            <main id="main-content" className="flex-grow w-full pt-16">
+              {children}
+            </main>
+            <HiringManagerCard />
+            <Footer />
+          </div>
 
-            <div className="relative z-10 flex flex-col min-h-screen w-full">
-              <main id="main-content" className="flex-grow w-full">
-                {children}
-              </main>
-              <Footer />
-            </div>
-
-            <FloatingChat />
-            <QuickActionMenu />
-            <CookieBanner />
-            <Analytics />
-          </ClientProviders>
+          <CookieBanner />
+          <Analytics />
         </ErrorBoundary>
       </body>
     </html>

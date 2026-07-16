@@ -9,7 +9,7 @@ export default function BlogPostLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // Article schema shell — dynamic fields (headline, datePublished, author, url)
+  // Article schema shell - dynamic fields (headline, datePublished, author, url)
   // should be output by page.tsx generateMetadata or a per-post script tag.
   // This provides the publisher + organization link that every post shares.
   const articlePublisherSchema = {

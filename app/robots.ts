@@ -29,7 +29,7 @@ export default function robots(): MetadataRoute.Robots {
         crawlDelay: 0,
       },
 
-      // AI search & LLM crawlers — explicitly allowed for AIO/GEO
+      // AI search & LLM crawlers - explicitly allowed for AIO/GEO
       {
         userAgent: 'GPTBot',           // OpenAI training
         allow: '/',
@@ -90,7 +90,7 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
       },
 
-      // SEO audit tools — allowed so your own SEO monitoring works correctly.
+      // SEO audit tools - allowed so your own SEO monitoring works correctly.
       // Blocking these only hurts your ability to track your own rankings.
       {
         userAgent: 'AhrefsBot',
@@ -103,7 +103,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/api/', '/admin/'],
       },
 
-      // Low-value crawlers — still blocked
+      // Low-value crawlers - still blocked
       {
         userAgent: [
           'MJ12bot',

@@ -1,4 +1,4 @@
-// metadata.ts removed — consolidated here.
+// metadata.ts removed - consolidated here.
 import type { Metadata } from 'next';
 import React from 'react';
 
