@@ -12,7 +12,10 @@ export interface RolesResult {
   demo: boolean;
 }
 
-const PLATFORM_ROLES_URL = 'https://app.recxchange.io/api/public/roles';
+// Overridable so staging/tests can point at a different platform instance.
+const PLATFORM_ROLES_URL =
+  process.env.RECX_PLATFORM_ROLES_URL ??
+  'https://app.recxchange.io/api/public/roles';
 
 /**
  * The curated fallback set carries fixed authoring dates that age out and
