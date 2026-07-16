@@ -10,6 +10,7 @@ import {
   WORK_MODEL_LABEL,
 } from '@/lib/roles/format';
 import { getRoleById } from '@/lib/roles/fetch';
+import { parseRoleLocation } from '@/lib/roles/location';
 import { APP_REGISTER_URL } from '@/lib/redesign/site';
 
 export const revalidate = 300;
@@ -44,25 +45,47 @@ export default async function RoleDetailPage({ params }: PageProps) {
     postedDate.getTime() + 60 * 24 * 60 * 60 * 1000
   );
 
-  const jobPostingSchema = {
+  // Google Jobs requires a structured address; free-text locations get
+  // ignored by the jobs panel. Remote roles additionally require
+  // applicantLocationRequirements.
+  const parsed = parseRoleLocation(role.location);
+  const isRemote = role.workModel === 'remote' || parsed.remoteHint;
+
+  const address: Record<string, string> = { '@type': 'PostalAddress' };
+  if (parsed.addressLocality) address.addressLocality = parsed.addressLocality;
+  if (parsed.addressRegion) address.addressRegion = parsed.addressRegion;
+  if (parsed.addressCountry) address.addressCountry = parsed.addressCountry;
+
+  const jobPostingSchema: Record<string, unknown> = {
     '@context': 'https://schema.org',
     '@type': 'JobPosting',
+    '@id': `https://recxchange.io/roles/${role.id}#jobposting`,
+    mainEntityOfPage: `https://recxchange.io/roles/${role.id}`,
     title: role.title,
-    description: role.descriptionSnippet,
+    description: `<p>${role.descriptionSnippet}</p><p>This role is filled through RecXchange, the split-fee recruitment marketplace. Recruiters with a matching candidate partner on the placement and receive the agreed split fee.</p>`,
+    identifier: {
+      '@type': 'PropertyValue',
+      name: 'RecXchange',
+      value: role.id,
+    },
     datePosted: role.postedAt,
     validThrough: validThrough.toISOString(),
     employmentType: role.roleType === 'permanent' ? 'FULL_TIME' : 'CONTRACTOR',
     hiringOrganization: {
       '@type': 'Organization',
-      name: isDirect ? 'RecX Direct Client (via RecXchange)' : 'RecXchange Partner Network',
+      name: isDirect
+        ? 'RecX Direct Client (via RecXchange)'
+        : 'RecXchange Partner Network',
       sameAs: 'https://recxchange.io',
+      logo: 'https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Icon-GW-Small-25.png',
     },
     jobLocation: {
       '@type': 'Place',
-      address: { '@type': 'PostalAddress', addressLocality: role.location },
+      address:
+        Object.keys(address).length > 1
+          ? address
+          : { '@type': 'PostalAddress', addressLocality: role.location },
     },
-    jobLocationType:
-      role.workModel === 'remote' ? 'TELECOMMUTE' : undefined,
     baseSalary: {
       '@type': 'MonetaryAmount',
       currency: role.salaryCurrency,
@@ -77,11 +100,47 @@ export default async function RoleDetailPage({ params }: PageProps) {
     directApply: false,
   };
 
+  if (isRemote) {
+    jobPostingSchema.jobLocationType = 'TELECOMMUTE';
+    jobPostingSchema.applicantLocationRequirements = parsed.addressCountry
+      ? { '@type': 'Country', name: parsed.addressCountry }
+      : { '@type': 'Country', name: 'Worldwide' };
+  }
+
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://recxchange.io/',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Live Roles',
+        item: 'https://recxchange.io/roles',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: role.title,
+        item: `https://recxchange.io/roles/${role.id}`,
+      },
+    ],
+  };
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jobPostingSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
       <div className="mx-auto max-w-4xl px-4 sm:px-6 pt-14 sm:pt-20 pb-24">

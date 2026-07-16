@@ -185,10 +185,10 @@ export default function HomePage() {
                 of the fee when they&apos;re placed.
               </p>
               <Link
-                href="/roles"
+                href="/earn-more-as-a-recruiter"
                 className="text-sm font-semibold grad-text hover:underline"
               >
-                See roles that need candidates →
+                How recruiters earn more from their bench →
               </Link>
             </GlassCard>
           </Reveal>

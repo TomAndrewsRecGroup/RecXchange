@@ -19,8 +19,25 @@ export default async function RolesPage() {
 
   const directCount = roles.filter((r) => r.source === 'recx_direct').length;
 
+  const itemListSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Live split-fee recruitment roles on RecXchange',
+    numberOfItems: total,
+    itemListElement: roles.slice(0, 50).map((role, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      url: `https://recxchange.io/roles/${role.id}`,
+      name: role.title,
+    })),
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
+      />
       <section className="mx-auto max-w-6xl px-4 sm:px-6 pt-20 sm:pt-24 pb-10 text-center">
         <Reveal>
           <SectionHeading

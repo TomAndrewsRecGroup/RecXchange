@@ -7,6 +7,7 @@ const columns = [
     links: [
       { href: '/how-it-works', label: 'How it works' },
       { href: '/roles', label: 'Live roles' },
+      { href: '/earn-more-as-a-recruiter', label: 'Earn more' },
       { href: '/pricing', label: 'Pricing' },
       { href: '/why-recxchange', label: 'Why RecXchange' },
     ],

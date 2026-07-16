@@ -175,6 +175,16 @@ export default function RootLayout({ children }: RootLayoutProps) {
           "value": 15000,
           "description": "Vetted recruiters on platform"
         },
+        "knowsAbout": [
+          "Split-fee recruitment",
+          "Split fee agreements",
+          "Recruiter collaboration",
+          "Recruitment fee sharing",
+          "How recruiters earn more from placements",
+          "Candidate ownership protection",
+          "Contingency recruitment",
+          "Recruitment marketplaces"
+        ],
         "contactPoint": {
           "@type": "ContactPoint",
           "contactType": "Customer Support",

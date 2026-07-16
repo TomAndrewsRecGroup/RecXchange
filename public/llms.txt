@@ -75,7 +75,9 @@ International / cross-border placements
 
 Home (for recruiters): /
 How it works (split-fee explained): /how-it-works
+How recruiters earn more by working roles: /earn-more-as-a-recruiter
 Live roles marketplace: /roles
+Live roles as Markdown (for AI agents): /roles.md
 Pricing & earnings calculator: /pricing
 Why RecXchange (deal protection): /why-recxchange
 For employers (post a role): /for-employers

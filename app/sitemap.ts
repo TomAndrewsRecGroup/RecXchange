@@ -1,19 +1,37 @@
 import { MetadataRoute } from 'next';
+import { getRoles } from '@/lib/roles/fetch';
 
 // lastModified uses real dates, not new Date().
 // Using new Date() re-stamps every build as "just modified" which pollutes
 // crawl frequency signals and wastes crawl budget on unchanged pages.
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://recxchange.io';
   const redesignDate = new Date('2026-07-15');
   const legalDate = new Date('2026-01-01');
+
+  // Live role postings: Google discovers JobPosting pages primarily through
+  // the sitemap, so every open role gets its own entry.
+  let roleEntries: MetadataRoute.Sitemap = [];
+  try {
+    const { roles } = await getRoles();
+    roleEntries = roles.map((role) => ({
+      url: `${baseUrl}/roles/${role.id}`,
+      lastModified: new Date(role.postedAt),
+      changeFrequency: 'daily' as const,
+      priority: 0.7,
+    }));
+  } catch (error) {
+    console.error('[sitemap] Failed to load roles:', error);
+  }
 
   return [
     // ─── Core (recruiter-led) ────────────────────────────────────
     { url: baseUrl, lastModified: redesignDate, changeFrequency: 'weekly', priority: 1.0 },
     { url: `${baseUrl}/how-it-works`, lastModified: redesignDate, changeFrequency: 'monthly', priority: 0.95 },
     { url: `${baseUrl}/roles`, lastModified: redesignDate, changeFrequency: 'daily', priority: 0.95 },
+    ...roleEntries,
+    { url: `${baseUrl}/earn-more-as-a-recruiter`, lastModified: redesignDate, changeFrequency: 'monthly', priority: 0.90 },
     { url: `${baseUrl}/pricing`, lastModified: redesignDate, changeFrequency: 'weekly', priority: 0.95 },
     { url: `${baseUrl}/why-recxchange`, lastModified: redesignDate, changeFrequency: 'monthly', priority: 0.85 },
     { url: `${baseUrl}/faq`, lastModified: redesignDate, changeFrequency: 'monthly', priority: 0.80 },

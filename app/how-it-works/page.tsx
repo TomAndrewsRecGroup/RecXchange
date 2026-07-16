@@ -80,12 +80,31 @@ const howToSchema = {
   ],
 };
 
+const definedTermSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'DefinedTerm',
+  '@id': 'https://recxchange.io/how-it-works#split-fee-recruitment',
+  name: 'Split-fee recruitment',
+  alternateName: ['Split fee recruitment', 'Fee split recruitment', 'Fee share recruitment'],
+  description:
+    'A recruitment partnership in which two recruiters share one placement fee: one supplies the role (the job order) and the other supplies the candidate. Splits are typically 50/50, with employer-direct marketplaces such as RecX Direct paying up to 70% to the candidate-side recruiter.',
+  url: 'https://recxchange.io/how-it-works',
+  inDefinedTermSet: {
+    '@type': 'DefinedTermSet',
+    name: 'Recruitment industry terminology',
+  },
+};
+
 export default function HowItWorksPage() {
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(definedTermSchema) }}
       />
       <script
         type="application/ld+json"
