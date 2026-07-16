@@ -1,3 +1,4 @@
+import { safeJsonLd } from '@/lib/seo/jsonld';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Reveal from '@/components/redesign/Reveal';
@@ -125,7 +126,7 @@ export default function GlossaryPage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(glossarySchema) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(glossarySchema) }}
       />
 
       <section className="mx-auto max-w-4xl px-4 sm:px-6 pt-20 sm:pt-28 pb-12 text-center">

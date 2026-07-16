@@ -22,7 +22,21 @@ interface ContactPayload {
 
 function str(value: unknown, max: number): string | null {
   if (typeof value !== 'string') return null;
-  const trimmed = value.trim();
+  // Strip control characters (incl. CR/LF) - defense in depth against
+  // header/format injection in anything that ends up in an email.
+  // eslint-disable-next-line no-control-regex
+  const trimmed = value.replace(/[\u0000-\u001F\u007F]/g, ' ').trim();
+  if (!trimmed || trimmed.length > max) return null;
+  return trimmed;
+}
+
+/** Multiline variant for the message body: keeps newlines, strips the rest. */
+function multilineStr(value: unknown, max: number): string | null {
+  if (typeof value !== 'string') return null;
+  // eslint-disable-next-line no-control-regex
+  const trimmed = value
+    .replace(/[\u0000-\u0009\u000B-\u001F\u007F]/g, ' ')
+    .trim();
   if (!trimmed || trimmed.length > max) return null;
   return trimmed;
 }
@@ -53,7 +67,7 @@ export async function POST(request: NextRequest) {
   const name = str(body.name, 120);
   const email = str(body.email, 254);
   const company = str(body.company, 160); // optional
-  const message = str(body.message, 5000);
+  const message = multilineStr(body.message, 5000);
   const reason: Reason = REASONS.includes(body.reason as Reason)
     ? (body.reason as Reason)
     : 'other';

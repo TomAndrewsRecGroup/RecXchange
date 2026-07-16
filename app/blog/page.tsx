@@ -1,3 +1,4 @@
+import { safeJsonLd } from '@/lib/seo/jsonld';
 // Metadata is exported from blog/layout.tsx - do not duplicate here.
 import React from 'react';
 import Link from 'next/link';
@@ -110,7 +111,7 @@ export default function BlogHubPage() {
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(schema) }} />
 
       <section className="mx-auto max-w-4xl px-4 sm:px-6 pt-20 sm:pt-28 pb-12 text-center">
         <Reveal>

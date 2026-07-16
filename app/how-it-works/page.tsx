@@ -1,3 +1,4 @@
+import { safeJsonLd } from '@/lib/seo/jsonld';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Reveal from '@/components/redesign/Reveal';
@@ -100,15 +101,15 @@ export default function HowItWorksPage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(faqSchema) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(definedTermSchema) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(definedTermSchema) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(howToSchema) }}
       />
 
       {/* Hero - answer-first for AEO */}

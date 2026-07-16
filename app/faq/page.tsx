@@ -1,3 +1,4 @@
+import { safeJsonLd } from '@/lib/seo/jsonld';
 import type { Metadata } from 'next';
 import Reveal from '@/components/redesign/Reveal';
 import { SectionHeading, GradientButton } from '@/components/redesign/ui';
@@ -94,7 +95,7 @@ export default function FAQPage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(faqSchema) }}
       />
 
       <section className="mx-auto max-w-4xl px-4 sm:px-6 pt-20 sm:pt-28 pb-12 text-center">

@@ -1,3 +1,4 @@
+import { safeJsonLd } from '@/lib/seo/jsonld';
 import type { Metadata } from 'next';
 import Reveal from '@/components/redesign/Reveal';
 import RolesExplorer from '@/components/redesign/RolesExplorer';
@@ -36,7 +37,7 @@ export default async function RolesPage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(itemListSchema) }}
       />
       <section className="mx-auto max-w-6xl px-4 sm:px-6 pt-20 sm:pt-24 pb-10 text-center">
         <Reveal>

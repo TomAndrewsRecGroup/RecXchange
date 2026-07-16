@@ -1,3 +1,4 @@
+import { safeJsonLd } from '@/lib/seo/jsonld';
 import "@/app/globals.css";
 import { Inter } from "next/font/google";
 import React from "react";
@@ -456,11 +457,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <SpeakableSchema />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(aiAgentIdentity) }}
+          dangerouslySetInnerHTML={{ __html: safeJsonLd(aiAgentIdentity) }}
         />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrgData) }}
+          dangerouslySetInnerHTML={{ __html: safeJsonLd(schemaOrgData) }}
         />
       </head>
       <body

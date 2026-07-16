@@ -1,3 +1,4 @@
+import { safeJsonLd } from '@/lib/seo/jsonld';
 // SpeakableSchema - server component, injected in layout <head>.
 // Invisible to users. Read only by Google Assistant, AI crawlers, and TTS engines.
 // Marks the most answer-worthy passages on the site for generative engine citation.
@@ -43,7 +44,7 @@ export default function SpeakableSchema() {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(speakableSchema) }}
+      dangerouslySetInnerHTML={{ __html: safeJsonLd(speakableSchema) }}
     />
   );
 }

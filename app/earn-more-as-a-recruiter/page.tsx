@@ -1,3 +1,4 @@
+import { safeJsonLd } from '@/lib/seo/jsonld';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Reveal from '@/components/redesign/Reveal';
@@ -69,7 +70,7 @@ export default function EarnMorePage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(faqSchema) }}
       />
 
       {/* Answer-first hero for AEO */}

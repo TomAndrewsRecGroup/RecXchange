@@ -1,3 +1,4 @@
+import crypto from 'crypto';
 import { NextRequest, NextResponse } from 'next/server';
 import { getRoles } from '@/lib/roles/fetch';
 import {
@@ -22,7 +23,13 @@ const BASE_URL = 'https://recxchange.io';
 function isAuthorized(request: NextRequest): boolean {
   const secret = process.env.CRON_SECRET;
   if (!secret) return false;
-  return request.headers.get('authorization') === `Bearer ${secret}`;
+  const provided = request.headers.get('authorization') ?? '';
+  const expected = `Bearer ${secret}`;
+  // Constant-time comparison; length check first because timingSafeEqual
+  // requires equal-length buffers.
+  const a = Buffer.from(provided);
+  const b = Buffer.from(expected);
+  return a.length === b.length && crypto.timingSafeEqual(a, b);
 }
 
 export async function GET(request: NextRequest) {

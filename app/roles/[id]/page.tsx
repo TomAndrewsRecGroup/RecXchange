@@ -1,3 +1,4 @@
+import { safeJsonLd } from '@/lib/seo/jsonld';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -136,11 +137,11 @@ export default async function RoleDetailPage({ params }: PageProps) {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jobPostingSchema) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(jobPostingSchema) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }}
       />
 
       <div className="mx-auto max-w-4xl px-4 sm:px-6 pt-14 sm:pt-20 pb-24">
