@@ -10,6 +10,11 @@ export interface RolesResult {
   lastUpdated: string;
   roles: Role[];
   demo: boolean;
+  /**
+   * Why the fallback set was served (only present when demo is true).
+   * Deliberately non-sensitive; safe to expose for diagnostics.
+   */
+  fallbackReason?: string;
 }
 
 // Overridable so staging/tests can point at a different platform instance.
@@ -46,16 +51,17 @@ function refreshDemoDates(roles: Role[]): Role[] {
  * /api/roles route and the server-rendered /roles pages so both always agree.
  */
 export async function getRoles(): Promise<RolesResult> {
-  const demoResult = (): RolesResult => ({
+  const demoResult = (fallbackReason: string): RolesResult => ({
     total: ALL_DEMO_ROLES.length,
     lastUpdated: new Date().toISOString(),
     roles: refreshDemoDates(ALL_DEMO_ROLES),
     demo: true,
+    fallbackReason,
   });
 
   const apiKey = process.env.RECX_PLATFORM_API_KEY;
   if (!apiKey) {
-    return demoResult();
+    return demoResult('RECX_PLATFORM_API_KEY is not set in this environment');
   }
 
   try {
@@ -65,10 +71,16 @@ export async function getRoles(): Promise<RolesResult> {
       next: { revalidate: 300 },
     });
 
-    if (!response.ok) return demoResult();
+    if (!response.ok) {
+      return demoResult(
+        `platform API responded ${response.status} (401/403 usually means the key value is wrong or was rotated)`
+      );
+    }
 
     const data: APIResponse = await response.json();
-    if (!data.roles || !Array.isArray(data.roles)) return demoResult();
+    if (!data.roles || !Array.isArray(data.roles)) {
+      return demoResult('platform API responded 200 but without a roles array');
+    }
 
     const filteredRoles = data.roles.filter((role) => {
       if (role.source === 'recx_direct') return true;
@@ -86,7 +98,7 @@ export async function getRoles(): Promise<RolesResult> {
     };
   } catch (error) {
     console.error('[roles] Error fetching live roles:', error);
-    return demoResult();
+    return demoResult('network error reaching the platform API');
   }
 }
 
