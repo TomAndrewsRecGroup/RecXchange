@@ -66,7 +66,7 @@ export async function getRoles(): Promise<RolesResult> {
 
   try {
     const response = await fetch(PLATFORM_ROLES_URL, {
-      headers: { 'x-api-key': apiKey },
+      headers: { 'x-api-key': apiKey, Accept: 'application/json' },
       // ISR: pages and the API route re-fetch the platform every 5 minutes.
       next: { revalidate: 300 },
     });
@@ -77,7 +77,21 @@ export async function getRoles(): Promise<RolesResult> {
       );
     }
 
-    const data: APIResponse = await response.json();
+    // A 200 with an HTML body means the platform served its app shell for an
+    // unknown path - i.e. the roles endpoint does not exist at this URL.
+    const contentType = response.headers.get('content-type') ?? '';
+    if (!contentType.includes('json')) {
+      return demoResult(
+        `platform responded 200 with '${contentType}' instead of JSON - the endpoint URL is wrong or the public roles API is not enabled on the platform (set RECX_PLATFORM_ROLES_URL to the correct endpoint)`
+      );
+    }
+
+    let data: APIResponse;
+    try {
+      data = await response.json();
+    } catch {
+      return demoResult('platform response claimed JSON but failed to parse');
+    }
     if (!data.roles || !Array.isArray(data.roles)) {
       return demoResult('platform API responded 200 but without a roles array');
     }
