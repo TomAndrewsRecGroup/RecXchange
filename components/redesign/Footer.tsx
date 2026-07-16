@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { SUPPORT_EMAIL } from '@/lib/redesign/site';
 
@@ -45,11 +46,14 @@ export default function Footer() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6 py-14">
         <div className="grid grid-cols-2 gap-10 md:grid-cols-5">
           <div className="col-span-2">
-            <Link
-              href="/"
-              className="text-xl font-extrabold tracking-tight text-white"
-            >
-              Rec<span className="grad-text-hot">X</span>change
+            <Link href="/" className="inline-block" aria-label="RecXchange home">
+              <Image
+                src="https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Main-Logo-25.png"
+                alt="RecXchange"
+                width={150}
+                height={40}
+                className="w-[140px] h-auto"
+              />
             </Link>
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-[var(--rx-muted)]">
               The split-fee recruitment marketplace where 15,000+ recruiters

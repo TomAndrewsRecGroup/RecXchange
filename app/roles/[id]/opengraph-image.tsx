@@ -8,10 +8,24 @@ import { formatSalary, formatSplit } from '@/lib/roles/format';
  * fee on the brand gradient.
  */
 
-export const runtime = 'edge';
 export const alt = 'Live split-fee role on RecXchange';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
+
+const LOGO_URL =
+  'https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Main-Logo-25.png';
+
+/** Fetch the logo as a data URI; null if unreachable so the card never 500s. */
+async function fetchLogo(): Promise<string | null> {
+  try {
+    const res = await fetch(LOGO_URL);
+    if (!res.ok) return null;
+    const buf = await res.arrayBuffer();
+    return `data:image/png;base64,${Buffer.from(buf).toString('base64')}`;
+  } catch {
+    return null;
+  }
+}
 
 export default async function OpengraphImage({
   params,
@@ -19,7 +33,7 @@ export default async function OpengraphImage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const role = await getRoleById(id);
+  const [role, logo] = await Promise.all([getRoleById(id), fetchLogo()]);
 
   const title = role ? role.title : 'Live split-fee roles';
   const salary = role
@@ -55,11 +69,20 @@ export default async function OpengraphImage({
             justifyContent: 'space-between',
           }}
         >
-          <div style={{ display: 'flex', fontSize: 36, fontWeight: 800 }}>
-            <span>Rec</span>
-            <span style={{ color: '#a855f7' }}>X</span>
-            <span>change</span>
-          </div>
+          {logo ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={logo}
+              alt="RecXchange"
+              width={180}
+              height={48}
+              style={{ objectFit: 'contain' }}
+            />
+          ) : (
+            <div style={{ display: 'flex', fontSize: 36, fontWeight: 800 }}>
+              RecXchange
+            </div>
+          )}
           <div
             style={{
               fontSize: 22,

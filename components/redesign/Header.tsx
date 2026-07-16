@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
@@ -34,12 +35,15 @@ export default function Header() {
       }`}
     >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-        <Link
-          href="/"
-          className="text-xl font-extrabold tracking-tight text-white"
-          aria-label="RecXchange home"
-        >
-          Rec<span className="grad-text-hot">X</span>change
+        <Link href="/" className="flex-shrink-0" aria-label="RecXchange home">
+          <Image
+            src="https://haaqtnq6favvrbuh.public.blob.vercel-storage.com/REX-Main-Logo-25.png"
+            alt="RecXchange"
+            width={150}
+            height={40}
+            className="w-[120px] h-auto sm:w-[140px]"
+            priority
+          />
         </Link>
 
         <nav className="hidden lg:flex items-center gap-7" aria-label="Main">
