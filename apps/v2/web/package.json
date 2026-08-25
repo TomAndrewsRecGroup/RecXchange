@@ -1,0 +1,28 @@
+{
+  "name": "recxchange-v2-web",
+  "version": "2.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3001 -H 0.0.0.0",
+    "build": "next build",
+    "start": "next start -p 3001 -H 0.0.0.0",
+    "lint": "next lint",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "lucide-react": "^0.460.0",
+    "next": "16.1.6",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.51.0",
+    "@types/node": "^20",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.0.0"
+  }
+}

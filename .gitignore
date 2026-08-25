@@ -17,9 +17,19 @@ yarn-error.log*
 
 # Environment variables
 .env*.local
+.env
+deploy/.env
 
 # OS files
 .DS_Store
 Thumbs.db
 tsconfig.tsbuildinfo
 .claude/worktrees/
+
+# v2 services
+services/match/target/
+services/api/bin/
+**/__pycache__/
+**/.pytest_cache/
+**/*.pyc
+.venv/

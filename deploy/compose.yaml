@@ -1,0 +1,85 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: recx
+      POSTGRES_PASSWORD: recx
+      POSTGRES_DB: recxchange
+    ports:
+      - "5432:5432"
+    volumes:
+      - recx_pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U recx -d recxchange"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  match:
+    build: ../services/match
+    environment:
+      MATCH_ADDR: 0.0.0.0:8081
+    ports:
+      - "8081:8081"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8081/healthz"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 10s
+
+  friction:
+    build: ../services/friction
+    environment:
+      FRICTION_ADDR: 0.0.0.0:8082
+    ports:
+      - "8082:8082"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8082/healthz')"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 10s
+
+  api:
+    build:
+      context: ..
+      dockerfile: services/api/Dockerfile
+    environment:
+      API_ADDR: 0.0.0.0:8080
+      DATABASE_URL: postgres://recx:recx@postgres:5432/recxchange?sslmode=disable
+      MATCH_URL: http://match:8081
+      FRICTION_URL: http://friction:8082
+      SESSION_SECRET: recx-v2-dev-session
+      WEB_ORIGIN: http://localhost:3001
+      ENV: dev
+      MIGRATIONS_DIR: /migrations
+      SEED_SQL: /seed.sql
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      match:
+        condition: service_started
+      friction:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8080/healthz"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 15s
+
+  web:
+    build: ../apps/v2/web
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8080
+    ports:
+      - "3001:3001"
+    depends_on:
+      api:
+        condition: service_started
+
+volumes:
+  recx_pg:
