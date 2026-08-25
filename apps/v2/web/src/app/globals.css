@@ -1,0 +1,134 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --rx-bg: #0a0a0f;
+  --rx-deep: #060312;
+  --rx-cyan: #00f0ff;
+  --rx-fuchsia: #ff00ff;
+  --rx-purple: #a855f7;
+  --rx-text: #f4f4f8;
+  --rx-muted: #b4b2cc;
+  --rx-faint: #7a7898;
+  --rx-line: rgba(255, 255, 255, 0.1);
+  --rx-panel: rgba(255, 255, 255, 0.035);
+  --rx-live: #34d399;
+  --rx-grad: linear-gradient(100deg, #00f0ff 0%, #a855f7 50%, #ff00ff 100%);
+}
+
+html,
+body {
+  background: var(--rx-deep);
+  color: var(--rx-text);
+  min-height: 100%;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 10% -10%, rgba(0, 240, 255, 0.08), transparent 50%),
+    radial-gradient(ellipse 60% 40% at 90% 0%, rgba(255, 0, 255, 0.07), transparent 50%),
+    radial-gradient(ellipse 50% 40% at 50% 110%, rgba(168, 85, 247, 0.08), transparent 50%),
+    linear-gradient(#0a0a0f, #060312);
+  background-attachment: fixed;
+}
+
+::selection {
+  background: rgba(0, 240, 255, 0.28);
+  color: #fff;
+}
+
+.font-display {
+  font-family: var(--font-lexend), var(--font-inter), system-ui, sans-serif;
+}
+
+.grad-text {
+  background: var(--rx-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.rx-grid {
+  background-image:
+    linear-gradient(rgba(0, 240, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 240, 255, 0.035) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.rx-card {
+  background: var(--rx-panel);
+  border: 1px solid var(--rx-line);
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(0, 240, 255, 0.12);
+}
+
+.rx-card-hot {
+  background: var(--rx-panel);
+  border: 1px solid rgba(255, 0, 255, 0.22);
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 0, 255, 0.15);
+}
+
+input,
+textarea,
+select {
+  background: rgba(6, 3, 18, 0.7);
+  border: 1px solid var(--rx-line);
+  color: var(--rx-text);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: rgba(0, 240, 255, 0.55);
+  box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.12);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--rx-faint);
+}
+
+.kind-direct {
+  --kind: #00f0ff;
+}
+.kind-xchange {
+  --kind: #ff00ff;
+}
+.kind-referral {
+  --kind: #a855f7;
+}
+
+@keyframes rx-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+.rx-pulse {
+  animation: rx-pulse 2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rx-pulse {
+    animation: none;
+  }
+}
+
+/* Scrollbars — keep them quiet on dark chrome */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 240, 255, 0.25) transparent;
+}

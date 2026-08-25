@@ -1,0 +1,75 @@
+name: v2
+
+on:
+  pull_request:
+    paths:
+      - "apps/v2/**"
+      - "services/**"
+      - "deploy/**"
+      - ".github/workflows/v2.yml"
+      - "docs/v2.md"
+      - "Makefile"
+
+jobs:
+  rust:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: services/match
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - run: cargo test
+
+  python:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: services/friction
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - run: pytest -q
+
+  go:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: services/api
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.23"
+      - run: go test ./...
+
+  playwright:
+    runs-on: ubuntu-latest
+    needs: [rust, python, go]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Compose up
+        run: docker compose -f deploy/compose.yaml up --build -d
+      - name: Wait for web
+        run: |
+          for i in $(seq 1 60); do
+            curl -sf http://localhost:3001 >/dev/null && exit 0
+            sleep 3
+          done
+          docker compose -f deploy/compose.yaml logs
+          exit 1
+      - name: Playwright
+        working-directory: apps/v2/web
+        run: |
+          npm install
+          npx playwright install --with-deps chromium
+          npx playwright test
+      - name: Compose down
+        if: always()
+        run: docker compose -f deploy/compose.yaml down -v
